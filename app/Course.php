@@ -6,5 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    //
+    public function materials() {
+
+		return $this->belongsToMany('App\Material');
+
+	}
+
+	public function bundles() {
+
+		return $this->belongsToMany('App\Bundle');
+		
+	}
+
+	public function users() {
+
+		return $this->belongsToMany('App\User');
+		
+	}
 }
