@@ -17,4 +17,10 @@ class Material extends Model
 		return $this->belongsToMany('App/User');
 
 	}
+
+	public function topics() {
+
+		return $this->belongsToMany('App/Topic');
+
+	}
 }
