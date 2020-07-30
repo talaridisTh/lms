@@ -22,7 +22,7 @@ class CreateMaterialsTable extends Migration
             $table->text('description');
             $table->unsignedTinyInteger('active');
             $table->string('slug', 80);
-            $table->string('type', 10);
+            $table->string('type', 20);
             $table->timestamps();
         });
     }

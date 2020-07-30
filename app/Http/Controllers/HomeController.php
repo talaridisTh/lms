@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
+
 
 class HomeController extends Controller
 {
+
     /**
+     *
      * Create a new controller instance.
      *
      * @return void
@@ -22,7 +28,12 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
+
     {
+
+
+
+
         return view('home');
     }
 }

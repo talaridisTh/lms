@@ -17,7 +17,6 @@ class CreateMaterialTopicTable extends Migration
             $table->id();
             $table->foreignId('material_id');
             $table->foreignId('topic_id');
-            $table->timestamps();
         });
     }
 

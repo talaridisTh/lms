@@ -13,11 +13,12 @@ class CreateCourseMaterialTable extends Migration
      */
     public function up()
     {
+        $secs = rand(0, 59);
         Schema::create('course_material', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_id');
             $table->foreignId('material_id');
-            $table->unsignedSmallInteger('priority');
+//            $table->unsignedSmallInteger('priority');
         });
     }
 

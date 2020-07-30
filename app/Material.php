@@ -14,13 +14,14 @@ class Material extends Model
 
 	public function users() {
 
+
 		return $this->belongsToMany('App/User');
 
 	}
 
 	public function topics() {
 
-		return $this->belongsToMany('App/Topic');
+		return $this->belongsToMany(Topic::class);
 
 	}
 }
