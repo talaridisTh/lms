@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Material;
 use Illuminate\Http\Request;
+use App\User;
 
 class MaterialController extends Controller
 {
@@ -14,7 +15,9 @@ class MaterialController extends Controller
      */
     public function index()
     {
-        return view('admin/materials/materialsMain');
+		$materials = Material::all(['name', 'small_description', 'active', 'type']);
+
+        return view('admin/materials/materialsMain')->withMaterials($materials);
     }
 
     /**
