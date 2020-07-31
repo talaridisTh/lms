@@ -15,6 +15,7 @@
 		<link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
 
 		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
+		@yield('css')
 
 	</head>
 
