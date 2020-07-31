@@ -62,6 +62,14 @@
 		$("#scroll-horizontal-datatable").DataTable({
 		scrollX:!0,
 		language:{
+			emptyTable: 		"Δεν υπάρχουν εγγραφές",
+			info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+			infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+			lengthMenu: 		"_MENU_ Αποτελέσματα ανα σελίδα",
+			loadingRecords: 	"Φόρτωση ...",
+			processing: 		"Επεξεργασία ...",
+			search: 			"Αναζήτηση: ",
+			zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
 			paginate:{
 				previous:"<i class='mdi mdi-chevron-left'>",
 				next:"<i class='mdi mdi-chevron-right'>"}
