@@ -15,9 +15,15 @@ class UserController extends Controller
     public function index()
     {
 		$users = User::all();
+		$roles = [];
 
+		foreach ($users as $user){
 
-        return view('admin/users/usersMain')->withUsers($users);
+            array_push( $roles, $user->getRoleNames()->first());
+
+        }
+
+        return view('admin/users/usersMain',compact("roles","users"));
     }
 
     /**

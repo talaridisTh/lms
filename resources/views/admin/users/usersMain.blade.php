@@ -22,9 +22,10 @@
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
             <thead>
             <tr>
-                <th class="text-left">Ρολος</th>
+
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
+                <th class="text-left">Ρολος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
@@ -32,20 +33,22 @@
             </thead>
             <tbody>
 
-            @foreach ($users as $user)
+            @foreach ($users as $n =>$user)
                 <tr>
-                    <td>{{ $user->getRoleNames()}}</td>
                     <td>{{ $user['first_name'] }}</td>
                     <td>{{ $user['last_name'] }}</td>
+                    <td>{{ $roles[$n]}}</td>
                     <td>{{ $user['email'] }}</td>
                     <td>{{ $user['active'] }}</td>
                     <td>{{ $user['created_at'] }}</td>
+
                 </tr>
             @endforeach
 
             </tbody>
             <tfoot>
             <tr>
+                <th class="text-left">Ρολος</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
                 <th class="text-left">Email</th>
