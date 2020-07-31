@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder {
      */
     public function run()
     {
+        $this->call(RoleSeeder::class);
+        $this->call(UserSeeder::class);
       factory(App\Course::class, 5)->create()
             ->each(function ($course) {
                 $course->materials()->saveMany(factory(App\Material::class, 5)->create(["type"=>$course->name]))
@@ -19,8 +21,7 @@ class DatabaseSeeder extends Seeder {
             });
     });
 
-        $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
+
 }
 
 

@@ -3,8 +3,10 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Material;
+use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Carbon;
+use Spatie\Permission\Models\Role;
 
 $factory->define(Material::class, function (Faker $faker) {
 
@@ -19,8 +21,11 @@ $factory->define(Material::class, function (Faker $faker) {
 
 	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
+    $admin=  User::role(["instractor","admin"])->get();
+    $num = count($admin);
+
     return [
-        'author_id' => $faker->numberBetween( 1, 10 ) ,
+        'author_id' =>  $admin[rand(0, 4)] ,
 		'name' => "Name of Lesson ".$counter ,
 		'cover' => $faker->md5 .".jpg",
 		'small_description' => "Small Description of Lesson ".$counter ,
