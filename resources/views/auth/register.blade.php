@@ -11,7 +11,7 @@
 				</h4>
 			
 				<div class="card-body p-4">
-					<form>
+				<form method="POST" action="{{ route('register') }}">
 
 						@csrf
 
@@ -27,7 +27,7 @@
 						</div>
 						<div class="form-group">
 							<label for="email" class="text-white">Email</label>
-							<input type="text" class="form-control" id="email" placeholder="Email">
+							<input type="text" class="form-control" id="email" name="email" placeholder="Email">
 						</div>
 						<div class="form-row">
 							<div class="form-group col-md-6">
@@ -44,7 +44,7 @@
 							<div class="form-group col-md-6">
 								<label for="confirm-password" class="text-white">Επιβεβαίωση Κωδικού</label>
 								<div class="input-group input-group-merge">
-								    <input type="password" id="confirm-password" class="form-control" name="passwordConfimation" placeholder="Enter your password">
+								    <input type="password" id="confirm-password" class="form-control" name="password_confirmation" placeholder="Enter your password">
 								    <div class="input-group-append" data-password="false">
 								        <div class="input-group-text">
 								            <span class="password-eye"></span>
