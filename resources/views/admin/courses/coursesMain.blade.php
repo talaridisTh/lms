@@ -54,6 +54,7 @@
 @endsection
 
 @section('scripts')
+<<<<<<< HEAD
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script>
@@ -70,4 +71,30 @@
             }
         })
     </script>
+=======
+<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
+<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+
+<script>
+	$("#scroll-horizontal-datatable").DataTable({
+		scrollX:!0,
+		language:{
+			emptyTable: 		"Δεν υπάρχουν εγγραφές",
+			info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+			infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+			lengthMenu: 		"_MENU_ Αποτελέσματα ανα σελίδα",
+			loadingRecords: 	"Φόρτωση ...",
+			processing: 		"Επεξεργασία ...",
+			search: 			"Αναζήτηση: ",
+			zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+			paginate:{
+				previous:"<i class='mdi mdi-chevron-left'>",
+				next:"<i class='mdi mdi-chevron-right'>"}
+		},
+		drawCallback:function(){
+			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+		}
+	})
+</script>
+>>>>>>> 9eb50ac8027112ed05f499cbe98e9b5e81f14716
 @endsection
