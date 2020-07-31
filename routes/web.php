@@ -18,25 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('admin/overview/overviewMain');
-})->middleware(['auth', 'role']);
+Route::get('/dashboard', 'DashboardController@index')->middleware(['auth', 'role']);
 
-Route::get('/dashboard/users', function () {
-    return view('admin/users/usersMain');
-})->middleware(['auth', 'role']);
+Route::get('/dashboard/users', 'UserController@index')->middleware(['auth', 'role']);
 
-Route::get('/dashboard/materials', function () {
-    return view('admin/materials/materialsMain');
-})->middleware(['auth', 'role']);
+Route::get('/dashboard/materials', 'MaterialController@index')->middleware(['auth', 'role']);
 
-Route::get('/dashboard/courses', function () {
-    return view('admin/courses/coursesMain');
-})->middleware(['auth', 'role']);
+Route::get('/dashboard/courses', 'CourseController@index')->middleware(['auth', 'role']);
 
-Route::get('/dashboard/bundles', function () {
-    return view('admin/bundles/bundlesMain');
-})->middleware(['auth', 'role']);
+Route::get('/dashboard/bundles', 'BundleController@index')->middleware(['auth', 'role']);
 
 Auth::routes();
 
