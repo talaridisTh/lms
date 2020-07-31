@@ -22,6 +22,7 @@
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap">
             <thead>
             <tr>
+                <th class="text-left">Ρολος</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
                 <th class="text-left">Email</th>
@@ -33,6 +34,7 @@
 
             @foreach ($users as $user)
                 <tr>
+                    <td>{{ $user->getRoleNames()}}</td>
                     <td>{{ $user['first_name'] }}</td>
                     <td>{{ $user['last_name'] }}</td>
                     <td>{{ $user['email'] }}</td>

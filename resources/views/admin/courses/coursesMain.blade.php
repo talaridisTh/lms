@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('css')
-	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />	
+	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('content')
@@ -23,10 +23,10 @@
 					<td>{{ $course['name'] }}</td>
 					<td>{{ $course['active'] }}</td>
 					<td>{{ $course['updated_at'] }}</td>
-					<td>{{ $course['created_at'] }}</td>
+					<td>{{ $course['created_at']}}</td>
 				</tr>
 			@endforeach
-			
+
 		</tbody>
 		<tfoot>
 			<tr>
