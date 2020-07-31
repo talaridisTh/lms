@@ -20,7 +20,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('overview');
-});
+})->middleware(['auth', 'role']);
 
 Auth::routes();
 
