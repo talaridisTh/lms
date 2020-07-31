@@ -58,7 +58,7 @@
 							</a>
 						</li>
 						<li class="side-nav-item">
-							<a href="/dashboard/users" class="side-nav-link">
+							<a href="{{route('user.index')}}" class="side-nav-link">
 								<i class="uil-comments-alt"></i>
 								<span>Χρήστες</span>
 							</a>
@@ -258,7 +258,7 @@
 								<a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 									aria-expanded="false">
 									<span class="account-user-avatar">
-										<img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set5" alt="user-image" class="rounded-circle">
+										<img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set4" alt="user-image" class="rounded-circle">
 									</span>
 									<span>
 										<span class="account-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>

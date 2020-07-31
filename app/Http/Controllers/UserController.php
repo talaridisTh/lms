@@ -23,6 +23,8 @@ class UserController extends Controller
 
         }
 
+
+
         return view('admin/users/usersMain',compact("roles","users"));
     }
 
@@ -45,6 +47,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request->all());
     }
 
     /**

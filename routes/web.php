@@ -20,7 +20,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', 'DashboardController@index')->middleware(['auth', 'role']);
 
-Route::get('/dashboard/users', 'UserController@index')->middleware(['auth', 'role']);
+Route::get('/dashboard/users', 'UserController@index')->middleware(['auth', 'role'])->name('user.index');
+Route::post('/dashboard/users/create', 'UserController@store')->middleware(['auth', 'role'])->name('user.store');;
 
 Route::get('/dashboard/materials', 'MaterialController@index')->middleware(['auth', 'role']);
 

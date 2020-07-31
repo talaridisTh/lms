@@ -11,27 +11,42 @@
                     </a>
                 </div>
 
-                <form class="pl-3 pr-3" action="#">
+                <form class="pl-3 pr-3 d-flex flex-column align-items-center" action="{{route('user.store')}}" method="POST">
 
-                    <div class="form-group">
-                        <label for="username">Name</label>
-                        <input class="form-control" type="email" id="username" required="" placeholder="Michael Zenaty">
+                    @csrf
+                    <div class="d-flex">
+                        <div class="form-group  m-2">
+                            <label for="firstname">Όνομα</label>
+                            <input class="form-control" name="first_name" type="text" id="firstname" requireduser.store="">
+                        </div>
+
+                        <div class="form-group  m-2">
+                            <label for="lastname">Επίθετο</label>
+                            <input class="form-control" name="last_name" type="text" id="lastname" required="">
+                        </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="emailaddress">Email address</label>
-                        <input class="form-control" type="email" id="emailaddress" required="" placeholder="john@deo.com">
-                    </div>
+                    <div class="d-flex">
+                        <div class="form-group  m-2">
+                            <label for="emailaddress">Email</label>
+                            <input class="form-control" name="email" type="email" id="emailaddress" required="">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input class="form-control" type="password" required="" id="password" placeholder="Enter your password">
-                    </div>
 
-                    <div class="form-group">
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">I accept <a href="#">Terms and Conditions</a></label>
+                        <div class="form-group  m-2">
+                            <label for="avatar">Avatar</label>
+                            <input class="form-control" name="avatar" type="password" required="" id="avatar">
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="form-group  m-2">
+                            <label for="password">Κωδικός</label>
+                            <input class="form-control" name="password" type="password" required="" id="password">
+                        </div>
+
+                        <div class="form-group  m-2">
+                            <label for="passwordconfig">Επιβεβαίωση κωδικού</label>
+                            <input class="form-control" name="password_confirmation" type="password" required="" id="passwordconfig">
                         </div>
                     </div>
 
