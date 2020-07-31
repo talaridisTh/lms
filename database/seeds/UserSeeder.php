@@ -20,23 +20,44 @@ class UserSeeder extends Seeder
     {
 
         User::create([
-            'first_name' =>"Θανος",
-            'last_name' => "Ταλαριδης",
+            'first_name' =>"admin",
+            'last_name' => "admin",
             'avatar' => "sjkfbhdjka0dbd541fbe1ca1a045e.jpg.jpg",
-            'email' => "thanos@gmail.com",
-            'password' =>  Hash::make('thanosthanos'),
+            'email' => "admin@gmail.com",
+            'password' =>  Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("admin");
+
          User::create([
-            'first_name' =>"Βαγγελης",
-            'last_name' => "Μπιτσιλης",
+            'first_name' =>"instructor",
+            'last_name' => "instructor",
             'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
-            'email' => "baggelis@gmail.com",
-            'password' =>  Hash::make('baggelisbaggelis'),
+            'email' => "instructor@gmail.com",
+            'password' =>  Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
-        ])->assignRole("admin");
+        ])->assignRole("instructor");
+
+         User::create([
+            'first_name' =>"partner",
+            'last_name' => "partner",
+            'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
+            'email' => "partner@gmail.com",
+            'password' =>  Hash::make('password'),
+            'active' => 1,
+            'remember_token' => Str::random(10),
+        ])->assignRole("partner");
+
+         User::create([
+            'first_name' =>"student",
+            'last_name' => "student",
+            'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
+            'email' => "student@gmail.com",
+            'password' =>  Hash::make('password'),
+            'active' => 1,
+            'remember_token' => Str::random(10),
+        ])->assignRole("student");
 
 //       Role::create(['name' => 'admin']);
 //        $baggelis = Role::create(['name' => 'admin']);
@@ -44,12 +65,12 @@ class UserSeeder extends Seeder
 
 
         factory( App\User::class, 15)->create();
-
-        $users = User::findOrFail([3,4,5]);
-
-        foreach ($users as $user){
-            $user->assignRole("instructor");
-        }
+//
+//        $users = User::findOrFail([3,4,5]);
+//
+//        foreach ($users as $user){
+//            $user->assignRole("instructor");
+//        }
 
 
 //

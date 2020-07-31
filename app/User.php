@@ -2,13 +2,14 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
-{
+class User extends Authenticatable {
+
     use Notifiable, HasRoles;
 
     /**
@@ -36,17 +37,40 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-	];
+    ];
 
-	public function courses() {
+    public function courses()
+    {
 
-		return $this->belongsToMany('App/Course');
+        return $this->belongsToMany('App/Course');
+    }
 
-	}
+    public function materials()
+    {
 
-	public function materials() {
+        return $this->belongsToMany('App/Material');
+    }
 
-		return $this->belongsToMany('App/Material');
+    // $user->fullName  // Onoma Epitheto
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
+    }
 
-	}
+    // $user->created_at  // egrafi prin 20 lepta
+    public function getCreatedAtAttribute($value)
+    {
+        $carbonDate = new Carbon($value);
+
+        return $carbonDate->diffForHumans();
+    }
+
+    // $user->update_at  //update prin 20 lepta
+    public function getUpdatedAtAttribute($value)
+    {
+        $carbonDate = new Carbon($value);
+
+        return $carbonDate->diffForHumans();
+    }
+
 }

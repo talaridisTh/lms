@@ -25,7 +25,7 @@ $factory->define(Material::class, function (Faker $faker) {
     $num = count($admin);
 
     return [
-        'author_id' =>  $admin[rand(0, 4)] ,
+        'author_id' =>  $admin[rand(0, $num-1)] ,
 		'name' => "Name of Lesson ".$counter ,
 		'cover' => $faker->md5 .".jpg",
 		'small_description' => "Small Description of Lesson ".$counter ,

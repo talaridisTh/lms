@@ -41,7 +41,6 @@ class RoleSeeder extends Seeder
 
 
 
-//        factory( App\Role::class, 4)->create();
 
     }
 }
