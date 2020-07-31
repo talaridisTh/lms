@@ -10,7 +10,9 @@ class BundleController extends Controller
 
     public function index()
     {
-        return view('admin/bundles/bundlesMain');
+		$bundles = Bundle::all(['name', 'active', 'updated_at', 'created_at']);
+
+        return view('admin/bundles/bundlesMain')->withBundles($bundles);
     }
 
 
