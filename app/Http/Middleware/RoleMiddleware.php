@@ -16,13 +16,12 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next)
     {
-		$role = Auth::user()->getRoleNames();
+		$role = $request->user()->getRoleNames();
 		
 		if ( $role[0] == "admin" || $role[0] == "instructor" ) {
 			return $next($request);
 		}
 
-		// return view('welcome')->with('user', Auth::user());
 		return redirect()->to('/');
     }
 }

@@ -17,6 +17,7 @@ class CreateCourseUserTable extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('course_id');
+            $table->json('material_status')->nullable();
         });
     }
 

@@ -5,3 +5,9 @@
 	<h1>Overview</h1>
 
 @endsection
+
+@section('scripts')
+	<script>
+		
+	</script>
+@endsection

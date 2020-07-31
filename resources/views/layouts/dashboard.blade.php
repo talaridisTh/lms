@@ -8,11 +8,13 @@
 		<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 		<meta content="Coderthemes" name="author" />
 		<!-- App favicon -->
-		<link rel="shortcut icon" href="assets/images/favicon.ico">
+		<link rel="shortcut icon" href="/assets/images/favicon.ico">
 		<!-- App css -->
-		<link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-		<link href="assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style" />
-		<link href="assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+		<link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+		<link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style" />
+		<link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
+
+		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
 
 	</head>
 
@@ -24,20 +26,20 @@
 				<!-- LOGO -->
 				<a href="index.html" class="logo text-center logo-light">
 					<span class="logo-lg">
-						<img src="assets/images/logo.png" alt="" height="16">
+						<img src="/assets/images/logo.png" alt="" height="16">
 					</span>
 					<span class="logo-sm">
-						<img src="assets/images/logo_sm.png" alt="" height="16">
+						<img src="/assets/images/logo_sm.png" alt="" height="16">
 					</span>
 				</a>
 
 				<!-- LOGO -->
 				<a href="index.html" class="logo text-center logo-dark">
 					<span class="logo-lg">
-						<img src="assets/images/logo-dark.png" alt="" height="16">
+						<img src="/assets/images/logo-dark.png" alt="" height="16">
 					</span>
 					<span class="logo-sm">
-						<img src="assets/images/logo_sm_dark.png" alt="" height="16">
+						<img src="/assets/images/logo_sm_dark.png" alt="" height="16">
 					</span>
 				</a>
 	
@@ -49,115 +51,34 @@
 						<li class="side-nav-title side-nav-item">Menu</li>
 
 						<li class="side-nav-item">
-							<a href="apps-calendar.html" class="side-nav-link">
+							<a href="/dashboard" class="side-nav-link">
 								<i class="uil-calender"></i>
-								<span> Overview </span>
+								<span>Overview</span>
 							</a>
 						</li>
-
 						<li class="side-nav-item">
-							<a href="apps-chat.html" class="side-nav-link">
+							<a href="/dashboard/users" class="side-nav-link">
 								<i class="uil-comments-alt"></i>
-								<span> Chat </span>
+								<span>Χρήστες</span>
 							</a>
 						</li>
-
 						<li class="side-nav-item">
-							<a href="javascript: void(0);" class="side-nav-link">
-								<i class="uil-store"></i>
-								<span> Ecommerce </span>
-								<span class="menu-arrow"></span>
-							</a>
-							<ul class="side-nav-second-level" aria-expanded="false">
-								<li>
-									<a href="apps-ecommerce-products.html">Products</a>
-								</li>
-								<li>
-									<a href="apps-ecommerce-products-details.html">Products Details</a>
-								</li>
-								<li>
-									<a href="apps-ecommerce-orders.html">Orders</a>
-								</li>
-								<li>
-									<a href="apps-ecommerce-orders-details.html">Order Details</a>
-								</li>
-								<li>
-									<a href="apps-ecommerce-customers.html">Customers</a>
-								</li>
-								<li>
-									<a href="apps-ecommerce-shopping-cart.html">Shopping Cart</a>
-								</li>
-								<li>
-									<a href="apps-ecommerce-checkout.html">Checkout</a>
-								</li>
-								<li>
-									<a href="apps-ecommerce-sellers.html">Sellers</a>
-								</li>
-							</ul>
-						</li>
-
-						<li class="side-nav-item">
-							<a href="javascript: void(0);" class="side-nav-link">
-								<i class="uil-envelope"></i>
-								<span> Email </span>
-								<span class="menu-arrow"></span>
-							</a>
-							<ul class="side-nav-second-level" aria-expanded="false">
-								<li>
-									<a href="apps-email-inbox.html">Inbox</a>
-								</li>
-								<li>
-									<a href="apps-email-read.html">Read Email</a>
-								</li>
-							</ul>
-						</li>
-
-						<li class="side-nav-item">
-							<a href="javascript: void(0);" class="side-nav-link">
-								<i class="uil-briefcase"></i>
-								<span> Projects </span>
-								<span class="menu-arrow"></span>
-							</a>
-							<ul class="side-nav-second-level" aria-expanded="false">
-								<li>
-									<a href="apps-projects-list.html">List</a>
-								</li>
-								<li>
-									<a href="apps-projects-details.html">Details</a>
-								</li>
-								<li>
-									<a href="apps-projects-gantt.html">Gantt <span class="badge badge-pill badge-light-lighten font-10 float-right">New</span></a>
-								</li>
-								<li>
-									<a href="apps-projects-add.html">Create Project <span class="badge badge-pill badge-success-lighten font-10 float-right">New</span></a>
-								</li>
-							</ul>
-						</li>
-
-						<li class="side-nav-item">
-							<a href="apps-social-feed.html" class="side-nav-link">
-								<i class="uil-rss"></i>
-								<span> Social Feed </span>
+							<a href="/dashboard/materials" class="side-nav-link">
+								<i class="uil-comments-alt"></i>
+								<span>Μαθήματα</span>
 							</a>
 						</li>
-
 						<li class="side-nav-item">
-							<a href="javascript: void(0);" class="side-nav-link">
-								<i class="uil-clipboard-alt"></i>
-								<span> Tasks </span>
-								<span class="menu-arrow"></span>
+							<a href="/dashboard/courses" class="side-nav-link">
+								<i class="uil-comments-alt"></i>
+								<span>Courses</span>
 							</a>
-							<ul class="side-nav-second-level" aria-expanded="false">
-								<li>
-									<a href="apps-tasks.html">List</a>
-								</li>
-								<li>
-									<a href="apps-tasks-details.html">Details</a>
-								</li>
-								<li>
-									<a href="apps-kanban.html">Kanban Board</a>
-								</li>
-							</ul>
+						</li>
+						<li class="side-nav-item">
+							<a href="/dashboard/bundles" class="side-nav-link">
+								<i class="uil-comments-alt"></i>
+								<span>Bundles</span>
+							</a>
 						</li>
 			
 					</ul>
@@ -231,7 +152,7 @@
 										<!-- item-->
 										<a href="javascript:void(0);" class="dropdown-item notify-item">
 											<div class="notify-icon">
-												<img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+												<img src="/assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
 											<p class="notify-details">Cristina Pride</p>
 											<p class="text-muted mb-0 user-msg">
 												<small>Hi, How are you? What about our next meeting</small>
@@ -251,7 +172,7 @@
 										<!-- item-->
 										<a href="javascript:void(0);" class="dropdown-item notify-item">
 											<div class="notify-icon">
-												<img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
+												<img src="/assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
 											<p class="notify-details">Karen Robinson</p>
 											<p class="text-muted mb-0 user-msg">
 												<small>Wow ! this admin looks good and awesome design</small>
@@ -288,19 +209,19 @@
 										<div class="row no-gutters">
 											<div class="col">
 												<a class="dropdown-icon-item" href="#">
-													<img src="assets/images/brands/slack.png" alt="slack">
+													<img src="/assets/images/brands/slack.png" alt="slack">
 													<span>Slack</span>
 												</a>
 											</div>
 											<div class="col">
 												<a class="dropdown-icon-item" href="#">
-													<img src="assets/images/brands/github.png" alt="Github">
+													<img src="/assets/images/brands/github.png" alt="Github">
 													<span>GitHub</span>
 												</a>
 											</div>
 											<div class="col">
 												<a class="dropdown-icon-item" href="#">
-													<img src="assets/images/brands/dribbble.png" alt="dribbble">
+													<img src="/assets/images/brands/dribbble.png" alt="dribbble">
 													<span>Dribbble</span>
 												</a>
 											</div>
@@ -309,19 +230,19 @@
 										<div class="row no-gutters">
 											<div class="col">
 												<a class="dropdown-icon-item" href="#">
-													<img src="assets/images/brands/bitbucket.png" alt="bitbucket">
+													<img src="/assets/images/brands/bitbucket.png" alt="bitbucket">
 													<span>Bitbucket</span>
 												</a>
 											</div>
 											<div class="col">
 												<a class="dropdown-icon-item" href="#">
-													<img src="assets/images/brands/dropbox.png" alt="dropbox">
+													<img src="/assets/images/brands/dropbox.png" alt="dropbox">
 													<span>Dropbox</span>
 												</a>
 											</div>
 											<div class="col">
 												<a class="dropdown-icon-item" href="#">
-													<img src="assets/images/brands/g-suite.png" alt="G Suite">
+													<img src="/assets/images/brands/g-suite.png" alt="G Suite">
 													<span>G Suite</span>
 												</a>
 											</div>
@@ -419,7 +340,7 @@
 									<!-- item-->
 									<a href="javascript:void(0);" class="dropdown-item notify-item">
 										<div class="media">
-											<img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
+											<img class="d-flex mr-2 rounded-circle" src="/assets/images/users/avatar-2.jpg" alt="Generic placeholder image" height="32">
 											<div class="media-body">
 												<h5 class="m-0 font-14">Erwin Brown</h5>
 												<span class="font-12 mb-0">UI Designer</span>
@@ -430,7 +351,7 @@
 									<!-- item-->
 									<a href="javascript:void(0);" class="dropdown-item notify-item">
 										<div class="media">
-											<img class="d-flex mr-2 rounded-circle" src="assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
+											<img class="d-flex mr-2 rounded-circle" src="/assets/images/users/avatar-5.jpg" alt="Generic placeholder image" height="32">
 											<div class="media-body">
 												<h5 class="m-0 font-14">Jacob Deo</h5>
 												<span class="font-12 mb-0">Developer</span>
@@ -488,8 +409,9 @@
 		</form>
 
 		<!-- bundle -->
-		<script src="assets/js/vendor.min.js"></script>
-		<script src="assets/js/app.min.js"></script>
+		<script src="/assets/js/vendor.min.js"></script>
+		<script src="/assets/js/app.min.js"></script>
+		<script src="{{ asset('js/app.js') }}"></script>
 		
 		<script>
 			$('#logout-btn').click( function() {
@@ -498,5 +420,7 @@
 				$('#logout-form').submit();
 			})
 		</script>
+
+		@yield('scripts')
 	</body>
 </html>

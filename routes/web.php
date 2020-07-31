@@ -19,7 +19,23 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('overview');
+    return view('admin/overview/overviewMain');
+})->middleware(['auth', 'role']);
+
+Route::get('/dashboard/users', function () {
+    return view('admin/users/usersMain');
+})->middleware(['auth', 'role']);
+
+Route::get('/dashboard/materials', function () {
+    return view('admin/materials/materialsMain');
+})->middleware(['auth', 'role']);
+
+Route::get('/dashboard/courses', function () {
+    return view('admin/courses/coursesMain');
+})->middleware(['auth', 'role']);
+
+Route::get('/dashboard/bundles', function () {
+    return view('admin/bundles/bundlesMain');
 })->middleware(['auth', 'role']);
 
 Auth::routes();
