@@ -8,9 +8,7 @@
 
     <div class="container" style="max-width:1370px">
         <div class="row mb-2">
-            <div class="col-sm-4">
-                <a href="javascript:void(0);" class="btn btn-danger mb-2"><i class="mdi mdi-plus-circle mr-2"></i> Δημιουργία  χρηστη</a>
-            </div>
+            <x-user.modalUserCreate></x-user.modalUserCreate>
             <div class="col-sm-8">
                 <div class="text-sm-right">
 {{--                    <button type="button" class="btn btn-success mb-2 mr-1"><i class="mdi mdi-settings"></i></button>--}}
