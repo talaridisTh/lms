@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
         $users = User::findOrFail([3,4,5]);
 
         foreach ($users as $user){
-            $user->assignRole("instractor");
+            $user->assignRole("instructor");
         }
 
 

@@ -6,7 +6,7 @@ use App\Material;
 use App\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Carbon;
-use Spatie\Permission\Models\Role;
+
 
 $factory->define(Material::class, function (Faker $faker) {
 
@@ -21,7 +21,7 @@ $factory->define(Material::class, function (Faker $faker) {
 
 	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
-    $admin=  User::role(["instractor","admin"])->get();
+    $admin=  User::role(["instructor","admin"])->get();
     $num = count($admin);
 
     return [
