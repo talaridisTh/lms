@@ -54,24 +54,6 @@
 @endsection
 
 @section('scripts')
-<<<<<<< HEAD
-    <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
-    <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
-    <script>
-        $("#scroll-horizontal-datatable").DataTable({
-            scrollX: !0,
-            language: {
-                paginate: {
-                    previous: "<i class='mdi mdi-chevron-left'>",
-                    next: "<i class='mdi mdi-chevron-right'>"
-                }
-            },
-            drawCallback: function () {
-                $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-            }
-        })
-    </script>
-=======
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 
@@ -96,5 +78,4 @@
 		}
 	})
 </script>
->>>>>>> 9eb50ac8027112ed05f499cbe98e9b5e81f14716
 @endsection
