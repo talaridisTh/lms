@@ -18,8 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/testtheme', function () {
-    return view('test-theme');
+Route::get('/dashboard', function () {
+    return view('overview');
 });
 
 Auth::routes();
