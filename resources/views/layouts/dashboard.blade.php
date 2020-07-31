@@ -43,7 +43,7 @@
 						<img src="/assets/images/logo_sm_dark.png" alt="" height="16">
 					</span>
 				</a>
-	
+
 				<div class="h-100" id="left-side-menu-container" data-simplebar>
 
 					<!--- Sidemenu -->
@@ -81,7 +81,7 @@
 								<span>Bundles</span>
 							</a>
 						</li>
-			
+
 					</ul>
 					<!-- End Sidebar -->
 
@@ -247,7 +247,7 @@
 													<span>G Suite</span>
 												</a>
 											</div>
-			
+
 										</div>
 									</div>
 
@@ -257,7 +257,7 @@
 							<li class="dropdown notification-list">
 								<a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 									aria-expanded="false">
-									<span class="account-user-avatar"> 
+									<span class="account-user-avatar">
 										<img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set5" alt="user-image" class="rounded-circle">
 									</span>
 									<span>
@@ -305,7 +305,7 @@
 										<button class="btn btn-primary" type="submit">Search</button>
 									</div>
 								</div>
-			 
+
 							</form>
 
 							<div class="dropdown-menu dropdown-menu-animated dropdown-lg" id="search-dropdown">
@@ -364,9 +364,9 @@
 						</div>
 					</div>
 					<!-- end Topbar -->
-					
+
 					<!-- Start Content-->
-					<div class="container-fluid">
+					<div class="container-fluid my-5">
 
 						@yield('content')
 
@@ -404,7 +404,7 @@
 
 		</div>
 		<!-- END wrapper -->
-		
+
 		<form id="logout-form" action="{{ route('logout') }}" method="POST">
 			@csrf
 		</form>
@@ -413,7 +413,7 @@
 		<script src="/assets/js/vendor.min.js"></script>
 		<script src="/assets/js/app.min.js"></script>
 		<script src="{{ asset('js/app.js') }}"></script>
-		
+
 		<script>
 			$('#logout-btn').click( function() {
 				event.preventDefault();
