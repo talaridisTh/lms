@@ -18,10 +18,11 @@ class RoleMiddleware
     {
 		$role = Auth::user()->getRoleNames();
 		
-		if ( $role[0] == "admin" || $role[0] == "instractor" ) {
+		if ( $role[0] == "admin" || $role[0] == "instructor" ) {
 			return $next($request);
 		}
 
-		return view('welcome');
+		// return view('welcome')->with('user', Auth::user());
+		return redirect()->to('/');
     }
 }
