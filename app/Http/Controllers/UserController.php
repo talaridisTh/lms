@@ -14,7 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin/users/usersMain');
+		$users = User::all(['first_name', 'last_name', 'email', 'active', 'created_at']);
+
+        return view('admin/users/usersMain')->withUsers($users);
     }
 
     /**
