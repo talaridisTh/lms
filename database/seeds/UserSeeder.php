@@ -6,10 +6,7 @@ use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
-
-
-class UserSeeder extends Seeder
-{
+class UserSeeder extends Seeder {
 
     /**
      * Run the database seeds.
@@ -20,63 +17,50 @@ class UserSeeder extends Seeder
     {
 
         User::create([
-            'first_name' =>"admin",
+            'first_name' => "admin",
             'last_name' => "admin",
             'avatar' => "sjkfbhdjka0dbd541fbe1ca1a045e.jpg.jpg",
             'email' => "admin@gmail.com",
-            'password' =>  Hash::make('password'),
+            'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("admin");
-
-         User::create([
-            'first_name' =>"instructor",
+        User::create([
+            'first_name' => "instructor",
             'last_name' => "instructor",
             'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
             'email' => "instructor@gmail.com",
-            'password' =>  Hash::make('password'),
+            'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("instructor");
-
-         User::create([
-            'first_name' =>"partner",
+        User::create([
+            'first_name' => "partner",
             'last_name' => "partner",
             'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
             'email' => "partner@gmail.com",
-            'password' =>  Hash::make('password'),
+            'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("partner");
-
-         User::create([
-            'first_name' =>"student",
+        User::create([
+            'first_name' => "student",
             'last_name' => "student",
             'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
             'email' => "student@gmail.com",
-            'password' =>  Hash::make('password'),
+            'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("student");
 
-//       Role::create(['name' => 'admin']);
-//        $baggelis = Role::create(['name' => 'admin']);
-
-
-
-        factory( App\User::class, 15)->create();
+        factory(App\User::class, 15)->create();
 //
-//        $users = User::findOrFail([3,4,5]);
+        $users = User::whereNotIn('first_name', ["admin", "instructor", "partner"])->get();
+        foreach ($users as $user)
+        {
+            $user->assignRole("student");
+        }
 //
-//        foreach ($users as $user){
-//            $user->assignRole("instructor");
-//        }
-
-
-//
-
-
-
-
     }
+
 }

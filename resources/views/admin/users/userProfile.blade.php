@@ -12,7 +12,8 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="card text-center">
                         <div class="card-body">
-                            <img src=" https://robohash.org/set_set3/bgset_bg1/3.14159?size=500x500" class="rounded-circle avatar-lg img-thumbnail"
+                            <img src=" https://robohash.org/set_set3/bgset_bg1/3.14159?size=500x500"
+                                 class="rounded-circle avatar-lg img-thumbnail"
                                  alt="profile-image">
 
                             <h4 class="mb-0 mt-2">Dominic Keller</h4>
@@ -22,22 +23,18 @@
 
 
                             <div class="text-left mt-3">
-                                <h4 class="font-13 text-uppercase">About Me : </h4>
-                                <p class="text-muted font-13 mb-3">
-                                    Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the
-                                    1500s, when an unknown printer took a galley of type.
-                                </p>
-                                <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ml-2">Geneva
-                                                    D. McKnight</span></p>
+                                <p class="text-muted mb-2 font-13"><strong>Oνοματεπώνυμο :</strong> <span class="ml-2">
+                                        {{$user->fullname}}
+                                    </span></p>
 
-                                <p class="text-muted mb-2 font-13"><strong>Mobile :</strong><span class="ml-2">(123)
-                                                    123 1234</span></p>
+                                <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span
+                                        class="ml-2 ">{{$user->email}}</span></p>
 
-                                <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 ">user@email.domain</span></p>
-
-                                <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span class="ml-2">USA</span></p>
+                                <p class="text-muted mb-1 font-13"><strong>Active :</strong> <span
+                                        class="ml-2">{{$user->active}}</span></p>
                                 <div class="text-right">
-                                <button type="button" class="btn btn-danger btn-sm mb-2 ">Διαγραφη Onoma user</button>
+                                    <button type="button" class="btn btn-danger btn-sm mb-2 ">Διαγραφη Onoma user
+                                    </button>
                                 </div>
                             </div>
 
@@ -52,17 +49,20 @@
                         <div class="card-body">
                             <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                                 <li class="nav-item">
-                                    <a href="#aboutme" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                    <a href="#aboutme" data-toggle="tab" aria-expanded="false"
+                                       class="nav-link rounded-0">
                                         About
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#timeline" data-toggle="tab" aria-expanded="true" class="nav-link rounded-0 active">
+                                    <a href="#timeline" data-toggle="tab" aria-expanded="true"
+                                       class="nav-link rounded-0 active">
                                         Timeline
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                    <a href="#settings" data-toggle="tab" aria-expanded="false"
+                                       class="nav-link rounded-0">
                                         Settings
                                     </a>
                                 </li>
@@ -87,7 +87,9 @@
                                             <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td><img src="https://robohash.org/24.218.243.24.png" alt="table-user" class="mr-2 rounded-circle" height="24"> Halette Boivin</td>
+                                                <td><img src="https://robohash.org/24.218.243.24.png" alt="table-user"
+                                                         class="mr-2 rounded-circle" height="24"> Halette Boivin
+                                                </td>
                                                 <td>App design and development</td>
                                                 <td>01/01/2015</td>
                                                 <td>10/15/2018</td>
@@ -106,8 +108,10 @@
                                             <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
                                             <div class="timeline-item-info">
                                                 <h5 class="mt-0 mb-1">Lead designer / Developer</h5>
-                                                <p class="font-14">websitename.com <span class="ml-2 font-12">Year: 2015 - 18</span></p>
-                                                <p class="text-muted mt-2 mb-0 pb-3">Everyone realizes why a new common language
+                                                <p class="font-14">websitename.com <span class="ml-2 font-12">Year: 2015 - 18</span>
+                                                </p>
+                                                <p class="text-muted mt-2 mb-0 pb-3">Everyone realizes why a new common
+                                                    language
                                                     would be desirable: one could refuse to pay expensive translators.
                                                     To achieve this, it would be necessary to have uniform grammar,
                                                     pronunciation and more common words.</p>
@@ -118,8 +122,10 @@
                                             <i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
                                             <div class="timeline-item-info">
                                                 <h5 class="mt-0 mb-1">Senior Graphic Designer</h5>
-                                                <p class="font-14">Software Inc. <span class="ml-2 font-12">Year: 2012 - 15</span></p>
-                                                <p class="text-muted mt-2 mb-0 pb-3">If several languages coalesce, the grammar
+                                                <p class="font-14">Software Inc. <span class="ml-2 font-12">Year: 2012 - 15</span>
+                                                </p>
+                                                <p class="text-muted mt-2 mb-0 pb-3">If several languages coalesce, the
+                                                    grammar
                                                     of the resulting language is more simple and regular than that of
                                                     the individual languages. The new common language will be more
                                                     simple and regular than the existing European languages.</p>
@@ -131,8 +137,10 @@
                                             <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
                                             <div class="timeline-item-info">
                                                 <h5 class="mt-0 mb-1">Graphic Designer</h5>
-                                                <p class="font-14">Coderthemes Design LLP <span class="ml-2 font-12">Year: 2010 - 12</span></p>
-                                                <p class="text-muted mt-2 mb-0 pb-2">The European languages are members of
+                                                <p class="font-14">Coderthemes Design LLP <span class="ml-2 font-12">Year: 2010 - 12</span>
+                                                </p>
+                                                <p class="text-muted mt-2 mb-0 pb-2">The European languages are members
+                                                    of
                                                     the same family. Their separate existence is a myth. For science
                                                     music sport etc, Europe uses the same vocabulary. The languages
                                                     only differ in their grammar their pronunciation.</p>
@@ -145,144 +153,68 @@
                                 </div>
 
                                 <div class="tab-pane" id="settings">
-                                    <form>
-                                        <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i> Personal Info</h5>
+                                    <form id="buttonUser" class="px-4" action="{{route('user.update',$user->id)}}"
+                                          method="Post" enctype="multipart/form-data">
+                                        @csrf
+                                        @method('PATCH')
+
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="firstname">First Name</label>
-                                                    <input type="text" class="form-control" id="firstname" placeholder="Enter first name">
-                                                </div>
+                                            <div class="form-group  col-md-6">
+                                                <label for="firstName">Όνομα</label>
+                                                <input class="form-control" value="{{$user->first_name}}"
+                                                       name="first_name" type="text" id="firstName">
+                                                @error("first_name")
+                                                <div
+                                                    class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="lastname">Last Name</label>
-                                                    <input type="text" class="form-control" id="lastname" placeholder="Enter last name">
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
 
-                                        <div class="row">
-                                            <div class="col-12">
-                                                <div class="form-group">
-                                                    <label for="userbio">Bio</label>
-                                                    <textarea class="form-control" id="userbio" rows="4" placeholder="Write something..."></textarea>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="useremail">Email Address</label>
-                                                    <input type="email" class="form-control" id="useremail" placeholder="Enter email">
-                                                    <span class="form-text text-muted"><small>If you want to change email please <a href="javascript: void(0);">click</a> here.</small></span>
-                                                </div>
+                                            <div class="form-group  col-md-6">
+                                                <label for="lastName">Επίθετο</label>
+                                                <input class="form-control" value="{{$user->last_name}}"
+                                                       name="last_name" type="text" id="lastName">
+                                                @error("last_name")
+                                                <div
+                                                    class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="userpassword">Password</label>
-                                                    <input type="password" class="form-control" id="userpassword" placeholder="Enter password">
-                                                    <span class="form-text text-muted"><small>If you want to change password please <a href="javascript: void(0);">click</a> here.</small></span>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-
-                                        <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-office-building mr-1"></i> Company Info</h5>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="companyname">Company Name</label>
-                                                    <input type="text" class="form-control" id="companyname" placeholder="Enter company name">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="cwebsite">Website</label>
-                                                    <input type="text" class="form-control" id="cwebsite" placeholder="Enter website url">
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-
-                                        <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-earth mr-1"></i> Social</h5>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="social-fb">Facebook</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="mdi mdi-facebook"></i></span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="social-fb" placeholder="Url">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="social-tw">Twitter</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="mdi mdi-twitter"></i></span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="social-tw" placeholder="Username">
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="social-insta">Instagram</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="mdi mdi-instagram"></i></span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="social-insta" placeholder="Url">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="social-lin">Linkedin</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="mdi mdi-linkedin"></i></span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="social-lin" placeholder="Url">
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="social-sky">Skype</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="mdi mdi-skype"></i></span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="social-sky" placeholder="@username">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="social-gh">Github</label>
-                                                    <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                            <span class="input-group-text"><i class="mdi mdi-github-circle"></i></span>
-                                                        </div>
-                                                        <input type="text" class="form-control" id="social-gh" placeholder="Username">
-                                                    </div>
-                                                </div>
-                                            </div> <!-- end col -->
-                                        </div> <!-- end row -->
-
-                                        <div class="text-right">
-                                            <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Save</button>
                                         </div>
+
+                                        <div class="row">
+                                            <div class="form-group  col-md-6">
+                                                <label for="email">Email</label>
+                                                <input class="form-control" value="{{$user->email}}" name="email"
+                                                       type="email" id="email">
+                                                @error("email")
+                                                <div
+                                                    class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label for="email">Ρολος</label>
+                                                <select class="form-control" name="role">
+                                                    @foreach($rolesName as $key => $roleName)
+                                                        <option
+                                                            value="{{ $roleName->name }}" {{ $roleName->name == $user->getRoleNames()[0] ? 'selected' : '' }}>{{ $roleName->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <label>Avatar</label>
+                                            <div class="form-group">
+                                                <input type="file" class="form-control" value="{{$user->avatar}}"
+                                                       name="avatar" id="avatar">
+{{--                                                <img src="{{ 'public/image/users' . $user->avatar}}" width="200px"/>--}}
+                                                @error("avatar")
+                                                <div
+                                                    class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group text-center">
+                                            <button class="btn btn-primary" type="submit">Ενημέρωση Χρήστη</button>
+                                        </div>
+
                                     </form>
                                 </div>
                                 <!-- end settings content-->

@@ -52,40 +52,33 @@ class UserController extends Controller {
     }
 
 
-    public function show()
+    public function show(User $user)
     {
-        return view('admin.users.userProfile');
+        $rolesName = Role::all();
+
+        return view('admin.users.userProfile',compact("user","rolesName"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, User $user)
     {
         //
+
+        $data = collect($request)->except("avatar")->all();
+        $user->update($data);
+        $user->syncRoles($request->role);
+
+        if ($files = $request->file('avatar'))
+        {
+            $destinationPath = 'public/image/users';
+            $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $profileImage);
+            $data['avatar'] = $profileImage;
+        }
+
+        return redirect()->back();
+
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(User $user)
     {
         //
