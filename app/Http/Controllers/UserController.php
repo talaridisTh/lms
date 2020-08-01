@@ -63,6 +63,7 @@ class UserController extends Controller {
     {
         //
 
+
         $data = collect($request)->except("avatar")->all();
         $user->update($data);
         $user->syncRoles($request->role);
@@ -81,7 +82,10 @@ class UserController extends Controller {
 
     public function destroy(User $user)
     {
-        //
+
+        $user->delete();
+
+        return redirect(route('user.index'));
     }
 
 }

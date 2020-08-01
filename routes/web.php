@@ -29,6 +29,7 @@ Route::get('/dashboard/users', 'UserController@index')->middleware(['auth', 'rol
 Route::post('/dashboard/users/create', 'UserController@store')->middleware(['auth', 'role'])->name('user.store');;
 Route::get('/dashboard/users/{user}', 'UserController@show')->middleware(['auth', 'role'])->name('user.show');;
 Route::patch('/dashboard/users/{user}', 'UserController@update')->middleware(['auth', 'role'])->name('user.update');;
+Route::delete('/dashboard/users/{user}', 'UserController@destroy')->middleware(['auth', 'role'])->name('user.destroy');;
 
 Route::get('/dashboard/materials', 'MaterialController@index')->middleware(['auth', 'role']);
 

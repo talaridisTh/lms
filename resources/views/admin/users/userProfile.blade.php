@@ -31,10 +31,18 @@
                                         class="ml-2 ">{{$user->email}}</span></p>
 
                                 <p class="text-muted mb-1 font-13"><strong>Active :</strong> <span
-                                        class="ml-2">{{$user->active}}</span></p>
+                                        class="ml-2">{{$user->active == 1 ? 'Ενεργος' : "Ανενεργος"}}</span></p>
+
+                                <p class="text-muted mb-1 font-13"><strong>Ρολος :</strong> <span
+                                        class="ml-2">{{$user->getRoleNames()[0]}}</span></p>
                                 <div class="text-right">
-                                    <button type="button" class="btn btn-danger btn-sm mb-2 ">Διαγραφη Onoma user
+                                    <form method="POST" action="{{route('user.destroy',$user->id)}}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('Sure Want Delete?')" type="submit" class="btn btn-danger btn-sm mb-2 ">Διαγραφη
+                                        {{$user->fullName}}
                                     </button>
+                                    </form>
                                 </div>
                             </div>
 
@@ -63,7 +71,7 @@
                                 <li class="nav-item">
                                     <a href="#settings" data-toggle="tab" aria-expanded="false"
                                        class="nav-link rounded-0">
-                                        Settings
+                                        Edit user
                                     </a>
                                 </li>
                             </ul>
@@ -204,7 +212,7 @@
                                             <div class="form-group">
                                                 <input type="file" class="form-control" value="{{$user->avatar}}"
                                                        name="avatar" id="avatar">
-{{--                                                <img src="{{ 'public/image/users' . $user->avatar}}" width="200px"/>--}}
+                                                {{--                                                <img src="{{ 'public/image/users' . $user->avatar}}" width="200px"/>--}}
                                                 @error("avatar")
                                                 <div
                                                     class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
