@@ -1,6 +1,8 @@
 <!-- Signup modal-->
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signup-modal">Sign Up Modal</button>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signup-modal">
+    <i class="mdi mdi-plus-circle mr-2"></i>Δημιουργία χρηστη</button>
 <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -13,7 +15,7 @@
                 </div>
 
                 <form id="buttonUser" class="px-4" action="{{route('user.store')}}"
-                      method="POST">
+                      method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -42,9 +44,9 @@
 
                         <div class="form-group col-md-6">
                             <label for="email">avatar</label>
-                            <select class="form-control" name="item_id">
+                            <select class="form-control" name="role">
                                 @foreach($rolesName as $roleName)
-                                    <option value="{{$roleName->id}}">{{$roleName->name}}</option>
+                                    <option value="{{$roleName->name}}">{{$roleName->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -53,15 +55,14 @@
 
                     <div class="form-group ">
                         <label>Avatar</label>
-                        <div class="input-group">
-                            <div class="custom-file">
+                            <div class="form-group">
                                 <label class="custom-file-label" for="avatar">Choose file</label>
-                                <input type="file" class="custom-file-input" name="avatar" id="avatar">
+                                <input type="file" class="form-control" name="avatar" id="avatar">
                                 @error("avatar")
                                 <div class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
                             </div>
-                        </div>
                     </div>
+
 
                     <div class="form-group text-center">
                         <button class="btn btn-primary" type="submit">Sign Up Free</button>

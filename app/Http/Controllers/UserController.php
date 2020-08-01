@@ -33,14 +33,28 @@ class UserController extends Controller {
     {
         //
 
-        User::create([
-            "first_name"=>$request->first_name,
-            "last_name"=>$request->last_name,
-            "email"=>$request->email,
-            "password"=> Hash::make("password"),
-            "active"=>1,
-            "avatar"=>"thanos.jpg"
-        ]);
+        $user = new User();
+        $data = collect($request)->except('password', "avatar")->all();
+        $data['password'] = Hash::make("password");
+        $data['active'] = 1;
+
+
+        if ($files = $request->file('avatar'))
+        {
+            $destinationPath = 'public/image/users';
+            $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
+            $files->move($destinationPath, $profileImage);
+            $data['avatar'] = $profileImage;
+        } else
+        {
+            $data["avatar"] = "https://robohash.org/default.png?set=set4";
+        }
+
+       $user->create($data)->assignRole($request->role);
+
+
+
+
 
         return redirect(route("user.index"));
     }
