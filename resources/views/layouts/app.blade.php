@@ -34,7 +34,7 @@
                 		</a>
 					</div>
 					<div class="topbar-right-menu col-9 d-flex align-items-center justify-content-end h5">
-						
+
 						@if( !Auth::check() )
 							<div>
 								<a class="nav-link" href="/login" role="button" aria-haspopup="true" aria-expanded="false">
@@ -61,11 +61,11 @@
 
 					</div>
 				</div>
-				
+
             </div>
         </div>
 		<!-- end Topbar -->
-		
+
         <div class="row mt-5">
 
 				@yield('content')
@@ -76,7 +76,7 @@
         <footer class="footer footer-alt">
             2018 - 2020 © Hyper - Coderthemes.com
 		</footer>
-		
+
 		<form id="logout-form" action="{{ route('logout') }}" method="POST">
 			@csrf
 		</form>
@@ -90,6 +90,6 @@
 				$('#logout-form').submit();
 			})
 		</script>
-        
+
     </body>
 </html>

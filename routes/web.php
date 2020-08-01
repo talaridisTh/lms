@@ -18,6 +18,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/clear-cache', function() {
+    Artisan::call('cache:clear');
+
+});
+
 Route::get('/dashboard', 'DashboardController@index')->middleware(['auth', 'role']);
 
 Route::get('/dashboard/users', 'UserController@index')->middleware(['auth', 'role'])->name('user.index');
@@ -32,3 +37,5 @@ Route::get('/dashboard/bundles', 'BundleController@index')->middleware(['auth', 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+

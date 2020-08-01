@@ -8,7 +8,7 @@
 
     <div class="container" style="max-width:1370px">
         <div class="row mb-2">
-            <x-user.modalUserCreate></x-user.modalUserCreate>
+            <x-user.modalUserCreate :rolesName="$rolesName"></x-user.modalUserCreate>
             <div class="col-sm-8">
                 <div class="text-sm-right">
 {{--                    <button type="button" class="btn btn-success mb-2 mr-1"><i class="mdi mdi-settings"></i></button>--}}
