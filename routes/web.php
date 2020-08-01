@@ -27,6 +27,7 @@ Route::get('/dashboard', 'DashboardController@index')->middleware(['auth', 'role
 
 Route::get('/dashboard/users', 'UserController@index')->middleware(['auth', 'role'])->name('user.index');
 Route::post('/dashboard/users/create', 'UserController@store')->middleware(['auth', 'role'])->name('user.store');;
+Route::get('/dashboard/users/show', 'UserController@show')->middleware(['auth', 'role'])->name('user.show');;
 
 Route::get('/dashboard/materials', 'MaterialController@index')->middleware(['auth', 'role']);
 

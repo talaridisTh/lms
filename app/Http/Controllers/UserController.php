@@ -32,13 +32,10 @@ class UserController extends Controller {
     public function store(UserCreateRequest $request)
     {
         //
-
         $user = new User();
         $data = collect($request)->except('password', "avatar")->all();
         $data['password'] = Hash::make("password");
         $data['active'] = 1;
-
-
         if ($files = $request->file('avatar'))
         {
             $destinationPath = 'public/image/users';
@@ -49,25 +46,15 @@ class UserController extends Controller {
         {
             $data["avatar"] = "https://robohash.org/default.png?set=set4";
         }
-
-       $user->create($data)->assignRole($request->role);
-
-
-
-
+        $user->create($data)->assignRole($request->role);
 
         return redirect(route("user.index"));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
+
+    public function show()
     {
-        //
+        return view('admin.users.userProfile');
     }
 
     /**
