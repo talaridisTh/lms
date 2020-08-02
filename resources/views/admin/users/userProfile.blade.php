@@ -16,13 +16,8 @@
                                  class="rounded-circle avatar-lg img-thumbnail"
                                  alt="profile-image">
 
-                            <h4 class="mb-0 mt-2">Dominic Keller</h4>
-                            <p class="text-muted font-14">Founder</p>
 
-                            <button type="button" class="btn btn-success btn-sm mb-2">Follow</button>
-
-
-                            <div class="text-left mt-3">
+                            <div class="text-left mt-5">
                                 <p class="text-muted mb-2 font-13"><strong>Oνοματεπώνυμο :</strong> <span class="ml-2">
                                         {{$user->fullname}}
                                     </span></p>

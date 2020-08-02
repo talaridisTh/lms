@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,24 +19,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/clear-cache', function() {
+Route::get('/clear', function() {
     Artisan::call('cache:clear');
+
+    return redirect(route("home"));
 
 });
 
-Route::get('/dashboard', 'DashboardController@index')->middleware(['auth', 'role']);
+Route::group(['middleware' => ['auth',"role"]], function () {
 
-Route::get('/dashboard/users', 'UserController@index')->middleware(['auth', 'role'])->name('user.index');
-Route::post('/dashboard/users/create', 'UserController@store')->middleware(['auth', 'role'])->name('user.store');;
-Route::get('/dashboard/users/{user}', 'UserController@show')->middleware(['auth', 'role'])->name('user.show');;
-Route::patch('/dashboard/users/{user}', 'UserController@update')->middleware(['auth', 'role'])->name('user.update');;
-Route::delete('/dashboard/users/{user}', 'UserController@destroy')->middleware(['auth', 'role'])->name('user.destroy');;
+    Route::get('/dashboard', 'DashboardController@index');
 
-Route::get('/dashboard/materials', 'MaterialController@index')->middleware(['auth', 'role']);
+    Route::get('/dashboard/users', 'UserController@index')->name('user.index');
+    Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
+    Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
+    Route::patch('/dashboard/users/{user}', 'UserController@update')->name('user.update');
+    Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
-Route::get('/dashboard/courses', 'CourseController@index')->middleware(['auth', 'role']);
+    Route::get('/dashboard/materials', 'MaterialController@index');
 
-Route::get('/dashboard/bundles', 'BundleController@index')->middleware(['auth', 'role']);
+    Route::get('/dashboard/courses', 'CourseController@index');
+
+    Route::get('/dashboard/bundles', 'BundleController@index');
+
+});
+
+
+
 
 Auth::routes();
 
