@@ -10,7 +10,7 @@ class CourseController extends Controller
 
     public function index()
     {
-		$courses = Course::all(['name', 'active', 'slug', 'updated_at', 'created_at']);
+		$courses = Course::all(['id', 'name', 'active', 'slug', 'updated_at', 'created_at']);
 
         return view('admin/courses/coursesMain')->withCourses($courses);
     }
