@@ -23,8 +23,13 @@
   color: #aab8c5 !important;
 }
 
+.swal2-confirm {
+  background-color: #536de6 !important;
+}
+
 .swal2-cancel {
   color: black !important;
+  background-color: #dee2e6 !important;
 }
 
 .swal2-popup.swal2-toast {

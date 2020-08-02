@@ -112,20 +112,56 @@
 
 	$('#delete-courses-btn').click( function() {
 		let checkedBoxes = $('.js-course-checkbox:checked');
+
+		if ( checkedBoxes.length == 0 ) {
+			Swal.fire('Δεν έχετε επιλέξει τίποτα');
+			return;
+		}
+
 		let ids = [];
 
 		for ( let i = 0; i < checkedBoxes.length; i++ ) {
 			ids.push( checkedBoxes[i].dataset.courseId );
 		}
 
-		axios.delete(`/api/courses/massdestroy/${ids}`)
-			.then(function (response) {
-    			console.log(response);
-  			})
-  			.catch(function (error) {
-				console.log(error);
-  			});
+		Swal.fire({
+			title: 'Είστε σίγουρος;',
+			text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? "αρχείο θα διαγραφεί" : " αρχεία θα διαγραφούν"}`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναί, διαγραφή!',
+			cancelButtonText: 'Άκυρο'
+		}).then((result) => {
+			if (result.value) {
 
+				axios.delete(`/api/courses/massdestroy/${ids}`)
+				.then(function (response) {
+					Swal.fire({
+						toast: 'true',
+						position: 'top-end',
+						icon: 'success',
+						title: `${checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"}`,
+						showConfirmButton: false,
+						timer: 3000,
+  						timerProgressBar: true
+					});
+					[...checkedBoxes].forEach(element => {
+						element.parentElement.parentElement.parentElement.remove();
+					});
+				})
+				.catch(function (error) {
+					Swal.fire({
+						toast: 'true',
+						position: 'top-end',
+						icon: 'error',
+						title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+						showConfirmButton: false,
+						timer: 3000,
+  						timerProgressBar: true
+					});
+				});
+			}
+		})
 	});
 
 	$('.js-toggle').on('change', function() {
@@ -147,22 +183,19 @@
 				timer: 3000,
   				timerProgressBar: true
 			});
-			updatedAtElm.textContent = "Μόλις τώρα"
+			updatedAtElm.textContent = "Μόλις τώρα";
 		})
 		.catch( (err) => {
 			Swal.fire({
 				toast: 'true',
 				position: 'top-end',
 				icon: 'error',
-				title: "Παρουσιάστηκε κάποιο πρόβλημα...",
+				title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
 				showConfirmButton: false,
 				timer: 3000,
   				timerProgressBar: true
-			})
-		})
-
-		// Swal.fire('Any fool can use a computer')
-
-	})
+			});
+		});
+	});
 </script>
 @endsection
