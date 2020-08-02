@@ -16,9 +16,9 @@ class CreateCourseMaterialTable extends Migration
         $secs = rand(0, 59);
         Schema::create('course_material', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('course_id');
-            $table->foreignId('material_id');
-//            $table->unsignedSmallInteger('priority');
+            $table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
+           	$table->unsignedSmallInteger('priority')->nullable();
         });
     }
 

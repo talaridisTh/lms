@@ -1,0 +1,24 @@
+.custom-center-table td {
+	padding: 1.30rem 0.95rem 0.3rem;
+}
+.tables-hover-effect > tr:hover {
+	background-color: #3a444e;
+}
+
+.option-column::after, .option-column::before {
+	display: none !important;
+}
+.swal2-modal {
+	background-color: #313a46 !important;
+	
+}
+.swal2-title {
+	color: #aab8c5 !important;
+
+}
+.swal2-content {
+	color: #aab8c5 !important;
+}
+.swal2-cancel {
+	color: black !important;
+}
