@@ -56,7 +56,7 @@
 					</td>
                     <td>{{ $course['name'] }}</td>
                     <td class="">
-						<input type="checkbox" id="{{ $course['slug'] }}-toggle-checkbox" {{ $course['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
+						<input class="js-toggle" data-course-id="{{ $course['id'] }}" type="checkbox" id="{{ $course['slug'] }}-toggle-checkbox" {{ $course['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
 						<label for="{{ $course['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>{{-- {{ $course['active'] }} --}}
 					</td>
                     <td>{{ $course['updated_at'] }}</td>
@@ -122,6 +122,15 @@
 				console.log(error);
   			});
 
+	});
+
+	$('.js-toggle').on('change', function() {
+
+		axios.patch('/api/courses/active', {
+			course: this.dataset.courseId,
+			state: this.checked
+		})
+		
 	})
 </script>
 @endsection

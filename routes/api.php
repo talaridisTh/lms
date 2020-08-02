@@ -19,3 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::delete( 'courses/massdestroy/{ids}', 'Api\CourseController@massdestroy' );
+Route::patch( 'courses/active', 'Api\CourseController@toggleActive' );

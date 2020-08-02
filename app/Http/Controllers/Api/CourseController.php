@@ -93,6 +93,14 @@ class CourseController extends Controller
 			Course::find( $id )->delete();
 			
 		}
+	}
+	
+	public function toggleActive(Request $request) {
 
-    }
+		$data = $request->all();
+		
+		$course = Course::find($data['course']);
+		$course->active = $data['state'] == 1 ? 1 : 0;
+		$course->save();
+	}
 }
