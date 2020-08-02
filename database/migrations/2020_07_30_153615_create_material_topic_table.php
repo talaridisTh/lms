@@ -16,7 +16,7 @@ class CreateMaterialTopicTable extends Migration
         Schema::create('material_topic', function (Blueprint $table) {
             $table->id();
             $table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
-            $table->foreignId('topic_id')->references('id')->on('topic')->onDelete('cascade');
+            $table->foreignId('topic_id')->references('id')->on('topics')->onDelete('cascade');
         });
     }
 
