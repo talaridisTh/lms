@@ -9,19 +9,19 @@ class Course extends Model
 {
     public function materials() {
 
-		return $this->belongsToMany('App\Material')->withPivot('priority');
+		return $this->belongsToMany(Material::class);
 
 	}
 
 	public function bundles() {
 
-		return $this->belongsToMany('App\Bundle');
+		return $this->belongsToMany(Bundle::class);
 
 	}
 
 	public function users() {
 
-		return $this->belongsToMany('App\User');
+		return $this->belongsToMany(User::class);
 
 	}
 

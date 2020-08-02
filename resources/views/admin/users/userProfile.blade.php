@@ -76,10 +76,13 @@
                                 </li>
                             </ul>
                             <div class="tab-content">
+
                                 <div class="tab-pane" id="aboutme">
 
                                     <h5 class="mb-3 mt-4 text-uppercase"><i class="mdi mdi-cards-variant mr-1"></i>
-                                        Projects</h5>
+
+                                        {{$user->courses->first() == true ? $user->courses->first()->name : '' }}</h5>
+
                                     <div class="table-responsive">
                                         <table class="table table-borderless table-nowrap mb-0">
                                             <thead class="thead-light">
@@ -93,16 +96,22 @@
                                             </tr>
                                             </thead>
                                             <tbody>
+
+
+                                            @if ($user->findMaterials($user->id))
+                                            @foreach($user->findMaterials($user->id) as $material )
                                             <tr>
-                                                <td>1</td>
-                                                <td><img src="https://robohash.org/24.218.243.24.png" alt="table-user"
-                                                         class="mr-2 rounded-circle" height="24"> Halette Boivin
-                                                </td>
-                                                <td>App design and development</td>
-                                                <td>01/01/2015</td>
-                                                <td>10/15/2018</td>
+                                                <td>{{$material->id }}</td>
+                                                <td><img src="{{$material->cover}}" alt="table-user" class="mr-2 rounded-circle" height="24"> </td>
+                                                <td>{{$material->name}}</td>
+                                                <td>{{$material->small_description}}</td>
+                                                <td>{{$material->type}}</td>
+
                                                 <td><span class="badge badge-info-lighten">Work in Progress</span></td>
                                             </tr>
+
+                                            @endforeach
+                                            @endif
                                             </tbody>
                                         </table>
                                     </div>

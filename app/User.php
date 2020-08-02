@@ -43,13 +43,25 @@ class User extends Authenticatable {
     public function courses()
     {
 
-        return $this->belongsToMany('App/Course');
+        return $this->belongsToMany(Course::class);
+        //otan to deis auto thimise mou na s pw kati an dn t exw ksexasei !
+        //exoume themata me to App/courses klpa
     }
 
     public function materials()
     {
 
-        return $this->belongsToMany('App/Material');
+        return $this->belongsToMany(Material::class);
+    }
+
+    public function findMaterials($user)
+    {
+         $materials = User::whereId($user)->with('courses.materials')->first();
+
+         return !$materials->courses->first() == [] ? $materials->courses->first()->materials: "";
+
+
+
     }
 
     // $user->fullName  // Onoma Epitheto

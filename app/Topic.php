@@ -9,7 +9,7 @@ class Topic extends Model
 {
     public function materials() {
 
-		return $this->belongsToMany('App/Material');
+		return $this->belongsToMany(Material::class);
 
 	}
 

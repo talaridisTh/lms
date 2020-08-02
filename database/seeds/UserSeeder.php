@@ -53,13 +53,9 @@ class UserSeeder extends Seeder {
             'remember_token' => Str::random(10),
         ])->assignRole("student");
 
-        factory(App\User::class, 15)->create();
+
 //
-        $users = User::whereNotIn('first_name', ["admin", "instructor", "partner"])->get();
-        foreach ($users as $user)
-        {
-            $user->assignRole("student");
-        }
+
 //
     }
 

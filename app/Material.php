@@ -9,14 +9,14 @@ class Material extends Model
 {
     public function courses() {
 
-		return $this->belongsToMany('App/Course');
+		return $this->belongsToMany(Course::class);
 
 	}
 
 	public function users() {
 
 
-		return $this->belongsToMany('App/User');
+		return $this->belongsToMany(User::class);
 
 	}
 

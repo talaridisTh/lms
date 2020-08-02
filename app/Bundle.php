@@ -9,7 +9,7 @@ class Bundle extends Model
 {
 	public function courses() {
 
-		return $this->belongsToMany('App\Course');
+		return $this->belongsToMany(Course::class);
 
 	}
 

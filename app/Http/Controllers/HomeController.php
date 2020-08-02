@@ -30,9 +30,17 @@ class HomeController extends Controller
     public function index()
 
     {
+        $user = User::findOrFail(6);
+
+//        $test= Course::findOrFail(3);
+//        dd($test);
 
 
-
+//
+//        $test = User::whereId(6)->with('courses.materials')->first();
+//
+//        return $test->courses->first()->materials;
+////        dd($user->has('courses')->get());
 
 
 
