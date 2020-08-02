@@ -19,7 +19,7 @@ class UserSeeder extends Seeder {
         User::create([
             'first_name' => "admin",
             'last_name' => "admin",
-            'avatar' => "sjkfbhdjka0dbd541fbe1ca1a045e.jpg.jpg",
+            'avatar' => "sjkfbhdjka0dbd541fbe1ca1a045e.jpg",
             'email' => "admin@gmail.com",
             'password' => Hash::make('password'),
             'active' => 1,

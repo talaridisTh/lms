@@ -8,15 +8,13 @@
 
     <div class="container" style="max-width:1370px">
         <div class="row mb-2">
-            <div class="col-sm-4">
-                <x-user.modalUserCreate :rolesName="$rolesName"></x-user.modalUserCreate>
+            <div class="col-sm-4 ">
 
 
             </div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-                    {{--                    <button type="button" class="btn btn-success mb-2 mr-1"><i class="mdi mdi-settings"></i></button>--}}
-                    {{--                    <button type="button" class="btn btn-light mb-2 mr-1">Import</button>--}}
+                    <x-user.modalUserCreate :rolesName="$rolesName"></x-user.modalUserCreate>
                     <button type="button" class="btn btn-light mb-2">Export</button>
                 </div>
             </div>
@@ -31,23 +29,23 @@
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
-                <th class="text-left">Προφιλ</th>
             </tr>
             </thead>
             <tbody>
 
             @foreach ($users as $n =>$user)
-                <tr>
-                    <td>{{ $user['first_name'] }}</td>
+                <tr class="text-secondary">
+                    <td>
+                        <a href="{{route('user.show',$user->id)}}"  style="cursor: pointer" class="ml-3 text-secondary">
+                            {{ $user['first_name'] }}
+                        </a>
+                    </td>
                     <td>{{ $user['last_name'] }}</td>
                     <td>{{ $roles[$n]}}</td>
                     <td>{{ $user['email'] }}</td>
                     <td>{{ $user['active'] }}</td>
                     <td>{{ $user['created_at'] }}</td>
-                    <td>
-                        <a href="{{route('user.show',$user->id)}}" class="btn btn-primary ml-3 ">
-                            Προφιλ
-                        </a></td>
+
 
                 </tr>
             @endforeach
@@ -61,7 +59,6 @@
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
-                <th class="text-left">Προφιλ</th>
             </tr>
             </tfoot>
         </table>

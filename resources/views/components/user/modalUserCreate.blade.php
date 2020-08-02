@@ -1,8 +1,8 @@
 <!-- Signup modal-->
 
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signup-modal">
-    <i class="mdi mdi-plus-circle mr-2"></i>Δημιουργία χρηστη</button>
+<button type="button" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#signup-modal">
+    <i class="mdi mdi-plus-circle mr-2 "></i>Δημιουργία χρηστη</button>
 <div id="signup-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">

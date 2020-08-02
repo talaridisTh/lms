@@ -51,23 +51,19 @@ class UserController extends Controller {
         return redirect(route("user.index"));
     }
 
-
     public function show(User $user)
     {
         $rolesName = Role::all();
 
-        return view('admin.users.userProfile',compact("user","rolesName"));
+        return view('admin.users.userProfile', compact("user", "rolesName"));
     }
 
     public function update(Request $request, User $user)
     {
         //
-
-
         $data = collect($request)->except("avatar")->all();
         $user->update($data);
         $user->syncRoles($request->role);
-
         if ($files = $request->file('avatar'))
         {
             $destinationPath = 'public/image/users';
@@ -77,7 +73,6 @@ class UserController extends Controller {
         }
 
         return redirect()->back();
-
     }
 
     public function destroy(User $user)

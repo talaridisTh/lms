@@ -30,17 +30,13 @@ class HomeController extends Controller
     public function index()
 
     {
-        $user = User::findOrFail(6);
-
-//        $test= Course::findOrFail(3);
-//        dd($test);
-
-
+        $materials = User::whereId(5)->with('courses.materials')->first();
+//        dd($materials->courses);
+//        foreach ($materials->courses as $mat){
+//            echo $mat;
+//        }
 //
-//        $test = User::whereId(6)->with('courses.materials')->first();
-//
-//        return $test->courses->first()->materials;
-////        dd($user->has('courses')->get());
+//         return !$materials->courses->first() == [] ? $materials->courses->first()->materials: "";
 
 
 

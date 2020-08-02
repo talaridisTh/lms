@@ -58,7 +58,9 @@ class User extends Authenticatable {
     {
          $materials = User::whereId($user)->with('courses.materials')->first();
 
-         return !$materials->courses->first() == [] ? $materials->courses->first()->materials: "";
+        return $materials->courses;
+
+//         return !$materials->courses->first() == [] ? $materials->courses->first()->materials: "";
 
 
 
