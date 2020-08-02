@@ -15,7 +15,7 @@
             </div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-					<a href="javascript:void(0);" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
+					<a href="courses/create" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
 					<div class="btn-group mb-2">
@@ -48,20 +48,20 @@
             <tbody class="tables-hover-effect">
 
             @foreach ($courses as $course)
-                <tr>
+				<tr data-course-id="{{ $course['id'] }}">
                     <td class="pl-4">
 						<div class="icheck-primary d-inline">
 							<input class="js-course-checkbox" data-course-id="{{ $course['id'] }}" data-course-name="{{ $course['name'] }}" type="checkbox" id="{{ $course['slug'] }}" autocomplete="off">
 							<label for="{{ $course['slug'] }}"></label>
 						</div>
 					</td>
-                    <td>{{ $course['name'] }}</td>
-                    <td class="">
+                    <td class="cursor-pointer js-link">{{ $course['name'] }}</td>
+                    <td>
 						<input class="js-toggle" data-course-id="{{ $course['id'] }}" type="checkbox" id="{{ $course['slug'] }}-toggle-checkbox" {{ $course['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
 						<label for="{{ $course['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>{{-- {{ $course['active'] }} --}}
 					</td>
-                    <td class="js-updated-at">{{ $course['updated_at'] }}</td>
-                    <td>{{ $course['created_at']}}</td>
+                    <td class="js-updated-at cursor-pointer js-link">{{ $course['updated_at'] }}</td>
+                    <td class="cursor-pointer js-link">{{ $course['created_at']}}</td>
                 </tr>
             @endforeach
 
@@ -82,7 +82,6 @@
 @section('scripts')
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
-{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script> --}}
 
 <script>
 
@@ -160,12 +159,12 @@
   						timerProgressBar: true
 					});
 				});
+
 			}
 		})
 	});
 
 	$('.js-toggle').on('change', function() {
-
 		let courseCnt = this.parentElement.parentElement;
 		let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
 
@@ -196,6 +195,12 @@
   				timerProgressBar: true
 			});
 		});
+	});
+
+	$('.js-link').click( function() {
+		let courseId = this.parentElement.dataset.courseId;
+
+		window.location = `course/${courseId}`;
 	});
 </script>
 @endsection

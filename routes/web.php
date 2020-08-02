@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth',"role"]], function () {
 
     Route::get('/dashboard', 'DashboardController@index');
 
+	//! User Routes
     Route::get('/dashboard/users', 'UserController@index')->name('user.index');
     Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
     Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
@@ -38,7 +39,10 @@ Route::group(['middleware' => ['auth',"role"]], function () {
 
     Route::get('/dashboard/materials', 'MaterialController@index');
 
-    Route::get('/dashboard/courses', 'CourseController@index');
+	//! Course Routes
+    Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
+    Route::get('/dashboard/course/{course}', 'CourseController@show')->name('course.show');
+    Route::get('/dashboard/courses/create', 'CourseController@create')->name('course.create');
 
     Route::get('/dashboard/bundles', 'BundleController@index');
 
