@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Course;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class CourseController extends Controller
 {
@@ -98,9 +99,10 @@ class CourseController extends Controller
 	public function toggleActive(Request $request) {
 
 		$data = $request->all();
-		
+
 		$course = Course::find($data['course']);
 		$course->active = $data['state'] == 1 ? 1 : 0;
+		$course->updated_at = Carbon::now();
 		$course->save();
 	}
 }

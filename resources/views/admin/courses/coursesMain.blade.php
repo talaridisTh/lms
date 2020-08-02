@@ -2,6 +2,7 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+	{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css"> --}}
 @endsection
 
 @section('content')
@@ -50,7 +51,7 @@
                 <tr>
                     <td class="pl-4">
 						<div class="icheck-primary d-inline">
-							<input class="js-course-checkbox" data-course-id="{{ $course['id'] }}" type="checkbox" id="{{ $course['slug'] }}" autocomplete="off">
+							<input class="js-course-checkbox" data-course-id="{{ $course['id'] }}" data-course-name="{{ $course['name'] }}" type="checkbox" id="{{ $course['slug'] }}" autocomplete="off">
 							<label for="{{ $course['slug'] }}"></label>
 						</div>
 					</td>
@@ -59,7 +60,7 @@
 						<input class="js-toggle" data-course-id="{{ $course['id'] }}" type="checkbox" id="{{ $course['slug'] }}-toggle-checkbox" {{ $course['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
 						<label for="{{ $course['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>{{-- {{ $course['active'] }} --}}
 					</td>
-                    <td>{{ $course['updated_at'] }}</td>
+                    <td class="js-updated-at">{{ $course['updated_at'] }}</td>
                     <td>{{ $course['created_at']}}</td>
                 </tr>
             @endforeach
@@ -81,8 +82,11 @@
 @section('scripts')
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+{{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script> --}}
 
 <script>
+
+
 	$("#scroll-horizontal-datatable").DataTable({
 		scrollX:!0,
 		"columnDefs": [
@@ -126,11 +130,39 @@
 
 	$('.js-toggle').on('change', function() {
 
+		let courseCnt = this.parentElement.parentElement;
+		let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
+
 		axios.patch('/api/courses/active', {
 			course: this.dataset.courseId,
 			state: this.checked
 		})
-		
+		.then( (res) => {
+			Swal.fire({
+				toast: 'true',
+				position: 'top-end',
+				icon: 'success',
+				title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
+				showConfirmButton: false,
+				timer: 3000,
+  				timerProgressBar: true
+			});
+			updatedAtElm.textContent = "Μόλις τώρα"
+		})
+		.catch( (err) => {
+			Swal.fire({
+				toast: 'true',
+				position: 'top-end',
+				icon: 'error',
+				title: "Παρουσιάστηκε κάποιο πρόβλημα...",
+				showConfirmButton: false,
+				timer: 3000,
+  				timerProgressBar: true
+			})
+		})
+
+		// Swal.fire('Any fool can use a computer')
+
 	})
 </script>
 @endsection

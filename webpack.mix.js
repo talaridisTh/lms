@@ -16,5 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
     .browserSync("http://127.0.0.1:8000/")
     .sourceMaps()
     .disableSuccessNotifications()
-    git .version();
+    /* git .version() */;
 
