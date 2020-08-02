@@ -15,8 +15,8 @@ class CreateBundleCourseTable extends Migration
     {
         Schema::create('bundle_course', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bundle_id');
-            $table->foreignId('course_id');
+            $table->foreignId('bundle_id')->references('id')->on('bundles')->onDelete('cascade');
+            $table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
         });
     }
 
