@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Material;
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class CourseController extends Controller
 {
@@ -37,7 +40,24 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        return view('admin.courses.courseDetails')->withCourse($course);
+		$lessons = $course->materials()->where('type', 'Lesson')->get();
+		$additions = $course->materials()->where('type', '!=', 'Lesson')->get();
+		$lessonIds = [];
+
+		foreach ($lessons as $lesson) {
+			array_push( $lessonIds, $lesson['id'] );
+		};
+
+		// $authors = Material::whereIn('id', $lessonIds)->users()->get();
+
+		$data = [
+			'course' => $course,
+			'lessons' => $lessons,
+			// 'authors' => $authors,
+			'additions' => $additions
+		];
+		
+        return view('admin.courses.courseDetails')->with($data);
     }
 
     /**

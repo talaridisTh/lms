@@ -13,15 +13,19 @@ class DatabaseSeeder extends Seeder {
     public function run()
     {
         $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
-      factory(App\Course::class, 5)->create()
+		$this->call(UserSeeder::class);
+		
+    	factory(App\Course::class, 5)->create()
             ->each(function ($course) {
-                $course->users()->saveMany(factory(App\User::class, 5)->create());
-                $course->materials()->saveMany(factory(App\Material::class, 5)->create(["type"=>$course->name]))
+				$course->users()->saveMany(factory(App\User::class, 5)->create());
+				
+                $course->materials()->saveMany(factory(App\Material::class, 5)->create())
                     ->each(function($material){
                         $material->topics()->saveMany(factory(App\Topic::class, 2)->create());
-            });
-    });
+                        $material->users()->saveMany(factory(App\User::class, 2)->create());
+					});
+					
+    		});
 
         $users = User::whereNotIn('first_name', ["admin", "instructor", "partner"])->get();
         foreach ($users as $user)

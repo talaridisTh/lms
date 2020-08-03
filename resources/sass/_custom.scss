@@ -34,3 +34,6 @@
 .cursor-pointer {
 	cursor: pointer;
 }
+.custom-file-label::after {
+	content: "Αναζήτηση" !important;
+}
