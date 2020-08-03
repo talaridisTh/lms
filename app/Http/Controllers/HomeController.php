@@ -31,8 +31,6 @@ class HomeController extends Controller
 
     {
 
-        $courses = Course::
-
 
 
 

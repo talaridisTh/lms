@@ -21,7 +21,7 @@ $factory->define(Course::class, function (Faker $faker) {
 
     return [
         'name' => "Name of Course ".$counter,
-		'description' => "Description of Course ".$counter++." ".$faker->paragraph($nbSentences = 3, $variableNbSentences = true),
+		'description' => "Description of Course ".$counter++." ".$faker->slug($nbSentences = 3, $variableNbSentences = true),
 		'cover' => $faker->md5 .".jpg",
 		'slug' => $faker->slug,
 		'active' => $faker->numberBetween( 0 , 1 ),
