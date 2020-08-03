@@ -31,7 +31,7 @@
                 <th class="text-left">Ημ. Εγγραφής</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="tables-hover-effect">
 
             @foreach ($users as $n =>$user)
                 <tr class="text-secondary">

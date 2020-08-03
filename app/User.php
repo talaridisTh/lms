@@ -19,7 +19,7 @@ class User extends Authenticatable {
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'avatar', 'active', 'email', 'password',"avatar",
+        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar",
     ];
 
     /**
@@ -54,16 +54,18 @@ class User extends Authenticatable {
         return $this->belongsToMany(Material::class);
     }
 
-    public function findMaterials($user)
+    public static function findMaterials($user)
     {
-         $materials = User::whereId($user)->with('courses.materials')->first();
+        $materials = User::whereId($user)->with('courses.materials')->first();
+        $materialArray = [];
+        foreach ($materials->courses as $material)
+        {
+            array_push($materialArray, $material->users);
+        }
 
-        return $materials->courses;
 
+        return $materialArray;
 //         return !$materials->courses->first() == [] ? $materials->courses->first()->materials: "";
-
-
-
     }
 
     // $user->fullName  // Onoma Epitheto
@@ -87,7 +89,5 @@ class User extends Authenticatable {
 
         return $carbonDate->diffForHumans();
     }
-
-
 
 }

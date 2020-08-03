@@ -30,13 +30,9 @@ class HomeController extends Controller
     public function index()
 
     {
-        $materials = User::whereId(5)->with('courses.materials')->first();
-//        dd($materials->courses);
-//        foreach ($materials->courses as $mat){
-//            echo $mat;
-//        }
-//
-//         return !$materials->courses->first() == [] ? $materials->courses->first()->materials: "";
+
+        $courses = Course::
+
 
 
 

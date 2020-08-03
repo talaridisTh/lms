@@ -22,9 +22,9 @@ class UserController extends Controller {
         $rolesName = Role::all();
         foreach ($users as $user)
         {
-
             array_push($roles, $user->getRoleNames()->first());
         }
+
 
         return view('admin/users/usersMain', compact("roles", "users", "rolesName"));
     }
@@ -55,7 +55,11 @@ class UserController extends Controller {
     {
         $rolesName = Role::all();
 
-        return view('admin.users.userProfile', compact("user", "rolesName"));
+        $userCourses = $user->courses()->get();
+        $allMaterials =User::findMaterials($user->id);
+
+
+        return view('admin.users.userProfile', compact("user", "rolesName","allMaterials","userCourses"));
     }
 
     public function update(Request $request, User $user)
@@ -64,6 +68,7 @@ class UserController extends Controller {
         $data = collect($request)->except("avatar")->all();
         $user->update($data);
         $user->syncRoles($request->role);
+
         if ($files = $request->file('avatar'))
         {
             $destinationPath = 'public/image/users';

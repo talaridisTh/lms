@@ -21,7 +21,7 @@ class CourseController extends Controller
 
     public function create()
     {
-		
+
 		return view('admin/courses/newCourse');
 
     }
@@ -44,6 +44,7 @@ class CourseController extends Controller
 		$additions = $course->materials()->where('type', '!=', 'Lesson')->get();
 		$lessonIds = [];
 
+
 		foreach ($lessons as $lesson) {
 			array_push( $lessonIds, $lesson['id'] );
 		};
@@ -56,7 +57,7 @@ class CourseController extends Controller
 			// 'authors' => $authors,
 			'additions' => $additions
 		];
-		
+
         return view('admin.courses.courseDetails')->with($data);
     }
 

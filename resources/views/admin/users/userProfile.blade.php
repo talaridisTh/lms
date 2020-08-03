@@ -73,73 +73,69 @@
                             <div class="tab-content">
 
                                 <div class="tab-pane" id="aboutme">
-                                    @foreach($user->courses()->get() as $users)
-                                    <div class="accordion custom-accordion" id="custom-accordion-one">
-                                        <div class="card mb-0">
-                                            <div class="card-header" id="headingFour">
-                                                <h5 class="m-0">
-                                                    <a class="custom-accordion-title d-block py-1"
-                                                       data-toggle="collapse" href="#collapseFour"
-                                                       aria-expanded="true" aria-controls="collapseFour">
+                                    @foreach($userCourses as $users)
+                                        <div class="accordion custom-accordion" id="custom-accordion-one">
+                                            <div class="card mb-0">
+                                                <div class="card-header" id="headingFour">
+                                                    <h5 class="m-0">
+                                                        <a class="custom-accordion-title d-block py-1"
+                                                           data-toggle="collapse" href="#collapseFour"
+                                                           aria-expanded="true" aria-controls="collapseFour">
 
-                                                        <i class="mdi mdi-cards-variant mr-1"></i>
-{{--                                                        {{$user->courses->first() == true ? $user->courses->first()->name : '' }}--}}
-                                                        {{$users->name}}
+                                                            <i class="mdi mdi-cards-variant mr-1"></i>
+                                                            {{--                                                        {{$user->courses->first() == true ? $user->courses->first()->name : '' }}--}}
+                                                            {{$users->name}}
 
-                                                        <i class="mdi mdi-chevron-down accordion-arrow"></i>
-                                                    </a>
-                                                </h5>
-                                            </div>
+                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
+                                                        </a>
+                                                    </h5>
+                                                </div>
 
-                                            <div id="collapseFour" class="collapse show"
-                                                 aria-labelledby="headingFour"
-                                                 data-parent="#custom-accordion-one">
-                                                <div class="card-body">
-
-                                                    <div class="table-responsive">
-                                                        <table class="table table-borderless table-nowrap mb-0">
-                                                            <thead class="thead-light">
-                                                            <tr>
-                                                                <th>#</th>
-                                                                <th>Clients</th>
-                                                                <th>Project Name</th>
-                                                                <th>Start Date</th>
-                                                                <th>Due Date</th>
-                                                                <th>Status</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-
-
-                                                            @if ($user->findMaterials($user->id))
-
-                                                                @foreach($user->findMaterials($user->id) as $materials )
-                                                                    @foreach($materials->materials as $key=> $material )
-                                                                    <tr>
-
-                                                                        <td>{{$material->id }}</td>
-                                                                        <td><img src="{{$material->cover}}"
-                                                                                 alt="table-user"
-                                                                                 class="mr-2 rounded-circle"
-                                                                                 height="24"></td>
-                                                                        <td>{{$material->name}}</td>
-                                                                        <td>{{$material->small_description}}</td>
-                                                                        <td>{{$material->type}}</td>
-
-                                                                        <td><span class="badge badge-info-lighten">Work in Progress</span>
-                                                                        </td>
-
-                                                                    </tr>
-                                                                    @endforeach
+                                                <div id="collapseFour" class="collapse show"
+                                                     aria-labelledby="headingFour"
+                                                     data-parent="#custom-accordion-one">
+                                                    <div class="card-body">
+                                                        <div class="table-responsive">
+                                                            <table class="table table-borderless table-nowrap mb-0">
+                                                                <thead class="thead-light">
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Clients</th>
+                                                                    <th>Project Name</th>
+                                                                    <th>Start Date</th>
+                                                                    <th>Due Date</th>
+                                                                    <th>Status</th>
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                @foreach($allMaterials as $key =>   $materials )
+{{--                                                                    parrent {{$loop->parent->index}}--}}
+{{--                                                                    key  {{$key}}--}}
+                                                                    @if ($loop->parent->index ==$key)
+                                                                        @foreach($materials as $material)
+                                                                            <tr>
+                                                                                <td>{{$material->id}}</td>
+                                                                                <td>
+                                                                                    <img src="{{$material->cover}}"
+                                                                                         alt="table-user"
+                                                                                         class="mr-2 rounded-circle"
+                                                                                         height="24"
+                                                                                    >
+                                                                                </td>
+                                                                                <td>{{$material->name}}</td>
+                                                                                <td>{{$material->small_description}}</td>
+                                                                                <td>{{$material->type}}</td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    @endif
                                                                 @endforeach
-                                                            @endif
-                                                            </tbody>
-                                                        </table>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
                                     @endforeach
 
@@ -149,7 +145,6 @@
                                           method="Post" enctype="multipart/form-data">
                                         @csrf
                                         @method('PATCH')
-
                                         <div class="row">
                                             <div class="form-group  col-md-6">
                                                 <label for="firstName">Όνομα</label>

@@ -132,7 +132,6 @@
 			cancelButtonText: 'Άκυρο'
 		}).then((result) => {
 			if (result.value) {
-
 				axios.delete(`/api/courses/massdestroy/${ids}`)
 				.then(function (response) {
 					Swal.fire({

@@ -24,18 +24,18 @@
 						<p class="text-muted font-13 mb-3">{{ $course['description'] }}</p>
 						<p class="text-muted font-13"><strong>Σύνολο μαθημάτων :</strong> <span class="ml-2">{{ $lessons->count() }}</span></p>
 						<p class="text-muted mb-4 font-13"><strong>Σύνολο επιπλέον υλικού :</strong><span class="ml-2">{{ $additions->count() }}</span></p>
-						
+
 						<h4 class="font-13 text-uppercase">Εισηγητές μαθημάτων</h4>
 
 						<ul>
 							{{-- @foreach ($authors as $author)
 								@foreach ($author as $user)
 									<li>{{$user['first_name']}} {{$user['last_name']}}</li>
-									
+
 								@endforeach
 							@endforeach --}}
 
-							
+
 						</ul>
 
 
@@ -80,7 +80,7 @@
 					</ul>
 					<div class="tab-content">
 						<div class="tab-pane show active" id="time-line">
-    
+
 							<h5 class="text-uppercase"><i class="mdi mdi-briefcase mr-1"></i>Περιεχόμενα</h5>
 
 							<div class="timeline-alt pb-0">
@@ -95,7 +95,8 @@
 										    pronunciation and more common words.</p>
 									</div>
 								</div>
-    
+                                {{dd($course->materials)}}
+
 								<div class="timeline-item">
 										<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
 										<div class="timeline-item-info">
@@ -105,10 +106,10 @@
 												of the resulting language is more simple and regular than that of
 												the individual languages. The new common language will be more
 												simple and regular than the existing European languages.</p>
-																									
+
 										</div>
 								</div>
-    
+
 								<div class="timeline-item">
 										<i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
 										<div class="timeline-item-info">
@@ -121,11 +122,11 @@
 										</div>
 								</div>
 							</div>
-							<!-- end timeline -->        
-    
+							<!-- end timeline -->
+
 						</div> <!-- end tab-pane -->
 						<!-- end about me section content -->
-					
+
 						<div class="tab-pane" id="settings">
 							<form>
 							    <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i>Στοιχεία Course</h5>
@@ -148,7 +149,7 @@
 							            </div>
 							        </div> <!-- end col -->
 							    </div> <!-- end row -->
-							
+
 							    <div class="row">
 							        <div class="col-12">
 							            <div class="form-group">
@@ -157,7 +158,7 @@
 							            </div>
 							        </div> <!-- end col -->
 							    </div> <!-- end row -->
-							
+
 							    <div class="row">
 							        <div class="col-xl-6">
 							            <div class="form-group">
@@ -171,25 +172,25 @@
 							        <div class="col-xl-6">
 									</div> <!-- end col -->
 							    </div> <!-- end row -->
-							
+
 							    <div class="text-right">
 							        <button type="submit" class="btn btn-primary mt-2"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
 							    </div>
 							</form>
 						</div>
 						<!-- end settings content-->
-    
+
 					</div> <!-- end tab-content -->
             	</div> <!-- end card body -->
 			</div> <!-- end card -->
 		</div> <!-- end col -->
-		
+
 	</div>
-	
+
 {{-- </div> --}}
 
 @endsection
 
 @section('scripts')
-	
+
 @endsection
