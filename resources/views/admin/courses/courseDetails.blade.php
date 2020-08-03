@@ -31,7 +31,7 @@
 							@foreach ($authors as $key => $author)
 									<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
 							@endforeach
-							<li id="more-authors" data-shown="false" class="d-none mt-1 list-unstyled font-weight-bold">Περρισότερα...</li>
+							<li id="more-authors" data-shown="false" class="text-hover-underline cursor-pointer d-none mt-1 list-unstyled font-weight-bold">Περρισότερα...</li>
 						</ul>
 
 			        </div>

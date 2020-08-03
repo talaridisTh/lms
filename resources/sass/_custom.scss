@@ -34,6 +34,11 @@
 .cursor-pointer {
 	cursor: pointer;
 }
+
+.text-hover-underline:hover {
+	text-decoration: underline;
+}
+
 .custom-file-label::after {
 	content: "Αναζήτηση" !important;
 }
