@@ -56,17 +56,33 @@ class User extends Authenticatable {
 
     public static function findMaterials($user)
     {
-        $materials = User::whereId($user)->with('courses.materials')->first();
+         $materials = User::whereId($user)->with('courses.materials')->first();
+
+
         $materialArray = [];
         foreach ($materials->courses as $material)
         {
-            array_push($materialArray, $material->users);
+
+            array_push($materialArray, $material->materials);
         }
 
 
+
         return $materialArray;
-//         return !$materials->courses->first() == [] ? $materials->courses->first()->materials: "";
     }
+
+
+    public static function userIs($user)
+    {
+
+        return $user->getRoleNames()->first();
+
+
+    }
+
+
+
+
 
     // $user->fullName  // Onoma Epitheto
     public function getFullNameAttribute()

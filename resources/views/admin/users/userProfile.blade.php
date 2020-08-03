@@ -32,7 +32,8 @@
                                         class="ml-2">{{$user->active == 1 ? 'Ενεργος' : "Ανενεργος"}}</span></p>
 
                                 <p class="text-muted mb-1 font-13"><strong>Ρολος :</strong> <span
-                                        class="ml-2">{{$user->getRoleNames()[0]}}</span></p>
+                                        class="ml-2">    {{$userIs }}</span></p>
+
                                 <div class="text-right">
                                     <form method="POST" action="{{route('user.destroy',$user->id)}}">
                                         @csrf
@@ -108,9 +109,8 @@
                                                                 </tr>
                                                                 </thead>
                                                                 <tbody>
+                                                                @if($userIs =="student")
                                                                 @foreach($allMaterials as $key =>   $materials )
-{{--                                                                    parrent {{$loop->parent->index}}--}}
-{{--                                                                    key  {{$key}}--}}
                                                                     @if ($loop->parent->index ==$key)
                                                                         @foreach($materials as $material)
                                                                             <tr>
@@ -129,6 +129,7 @@
                                                                         @endforeach
                                                                     @endif
                                                                 @endforeach
+                                                                @endif
                                                                 </tbody>
                                                             </table>
                                                         </div>

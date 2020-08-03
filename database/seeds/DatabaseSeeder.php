@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder {
                     })
 
                     ->each(function ($material) {
-                        $material->users()->saveMany(factory(App\User::class, 1)->create())
+                        $material->users()->saveMany(factory(App\User::class, 2)->create())
                             ->each(function ($user) {
                                 $user->assignRole('instructor');
                                 $user->courses()->attach(App\Course::all()->random()->id);

@@ -55,11 +55,16 @@ class UserController extends Controller {
     {
         $rolesName = Role::all();
 
+        $userIs = User::userIs($user);
+
         $userCourses = $user->courses()->get();
+
         $allMaterials =User::findMaterials($user->id);
 
 
-        return view('admin.users.userProfile', compact("user", "rolesName","allMaterials","userCourses"));
+
+
+        return view('admin.users.userProfile', compact("user", "rolesName","allMaterials","userCourses","userIs"));
     }
 
     public function update(Request $request, User $user)
