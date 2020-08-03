@@ -1,7 +1,5 @@
 <?php
 
-use App\Course;
-use App\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder {
@@ -14,33 +12,43 @@ class DatabaseSeeder extends Seeder {
     public function run()
     {
         $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
-        factory(App\Course::class, 5)->create()
-            ->each(function ($course) {
-                $course->users()->saveMany(factory(App\User::class, 5)->create())
-                    ->each(function ($user) {
-                        $user->assignRole('student');
-                    });
+		$this->call(UserSeeder::class);
+		$this->call(TopicSeeder::class);
+		
 
-                $course->materials()->saveMany(factory(App\Material::class, 5)->create())
-                    ->each(function ($material) {
-                        $material->topics()->saveMany(factory(App\Topic::class, 2)->create());
-                    })
 
-                    ->each(function ($material) {
-                        $material->users()->saveMany(factory(App\User::class, 2)->create())
-                            ->each(function ($user) {
-                                $user->assignRole('instructor');
-                                $user->courses()->attach(App\Course::all()->random()->id);
-                            });
+		factory(App\Bundle::class, 3)->create()
+		->each(function ($bundle) {
 
-                    });
+			$bundle->courses()->saveMany(factory(App\Course::class, 5)->create()
+			->each(function($course) {
+
+				$course->users()->saveMany(factory(App\User::class, 5)->create())
+				->each(function($user) {
+
+					$rand = rand( 0, 1 );
+                    $roles = [ 'instructor', 'student' ];
+					$user->assignRole($roles[$rand]);
+					
+				});
+			}));
+        });
+
+		factory(App\Material::class, 10)->create()
+		->each(function ($materials) {
+			
+			$materials->topics()->attach(App\Topic::all()->random()->id);
+            $materials->users()->saveMany(factory(App\User::class, 2)->create())
+            ->each(function ($user) {
+
+                $user->assignRole('instructor');
+            
             });
+        });
 
-
+		// an mpei epano oi users den exoun dimiourgi8ei akomi kai petaei errors
+		$this->call(CourseMaterialSeeder::class);
 
     }
 
 }
-
-

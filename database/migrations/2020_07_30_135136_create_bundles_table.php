@@ -18,7 +18,7 @@ class CreateBundlesTable extends Migration
             $table->string('name', 80);
             $table->string('cover', 50);
             $table->string('description', 500);
-            $table->string('slug', 80);
+            $table->string('slug', 100);
             $table->unsignedTinyInteger('active');
             $table->timestamps();
         });
