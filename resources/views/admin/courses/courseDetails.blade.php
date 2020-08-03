@@ -27,17 +27,12 @@
 
 						<h4 class="font-13 text-uppercase">Εισηγητές μαθημάτων</h4>
 
-						<ul>
-							{{-- @foreach ($authors as $author)
-								@foreach ($author as $user)
-									<li>{{$user['first_name']}} {{$user['last_name']}}</li>
-
-								@endforeach
-							@endforeach --}}
-
-
+						<ul id="authors-list">
+							@foreach ($authors as $key => $author)
+									<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
+							@endforeach
+							<li id="more-authors" data-shown="false" class="d-none mt-1 list-unstyled font-weight-bold">Περρισότερα...</li>
 						</ul>
-
 
 			        </div>
 
@@ -95,7 +90,6 @@
 										    pronunciation and more common words.</p>
 									</div>
 								</div>
-                                {{dd($course->materials)}}
 
 								<div class="timeline-item">
 										<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
@@ -192,5 +186,34 @@
 @endsection
 
 @section('scripts')
+	<script>
+		const authors = $('.js-authors');
 
+		if ( authors.length > 3 ) {
+			for ( let i = 3; i < authors.length; i++ ) {
+				authors[i].classList.add('d-none');
+			}
+
+			const moreAuthors = $('#more-authors')[0];
+			moreAuthors.classList.remove("d-none");
+		}
+
+		$('#more-authors').click( function() {
+
+			if ( this.dataset.shown == "true") {
+				this.dataset.shown = "false";
+				for ( let i = 3; i < authors.length; i++ ) {
+					authors[i].classList.add('d-none');
+				}
+				this.textContent = "Περισσότερα ..."
+			}
+			else {
+				this.textContent = "Λιγότερα ..."
+				this.dataset.shown = "true";
+				for ( let i = 3; i < authors.length; i++ ) {
+					authors[i].classList.remove('d-none');
+				}
+			}
+		})
+	</script>
 @endsection

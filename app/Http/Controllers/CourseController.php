@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use App\Material;
-use App\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -49,12 +48,17 @@ class CourseController extends Controller
 			array_push( $lessonIds, $lesson['id'] );
 		};
 
-		// $authors = Material::whereIn('id', $lessonIds)->users()->get();
+		$authors = DB::table('material_user')
+			->join('users', 'material_user.user_id', '=', 'users.id')
+			->whereIn('material_user.material_id', $lessonIds)
+			->select('users.first_name', 'users.last_name')
+			->get();
+
 
 		$data = [
 			'course' => $course,
 			'lessons' => $lessons,
-			// 'authors' => $authors,
+			'authors' => json_decode($authors, true),
 			'additions' => $additions
 		];
 
