@@ -14,7 +14,9 @@
             </div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-                    <x-user.modalUserCreate :rolesName="$rolesName"></x-user.modalUserCreate>
+                    <a href="{{route('user.create')}}" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
+                        Νέο Course
+                    </a>
                     <button type="button" class="btn btn-light mb-2">Export</button>
                 </div>
             </div>
@@ -41,7 +43,7 @@
                         </a>
                     </td>
                     <td>{{ $user['last_name'] }}</td>
-                    <td>{{ $roles[$n]}}</td>
+                    <td>{{  $user->getRoleNames()[0]}}</td>
                     <td>{{ $user['email'] }}</td>
                     <td>{{ $user['active'] }}</td>
                     <td>{{ $user['created_at'] }}</td>

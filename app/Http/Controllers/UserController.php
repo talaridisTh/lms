@@ -10,23 +10,17 @@ use Spatie\Permission\Models\Role;
 
 class UserController extends Controller {
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $users = User::all();
-        $roles = [];
-        $rolesName = Role::all();
-        foreach ($users as $user)
-        {
-            array_push($roles, $user->getRoleNames()->first());
-        }
 
+        return view('admin.users.usersMain');
+    }
 
-        return view('admin/users/usersMain', compact("roles", "users", "rolesName"));
+    public function create()
+    {
+
+        return view("admin.users.userCreate");
     }
 
     public function store(UserCreateRequest $request)
@@ -53,18 +47,12 @@ class UserController extends Controller {
 
     public function show(User $user)
     {
-        $rolesName = Role::all();
 
         $userIs = User::userIs($user);
-
         $userCourses = $user->courses()->get();
+        $allMaterials = User::findMaterials($user->id);
 
-        $allMaterials =User::findMaterials($user->id);
-
-
-
-
-        return view('admin.users.userProfile', compact("user", "rolesName","allMaterials","userCourses","userIs"));
+        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs"));
     }
 
     public function update(Request $request, User $user)
@@ -73,7 +61,6 @@ class UserController extends Controller {
         $data = collect($request)->except("avatar")->all();
         $user->update($data);
         $user->syncRoles($request->role);
-
         if ($files = $request->file('avatar'))
         {
             $destinationPath = 'public/image/users';

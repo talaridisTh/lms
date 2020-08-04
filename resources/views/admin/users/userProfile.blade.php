@@ -58,7 +58,7 @@
                             <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                                 <li class="nav-item">
                                     <a href="#aboutme" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0 ">
+                                       class="nav-link rounded-0  active">
                                         Μαθήματα
                                     </a>
                                 </li>
@@ -73,7 +73,7 @@
 
                             <div class="tab-content">
 
-                                <div class="tab-pane" id="aboutme">
+                                <div class="tab-pane active show" id="aboutme">
                                     @foreach($userCourses as $users)
                                         <div class="accordion custom-accordion" id="custom-accordion-one">
                                             <div class="card mb-0">
@@ -95,37 +95,48 @@
                                                 <div id="collapseFour" class="collapse show"
                                                      aria-labelledby="headingFour"
                                                      data-parent="#custom-accordion-one">
+
                                                     <div class="card-body">
                                                         <div class="table-responsive">
                                                             <table class="table table-borderless table-nowrap mb-0">
-                                                                <thead class="thead-light">
-                                                                <tr>
-                                                                    <th>#</th>
-                                                                    <th>Clients</th>
-                                                                    <th>Project Name</th>
-                                                                    <th>Start Date</th>
-                                                                    <th>Due Date</th>
-                                                                    <th>Status</th>
-                                                                </tr>
-                                                                </thead>
                                                                 <tbody>
                                                                 @if($userIs =="student")
                                                                 @foreach($allMaterials as $key =>   $materials )
                                                                     @if ($loop->parent->index ==$key)
                                                                         @foreach($materials as $material)
-                                                                            <tr>
-                                                                                <td>{{$material->id}}</td>
-                                                                                <td>
-                                                                                    <img src="{{$material->cover}}"
-                                                                                         alt="table-user"
-                                                                                         class="mr-2 rounded-circle"
-                                                                                         height="24"
-                                                                                    >
-                                                                                </td>
-                                                                                <td>{{$material->name}}</td>
-                                                                                <td>{{$material->small_description}}</td>
-                                                                                <td>{{$material->type}}</td>
-                                                                            </tr>
+                                                                            <div class="card-body row">
+                                                                                <div class=" col-md-2   ">
+                                                                                <img src="{{$material->cover}}" class="rounded-circle avatar-lg img-fluid img-thumbnail" alt="courses-image">
+                                                                                </div>
+                                                                                    <div class=" col-md-10   ">
+                                                                                    <div
+                                                                                        class="badge badge-success float-right">
+                                                                                        Completed
+                                                                                    </div>
+
+                                                                                    <h5><a href="#"
+                                                                                           class="text-dark">{{$material->name}}</a>
+                                                                                    </h5>
+                                                                                    <p class="text-muted mb-4">{{$material->small_description}}
+                                                                                    </p>
+
+                                                                                    <div>
+                                                                                        <a href="javascript: void(0);">
+                                                                                            <img
+                                                                                                src="assets/images/users/avatar-2.jpg"
+                                                                                                alt=""
+                                                                                                class="avatar-sm m-1 rounded-circle">
+                                                                                        </a>
+                                                                                        <a href="javascript: void(0);">
+                                                                                            <img
+                                                                                                src="assets/images/users/avatar-3.jpg"
+                                                                                                alt=""
+                                                                                                class="avatar-sm m-1 rounded-circle">
+                                                                                        </a>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         @endforeach
                                                                     @endif
                                                                 @endforeach

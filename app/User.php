@@ -72,7 +72,7 @@ class User extends Authenticatable {
     }
 
 
-    public static function userIs($user)
+    public static function userIs($user )
     {
 
         return $user->getRoleNames()->first();
