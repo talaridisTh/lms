@@ -46,7 +46,10 @@ Route::group(['middleware' => ['auth',"role"]], function () {
     Route::get('/dashboard/course/{course}', 'CourseController@show')->name('course.show');
     Route::get('/dashboard/courses/create', 'CourseController@create')->name('course.create');
 
-    Route::get('/dashboard/bundles', 'BundleController@index');
+	//!Bundle Routes
+    Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
+    Route::get('/dashboard/bundle/{bundle}', 'BundleController@show')->name('bundle.show');
+    Route::get('/dashboard/bundles/create', 'BundleController@create')->name('bundle.create');
 
 });
 

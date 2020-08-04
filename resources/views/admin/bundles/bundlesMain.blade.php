@@ -12,20 +12,21 @@
 		</div>
 		<div class="col-sm-8">
 			<div class="text-sm-right">
-					<a href="courses/create" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
-						Νέο Bundle
-					</a>
-					<div class="btn-group mb-2">
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Επιλογές</button>
-						<div class="dropdown-menu">
-							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Export</a>
-
-						</div>
+				<a href="courses/create" class="btn btn-secondary mb-2">
+					<i class="mdi mdi-plus-circle mr-2"></i>
+					Νέο Bundle
+				</a>
+				<div class="btn-group mb-2">
+					<button type="button" class="btn btn-primary dropdown-toggle" 
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						Επιλογές
+					</button>
+					<div class="dropdown-menu">
+						<a id="delete-bundles-btn" class="dropdown-item" href="#">Διαγραφή</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Export</a>
 					</div>
+				</div>
 			</div>
 		</div>
 	</div>
