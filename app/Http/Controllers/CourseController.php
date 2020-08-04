@@ -39,7 +39,22 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-		$materials = $course->materials()->get();
+		
+		$allRemainingMaterials = DB::table('materials')
+			->where('active', 1)
+			->whereNotIn( 'id',
+				function($query) use ($course) {
+
+					$query->select('material_id')
+						->from('course_material')
+						->where('course_id', $course['id'])
+						->get();
+
+				}
+			)
+			->get();
+
+		$materials = $course->materials()->orderBy('priority')->get();
 		$lessonIds = [];
 
 		foreach ($materials as $lesson) {
@@ -50,11 +65,13 @@ class CourseController extends Controller
 			->join('users', 'material_user.user_id', '=', 'users.id')
 			->whereIn('material_user.material_id', $lessonIds)
 			->select('users.first_name', 'users.last_name')
+			->orderBy('users.last_name')
 			->get();
 
 		$data = [
 			'course' => $course,
 			'materials' => $materials,
+			'allRemainingMaterials' => json_decode($allRemainingMaterials, true),
 			'authors' => json_decode($authors, true),
 		];
 

@@ -51,6 +51,14 @@
   content: "\391\3BD\3B1\3B6\3AE\3C4\3B7\3C3\3B7" !important;
 }
 
+#remaining-materials-table tbody td {
+  border-bottom: 1px solid #656e77;
+}
+
+#remaining-materials-table tbody tr:first-child td {
+  border-top: 1px solid #656e77;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

@@ -1,16 +1,122 @@
 @extends('layouts.dashboard')
 
 @section('css')
+	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 
 @endsection
 
 @section('content')
-{{-- <div class="container"> --}}
+
+
+	<div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
+	        <div class="modal-content">
+	            <div class="modal-header modal-colored-header bg-primary">
+	                <h4 class="modal-title" id="primary-header-modalLabel">Προσθήκη Μαθημάτων</h4>
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	            </div>
+	            <div class="modal-body">
+	                <table id="remaining-materials-table" class="table w-100 nowrap">
+						<thead>
+							<tr>
+								<th>Όνομα</th>
+								<th style="display: none;"></th>
+							</tr>
+						</thead>
+						<tbody class="tables-hover-effect">
+							@foreach ($allRemainingMaterials as $material)
+								<tr>
+									<td>{{ $material['name'] }}</td>
+									<td class="d-flex">
+										<button type="button" class="btn btn-primary ml-auto">Προσθήκη</button>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+						<tfoot>
+							<tr>
+								<th>Όνομα</th>
+								<th></th>
+							</tr>
+						</tfoot>
+					</table>
+	            </div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+	                {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<div class="row">
-		<div class="col-xl-3 col-lg-5">
+		<div class="col-xl-4 col-lg-5">
+			<div class="card text-center">
+				<div class="card-body">
+					<img src="https://via.placeholder.com/300x200" class="img-fluid"
+					alt="profile-image">
 
+					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
+					<p class="text-muted font-14">Course</p>
+
+					<div class="text-left mt-3">
+						<h4 class="font-13 text-uppercase">About Course :</h4>
+						<p class="text-muted font-13 mb-3">
+							{{ $course['description'] }}
+						</p>
+						<p class="text-muted mb-2 font-13">
+							<strong>
+								Σύνολο Μαθημάτων :
+							</strong>
+							<span class="ml-2">
+								{{ $course->materials->where( 'type', 'Lesson')->count() }}
+							</span>
+						</p>
+
+						<p class="text-muted mb-2 font-13">
+							<strong>
+								Σύνολο Extra Υλικού :
+							</strong>
+							<span class="ml-2">
+								{{ $course->materials->where( 'type', '!=', 'Lesson')->count() }}
+							</span>
+						</p>
+						<h4 class="font-13 text-uppercase mt-4">Εισηγητές μαθημάτων :</h4>
+							<ul id="authors-list">
+								@foreach ($authors as $key => $author)
+										<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
+								@endforeach
+								<li id="more-authors" 
+									data-shown="false" 
+									class="d-none mt-1 list-unstyled font-weight-bold cursor-pointer text-hover-underline">
+									Περρισότερα...
+								</li>
+							</ul>
+
+						<p class="text-muted mb-2 font-13 mt-4">
+							<strong>
+								Τελευταία Ανανέωση :
+							</strong>
+							<span class="ml-2 ">
+								{{ $course['updated_at'] }}
+							</span>
+						</p>
+
+						<p class="text-muted mb-1 font-13">
+							<strong>
+								Ημ. Δημιουργίας :
+							</strong>
+							<span class="ml-2">
+								{{ $course['created_at'] }}
+							</span>
+						</p>
+					</div>
+
+				</div> <!-- end card-body -->
+			</div> <!-- end course info card -->
+
+			<!-- Material Timeline -->
 			<div class="card">
-
 				<div class="card-body">
 					<h5 class="text-uppercase"><i class="mdi mdi-briefcase mr-1"></i>Μαθήματα</h5>
 					<div class="timeline-alt pb-0">
@@ -40,57 +146,96 @@
 						@endforeach
 
 					</div><!-- end timeline -->
-				</div><!-- /.card-body ends -->
-			</div><!-- /.card ends -->
-
+				</div> <!-- end card-body-->
+			</div> <!-- end material timeline -->
 		</div> <!-- end col-->
 
-		<div class="col-xl-9 col-lg-7">
+		<div class="col-xl-8 col-lg-7">
 			<div class="card">
-            	<div class="card-body">
+				<div class="card-body">
 
+					<!-- Tab Buttons -->
 					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
 						<li class="nav-item">
-						    <a href="#time-line" data-toggle="tab" aria-expanded="ture" class="nav-link rounded-0 active">
-						        Timeline
-						    </a>
+							<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+								Μαθήματα
+							</a>
 						</li>
 						<li class="nav-item">
-						    <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-						        Επεξεργασία
-						    </a>
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+								Επεξεργασία
+							</a>
 						</li>
-					</ul>
+					</ul><!-- /.End Tab Buttons -->
 
 					<div class="tab-content">
+						<!-- Materials table tab-->
+						<div class="tab-pane show active" id="materials">
 
-						<div class="tab-pane show active" id="time-line">
-							<div class="row">
-								<div class="col-xl-2 d-flex mb-4">
-									<img src="https://via.placeholder.com/300x250" class="card-img m-auto" style="max-width: 500px" alt="...">
+							
+
+
+							<table id="course-materials-list" class="table w-100 nowrap custom-center-table">
+								<thead>
+									<tr>
+										<th class="option-column">Επιλογή</th>
+										<th>Όνομα</th>
+										<th>Ενεργό</th>
+										<th>Τύπος</th>
+										<th>Τελ. Ανανέωση</th>
+										<th>Ημ. Δημιουργίας</th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect">
+									@foreach ($materials as $material)
+										<tr>
+											<td class="pl-4">
+												<div class="icheck-primary d-inline">
+													<input id="{{ $material['slug'] }}" class="js-material-checkbox" data-material-id="{{ $material['id'] }}" data-material-name="{{ $material['name'] }}" type="checkbox" autocomplete="off">
+													<label for="{{ $material['slug'] }}"></label>
+												</div>
+											</td>
+											<td>{{ $material['name'] }}</td>
+											<td>
+												<input class="js-toggle" data-material-id="{{ $material['id'] }}" type="checkbox" id="{{ $material['slug'] }}-toggle-checkbox" {{ $material['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
+												<label for="{{ $material['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>	
+											</td>
+											<td>{{ $material['type']}}</td>
+											<td>{{ $material['updated_at'] }}</td>
+											<td>{{ $material['created_at'] }}</td>
+										</tr>
+									@endforeach
+								</tbody>
+								<tfoot>
+									<tr>
+										<th>Επιλογή</th>
+										<th>Όνομα</th>
+										<th>Ενεργό</th>
+										<th>Τύπος</th>
+										<th>Τελ. Ανανέωση</th>
+										<th>Ημ. Δημιουργίας</th>
+									</tr>
+								</tfoot>
+							</table>
+
+							<div class="row mt-3">
+								<div class="col-sm-4">
 								</div>
-								<div class="col-xl-5 pl-4 mb-4">
-									<h5 class="card-title">{{ $course['name'] }}</h5>
-									<p class="card-text">{{ $course['description'] }}</p>
-									<p class="card-text"><small class="text-muted">Τελευταία Ενημέρωση: {{ $course['updated_at'] }}</small></p>
-									<p class="card-text"><small class="text-muted">Δημιουργήθηκε: {{ $course['created_at'] }}</small></p>
-								</div>
-								<div class="col-xl-5 pl-4">
-									<h5 class="card-title">Εισηγητές μαθημάτων</h5>
-									<ul id="authors-list">
-										@foreach ($authors as $key => $author)
-												<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
-										@endforeach
-										<li id="more-authors" data-shown="false" class="d-none mt-1 list-unstyled font-weight-bold">Περρισότερα...</li>
-									</ul>
+								<div class="col-sm-8">
+									<div class="text-sm-right">
+										<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#primary-header-modal">
+											<i class="mdi mdi-plus-circle mr-2"></i>
+											Προσθήκη Μαθημάτων
+										</button>
+									</div>
 								</div>
 							</div>
-						</div><!-- end tab-pane -->
+						</div><!-- end material tab-pane -->
 						<!-- end about me section content -->
 
+						<!-- Course edit form tab-pane -->
 						<div class="tab-pane" id="settings">
 							<form>
-							    <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle mr-1"></i>Στοιχεία Course</h5>
 							    <div class="row">
 							        <div class="col-xl-6">
 							            <div class="form-group">
@@ -135,24 +280,23 @@
 							    </div> <!-- end row -->
 
 							    <div class="text-right">
-							        <button type="submit" class="btn btn-primary mt-2"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
+							        <button type="submit" class="btn btn-primary mt-2 w-100"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
 							    </div>
 							</form>
-						</div>
+						</div><!-- end tab-pane -->
 						<!-- end settings content-->
-
 					</div> <!-- end tab-content -->
-            	</div> <!-- end card body -->
+					
+				</div> <!-- end card body -->
 			</div> <!-- end card -->
 		</div> <!-- end col -->
-
 	</div>
-
-{{-- </div> --}}
-
 @endsection
 
 @section('scripts')
+<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
+<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+
 	<script>
 		const authors = $('.js-authors');
 
@@ -181,6 +325,61 @@
 					authors[i].classList.remove('d-none');
 				}
 			}
-		})
+		});
+
+		$("#course-materials-list").DataTable({
+			scrollX:!0,
+			"columnDefs": [
+				{ "width": "5%", "targets": 0 }
+			],
+			language:{
+				emptyTable: 		"Δεν υπάρχουν εγγραφές",
+				info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+				infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+				lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+				loadingRecords: 	"Φόρτωση ...",
+				processing: 		"Επεξεργασία ...",
+				search: 			"Αναζήτηση: ",
+				zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+			},
+			
+		});
+		const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
+			scrollX:!0,
+			"columnDefs": [
+				{ "width": "5%", "targets": 1 }
+			],
+			language:{
+				emptyTable: 		"Δεν υπάρχουν εγγραφές",
+				info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+				infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+				lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+				loadingRecords: 	"Φόρτωση ...",
+				processing: 		"Επεξεργασία ...",
+				search: 			"Αναζήτηση: ",
+				zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+			},
+			
+		});
+
+		$('#material-modal-shown-btn').click( function() {
+			setTimeout( function() { remainingMaterialsTables.columns.adjust(); }, 200)
+		});
 	</script>
 @endsection

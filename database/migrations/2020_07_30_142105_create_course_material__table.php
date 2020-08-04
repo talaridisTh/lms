@@ -18,6 +18,7 @@ class CreateCourseMaterialTable extends Migration
             $table->id();
             $table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
+           	$table->unsignedSmallInteger('active')->default(0);
            	$table->unsignedSmallInteger('priority')->nullable();
         });
     }
