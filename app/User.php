@@ -48,6 +48,7 @@ class User extends Authenticatable {
         //exoume themata me to App/courses klpa
     }
 
+//        dd($ins);{
     public function materials()
     {
 
@@ -56,9 +57,7 @@ class User extends Authenticatable {
 
     public static function findMaterials($user)
     {
-         $materials = User::whereId($user)->with('courses.materials')->first();
-
-
+        $materials = User::whereId($user)->with('courses.materials')->first();
         $materialArray = [];
         foreach ($materials->courses as $material)
         {
@@ -66,23 +65,38 @@ class User extends Authenticatable {
             array_push($materialArray, $material->materials);
         }
 
-
-
         return $materialArray;
     }
 
+    public function getInstructor()
+    {
+        return User::whereHas('materials')->get();
+    }
 
-    public static function userIs($user )
+
+    public static function getMaterialsInstructor($user)
     {
 
-        return $user->getRoleNames()->first();
 
+        return User::whereId($user)->with('courses.materials')->whereHas('materials')->first();
+    }
 
+    public function getStudent()
+    {
+
+        return User::whereHas('courses')->get();
     }
 
 
 
 
+
+
+    public static function userIs($user)
+    {
+
+        return $user->getRoleNames()->first();
+    }
 
     // $user->fullName  // Onoma Epitheto
     public function getFullNameAttribute()

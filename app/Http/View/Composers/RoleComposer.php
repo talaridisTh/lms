@@ -11,6 +11,7 @@ class RoleComposer {
     public function compose(View $view)
     {
         $view->with("rolesName",Role::all());
+//        $view->with("users", $users = User::whereHas("materials")->get());
         $view->with("users", $users = User::all());
     }
 

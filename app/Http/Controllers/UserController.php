@@ -47,12 +47,18 @@ class UserController extends Controller {
 
     public function show(User $user)
     {
-
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
+
         $allMaterials = User::findMaterials($user->id);
 
-        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs"));
+        $InstructorCourses = User::getMaterialsInstructor($user->id);
+
+
+
+
+
+        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs","InstructorCourses"));
     }
 
     public function update(Request $request, User $user)

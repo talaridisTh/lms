@@ -74,82 +74,10 @@
                             <div class="tab-content">
 
                                 <div class="tab-pane active show" id="aboutme">
-                                    @foreach($userCourses as $users)
-                                        <div class="accordion custom-accordion" id="custom-accordion-one">
-                                            <div class="card mb-0">
-                                                <div class="card-header" id="headingFour">
-                                                    <h5 class="m-0">
-                                                        <a class="custom-accordion-title d-block py-1"
-                                                           data-toggle="collapse" href="#collapseFour"
-                                                           aria-expanded="true" aria-controls="collapseFour">
 
-                                                            <i class="mdi mdi-cards-variant mr-1"></i>
-                                                            {{--                                                        {{$user->courses->first() == true ? $user->courses->first()->name : '' }}--}}
-                                                            {{$users->name}}
+                                 @include("components.FindUserMaterial")
 
-                                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
-                                                        </a>
-                                                    </h5>
-                                                </div>
-
-                                                <div id="collapseFour" class="collapse show"
-                                                     aria-labelledby="headingFour"
-                                                     data-parent="#custom-accordion-one">
-
-                                                    <div class="card-body">
-                                                        <div class="table-responsive">
-                                                            <table class="table table-borderless table-nowrap mb-0">
-                                                                <tbody>
-                                                                @if($userIs =="student")
-                                                                @foreach($allMaterials as $key =>   $materials )
-                                                                    @if ($loop->parent->index ==$key)
-                                                                        @foreach($materials as $material)
-                                                                            <div class="card-body row">
-                                                                                <div class=" col-md-2   ">
-                                                                                <img src="{{$material->cover}}" class="rounded-circle avatar-lg img-fluid img-thumbnail" alt="courses-image">
-                                                                                </div>
-                                                                                    <div class=" col-md-10   ">
-                                                                                    <div
-                                                                                        class="badge badge-success float-right">
-                                                                                        Completed
-                                                                                    </div>
-
-                                                                                    <h5><a href="#"
-                                                                                           class="text-dark">{{$material->name}}</a>
-                                                                                    </h5>
-                                                                                    <p class="text-muted mb-4">{{$material->small_description}}
-                                                                                    </p>
-
-                                                                                    <div>
-                                                                                        <a href="javascript: void(0);">
-                                                                                            <img
-                                                                                                src="assets/images/users/avatar-2.jpg"
-                                                                                                alt=""
-                                                                                                class="avatar-sm m-1 rounded-circle">
-                                                                                        </a>
-                                                                                        <a href="javascript: void(0);">
-                                                                                            <img
-                                                                                                src="assets/images/users/avatar-3.jpg"
-                                                                                                alt=""
-                                                                                                class="avatar-sm m-1 rounded-circle">
-                                                                                        </a>
-
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        @endforeach
-                                                                    @endif
-                                                                @endforeach
-                                                                @endif
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    @endforeach
+                                    @include("components.findInstructorMaterial")
 
                                 </div> <!-- end tab-pane -->
                                 <div class="tab-pane" id="settings">
