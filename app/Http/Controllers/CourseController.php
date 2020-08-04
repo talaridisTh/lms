@@ -39,21 +39,7 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-		
-		$allRemainingMaterials = DB::table('materials')
-			->where('active', 1)
-			->whereNotIn( 'id',
-				function($query) use ($course) {
-
-					$query->select('material_id')
-						->from('course_material')
-						->where('course_id', $course['id'])
-						->get();
-
-				}
-			)
-			->get();
-
+		$allRemainingMaterials = Course::notInCourseMaterials( $course );
 		$materials = $course->materials()->orderBy('priority')->get();
 		$lessonIds = [];
 
@@ -61,12 +47,7 @@ class CourseController extends Controller
 			array_push( $lessonIds, $lesson['id'] );
 		};
 
-		$authors = DB::table('material_user')
-			->join('users', 'material_user.user_id', '=', 'users.id')
-			->whereIn('material_user.material_id', $lessonIds)
-			->select('users.first_name', 'users.last_name')
-			->orderBy('users.last_name')
-			->get();
+		$authors = Course::courseAuthors( $lessonIds );
 
 		$data = [
 			'course' => $course,

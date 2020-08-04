@@ -6,7 +6,7 @@
 @endsection
 
 @section('content')
-
+{{-- {{ dd($authors) }} --}}
 
 	<div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
