@@ -39,12 +39,10 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-		$lessons = $course->materials()->where('type', 'Lesson')->get();
-		$additions = $course->materials()->where('type', '!=', 'Lesson')->get();
+		$materials = $course->materials()->get();
 		$lessonIds = [];
 
-
-		foreach ($lessons as $lesson) {
+		foreach ($materials as $lesson) {
 			array_push( $lessonIds, $lesson['id'] );
 		};
 
@@ -54,12 +52,10 @@ class CourseController extends Controller
 			->select('users.first_name', 'users.last_name')
 			->get();
 
-
 		$data = [
 			'course' => $course,
-			'lessons' => $lessons,
+			'materials' => $materials,
 			'authors' => json_decode($authors, true),
-			'additions' => $additions
 		];
 
         return view('admin.courses.courseDetails')->with($data);

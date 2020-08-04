@@ -7,60 +7,48 @@
 @section('content')
 {{-- <div class="container"> --}}
 	<div class="row">
-		<div class="col-xl-4 col-lg-5">
-			<div class="card text-center">
-			    <div class="card-body">
-			        <img src="https://via.placeholder.com/300x250" class="img-fluid"
-			        alt="profile-image">
+		<div class="col-xl-3 col-lg-5">
 
-			        <h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
-			        <p class="text-muted font-14">Course</p>
+			<div class="card">
 
-					{{-- <button type="button" class="btn btn-success btn-sm mb-2">Follow</button> --}}
-					{{-- <button type="button" class="btn btn-danger btn-sm mb-2">Message</button> --}}
+				<div class="card-body">
+					<h5 class="text-uppercase"><i class="mdi mdi-briefcase mr-1"></i>Μαθήματα</h5>
+					<div class="timeline-alt pb-0">
 
-			        <div class="text-left mt-3">
-			            <h4 class="font-13 text-uppercase">Περιγραφή</h4>
-						<p class="text-muted font-13 mb-3">{{ $course['description'] }}</p>
-						<p class="text-muted font-13"><strong>Σύνολο μαθημάτων :</strong> <span class="ml-2">{{ $lessons->count() }}</span></p>
-						<p class="text-muted mb-4 font-13"><strong>Σύνολο επιπλέον υλικού :</strong><span class="ml-2">{{ $additions->count() }}</span></p>
+						@foreach ($materials as $material)
+							<div class="timeline-item">
+								<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
+								<div class="timeline-item-info">
+								<h5 class="mt-0 mb-1">{{ $material['name'] }}</h5>
+									<p class="font-14">
+										Τελευταία Ανανέωση
+										<span class="ml-2 font-12">
+											{{ $material['updated_at'] }}
+										</span>
+									</p>
+									<p class="text-muted mt-2 mb-0 pb-3">
+										{{ $material['small_description'] }}
+									</p>
+								</div>
+							</div>
+							<div class="timeline-item pb-4">
+								<i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+								<div class="timeline-item-info">
+									<h5 class="mt-0 mb-1">Προσθήκη Υλικού</h5>
+								</div>
+							</div>
+						@endforeach
 
-						<h4 class="font-13 text-uppercase">Εισηγητές μαθημάτων</h4>
+					</div><!-- end timeline -->
+				</div><!-- /.card-body ends -->
+			</div><!-- /.card ends -->
 
-						<ul id="authors-list">
-							@foreach ($authors as $key => $author)
-									<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
-							@endforeach
-							<li id="more-authors" data-shown="false" class="text-hover-underline cursor-pointer d-none mt-1 list-unstyled font-weight-bold">Περρισότερα...</li>
-						</ul>
-
-			        </div>
-
-			        <ul class="social-list list-inline mt-3 mb-0">
-			            <li class="list-inline-item">
-			                <a href="javascript: void(0);" class="social-list-item border-primary text-primary"><i
-			                        class="mdi mdi-facebook"></i></a>
-			            </li>
-			            <li class="list-inline-item">
-			                <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i
-			                        class="mdi mdi-google"></i></a>
-			            </li>
-			            <li class="list-inline-item">
-			                <a href="javascript: void(0);" class="social-list-item border-info text-info"><i
-			                        class="mdi mdi-twitter"></i></a>
-			            </li>
-			            <li class="list-inline-item">
-			                <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i
-			                        class="mdi mdi-github-circle"></i></a>
-			            </li>
-			        </ul>
-			    </div> <!-- end card-body -->
-            </div> <!-- end card -->
 		</div> <!-- end col-->
 
-		<div class="col-xl-8 col-lg-7">
+		<div class="col-xl-9 col-lg-7">
 			<div class="card">
             	<div class="card-body">
+
 					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
 						<li class="nav-item">
 						    <a href="#time-line" data-toggle="tab" aria-expanded="ture" class="nav-link rounded-0 active">
@@ -73,52 +61,31 @@
 						    </a>
 						</li>
 					</ul>
+
 					<div class="tab-content">
+
 						<div class="tab-pane show active" id="time-line">
-
-							<h5 class="text-uppercase"><i class="mdi mdi-briefcase mr-1"></i>Περιεχόμενα</h5>
-
-							<div class="timeline-alt pb-0">
-								<div class="timeline-item">
-									<i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
-									<div class="timeline-item-info">
-										<h5 class="mt-0 mb-1">Lead designer / Developer</h5>
-										<p class="font-14">websitename.com <span class="ml-2 font-12">Year: 2015 - 18</span></p>
-										<p class="text-muted mt-2 mb-0 pb-3">Everyone realizes why a new common language
-										    would be desirable: one could refuse to pay expensive translators.
-										    To achieve this, it would be necessary to have uniform grammar,
-										    pronunciation and more common words.</p>
-									</div>
+							<div class="row">
+								<div class="col-xl-2 d-flex mb-4">
+									<img src="https://via.placeholder.com/300x250" class="card-img m-auto" style="max-width: 500px" alt="...">
 								</div>
-
-								<div class="timeline-item">
-										<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
-										<div class="timeline-item-info">
-											<h5 class="mt-0 mb-1">Senior Graphic Designer</h5>
-											<p class="font-14">Software Inc. <span class="ml-2 font-12">Year: 2012 - 15</span></p>
-											<p class="text-muted mt-2 mb-0 pb-3">If several languages coalesce, the grammar
-												of the resulting language is more simple and regular than that of
-												the individual languages. The new common language will be more
-												simple and regular than the existing European languages.</p>
-
-										</div>
+								<div class="col-xl-5 pl-4 mb-4">
+									<h5 class="card-title">{{ $course['name'] }}</h5>
+									<p class="card-text">{{ $course['description'] }}</p>
+									<p class="card-text"><small class="text-muted">Τελευταία Ενημέρωση: {{ $course['updated_at'] }}</small></p>
+									<p class="card-text"><small class="text-muted">Δημιουργήθηκε: {{ $course['created_at'] }}</small></p>
 								</div>
-
-								<div class="timeline-item">
-										<i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
-										<div class="timeline-item-info">
-											<h5 class="mt-0 mb-1">Graphic Designer</h5>
-											<p class="font-14">Coderthemes Design LLP <span class="ml-2 font-12">Year: 2010 - 12</span></p>
-											<p class="text-muted mt-2 mb-0 pb-2">The European languages are members of
-												the same family. Their separate existence is a myth. For science
-												music sport etc, Europe uses the same vocabulary. The languages
-												only differ in their grammar their pronunciation.</p>
-										</div>
+								<div class="col-xl-5 pl-4">
+									<h5 class="card-title">Εισηγητές μαθημάτων</h5>
+									<ul id="authors-list">
+										@foreach ($authors as $key => $author)
+												<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
+										@endforeach
+										<li id="more-authors" data-shown="false" class="d-none mt-1 list-unstyled font-weight-bold">Περρισότερα...</li>
+									</ul>
 								</div>
 							</div>
-							<!-- end timeline -->
-
-						</div> <!-- end tab-pane -->
+						</div><!-- end tab-pane -->
 						<!-- end about me section content -->
 
 						<div class="tab-pane" id="settings">
