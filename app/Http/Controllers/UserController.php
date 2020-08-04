@@ -54,6 +54,10 @@ class UserController extends Controller {
 
         $InstructorCourses = User::getMaterialsInstructor($user->id);
 
+//        $InstructorCourses = User::getCountStudent($user->id);
+
+
+
 
 
 
@@ -84,6 +88,15 @@ class UserController extends Controller {
         $user->delete();
 
         return redirect(route('user.index'));
+    }
+
+    public function changeStatus(Request $request)
+    {
+        $user = User::find($request->id);
+        $user->active = $request->active;
+        $user->save();
+
+        return response()->json(['success'=>'Status change successfully.']);
     }
 
 }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -68,9 +69,9 @@ class User extends Authenticatable {
         return $materialArray;
     }
 
-    public function getInstructor()
+    public static function getInstructor()
     {
-        return User::whereHas('materials')->get();
+        return User::whereHas('courses.materials')->get();
     }
 
 
@@ -81,10 +82,26 @@ class User extends Authenticatable {
         return User::whereId($user)->with('courses.materials')->whereHas('materials')->first();
     }
 
-    public function getStudent()
-    {
 
-        return User::whereHas('courses')->get();
+    public static function  getStudent()
+    {
+        return  DB::table("course_user")
+             ->join("users","course_user.user_id","=","users.id")
+             ->join("courses","course_user.course_id","=","courses.id")
+             ->select('users.first_name')
+            ->where("courses.id","=",1)
+             ->get();
+
+    }
+    public static function getCountStudent($course)
+    {
+        return  DB::table("course_user")
+             ->join("users","course_user.user_id","=","users.id")
+             ->join("courses","course_user.course_id","=","courses.id")
+             ->select('users.first_name')
+            ->where("courses.id","=",$course)
+             ->count();
+
     }
 
 

@@ -40,6 +40,7 @@
          @foreach($instructor->courses as  $courses)
 
 
+
             <div class="accordion custom-accordion" id="custom-accordion-one">
                 <div class="card mb-0">
                     <div class="card-header" id="headingFour">
@@ -47,10 +48,11 @@
                             <a class="custom-accordion-title d-block py-1"
                                data-toggle="collapse" href="#collapse-{{$c}}"
                                aria-expanded="true" aria-controls="collapseFour">
-
+                                <div class="d-flex ">
                                 <i class="mdi mdi-cards-variant mr-1"></i>
-                                {{--                                                        {{$user->courses->first() == true ? $user->courses->first()->name : '' }}--}}
-                               {{$courses->name}}
+                                    <span style="flex: 1">{{$courses->name}}</span>
+                                    <span >{{$user->getCountStudent($courses->id)}}</span>
+                                </div>
 
                                 <i class="mdi mdi-chevron-down accordion-arrow"></i>
                             </a>
@@ -73,6 +75,7 @@
                                         <h5><a href="#"
                                                class="text-dark">{{$instructor->name}}</a>
                                             <p class="text-muted mb-2">{{$instructor->small_description}}
+
                                         </h5>
                                         </p>
                                         <div>

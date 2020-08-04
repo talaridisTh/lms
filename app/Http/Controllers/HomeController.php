@@ -34,7 +34,7 @@ class HomeController extends Controller
 
          $user = new User();
 
-      return    $user->getMaterialsInstructor(5);
+      return    $user->getStudent();
 
 
 

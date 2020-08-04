@@ -47,7 +47,10 @@
                     <td>{{ $user['last_name'] }}</td>
                     <td>{{  $user->getRoleNames()[0]}}</td>
                     <td>{{ $user['email'] }}</td>
-                    <td>{{ $user['active'] }}</td>
+                    <td>
+                        <input  class="toggle-class" data-id="{{ $user['id'] }}" type="checkbox" id="{{ $user['first_name'] }}-toggle-checkbox" {{ $user['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
+                        <label for="{{ $user['first_name'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>
+                    </td>
                     <td>{{ $user['created_at'] }}</td>
 
 
@@ -97,6 +100,22 @@
             }
         })
 
+        $(function() {
+            $('.toggle-class').change(function() {
+                const status = $(this).prop('checked') == true ? 1 : 0;
+                const user_id = $(this).data('id');
+
+                $.ajax({
+                    type: "GET",
+                    dataType: "json",
+                    url: '/changeStatus',
+                    data: {'active': status, 'id': user_id},
+                    success: function(data){
+                        console.log(data.success)
+                    }
+                });
+            })
+        })
 
 
 
