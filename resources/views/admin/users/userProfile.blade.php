@@ -35,13 +35,11 @@
                                         class="ml-2">    {{$userIs }}</span></p>
 
                                 <div class="text-right">
-                                    <form method="POST" action="{{route('user.destroy',$user->id)}}">
+                                    <form method="POST" id="alertSumbit" action="{{route('user.destroy',$user->id)}}">
                                         @csrf
                                         @method('DELETE')
-                                        <button onclick="return confirm('Sure Want Delete?')" type="submit"
-                                                class="btn btn-danger btn-sm mb-2 ">Διαγραφη
-                                            {{$user->fullName}}
-                                        </button>
+                                        <input type="submit"  value="Διαγραφη {{$user->fullName}}" data-id="{{ $user->id }}"
+                                                class=" js-delete btn btn-danger btn-sm mb-2 "/>
                                     </form>
                                 </div>
                             </div>
@@ -166,6 +164,50 @@
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script>
+        $('#alertSumbit').submit(async function(e) {
+            e.preventDefault()
+            let buttonDelete = $('.js-delete');
+            const user = buttonDelete[0].dataset.id;
+            try {
+                const {value} = await Swal.fire({
+                    title: 'Είστε σίγουρος;',
+                    text: "αρχεία θα διαγραφούν",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ναί, διαγραφή!',
+                    cancelButtonText: 'Άκυρο'
+                });
+                if(value){
+                       const res = await axios.post(`/dashboard/users/${user}`)
+                       Swal.fire({
+                           toast: 'true',
+                           position: 'top-end',
+                           icon: 'success',
+                           title: "Διαγράφηκαν",
+                           showConfirmButton: false,
+                           timer: 3000,
+                           timerProgressBar: true
+                       });
+                    window.location = `http://127.0.0.1:8000/dashboard/users`;
+                }
+            }catch (e) {
+                Swal.fire({
+                    toast: 'true',
+                    position: 'top-end',
+                    icon: 'error',
+                    title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }
+
+
+
+
+
+        });
+
 
     </script>
 @endsection

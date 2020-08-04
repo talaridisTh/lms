@@ -14,7 +14,8 @@
             </div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-                    <a href="{{route('user.create')}}" class="btn btn-secondary mb-2 display"><i class="mdi mdi-plus-circle mr-2"></i>
+                    <a href="{{route('user.create')}}" class="btn btn-secondary mb-2 display"><i
+                            class="mdi mdi-plus-circle mr-2"></i>
                         Νέο Course
                     </a>
                     <button type="button" class="btn btn-light mb-2">Export</button>
@@ -40,7 +41,7 @@
                 <tr class="text-secondary">
                     <td>{{ $user['id'] }}</td>
                     <td>
-                        <a href="{{route('user.show',$user->id)}}"  style="cursor: pointer" class="ml-3 text-secondary">
+                        <a href="{{route('user.show',$user->id)}}" style="cursor: pointer" class="ml-3 text-secondary">
                             {{ $user['first_name'] }}
                         </a>
                     </td>
@@ -48,8 +49,11 @@
                     <td>{{  $user->getRoleNames()[0]}}</td>
                     <td>{{ $user['email'] }}</td>
                     <td>
-                        <input  class="toggle-class" data-id="{{ $user['id'] }}" type="checkbox" id="{{ $user['first_name'] }}-toggle-checkbox" {{ $user['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
-                        <label for="{{ $user['first_name'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>
+                        <input class="toggle-class" data-id="{{ $user['id'] }}" type="checkbox"
+                               id="{{ $user['first_name'] }}-toggle-checkbox"
+                               {{ $user['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
+                        <label for="{{ $user['first_name'] }}-toggle-checkbox" data-on-label="On"
+                               data-off-label="Off"></label>
                     </td>
                     <td>{{ $user['created_at'] }}</td>
 
@@ -81,14 +85,14 @@
         $("#scroll-horizontal-datatable").DataTable({
             scrollX: !0,
             language: {
-                emptyTable: 		"Δεν υπάρχουν εγγραφές",
-                info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-                infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-                lengthMenu: 		"_MENU_ Αποτελέσματα ανα σελίδα",
-                loadingRecords: 	"Φόρτωση ...",
-                processing: 		"Επεξεργασία ...",
-                search: 			"Αναζήτηση: ",
-                zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+                emptyTable: "Δεν υπάρχουν εγγραφές",
+                info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+                infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
+                lengthMenu: "_MENU_ Αποτελέσματα ανα σελίδα",
+                loadingRecords: "Φόρτωση ...",
+                processing: "Επεξεργασία ...",
+                search: "Αναζήτηση: ",
+                zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
                 paginate: {
                     previous: "<i class='mdi mdi-chevron-left'>",
                     next: "<i class='mdi mdi-chevron-right'>"
@@ -100,28 +104,39 @@
             }
         })
 
-        $(function() {
-            $('.toggle-class').change(function() {
-                const status = $(this).prop('checked') == true ? 1 : 0;
-                const user_id = $(this).data('id');
 
-                $.ajax({
-                    type: "GET",
-                    dataType: "json",
-                    url: '/changeStatus',
-                    data: {'active': status, 'id': user_id},
-                    success: function(data){
-                        console.log(data.success)
-                    }
+        $('.toggle-class').change(async function () {
+            const status = $(this).prop('checked') == true ? 1 : 0;
+            const user_id = $(this).data('id');
+
+            try {
+                const {data} = await axios.patch('/changeStatus', {
+                    'active': status,
+                    'id': user_id
+                })
+                Swal.fire({
+                    toast: 'true',
+                    position: 'top-end',
+                    icon: 'success',
+                    title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
                 });
-            })
+            } catch (err) {
+                Swal.fire({
+                    toast: 'true',
+                    position: 'top-end',
+                    icon: 'error',
+                    title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true
+                });
+            }
+
+
         })
-
-
-
-
-
-
 
 
     </script>
