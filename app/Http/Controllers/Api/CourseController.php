@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Course;
+use App\CourseMaterial;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller
 {
@@ -104,5 +106,31 @@ class CourseController extends Controller
 		$course->active = $data['state'] == 1 ? 1 : 0;
 		$course->updated_at = Carbon::now();
 		$course->save();
+	}
+
+	public function changePriority( Request $request ) {
+
+		$data = $request->all();
+
+		$priorityRange = [ $data['priority']['new'], $data['priority']['old'] ];
+		sort( $priorityRange );
+
+			if ( $data['priority']['new'] < $data['priority']['old'] ) {
+				DB::table('course_material')
+					->where('course_id', $data['courseId'])
+					->whereBetween('priority', $priorityRange)
+					->increment('priority');
+			}
+			else {
+				DB::table('course_material')
+					->where('course_id', $data['courseId'])
+					->whereBetween('priority', $priorityRange)
+					->decrement('priority');
+			}
+
+		CourseMaterial::where( 'course_id', $data['courseId'] )
+			->where( 'material_id', $data['materialId'] )
+			->update( ['priority' => $data['priority']['new']] );
+
 	}
 }

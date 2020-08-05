@@ -10,7 +10,7 @@ class Course extends Model
 {
     public function materials() {
 
-		return $this->belongsToMany(Material::class);
+		return $this->belongsToMany(Material::class)->withPivot('active', 'priority');
 
 	}
 

@@ -43,9 +43,9 @@
 	content: "Αναζήτηση" !important;
 }
 
-#remaining-materials-table tbody td {
+.modal-table tbody td {
 	border-bottom: 1px solid #656e77;
 }
-#remaining-materials-table tbody tr:first-child td {
-	border-top: 1px solid #656e77;
+.modal-table tbody tr:first-child td {
+	border-top: 1px solid #656e77 !important;
 }

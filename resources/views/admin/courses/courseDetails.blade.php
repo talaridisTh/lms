@@ -6,8 +6,6 @@
 @endsection
 
 @section('content')
-{{-- {{ dd($authors) }} --}}
-
 	<div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
@@ -16,7 +14,7 @@
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body">
-	                <table id="remaining-materials-table" class="table w-100 nowrap">
+	                <table id="remaining-materials-table" class="table w-100 nowrap modal-table">
 						<thead>
 							<tr>
 								<th>Όνομα</th>
@@ -172,15 +170,13 @@
 						<!-- Materials table tab-->
 						<div class="tab-pane show active" id="materials">
 
-							
-
-
-							<table id="course-materials-list" class="table w-100 nowrap custom-center-table">
+							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table">
 								<thead>
 									<tr>
 										<th class="option-column">Επιλογή</th>
 										<th>Όνομα</th>
 										<th>Ενεργό</th>
+										<th>Κατάταξη</th>
 										<th>Τύπος</th>
 										<th>Τελ. Ανανέωση</th>
 										<th>Ημ. Δημιουργίας</th>
@@ -197,8 +193,19 @@
 											</td>
 											<td>{{ $material['name'] }}</td>
 											<td>
-												<input class="js-toggle" data-material-id="{{ $material['id'] }}" type="checkbox" id="{{ $material['slug'] }}-toggle-checkbox" {{ $material['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
+												<input class="js-toggle" data-material-id="{{ $material['id'] }}" 
+													type="checkbox" id="{{ $material['slug'] }}-toggle-checkbox" 
+													{{ $material->pivot['active'] == 0 ? '' : 'checked' }} 
+													data-switch="bool" autocomplete="off"/>
 												<label for="{{ $material['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>	
+											</td>
+											<td>
+												<div class="form-group">
+													<input type="text" class="form-control text-center js-sort-input" 
+														data-material-id="{{ $material['id'] }}" 
+														data-current-priority="{{ $material->pivot['priority'] }}" 
+														value="{{ $material->pivot['priority'] }}" autocomplete="off">
+												</div>
 											</td>
 											<td>{{ $material['type']}}</td>
 											<td>{{ $material['updated_at'] }}</td>
@@ -211,6 +218,7 @@
 										<th>Επιλογή</th>
 										<th>Όνομα</th>
 										<th>Ενεργό</th>
+										<th>Κατάταξη</th>
 										<th>Τύπος</th>
 										<th>Τελ. Ανανέωση</th>
 										<th>Ημ. Δημιουργίας</th>
@@ -327,7 +335,7 @@
 			}
 		});
 
-		$("#course-materials-list").DataTable({
+		const courseMaterialsTable = $("#course-materials-list").DataTable({
 			scrollX:!0,
 			"columnDefs": [
 				{ "width": "5%", "targets": 0 }
@@ -378,8 +386,35 @@
 			
 		});
 
-		$('#material-modal-shown-btn').click( function() {
+		/* $('#material-modal-shown-btn').click( function() {
 			setTimeout( function() { remainingMaterialsTables.columns.adjust(); }, 200)
+		}); */
+
+		$('.js-sort-input').on( "input", function() {
+			let inputValue = this.value;
+
+			if ( isNaN( inputValue ) ) {
+				return this.value = inputValue.replace(/[^0-9]/g, '');
+			}
 		});
+
+		$('.js-sort-input').on('keyup', function() {
+			if ( event.keyCode == 13 && !isNaN( this.value) ) {
+
+				axios.patch('/api/courses/priority', {
+					courseId: $('#course-materials-list')[0].dataset.courseId,
+					materialId: this.dataset.materialId,
+					priority: { 
+						new: this.value, 
+						old: this.dataset.currentPriority
+					},
+				})
+				.then( (res) => {
+
+					$("#course-materials-list").DataTable().draw();
+				})
+			}
+		})
+
 	</script>
 @endsection
