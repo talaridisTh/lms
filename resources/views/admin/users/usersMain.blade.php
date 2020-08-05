@@ -5,12 +5,12 @@
 @endsection
 
 @section('content')
-
+    <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container" style="max-width:1370px">
         <div class="row mb-2">
             <div class="col-sm-12">
                     <div class="text-right">
-                        <a href="courses/create" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
+                        <a href="{{route('user.create')}}" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
                             Νέος χρήστης
                         </a>
 

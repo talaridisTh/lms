@@ -84,7 +84,7 @@ class User extends Authenticatable {
 //exei lathos edw na t koitaksw
     public static function  getStudent()
     {
-        return User::whereHas('courses.materials')->get();
+        return User::whereHas('courses.users')->get();
 
     }
     public static function getCountStudent($course)

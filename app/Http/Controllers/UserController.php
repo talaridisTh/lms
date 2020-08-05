@@ -7,8 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
-
-
+use function Couchbase\defaultDecoder;
 
 class UserController extends Controller {
 
@@ -44,7 +43,8 @@ class UserController extends Controller {
         }
         $user->create($data)->assignRole($request->role);
 
-        return redirect(route("user.index"));
+
+        return redirect(route("user.index"))->with('create', 'Ο '.$data["first_name"]." " .$data["last_name"]. ' δημιουργήθηκε');
     }
 
     public function show(User $user)
@@ -72,7 +72,7 @@ class UserController extends Controller {
             $data['avatar'] = $profileImage;
         }
 
-        return redirect()->back()->with('update', 'Ο χρηστης ενημερώθηκε');;
+        return redirect()->back()->with('update', 'Ο '.$user->fullName.' ενημερώθηκε');
     }
 
     public function destroy(User $user)
@@ -90,6 +90,19 @@ class UserController extends Controller {
         $user->save();
 
         return response()->json(['success' => 'Status change successfully.']);
+    }
+
+    public function addCourses(Request $request)
+    {
+
+        $user = User::find($request->user_id);
+
+         $user->courses()->attach($request->course_id);
+
+
+
+        return response()->json(['success' => 'Status change successfully.']);
+
     }
 
 }

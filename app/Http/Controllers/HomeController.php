@@ -29,7 +29,12 @@ class HomeController extends Controller
      */
     public function index()
 
+
     {
+
+        $test = Course::find(1)->with('materials.users')->get();
+
+        return  $test[0]["materials"]->first();
 
         return view('home');
     }
