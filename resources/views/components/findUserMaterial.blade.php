@@ -22,35 +22,40 @@
                      data-parent="#custom-accordion-one">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-borderless table-nowrap mb-0">
-                                <tbody>
                                 @foreach($allMaterials as $key =>   $materials )
                                     @if ($loop->parent->index ==$key)
-                                        @foreach($materials as $material)
-                                            <div class="card-body">
-                                                <div
-                                                    class="badge badge-success float-right">
-                                                    Completed
-                                                </div>
-                                                <h5><a href="#"
-                                                       class="text-dark">{{$material->name}}</a>
-                                                    <p class="text-muted mb-2">{{$material->small_description}}
-                                                </h5>
-                                                </p>
-                                                <div>
-                                                    <a href="javascript: void(0);">
-                                                        <img
-                                                            src="{{$material->cover}}"
-                                                            alt=""
-                                                            class="avatar-sm m-1 rounded-circle">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                                <table  class="course-materials-list table w-100 nowrap custom-center-table ">
+                                                    <thead>
+                                                    <tr>
+                                                        <th >Όνομα</th>
+                                                        <th>Τύπος</th>
+                                                        <th>Τελ. Ανανέωση</th>
+                                                        <th>Ημ. Δημιουργίας</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="tables-hover-effect">
+                                                    @foreach($materials as $material)
+                                                        <tr>
+
+                                                            <td>{{ $material['name'] }}</td>
+                                                            <td>{{ $material['type']}}</td>
+                                                            <td>{{ $material['updated_at'] }}</td>
+                                                            <td>{{ $material['created_at'] }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                    <tfoot>
+                                                    <tr>
+                                                        <th>Όνομα</th>
+                                                        <th>Τύπος</th>
+                                                        <th>Τελ. Ανανέωση</th>
+                                                        <th>Ημ. Δημιουργίας</th>
+                                                    </tr>
+                                                    </tfoot>
+                                                </table>
                                     @endif
                                 @endforeach
-                                </tbody>
-                            </table>
+
                         </div>
                     </div>
                 </div>

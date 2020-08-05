@@ -8,19 +8,26 @@
 
     <div class="container" style="max-width:1370px">
         <div class="row mb-2">
-            <div class="col-sm-4 ">
+            <div class="col-sm-12">
+                    <div class="text-right">
+                        <a href="courses/create" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
+                            Νέος χρήστης
+                        </a>
 
+                        <div class="btn-group mb-2">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Επιλογές</button>
+                            <div class="dropdown-menu">
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Print</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Excel</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">CVS </a>
+                            </div>
+                        </div>
+                    </div>
+            </div>
 
-            </div>
-            <div class="col-sm-8">
-                <div class="text-sm-right">
-                    <a href="{{route('user.create')}}" class="btn btn-secondary mb-2 display"><i
-                            class="mdi mdi-plus-circle mr-2"></i>
-                        Νέο Course
-                    </a>
-                    <button type="button" class="btn btn-light mb-2">Export</button>
-                </div>
-            </div>
         </div>
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table">
             <thead>

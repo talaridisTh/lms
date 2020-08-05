@@ -1,45 +1,9 @@
-{{--@if($userIs =="instructor")--}}
-{{--    @foreach($allMaterials as $key =>   $materials )--}}
-{{--        @if ($loop->parent->index ==$key)--}}
-{{--            @foreach($materials as $material)--}}
-{{--                <div class="card-body">--}}
-{{--                    <div--}}
-{{--                        class="badge badge-success float-right">--}}
-{{--                        Completed--}}
-{{--                    </div>--}}
-
-{{--                    <h5><a href="#"--}}
-{{--                           class="text-dark">{{$material->name}}</a>--}}
-{{--                        <p class="text-muted mb-2">{{$material->small_description}}--}}
-{{--                    </h5>--}}
-{{--                    </p>--}}
-
-{{--                    <div>--}}
-{{--                        <a href="javascript: void(0);">--}}
-{{--                            <img--}}
-{{--                                src="{{$material->cover}}"--}}
-{{--                                alt=""--}}
-{{--                                class="avatar-sm m-1 rounded-circle">--}}
-{{--                        </a>--}}
-
-{{--                    </div>--}}
-{{--                </div>--}}
-
-{{--            @endforeach--}}
-{{--        @endif--}}
-{{--    @endforeach--}}
-{{--@endif--}}
-
-
-
 @php($c=0)
 @if($userIs =="instructor")
 
     @if($InstructorCourses)
         @foreach($InstructorCourses->materials as $instructor)
          @foreach($instructor->courses as  $courses)
-
-
 
             <div class="accordion custom-accordion" id="custom-accordion-one">
                 <div class="card mb-0">
@@ -51,7 +15,7 @@
                                 <div class="d-flex ">
                                 <i class="mdi mdi-cards-variant mr-1"></i>
                                     <span style="flex: 1">{{$courses->name}}</span>
-                                    <span >{{$user->getCountStudent($courses->id)}}</span>
+
                                 </div>
 
                                 <i class="mdi mdi-chevron-down accordion-arrow"></i>
@@ -63,35 +27,48 @@
                          aria-labelledby="headingFour"
                          data-parent="#custom-accordion-one">
 
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-borderless table-nowrap mb-0">
-                                    <tbody>
-                                    <div class="card-body">
-                                        <div
-                                            class="badge badge-success float-right">
-                                            Completed
-                                        </div>
-                                        <h5><a href="#"
-                                               class="text-dark">{{$instructor->name}}</a>
-                                            <p class="text-muted mb-2">{{$instructor->small_description}}
+                            <div class="tab-content">
+                                <!-- Materials table tab-->
+                                <div class="tab-pane show active mt-3" id="materials">
+                                    <table  class="course-materials-list table w-100 nowrap custom-center-table ">
+                                        <thead>
+                                        <tr>
+                                            <th >Όνομα</th>
+                                            <th>Τύπος</th>
+                                            <th>Τελ. Ανανέωση</th>
+                                            <th>Ημ. Δημιουργίας</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="tables-hover-effect">
+                                        @foreach($courses->materials as $material)
+                                            <tr>
 
-                                        </h5>
-                                        </p>
-                                        <div>
-                                            <a href="javascript: void(0);">
-                                                <img
-                                                    src="{{$instructor->cover}}"
-                                                    alt=""
-                                                    class="avatar-sm m-1 rounded-circle">
-                                            </a>
-                                        </div>
-                                    </div>
+                                                <td>{{ $material['name'] }}</td>
+                                                <td>{{ $material['type']}}</td>
+                                                <td>{{ $material['updated_at'] }}</td>
+                                                <td>{{ $material['created_at'] }}</td>
+                                            </tr>
+                                        @endforeach
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>Όνομα</th>
+                                            <th>Τύπος</th>
+                                            <th>Τελ. Ανανέωση</th>
+                                            <th>Ημ. Δημιουργίας</th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+
+                                </div><!-- end material tab-pane -->
+                                <!-- end about me section content -->
+
+                                <!-- Course edit form tab-pane -->
+
+                                <!-- end settings content-->
+                            </div> <!-- end tab-content -->
+
                     </div>
                 </div>
             </div>
@@ -100,3 +77,4 @@
         @endforeach
     @endif
 @endif
+

@@ -78,19 +78,13 @@ class User extends Authenticatable {
     public static function getMaterialsInstructor($user)
     {
 
-
         return User::whereId($user)->with('courses.materials')->whereHas('materials')->first();
     }
 
-
+//exei lathos edw na t koitaksw
     public static function  getStudent()
     {
-        return  DB::table("course_user")
-             ->join("users","course_user.user_id","=","users.id")
-             ->join("courses","course_user.course_id","=","courses.id")
-             ->select('users.first_name')
-            ->where("courses.id","=",1)
-             ->get();
+        return User::whereHas('courses.materials')->get();
 
     }
     public static function getCountStudent($course)
@@ -98,13 +92,11 @@ class User extends Authenticatable {
         return  DB::table("course_user")
              ->join("users","course_user.user_id","=","users.id")
              ->join("courses","course_user.course_id","=","courses.id")
-             ->select('users.first_name')
-            ->where("courses.id","=",$course)
+             ->select('users.*')
+            ->where("courses.id","=",$course )
              ->count();
 
     }
-
-
 
 
 
@@ -114,6 +106,7 @@ class User extends Authenticatable {
 
         return $user->getRoleNames()->first();
     }
+
 
     // $user->fullName  // Onoma Epitheto
     public function getFullNameAttribute()

@@ -31,13 +31,6 @@ class HomeController extends Controller
 
     {
 
-
-         $user = new User();
-
-      return    $user->getStudent();
-
-
-
         return view('home');
     }
 }

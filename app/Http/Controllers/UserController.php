@@ -8,11 +8,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller {
 
+
+class UserController extends Controller {
 
     public function index()
     {
+
 
         return view('admin.users.usersMain');
     }
@@ -47,22 +49,13 @@ class UserController extends Controller {
 
     public function show(User $user)
     {
+
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
-
         $allMaterials = User::findMaterials($user->id);
-
         $InstructorCourses = User::getMaterialsInstructor($user->id);
 
-//        $InstructorCourses = User::getCountStudent($user->id);
-
-
-
-
-
-
-
-        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs","InstructorCourses"));
+        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs", "InstructorCourses"));
     }
 
     public function update(Request $request, User $user)
@@ -79,14 +72,13 @@ class UserController extends Controller {
             $data['avatar'] = $profileImage;
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('update', 'Ο χρηστης ενημερώθηκε');;
     }
 
     public function destroy(User $user)
     {
 
         $user->delete();
-
 
         return redirect(route('user.index'));
     }
@@ -97,7 +89,7 @@ class UserController extends Controller {
         $user->active = $request->active;
         $user->save();
 
-        return response()->json(['success'=>'Status change successfully.']);
+        return response()->json(['success' => 'Status change successfully.']);
     }
 
 }
