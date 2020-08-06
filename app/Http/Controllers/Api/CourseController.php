@@ -134,4 +134,12 @@ class CourseController extends Controller
 			->update( ['priority' => $data['priority']['new']] );
 
 	}
+
+	public function courseMaterials() {
+		
+	}
+
+	public function remainingMaterials() {
+
+	}
 }

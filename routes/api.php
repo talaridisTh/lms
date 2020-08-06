@@ -18,10 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post( 'courses/coursesdatatable', 'Api\CourseController@index' );
-
-
-
+//!	Courses Ajax Routes
 Route::delete( 'courses/massdestroy/{ids}', 'Api\CourseController@massdestroy' );
 Route::patch( 'courses/active', 'Api\CourseController@toggleActive' );
 Route::patch( 'courses/priority', 'Api\CourseController@changePriority' );
+
+//! Courses Datatables
+Route::post( 'courses/courses-datatable', 'Api\CourseController@index' );
+Route::post( 'courses/course-materials-datatable', 'Api\CourseController@courseMaterials' );
+Route::post( 'courses/not-incourse-materials-datatable', 'Api\CourseController@remainingMaterials' );
