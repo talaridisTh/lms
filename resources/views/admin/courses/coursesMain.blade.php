@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <table id="courses-datatable" class="table w-100 nowrap custom-center-table remove-talbe-classes">
+        <table id="courses-datatable" class="table w-100 nowrap custom-center-table center-not-second remove-talbe-classes">
             <thead>
             	<tr>
             	    <th class="text-center option-column">Επιλογή</th>

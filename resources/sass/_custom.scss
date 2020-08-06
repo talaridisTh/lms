@@ -50,6 +50,15 @@
 	border-top: 1px solid #656e77 !important;
 }
 
-#courses-datatable > tbody > tr > td:not( :nth-child(2) ) {
+.center-not-second > tbody > tr > td:not( :nth-child(2) ) {
 	text-align: center;
 }
+
+#course-materials-list > tbody td:nth-child(4) .form-group {
+	margin-bottom: 0px !important;
+}
+
+#course-materials-list > tbody td:nth-child(4) {
+	padding-top: 13px;
+}
+   

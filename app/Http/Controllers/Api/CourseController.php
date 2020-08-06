@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
+use App\DataTables\CourseMaterialsDataTable;
 
 class CourseController extends Controller
 {
@@ -135,8 +136,8 @@ class CourseController extends Controller
 
 	}
 
-	public function courseMaterials() {
-		
+	public function courseMaterials(CourseMaterialsDataTable $dataTable) {
+		return $dataTable->render('course.materials');
 	}
 
 	public function remainingMaterials() {
