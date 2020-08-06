@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\DataTables\CoursesDataTable;
 
 class CourseController extends Controller
 {
@@ -16,9 +17,9 @@ class CourseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CoursesDataTable $dataTable)
     {
-        //
+        return $dataTable->render('courses.index');
     }
 
     /**

@@ -18,6 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post( 'courses/coursesdatatable', 'Api\CourseController@index' );
+
+
+
 Route::delete( 'courses/massdestroy/{ids}', 'Api\CourseController@massdestroy' );
 Route::patch( 'courses/active', 'Api\CourseController@toggleActive' );
 Route::patch( 'courses/priority', 'Api\CourseController@changePriority' );
