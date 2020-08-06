@@ -49,3 +49,7 @@
 .modal-table tbody tr:first-child td {
 	border-top: 1px solid #656e77 !important;
 }
+
+#courses-datatable > tbody > tr > td:not( :nth-child(2) ) {
+	text-align: center;
+}

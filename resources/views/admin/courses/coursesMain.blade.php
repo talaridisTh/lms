@@ -35,19 +35,19 @@
             </div>
         </div>
 
-        <table id="scroll-horizontal-datatable" class="table w-100 nowrap custom-center-table">
+        <table id="courses-datatable" class="table w-100 nowrap custom-center-table remove-talbe-classes">
             <thead>
-            <tr>
-                <th class="text-left option-column">Επιλογή</th>
-                <th class="text-left">Όνομα</th>
-                <th class="text-left">Ενεργό</th>
-                <th class="text-left">Τελ. Ενημέρωση</th>
-                <th class="text-left">Ημ. Δημιουργίας</th>
-            </tr>
+            	<tr>
+            	    <th class="text-center option-column">Επιλογή</th>
+            	    <th class="text-center">Όνομα</th>
+            	    <th class="text-center">Ενεργό</th>
+            	    <th class="text-center">Τελ. Ενημέρωση</th>
+            	    <th class="text-center">Ημ. Δημιουργίας</th>
+            	</tr>
             </thead>
             <tbody class="tables-hover-effect">
 
-            @foreach ($courses as $course)
+           {{--  @foreach ($courses as $course)
 				<tr data-course-id="{{ $course['id'] }}">
                     <td class="pl-4">
 						<div class="icheck-primary d-inline">
@@ -58,21 +58,22 @@
                     <td class="cursor-pointer js-link">{{ $course['name'] }}</td>
                     <td>
 						<input class="js-toggle" data-course-id="{{ $course['id'] }}" type="checkbox" id="{{ $course['slug'] }}-toggle-checkbox" {{ $course['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
-						<label for="{{ $course['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>{{-- {{ $course['active'] }} --}}
+						<label for="{{ $course['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>
 					</td>
                     <td class="js-updated-at cursor-pointer js-link">{{ $course['updated_at'] }}</td>
                     <td class="cursor-pointer js-link">{{ $course['created_at']}}</td>
                 </tr>
-            @endforeach
+            @endforeach --}}
 
             </tbody>
             <tfoot>
             	<tr>
-					<th class="text-left">Επιλογή</th>
-            	    <th class="text-left">Όνομα</th>
-            	    <th class="text-left">Ενεργό</th>
-            	    <th class="text-left">Τελ. Ενημέρωση</th>
-            	    <th class="text-left">Ημ. Δημιουργίας</th>
+					{{-- <th class="text-left">Επιλογή</th> --}}
+            	    <th class="text-center">Επιλογή</th>
+            	    <th class="text-center">Όνομα</th>
+            	    <th class="text-center">Ενεργό</th>
+            	    <th class="text-center">Τελ. Ενημέρωση</th>
+            	    <th class="text-center">Ημ. Δημιουργίας</th>
             	</tr>
             </tfoot>
         </table>
@@ -86,10 +87,28 @@
 <script>
 
 
-	$("#scroll-horizontal-datatable").DataTable({
+	$("#courses-datatable").DataTable({
 		scrollX:!0,
-		"columnDefs": [
-			{ "width": "5%", "targets": 0 }
+		"columnDefs": [{ 
+			"width": "5%", "targets": 0 
+		}],
+		processing: true,
+		serverSide: true,
+		ajax: {
+			url: "/api/courses/coursesdatatable",
+			type: "post"
+		},
+		columnDefs: [
+			{ orderable: false, "targets": [ 0, 2 ] },
+			{ className: "js-link cursor-pointer", "targets": [ 1, 4 ] },
+			{ className: "js-link cursor-pointer js-updated-at", "targets": [ 3 ] },
+		],
+		columns: [
+			{data: 'action', name: 'action'},
+			{data: 'name', name: 'name'},
+			{data: 'active', name: 'active'},
+			{data: 'updated_at', name: 'updated_at'},
+			{data: 'created_at', name: 'created_at'},
 		],
 		language:{
 			emptyTable: 		"Δεν υπάρχουν εγγραφές",
@@ -105,7 +124,11 @@
 				next:"<i class='mdi mdi-chevron-right'>"}
 		},
 		drawCallback:function(){
-			$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+			$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+			$(".remove-talbe-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+
+			atLinkEventListener();
+			toggleActive();
 		}
 	})
 
@@ -163,43 +186,52 @@
 		})
 	});
 
-	$('.js-toggle').on('change', function() {
-		let courseCnt = this.parentElement.parentElement;
-		let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
+	function toggleActive() {
+		$('.js-toggle').unbind();
 
-		axios.patch('/api/courses/active', {
-			course: this.dataset.courseId,
-			state: this.checked
-		})
-		.then( (res) => {
-			Swal.fire({
-				toast: 'true',
-				position: 'top-end',
-				icon: 'success',
-				title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
-				showConfirmButton: false,
-				timer: 3000,
-  				timerProgressBar: true
-			});
-			updatedAtElm.textContent = "Μόλις τώρα";
-		})
-		.catch( (err) => {
-			Swal.fire({
-				toast: 'true',
-				position: 'top-end',
-				icon: 'error',
-				title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
-				showConfirmButton: false,
-				timer: 3000,
-  				timerProgressBar: true
+		$('.js-toggle').on('change', function() {
+			let courseCnt = this.parentElement.parentElement;
+			let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
+
+			axios.patch('/api/courses/active', {
+				course: this.dataset.courseId,
+				state: this.checked
+			})
+			.then( (res) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'success',
+					title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+				updatedAtElm.textContent = "Μόλις τώρα";
+			})
+			.catch( (err) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'error',
+					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
 			});
 		});
-	});
+	}
 
-	$('.js-link').click( function() {
-		let courseId = this.parentElement.dataset.courseId;
+	
 
-		window.location = `course/${courseId}`;
-	});
+	function atLinkEventListener() {
+		$('.js-link').click( function() {
+			let courseId = this.parentElement.dataset.courseId;
+
+			window.location = `course/${courseId}`;
+		});
+	}
+	
 </script>
 @endsection
