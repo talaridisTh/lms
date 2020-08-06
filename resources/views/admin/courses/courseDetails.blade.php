@@ -170,7 +170,7 @@
 						<!-- Materials table tab-->
 						<div class="tab-pane show active" id="materials">
 
-							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second">
+							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
 									<tr>
 										<th class="text-center">Επιλογή</th>
@@ -182,37 +182,7 @@
 										<th class="text-center">Ημ. Δημιουργίας</th>
 									</tr>
 								</thead>
-								<tbody class="tables-hover-effect">
-									{{-- @foreach ($materials as $material)
-										<tr>
-											<td class="pl-4">
-												<div class="icheck-primary d-inline">
-													<input id="{{ $material['slug'] }}" class="js-material-checkbox" data-material-id="{{ $material['id'] }}" data-material-name="{{ $material['name'] }}" type="checkbox" autocomplete="off">
-													<label for="{{ $material['slug'] }}"></label>
-												</div>
-											</td>
-											<td>{{ $material['name'] }}</td>
-											<td>
-												<input class="js-toggle" data-material-id="{{ $material['id'] }}" 
-													type="checkbox" id="{{ $material['slug'] }}-toggle-checkbox" 
-													{{ $material->pivot['active'] == 0 ? '' : 'checked' }} 
-													data-switch="bool" autocomplete="off"/>
-												<label for="{{ $material['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>	
-											</td>
-											<td>
-												<div class="form-group">
-													<input type="text" class="form-control text-center js-sort-input" 
-														data-material-id="{{ $material['id'] }}" 
-														data-current-priority="{{ $material->pivot['priority'] }}" 
-														value="{{ $material->pivot['priority'] }}" autocomplete="off">
-												</div>
-											</td>
-											<td>{{ $material['type']}}</td>
-											<td>{{ $material['updated_at'] }}</td>
-											<td>{{ $material['created_at'] }}</td>
-										</tr>
-									@endforeach --}}
-								</tbody>
+								<tbody class="tables-hover-effect"></tbody>
 								<tfoot>
 									<tr>
 										<th>Επιλογή</th>
@@ -342,7 +312,7 @@
 			columnDefs: [
 				{ width: "5%", "targets": 0 },
 				{ className: "js-link cursor-pointer", targets: [ 1, 4, 6 ] },
-				{ className: "js-link cursor-pointer js-updated-at", targets: 5 },
+				{ className: "js-link cursor-pointer", targets: 5 },
 				{ width: "5%", targets: 3 }
 			],
 			order: [3, "asc"],
@@ -381,7 +351,9 @@
 				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+				$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
 
+				toggleCourseMaterial()
 				sortInputsInit();
 			},
 			
@@ -448,6 +420,44 @@
 
 			})
 		}
+
+		function toggleCourseMaterial() {
+		$('.js-toggle').unbind();
+
+		$('.js-toggle').on('change', function() {
+			let courseCnt = this.parentElement.parentElement;
+			let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
+
+			axios.patch('/api/courses/toggle-materials', {
+				courseId: this.dataset.courseId,
+				materialId: this.dataset.materialId,
+				state: this.checked
+			})
+			.then( (res) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'success',
+					title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+				// updatedAtElm.textContent = "Μόλις τώρα";
+			})
+			.catch( (err) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'error',
+					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+			});
+		});
+	}
 
 	</script>
 @endsection

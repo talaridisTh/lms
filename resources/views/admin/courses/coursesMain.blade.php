@@ -27,7 +27,7 @@
             </div>
         </div>
 
-        <table id="courses-datatable" class="table w-100 nowrap custom-center-table center-not-second remove-talbe-classes">
+        <table id="courses-datatable" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
             <thead>
             	<tr>
             	    <th class="text-center option-column">Επιλογή</th>
@@ -70,8 +70,7 @@
 		},
 		columnDefs: [
 			{ orderable: false, "targets": [ 0, 2 ] },
-			{ className: "js-link cursor-pointer", "targets": [ 1, 4 ] },
-			{ className: "js-link cursor-pointer js-updated-at", "targets": [ 3 ] },
+			{ className: "js-link cursor-pointer", "targets": [ 1, 3, 4 ] }
 		],
 		columns: [
 			{data: 'action', name: 'action'},
@@ -95,7 +94,7 @@
 		},
 		drawCallback:function(){
 			$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-			$(".remove-talbe-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+			$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
 
 			atLinkEventListener();
 			toggleActive();
@@ -177,7 +176,7 @@
 					timer: 3000,
   					timerProgressBar: true
 				});
-				updatedAtElm.textContent = "Μόλις τώρα";
+				// updatedAtElm.textContent = "Μόλις τώρα";
 			})
 			.catch( (err) => {
 				Swal.fire({

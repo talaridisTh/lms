@@ -23,20 +23,6 @@ class CourseMaterialsDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-	
-		/* $query = DB::table('course_material')
-			->join('materials', 'course_material.material_id', '=', 'materials.id')
-			->select('materials.id', 
-				'materials.name as name', 
-				'materials.active as materialActive', 
-				'course_material.active as active', 
-				'course_material.priority as priority', 
-				'materials.type', 
-				'materials.slug', 
-				'materials.updated_at as updated_at', 
-				'materials.created_at as created_at', 
-				'course_material.id')
-			->where('course_id', $request->courseId); */
 
 		$query = DB::table('materials')
 			->join('course_material', 'materials.id', '=', 'course_material.material_id')
@@ -53,19 +39,21 @@ class CourseMaterialsDataTable extends DataTable
 			->where('course_id', $request->courseId);
 
         return Datatables::queryBuilder($query)
-            ->addColumn('action', function($data) {
+            ->addColumn('action', function($data) use ($request) {
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-course-id='$data->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-course-checkbox' data-course-id='$request->courseId' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
 
 			})
-			->editColumn('active', function($data) {
+			->editColumn('active', function($data) use ($request) {
 
 				$active = $data->active == 0 ? "" : "checked";
 
-				return "<input class='js-toggle' data-course-id='". $data->id ."' type='checkbox' id='". $data->slug ."-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+				return "<input class='js-toggle' data-course-id='$request->courseId'
+					type='checkbox' id='". $data->slug ."-toggle-checkbox' 
+					data-material-id='$data->materialId' $active data-switch='bool' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
 
 			})

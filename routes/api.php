@@ -22,6 +22,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::delete( 'courses/massdestroy/{ids}', 'Api\CourseController@massdestroy' );
 Route::patch( 'courses/active', 'Api\CourseController@toggleActive' );
 Route::patch( 'courses/priority', 'Api\CourseController@changePriority' );
+Route::patch( 'courses/toggle-materials', 'Api\CourseController@toggleCourseMaterials' );
+
 
 //! Courses Datatables
 Route::post( 'courses/courses-datatable', 'Api\CourseController@index' );

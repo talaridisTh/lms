@@ -143,4 +143,16 @@ class CourseController extends Controller
 	public function remainingMaterials() {
 
 	}
+
+	public function toggleCourseMaterials( Request $request ) {
+
+		$data = $request->all();
+
+		$material = Course::find( $data['courseId'] )->materials()
+			->where('material_id', $data['materialId']);
+
+		$material->active = $data['state'] == 1 ? 1 : 0;
+		$material->update( ['course_material.active'=> $data['state'] == 1 ? 1 : 0 ] );
+
+	}
 }
