@@ -3,7 +3,6 @@
 @section('css')
     <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 @endsection
-
 @section('content')
     <x-alertMsg :msg="'update'"></x-alertMsg>
     <div class="container" style="max-width:1400px">
@@ -237,16 +236,28 @@
             }, 200)
         });
 
+        $(".js-button").click(function() {
+           const parent =  this.parentElement.parentElement
+            console.log(parent);
+
+
+            const test = this.dataset.exist;
+
+            // console.log(test=="")
+
+        })
+
+
 
         $(".js-button").click(async function () {
 
             try {
-                const res = await axios.patch('/addCourses', {
-                    "course_id": this.dataset.courseId,
-                    "user_id": this.dataset.user,
-
-                })
-                console.log(this.dataset)
+                // const res = await axios.patch('/addCourses', {
+                //     "course_id": this.dataset.courseId,
+                //     "user_id": this.dataset.user,
+                //
+                // })
+                // console.log(this.dataset)
 
             } catch (e) {
                 console.log(e)

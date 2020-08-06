@@ -7,12 +7,13 @@
     </thead>
     <tbody class="tables-hover-effect">
 
+
     @foreach ($courses as $course)
-        <tr data-course-id="{{ $course['id'] }}">
+        <tr class="tablesTr" data-course-id="{{ $course['id'] }}" data-user-id="{{ $user['id'] }}">
 
             <td class="cursor-pointer js-link">{{ $course['name'] }}</td>
             <td>
-                <input class="btn btn-info  js-button" value="Προσήκη" data-course-id="{{ $course['id'] }}" data-user="{{$user->id}}" type="submit" id="" />
+                <input class="btn btn-info  js-button" value="Προσήκη"  data-course-id="{{ $course['id'] }}" data-user="{{$user->id}}" type="submit" id="" />
                 <label for="{{ $course['slug'] }}" ></label>
             </td>
         </tr>

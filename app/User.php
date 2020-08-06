@@ -79,7 +79,65 @@ class User extends Authenticatable {
     {
 
         return User::whereId($user)->with('courses.materials')->whereHas('materials')->first();
+
     }
+
+    public static function getIfExistInsuctorCourse($user,$courses)
+    {
+
+//          return $test= User::whereHas('materials')
+//                ->with("materials.courses")
+//                ->get()
+//                ->where("id",$user)
+//                ->first()
+//                ->materials
+//                ->first()
+//                ->courses
+//                ->where("id",$courses);
+//
+//        $test= User::whereHas('materials')
+//            ->with("materials.courses")
+//            ->get()
+//            ->where("id",$user)
+//            ->first();
+//
+//        if(isset($test["materials"])){
+//          return is_null(!$test["materials"][0]["courses"]->whereIn("id",$courses));
+//
+//
+//        }else
+//            return  false;
+
+         $test = DB::table("courses")
+            ->join("course_material","courses.id","=","course_material.course_id")
+            ->join("materials","course_material.material_id","=","materials.id")
+            ->join("material_user","material_user.material_id","=","materials.id")
+            ->join("users","material_user.user_id","=","users.id")
+            ->where("users.id",$user)
+            ->where("courses.id",$courses)
+            ->select("courses.id")
+            ->get();
+
+        if (empty(!count($test))){
+            return true;
+        }else{
+            return false;
+
+        }
+
+
+//         (isset($test)) {
+//              return'$var is either 0, empty, or not set at all';
+//    }
+
+
+
+    }
+
+
+
+
+
 
 //exei lathos edw na t koitaksw
     public static function  getStudent()
