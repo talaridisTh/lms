@@ -142,7 +142,6 @@ class CourseController extends Controller
 	}
 
 	public function remainingMaterials(RemainingMaterialsDataTable $dataTable) {
-		// dd("here");
 		return $dataTable->render('course.remaingMaterials');
 	}
 
@@ -156,5 +155,22 @@ class CourseController extends Controller
 		$material->active = $data['state'] == 1 ? 1 : 0;
 		$material->update( ['course_material.active'=> $data['state'] == 1 ? 1 : 0 ] );
 
+	}
+
+	public function addMaterials( Request $request ) {
+
+		$course = Course::find( $request->courseId );
+		$lastMaterialId = $course->materials()->orderBy('priority', 'desc')->first()->pivot->priority;
+		$materialIds = $request->materialId;
+
+		foreach ( $materialIds as $id ) {
+			$course->materials()->attach( $id, ['active' => 0, 'priority' => $lastMaterialId + 1] );
+		}
+
+
+// $test = $lastMaterial->priority;
+
+		// return $materialId;
+		// echo $lastMaterial;
 	}
 }

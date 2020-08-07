@@ -388,15 +388,47 @@
 				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 				
-				addMaterialEventListerner()
+				addMaterialsEventListerner()
 			},
 			
 		});
 
-		function addMaterialEventListerner() {
+		function addMaterialsEventListerner() {
 			$('.js-add-material-btn').click( function() {
-				console.log(this.dataset.materialId);
+				const materialId = [this.dataset.materialId];
+				postMaterialIds( materialId );
 			});
+		}
+
+		function postMaterialIds( materialId ) {
+			axios.post( "/api/courses/add-materials", {
+				courseId,
+				materialId
+			})
+			.then( (res) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'success',
+					title: materialId.length > 1 ? "1 Αρχείο προστέθηκε" : `${materialId.length} Αρχεία προστέθηκαν`,
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+				courseMaterialsTable.ajax.reload();
+				remainingMaterialsTables.ajax.reload();
+			})
+			.catch( (err) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'error',
+					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+			})
 		}
 
 		function sortInputsInit() {
