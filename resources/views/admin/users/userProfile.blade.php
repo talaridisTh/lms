@@ -43,7 +43,8 @@
                                         </form>
                                     </div>
 
-                                    <button id="material-modal-shown-btn"  type="button" class="btn btn-primary" data-toggle="modal"
+                                    <button id="material-modal-shown-btn" type="button" class="btn btn-primary"
+                                            data-toggle="modal"
                                             data-target="#primary-header-modal">Primary Header
                                     </button>
                                     <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog"
@@ -64,7 +65,9 @@
                                                     <button type="button" class="btn btn-light" data-dismiss="modal">
                                                         Close
                                                     </button>
-                                                    <button type="button" onclick="javascript:window.location.reload()" class="btn btn-primary">Save changes</button>
+                                                    <button type="button" onclick="javascript:window.location.reload()"
+                                                            class="btn btn-primary">Save changes
+                                                    </button>
                                                 </div>
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
@@ -98,24 +101,14 @@
                                     </a>
                                 </li>
 
-                                <li class="nav-item">
-                                    <a href="#addCourses" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0">
-                                        Προσθήκη σε <b>COURSES</b>
-                                    </a>
-                                </li>
                             </ul>
 
                             <div class="tab-content">
                                 <div class="tab-pane active show" id="courses">
                                     @include("components.FindUserMaterial")
-                                    @include("components.findInstructorMaterial")
                                 </div>
                                 <div class="tab-pane" id="settings">
                                     @include("components.tabsEdit")
-                                </div>
-                                <div class="tab-pane" id="addCourses">
-                                    @include("components.addCourses")
                                 </div>
                             </div>
                         </div>
@@ -134,6 +127,7 @@
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script>
+
         $('#alertSumbit').submit(async function (e) {
             e.preventDefault()
             let buttonDelete = $('.js-delete');
@@ -175,37 +169,62 @@
 
         });
 
-        $(".course-materials-list").DataTable({
-            "columnDefs": [
-                {"width": "5%", "targets": 0}
-            ],
-            language: {
-                emptyTable: "Δεν υπάρχουν εγγραφές",
-                info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-                infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
-                lengthMenu: "Αποτελέσματα ανα σελίδα: _MENU_",
-                loadingRecords: "Φόρτωση ...",
-                processing: "Επεξεργασία ...",
-                search: "Αναζήτηση: ",
-                zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
-                paginate: {
-                    previous: "<i class='mdi mdi-chevron-left'>",
-                    next: "<i class='mdi mdi-chevron-right'>"
-                }
-            },
-            drawCallback: function () {
-                $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-                $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-                $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-            },
 
-        });
+        $(".course-materials-list").DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{route("user.show",$user->id)}}",
+                type: "get"
+            },
+            columns: [
+                {
+                    data: "first_name",
+                    name: "first_name"
+                },
+                {
+                    data: "last_name",
+                    name: "last_name"
+                },
+                {data: 'updated_at', name: 'updated_at'},
+                {data: 'created_at', name: 'created_at'},
+            ]
+        })
+
+        // const courses = $(".course-materials-list").DataTable({
+        //     scrollX: !0,
+        //     "columnDefs": [
+        //         {"width": "5%", "targets": [2]}
+        //     ],
+        //     language: {
+        //         emptyTable: "Δεν υπάρχουν εγγραφές",
+        //         info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+        //         infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
+        //         lengthMenu: "Αποτελέσματα ανα σελίδα: _MENU_",
+        //         loadingRecords: "Φόρτωση ...",
+        //         processing: "Επεξεργασία ...",
+        //         search: "Αναζήτηση: ",
+        //         zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
+        //         paginate: {
+        //             previous: "<i class='mdi mdi-chevron-left'>",
+        //             next: "<i class='mdi mdi-chevron-right'>"
+        //         }
+        //     },
+        //     drawCallback: function () {
+        //         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+        //         $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+        //         $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+        //     },
+        //
+        // });
 
         const addCourse = $("#datatableAddCourse").DataTable({
-            "aLengthMenu": [[5, 10, 25, -1], [5, 10, 25, "All"]],
             scrollX: !0,
-            "columnDefs": [
-                {"width": "5%", "targets": 1}
+            info: false,
+            "autoWidth": true,
+            "columns": [
+                {"width": "100%"},
+                {"width": "70%"},
             ],
             language: {
                 emptyTable: "Δεν υπάρχουν εγγραφές",
@@ -236,28 +255,31 @@
             }, 200)
         });
 
-        $(".js-button").click(function() {
-           const parent =  this.parentElement.parentElement
-            console.log(parent);
-
-
-            const test = this.dataset.exist;
-
-            // console.log(test=="")
-
-        })
-
-
 
         $(".js-button").click(async function () {
+            const parent = this.parentElement.parentElement
+            if (parent.dataset.exist == "") {
+                parent.dataset.exist = 1
+                this.value = "Αφαίρεση"
+                this.classList.remove("btn-info")
+                this.classList.add("btn-danger")
 
+
+            } else {
+                parent.dataset.exist = ""
+                this.value = "Προσθήκη"
+                this.classList.remove("btn-danger")
+                this.classList.add("btn-info")
+
+
+            }
             try {
-                // const res = await axios.patch('/addCourses', {
-                //     "course_id": this.dataset.courseId,
-                //     "user_id": this.dataset.user,
-                //
-                // })
-                // console.log(this.dataset)
+                const res = await axios.patch('/addCourses', {
+                    "course_id": this.dataset.courseId,
+                    "user_id": this.dataset.user,
+
+                })
+                console.log(res)
 
             } catch (e) {
                 console.log(e)

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
-use function Couchbase\defaultDecoder;
 
 class UserController extends Controller {
 
     public function index()
     {
-
 
         return view('admin.users.usersMain');
     }
@@ -24,6 +24,20 @@ class UserController extends Controller {
         return view("admin.users.userCreate");
     }
 
+    public function show(User $user,UsersDataTable $dataTable)
+    {
+
+
+        $userIs = User::userIs($user);
+        $userCourses = $user->courses()->get();
+        $allMaterials = User::findMaterials($user->id);
+
+        return $dataTable->render('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs"));
+
+
+    }
+
+
     public function store(UserCreateRequest $request)
     {
         //
@@ -33,7 +47,7 @@ class UserController extends Controller {
         $data['active'] = 1;
         if ($files = $request->file('avatar'))
         {
-            $destinationPath = 'public/image/users';
+            $destinationPath = public_path("images") . '/student';
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
             $data['avatar'] = $profileImage;
@@ -43,22 +57,9 @@ class UserController extends Controller {
         }
         $user->create($data)->assignRole($request->role);
 
-
-        return redirect(route("user.index"))->with('create', 'Ο '.$data["first_name"]." " .$data["last_name"]. ' δημιουργήθηκε');
+        return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
 
-    public function show(User $user)
-    {
-
-
-        $userIs = User::userIs($user);
-        $userCourses = $user->courses()->get();
-        $allMaterials = User::findMaterials($user->id);
-        $InstructorCourses = User::getMaterialsInstructor($user->id);
-
-
-        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs", "InstructorCourses"));
-    }
 
     public function update(Request $request, User $user)
     {
@@ -74,7 +75,7 @@ class UserController extends Controller {
             $data['avatar'] = $profileImage;
         }
 
-        return redirect()->back()->with('update', 'Ο '.$user->fullName.' ενημερώθηκε');
+        return redirect()->back()->with('update', 'Ο ' . $user->fullName . ' ενημερώθηκε');
     }
 
     public function destroy(User $user)
@@ -85,26 +86,6 @@ class UserController extends Controller {
         return redirect(route('user.index'));
     }
 
-    public function changeStatus(Request $request)
-    {
-        $user = User::find($request->id);
-        $user->active = $request->active;
-        $user->save();
 
-        return response()->json(['success' => 'Status change successfully.']);
-    }
-
-    public function addCourses(Request $request)
-    {
-
-        $user = User::find($request->user_id);
-
-         $user->courses()->attach($request->course_id);
-
-
-
-        return response()->json(['success' => 'Status change successfully.']);
-
-    }
 
 }

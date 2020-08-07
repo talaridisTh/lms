@@ -33,12 +33,13 @@ Route::group(['middleware' => ['auth',"role"]], function () {
 	//! User Routes
     Route::get('/dashboard/users', 'UserController@index')->name('user.index');
     Route::get('/dashboard/create', 'UserController@create')->name('user.create');
-    Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
     Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
+    Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
     Route::patch('/dashboard/users/{user}', 'UserController@update')->name('user.update');
     Route::post('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
-    Route::patch('changeStatus', 'UserController@changeStatus');
-    Route::patch('addCourses', 'UserController@addCourses');
+
+
+
 
 
     Route::get('/dashboard/materials', 'MaterialController@index');

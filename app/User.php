@@ -45,15 +45,39 @@ class User extends Authenticatable {
     {
 
         return $this->belongsToMany(Course::class);
-        //otan to deis auto thimise mou na s pw kati an dn t exw ksexasei !
-        //exoume themata me to App/courses klpa
     }
 
-//        dd($ins);{
     public function materials()
     {
 
         return $this->belongsToMany(Material::class);
+    }
+
+//    CUSTOM METHOD
+    public static function getInstructor()
+    {
+        $users = User::whereHas("courses")->get();
+        $instructor = [];
+        foreach ($users as $user)
+        {
+            if ($user->getRoleNames()[0] == "instructor")
+                array_push($instructor, $user);
+        }
+
+        return $instructor;
+    }
+
+    public static function getStudent()
+    {
+        $users = User::whereHas("courses")->get();
+        $student = [];
+        foreach ($users as $user)
+        {
+            if ($user->getRoleNames()[0] == "student")
+                array_push($student, $user);
+        }
+
+        return $student;
     }
 
     public static function findMaterials($user)
@@ -69,102 +93,51 @@ class User extends Authenticatable {
         return $materialArray;
     }
 
-    public static function getInstructor()
+    public static function getCoursesInstructor($user)
     {
-        return User::whereHas('courses.materials')->get();
+
+        return $authors = DB::table('course_user')
+            ->join('users', 'course_user.user_id', '=', 'users.id')
+            ->join('courses', 'courses.id', '=', 'course_user.course_id')
+            ->whereIn('course_user.user_id', [7])
+            ->select('courses.name')
+            ->orderBy('courses.name')
+            ->get();
     }
 
-
-    public static function getMaterialsInstructor($user)
+    public static function getIfExistInsuctorCourse($user, $courses)
     {
-
-        return User::whereId($user)->with('courses.materials')->whereHas('materials')->first();
-
-    }
-
-    public static function getIfExistInsuctorCourse($user,$courses)
-    {
-
-//          return $test= User::whereHas('materials')
-//                ->with("materials.courses")
-//                ->get()
-//                ->where("id",$user)
-//                ->first()
-//                ->materials
-//                ->first()
-//                ->courses
-//                ->where("id",$courses);
-//
-//        $test= User::whereHas('materials')
-//            ->with("materials.courses")
-//            ->get()
-//            ->where("id",$user)
-//            ->first();
-//
-//        if(isset($test["materials"])){
-//          return is_null(!$test["materials"][0]["courses"]->whereIn("id",$courses));
-//
-//
-//        }else
-//            return  false;
-
-         $test = DB::table("courses")
-            ->join("course_material","courses.id","=","course_material.course_id")
-            ->join("materials","course_material.material_id","=","materials.id")
-            ->join("material_user","material_user.material_id","=","materials.id")
-            ->join("users","material_user.user_id","=","users.id")
-            ->where("users.id",$user)
-            ->where("courses.id",$courses)
+        $test = DB::table("courses")
+            ->join("course_user", "courses.id", "=", "course_user.course_id")
+            ->join("users", "users.id", "=", "course_user.user_id")
+            ->where("users.id", $user)
+            ->where("courses.id", $courses)
             ->select("courses.id")
             ->get();
-
-        if (empty(!count($test))){
+        if (empty(!count($test)))
+        {
             return true;
-        }else{
+        } else
+        {
             return false;
-
         }
-
-
-//         (isset($test)) {
-//              return'$var is either 0, empty, or not set at all';
-//    }
-
-
-
     }
 
-
-
-
-
-
-//exei lathos edw na t koitaksw
-    public static function  getStudent()
-    {
-        return User::whereHas('courses.users')->get();
-
-    }
     public static function getCountStudent($course)
     {
-        return  DB::table("course_user")
-             ->join("users","course_user.user_id","=","users.id")
-             ->join("courses","course_user.course_id","=","courses.id")
-             ->select('users.*')
-            ->where("courses.id","=",$course )
-             ->count();
-
+        return DB::table("course_user")
+            ->join("users", "course_user.user_id", "=", "users.id")
+            ->join("courses", "course_user.course_id", "=", "courses.id")
+            ->select('users.*')
+            ->where("courses.id", "=", $course)
+            ->count();
     }
-
-
-
 
     public static function userIs($user)
     {
 
         return $user->getRoleNames()->first();
     }
-
 
     // $user->fullName  // Onoma Epitheto
     public function getFullNameAttribute()

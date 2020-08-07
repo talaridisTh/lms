@@ -25,3 +25,10 @@ Route::post( 'courses/coursesdatatable', 'Api\CourseController@index' );
 Route::delete( 'courses/massdestroy/{ids}', 'Api\CourseController@massdestroy' );
 Route::patch( 'courses/active', 'Api\CourseController@toggleActive' );
 Route::patch( 'courses/priority', 'Api\CourseController@changePriority' );
+
+
+//Users
+Route::post('users/userDatatable', 'Api\UserController@index')->name("index.datatable");
+Route::patch('/addCourses', 'Api\UserController@addCourses')->name("addcourses.datatable");
+Route::patch('/changeStatus', 'Api\UserController@changeStatus')->name("changeStatus.datatable");;
+
