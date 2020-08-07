@@ -49,7 +49,7 @@ class RemainingMaterialsDataTable extends DataTable
             ->addColumn('action', function($data) {
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-material-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-remainings-checkbox' data-material-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
 

@@ -462,6 +462,10 @@ div.dt-buttons a.btn.processing:after {
   padding: 10px;
 }
 
+.select-all {
+  padding-left: 30px !important;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

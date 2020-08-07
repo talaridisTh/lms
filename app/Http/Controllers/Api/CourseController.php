@@ -163,14 +163,9 @@ class CourseController extends Controller
 		$lastMaterialId = $course->materials()->orderBy('priority', 'desc')->first()->pivot->priority;
 		$materialIds = $request->materialId;
 
-		foreach ( $materialIds as $id ) {
-			$course->materials()->attach( $id, ['active' => 0, 'priority' => $lastMaterialId + 1] );
+		foreach ( $materialIds as $key => $id ) {
+			$course->materials()->attach( $id, ['active' => 0, 'priority' => $lastMaterialId + $key + 1 ] );
 		}
 
-
-// $test = $lastMaterial->priority;
-
-		// return $materialId;
-		// echo $lastMaterial;
 	}
 }

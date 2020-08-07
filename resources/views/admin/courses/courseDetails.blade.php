@@ -16,7 +16,12 @@
 	                <table id="remaining-materials-table" class="table w-100 nowrap modal-table custom-center-table center-not-second">
 						<thead>
 							<tr>
-								<th class="text-center option-column">Επιλογή</th>
+								<th class="text-center option-column select-all">
+									<div class='icheck-primary d-inline'>
+										<input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
+										<label for='all-remainings-checkbox'></label>
+									</div>
+								</th>
 								<th class="text-center">Όνομα</th>
 								<th class="text-center">Topic</th>
 								<th class="text-center">Τύπος</th>
@@ -36,6 +41,7 @@
 					</table>
 	            </div>
 	            <div class="modal-footer">
+	                <button id="add-remaingings-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
 	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 	            </div>
 	        </div><!-- /.modal-content -->
@@ -302,6 +308,49 @@
 			}
 		});
 
+		//! EventListerners 
+		$('#all-remainings-checkbox').click( function() {
+			let checkboxes = $('.js-remainings-checkbox');
+
+			if ( this.checked ) {
+				for ( let i = 0; i < checkboxes.length; i++ ) {
+					checkboxes[i].checked = true;
+				}
+			}
+			else {
+				for ( let i = 0; i < checkboxes.length; i++ ) {
+					checkboxes[i].checked = false;
+				}
+			}
+		});
+
+		$('#add-remaingings-btn').click( function() {
+			let checkboxes = $('.js-remainings-checkbox:checked');
+			let ids = [];
+
+			if ( checkboxes.length == 0 ) {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'info',
+					title: "Δεν υπάρχουν επιλογές...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+
+				return;
+			}
+			else {
+				for ( let i = 0; i < checkboxes.length; i++) {
+					ids.push(checkboxes[i].dataset.materialId)
+				}
+				postMaterialIds( ids )
+			}
+		})
+		//! EventListerners /end
+
+		//! Datatables
 		const courseMaterialsTable = $("#course-materials-list").DataTable({
 			columnDefs: [
 				{ width: "5%", "targets": 0 },
@@ -392,7 +441,9 @@
 			},
 			
 		});
+		//! DataTables /end
 
+		//! DataTables function / EventListener
 		function addMaterialsEventListerner() {
 			$('.js-add-material-btn').click( function() {
 				const materialId = [this.dataset.materialId];
@@ -410,7 +461,7 @@
 					toast: 'true',
 					position: 'top-end',
 					icon: 'success',
-					title: materialId.length > 1 ? "1 Αρχείο προστέθηκε" : `${materialId.length} Αρχεία προστέθηκαν`,
+					title: materialId.length == 1 ? "1 Αρχείο προστέθηκε" : `${materialId.length} Αρχεία προστέθηκαν`,
 					showConfirmButton: false,
 					timer: 3000,
   					timerProgressBar: true
@@ -465,42 +516,43 @@
 		}
 
 		function toggleCourseMaterial() {
-		$('.js-toggle').unbind();
+			$('.js-toggle').unbind();
 
-		$('.js-toggle').on('change', function() {
-			let courseCnt = this.parentElement.parentElement;
-			let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
+			$('.js-toggle').on('change', function() {
+				let courseCnt = this.parentElement.parentElement;
+				let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
 
-			axios.patch('/api/courses/toggle-materials', {
-				courseId: this.dataset.courseId,
-				materialId: this.dataset.materialId,
-				state: this.checked
-			})
-			.then( (res) => {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'success',
-					title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
-				// updatedAtElm.textContent = "Μόλις τώρα";
-			})
-			.catch( (err) => {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'error',
-					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
+				axios.patch('/api/courses/toggle-materials', {
+					courseId: this.dataset.courseId,
+					materialId: this.dataset.materialId,
+					state: this.checked
+				})
+				.then( (res) => {
+					Swal.fire({
+						toast: 'true',
+						position: 'top-end',
+						icon: 'success',
+						title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
+						showConfirmButton: false,
+						timer: 3000,
+  						timerProgressBar: true
+					});
+					// updatedAtElm.textContent = "Μόλις τώρα";
+				})
+				.catch( (err) => {
+					Swal.fire({
+						toast: 'true',
+						position: 'top-end',
+						icon: 'error',
+						title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+						showConfirmButton: false,
+						timer: 3000,
+  						timerProgressBar: true
+					});
 				});
 			});
-		});
-	}
+		}
+
 
 	</script>
 @endsection
