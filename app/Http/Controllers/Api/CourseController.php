@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
+use App\DataTables\RemainingMaterialsDataTable;
 
 class CourseController extends Controller
 {
@@ -140,8 +141,9 @@ class CourseController extends Controller
 		return $dataTable->render('course.materials');
 	}
 
-	public function remainingMaterials() {
-
+	public function remainingMaterials(RemainingMaterialsDataTable $dataTable) {
+		// dd("here");
+		return $dataTable->render('course.remaingMaterials');
 	}
 
 	public function toggleCourseMaterials( Request $request ) {

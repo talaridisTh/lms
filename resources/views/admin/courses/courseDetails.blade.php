@@ -2,7 +2,6 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-
 @endsection
 
 @section('content')
@@ -13,35 +12,31 @@
 	                <h4 class="modal-title" id="primary-header-modalLabel">Προσθήκη Μαθημάτων</h4>
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
-	            <div class="modal-body">
-	                <table id="remaining-materials-table" class="table w-100 nowrap modal-table">
+	            <div class="modal-body table-cnt">
+	                <table id="remaining-materials-table" class="table w-100 nowrap modal-table custom-center-table center-not-second">
 						<thead>
 							<tr>
-								<th>Όνομα</th>
-								<th style="display: none;"></th>
+								<th class="text-center option-column">Επιλογή</th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Topic</th>
+								<th class="text-center">Τύπος</th>
+								<th class="text-center"></th>
 							</tr>
 						</thead>
-						<tbody class="tables-hover-effect">
-							@foreach ($allRemainingMaterials as $material)
-								<tr>
-									<td>{{ $material['name'] }}</td>
-									<td class="d-flex">
-										<button type="button" class="btn btn-primary ml-auto">Προσθήκη</button>
-									</td>
-								</tr>
-							@endforeach
-						</tbody>
+						<tbody class="tables-hover-effect"></tbody>
 						<tfoot>
 							<tr>
-								<th>Όνομα</th>
-								<th></th>
+								<th class="text-center">Επιλογή</th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Topic</th>
+								<th class="text-center">Τύπος</th>
+								<th class="text-center"></th>
 							</tr>
 						</tfoot>
 					</table>
 	            </div>
 	            <div class="modal-footer">
 	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-	                {{-- <button type="button" class="btn btn-primary">Save changes</button> --}}
 	            </div>
 	        </div><!-- /.modal-content -->
 	    </div><!-- /.modal-dialog -->
@@ -168,7 +163,7 @@
 
 					<div class="tab-content">
 						<!-- Materials table tab-->
-						<div class="tab-pane show active" id="materials">
+						<div class="tab-pane show active table-cnt" id="materials">
 
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
@@ -308,7 +303,6 @@
 		});
 
 		const courseMaterialsTable = $("#course-materials-list").DataTable({
-			scrollX:!0,
 			columnDefs: [
 				{ width: "5%", "targets": 0 },
 				{ className: "js-link cursor-pointer", targets: [ 1, 4, 6 ] },
@@ -358,10 +352,23 @@
 			},
 			
 		});
+
 		const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
-			scrollX:!0,
-			columnDefs: [
-				{ "width": "5%", "targets": 1 }
+			processing: true,
+			serverSide: true,
+			ajax: {
+				url: "/api/courses/not-incourse-materials-datatable",
+				type: "post",
+				data: {
+					courseId: courseId
+				}
+			},
+			columns: [
+				{data: 'action', width: "5%", orderable: false},
+				{data: 'materialName', name: 'materials.name'},
+				{data: 'topicName', name: 'topics.name'},
+				{data: 'type', name: 'materials.type'},
+				{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 			],
 			language:{
 				emptyTable: 		"Δεν υπάρχουν εγγραφές",
@@ -380,13 +387,17 @@
 				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+				
+				addMaterialEventListerner()
 			},
 			
 		});
 
-		/* $('#material-modal-shown-btn').click( function() {
-			setTimeout( function() { remainingMaterialsTables.columns.adjust(); }, 200)
-		}); */
+		function addMaterialEventListerner() {
+			$('.js-add-material-btn').click( function() {
+				console.log(this.dataset.materialId);
+			});
+		}
 
 		function sortInputsInit() {
 

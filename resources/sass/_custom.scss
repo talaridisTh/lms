@@ -62,3 +62,10 @@
 	padding-top: 13px;
 }
    
+.table-cnt > div > .row:nth-child(2) {
+	overflow-x: auto !important;
+}
+
+.last-column-p-10 > td:last-of-type {
+	padding: 10px;
+}
