@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\DataTables\AddCoursesDataTable;
 use App\DataTables\UserProfileDataTable;
 use App\DataTables\UsersDataTable;
 use App\User;
@@ -21,6 +22,7 @@ class UserController {
         return $dataTable->render('users.profile');
     }
 
+
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
@@ -30,13 +32,24 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
+    public function addCourseModal(AddCoursesDataTable $dataTable)
+    {
+
+        return $dataTable->render('users.addCourses');
+
+    }
+
     public function addCourses(Request $request)
     {
+
+//
+
 
         $user = User::find($request->user_id);
         $user->courses()->attach($request->course_id);
 
         return response()->json(['success' => 'Status change successfully.']);
+
     }
 
 }

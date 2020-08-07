@@ -149,7 +149,6 @@
                 }
             })
         }
-
         function routeLink() {
             $('.js-link').click( function() {
                 $('.js-link').unbind();

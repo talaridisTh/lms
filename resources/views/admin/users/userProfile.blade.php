@@ -215,11 +215,23 @@
 
         const addCourse = $("#datatableAddCourse").DataTable({
             scrollX: !0,
-            info: false,
-            "autoWidth": true,
-            "columns": [
-                {"width": "100%"},
-                {"width": "70%"},
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: "{{route("courseModal.datatable")}}",
+                type: "post",
+                data: {
+                    userId: userId
+                }
+            },
+            columns: [
+                {data: 'name', name: 'name'},
+                {data: 'action', name: 'action'},
+
+            ],
+            columnDefs: [
+                { "width": "5%", "targets": 1 },
+
             ],
             language: {
                 emptyTable: "Δεν υπάρχουν εγγραφές",
@@ -239,7 +251,11 @@
                 $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
                 $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
                 $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-            },
+                addCourseToUser()
+
+            }
+
+
 
         });
 
@@ -251,37 +267,26 @@
         });
 
 
-        $(".js-button").click(async function () {
-            const parent = this.parentElement.parentElement
-            if (parent.dataset.exist == "") {
-                parent.dataset.exist = 1
-                this.value = "Αφαίρεση"
-                this.classList.remove("btn-info")
-                this.classList.add("btn-danger")
+        function addCourseToUser(){
+            $('.js-button').unbind();
+            $(".js-button").click(async function () {
+                const parent = this.parentElement.parentElement
+                try {
+                    const res = await axios.patch('{{route("addcourses.datatable")}}', {
+                        "course_id": this.dataset.courseId,
+                        "user_id": userId,
 
 
-            } else {
-                parent.dataset.exist = ""
-                this.value = "Προσθήκη"
-                this.classList.remove("btn-danger")
-                this.classList.add("btn-info")
+                    })
+                    console.log(res)
 
+                } catch (e) {
+                    console.log(e)
+                }
 
-            }
-            try {
-                const res = await axios.patch('/addCourses', {
-                    "course_id": this.dataset.courseId,
-                    "user_id": this.dataset.user,
+            })
+        }
 
-                })
-                console.log(res)
-
-            } catch (e) {
-                console.log(e)
-            }
-
-
-        })
 
 
     </script>
