@@ -2,17 +2,12 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-	{{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css"> --}}
 @endsection
 
 @section('content')
     <div class="container" style="max-width:1370px">
         <div class="row mb-2">
-            <div class="col-sm-4">
-                {{-- <a href="javascript:void(0);" class="btn btn-primary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
-					Νέο Course
-				</a> --}}
-            </div>
+            <div class="col-sm-4"></div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
 					<a href="courses/create" class="btn btn-secondary mb-2"><i class="mdi mdi-plus-circle mr-2"></i>
@@ -26,16 +21,13 @@
 							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
 							<div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#">Export</a>
-
 						</div>
 					</div>
-                    {{--                    <button type="button" class="btn btn-success mb-2 mr-1"><i class="mdi mdi-settings"></i></button>--}}
-                    {{--                    <button type="button" class="btn btn-light mb-2 mr-1">Import</button>--}}
 				</div>
             </div>
         </div>
 
-        <table id="courses-datatable" class="table w-100 nowrap custom-center-table remove-talbe-classes">
+        <table id="courses-datatable" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
             <thead>
             	<tr>
             	    <th class="text-center option-column">Επιλογή</th>
@@ -45,30 +37,9 @@
             	    <th class="text-center">Ημ. Δημιουργίας</th>
             	</tr>
             </thead>
-            <tbody class="tables-hover-effect">
-
-           {{--  @foreach ($courses as $course)
-				<tr data-course-id="{{ $course['id'] }}">
-                    <td class="pl-4">
-						<div class="icheck-primary d-inline">
-							<input class="js-course-checkbox" data-course-id="{{ $course['id'] }}" data-course-name="{{ $course['name'] }}" type="checkbox" id="{{ $course['slug'] }}" autocomplete="off">
-							<label for="{{ $course['slug'] }}"></label>
-						</div>
-					</td>
-                    <td class="cursor-pointer js-link">{{ $course['name'] }}</td>
-                    <td>
-						<input class="js-toggle" data-course-id="{{ $course['id'] }}" type="checkbox" id="{{ $course['slug'] }}-toggle-checkbox" {{ $course['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>
-						<label for="{{ $course['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>
-					</td>
-                    <td class="js-updated-at cursor-pointer js-link">{{ $course['updated_at'] }}</td>
-                    <td class="cursor-pointer js-link">{{ $course['created_at']}}</td>
-                </tr>
-            @endforeach --}}
-
-            </tbody>
+            <tbody class="tables-hover-effect"></tbody>
             <tfoot>
             	<tr>
-					{{-- <th class="text-left">Επιλογή</th> --}}
             	    <th class="text-center">Επιλογή</th>
             	    <th class="text-center">Όνομα</th>
             	    <th class="text-center">Ενεργό</th>
@@ -86,7 +57,6 @@
 
 <script>
 
-
 	$("#courses-datatable").DataTable({
 		scrollX:!0,
 		"columnDefs": [{ 
@@ -95,13 +65,12 @@
 		processing: true,
 		serverSide: true,
 		ajax: {
-			url: "/api/courses/coursesdatatable",
+			url: "/api/courses/courses-datatable",
 			type: "post"
 		},
 		columnDefs: [
 			{ orderable: false, "targets": [ 0, 2 ] },
-			{ className: "js-link cursor-pointer", "targets": [ 1, 4 ] },
-			{ className: "js-link cursor-pointer js-updated-at", "targets": [ 3 ] },
+			{ className: "js-link cursor-pointer", "targets": [ 1, 3, 4 ] }
 		],
 		columns: [
 			{data: 'action', name: 'action'},
@@ -125,7 +94,7 @@
 		},
 		drawCallback:function(){
 			$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-			$(".remove-talbe-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+			$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
 
 			atLinkEventListener();
 			toggleActive();
@@ -207,7 +176,7 @@
 					timer: 3000,
   					timerProgressBar: true
 				});
-				updatedAtElm.textContent = "Μόλις τώρα";
+				// updatedAtElm.textContent = "Μόλις τώρα";
 			})
 			.catch( (err) => {
 				Swal.fire({
@@ -222,8 +191,6 @@
 			});
 		});
 	}
-
-	
 
 	function atLinkEventListener() {
 		$('.js-link').click( function() {

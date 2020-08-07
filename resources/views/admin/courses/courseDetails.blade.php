@@ -170,49 +170,19 @@
 						<!-- Materials table tab-->
 						<div class="tab-pane show active" id="materials">
 
-							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table">
+							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
 									<tr>
-										<th class="option-column">Επιλογή</th>
-										<th>Όνομα</th>
-										<th>Ενεργό</th>
-										<th>Κατάταξη</th>
-										<th>Τύπος</th>
-										<th>Τελ. Ανανέωση</th>
-										<th>Ημ. Δημιουργίας</th>
+										<th class="text-center">Επιλογή</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Ενεργό</th>
+										<th class="text-center">Κατάταξη</th>
+										<th class="text-center">Τύπος</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
 									</tr>
 								</thead>
-								<tbody class="tables-hover-effect">
-									@foreach ($materials as $material)
-										<tr>
-											<td class="pl-4">
-												<div class="icheck-primary d-inline">
-													<input id="{{ $material['slug'] }}" class="js-material-checkbox" data-material-id="{{ $material['id'] }}" data-material-name="{{ $material['name'] }}" type="checkbox" autocomplete="off">
-													<label for="{{ $material['slug'] }}"></label>
-												</div>
-											</td>
-											<td>{{ $material['name'] }}</td>
-											<td>
-												<input class="js-toggle" data-material-id="{{ $material['id'] }}" 
-													type="checkbox" id="{{ $material['slug'] }}-toggle-checkbox" 
-													{{ $material->pivot['active'] == 0 ? '' : 'checked' }} 
-													data-switch="bool" autocomplete="off"/>
-												<label for="{{ $material['slug'] }}-toggle-checkbox" data-on-label="On" data-off-label="Off"></label>	
-											</td>
-											<td>
-												<div class="form-group">
-													<input type="text" class="form-control text-center js-sort-input" 
-														data-material-id="{{ $material['id'] }}" 
-														data-current-priority="{{ $material->pivot['priority'] }}" 
-														value="{{ $material->pivot['priority'] }}" autocomplete="off">
-												</div>
-											</td>
-											<td>{{ $material['type']}}</td>
-											<td>{{ $material['updated_at'] }}</td>
-											<td>{{ $material['created_at'] }}</td>
-										</tr>
-									@endforeach
-								</tbody>
+								<tbody class="tables-hover-effect"></tbody>
 								<tfoot>
 									<tr>
 										<th>Επιλογή</th>
@@ -306,6 +276,8 @@
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 
 	<script>
+		//! GLOBAL VARIABLES
+		const courseId = $("#course-materials-list")[0].dataset.courseId
 		const authors = $('.js-authors');
 
 		if ( authors.length > 3 ) {
@@ -337,8 +309,30 @@
 
 		const courseMaterialsTable = $("#course-materials-list").DataTable({
 			scrollX:!0,
-			"columnDefs": [
-				{ "width": "5%", "targets": 0 }
+			columnDefs: [
+				{ width: "5%", "targets": 0 },
+				{ className: "js-link cursor-pointer", targets: [ 1, 4, 6 ] },
+				{ className: "js-link cursor-pointer", targets: 5 },
+				{ width: "5%", targets: 3 }
+			],
+			order: [3, "asc"],
+			processing: true,
+			serverSide: true,
+			ajax: {
+				url: "/api/courses/course-materials-datatable",
+				type: "post",
+				data: {
+					courseId: courseId
+				}
+			},
+			columns: [
+				{data: 'action', name: 'action', orderable: false},
+				{data: 'name', name: 'name'},
+				{data: 'active', name: 'active'},
+				{data: 'priority', name: 'priority', searchable: false},
+				{data: 'type', name: 'type'},
+				{data: 'updated_at', name: 'updated_at'},
+				{data: 'created_at', name: 'created_at'},
 			],
 			language:{
 				emptyTable: 		"Δεν υπάρχουν εγγραφές",
@@ -357,12 +351,16 @@
 				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+				$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
+
+				toggleCourseMaterial()
+				sortInputsInit();
 			},
 			
 		});
 		const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 			scrollX:!0,
-			"columnDefs": [
+			columnDefs: [
 				{ "width": "5%", "targets": 1 }
 			],
 			language:{
@@ -390,31 +388,76 @@
 			setTimeout( function() { remainingMaterialsTables.columns.adjust(); }, 200)
 		}); */
 
-		$('.js-sort-input').on( "input", function() {
-			let inputValue = this.value;
+		function sortInputsInit() {
 
-			if ( isNaN( inputValue ) ) {
-				return this.value = inputValue.replace(/[^0-9]/g, '');
-			}
+			$('.js-sort-input').unbind();
+
+			$('.js-sort-input').on( "input", function() {
+
+				let inputValue = this.value;
+
+				if ( isNaN( inputValue ) ) {
+					return this.value = inputValue.replace(/[^0-9]/g, '');
+				}
+
+			});
+
+			$('.js-sort-input').on('keyup', function() {
+
+				if ( event.keyCode == 13 && !isNaN( this.value) ) {
+					axios.patch('/api/courses/priority', {
+						courseId: $('#course-materials-list')[0].dataset.courseId,
+						materialId: this.dataset.materialId,
+						priority: { 
+							new: this.value, 
+							old: this.dataset.currentPriority
+						},
+					})
+					.then( (res) => {
+						courseMaterialsTable.ajax.reload();
+					})
+				}
+
+			})
+		}
+
+		function toggleCourseMaterial() {
+		$('.js-toggle').unbind();
+
+		$('.js-toggle').on('change', function() {
+			let courseCnt = this.parentElement.parentElement;
+			let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
+
+			axios.patch('/api/courses/toggle-materials', {
+				courseId: this.dataset.courseId,
+				materialId: this.dataset.materialId,
+				state: this.checked
+			})
+			.then( (res) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'success',
+					title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+				// updatedAtElm.textContent = "Μόλις τώρα";
+			})
+			.catch( (err) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'error',
+					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+			});
 		});
-
-		$('.js-sort-input').on('keyup', function() {
-			if ( event.keyCode == 13 && !isNaN( this.value) ) {
-
-				axios.patch('/api/courses/priority', {
-					courseId: $('#course-materials-list')[0].dataset.courseId,
-					materialId: this.dataset.materialId,
-					priority: { 
-						new: this.value, 
-						old: this.dataset.currentPriority
-					},
-				})
-				.then( (res) => {
-
-					$("#course-materials-list").DataTable().draw();
-				})
-			}
-		})
+	}
 
 	</script>
 @endsection

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
+use App\DataTables\CourseMaterialsDataTable;
 
 class CourseController extends Controller
 {
@@ -132,6 +133,26 @@ class CourseController extends Controller
 		CourseMaterial::where( 'course_id', $data['courseId'] )
 			->where( 'material_id', $data['materialId'] )
 			->update( ['priority' => $data['priority']['new']] );
+
+	}
+
+	public function courseMaterials(CourseMaterialsDataTable $dataTable) {
+		return $dataTable->render('course.materials');
+	}
+
+	public function remainingMaterials() {
+
+	}
+
+	public function toggleCourseMaterials( Request $request ) {
+
+		$data = $request->all();
+
+		$material = Course::find( $data['courseId'] )->materials()
+			->where('material_id', $data['materialId']);
+
+		$material->active = $data['state'] == 1 ? 1 : 0;
+		$material->update( ['course_material.active'=> $data['state'] == 1 ? 1 : 0 ] );
 
 	}
 }
