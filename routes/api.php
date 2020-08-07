@@ -40,6 +40,7 @@ Route::post( 'courses/not-incourse-materials-datatable', 'Api\CourseController@r
 
 
 //Users
-Route::post('users/userDatatable', 'Api\UserController@index')->name("index.datatable");
+Route::post('users/view-users', 'Api\UserController@index')->name("index.datatable");
+Route::post('users/view-user', 'Api\UserController@show')->name("show.datatable");
 Route::patch('/addCourses', 'Api\UserController@addCourses')->name("addcourses.datatable");
 Route::patch('/changeStatus', 'Api\UserController@changeStatus')->name("changeStatus.datatable");;

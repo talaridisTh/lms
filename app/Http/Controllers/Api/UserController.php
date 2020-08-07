@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
-
-
+use App\DataTables\UserProfileDataTable;
 use App\DataTables\UsersDataTable;
 use App\User;
 use Illuminate\Http\Request;
@@ -11,11 +10,16 @@ use Illuminate\Http\Request;
 class UserController {
 
     public function index(UsersDataTable $dataTable)
-{
+    {
 
-    return $dataTable->render('users.index');
+        return $dataTable->render('users.index');
+    }
 
-}
+    public function show(UserProfileDataTable $dataTable)
+    {
+
+        return $dataTable->render('users.profile');
+    }
 
     public function changeStatus(Request $request)
     {

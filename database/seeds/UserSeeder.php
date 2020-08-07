@@ -19,7 +19,7 @@ class UserSeeder extends Seeder {
         User::create([
             'first_name' => "admin",
             'last_name' => "admin",
-            'avatar' => "sjkfbhdjka0dbd541fbe1ca1a045e.jpg",
+            'avatar' => "https://lorempixel.com/640/480/?10211",
             'email' => "admin@gmail.com",
             'password' => Hash::make('password'),
             'active' => 1,
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder {
         User::create([
             'first_name' => "instructor",
             'last_name' => "instructor",
-            'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
+            'avatar' => "https://lorempixel.com/640/480/?10961",
             'email' => "instructor@gmail.com",
             'password' => Hash::make('password'),
             'active' => 1,
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder {
         User::create([
             'first_name' => "partner",
             'last_name' => "partner",
-            'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
+            'avatar' => "https://lorempixel.com/640/480/?10914",
             'email' => "partner@gmail.com",
             'password' => Hash::make('password'),
             'active' => 1,
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder {
         User::create([
             'first_name' => "student",
             'last_name' => "student",
-            'avatar' => "fjmwedkskb0880dbd541fbe1ca1a045e.jpg",
+            'avatar' => "https://lorempixel.com/640/480/?10917",
             'email' => "student@gmail.com",
             'password' => Hash::make('password'),
             'active' => 1,

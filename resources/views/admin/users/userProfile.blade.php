@@ -127,6 +127,8 @@
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script>
+        const userId = $(".course-materials-list")[0].dataset.id
+
 
         $('#alertSumbit').submit(async function (e) {
             e.preventDefault()
@@ -169,54 +171,47 @@
 
         });
 
-
-        $(".course-materials-list").DataTable({
+        const courses = $(".course-materials-list").DataTable({
+            scrollX: !0,
+            // "columnDefs": [
+            //     {"width": "5%", "targets": [2]}
+            // ],
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{route("user.show",$user->id)}}",
-                type: "get"
+                url: "{{route("show.datatable")}}",
+                type: "post",
+                data: {
+                    userId: userId
+                }
+
             },
             columns: [
-                {
-                    data: "first_name",
-                    name: "first_name"
-                },
-                {
-                    data: "last_name",
-                    name: "last_name"
-                },
-                {data: 'updated_at', name: 'updated_at'},
-                {data: 'created_at', name: 'created_at'},
-            ]
-        })
+                {data: 'name', name: 'name'},
+                {data: 'students', name: 'students'},
+                {data: 'action', name: 'action'},
+            ],
+            language: {
+                emptyTable: "Δεν υπάρχουν εγγραφές",
+                info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+                infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
+                lengthMenu: "Αποτελέσματα ανα σελίδα: _MENU_",
+                loadingRecords: "Φόρτωση ...",
+                processing: "Επεξεργασία ...",
+                search: "Αναζήτηση: ",
+                zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
+                paginate: {
+                    previous: "<i class='mdi mdi-chevron-left'>",
+                    next: "<i class='mdi mdi-chevron-right'>"
+                }
+            },
+            drawCallback: function () {
+                $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+                $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+                $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+            },
 
-        // const courses = $(".course-materials-list").DataTable({
-        //     scrollX: !0,
-        //     "columnDefs": [
-        //         {"width": "5%", "targets": [2]}
-        //     ],
-        //     language: {
-        //         emptyTable: "Δεν υπάρχουν εγγραφές",
-        //         info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-        //         infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
-        //         lengthMenu: "Αποτελέσματα ανα σελίδα: _MENU_",
-        //         loadingRecords: "Φόρτωση ...",
-        //         processing: "Επεξεργασία ...",
-        //         search: "Αναζήτηση: ",
-        //         zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
-        //         paginate: {
-        //             previous: "<i class='mdi mdi-chevron-left'>",
-        //             next: "<i class='mdi mdi-chevron-right'>"
-        //         }
-        //     },
-        //     drawCallback: function () {
-        //         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-        //         $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-        //         $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-        //     },
-        //
-        // });
+        });
 
         const addCourse = $("#datatableAddCourse").DataTable({
             scrollX: !0,

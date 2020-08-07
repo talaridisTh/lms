@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\User;
 use Yajra\DataTables\Html\Button;
+use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
@@ -31,20 +32,20 @@ class UsersDataTable extends DataTable {
             ->editColumn('active', function ($data) {
 
                 $active = $data->active == 0 ? "" : "checked";
-                
 
-
-
-                return "<input class='js-toggle' data-id='". $data->id ."' type='checkbox' id='". $data->first_name ."-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
-					<label for='". $data->first_name ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+                return "<input class='toggle-class' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
-            ->rawColumns(['action', 'active'])
+            ->editColumn('avatar', function ($data) {
+
+                return "<img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' > ";
+            })
+            ->rawColumns(['action', 'active', "avatar"])
             ->setRowAttr(['data-user-id' => function ($data) {
 
                 return $data->id;
             }]);
     }
-
 
     /**
      * Get query source of dataTable.
@@ -54,6 +55,7 @@ class UsersDataTable extends DataTable {
      */
     public function query(User $model)
     {
+
         return $model->newQuery();
     }
 

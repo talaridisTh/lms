@@ -32,7 +32,7 @@ class UserController extends Controller {
         $userCourses = $user->courses()->get();
         $allMaterials = User::findMaterials($user->id);
 
-        return $dataTable->render('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs"));
+        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs"));
 
 
     }

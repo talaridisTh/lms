@@ -32,7 +32,7 @@
             </div>
 
         </div>
-        <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table">
+        <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
             <tr>
                 <th class="text-left">Avatar</th>
@@ -44,33 +44,8 @@
                 <th class="text-left">Ημ. Εγγραφής</th>
             </tr>
             </thead>
-            {{--            <tbody class="tables-hover-effect">--}}
-
-            {{--            @foreach ($users as $n =>$user)--}}
-            {{--                <tr class="text-secondary">--}}
-            {{--                    <td>{{ $user['id'] }}</td>--}}
-            {{--                    <td>--}}
-            {{--                        <a href="{{route('user.show',$user->id)}}" style="cursor: pointer" class="ml-3 text-secondary">--}}
-            {{--                            {{ $user['first_name'] }}--}}
-            {{--                        </a>--}}
-            {{--                    </td>--}}
-            {{--                    <td>{{ $user['last_name'] }}</td>--}}
-            {{--                    <td>{{  $user->getRoleNames()[0]}}</td>--}}
-            {{--                    <td>{{ $user['email'] }}</td>--}}
-            {{--                    <td>--}}
-            {{--                                    <input class="toggle-class" data-id="{{ $user['id'] }}" type="checkbox"--}}
-            {{--                                           id="{{ $user['first_name'] }}-toggle-checkbox"--}}
-            {{--                                           {{ $user['active'] == 0 ? '' : 'checked' }} data-switch="bool" autocomplete="off"/>--}}
-            {{--                                    <label for="{{ $user['first_name'] }}-toggle-checkbox" data-on-label="On"--}}
-            {{--                                           data-off-label="Off"></label>--}}
-            {{--                    </td>--}}
-            {{--                    <td>{{ $user['created_at'] }}</td>--}}
-
-
-            {{--                </tr>--}}
-            {{--            @endforeach--}}
-
-            {{--            </tbody>--}}
+                        <tbody class="tables-hover-effect">
+                        </tbody>
             <tfoot>
             <tr>
                 <th class="text-left">Avatar</th>
@@ -99,6 +74,10 @@
                 url: "{{route("index.datatable")}}",
                 type: "post"
             },
+            columnDefs: [
+                { orderable: false, "targets": [ 0 ] },
+                { className: "js-link cursor-pointer", "targets":  [0, 1, 2, 3, 4, 6]}
+            ],
             columns: [
                 {data: "avatar", name: "avatar"},
                 {data: "first_name", name: "first_name"},
@@ -126,9 +105,11 @@
 
             drawCallback: function () {
                 $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+                $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
 
 
                 toogleInput();
+                routeLink();
             }
         })
 
@@ -139,9 +120,10 @@
                 const status = $(this).prop('checked') == true ? 1 : 0;
                 const user_id = $(this).data('id');
                 console.log(status)
+                console.log(user_id)
 
                 try {
-                    const {data} = await axios.patch('/changeStatus', {
+                    const {data} = await axios.patch("{{route("changeStatus.datatable")}}", {
                         'active': status,
                         'id': user_id
                     })
@@ -166,6 +148,17 @@
                     });
                 }
             })
+        }
+
+        function routeLink() {
+            $('.js-link').click( function() {
+                $('.js-link').unbind();
+
+                let user = this.parentElement.dataset.userId;
+
+
+                window.location = `/dashboard/users/${user}`;
+            });
         }
 
 
