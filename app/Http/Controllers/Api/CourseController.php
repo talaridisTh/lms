@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
+use App\DataTables\RemainingMaterialsDataTable;
 
 class CourseController extends Controller
 {
@@ -140,8 +141,8 @@ class CourseController extends Controller
 		return $dataTable->render('course.materials');
 	}
 
-	public function remainingMaterials() {
-
+	public function remainingMaterials(RemainingMaterialsDataTable $dataTable) {
+		return $dataTable->render('course.remaingMaterials');
 	}
 
 	public function toggleCourseMaterials( Request $request ) {
@@ -153,6 +154,18 @@ class CourseController extends Controller
 
 		$material->active = $data['state'] == 1 ? 1 : 0;
 		$material->update( ['course_material.active'=> $data['state'] == 1 ? 1 : 0 ] );
+
+	}
+
+	public function addMaterials( Request $request ) {
+
+		$course = Course::find( $request->courseId );
+		$lastMaterialId = $course->materials()->orderBy('priority', 'desc')->first()->pivot->priority;
+		$materialIds = $request->materialId;
+
+		foreach ( $materialIds as $key => $id ) {
+			$course->materials()->attach( $id, ['active' => 0, 'priority' => $lastMaterialId + $key + 1 ] );
+		}
 
 	}
 }
