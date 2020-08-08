@@ -74,8 +74,7 @@ class BundleController extends Controller
 
 		$bundle->active = $request->state;
 		$bundle->save();
-        // return $request->state;
-        // return $bundle;
+
     }
 
     /**

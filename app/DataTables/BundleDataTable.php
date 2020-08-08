@@ -39,7 +39,12 @@ class BundleDataTable extends DataTable
 					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
 
 			})
-			->rawColumns(['action', 'active']);
+			->rawColumns(['action', 'active'])
+			->setRowAttr([ 'data-bundle-id' => function($data) {
+
+				return  $data->id;
+
+			}]);
     }
 
     /**

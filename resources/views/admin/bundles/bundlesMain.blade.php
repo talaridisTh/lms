@@ -31,7 +31,7 @@
 		</div>
 	</div>
 
-	<table id="bundle-table" class="table w-100 nowrap custom-center-table center-not-second">
+	<table id="bundle-table" class="table w-100 nowrap js-remove-table-classes custom-center-table center-not-second">
 		<thead>
 			<tr>
 				<th class="text-center option-column">Επιλογή</th>
@@ -61,11 +61,11 @@
 	<script>
 		$("#bundle-table").DataTable({
 			columns: [
-				{ data: "action", name: "action", width: "5%" },
-				{ data: "name", name: "name" },
-				{ data: "active", name: "active", width: "5%" },
-				{ data: "updated_at", name: "updated_at" },
-				{ data: "created_at", name: "created_at" },
+				{ data: "action", name: "action", width: "5%", orderable: false, searchable: false },
+				{ data: "name", name: "name", className: "js-link cursor-pointer"},
+				{ data: "active", name: "active", width: "5%", searchable: false },
+				{ data: "updated_at", name: "updated_at", className: "js-link cursor-pointer"},
+				{ data: "created_at", name: "created_at", className: "js-link cursor-pointer"},
 			],
 			processing: true,
 			serverSide: true,
@@ -88,7 +88,9 @@
 			},
 			drawCallback:function(){
 				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+				$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
 
+				jsLinkInit();
 				activeToggleInit();
 			}
 		})
@@ -115,11 +117,15 @@
 			});
 		}
 
-		$('.js-link').click( function() {
-			let bundleId = this.parentElement.dataset.bundleId;
+		function jsLinkInit() {
 
-			window.location = `bundle/${bundleId}`;
-		});
+			$('.js-link').click( function() {
+				let bundleId = this.parentElement.dataset.bundleId;
+
+				window.location = `bundle/${bundleId}`;
+			});
+
+		}
 
 		function toastAlert( icon, message ) {
 			Swal.fire({
