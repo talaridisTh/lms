@@ -144,7 +144,7 @@
                     cancelButtonText: 'Άκυρο'
                 });
                 if (value) {
-                    const res = await axios.post(`/dashboard/users/${user}`)
+                    const res = await axios.post(`/dashboard/users/${user}`,{ _method: 'DELETE'})
                     sweetAlert("Διεγράφη",'success')
                     window.location = `http://127.0.0.1:8000/dashboard/users`;
                 }
@@ -237,11 +237,37 @@
                 $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
                 $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
                 addCourseToUser()
+                deleteCourse()
 
             }
 
 
         });
+
+        function deleteCourse() {
+            $('.js-button-delete').unbind();
+            $(".js-button-delete").click( async function () {
+                try {
+                    let {status} = await axios.delete("{{route('destroy.datatable')}}",{
+                        data: {
+                            'course_id' :this.dataset.courseId,
+                            'user_id' :userId
+                        }
+                    })
+                    if(status==200){
+                        sweetAlert(`${this.dataset.courseName}  Διεγραφη`,'error')
+                        courses.ajax.reload();
+                        addCourse.ajax.reload();
+                    }
+                }catch (e) {
+                    sweetAlert("Παρουσιάστηκε κάποιο πρόβλημα", 'error')
+                }
+
+
+                console.log(this)
+            })
+        }
+
         $('#material-modal-shown-btn').click(function () {
             setTimeout(function () {
                 addCourse.columns.adjust();
@@ -256,7 +282,7 @@
             let jsButton = $(".js-button").click(async function () {
                 const parent = this.parentElement.parentElement
                 if (parent.dataset.exist) {
-                    sweetAlert(`1 αφαιρεθηκε`,'warning')
+                    sweetAlert(`${this.dataset.courseName}  αφαιρεθηκε`,'warning')
                     ids = ids.filter(val => val !== this.dataset.courseId);
                     this.value = 'Προσθηκη'
                     this.classList.remove("btn-danger")
@@ -266,7 +292,7 @@
                     if (!ids.includes(this.dataset.courseId)) {
                         ids.push(this.dataset.courseId)
                     }
-                    sweetAlert(`${ids.length} Επιλέχθηκε`,'success')
+                    sweetAlert(`${this.dataset.courseName} Επιλέχθηκε`,'success')
                     this.classList.remove("btn-info")
                     this.classList.add("btn-danger")
                     this.value = 'Αφαιρεση'

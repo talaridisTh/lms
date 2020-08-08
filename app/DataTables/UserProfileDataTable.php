@@ -34,8 +34,11 @@ class UserProfileDataTable extends DataTable
             })
             ->addColumn('action', function ($data)  {
 
-                return "<td><h3><i class='mdi text-danger mdi-delete-circle cursor-pointer'></i></h3></td>";
+                return "<td><h3><i data-course-id='{$data->id}' data-course-name='{$data->name}' class=' js-button-delete mdi text-danger mdi-delete-circle cursor-pointer'></i></h3></td>";
             })
+            ->setRowAttr(['data-course-id' => function ($data) {
+                return [$data->id,$data->name];
+            }])
         ->rawColumns(['students','action']);
     }
 

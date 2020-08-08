@@ -41,3 +41,4 @@ Route::post('users/view-user', 'Api\UserController@show')->name("show.datatable"
 Route::post('/user/add-course-modal', 'Api\UserController@addCourseModal')->name("courseModal.datatable");
 Route::patch('/user/add-course', 'Api\UserController@addCourses')->name("addcourses.datatable");
 Route::patch('/changeStatus', 'Api\UserController@changeStatus')->name("changeStatus.datatable");;
+Route::delete('/user/delete', 'Api\UserController@destroy')->name("destroy.datatable");

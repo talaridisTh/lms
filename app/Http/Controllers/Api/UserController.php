@@ -51,4 +51,16 @@ class UserController {
 
     }
 
+    public function destroy(Request $request)
+    {
+
+//
+        $user = User::find($request->user_id);
+        $user->courses()->detach($request->course_id);
+
+
+        return response()->json(['success' => 'Status change successfully.']);
+
+    }
+
 }

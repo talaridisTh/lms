@@ -36,7 +36,7 @@ Route::group(['middleware' => ['auth',"role"]], function () {
     Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
     Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
     Route::patch('/dashboard/users/{user}', 'UserController@update')->name('user.update');
-    Route::post('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
+    Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
 
 
