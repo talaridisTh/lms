@@ -341,16 +341,7 @@
 			let ids = [];
 
 			if ( checkboxes.length == 0 ) {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'info',
-					title: "Δεν υπάρχουν επιλεγμένα μαθήματα...",
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
-
+				toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 				return;
 			}
 			else {
@@ -366,16 +357,8 @@
 			let ids = []
 
 			if ( checkboxes.length == 0 ) {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'info',
-					title: "Δεν υπάρχουν επιλεγμένα μαθήματα...",
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
-
+				
+				toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 				return;
 			}
 			else {
@@ -551,27 +534,14 @@
 					state: this.checked
 				})
 				.then( (res) => {
-					Swal.fire({
-						toast: 'true',
-						position: 'top-end',
-						icon: 'success',
-						title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
-						showConfirmButton: false,
-						timer: 3000,
-  						timerProgressBar: true
-					});
+					let icon = this.checked ? "success" : "info";
+					let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+					toastAlert( icon, message );
 					updatedAt.textContent = "Μόλις τώρα";
 				})
 				.catch( (err) => {
-					Swal.fire({
-						toast: 'true',
-						position: 'top-end',
-						icon: 'error',
-						title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
-						showConfirmButton: false,
-						timer: 3000,
-  						timerProgressBar: true
-					});
+					toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 				});
 			});
 		}
@@ -636,7 +606,6 @@
 					mainCheckbox.checked = true;
 				}
 			}
-		
 		}
 
 		function postMaterialIds( materialId ) {
@@ -645,29 +614,15 @@
 				materialId
 			})
 			.then( (res) => {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'success',
-					title: materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`,
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
+				let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
+				toastAlert( 'success', message );
+
 				courseMaterialsTable.ajax.reload();
 				remainingMaterialsTables.ajax.reload();
 				updatedAt.textContent = "Μόλις τώρα";
 			})
 			.catch( (err) => {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'error',
-					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
+				toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 			})
 		}
 
@@ -678,30 +633,29 @@
 				materialIds
 			})
 			.then( (res) => {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'success',
-					title: materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ΄ύλης`,
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
+
+				let message = materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ύλης`;
+				toastAlert( 'success', message );
+
 				courseMaterialsTable.ajax.reload();
 				remainingMaterialsTables.ajax.reload();
 				updatedAt.textContent = "Μόλις τώρα";
 			})
 			.catch( (err) => {
-				Swal.fire({
+				toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			})
+		}
+
+		function toastAlert( icon, message ) {
+			Swal.fire({
 					toast: 'true',
 					position: 'top-end',
-					icon: 'error',
-					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+					icon: icon,
+					title: message,
 					showConfirmButton: false,
 					timer: 3000,
   					timerProgressBar: true
 				});
-			})
 		}
 	</script>
 @endsection
