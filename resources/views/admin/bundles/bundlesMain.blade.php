@@ -43,7 +43,7 @@
 		</thead>
 		<tbody class="tables-hover-effect">
 
-			@foreach ($bundles as $bundle)
+			{{-- @foreach ($bundles as $bundle)
 				<tr>
 					<td class="pl-4">
 						<div class="icheck-primary d-inline">
@@ -59,7 +59,7 @@
 					<td class="cursor-pointer js-link">{{ $bundle['updated_at'] }}</td>
 					<td class="cursor-pointer js-link">{{ $bundle['created_at'] }}</td>
 				</tr>
-			@endforeach
+			@endforeach --}}
 			
 		</tbody>
 		<tfoot>
@@ -81,9 +81,19 @@
 	<script>
 		$("#bundle-table").DataTable({
 			scrollX: !0,
-			columnDefs: [
-				{ "width": "5%", "targets": 0 }
+			columns: [
+				{ data: "action", name: "action", width: "5%" },
+				{ data: "name", name: "name" },
+				{ data: "active", name: "active", width: "5%" },
+				{ data: "updated_at", name: "updated_at" },
+				{ data: "created_at", name: "created_at" },
 			],
+			processing: true,
+			serverSide: true,
+			ajax: {
+				url: "/api/bundles/bundles-datatable",
+				type: "post"
+			},
 			language: {
 				emptyTable: 		"Δεν υπάρχουν εγγραφές",
 				info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",

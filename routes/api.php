@@ -32,9 +32,8 @@ Route::post( 'courses/courses-datatable', 'Api\CourseController@index' );
 Route::post( 'courses/course-materials-datatable', 'Api\CourseController@courseMaterials' );
 Route::post( 'courses/not-incourse-materials-datatable', 'Api\CourseController@remainingMaterials' );
 
-
-
-
+//! Bundles Datatables
+Route::post( 'bundles/bundles-datatable', 'Api\BundleController@index' );
 
 //Users
 Route::post('users/view-users', 'Api\UserController@index')->name("index.datatable");
