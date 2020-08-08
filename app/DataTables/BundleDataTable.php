@@ -35,7 +35,7 @@ class BundleDataTable extends DataTable
 
 				$active = $data->active == 0 ? "" : "checked";
 
-				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='". $data->slug ."-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+				return "<input class='js-toggle' data-bundle-id='$data->id' type='checkbox' id='". $data->slug ."-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
 
 			})

@@ -71,7 +71,11 @@ class BundleController extends Controller
      */
     public function update(Request $request, Bundle $bundle)
     {
-        //
+
+		$bundle->active = $request->state;
+		$bundle->save();
+        // return $request->state;
+        // return $bundle;
     }
 
     /**

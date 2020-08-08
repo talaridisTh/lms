@@ -34,6 +34,7 @@ Route::post( 'courses/not-incourse-materials-datatable', 'Api\CourseController@r
 
 //! Bundles Datatables
 Route::post( 'bundles/bundles-datatable', 'Api\BundleController@index' );
+Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Api\BundleController@update' );
 
 //Users
 Route::post('users/view-users', 'Api\UserController@index')->name("index.datatable");

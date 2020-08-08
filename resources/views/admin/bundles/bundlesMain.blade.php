@@ -87,14 +87,50 @@
 					next:"<i class='mdi mdi-chevron-right'>"}
 			},
 			drawCallback:function(){
-				$(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+
+				activeToggleInit();
 			}
 		})
+
+		function activeToggleInit() {
+
+			let toggle = $(".js-toggle");
+
+			toggle.change( function() {
+
+				// console.log(this.checked);
+
+				axios.patch( `/api/bundles/bundles-toggle-active/${this.dataset.bundleId}`, {
+					state: this.checked ? 1 : 0
+				})
+				.then( (res) => {
+					let icon = this.checked ? "success" : "info";
+					let message = this.checked ? "Ενεργοποιήθηκε!" : "Απενεργοποιήθηκε";
+					toastAlert( icon, message );
+				})
+				.catch( (err) => {
+					toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+				})
+			});
+		}
 
 		$('.js-link').click( function() {
 			let bundleId = this.parentElement.dataset.bundleId;
 
 			window.location = `bundle/${bundleId}`;
 		});
+
+		function toastAlert( icon, message ) {
+			Swal.fire({
+				toast: 'true',
+				position: 'top-end',
+				icon: icon,
+				title: message,
+				showConfirmButton: false,
+				timer: 3000,
+  				timerProgressBar: true
+			});
+		}
 	</script>
 @endsection
