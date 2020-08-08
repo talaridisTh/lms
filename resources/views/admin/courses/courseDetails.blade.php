@@ -649,7 +649,7 @@
 					toast: 'true',
 					position: 'top-end',
 					icon: 'success',
-					title: materialId.length == 1 ? "1 Αρχείο προστέθηκε" : `${materialId.length} Αρχεία προστέθηκαν`,
+					title: materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`,
 					showConfirmButton: false,
 					timer: 3000,
   					timerProgressBar: true
@@ -682,7 +682,7 @@
 					toast: 'true',
 					position: 'top-end',
 					icon: 'success',
-					title: materialIds.length == 1 ? "1 Αρχείο αφαιρέθηκε" : `${materialIds.length} Αρχεία αφαιρέθηκαν`,
+					title: materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ΄ύλης`,
 					showConfirmButton: false,
 					timer: 3000,
   					timerProgressBar: true
