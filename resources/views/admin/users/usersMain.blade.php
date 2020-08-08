@@ -44,8 +44,8 @@
                 <th class="text-left">Ημ. Εγγραφής</th>
             </tr>
             </thead>
-                        <tbody class="tables-hover-effect">
-                        </tbody>
+            <tbody class="tables-hover-effect">
+            </tbody>
             <tfoot>
             <tr>
                 <th class="text-left">Avatar</th>
@@ -75,8 +75,8 @@
                 type: "post"
             },
             columnDefs: [
-                { orderable: false, "targets": [ 0 ] },
-                { className: "js-link cursor-pointer", "targets":  [0, 1, 2, 3, 4, 6]}
+                {orderable: false, "targets": [0]},
+                {className: "js-link cursor-pointer", "targets": [0, 1, 2, 3, 4, 6]}
             ],
             columns: [
                 {data: "avatar", name: "avatar"},
@@ -127,30 +127,15 @@
                         'active': status,
                         'id': user_id
                     })
-                    Swal.fire({
-                        toast: 'true',
-                        position: 'top-end',
-                        icon: 'success',
-                        title: this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true
-                    });
+                    sweetAlert(this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε", 'success')
                 } catch (err) {
-                    Swal.fire({
-                        toast: 'true',
-                        position: 'top-end',
-                        icon: 'error',
-                        title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true
-                    });
+                    sweetAlert("Παρουσιάστηκε κάποιο πρόβλημα", 'error')
                 }
             })
         }
+
         function routeLink() {
-            $('.js-link').click( function() {
+            $('.js-link').click(function () {
                 $('.js-link').unbind();
 
                 let user = this.parentElement.dataset.userId;
@@ -158,6 +143,19 @@
 
                 window.location = `/dashboard/users/${user}`;
             });
+        }
+
+        let sweetAlert = (title, icon) => {
+            Swal.fire({
+                toast: 'true',
+                position: 'top-end',
+                icon: icon,
+                title: title,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+
         }
 
 

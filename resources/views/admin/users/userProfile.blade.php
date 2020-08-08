@@ -45,7 +45,7 @@
 
                                     <button id="material-modal-shown-btn" type="button" class="btn btn-primary"
                                             data-toggle="modal"
-                                            data-target="#primary-header-modal">Primary Header
+                                            data-target="#primary-header-modal">Προσθήκη COURSES
                                     </button>
                                     <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog"
                                          aria-labelledby="primary-header-modalLabel" aria-hidden="true">
@@ -53,7 +53,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header modal-colored-header bg-primary">
                                                     <h4 class="modal-title" id="primary-header-modalLabel">Προσθήκη
-                                                        Μαθημάτων</h4>
+                                                        Courses</h4>
                                                     <button type="button" class="close" data-dismiss="modal"
                                                             aria-hidden="true">×
                                                     </button>
@@ -63,10 +63,10 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-light" data-dismiss="modal">
-                                                        Close
+                                                        Κλείσιμο
                                                     </button>
                                                     <button type="button" onClick="window.location.reload();"
-                                                            class="btn btn-primary modal-save">Save changes
+                                                            class="btn btn-primary modal-save">Προσθήκη
                                                     </button>
                                                 </div>
                                             </div><!-- /.modal-content -->
@@ -127,8 +127,8 @@
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script>
-        const userId = $(".course-materials-list")[0].dataset.id
 
+        const userId = $(".course-materials-list")[0].dataset.id
 
         $('#alertSumbit').submit(async function (e) {
             e.preventDefault()
@@ -145,27 +145,11 @@
                 });
                 if (value) {
                     const res = await axios.post(`/dashboard/users/${user}`)
-                    Swal.fire({
-                        toast: 'true',
-                        position: 'top-end',
-                        icon: 'success',
-                        title: "Διαγράφηκαν",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true
-                    });
+                    sweetAlert("Διεγράφη",'success')
                     window.location = `http://127.0.0.1:8000/dashboard/users`;
                 }
             } catch (e) {
-                Swal.fire({
-                    toast: 'true',
-                    position: 'top-end',
-                    icon: 'error',
-                    title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true
-                });
+                sweetAlert("Παρουσιάστηκε κάποιο πρόβλημα",'error')
             }
 
 
@@ -272,6 +256,7 @@
             let jsButton = $(".js-button").click(async function () {
                 const parent = this.parentElement.parentElement
                 if (parent.dataset.exist) {
+                    sweetAlert(`1 αφαιρεθηκε`,'warning')
                     ids = ids.filter(val => val !== this.dataset.courseId);
                     this.value = 'Προσθηκη'
                     this.classList.remove("btn-danger")
@@ -281,6 +266,7 @@
                     if (!ids.includes(this.dataset.courseId)) {
                         ids.push(this.dataset.courseId)
                     }
+                    sweetAlert(`${ids.length} Επιλέχθηκε`,'success')
                     this.classList.remove("btn-info")
                     this.classList.add("btn-danger")
                     this.value = 'Αφαιρεση'
@@ -288,6 +274,7 @@
                 }
 
                 $(".modal-save").click(async function () {
+                  await  sweetAlert(`${ids.length} COURSES Προσθεθηκαν`,'success')
                     const parent = this.parentElement.parentElement
                     let id = [];
 
@@ -300,6 +287,7 @@
                             "course_id": id,
                             "user_id": userId,
                         })
+
                         courses.ajax.reload();
 
                     } catch (e) {
@@ -309,10 +297,24 @@
                 })
 
 
+
             })
 
 
         }
+
+         let sweetAlert = (title,icon)=>{
+             Swal.fire({
+                 toast: 'true',
+                 position: 'top-end',
+                 icon: icon,
+                 title: title,
+                 showConfirmButton: false,
+                 timer: 3000,
+                 timerProgressBar: true
+             });
+
+         }
 
 
     </script>
