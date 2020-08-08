@@ -35,6 +35,7 @@ class UserController {
     public function addCourseModal(AddCoursesDataTable $dataTable)
     {
 
+
         return $dataTable->render('users.addCourses');
 
     }
@@ -43,8 +44,6 @@ class UserController {
     {
 
 //
-
-
         $user = User::find($request->user_id);
         $user->courses()->attach($request->course_id);
 

@@ -6,6 +6,7 @@ use App\AddCourseDataTable;
 use App\Course;
 use App\User;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -24,10 +25,10 @@ class AddCoursesDataTable extends DataTable {
     {
 
         $user = User::findOrFail($request->userId);
-        $query = Course::query()->select();
 
-        return datatables()
-            ->eloquent($query)
+        $query = User::courseWhereNotExist($request->userId);
+
+        return DataTables::of($query)
             ->addColumn('action', function ($data) {
 
                 return "<td><input class='btn btn-info js-button btn-sm my-1' value='Προσθηκη' data-course-id='{$data->id}'/></td>";

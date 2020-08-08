@@ -24,6 +24,7 @@ class UserProfileDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
         $user = User::findOrFail($request->userId);
+
         $query = $user->courses()->get();
 
         return DataTables::of($query)

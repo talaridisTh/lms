@@ -65,8 +65,8 @@
                                                     <button type="button" class="btn btn-light" data-dismiss="modal">
                                                         Close
                                                     </button>
-                                                    <button type="button" onclick="javascript:window.location.reload()"
-                                                            class="btn btn-primary">Save changes
+                                                    <button type="button" onClick="window.location.reload();"
+                                                            class="btn btn-primary modal-save">Save changes
                                                     </button>
                                                 </div>
                                             </div><!-- /.modal-content -->
@@ -213,6 +213,7 @@
 
         });
 
+
         const addCourse = $("#datatableAddCourse").DataTable({
             scrollX: !0,
             processing: true,
@@ -230,7 +231,7 @@
 
             ],
             columnDefs: [
-                { "width": "5%", "targets": 1 },
+                {"width": "5%", "targets": 1},
 
             ],
             language: {
@@ -256,37 +257,62 @@
             }
 
 
-
         });
-
-
         $('#material-modal-shown-btn').click(function () {
             setTimeout(function () {
                 addCourse.columns.adjust();
             }, 200)
         });
 
-
-        function addCourseToUser(){
+        function addCourseToUser() {
             $('.js-button').unbind();
-            $(".js-button").click(async function () {
+            let ids = [];
+
+
+            let jsButton = $(".js-button").click(async function () {
                 const parent = this.parentElement.parentElement
-                try {
-                    const res = await axios.patch('{{route("addcourses.datatable")}}', {
-                        "course_id": this.dataset.courseId,
-                        "user_id": userId,
-
-
-                    })
-                    console.log(res)
-
-                } catch (e) {
-                    console.log(e)
+                if (parent.dataset.exist) {
+                    ids = ids.filter(val => val !== this.dataset.courseId);
+                    this.value = 'Προσθηκη'
+                    this.classList.remove("btn-danger")
+                    this.classList.add("btn-info")
+                    delete parent.dataset.exist
+                } else {
+                    if (!ids.includes(this.dataset.courseId)) {
+                        ids.push(this.dataset.courseId)
+                    }
+                    this.classList.remove("btn-info")
+                    this.classList.add("btn-danger")
+                    this.value = 'Αφαιρεση'
+                    parent.dataset.exist = true
                 }
 
-            })
-        }
+                $(".modal-save").click(async function () {
+                    const parent = this.parentElement.parentElement
+                    let id = [];
 
+                    if (id.indexOf(ids[0]) === -1) {
+                        id.push(ids[0])
+                        ids.shift();
+                    }
+                    try {
+                        const res = await axios.patch('{{route("addcourses.datatable")}}', {
+                            "course_id": id,
+                            "user_id": userId,
+                        })
+                        courses.ajax.reload();
+
+                    } catch (e) {
+                        console.log(e)
+                    }
+
+                })
+
+
+            })
+
+
+        }
 
 
     </script>

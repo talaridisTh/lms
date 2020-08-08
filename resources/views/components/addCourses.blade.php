@@ -6,20 +6,6 @@
     </tr>
     </thead>
     <tbody class="tables-hover-effect">
-
-{{--    @foreach ($courses as $course)--}}
-{{--        <tr class="tablesTr" data-course-id="{{ $course['id'] }}"--}}
-{{--            data-exist=""--}}
-{{--            data-user-id="{{ $user['id'] }}">--}}
-{{--            <td class="cursor-pointer js-link">{{ $course['name'] }}</td>--}}
-{{--            <td>--}}
-
-{{--                <input class="btn btn-info  js-button" value="Προσθήκη" data-course-id="{{ $course['id'] }}"--}}
-{{--                       data-user="{{$user->id}}" type="submit" id=""/>--}}
-{{--            </td>--}}
-{{--        </tr>--}}
-{{--    @endforeach--}}
-
     </tbody>
     <tfoot>
     <tr>

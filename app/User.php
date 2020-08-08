@@ -105,22 +105,20 @@ class User extends Authenticatable {
             ->get();
     }
 
-    public static function getIfExistInsuctorCourse($user, $courses)
+    public static function courseWhereNotExist($user)
     {
-        $test = DB::table("courses")
-            ->join("course_user", "courses.id", "=", "course_user.course_id")
-            ->join("users", "users.id", "=", "course_user.user_id")
-            ->where("users.id", $user)
-            ->where("courses.id", $courses)
-            ->select("courses.id")
+       $test = DB::table('courses')
+            ->whereNotIn('id',
+                function ($query) use ($user) {
+
+                    $query->select('course_id')
+                        ->from('course_user')
+                        ->where('user_id', $user)
+                        ->get();
+                }
+            )
             ->get();
-        if (empty(!count($test)))
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+       return $test;
     }
 
     public static function getCountStudent($course)
