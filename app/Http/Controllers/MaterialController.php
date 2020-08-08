@@ -49,7 +49,7 @@ class MaterialController extends Controller
      */
     public function show(Material $material)
     {
-        //
+        return view('admin.materials.material')->with('material', $material);
     }
 
     /**

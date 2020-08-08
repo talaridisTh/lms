@@ -115,6 +115,8 @@ class CourseController extends Controller
 
 		$data = $request->all();
 
+		$course = Course::find($data['courseId']);
+
 		$priorityRange = [ $data['priority']['new'], $data['priority']['old'] ];
 		sort( $priorityRange );
 
@@ -135,6 +137,9 @@ class CourseController extends Controller
 			->where( 'material_id', $data['materialId'] )
 			->update( ['priority' => $data['priority']['new']] );
 
+		$course->updated_at = Carbon::now();
+		$course->save();
+
 	}
 
 	public function courseMaterials(CourseMaterialsDataTable $dataTable) {
@@ -148,13 +153,16 @@ class CourseController extends Controller
 	public function toggleCourseMaterials( Request $request ) {
 
 		$data = $request->all();
+		$course = Course::find( $data['courseId'] );
 
-		$material = Course::find( $data['courseId'] )->materials()
+		$material = $course->materials()
 			->where('material_id', $data['materialId']);
 
 		$material->active = $data['state'] == 1 ? 1 : 0;
 		$material->update( ['course_material.active'=> $data['state'] == 1 ? 1 : 0 ] );
 
+		$course->updated_at = Carbon::now();
+		$course->save();
 	}
 
 	public function addMaterials( Request $request ) {
@@ -167,5 +175,31 @@ class CourseController extends Controller
 			$course->materials()->attach( $id, ['active' => 0, 'priority' => $lastMaterialId + $key + 1 ] );
 		}
 
+		$course->updated_at = Carbon::now();
+		$course->save();
+
+	}
+
+	public function removeMaterials( Request $request ) {
+
+		$courseId = $request->courseId;
+		$materialIds = $request->materialIds;
+		$course = Course::find($courseId);
+
+		foreach( $materialIds as $id ) {
+			$course->materials()->detach( $id );
+		}
+
+		$totalMaterials = $course->materials()->orderBy('priority')->get();
+
+		foreach ( $totalMaterials as $key => $material ) {
+			DB::table('course_material')
+				->where('course_id', $courseId)
+				->where('material_id', $material['id'])
+				->update( ['priority' => $key + 1] );
+		}
+
+		$course->updated_at = Carbon::now();
+		$course->save();
 	}
 }

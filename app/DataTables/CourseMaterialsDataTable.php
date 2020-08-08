@@ -42,7 +42,7 @@ class CourseMaterialsDataTable extends DataTable
             ->addColumn('action', function($data) use ($request) {
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-course-id='$request->courseId' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-course-material-checkbox' data-material-id='$data->materialId' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
 
@@ -66,7 +66,12 @@ class CourseMaterialsDataTable extends DataTable
 								value='$data->priority' autocomplete='off'>
 						</div>";
 			})
-			->rawColumns(['action', 'active', 'priority']);
+			->rawColumns(['action', 'active', 'priority'])
+			->setRowAttr([ 'data-material-id' => function($data) {
+
+				return  $data->materialId;
+
+			}]);
     }
 
     /**

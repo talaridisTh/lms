@@ -38,11 +38,9 @@ Route::group(['middleware' => ['auth',"role"]], function () {
     Route::patch('/dashboard/users/{user}', 'UserController@update')->name('user.update');
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
-
-
-
-
-    Route::get('/dashboard/materials', 'MaterialController@index');
+	//! Material Routes
+    Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
+    Route::get('/dashboard/material/{material}', 'MaterialController@show')->name('material.show');
 
 	//! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');

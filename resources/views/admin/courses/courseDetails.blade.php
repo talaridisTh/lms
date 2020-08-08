@@ -13,7 +13,7 @@
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body table-cnt">
-	                <table id="remaining-materials-table" class="table w-100 nowrap modal-table custom-center-table center-not-second">
+	                <table id="remaining-materials-table" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
 						<thead>
 							<tr>
 								<th class="text-center option-column select-all">
@@ -96,7 +96,7 @@
 							<strong>
 								Τελευταία Ανανέωση :
 							</strong>
-							<span class="ml-2 ">
+							<span id="last-update-cnt" class="ml-2">
 								{{ $course['updated_at'] }}
 							</span>
 						</p>
@@ -174,7 +174,12 @@
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
 									<tr>
-										<th class="text-center">Επιλογή</th>
+										<th class="text-center">
+											<div class='icheck-primary d-inline'>
+												<input type='checkbox' id='all-active-materials-checkbox' autocomplete='off'>
+												<label for='all-active-materials-checkbox'></label>
+											</div>
+										</th>
 										<th class="text-center">Όνομα</th>
 										<th class="text-center">Ενεργό</th>
 										<th class="text-center">Κατάταξη</th>
@@ -186,26 +191,32 @@
 								<tbody class="tables-hover-effect"></tbody>
 								<tfoot>
 									<tr>
-										<th>Επιλογή</th>
-										<th>Όνομα</th>
-										<th>Ενεργό</th>
-										<th>Κατάταξη</th>
-										<th>Τύπος</th>
-										<th>Τελ. Ανανέωση</th>
-										<th>Ημ. Δημιουργίας</th>
+										<th class="text-center"></th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Ενεργό</th>
+										<th class="text-center">Κατάταξη</th>
+										<th class="text-center">Τύπος</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
 									</tr>
 								</tfoot>
 							</table>
 
 							<div class="row mt-3">
-								<div class="col-sm-4">
+								<div class="col-sm-1">
 								</div>
-								<div class="col-sm-8">
-									<div class="text-sm-right">
-										<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#primary-header-modal">
-											<i class="mdi mdi-plus-circle mr-2"></i>
-											Προσθήκη Μαθημάτων
+								<div class="col-sm-11 d-flex justify-content-end">
+									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#primary-header-modal">
+										<i class="mdi mdi-plus-circle mr-2"></i>
+										Προσθήκη Μαθημάτων
+									</button>
+									<div class="dropdown ml-2">
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Επιλογές
 										</button>
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+											<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -280,6 +291,7 @@
 		//! GLOBAL VARIABLES
 		const courseId = $("#course-materials-list")[0].dataset.courseId
 		const authors = $('.js-authors');
+		const updatedAt = $("#last-update-cnt")[0];
 
 		if ( authors.length > 3 ) {
 			for ( let i = 3; i < authors.length; i++ ) {
@@ -309,7 +321,7 @@
 		});
 
 		//! EventListerners 
-		$('#all-remainings-checkbox').click( function() {
+		$('#all-remainings-checkbox').change( function() {
 			let checkboxes = $('.js-remainings-checkbox');
 
 			if ( this.checked ) {
@@ -333,7 +345,7 @@
 					toast: 'true',
 					position: 'top-end',
 					icon: 'info',
-					title: "Δεν υπάρχουν επιλογές...",
+					title: "Δεν υπάρχουν επιλεγμένα μαθήματα...",
 					showConfirmButton: false,
 					timer: 3000,
   					timerProgressBar: true
@@ -347,17 +359,52 @@
 				}
 				postMaterialIds( ids )
 			}
-		})
+		});
+
+		$('#remove-selection-btn').click( function() {
+			let checkboxes = $('.js-course-material-checkbox:checked');
+			let ids = []
+
+			if ( checkboxes.length == 0 ) {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'info',
+					title: "Δεν υπάρχουν επιλεγμένα μαθήματα...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+
+				return;
+			}
+			else {
+				for ( let i = 0; i < checkboxes.length; i++ ) {
+					ids.push( checkboxes[i].dataset.materialId );
+				}
+				removeMaterials(ids);
+			}
+		});
+
+		$("#all-active-materials-checkbox").change( function() {
+
+			let checkboxes = $(".js-course-material-checkbox");
+
+			if ( this.checked ) {
+				for ( let i = 0; i < checkboxes.length; i++ ) {
+					checkboxes[i].checked = true;
+				}
+			}
+			else {
+				for ( let i = 0; i < checkboxes.length; i++ ) {
+					checkboxes[i].checked = false;
+				}
+			}
+		});
 		//! EventListerners /end
 
 		//! Datatables
 		const courseMaterialsTable = $("#course-materials-list").DataTable({
-			columnDefs: [
-				{ width: "5%", "targets": 0 },
-				{ className: "js-link cursor-pointer", targets: [ 1, 4, 6 ] },
-				{ className: "js-link cursor-pointer", targets: 5 },
-				{ width: "5%", targets: 3 }
-			],
 			order: [3, "asc"],
 			processing: true,
 			serverSide: true,
@@ -369,13 +416,13 @@
 				}
 			},
 			columns: [
-				{data: 'action', name: 'action', orderable: false},
-				{data: 'name', name: 'name'},
-				{data: 'active', name: 'active'},
-				{data: 'priority', name: 'priority', searchable: false},
-				{data: 'type', name: 'type'},
-				{data: 'updated_at', name: 'updated_at'},
-				{data: 'created_at', name: 'created_at'},
+				{ data: 'action', name: 'action', orderable: false, width: "5%" },
+				{ data: 'name', name: 'name', className: "js-link cursor-pointer" },
+				{ data: 'active', name: 'active' },
+				{ data: 'priority', name: 'priority',  width: "5%", searchable: false },
+				{ data: 'type', name: 'type', className: "js-link cursor-pointer" },
+				{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer" },
+				{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
 			],
 			language:{
 				emptyTable: 		"Δεν υπάρχουν εγγραφές",
@@ -396,6 +443,8 @@
 				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 				$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
 
+				jsLinkEventListener();
+				activeMaterialsCheckboxToggle();
 				toggleCourseMaterial()
 				sortInputsInit();
 			},
@@ -414,9 +463,9 @@
 			},
 			columns: [
 				{data: 'action', width: "5%", orderable: false},
-				{data: 'materialName', name: 'materials.name'},
-				{data: 'topicName', name: 'topics.name'},
-				{data: 'type', name: 'materials.type'},
+				{data: 'materialName', name: 'materials.name', className: "cursor-default"},
+				{data: 'topicName', name: 'topics.name', className: "cursor-default"},
+				{data: 'type', name: 'materials.type', className: "cursor-default"},
 				{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 			],
 			language:{
@@ -436,50 +485,23 @@
 				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-				
-				addMaterialsEventListerner()
+				$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+				$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
+
+				addMaterialsEventListerner();
+				remainingsCheckboxes();
 			},
 			
 		});
 		//! DataTables /end
 
 		//! DataTables function / EventListener
+
 		function addMaterialsEventListerner() {
 			$('.js-add-material-btn').click( function() {
 				const materialId = [this.dataset.materialId];
 				postMaterialIds( materialId );
 			});
-		}
-
-		function postMaterialIds( materialId ) {
-			axios.post( "/api/courses/add-materials", {
-				courseId,
-				materialId
-			})
-			.then( (res) => {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'success',
-					title: materialId.length == 1 ? "1 Αρχείο προστέθηκε" : `${materialId.length} Αρχεία προστέθηκαν`,
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
-				courseMaterialsTable.ajax.reload();
-				remainingMaterialsTables.ajax.reload();
-			})
-			.catch( (err) => {
-				Swal.fire({
-					toast: 'true',
-					position: 'top-end',
-					icon: 'error',
-					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
-					showConfirmButton: false,
-					timer: 3000,
-  					timerProgressBar: true
-				});
-			})
 		}
 
 		function sortInputsInit() {
@@ -509,10 +531,11 @@
 					})
 					.then( (res) => {
 						courseMaterialsTable.ajax.reload();
+						updatedAt.textContent = "Μόλις τώρα";
 					})
 				}
 
-			})
+			});
 		}
 
 		function toggleCourseMaterial() {
@@ -537,7 +560,7 @@
 						timer: 3000,
   						timerProgressBar: true
 					});
-					// updatedAtElm.textContent = "Μόλις τώρα";
+					updatedAt.textContent = "Μόλις τώρα";
 				})
 				.catch( (err) => {
 					Swal.fire({
@@ -553,6 +576,132 @@
 			});
 		}
 
+		function remainingsCheckboxes() {
 
+			let remainingCheckboxes = $('.js-remainings-checkbox');
+
+			remainingCheckboxes.unbind();
+			remainingCheckboxes.change( remainingMaterialsCheckboxHandler );
+		}
+		// DataTables function / EventListener End
+
+		function jsLinkEventListener() {
+
+			let links = $(".js-link");
+
+			links.unbind();
+			links.click( function() {
+				
+				let id = this.parentElement.dataset.materialId;
+
+				window.location = `/dashboard/material/${id}`;
+			});
+		}
+
+		function remainingMaterialsCheckboxHandler() {
+
+			let mainCheckbox = $('#all-remainings-checkbox')[0];
+			let checkbox = $('.js-remainings-checkbox');
+
+			for ( let i = 0; i < checkbox.length; i++ ) {
+				if ( !checkbox[i].checked ) {
+					mainCheckbox.checked = false;
+					break;
+				}
+				else {
+					mainCheckbox.checked = true;
+				}
+			}
+
+		}
+
+		function activeMaterialsCheckboxToggle() {
+
+			let activeCheckboxes = $(".js-course-material-checkbox");
+
+			activeCheckboxes.change( activeMaterialsCheckboxHandler );
+		}
+
+		function activeMaterialsCheckboxHandler() {
+
+			let mainCheckbox = $('#all-active-materials-checkbox')[0];
+			let checkbox = $('.js-course-material-checkbox');
+
+			for ( let i = 0; i < checkbox.length; i++ ) {
+				if ( !checkbox[i].checked ) {
+					mainCheckbox.checked = false;
+					break;
+				}
+				else {
+					mainCheckbox.checked = true;
+				}
+			}
+		
+		}
+
+		function postMaterialIds( materialId ) {
+			axios.post( "/api/courses/add-materials", {
+				courseId,
+				materialId
+			})
+			.then( (res) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'success',
+					title: materialId.length == 1 ? "1 Αρχείο προστέθηκε" : `${materialId.length} Αρχεία προστέθηκαν`,
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+				courseMaterialsTable.ajax.reload();
+				remainingMaterialsTables.ajax.reload();
+				updatedAt.textContent = "Μόλις τώρα";
+			})
+			.catch( (err) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'error',
+					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+			})
+		}
+
+		function removeMaterials( materialIds ) {
+			
+			axios.patch( "/api/courses/remove-materials", {
+				courseId,
+				materialIds
+			})
+			.then( (res) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'success',
+					title: materialIds.length == 1 ? "1 Αρχείο αφαιρέθηκε" : `${materialIds.length} Αρχεία αφαιρέθηκαν`,
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+				courseMaterialsTable.ajax.reload();
+				remainingMaterialsTables.ajax.reload();
+				updatedAt.textContent = "Μόλις τώρα";
+			})
+			.catch( (err) => {
+				Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: 'error',
+					title: "Παρουσιάστηκε κάποιο πρόβλημα ...",
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+			})
+		}
 	</script>
 @endsection
