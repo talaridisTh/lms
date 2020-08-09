@@ -31,7 +31,7 @@ class AddCoursesDataTable extends DataTable {
         return DataTables::of($query)
             ->addColumn('action', function ($data) {
 
-                return "<td><input class='btn btn-info js-button btn-sm my-1' value='Επιλογη' data-course-name='{$data->name}' data-course-id='{$data->id}'/></td>";
+                return "<td><input class='btn btn-primary js-button btn-sm my-1' value='Επιλογη' data-course-name='{$data->name}' data-course-id='{$data->id}'/></td>";
             })
 //            ->editColumn('name', function ($data) {
 //

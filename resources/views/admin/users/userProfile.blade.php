@@ -62,7 +62,7 @@
                                                     @include("components.addCourses")
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light" data-dismiss="modal">
+                                                    <button type="button" class="btn btn-light modal-dismiss" data-dismiss="modal">
                                                         Κλείσιμο
                                                     </button>
                                                     <button type="button" onClick="window.location.reload();"
@@ -196,8 +196,6 @@
             },
 
         });
-
-
         const addCourse = $("#datatableAddCourse").DataTable({
             scrollX: !0,
             processing: true,
@@ -267,13 +265,6 @@
                 console.log(this)
             })
         }
-
-        $('#material-modal-shown-btn').click(function () {
-            setTimeout(function () {
-                addCourse.columns.adjust();
-            }, 200)
-        });
-
         function addCourseToUser() {
             $('.js-button').unbind();
             let ids = [];
@@ -284,16 +275,16 @@
                 if (parent.dataset.exist) {
                     sweetAlert(`${this.dataset.courseName}  αφαιρεθηκε`,'warning')
                     ids = ids.filter(val => val !== this.dataset.courseId);
-                    this.value = 'Προσθηκη'
+                    this.value = 'Επιλογη'
                     this.classList.remove("btn-danger")
-                    this.classList.add("btn-info")
+                    this.classList.add("btn-primary")
                     delete parent.dataset.exist
                 } else {
                     if (!ids.includes(this.dataset.courseId)) {
                         ids.push(this.dataset.courseId)
                     }
                     sweetAlert(`${this.dataset.courseName} Επιλέχθηκε`,'success')
-                    this.classList.remove("btn-info")
+                    this.classList.remove("btn-primary")
                     this.classList.add("btn-danger")
                     this.value = 'Αφαιρεση'
                     parent.dataset.exist = true
@@ -341,6 +332,18 @@
              });
 
          }
+
+         $(".modal-dismiss").click(()=>{
+             addCourse.ajax.reload();
+         })
+         $(".close").click(()=>{
+             addCourse.ajax.reload();
+         })
+        $('#material-modal-shown-btn').click(function () {
+            setTimeout(function () {
+                addCourse.columns.adjust();
+            }, 200)
+        });
 
 
     </script>
