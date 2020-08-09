@@ -49,7 +49,7 @@
 	</div><!-- /.modal -->
 
 	<div class="row">
-		<div class="col-xl-4 col-lg-5">
+		<div class="col-xl-3 col-lg-5">
 			<div class="card text-center">
 				<div class="card-body">
 					<img src="https://via.placeholder.com/300x200" class="img-fluid"
@@ -114,42 +114,9 @@
 				</div> <!-- end card-body -->
 			</div> <!-- end course info card -->
 
-			<!-- Material Timeline -->
-			<div class="card">
-				<div class="card-body">
-					<h5 class="text-uppercase"><i class="mdi mdi-briefcase mr-1"></i>Μαθήματα</h5>
-					<div class="timeline-alt pb-0">
-
-						@foreach ($materials as $material)
-							<div class="timeline-item">
-								<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
-								<div class="timeline-item-info">
-								<h5 class="mt-0 mb-1">{{ $material['name'] }}</h5>
-									<p class="font-14">
-										Τελευταία Ανανέωση
-										<span class="ml-2 font-12">
-											{{ $material['updated_at'] }}
-										</span>
-									</p>
-									<p class="text-muted mt-2 mb-0 pb-3">
-										{{ $material['small_description'] }}
-									</p>
-								</div>
-							</div>
-							<div class="timeline-item pb-4">
-								<i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
-								<div class="timeline-item-info">
-									<h5 class="mt-0 mb-1">Προσθήκη Υλικού</h5>
-								</div>
-							</div>
-						@endforeach
-
-					</div><!-- end timeline -->
-				</div> <!-- end card-body-->
-			</div> <!-- end material timeline -->
 		</div> <!-- end col-->
 
-		<div class="col-xl-8 col-lg-7">
+		<div class="col-xl-9 col-lg-7">
 			<div class="card">
 				<div class="card-body">
 
