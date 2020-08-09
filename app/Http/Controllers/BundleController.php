@@ -10,9 +10,7 @@ class BundleController extends Controller
 
     public function index()
     {
-		$bundles = Bundle::all();
-
-        return view('admin/bundles/bundlesMain')->withBundles($bundles);
+        return view('admin/bundles/bundlesMain');
     }
 
 
@@ -29,7 +27,7 @@ class BundleController extends Controller
 
     public function show(Bundle $bundle)
     {
-        //
+        return view("admin/bundles/bundle")->withBundle($bundle);
     }
 
 

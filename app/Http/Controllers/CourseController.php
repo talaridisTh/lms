@@ -56,7 +56,7 @@ class CourseController extends Controller
 			'authors' => json_decode($authors, true),
 		];
 
-        return view('admin.courses.courseDetails')->with($data);
+        return view('admin.courses.course')->with($data);
     }
 
     /**

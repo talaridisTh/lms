@@ -426,6 +426,10 @@ div.dt-buttons a.btn.processing:after {
   cursor: pointer;
 }
 
+.cursor-default {
+  cursor: default;
+}
+
 .text-hover-underline:hover {
   text-decoration: underline;
 }
@@ -454,7 +458,7 @@ div.dt-buttons a.btn.processing:after {
   padding-top: 13px;
 }
 
-.table-cnt > div > .row:nth-child(2) {
+.table-cnt > .dataTables_wrapper > .row:nth-child(2) {
   overflow-x: auto !important;
 }
 

@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Material;
+use App\Bundle;
+use App\DataTables\BundleDataTable;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
 
-class MaterialController extends Controller
+class BundleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index( BundleDataTable $dataTable )
     {
-		$materials = Material::all(['name', 'small_description', 'active', 'type']);
-
-        return view('admin/materials/materialsMain')->withMaterials($materials);
+        return $dataTable->render('courses.index');
     }
 
     /**
@@ -44,21 +43,21 @@ class MaterialController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Material  $material
+     * @param  \App\Bundle  $bundle
      * @return \Illuminate\Http\Response
      */
-    public function show(Material $material)
+    public function show(Bundle $bundle)
     {
-        return view('admin.materials.material')->with('material', $material);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Material  $material
+     * @param  \App\Bundle  $bundle
      * @return \Illuminate\Http\Response
      */
-    public function edit(Material $material)
+    public function edit(Bundle $bundle)
     {
         //
     }
@@ -67,21 +66,24 @@ class MaterialController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Material  $material
+     * @param  \App\Bundle  $bundle
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Material $material)
+    public function update(Request $request, Bundle $bundle)
     {
-        //
+
+		$bundle->active = $request->state;
+		$bundle->save();
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Material  $material
+     * @param  \App\Bundle  $bundle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Material $material)
+    public function destroy(Bundle $bundle)
     {
         //
     }
