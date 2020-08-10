@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Course;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -19,9 +21,12 @@ class CoursesDataTable extends DataTable
      */
     public function dataTable($query)
     {
-		$query = Course::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
 
-		// return $courses;
+		// dd( Auth::user()->id );
+		// $userId = Auth::user()->id;
+		// $roleId = Auth::user()->roles[0]->id;
+
+		$query = Course::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
 
         return datatables()
             ->eloquent($query)

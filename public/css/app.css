@@ -470,6 +470,10 @@ div.dt-buttons a.btn.processing:after {
   padding-left: 30px !important;
 }
 
+.file-search-label-primary::after {
+  background-color: #536de6 !important;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.
