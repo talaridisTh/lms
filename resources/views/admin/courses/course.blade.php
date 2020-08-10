@@ -473,7 +473,7 @@
 			$('.js-sort-input').on('keyup', function() {
 
 				if ( event.keyCode == 13 && !isNaN( this.value) ) {
-					axios.patch('/api/courses/priority', {
+					axios.patch('/courses/priority', {
 						courseId: $('#course-materials-list')[0].dataset.courseId,
 						materialId: this.dataset.materialId,
 						priority: { 
@@ -497,7 +497,7 @@
 				let courseCnt = this.parentElement.parentElement;
 				let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
 
-				axios.patch('/api/courses/toggle-materials', {
+				axios.patch('/courses/toggle-materials', {
 					courseId: this.dataset.courseId,
 					materialId: this.dataset.materialId,
 					state: this.checked
@@ -578,7 +578,7 @@
 		}
 
 		function postMaterialIds( materialId ) {
-			axios.post( "/api/courses/add-materials", {
+			axios.post( "/courses/add-materials", {
 				courseId,
 				materialId
 			})
@@ -597,7 +597,7 @@
 
 		function removeMaterials( materialIds ) {
 			
-			axios.patch( "/api/courses/remove-materials", {
+			axios.patch( "/courses/remove-materials", {
 				courseId,
 				materialIds
 			})
