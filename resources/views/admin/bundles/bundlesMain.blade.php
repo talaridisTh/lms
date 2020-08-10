@@ -70,7 +70,8 @@
 			processing: true,
 			serverSide: true,
 			ajax: {
-				url: "/api/bundles/bundles-datatable",
+				url: "/bundles/bundles-datatable",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 				type: "post"
 			},
 			language: {
@@ -103,7 +104,7 @@
 
 				// console.log(this.checked);
 
-				axios.patch( `/api/bundles/bundles-toggle-active/${this.dataset.bundleId}`, {
+				axios.patch( `/bundles/bundles-toggle-active/${this.dataset.bundleId}`, {
 					state: this.checked ? 1 : 0
 				})
 				.then( (res) => {

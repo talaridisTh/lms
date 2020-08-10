@@ -71,7 +71,8 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{route("index.datatable")}}",
+				url: "{{route("index.datatable")}}",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "post"
             },
             columnDefs: [

@@ -54,8 +54,35 @@ Route::group(['middleware' => ['auth',"role"]], function () {
 
 });
 
+//! Ajax Users Datatables
+Route::post('users/view-users', 'Ajax\UserController@index')->name("index.datatable");
+Route::post('users/view-user', 'Ajax\UserController@show')->name("show.datatable");
+Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->name("courseModal.datatable");
+
+//! Ajax Users CRUD
+Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
+Route::patch('/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
+Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
 
 
+//! Ajax Courses Datatables
+Route::post( 'courses/courses-datatable', 'Ajax\CourseController@index' );
+Route::post( 'courses/course-materials-datatable', 'Ajax\CourseController@courseMaterials' );
+Route::post( 'courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials' );
+
+//! Ajax Courses CRUD
+Route::delete( 'courses/massdestroy/{ids}', 'Ajax\CourseController@massdestroy' );
+Route::patch( 'courses/active', 'Ajax\CourseController@toggleActive' );
+Route::patch( 'courses/priority', 'Ajax\CourseController@changePriority' );
+Route::patch( 'courses/toggle-materials', 'Ajax\CourseController@toggleCourseMaterials' );
+Route::post( 'courses/add-materials', 'Ajax\CourseController@addMaterials' );
+Route::patch( 'courses/remove-materials', 'Ajax\CourseController@removeMaterials' );
+
+//! Ajax Bundles Datatables
+Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );
+
+//! Ajax Bundles CRUD
+Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@update' );
 
 Auth::routes();
 

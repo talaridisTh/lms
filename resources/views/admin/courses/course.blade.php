@@ -359,7 +359,8 @@
 			processing: true,
 			serverSide: true,
 			ajax: {
-				url: "/api/courses/course-materials-datatable",
+				url: "/courses/course-materials-datatable",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 				type: "post",
 				data: {
 					courseId: courseId
@@ -405,7 +406,8 @@
 			processing: true,
 			serverSide: true,
 			ajax: {
-				url: "/api/courses/not-incourse-materials-datatable",
+				url: "/courses/not-incourse-materials-datatable",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 				type: "post",
 				data: {
 					courseId: courseId

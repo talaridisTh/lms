@@ -163,7 +163,8 @@
             processing: true,
             serverSide: true,
             ajax: {
-                url: "{{route("show.datatable")}}",
+				url: "{{route("show.datatable")}}",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "post",
                 data: {
                     userId: userId
@@ -203,7 +204,8 @@
             serverSide: true,
 
             ajax: {
-                url: "{{route("courseModal.datatable")}}",
+				url: "{{route("courseModal.datatable")}}",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "post",
                 data: {
                     userId: userId

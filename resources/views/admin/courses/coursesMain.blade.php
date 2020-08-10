@@ -64,7 +64,8 @@
 		processing: true,
 		serverSide: true,
 		ajax: {
-			url: "/api/courses/courses-datatable",
+			url: "/courses/courses-datatable",
+			headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 			type: "post"
 		},
 		columnDefs: [
@@ -161,7 +162,7 @@
 			let courseCnt = this.parentElement.parentElement;
 			let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
 
-			axios.patch('/api/courses/active', {
+			axios.patch('/courses/active', {
 				course: this.dataset.courseId,
 				state: this.checked
 			})
