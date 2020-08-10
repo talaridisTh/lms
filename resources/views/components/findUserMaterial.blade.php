@@ -3,6 +3,7 @@
             <table data-id="{{ $user['id'] }}" class="course-materials-list table w-100 nowrap custom-center-table ">
                 <thead>
                 <tr>
+                    <th >Επιλογη</th>
                     <th>Όνομα</th>
                     <th>Συμμετοχη</th>
                     <th>Action</th>
@@ -12,6 +13,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
+                    <th >Επιλογη</th>
                     <th>Όνομα</th>
                     <th>Συμμετοχη</th>
                     <th>Action</th>

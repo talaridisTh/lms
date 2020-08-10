@@ -171,6 +171,7 @@
 
             },
             columns: [
+                {data: 'chexbox', name: 'chexbox'},
                 {data: 'name', name: 'name'},
                 {data: 'students', name: 'students'},
                 {data: 'action', name: 'action'},
@@ -200,6 +201,7 @@
             scrollX: !0,
             processing: true,
             serverSide: true,
+
             ajax: {
                 url: "{{route("courseModal.datatable")}}",
                 type: "post",

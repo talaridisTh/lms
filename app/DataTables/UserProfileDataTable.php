@@ -36,10 +36,17 @@ class UserProfileDataTable extends DataTable
 
                 return "<td><h3><i data-course-id='{$data->id}' data-course-name='{$data->name}' class=' js-button-delete mdi text-danger mdi-delete-circle cursor-pointer'></i></h3></td>";
             })
+            ->addColumn('chexbox', function ($data)  {
+
+                return "<div class='icheck-primary d-inline'>
+							<input class='js-remainings-checkbox' data-course-id='$data->id' id='$data->slug' type='checkbox'autocomplete='off'>
+							<label for='$data->slug' ></label>
+						</div>";
+            })
             ->setRowAttr(['data-course-id' => function ($data) {
                 return [$data->id,$data->name];
             }])
-        ->rawColumns(['students','action']);
+        ->rawColumns(['students','action' ,"chexbox"  ]);
     }
 
     /**

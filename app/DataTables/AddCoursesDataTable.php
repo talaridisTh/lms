@@ -41,6 +41,7 @@ class AddCoursesDataTable extends DataTable {
             }, 'data-user-id' => function ($data) use($user) {
                 return $user->id;
             }]);
+
     }
 
     /**
