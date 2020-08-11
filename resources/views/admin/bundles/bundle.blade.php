@@ -52,41 +52,21 @@
 					alt="profile-image">
 
 					<h4 class="mb-0 mt-2">{{ $bundle['name'] }}</h4>
-					<p class="text-muted font-14">Course</p>
+					<p class="text-muted font-14">Bundle</p>
 
 					<div class="text-left mt-3">
-						<h4 class="font-13 text-uppercase">About Course :</h4>
+						<h4 class="font-13 text-uppercase">About Bundle :</h4>
 						<p class="text-muted font-13 mb-3">
 							{{ $bundle['description'] }}
 						</p>
 						<p class="text-muted mb-2 font-13">
 							<strong>
-								Σύνολο Μαθημάτων :
+								Σύνολο περιεχομένων :
 							</strong>
-							<span class="ml-2">
-								{{-- {{ $course->materials->where( 'type', 'Lesson')->count() }} --}}
+							<span id="total-courses-cnt" class="ml-2">
+								{{ $bundle->courses->count() }}
 							</span>
 						</p>
-
-						<p class="text-muted mb-2 font-13">
-							<strong>
-								Σύνολο Extra Υλικού :
-							</strong>
-							<span class="ml-2">
-								{{-- {{ $course->materials->where( 'type', '!=', 'Lesson')->count() }} --}}
-							</span>
-						</p>
-						<h4 class="font-13 text-uppercase mt-4">Εισηγητές μαθημάτων :</h4>
-							<ul id="authors-list">
-								{{-- @foreach ($authors as $key => $author)
-										<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
-								@endforeach --}}
-								<li id="more-authors" 
-									data-shown="false" 
-									class="d-none mt-1 list-unstyled font-weight-bold cursor-pointer text-hover-underline">
-									Περρισότερα...
-								</li>
-							</ul>
 
 						<p class="text-muted mb-2 font-13 mt-4">
 							<strong>
@@ -247,6 +227,7 @@
 	<script>
 		//! GLOBAL VARIABLES
 		const bundleId = $("#bundle-courses-list")[0].dataset.bundleId
+		const totalCourses = $('#total-courses-cnt')[0];
 		const updatedAt = $("#last-update-cnt")[0];
 
 		//! EventListerners
@@ -294,21 +275,6 @@
 			}
 		});
 
-		// $("#all-active-materials-checkbox").change( function() {
-
-		// 	let checkboxes = $(".js-course-material-checkbox");
-
-		// 	if ( this.checked ) {
-		// 		for ( let i = 0; i < checkboxes.length; i++ ) {
-		// 			checkboxes[i].checked = true;
-		// 		}
-		// 	}
-		// 	else {
-		// 		for ( let i = 0; i < checkboxes.length; i++ ) {
-		// 			checkboxes[i].checked = false;
-		// 		}
-		// 	}
-		// });
 		//! EventListerners /end
 
 		//! Datatables
@@ -488,6 +454,7 @@
 
 				bundleCoursesTable.ajax.reload();
 				remainingCoursesTable.ajax.reload();
+				totalCourses.textContent = parseInt(totalCourses.textContent) + courseIds.length;
 				updatedAt.textContent = "Μόλις τώρα";
 			})
 			.catch( (err) => {
@@ -508,6 +475,7 @@
 
 				bundleCoursesTable.ajax.reload();
 				remainingCoursesTable.ajax.reload();
+				totalCourses.textContent = parseInt(totalCourses.textContent) - courseIds.length;
 				updatedAt.textContent = "Μόλις τώρα";
 			})
 			.catch( (err) => {
