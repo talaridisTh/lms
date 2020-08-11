@@ -30,8 +30,6 @@ class BundleCoursesDataTable extends DataTable
 				'courses.created_at'
 			);
 
-		// dd($query);
-
         return datatables()
             ->eloquent($query)
 			->addColumn('action', function($data) {
