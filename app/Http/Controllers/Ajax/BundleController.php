@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Bundle;
+use App\DataTables\BundleCoursesDataTable;
 use App\DataTables\BundleDataTable;
+use App\DataTables\RemainingCoursesDataTable;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BundleController extends Controller
@@ -46,9 +49,9 @@ class BundleController extends Controller
      * @param  \App\Bundle  $bundle
      * @return \Illuminate\Http\Response
      */
-    public function show(Bundle $bundle)
+    public function show(BundleCoursesDataTable $dataTable)
     {
-        //
+        return $dataTable->render('bundle.show');
     }
 
     /**
@@ -86,5 +89,37 @@ class BundleController extends Controller
     public function destroy(Bundle $bundle)
     {
         //
-    }
+	}
+	
+	public function remainingCourses(RemainingCoursesDataTable $dataTable) {
+		return $dataTable->render('bundle.remainingCoursesDataTable');
+	}
+
+	public function addCourses(Request $request) {
+
+		$bundle = Bundle::find( $request->bundleId );
+		$courseIds = $request->courseIds;
+
+		foreach ( $courseIds as $id ) {
+			$bundle->courses()->attach( $id );
+		}
+
+		$bundle->updated_at = Carbon::now();
+		$bundle->save();
+
+	}
+
+	public function removeCourses( Request $request ) {
+
+		$bundle = Bundle::find( $request->bundleId );
+		$courseIds = $request->courseIds;
+
+		foreach ( $courseIds as $id ) {
+			$bundle->courses()->detach( $id );
+		}
+
+		$bundle->updated_at = Carbon::now();
+		$bundle->save();
+
+	}
 }

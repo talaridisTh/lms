@@ -80,9 +80,13 @@ Route::patch( 'courses/remove-materials', 'Ajax\CourseController@removeMaterials
 
 //! Ajax Bundles Datatables
 Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );
+Route::post( 'bundles/bundle-courses-datatable', 'Ajax\BundleController@show' );
+Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remainingCourses' );
 
 //! Ajax Bundles CRUD
 Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@update' );
+Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
+Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 
 Auth::routes();
 
