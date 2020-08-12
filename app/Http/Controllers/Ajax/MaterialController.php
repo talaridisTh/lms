@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Ajax;
 
+use App\DataTables\MaterialsDataTable;
+use App\Http\Controllers\Controller;
 use App\Material;
 use Illuminate\Http\Request;
-use App\User;
 
 class MaterialController extends Controller
 {
@@ -13,11 +14,9 @@ class MaterialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(MaterialsDataTable $dataTable)
     {
-		$materials = Material::all(['name', 'small_description', 'active', 'type']);
-
-        return view('admin/materials/materialsMain')->withMaterials($materials);
+        return $dataTable->render('materials.index');
     }
 
     /**
@@ -49,7 +48,7 @@ class MaterialController extends Controller
      */
     public function show(Material $material)
     {
-        return view('admin.materials.material')->with('material', $material);
+        //
     }
 
     /**
@@ -84,9 +83,5 @@ class MaterialController extends Controller
     public function destroy(Material $material)
     {
         //
-	}
-	
-	public function newMaterial() {
-		return view('admin/materials/newMaterial');
-	}
+    }
 }
