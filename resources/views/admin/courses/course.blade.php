@@ -291,16 +291,8 @@
 		$('#all-remainings-checkbox').change( function() {
 			let checkboxes = $('.js-remainings-checkbox');
 
-			if ( this.checked ) {
-				for ( let i = 0; i < checkboxes.length; i++ ) {
-					checkboxes[i].checked = true;
-				}
-			}
-			else {
-				for ( let i = 0; i < checkboxes.length; i++ ) {
-					checkboxes[i].checked = false;
-				}
-			}
+			minorCheckboxSwitcher( this, checkboxes );
+
 		});
 
 		$('#add-remaingings-btn').click( function() {
@@ -340,16 +332,8 @@
 
 			let checkboxes = $(".js-course-material-checkbox");
 
-			if ( this.checked ) {
-				for ( let i = 0; i < checkboxes.length; i++ ) {
-					checkboxes[i].checked = true;
-				}
-			}
-			else {
-				for ( let i = 0; i < checkboxes.length; i++ ) {
-					checkboxes[i].checked = false;
-				}
-			}
+			minorCheckboxSwitcher( this, checkboxes )
+
 		});
 		//! EventListerners /end
 
@@ -473,7 +457,7 @@
 			$('.js-sort-input').on('keyup', function() {
 
 				if ( event.keyCode == 13 && !isNaN( this.value) ) {
-					axios.patch('/api/courses/priority', {
+					axios.patch('/courses/priority', {
 						courseId: $('#course-materials-list')[0].dataset.courseId,
 						materialId: this.dataset.materialId,
 						priority: { 
@@ -497,7 +481,7 @@
 				let courseCnt = this.parentElement.parentElement;
 				let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
 
-				axios.patch('/api/courses/toggle-materials', {
+				axios.patch('/courses/toggle-materials', {
 					courseId: this.dataset.courseId,
 					materialId: this.dataset.materialId,
 					state: this.checked
@@ -542,15 +526,8 @@
 			let mainCheckbox = $('#all-remainings-checkbox')[0];
 			let checkbox = $('.js-remainings-checkbox');
 
-			for ( let i = 0; i < checkbox.length; i++ ) {
-				if ( !checkbox[i].checked ) {
-					mainCheckbox.checked = false;
-					break;
-				}
-				else {
-					mainCheckbox.checked = true;
-				}
-			}
+
+			mainCheckboxSwitcher( mainCheckbox, checkbox );
 
 		}
 
@@ -566,19 +543,12 @@
 			let mainCheckbox = $('#all-active-materials-checkbox')[0];
 			let checkbox = $('.js-course-material-checkbox');
 
-			for ( let i = 0; i < checkbox.length; i++ ) {
-				if ( !checkbox[i].checked ) {
-					mainCheckbox.checked = false;
-					break;
-				}
-				else {
-					mainCheckbox.checked = true;
-				}
-			}
+			mainCheckboxSwitcher( mainCheckbox, checkbox);
+
 		}
 
 		function postMaterialIds( materialId ) {
-			axios.post( "/api/courses/add-materials", {
+			axios.post( "/courses/add-materials", {
 				courseId,
 				materialId
 			})
@@ -597,7 +567,7 @@
 
 		function removeMaterials( materialIds ) {
 			
-			axios.patch( "/api/courses/remove-materials", {
+			axios.patch( "/courses/remove-materials", {
 				courseId,
 				materialIds
 			})
@@ -613,6 +583,35 @@
 			.catch( (err) => {
 				toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 			})
+		}
+
+		function mainCheckboxSwitcher( main, minor) {
+
+			for ( let i = 0; i < minor.length; i++ ) {
+				if ( !minor[i].checked ) {
+					main.checked = false;
+					break;
+				}
+				else {
+					main.checked = true;
+				}
+			}
+
+		}
+
+		function minorCheckboxSwitcher( main, minor ) {
+		
+			if ( main.checked ) {
+				for ( let i = 0; i < minor.length; i++ ) {
+					minor[i].checked = true;
+				}
+			}
+			else {
+				for ( let i = 0; i < minor.length; i++ ) {
+					minor[i].checked = false;
+				}
+			}
+
 		}
 
 		function toastAlert( icon, message ) {

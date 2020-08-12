@@ -2,16 +2,15 @@
 
 namespace App\DataTables;
 
-use App\Course;
-use App\User;
-use Illuminate\Support\Facades\Auth;
+use App\Bundle;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CoursesDataTable extends DataTable
+class BundleCoursesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,48 +18,43 @@ class CoursesDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query, Request $request)
     {
-
-		// dd( Auth::user()->id );
-		// $userId = Auth::user()->id;
-		// $roleId = Auth::user()->roles[0]->id;
-
-		$query = Course::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
+		$query = Bundle::find( $request->bundleId )
+			->courses()
+			->select(
+				'courses.id', 
+				'courses.name', 
+				'courses.slug', 
+				'courses.updated_at', 
+				'courses.created_at'
+			);
 
         return datatables()
             ->eloquent($query)
 			->addColumn('action', function($data) {
-				
+
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-course-id='". $data->id ." data-course-name='". $data->name ." type='checkbox' id='". $data->slug ."' autocomplete='off'>
-							<label for='". $data->slug ."'></label>
+							<input class='js-course-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
+							<label for='$data->slug'></label>
 						</div>";
 
 			})
-			->editColumn('active', function($data) {
+			->rawColumns(['action'])
+			->setRowAttr(['data-course-id' => function($data) {
 
-				$active = $data->active == 0 ? "" : "checked";
-
-				return "<input class='js-toggle' data-course-id='". $data->id ."' type='checkbox' id='". $data->slug ."-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
-					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
-
-			})
-			->rawColumns(['action', 'active'])
-			->setRowAttr([ 'data-course-id' => function($data) {
-
-				return  $data->id;
-
+				return $data->id;
+				
 			}]);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Course $model
+     * @param \App\Bundle $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(Bundle $model)
     {
         return $model->newQuery();
     }
@@ -73,7 +67,7 @@ class CoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('courses-table')
+                    ->setTableId('bundlecoursesdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -100,8 +94,8 @@ class CoursesDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('name'),
-            Column::make('active'),
+            Column::make('id'),
+            Column::make('add your columns'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];
@@ -114,6 +108,6 @@ class CoursesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Courses_' . date('YmdHis');
+        return 'BundleCourses_' . date('YmdHis');
     }
 }

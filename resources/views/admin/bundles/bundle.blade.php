@@ -1,127 +1,498 @@
 @extends('layouts.dashboard')
 
 @section('css')
-	
+	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 @endsection
 
 @section('content')
-		
-		<!-- start page title -->
-		<div class="row">
-			<div class="col-12">
-				<div class="page-title-box">
-					<div class="page-title-right">
-						<ol class="breadcrumb m-0">
-							<li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-							<li class="breadcrumb-item"><a href="javascript: void(0);">Apps</a></li>
-							<li class="breadcrumb-item active">Projects</li>
-						</ol>
+	<div id="remaining-courses-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remaining-courses-modalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-lg">
+	        <div class="modal-content">
+	            <div class="modal-header modal-colored-header bg-primary">
+	                <h4 class="modal-title" id="remaining-courses-modalLabel">Προσθήκη Μαθημάτων</h4>
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	            </div>
+	            <div class="modal-body table-cnt">
+	                <table id="remaining-courses-table" class="table w-100 nowrap modal-table px-3 custom-center-table js-remove-table-classes">
+						<thead>
+							<tr>
+								<th class="select-all w-5">
+									<div class='icheck-primary d-inline'>
+										<input class='js-courses-checkbox' type='checkbox' id='all-courses-checkbox' autocomplete='off'>
+										<label for='all-courses-checkbox'></label>
+									</div>
+								</th>
+								<th>Όνομα</th>
+								<th class="text-center w-5"></th>
+							</tr>
+						</thead>
+						<tbody class="tables-hover-effect"></tbody>
+						<tfoot>
+							<tr>
+								<th class="text-center"></th>
+								<th>Όνομα</th>
+								<th class="text-center"></th>
+							</tr>
+						</tfoot>
+					</table>
+	            </div>
+	            <div class="modal-footer">
+	                <button id="add-courses-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div class="row">
+		<div class="col-xl-3 col-lg-5">
+			<div class="card text-center">
+				<div class="card-body">
+					<img src="https://via.placeholder.com/300x200" class="img-fluid"
+					alt="profile-image">
+
+					<h4 class="mb-0 mt-2">{{ $bundle['name'] }}</h4>
+					<p class="text-muted font-14">Bundle</p>
+
+					<div class="text-left mt-3">
+						<h4 class="font-13 text-uppercase">About Bundle :</h4>
+						<p class="text-muted font-13 mb-3">
+							{{ $bundle['description'] }}
+						</p>
+						<p class="text-muted mb-2 font-13">
+							<strong>
+								Σύνολο περιεχομένων :
+							</strong>
+							<span id="total-courses-cnt" class="ml-2">
+								{{ $bundle->courses->count() }}
+							</span>
+						</p>
+
+						<p class="text-muted mb-2 font-13 mt-4">
+							<strong>
+								Τελευταία Ανανέωση :
+							</strong>
+							<span id="last-update-cnt" class="ml-2">
+								{{ $bundle['updated_at'] }}
+							</span>
+						</p>
+
+						<p class="text-muted mb-1 font-13">
+							<strong>
+								Ημ. Δημιουργίας :
+							</strong>
+							<span class="ml-2">
+								{{ $bundle['created_at'] }}
+							</span>
+						</p>
 					</div>
-					<h4 class="page-title">{{ $bundle->name }}</h4>
-				</div>
-			</div>
-		</div>     
-		<!-- end page title --> 
 
-		<div class="row mb-2">
-			<div class="col-sm-4">
-				<a href="apps-projects-add.html" class="btn btn-danger btn-rounded mb-3"><i class="mdi mdi-plus"></i> Create Project</a>
-			</div>
-			<div class="col-sm-8">
-				<div class="text-sm-right">
-					<div class="btn-group mb-3">
-						<button type="button" class="btn btn-primary">All</button>
-					</div>
-					<div class="btn-group mb-3 ml-1">
-						<button type="button" class="btn btn-light">Active</button>
-						<button type="button" class="btn btn-light">Inactive</button>
-					</div>
-					<div class="btn-group mb-3 ml-2 d-none d-sm-inline-block">
-						<button type="button" class="btn btn-secondary"><i class="dripicons-view-apps"></i></button>
-					</div>
-					<div class="btn-group mb-3 d-none d-sm-inline-block">
-						<button type="button" class="btn btn-link text-muted"><i class="dripicons-checklist"></i></button>
-					</div>
-				</div>
-			</div><!-- end col-->
-		</div> 
-		<!-- end row-->
+				</div> <!-- end card-body -->
+			</div> <!-- end course info card -->
 
-<div class="row">
+		</div> <!-- end col-->
 
-	@foreach ($bundle->courses as $key => $course)
+		<div class="col-xl-9 col-lg-7">
+			<div class="card">
+				<div class="card-body">
 
-		@php $badge = $course->active ? "badge-success" : "badge-danger" @endphp
-		@php $message = $course->active ? "Active" : "Inactive" @endphp
-		@php $authorCount = 0 @endphp
+					<!-- Tab Buttons -->
+					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+						<li class="nav-item">
+							<a href="#courses" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+								Courses
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+								Επεξεργασία
+							</a>
+						</li>
+					</ul><!-- /.End Tab Buttons -->
 
-		@foreach ( $course->materials->where('type', "Lesson") as $material )
+					<div class="tab-content">
+						<!-- Courses table tab-->
+						<div class="tab-pane show active table-cnt" id="courses">
 
-			@php $authorCount += $material->users->count() @endphp
+							<table id="bundle-courses-list" data-bundle-id="{{ $bundle['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
+								<thead>
+									<tr>
+										<th class="text-center">
+											<div class='icheck-primary d-inline'>
+												<input type='checkbox' id='main-active-courses-checkbox' autocomplete='off'>
+												<label for='main-active-courses-checkbox'></label>
+											</div>
+										</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center"></th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
+									</tr>
+								</tfoot>
+							</table>
 
-		@endforeach
+							<div class="row mt-3">
+								<div class="col-sm-1">
+								</div>
+								<div class="col-sm-11 d-flex justify-content-end">
+									<button id="course-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#remaining-courses-modal">
+										<i class="mdi mdi-plus-circle mr-2"></i>
+										Προσθήκη Μαθημάτων
+									</button>
+									<div class="dropdown ml-2">
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Επιλογές
+										</button>
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+											<a id="remove-selected-courses-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- end material tab-pane -->
+						<!-- end about me section content -->
 
-		@if ( ($key / 4 == 0) && ($key != 4) )
-			
-			</div><div class="row">
+						<!-- Course edit form tab-pane -->
+						<div class="tab-pane" id="settings">
+							<form>
+							    <div class="row">
+							        <div class="col-xl-6">
+							            <div class="form-group">
+							                <label for="name">Όνομα Course</label>
+											<input type="text" class="form-control" id="name" name="name" value="{{ $bundle['name'] }}" placeholder="Δώστε όνομα">
+							            </div>
+							        </div>
+							        <div class="col-xl-6">
+							            <div class="form-group">
+							                <label for="course-cover">Cover Εικόνα</label>
+											<div class="input-group">
+											    <div class="custom-file">
+											        <input type="file" class="custom-file-input" name="cover" value="{{ $bundle['cover'] }}" id="cover-input">
+											        <label class="custom-file-label" for="cover-input">"{{ $bundle['cover'] }}"</label>
+											    </div>
+											</div>
+							            </div>
+							        </div> <!-- end col -->
+							    </div> <!-- end row -->
 
-		@endif
-		<div class="col-md-6 col-xl-3">
-			<!-- project card -->
-			<div class="card d-block">
-				<!-- project-thumbnail -->
-				<img class="card-img-top" src="https://via.placeholder.com/500x260" alt="project image cap">
-				<div class="card-img-overlay">
-					<div class="badge {{ $badge }} p-1">{{ $message }}</div>
-				</div>
-	
-				<div class="card-body position-relative">
-					<!-- project title-->
-					<h4 class="mt-0">
-						<a href="apps-projects-details.html" class="text-title">{{ $course->name }}</a>
-					</h4>
-	
-					<!-- project detail-->
-					<p class="mb-3">
-						<span class="pr-2 text-nowrap">
-							<i class="mdi mdi-format-list-bulleted-type"></i>
-						<b>{{ $course->materials->where('type', 'Lesson')->count() }}</b> Μαθήματα
-						</span>
-						<span class="text-nowrap">
-							<i class="mdi mdi-comment-multiple-outline"></i>
-						<b>{{ $authorCount }}</b> Εισηγητές
-						</span>
-					</p>
-					<div class="mb-3">
-						<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mat Helme" class="d-inline-block">
-							<img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-xs" alt="friend">
-						</a>
-	
-						<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Michael Zenaty" class="d-inline-block">
-							<img src="assets/images/users/avatar-5.jpg" class="rounded-circle avatar-xs" alt="friend">
-						</a>
-	
-						<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="James Anderson" class="d-inline-block">
-							<img src="assets/images/users/avatar-9.jpg" class="rounded-circle avatar-xs" alt="friend">
-						</a>
-					</div>
-	
-					<!-- project progress-->
-					<p class="mb-2 font-weight-bold">Progress <span class="float-right">45%</span></p>
-					<div class="progress progress-sm">
-						<div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-						</div><!-- /.progress-bar -->
-					</div><!-- /.progress -->
-				</div> <!-- end card-body-->
-			</div> <!-- end card-->
+							    <div class="row">
+							        <div class="col-12">
+							            <div class="form-group">
+							                <label for="description">Περιγραφή</label>
+										<textarea class="form-control" id="description" name="description" rows="4" placeholder="Write something...">{{ $bundle['description'] }}</textarea>
+							            </div>
+							        </div> <!-- end col -->
+							    </div> <!-- end row -->
+
+							    <div class="row">
+							        <div class="col-xl-6">
+							            <div class="form-group">
+							                <label for="example-select">Κατάσταση</label>
+											<select class="form-control" id="active">
+											    <option value="1">Ενεργό</option>
+											    <option value="0">Ανενεργό</option>
+											</select>
+							            </div>
+							        </div>
+							        <div class="col-xl-6">
+									</div> <!-- end col -->
+							    </div> <!-- end row -->
+
+							    <div class="text-right">
+							        <button type="submit" class="btn btn-primary mt-2 w-100"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
+							    </div>
+							</form>
+						</div><!-- end tab-pane -->
+						<!-- end settings content-->
+					</div> <!-- end tab-content -->
+					
+				</div> <!-- end card body -->
+			</div> <!-- end card -->
 		</div> <!-- end col -->
-	@endforeach
-
-
-</div>		
-
+	</div>
 @endsection
 
 @section('scripts')
-	
+<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
+<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+
+	<script>
+		//! GLOBAL VARIABLES
+		const bundleId = $("#bundle-courses-list")[0].dataset.bundleId
+		const totalCourses = $('#total-courses-cnt')[0];
+		const updatedAt = $("#last-update-cnt")[0];
+
+		//! EventListerners
+
+		$('#main-active-courses-checkbox').click( function() {
+			let checkboxes = $('.js-course-checkbox');
+			minorCheckboxSwitcher( this, checkboxes );
+		});
+
+		$('#all-courses-checkbox').change( function() {
+			let checkboxes = $('.js-remainings-checkbox');
+			minorCheckboxSwitcher( this, checkboxes );
+		});
+
+		$('#add-courses-btn').click( function() {
+			let checkboxes = $('.js-remainings-checkbox:checked');
+			let ids = [];
+
+			if ( checkboxes.length == 0 ) {
+				toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
+				return;
+			}
+			else {
+				for ( let i = 0; i < checkboxes.length; i++) {
+					ids.push(checkboxes[i].dataset.courseId);
+				}
+				postCourseIds( ids );
+			}
+		});
+
+		$('#remove-selected-courses-btn').click( function() {
+			let checkboxes = $('.js-course-checkbox:checked');
+			let ids = []
+
+			if ( checkboxes.length == 0 ) {
+				
+				toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
+				return;
+			}
+			else {
+				for ( let i = 0; i < checkboxes.length; i++ ) {
+					ids.push( checkboxes[i].dataset.courseId );
+				}
+				removeCourses(ids);
+			}
+		});
+
+		//! EventListerners /end
+
+		//! Datatables
+		const bundleCoursesTable = $("#bundle-courses-list").DataTable({
+			order: [1, "asc"],
+			processing: true,
+			serverSide: true,
+			ajax: {
+				url: "/bundles/bundle-courses-datatable",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				type: "post",
+				data: {
+					bundleId: bundleId
+				}
+			},
+			columns: [
+				{ data: 'action', name: 'action', orderable: false, width: "5%" },
+				{ data: 'name', name: 'name', className: "js-link cursor-pointer" },
+				{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer" },
+				{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
+			],
+			language:{
+				emptyTable: 		"Δεν υπάρχουν εγγραφές",
+				info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+				infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+				lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+				loadingRecords: 	"Φόρτωση ...",
+				processing: 		"Επεξεργασία ...",
+				search: 			"Αναζήτηση: ",
+				zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+				$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
+
+				jsLinkEventListener();
+				activeCoursesCheckboxToggle();
+			},
+			
+		});
+
+		function activeCoursesCheckboxToggle() {
+
+			let mainCheckbox = $('#main-active-courses-checkbox')[0];
+			let minorCheckbox = $('.js-course-checkbox');
+
+			minorCheckbox.unbind();
+			minorCheckbox.change( function() {
+				mainCheckboxSwitcher(mainCheckbox, minorCheckbox);
+			});
+		}
+
+		const remainingCoursesTable = $("#remaining-courses-table").DataTable({
+			order: [1, "asc"],
+			processing: true,
+			serverSide: true,
+			ajax: {
+				url: "/bundles/remaining-courses-datatable",
+				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+				type: "post",
+				data: {
+					bundleId: bundleId
+				}
+			},
+			columns: [
+				{data: 'action', name:'action', orderable: false, searchable: false, className: "text-center"},
+				{data: 'name', name: 'name', className: "cursor-default"},
+				{data: 'addBtn', name: 'addBtn', orderable: false, searchable: false, className: "text-center"}
+			],
+			language:{
+				emptyTable: 		"Δεν υπάρχουν εγγραφές",
+				info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+				infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+				lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+				loadingRecords: 	"Φόρτωση ...",
+				processing: 		"Επεξεργασία ...",
+				search: 			"Αναζήτηση: ",
+				zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+				paginate:{
+					previous:"<i class='mdi mdi-chevron-left'>",
+					next:"<i class='mdi mdi-chevron-right'>"}
+			},
+			drawCallback:function(){
+				$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+				$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+				$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+				$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+				$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
+
+				addcourse();
+				remainingsCheckboxes();
+			},
+			
+		});
+		//! DataTables /end
+
+		//! DataTables function / EventListener
+
+		function addcourse() {
+			$('.js-add-course-btn').click( function() {
+
+				const courseId = [this.dataset.courseId];
+
+				postCourseIds( courseId );
+			});
+		}
+
+		function remainingsCheckboxes() {
+
+			let mainCheckbox = $('#all-courses-checkbox')[0];
+			let minorCheckbox = $('.js-remainings-checkbox');
+
+			minorCheckbox.unbind();
+			minorCheckbox.change( function() {
+				mainCheckboxSwitcher(mainCheckbox, minorCheckbox);
+			});
+		}
+
+		function jsLinkEventListener() {
+
+			let links = $(".js-link");
+
+			links.unbind();
+			links.click( function() {
+				
+				let id = this.parentElement.dataset.courseId;
+
+				window.location = `/dashboard/course/${id}`;
+			});
+		}
+
+		// DataTables function / EventListener End
+
+
+		function mainCheckboxSwitcher( main, minor) {
+
+			for ( let i = 0; i < minor.length; i++ ) {
+				if ( !minor[i].checked ) {
+					main.checked = false;
+					break;
+				}
+				else {
+					main.checked = true;
+				}
+			}
+
+		}
+
+		function minorCheckboxSwitcher( main, minor ) {
+
+			if ( main.checked ) {
+				for ( let i = 0; i < minor.length; i++ ) {
+					minor[i].checked = true;
+				}
+			}
+			else {
+				for ( let i = 0; i < minor.length; i++ ) {
+					minor[i].checked = false;
+				}
+			}
+
+		}
+
+		function postCourseIds( courseIds ) {
+			axios.patch( "/bundles/add-courses", {
+				bundleId,
+				courseIds
+			})
+			.then( (res) => {
+				let message = courseIds.length == 1 ? "1 προστέθηκε" : `${courseIds.length} προστέθηκαν`;
+				toastAlert( 'success', message );
+
+				bundleCoursesTable.ajax.reload();
+				remainingCoursesTable.ajax.reload();
+				totalCourses.textContent = parseInt(totalCourses.textContent) + courseIds.length;
+				updatedAt.textContent = "Μόλις τώρα";
+			})
+			.catch( (err) => {
+				toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			})
+		}
+
+		function removeCourses( courseIds ) {
+			
+			axios.patch( "/bundles/remove-courses", {
+				bundleId,
+				courseIds
+			})
+			.then( (res) => {
+
+				let message = courseIds.length == 1 ? "1 course Αφαιρέθηκε" : `${courseIds.length} courses αφαιρέθηκαν`;
+				toastAlert( 'success', message );
+
+				bundleCoursesTable.ajax.reload();
+				remainingCoursesTable.ajax.reload();
+				totalCourses.textContent = parseInt(totalCourses.textContent) - courseIds.length;
+				updatedAt.textContent = "Μόλις τώρα";
+			})
+			.catch( (err) => {
+				toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			})
+		}
+
+		function toastAlert( icon, message ) {
+			Swal.fire({
+					toast: 'true',
+					position: 'top-end',
+					icon: icon,
+					title: message,
+					showConfirmButton: false,
+					timer: 3000,
+  					timerProgressBar: true
+				});
+		}
+	</script>
 @endsection
