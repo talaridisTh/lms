@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 	//! Material Routes
     Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
     Route::get('/dashboard/material/{material}', 'MaterialController@show')->name('material.show');
+    Route::get('/dashboard/materials/new', 'MaterialController@newMaterial')->name('material.new');
 
 	//! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
@@ -103,6 +104,9 @@ Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remai
 Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@update' );
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
+
+//! Ajax Materials Datatables
+Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
 
 Auth::routes();
 
