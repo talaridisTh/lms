@@ -22,7 +22,6 @@ class UserController {
         return $dataTable->render('users.profile');
     }
 
-
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
@@ -35,9 +34,7 @@ class UserController {
     public function addCourseModal(AddCoursesDataTable $dataTable)
     {
 
-
         return $dataTable->render('users.addCourses');
-
     }
 
     public function addCourses(Request $request)
@@ -48,7 +45,6 @@ class UserController {
         $user->courses()->attach($request->course_id);
 
         return response()->json(['success' => 'Status change successfully.']);
-
     }
 
     public function destroy(Request $request)
@@ -58,9 +54,18 @@ class UserController {
         $user = User::find($request->user_id);
         $user->courses()->detach($request->course_id);
 
+        return response()->json(['success' => 'Status change successfully.']);
+    }
+
+
+    public function destroyMultiple(Request $request)
+    {
+
+//
+        $user = User::find($request->user_id);
+        $user->courses()->detach($request->course_id);
 
         return response()->json(['success' => 'Status change successfully.']);
-
     }
 
 }

@@ -43,10 +43,7 @@
                                         </form>
                                     </div>
 
-                                    <button id="material-modal-shown-btn" type="button" class="btn btn-primary"
-                                            data-toggle="modal"
-                                            data-target="#primary-header-modal">Προσθήκη COURSES
-                                    </button>
+
                                     <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog"
                                          aria-labelledby="primary-header-modalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-lg">
@@ -62,7 +59,8 @@
                                                     @include("components.addCourses")
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light modal-dismiss" data-dismiss="modal">
+                                                    <button type="button" class="btn btn-light modal-dismiss"
+                                                            data-dismiss="modal">
                                                         Κλείσιμο
                                                     </button>
                                                     <button type="button" onClick="window.location.reload();"
@@ -86,11 +84,29 @@
                 <div class="col-xl-8 col-lg-7">
                     <div class="card">
                         <div class="card-body">
+                            <div class="text-sm-right">
+                                <div class="btn-group mb-2 ">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle"
+                                            data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">Επιλογές
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a id="material-modal-shown-btn" type="button" class="dropdown-item"
+                                           data-toggle="modal"
+                                           data-target="#primary-header-modal">Προσθήκη COURSES
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item js-chexbox-delete" href="#">Διαγραφή επιλεγμένων</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#">Export</a>
+                                    </div>
+                                </div>
+                            </div>
                             <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                                 <li class="nav-item">
                                     <a href="#courses" data-toggle="tab" aria-expanded="false"
                                        class="nav-link rounded-0  active">
-                                        Μαθήματα
+                                        Courses
                                     </a>
                                 </li>
 
@@ -123,6 +139,7 @@
 
 @endsection
 
+
 @section('scripts')
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
@@ -130,41 +147,13 @@
 
         const userId = $(".course-materials-list")[0].dataset.id
 
-        $('#alertSumbit').submit(async function (e) {
-            e.preventDefault()
-            let buttonDelete = $('.js-delete');
-            const user = buttonDelete[0].dataset.id;
-            try {
-                const {value} = await Swal.fire({
-                    title: 'Είστε σίγουρος;',
-                    text: "αρχεία θα διαγραφούν",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ναί, διαγραφή!',
-                    cancelButtonText: 'Άκυρο'
-                });
-                if (value) {
-                    const res = await axios.post(`/dashboard/users/${user}`,{ _method: 'DELETE'})
-                    sweetAlert("Διεγράφη",'success')
-                    window.location = `http://127.0.0.1:8000/dashboard/users`;
-                }
-            } catch (e) {
-                sweetAlert("Παρουσιάστηκε κάποιο πρόβλημα",'error')
-            }
-
-
-        });
-
         const courses = $(".course-materials-list").DataTable({
             scrollX: !0,
-            // "columnDefs": [
-            //     {"width": "5%", "targets": [2]}
-            // ],
             processing: true,
             serverSide: true,
             ajax: {
-				url: "{{route("show.datatable")}}",
-				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: "{{route("show.datatable")}}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "post",
                 data: {
                     userId: userId
@@ -195,6 +184,7 @@
                 $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
                 $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
                 $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+                deleteMultipleCourse()
             },
 
         });
@@ -204,8 +194,8 @@
             serverSide: true,
 
             ajax: {
-				url: "{{route("courseModal.datatable")}}",
-				headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: "{{route("courseModal.datatable")}}",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type: "post",
                 data: {
                     userId: userId
@@ -241,6 +231,7 @@
                 addCourseToUser()
                 deleteCourse()
 
+
             }
 
 
@@ -248,20 +239,20 @@
 
         function deleteCourse() {
             $('.js-button-delete').unbind();
-            $(".js-button-delete").click( async function () {
+            $(".js-button-delete").click(async function () {
                 try {
-                    let {status} = await axios.delete("{{route('destroy.datatable')}}",{
+                    let {status} = await axios.delete("{{route('destroy.datatable')}}", {
                         data: {
-                            'course_id' :this.dataset.courseId,
-                            'user_id' :userId
+                            'course_id': this.dataset.courseId,
+                            'user_id': userId
                         }
                     })
-                    if(status==200){
-                        sweetAlert(`${this.dataset.courseName}  Διεγραφη`,'error')
+                    if (status == 200) {
+                        sweetAlert(`${this.dataset.courseName}  Διεγραφη`, 'error')
                         courses.ajax.reload();
                         addCourse.ajax.reload();
                     }
-                }catch (e) {
+                } catch (e) {
                     sweetAlert("Παρουσιάστηκε κάποιο πρόβλημα", 'error')
                 }
 
@@ -269,6 +260,7 @@
                 console.log(this)
             })
         }
+
         function addCourseToUser() {
             $('.js-button').unbind();
             let ids = [];
@@ -277,7 +269,7 @@
             let jsButton = $(".js-button").click(async function () {
                 const parent = this.parentElement.parentElement
                 if (parent.dataset.exist) {
-                    sweetAlert(`${this.dataset.courseName}  αφαιρεθηκε`,'warning')
+                    sweetAlert(`${this.dataset.courseName}  αφαιρεθηκε`, 'warning')
                     ids = ids.filter(val => val !== this.dataset.courseId);
                     this.value = 'Επιλογη'
                     this.classList.remove("btn-danger")
@@ -287,7 +279,7 @@
                     if (!ids.includes(this.dataset.courseId)) {
                         ids.push(this.dataset.courseId)
                     }
-                    sweetAlert(`${this.dataset.courseName} Επιλέχθηκε`,'success')
+                    sweetAlert(`${this.dataset.courseName} Επιλέχθηκε`, 'success')
                     this.classList.remove("btn-primary")
                     this.classList.add("btn-danger")
                     this.value = 'Αφαιρεση'
@@ -295,7 +287,7 @@
                 }
 
                 $(".modal-save").click(async function () {
-                  await  sweetAlert(`${ids.length} COURSES Προσθεθηκαν`,'success')
+                    await sweetAlert(`${ids.length} COURSES Προσθεθηκαν`, 'success')
                     const parent = this.parentElement.parentElement
                     let id = [];
 
@@ -318,37 +310,106 @@
                 })
 
 
-
             })
 
 
         }
 
-         let sweetAlert = (title,icon)=>{
-             Swal.fire({
-                 toast: 'true',
-                 position: 'top-end',
-                 icon: icon,
-                 title: title,
-                 showConfirmButton: false,
-                 timer: 3000,
-                 timerProgressBar: true
-             });
+        function deleteMultipleCourse() {
+            $('.js-chexbox-delete').unbind();
+            $('.js-chexbox-delete').click(async function () {
 
-         }
+                let checkedBoxes = $('.js-checkbox:checked');
 
-         $(".modal-dismiss").click(()=>{
-             addCourse.ajax.reload();
-         })
-         $(".close").click(()=>{
-             addCourse.ajax.reload();
-         })
+                // if ( checkedBoxes.length == 0 ) {
+                //     Swal.fire('Δεν έχετε επιλέξει τίποτα');
+                //     return;
+                // }
+
+                let ids = [];
+
+                for (let i = 0; i < checkedBoxes.length; i++) {
+                    ids.push(checkedBoxes[i].dataset.courseId);
+                }
+
+                try {
+                    let {status} = await axios.delete("{{route('destroyMultiple.datatable')}}", {
+                        data: {
+                            'course_id': ids,
+                            'user_id': userId
+                        }
+
+                    })
+                    if (status == 200) {
+                        sweetAlert(`${ids.length}  Διεγραφηκαν`, 'error')
+                        courses.ajax.reload();
+                        addCourse.ajax.reload();
+                    }
+
+                } catch (e) {
+                    sweetAlert("Παρουσιάστηκε κάποιο πρόβλημα", 'error')
+                }
+
+                //
+                // console.log(res);
+
+
+            })
+        }
+
+
+        $('#alertSumbit').submit(async function (e) {
+            e.preventDefault()
+            let buttonDelete = $('.js-delete');
+            const user = buttonDelete[0].dataset.id;
+            try {
+                const {value} = await Swal.fire({
+                    title: 'Είστε σίγουρος;',
+                    text: "αρχεία θα διαγραφούν",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ναί, διαγραφή!',
+                    cancelButtonText: 'Άκυρο'
+                });
+                if (value) {
+                    const res = await axios.post(`/dashboard/users/${user}`, {_method: 'DELETE'})
+                    sweetAlert("Διεγράφη", 'success')
+                    window.location = `http://127.0.0.1:8000/dashboard/users`;
+                }
+            } catch (e) {
+                sweetAlert("Παρουσιάστηκε κάποιο πρόβλημα", 'error')
+            }
+
+
+        });
+
+        $(".modal-dismiss").click(() => {
+            addCourse.ajax.reload();
+        })
+
+        $(".close").click(() => {
+            addCourse.ajax.reload();
+        })
+
         $('#material-modal-shown-btn').click(function () {
             setTimeout(function () {
                 addCourse.columns.adjust();
             }, 200)
         });
 
+
+        let sweetAlert = (title, icon) => {
+            Swal.fire({
+                toast: 'true',
+                position: 'top-end',
+                icon: icon,
+                title: title,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+
+        }
 
     </script>
 @endsection

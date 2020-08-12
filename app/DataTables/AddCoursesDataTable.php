@@ -37,10 +37,11 @@ class AddCoursesDataTable extends DataTable {
 //
 //            })
             ->setRowAttr(['data-course-id' => function ($data) {
-                return [$data->id,$data->name];
+                return [$data->id];
             }, 'data-user-id' => function ($data) use($user) {
                 return $user->id;
             }]);
+
 
     }
 
