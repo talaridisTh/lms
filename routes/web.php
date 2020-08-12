@@ -26,9 +26,9 @@ Route::get('/clear', function() {
 
 });
 
-Route::group(['middleware' => ['auth',"role"]], function () {
+Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
-    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
 
 	//! User Routes
     Route::get('/dashboard/users', 'UserController@index')->name('user.index');

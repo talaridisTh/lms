@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\Course;
 use App\DataTables\AddCoursesDataTable;
 use App\DataTables\UserProfileDataTable;
 use App\DataTables\UsersDataTable;
@@ -22,6 +23,8 @@ class UserController {
         return $dataTable->render('users.profile');
     }
 
+
+
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
@@ -41,10 +44,19 @@ class UserController {
     {
 
 //
+        $coursess= [];
+        foreach ($request->course_id as  $course){
+            array_push($coursess,  Course::findOrFail($course));
+
+        }
+
+//        dd($courses);
+
+
         $user = User::find($request->user_id);
         $user->courses()->attach($request->course_id);
 
-        return response()->json(['success' => 'Status change successfully.']);
+        return response()->json($coursess);
     }
 
     public function destroy(Request $request)

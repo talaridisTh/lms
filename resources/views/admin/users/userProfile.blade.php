@@ -11,7 +11,7 @@
                 <div class="col-xl-4 col-lg-5">
                     <div class="card text-center">
                         <div class="card-body">
-                            <img src=" https://robohash.org/set_set3/bgset_bg1/3.14159?size=500x500"
+                            <img src="{{$user->avatar}}"
                                  class="rounded-circle avatar-lg img-thumbnail"
                                  alt="profile-image">
                             <div class="text-left mt-5">
@@ -30,6 +30,7 @@
 
                                 <p class="text-muted mb-1 font-13"><strong>Ρολος :</strong> <span
                                         class="ml-2">    {{$userIs }}</span></p>
+
 
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <div>
@@ -286,29 +287,34 @@
                     parent.dataset.exist = true
                 }
 
-                $(".modal-save").click(async function () {
-                    await sweetAlert(`${ids.length} COURSES Προσθεθηκαν`, 'success')
-                    const parent = this.parentElement.parentElement
-                    let id = [];
 
-                    if (id.indexOf(ids[0]) === -1) {
-                        id.push(ids[0])
-                        ids.shift();
-                    }
-                    try {
-                        const res = await axios.patch('{{route("addcourses.datatable")}}', {
-                            "course_id": id,
-                            "user_id": userId,
-                        })
 
-                        courses.ajax.reload();
+            })
 
-                    } catch (e) {
-                        console.log(e)
-                    }
 
-                })
+            $(".modal-save").click(async function () {
+                await sweetAlert(`${ids.length} COURSES Προσθεθηκαν`, 'success')
+                const parent = this.parentElement.parentElement
+                let id = [];
 
+                const courseName = [...ids];
+                console.log(ids)
+
+                // if (id.indexOf(ids[0]) === -1) {
+                //     id.push(ids[0])
+                //     ids.shift();
+                // }
+                try {
+                    const res = await axios.patch('{{route("addcourses.datatable")}}', {
+                        "course_id": ids,
+                        "user_id": userId,
+                    })
+
+                    courses.ajax.reload();
+
+                } catch (e) {
+                    console.log(e)
+                }
 
             })
 
