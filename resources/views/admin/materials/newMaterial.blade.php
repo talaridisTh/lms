@@ -5,13 +5,7 @@
 @endsection
 
 @section('content')
-
-
-   <textarea id="entry">
-        <p>Content</p>
-    </textarea>
-
-
+<h1>new</h1>
 
 @endsection
 
