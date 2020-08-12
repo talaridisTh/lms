@@ -72,6 +72,10 @@
                 @role("admin")
                 <a href="{{ route("dashboard")}}">Dashboard</a>
                 @endrole
+
+                <a href="{{route('user.createLink')}}">create link</a>
+
+
             @else
                 <a href="{{ route('login') }}">Login</a>
 
@@ -82,10 +86,24 @@
         </div>
     @endif
 
-    <div class="content">
-        <div class="title m-b-md">
+
+
+        <div class="content">
+            @if (session('link'))
+                <div class="alert alert-success">
+                    {{ session('link') }}
+                </div>
+            @endif
+
+
+            <div class="title m-b-md">
             Laravel
         </div>
+
+
+
+
+
 
         <div class="links">
             <a href="https://laravel.com/docs"></a>

@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\URL;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller {
+
 
     public function index()
     {
@@ -84,6 +86,17 @@ class UserController extends Controller {
         $user->delete();
 
         return redirect(route('user.index'));
+    }
+
+    public function createLink()
+    {
+
+
+        $tempUrl  =  URL::temporarySignedRoute('link', now()->addMinutes(480));
+
+
+
+       return redirect()->back()->with("link",$tempUrl );
     }
 
 

@@ -1,8 +1,12 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\URL;
+use Spatie\UrlSigner\MD5UrlSigner;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +29,17 @@ Route::get('/clear', function() {
     return redirect(route("home"));
 
 });
+
+
+
+Route::get("/create-link", "UserController@createLink")->name("user.createLink");
+
+
+Route::any('/home', function (Request $request) {
+
+
+    // ...
+})->name('link');
 
 Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
