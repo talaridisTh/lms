@@ -107,6 +107,10 @@ Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 //! Ajax Materials Datatables
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
 
+//! Ajax Materials CRUD
+Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );
+
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

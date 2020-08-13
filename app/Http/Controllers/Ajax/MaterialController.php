@@ -83,5 +83,12 @@ class MaterialController extends Controller
     public function destroy(Material $material)
     {
         //
-    }
+	}
+	
+	public function toggleActive(Material $material, Request $request) {
+
+		$material->active = $request->state;
+		$material->save();
+
+	}
 }

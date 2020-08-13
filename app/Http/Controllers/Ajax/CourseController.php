@@ -168,8 +168,14 @@ class CourseController extends Controller
 	public function addMaterials( Request $request ) {
 
 		$course = Course::find( $request->courseId );
-		$lastMaterialId = $course->materials()->orderBy('priority', 'desc')->first()->pivot->priority;
 		$materialIds = $request->materialId;
+		
+		if ( $course->materials()->count() > 0 ) {
+			$lastMaterialId = $course->materials()->orderBy('priority', 'desc')->first()->pivot->priority;
+		}
+		else {
+			$lastMaterialId = 0;
+		}
 
 		foreach ( $materialIds as $key => $id ) {
 			$course->materials()->attach( $id, ['active' => 0, 'priority' => $lastMaterialId + $key + 1 ] );
