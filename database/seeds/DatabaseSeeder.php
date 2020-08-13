@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(RoleSeeder::class);
 		$this->call(UserSeeder::class);
 		$this->call(TopicSeeder::class);
-		
+
 
 
 		factory(App\Bundle::class, 3)->create()
@@ -26,23 +26,23 @@ class DatabaseSeeder extends Seeder {
 				$course->users()->saveMany(factory(App\User::class, 5)->create())
 				->each(function($user) {
 
-					$rand = rand( 0, 1 );
-                    $roles = [ 'instructor', 'student' ];
+					$rand = rand( 0 ,2);
+                    $roles = [ 'instructor', 'student','partner' ];
 					$user->assignRole($roles[$rand]);
-					
+
 				});
 			}));
         });
 
 		factory(App\Material::class, 10)->create()
 		->each(function ($materials) {
-			
+
 			$materials->topics()->attach(App\Topic::all()->random()->id);
             $materials->users()->saveMany(factory(App\User::class, 2)->create())
             ->each(function ($user) {
 
                 $user->assignRole('instructor');
-            
+
             });
         });
 

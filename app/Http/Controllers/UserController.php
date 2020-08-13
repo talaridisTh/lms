@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Course;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\User;
@@ -91,12 +92,28 @@ class UserController extends Controller {
     public function createLink()
     {
 
+        $partners = User::getPartner();
+        $courses =  Course::orderBy("id",'asc')->get();
+
+      return view("create-link",compact("partners","courses"));
 
         $tempUrl  =  URL::temporarySignedRoute('link', now()->addMinutes(480));
-
-
-
        return redirect()->back()->with("link",$tempUrl );
+    }
+
+    public function createLinkStore(Request $request)
+    {
+
+        $user = User::find($request->user_id);
+        $tempUrl  =  URL::temporarySignedRoute('link', now()->addMinutes(480));
+        $data = [
+            "course_id"=>$request->course_id,
+        ];
+
+//        dd( $user->courses());
+        $user->guest()->attach($data,['user_link'=> $tempUrl ]);
+
+
     }
 
 

@@ -5,8 +5,7 @@
 @endsection
 
 @section('content')
-    <form id="buttonUser" class="px-4" action="{{route('user.store')}}"
-          method="POST" enctype="multipart/form-data">
+    <form id="buttonUser" class="px-4" action="{{route('user.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="row">

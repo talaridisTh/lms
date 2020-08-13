@@ -19,9 +19,11 @@ class User extends Authenticatable {
      *
      * @var array
      */
-    protected $fillable = [
-        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar",
-    ];
+//    protected $fillable = [
+//        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar",
+//    ];
+//
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -47,6 +49,14 @@ class User extends Authenticatable {
         return $this->belongsToMany(Course::class);
     }
 
+    public function guest()
+    {
+
+        return $this->belongsToMany('App\Course', 'guest_course', 'user_id', 'course_id')->withTimestamps();
+    }
+
+
+
     public function materials()
     {
 
@@ -65,6 +75,19 @@ class User extends Authenticatable {
         }
 
         return $instructor;
+    }
+
+    public static function getPartner()
+    {
+        $users = User::whereHas("courses")->get();
+        $partner = [];
+        foreach ($users as $user)
+        {
+            if ($user->getRoleNames()[0] == "partner")
+                array_push($partner, $user);
+        }
+
+        return $partner;
     }
 
     public static function getStudent()

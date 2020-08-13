@@ -32,13 +32,12 @@ Route::get('/clear', function() {
 
 
 
-Route::get("/create-link", "UserController@createLink")->name("user.createLink");
+Route::get("/user/link", "UserController@createLink")->name("user.link");
+Route::post("/user/link/store", "UserController@createLinkStore")->name("user.linkStore");
+
 
 
 Route::any('/home', function (Request $request) {
-
-
-    // ...
 })->name('link');
 
 Route::group(['middleware' => ['auth',"role:admin"]], function () {
