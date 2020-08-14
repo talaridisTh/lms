@@ -20,8 +20,7 @@
 						
 						<div class="form-group">
 							<label for="name">Όνομα</label>
-						<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Δώστε όνομα">
-							
+						<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Δώστε όνομα...">
 							@error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -35,9 +34,14 @@
 									<label for="course-cover">Cover</label>
 									<div class="input-group">
 										<div class="custom-file">
-											<input type="file" class="custom-file-input" name="cover" id="course-cover">
-											<label class="custom-file-label file-search-label-primary" for="course-cover">"Εισάγετε αρχείο"</label>
+										<input id="cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
+											<label id="cover-input-label" class="custom-file-label file-search-label-primary" for="cover-input">"Εισάγετε αρχείο"</label>
 										</div>
+										@error('cover')
+											<span class="invalid-feedback d-block" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
 									</div>
 								</div>
 							</div>
@@ -61,7 +65,7 @@
 
 						<div class="form-group">
 							<label for="description">Περιγραφή</label>
-							<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Write something...">{{ old('description') }}</textarea>
+							<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Περιγραφή Course...">{{ old('description') }}</textarea>
 						
 							@error('description')
                                 <span class="invalid-feedback" role="alert">

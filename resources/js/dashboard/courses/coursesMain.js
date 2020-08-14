@@ -8,6 +8,10 @@ $("#submit-form-btn").click( function() {
 
 });
 
+$("#cover-input").change( function() {
+	$("#cover-input-label")[0].textContent = this.value.replace("C:\\fakepath\\", "");
+});
+
 $("#courses-datatable").DataTable({
 	order: [1, "asc"],
 	processing: true,

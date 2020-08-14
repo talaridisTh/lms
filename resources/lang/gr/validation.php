@@ -79,12 +79,14 @@ return [
     ],
     'max' => [
         'numeric' => 'The :attribute may not be greater than :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        // 'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'file' => 'Το αρχείο δεν μπορεί να είναι μεγαλύτερο απο :max kb.',
         // 'string' => 'The :attribute may not be greater than :max characters.',
         'string' => 'Το πεδίο δέχεται μέχρι :max χαρακτήρες.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
-    'mimes' => 'The :attribute must be a file of type: :values.',
+    // 'mimes' => 'The :attribute must be a file of type: :values.',
+    'mimes' => 'Το αρχείο μπορεί να είναι μόνο: :values.',
     'mimetypes' => 'The :attribute must be a file of type: :values.',
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',

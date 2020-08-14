@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\CourseStoreRequest;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -36,9 +36,17 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->active = $request->active;
 		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
-
 		$course->save();
-		return redirect( '/dashboard/course/'. $course->id );
+		
+		if ( $request->cover ) {
+			$ext = $_FILES['cover']['type'] == "image/png" ? "png" : "jpeg";
+			$request->cover->storeAs("public/courses/$course->id/cover", "cover.$ext");
+		}
+		else {
+			Storage::copy("public/no_image_600x400.png", "public/courses/$course->id/cover/cover.png");
+		}
+		
+		return redirect( "/dashboard/course/$course->id" );
 
     }
     /**
