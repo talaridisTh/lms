@@ -1,5 +1,13 @@
 import utilities from '../main.js';
 
+//! EventListeners
+
+$("#submit-form-btn").click( function() {
+	
+	$("#new-course-form").submit()
+
+});
+
 $("#courses-datatable").DataTable({
 	order: [1, "asc"],
 	processing: true,

@@ -478,6 +478,10 @@ div.dt-buttons a.btn.processing:after {
   width: 5% !important;
 }
 
+select.is-invalid {
+  background-position: center right calc(.375em + .9000rem) !important;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

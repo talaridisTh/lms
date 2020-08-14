@@ -6,6 +6,7 @@ use App\Course;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use App\Http\Requests\CourseStoreRequest;
 
 class CourseController extends Controller
 {
@@ -26,11 +27,20 @@ class CourseController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(CourseStoreRequest $request)
     {
-        //
-    }
+		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
+		$course = new Course;
+		$course->name = $request->name;
+		$course->description = $request->description;
+		$course->active = $request->active;
+		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
+
+		$course->save();
+		return redirect( '/dashboard/course/'. $course->id );
+
+    }
     /**
      * Display the specified resource.
      *

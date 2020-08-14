@@ -6,18 +6,27 @@
 
 @section('content')
 
-	<div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+	<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header modal-colored-header bg-primary">
-					<h4 class="modal-title" id="primary-header-modalLabel">Νέο Course</h4>
+					<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body table-cnt">
-					<form class="px-3">
+					<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
+						
+						@csrf
+						
 						<div class="form-group">
 							<label for="name">Όνομα</label>
-							<input type="text" class="form-control" id="name" name="name" placeholder="Δώστε όνομα">
+						<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Δώστε όνομα">
+							
+							@error('name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
 						</div>
 
 						<div class="row">
@@ -35,23 +44,36 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="example-select">Κατάσταση</label>
-									<select class="form-control" id="active">
-										<option value="1">Ενεργό</option>
-										<option value="0" selected>Ανενεργό</option>
+									<select class="form-control @error('active') is-invalid @enderror" id="active" name="active">
+										<option value="1" {{ old('active') == 1 ? "selected" : "" }}>Ενεργό</option>
+										<option value="0" {{ old('active') == 0 ? "selected" : "" }}>Ανενεργό</option>
 									</select>
+
+									@error('active')
+                            		    <span class="invalid-feedback" role="alert">
+                            		        <strong>{{ $message }}</strong>
+                            		    </span>
+									@enderror
+							
 								</div>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="description">Περιγραφή</label>
-							<textarea class="form-control" id="description" name="description" rows="4" placeholder="Write something..."></textarea>
+							<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Write something...">{{ old('description') }}</textarea>
+						
+							@error('description')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					{{-- <button id="add-remaingings-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button> --}}
-					<button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
+					<button id="submit-form-btn" class="btn btn-primary"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</div>
 			</div><!-- /.modal-content -->
@@ -63,7 +85,7 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-					<a href="courses/create" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#primary-header-modal"><i class="mdi mdi-plus-circle mr-2"></i>
+					<a href="courses/create" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#new-course-modal"><i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
 					<div class="btn-group mb-2">
@@ -109,5 +131,11 @@
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 
 <script src="{{ mix('js/dashboard/courses/coursesMain.js') }}"></script>
+
+@if ( count($errors) > 0 )
+	<script>
+		$('#new-course-modal').modal('show')
+	</script>
+@endif
 
 @endsection

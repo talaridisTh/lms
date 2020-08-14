@@ -298,12 +298,13 @@ function postMaterialIds( materialId ) {
 	.then( (res) => {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
 		
-		utilities.Alert( 'success', message );
+		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 		updatedAt.textContent = "Μόλις τώρα";
 	})
 	.catch( (err) => {
+		console.log(err);
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
