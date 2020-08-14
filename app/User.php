@@ -55,7 +55,7 @@ class User extends Authenticatable {
 
         return $this->belongsToMany('App\Course', 'guest_course', 'user_id', 'course_id')
             ->withTimestamps()
-            ->withPivot("user_link");
+            ->withPivot("user_link",'id');
     }
 
 

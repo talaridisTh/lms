@@ -47,11 +47,13 @@
                         </a>
                     </div>
                 @else
+                    @role("admin")
                     <div>
                         <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true" aria-expanded="false">
                             Dashboard
                         </a>
                     </div>
+                @endrole
                     <div>
                         <div class="dropdown">
                             <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
@@ -99,6 +101,7 @@
 <!-- bundle -->
 <script src="/assets/js/vendor.min.js"></script>
 <script src="/assets/js/app.min.js"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script>
     $('#logout-btn').click(function () {
         event.preventDefault();

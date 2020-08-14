@@ -2,83 +2,101 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
+use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
 class DashboardController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         return view('admin.overview.overviewMain');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function createLink()
     {
-        //
+
+        $partners = User::getPartner();
+        $courses = Course::orderBy("id", 'asc')->get();
+
+        return view("create-link", compact("partners", "courses"));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function createLinkStore(Request $request)
     {
-        //
+
+        $user = User::find($request->user_id);
+        $tempUrl = URL::temporarySignedRoute('link', now()->addMinutes(240));
+        $data = [
+            "course_id" => $request->course_id,
+        ];
+        $user->guest()->attach($data, ['user_link' => $tempUrl]);
+
+        return redirect(route('user.showLinks'))->with('create', "Το Url δημιουργήθηκε");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function showLinks()
     {
-        //
+
+        $userCurent = auth()->user()->guest;
+        $usersOnlyAdmin = User::all()->map(function ($user) {
+            if ($user->guest()->exists())
+            {
+                return $user->guest;
+            }
+        })
+            ->reject(function ($name) {
+                return empty($name);
+            });
+        $usersLeft = [];
+        foreach (User::all() as $user)
+        {
+
+            if ($user->guest()->exists())
+            {
+//
+                if (count($user->guest) > 1)
+                {
+                    foreach ($user->guest as $u)
+                    {
+                        array_push($usersLeft, $this->left($u->pivot->created_at));
+                    }
+                } else
+                {
+
+                    array_push($usersLeft, $this->left($user->guest[0]->pivot->created_at));
+                }
+            }
+        }
+        foreach ($usersOnlyAdmin as $user)
+        {
+            foreach ($user as $u)
+            {
+                $date = Carbon::now()->subMinutes(240);
+                if ($u->pivot->created_at < $date)
+                {
+                    $u->pivot->delete();
+                }
+//
+            }
+        }
+
+        return view("view-links", compact("userCurent", "usersOnlyAdmin", "usersLeft"));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function left($hour)
     {
-        //
+
+        $minutes = Carbon::now()->diffInMinutes($hour, false) + 240;
+        $zero = new DateTime('@0');
+        $offset = new DateTime('@' . $minutes * 60);
+        $diff = $zero->diff($offset);
+
+        return $diff->format('Απομένουν %h Ωρες, %i Λεπτα');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -1,3 +1,4 @@
+
 function toastAlert( icon, message ) {
 	Swal.fire({
 			toast: 'true',

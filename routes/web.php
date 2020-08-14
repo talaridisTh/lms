@@ -32,9 +32,9 @@ Route::get('/clear', function() {
 
 
 
-Route::get("/user/link", "UserController@createLink")->name("user.link");
-Route::post("/user/link/store", "UserController@createLinkStore")->name("user.linkStore");
-Route::get("/user/view-link", "UserController@showLinks")->name("user.showLinks");
+Route::get("/user/link", "HomeController@createLink")->name("user.link");
+Route::post("/user/link/store", "HomeController@createLinkStore")->name("user.linkStore");
+Route::get("/user/view-link", "HomeController@showLinks")->name("user.showLinks");
 
 
 

@@ -6,11 +6,14 @@ use App\Course;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\User;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
 use Spatie\Permission\Models\Role;
+use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
 class UserController extends Controller {
 
@@ -83,37 +86,6 @@ class UserController extends Controller {
         return redirect(route('user.index'));
     }
 
-    public function createLink()
-    {
 
-        $partners = User::getPartner();
-        $courses = Course::orderBy("id", 'asc')->get();
-
-        return view("create-link", compact("partners", "courses"));
-        $tempUrl = URL::temporarySignedRoute('link', now()->addMinutes(480));
-
-        return redirect()->back()->with("link", $tempUrl);
-    }
-
-    public function createLinkStore(Request $request)
-    {
-
-        $user = User::find($request->user_id);
-        $tempUrl = URL::temporarySignedRoute('link', now()->addMinutes(480));
-        $data = [
-            "course_id" => $request->course_id,
-        ];
-        $user->guest()->attach($data, ['user_link' => $tempUrl]);
-
-        return redirect(route('user.showLinks'));
-    }
-
-    public function showLinks()
-    {
-
-        $user = auth()->user()->guest;
-
-        return view("view-links", compact("user"));
-    }
 
 }

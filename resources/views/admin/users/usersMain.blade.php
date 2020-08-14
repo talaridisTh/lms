@@ -120,9 +120,6 @@
             $('.toggle-class').change(async function () {
                 const status = $(this).prop('checked') == true ? 1 : 0;
                 const user_id = $(this).data('id');
-                console.log(status)
-                console.log(user_id)
-
                 try {
                     const {data} = await axios.patch("{{route("changeStatus.datatable")}}", {
                         'active': status,

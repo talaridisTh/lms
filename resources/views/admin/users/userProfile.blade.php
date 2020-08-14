@@ -146,8 +146,8 @@
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script>
 
-        const userId = $(".course-materials-list")[0].dataset.id
 
+        const userId = $(".course-materials-list")[0].dataset.id
         const courses = $(".course-materials-list").DataTable({
             scrollX: !0,
             processing: true,
@@ -288,7 +288,6 @@
                 }
 
 
-
             })
 
 
@@ -402,7 +401,6 @@
                 addCourse.columns.adjust();
             }, 200)
         });
-
 
         let sweetAlert = (title, icon) => {
             Swal.fire({
