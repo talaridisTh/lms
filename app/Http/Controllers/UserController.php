@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Course;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller {
-
 
     public function index()
     {
@@ -27,19 +26,15 @@ class UserController extends Controller {
         return view("admin.users.userCreate");
     }
 
-    public function show(User $user,UsersDataTable $dataTable)
+    public function show(User $user, UsersDataTable $dataTable)
     {
-
 
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
         $allMaterials = User::findMaterials($user->id);
 
         return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs"));
-
-
     }
-
 
     public function store(UserCreateRequest $request)
     {
@@ -62,7 +57,6 @@ class UserController extends Controller {
 
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
-
 
     public function update(Request $request, User $user)
     {
@@ -93,29 +87,33 @@ class UserController extends Controller {
     {
 
         $partners = User::getPartner();
-        $courses =  Course::orderBy("id",'asc')->get();
+        $courses = Course::orderBy("id", 'asc')->get();
 
-      return view("create-link",compact("partners","courses"));
+        return view("create-link", compact("partners", "courses"));
+        $tempUrl = URL::temporarySignedRoute('link', now()->addMinutes(480));
 
-        $tempUrl  =  URL::temporarySignedRoute('link', now()->addMinutes(480));
-       return redirect()->back()->with("link",$tempUrl );
+        return redirect()->back()->with("link", $tempUrl);
     }
 
     public function createLinkStore(Request $request)
     {
 
         $user = User::find($request->user_id);
-        $tempUrl  =  URL::temporarySignedRoute('link', now()->addMinutes(480));
+        $tempUrl = URL::temporarySignedRoute('link', now()->addMinutes(480));
         $data = [
-            "course_id"=>$request->course_id,
+            "course_id" => $request->course_id,
         ];
+        $user->guest()->attach($data, ['user_link' => $tempUrl]);
 
-//        dd( $user->courses());
-        $user->guest()->attach($data,['user_link'=> $tempUrl ]);
-
-
+        return redirect(route('user.showLinks'));
     }
 
+    public function showLinks()
+    {
 
+        $user = auth()->user()->guest;
+
+        return view("view-links", compact("user"));
+    }
 
 }

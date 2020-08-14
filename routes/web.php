@@ -34,10 +34,17 @@ Route::get('/clear', function() {
 
 Route::get("/user/link", "UserController@createLink")->name("user.link");
 Route::post("/user/link/store", "UserController@createLinkStore")->name("user.linkStore");
+Route::get("/user/view-link", "UserController@showLinks")->name("user.showLinks");
 
 
 
-Route::any('/home', function (Request $request) {
+Route::get('/partner-links', function (Request $request) {
+
+    if (! $request->hasValidSignature()) {
+        abort(401);
+    }
+
+
 })->name('link');
 
 Route::group(['middleware' => ['auth',"role:admin"]], function () {

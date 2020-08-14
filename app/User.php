@@ -5,6 +5,7 @@ namespace App;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,10 +20,10 @@ class User extends Authenticatable {
      *
      * @var array
      */
-//    protected $fillable = [
-//        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar",
-//    ];
-//
+    protected $fillable = [
+        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar",
+    ];
+
     protected $guarded = [];
 
     /**
@@ -52,7 +53,9 @@ class User extends Authenticatable {
     public function guest()
     {
 
-        return $this->belongsToMany('App\Course', 'guest_course', 'user_id', 'course_id')->withTimestamps();
+        return $this->belongsToMany('App\Course', 'guest_course', 'user_id', 'course_id')
+            ->withTimestamps()
+            ->withPivot("user_link");
     }
 
 
@@ -160,6 +163,16 @@ class User extends Authenticatable {
 
         return $user->getRoleNames()->first();
     }
+
+    public static function ifExistUrl( $user)
+    {
+
+        $uri = $user->pivot->user_link;
+        $request = Request::create($uri);
+        return $request->hasValidSignature()==1? " Ενεργο": " Εληξε";
+    }
+
+
 
     // $user->fullName  // Onoma Epitheto
     public function getFullNameAttribute()

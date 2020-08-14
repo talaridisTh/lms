@@ -59,7 +59,7 @@
                                 Guest links
                             </a>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">All links</a>
+                                <a class="dropdown-item" href="{{route('user.showLinks')}}">All links</a>
                                 <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
                             </div>
                         </div>
