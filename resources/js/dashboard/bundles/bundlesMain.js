@@ -9,7 +9,45 @@ $("#submit-form-btn").click( function() {
 
 });
 
-$("#bundle-table").DataTable({
+$("#delete-bundles-btn").click( function() {
+	let checkedBoxes = $(".js-bundle-checkbox:checked");
+	let ids = [];
+
+	for ( let i = 0; i < checkedBoxes.length; i++ ) {
+		ids.push( checkedBoxes[i].dataset.bundleId );
+	}
+
+	Swal.fire({
+		title: 'Είστε σίγουρος;',
+		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? " Bundle θα διαγραφεί" : " Bundles θα διαγραφούν"}`,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναί, διαγραφή!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			axios.delete(`/bundles/destroy/${ids}`)
+			.then(function (response) {
+
+				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
+
+				utilities.toastAlert( "success", message );
+
+				bundlesDatatable.ajax.reload();
+			})
+			.catch(function (error) {
+				
+				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+
+			});
+			
+		}
+	})
+});
+
+const bundlesDatatable = $("#bundle-table").DataTable({
 	columns: [
 		{ data: "action", name: "action", width: "5%", orderable: false, searchable: false },
 		{ data: "name", name: "name", className: "js-link cursor-pointer"},

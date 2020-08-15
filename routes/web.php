@@ -109,6 +109,7 @@ Route::post( 'bundles/bundle-courses-datatable', 'Ajax\BundleController@show' );
 Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remainingCourses' );
 
 //! Ajax Bundles CRUD
+Route::delete( 'bundles/destroy/{ids}', 'Ajax\BundleController@destroy' );
 Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@update' );
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
