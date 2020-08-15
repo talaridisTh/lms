@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 	//!Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
     Route::get('/dashboard/bundle/{bundle}', 'BundleController@show')->name('bundle.show');
-    Route::get('/dashboard/bundles/create', 'BundleController@create')->name('bundle.create');
+    Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
 
 });
 

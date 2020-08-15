@@ -1,5 +1,14 @@
 import utilities from '../main';
 
+//! EventListeners
+//!==================
+
+$("#submit-form-btn").click( function() {
+	
+	$("#new-bundle-form").submit()
+
+});
+
 $("#bundle-table").DataTable({
 	columns: [
 		{ data: "action", name: "action", width: "5%", orderable: false, searchable: false },
