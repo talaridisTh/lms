@@ -5,34 +5,14 @@ const courseId = $("#course-materials-list")[0].dataset.courseId
 const authors = $('.js-authors');
 const updatedAt = $("#last-update-cnt")[0];
 
-if ( authors.length > 3 ) {
-	for ( let i = 3; i < authors.length; i++ ) {
-		authors[i].classList.add('d-none');
-	}
-	
-	const moreAuthors = $('#more-authors')[0];
-	moreAuthors.classList.remove("d-none");
-}
+//! EventListerners
 
-$('#more-authors').click( function() {
-	
-	if ( this.dataset.shown == "true") {
-		this.dataset.shown = "false";
-		for ( let i = 3; i < authors.length; i++ ) {
-			authors[i].classList.add('d-none');
-		}
-		this.textContent = "Περισσότερα ..."
-	}
-	else {
-		this.textContent = "Λιγότερα ..."
-		this.dataset.shown = "true";
-		for ( let i = 3; i < authors.length; i++ ) {
-			authors[i].classList.remove('d-none');
-		}
-	}
+$("#course-cover-input").change( function() {
+	let label = $("#course-cover-label")[0];
+
+	label.textContent = this.value.replace("C:\\fakepath\\", "");
 });
 
-//! EventListerners 
 $('#all-remainings-checkbox').change( function() {
 	let checkboxes = $('.js-remainings-checkbox')
 	

@@ -20,7 +20,7 @@
 						
 						<div class="form-group">
 							<label for="name">Όνομα</label>
-						<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Δώστε όνομα...">
+							<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Δώστε όνομα...">
 							@error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -34,7 +34,7 @@
 									<label for="course-cover">Cover</label>
 									<div class="input-group">
 										<div class="custom-file">
-										<input id="cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
+											<input id="cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
 											<label id="cover-input-label" class="custom-file-label file-search-label-primary" for="cover-input">"Εισάγετε αρχείο"</label>
 										</div>
 										@error('cover')
@@ -52,13 +52,11 @@
 										<option value="1" {{ old('active') == 1 ? "selected" : "" }}>Ενεργό</option>
 										<option value="0" {{ old('active') == 0 ? "selected" : "" }}>Ανενεργό</option>
 									</select>
-
 									@error('active')
-                            		    <span class="invalid-feedback" role="alert">
-                            		        <strong>{{ $message }}</strong>
-                            		    </span>
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
 									@enderror
-							
 								</div>
 							</div>
 						</div>
@@ -66,13 +64,11 @@
 						<div class="form-group">
 							<label for="description">Περιγραφή</label>
 							<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Περιγραφή Course...">{{ old('description') }}</textarea>
-						
 							@error('description')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
                             @enderror
-
 						</div>
 					</form>
 				</div>

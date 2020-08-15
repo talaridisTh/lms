@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course}', 'CourseController@show')->name('course.show');
     Route::post('/dashboard/courses/store', 'CourseController@store')->name('course.store');
+    Route::patch('/dashboard/courses/update/{course}', 'CourseController@update')->name('course.update');
 
 	//!Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
