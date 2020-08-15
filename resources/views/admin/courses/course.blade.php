@@ -57,7 +57,7 @@
 		<div class="col-xl-3 col-lg-5">
 			<div class="card text-center">
 				<div class="card-body">
-					<img src="{{ asset('storage/courses/'.$course->slug.'/cover//'.$course->cover) }}" class="img-fluid"
+					<img src="{{ asset('storage/courses/'.$course->id.'/cover/'.$course->cover) }}" class="img-fluid"
 					alt="profile-image">
 
 					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
