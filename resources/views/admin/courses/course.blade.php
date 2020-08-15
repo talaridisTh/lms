@@ -57,7 +57,7 @@
 		<div class="col-xl-3 col-lg-5">
 			<div class="card text-center">
 				<div class="card-body">
-					<img src="{{ $cover }}" class="img-fluid"
+					<img src="{{ asset('storage/courses/'.$course->slug.'/cover//'.$course->cover) }}" class="img-fluid"
 					alt="profile-image">
 
 					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
@@ -209,8 +209,8 @@
 							                <label for="course-cover">Cover Εικόνα</label>
 											<div class="input-group">
 											    <div class="custom-file">
-													<input id="course-cover-input @error('cover') is-invalid @enderror" type="file" class="custom-file-input" name="cover" value="{{ $cover }}">
-													<label id="course-cover-label" class="custom-file-label file-search-label-primary" for="course-cover-input">{{ $coverName }}</label>
+													<input id="course-cover-input @error('cover') is-invalid @enderror" type="file" class="custom-file-input" name="cover">
+													<label id="course-cover-label" class="custom-file-label file-search-label-primary" for="course-cover-input">{{ $course->cover }}</label>
 												</div>
 												@error('cover')
 													<span class="invalid-feedback d-block" role="alert">

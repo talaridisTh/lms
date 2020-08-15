@@ -37,14 +37,19 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->active = $request->active;
 		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
-		$course->save();
 		
 		if ( $request->cover ) {
-			$request->cover->store("public/courses/$course->id/cover");
+			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
+			$fileName = md5( $request->name ).$ext;
+			$request->cover->storeAs("public/courses/$course->slug/cover", $fileName);
+			$course->cover = $fileName;
 		}
 		else {
-			Storage::copy("public/no_image_600x400.png", "public/courses/$course->id/cover/default.png");
+			Storage::copy("public/no_image_600x400.png", "public/courses/$course->slug/cover/default.png");
+			$course->cover = "default.png";
 		}
+
+		$course->save();
 		
 		return redirect( "/dashboard/course/$course->id" );
 
@@ -61,12 +66,6 @@ class CourseController extends Controller
 		$materials = $course->materials()->orderBy('priority')->get();
 		$lessonIds = [];
 
-		$courseCoverArray = File::glob( public_path("storage/courses/$course->id/cover/*") );
-		$cover = str_replace(public_path(), '', $courseCoverArray[0]);
-
-		$temp = explode("/", $cover);
-		$coverName = end( $temp );
-
 		foreach ($materials as $lesson) {
 			array_push( $lessonIds, $lesson['id'] );
 		};
@@ -74,8 +73,6 @@ class CourseController extends Controller
 		$data = [
 			'course' => $course,
 			'materials' => $materials,
-			'cover' => $cover,
-			'coverName' => $coverName,
 			'allRemainingMaterials' => json_decode($allRemainingMaterials, true),
 		];
 
