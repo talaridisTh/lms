@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
 use App\DataTables\RemainingMaterialsDataTable;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -85,19 +87,14 @@ class CourseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($ids)
     {
-        //
-	}
-	
-	public function massDestroy($ids)
-    {
-		$idList = explode(',', $ids);
+        $idList = explode(',', $ids);
 
 		foreach( $idList as $id ) {
 			
 			Course::find( $id )->delete();
-			
+			Storage::deleteDirectory("public/courses/$id");
 		}
 	}
 	

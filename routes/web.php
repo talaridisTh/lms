@@ -96,7 +96,7 @@ Route::post( 'courses/course-materials-datatable', 'Ajax\CourseController@course
 Route::post( 'courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials' );
 
 //! Ajax Courses CRUD
-Route::delete( 'courses/massdestroy/{ids}', 'Ajax\CourseController@massdestroy' );
+Route::delete( 'courses/destroy/{ids}', 'Ajax\CourseController@destroy' );
 Route::patch( 'courses/active', 'Ajax\CourseController@toggleActive' );
 Route::patch( 'courses/priority', 'Ajax\CourseController@changePriority' );
 Route::patch( 'courses/toggle-materials', 'Ajax\CourseController@toggleCourseMaterials' );

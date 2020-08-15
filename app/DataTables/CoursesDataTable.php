@@ -33,8 +33,8 @@ class CoursesDataTable extends DataTable
 			->addColumn('action', function($data) {
 				
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-course-id='". $data->id ." data-course-name='". $data->name ." type='checkbox' id='". $data->slug ."' autocomplete='off'>
-							<label for='". $data->slug ."'></label>
+							<input class='js-course-checkbox' data-course-id='$data->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
+							<label for='$data->slug'></label>
 						</div>";
 
 			})
@@ -42,8 +42,8 @@ class CoursesDataTable extends DataTable
 
 				$active = $data->active == 0 ? "" : "checked";
 
-				return "<input class='js-toggle' data-course-id='". $data->id ."' type='checkbox' id='". $data->slug ."-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
-					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+					<label for='$data->slug-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
 
 			})
 			->rawColumns(['action', 'active'])
