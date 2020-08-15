@@ -64,9 +64,29 @@ class BundleController extends Controller
     }
 
 
-    public function update(Request $request, Bundle $bundle)
+    public function update(BundleCourseRequest $request, Bundle $bundle)
     {
-        //
+        $pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+
+		$bundle->name = $request->name;
+		$bundle->description = $request->description;
+		$bundle->active = $request->active;
+		$bundle->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
+
+		if ( !empty($_FILES['cover']['name']) ) {
+			
+			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
+			$fileName = md5( $request->name ).$ext;
+			
+			Storage::delete( "public/bundles/$bundle->id/cover/$bundle->cover" );
+			$request->cover->storeAs("public/bundles/$bundle->id/cover", $fileName);
+			
+			$bundle->cover = $fileName;
+		}
+
+		$bundle->save();
+
+		return redirect( "/dashboard/bundle/$bundle->id" );
     }
 
 

@@ -209,7 +209,7 @@
 							                <label for="course-cover">Cover Εικόνα</label>
 											<div class="input-group">
 											    <div class="custom-file">
-													<input id="course-cover-input @error('cover') is-invalid @enderror" type="file" class="custom-file-input" name="cover">
+													<input id="course-cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
 													<label id="course-cover-label" class="custom-file-label file-search-label-primary" for="course-cover-input">{{ $course->cover }}</label>
 												</div>
 												@error('cover')
