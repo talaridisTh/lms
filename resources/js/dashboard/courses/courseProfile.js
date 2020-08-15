@@ -1,8 +1,10 @@
 import utilities from '../main';
+import { parseInt } from 'lodash';
 
 //! GLOBAL VARIABLES
 const courseId = $("#course-materials-list")[0].dataset.courseId
-const authors = $('.js-authors');
+const totalLessons = $('#total-lessons')[0];
+const totalAdditions = $('#total-additions')[0];
 const updatedAt = $("#last-update-cnt")[0];
 
 //! EventListerners
@@ -22,6 +24,8 @@ $('#all-remainings-checkbox').change( function() {
 
 $('#add-remaingings-btn').click( function() {
 	let checkboxes = $('.js-remainings-checkbox:checked');
+	let lessonsCount = 0;
+	let additionsCount = 0;
 	let ids = [];
 
 	if ( checkboxes.length == 0 ) {
@@ -30,14 +34,23 @@ $('#add-remaingings-btn').click( function() {
 	}
 	else {
 		for ( let i = 0; i < checkboxes.length; i++) {
-			ids.push(checkboxes[i].dataset.materialId)
+			ids.push(checkboxes[i].dataset.materialId);
+
+			if ( checkboxes[i].dataset.materialType == "Lesson" ) {
+				lessonsCount++
+			}
+			else {
+				additionsCount++
+			}
 		}
-		postMaterialIds( ids )
+		postMaterialIds( ids, lessonsCount, additionsCount );
 	}
 });
 
 $('#remove-selection-btn').click( function() {
 	let checkboxes = $('.js-course-material-checkbox:checked');
+	let lessonsCount = 0;
+	let additionsCount = 0;
 	let ids = []
 
 	if ( checkboxes.length == 0 ) {
@@ -48,8 +61,15 @@ $('#remove-selection-btn').click( function() {
 	else {
 		for ( let i = 0; i < checkboxes.length; i++ ) {
 			ids.push( checkboxes[i].dataset.materialId );
+
+			if ( checkboxes[i].dataset.materialType == "Lesson" ) {
+				lessonsCount++
+			}
+			else {
+				additionsCount++
+			}
 		}
-		removeMaterials(ids);
+		removeMaterials(ids, lessonsCount, additionsCount);
 	}
 });
 
@@ -162,7 +182,9 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 function addMaterialsEventListerner() {
 	$('.js-add-material-btn').click( function() {
 		const materialId = [this.dataset.materialId];
-		postMaterialIds( materialId );
+		const lessonsCount = this.dataset.materialType == "Lesson" ? 1 : 0;
+		const additionsCount = this.dataset.materialType != "Lesson" ? 1 : 0;
+		postMaterialIds( materialId, lessonsCount, additionsCount );
 	});
 }
 
@@ -204,8 +226,6 @@ function toggleCourseMaterial() {
 	$('.js-toggle').unbind();
 
 	$('.js-toggle').on('change', function() {
-		let courseCnt = this.parentElement.parentElement;
-		let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
 
 		axios.patch('/courses/toggle-materials', {
 			courseId: this.dataset.courseId,
@@ -270,7 +290,7 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
 }
 
-function postMaterialIds( materialId ) {
+function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	axios.post( "/courses/add-materials", {
 		courseId,
 		materialId
@@ -281,6 +301,8 @@ function postMaterialIds( materialId ) {
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
+		totalLessons.textContent = parseInt(totalLessons.textContent) + lessonsCount;
+		totalAdditions.textContent = parseInt(totalAdditions.textContent) + additionsCount;
 		updatedAt.textContent = "Μόλις τώρα";
 	})
 	.catch( (err) => {
@@ -289,7 +311,7 @@ function postMaterialIds( materialId ) {
 	})
 }
 
-function removeMaterials( materialIds ) {
+function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 			
 	axios.patch( "/courses/remove-materials", {
 		courseId,
@@ -302,6 +324,8 @@ function removeMaterials( materialIds ) {
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
+		totalLessons.textContent = parseInt(totalLessons.textContent) - lessonsCount;
+		totalAdditions.textContent = parseInt(totalAdditions.textContent) - additionsCount;
 		updatedAt.textContent = "Μόλις τώρα";
 	})
 	.catch( (err) => {

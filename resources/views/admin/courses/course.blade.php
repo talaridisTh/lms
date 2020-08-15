@@ -72,7 +72,7 @@
 							<strong>
 								Σύνολο Μαθημάτων :
 							</strong>
-							<span class="ml-2">
+							<span id="total-lessons" class="ml-2">
 								{{ $course->materials->where( 'type', 'Lesson')->count() }}
 							</span>
 						</p>
@@ -80,7 +80,7 @@
 							<strong>
 								Σύνολο Extra Υλικού :
 							</strong>
-							<span class="ml-2">
+							<span id="total-additions" class="ml-2">
 								{{ $course->materials->where( 'type', '!=', 'Lesson')->count() }}
 							</span>
 						</p>
