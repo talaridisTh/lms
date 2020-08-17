@@ -184,7 +184,7 @@
 						<!-- Course edit form tab-pane -->
 						<div class="tab-pane {{ $settingsActive }}" id="settings">
 							<form action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
-								
+
 								@csrf
 								@method('PATCH')
 
@@ -192,10 +192,10 @@
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="name">Όνομα Course</label>
-											<input id="name" type="text" 
-												class="form-control @error('name') is-invalid @enderror" 
-												id="name" name="name" 
-												value="{{ old('name') != "" ? old('name') : $course['name'] }}" 
+											<input id="name" type="text"
+												class="form-control @error('name') is-invalid @enderror"
+												id="name" name="name"
+												value="{{ old('name') != "" ? old('name') : $course['name'] }}"
 												placeholder="Δώστε όνομα">
 											@error('name')
                             				    <span class="invalid-feedback" role="alert">
@@ -262,7 +262,7 @@
 						</div><!-- end tab-pane -->
 						<!-- end settings content-->
 					</div> <!-- end tab-content -->
-					
+
 				</div> <!-- end card body -->
 			</div> <!-- end card -->
 		</div> <!-- end col -->

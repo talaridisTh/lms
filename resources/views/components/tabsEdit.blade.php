@@ -5,31 +5,31 @@
     <div class="row">
         <div class="form-group  col-md-6">
             <label for="firstName">Όνομα</label>
-            <input class="form-control" value="{{$user->first_name}}"
+            <input class="form-control @error('first_name') is-invalid @enderror" value="{{$user->first_name}}"
                    name="first_name" type="text" id="firstName">
             @error("first_name")
             <div
-                class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
+                class="invalid-feedback d-block">{{$message}}</div>@enderror
         </div>
 
         <div class="form-group  col-md-6">
             <label for="lastName">Επίθετο</label>
-            <input class="form-control" value="{{$user->last_name}}"
+            <input class="form-control @error('last_name') is-invalid @enderror" value="{{$user->last_name}}"
                    name="last_name" type="text" id="lastName">
             @error("last_name")
             <div
-                class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
+                class="invalid-feedback d-block">{{$message}}</div>@enderror
         </div>
     </div>
 
     <div class="row">
         <div class="form-group  col-md-6">
             <label for="email">Email</label>
-            <input class="form-control" value="{{$user->email}}" name="email"
+            <input class="form-control @error('email') is-invalid @enderror" value="{{$user->email}}" name="email"
                    type="email" id="email">
             @error("email")
             <div
-                class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
+                class="invalid-feedback d-block">{{$message}}</div>@enderror
         </div>
 
         <div class="form-group col-md-6">
@@ -48,10 +48,6 @@
         <div class="form-group">
             <input type="file" class="form-control" value="{{$user->avatar}}"
                    name="avatar" id="avatar">
-            {{--                                                <img src="{{ 'public/image/users' . $user->avatar}}" width="200px"/>--}}
-            @error("avatar")
-            <div
-                class="mt-1 d-inline-block alert alert-danger">{{$message}}</div>@enderror
         </div>
     </div>
 

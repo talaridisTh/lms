@@ -36,7 +36,7 @@ class User extends Authenticatable {
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * relationship
      *
      * @var array
      */
@@ -57,8 +57,6 @@ class User extends Authenticatable {
             ->withTimestamps()
             ->withPivot("user_link",'id');
     }
-
-
 
     public function materials()
     {

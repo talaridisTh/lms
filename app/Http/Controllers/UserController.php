@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\User;
 use Carbon\Carbon;
 use DateTime;
@@ -61,7 +62,7 @@ class UserController extends Controller {
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         //
         $data = collect($request)->except("avatar")->all();

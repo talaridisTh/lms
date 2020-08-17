@@ -3,6 +3,14 @@
 @section('css')
     <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 @endsection
+
+@php
+    $isActive = count( $errors )>0? "" : "active";
+    $isnotActive = count( $errors )>0? "active" : "";
+
+@endphp
+
+
 @section('content')
     <x-alertMsg :msg="'update'"></x-alertMsg>
     <div class="container" style="max-width:1400px">
@@ -32,7 +40,7 @@
                                         class="ml-2">    {{$userIs }}</span></p>
 
 
-                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="d-flex justify-content-end align-items-center mt-3">
                                     <div>
                                         <form method="POST" id="alertSumbit"
                                               action="{{route('user.destroy',$user->id)}}">
@@ -64,8 +72,7 @@
                                                             data-dismiss="modal">
                                                         Κλείσιμο
                                                     </button>
-{{--                                                    onClick="window.location.reload();"--}}
-                                                    <button type="button"
+                                                    <button type="button" onClick="window.location.reload();"
                                                             class="btn btn-primary modal-save">Προσθήκη
                                                     </button>
                                                 </div>
@@ -86,18 +93,21 @@
                 <div class="col-xl-8 col-lg-7">
                     <div class="card">
                         <div class="card-body">
-                            <div class="text-sm-right">
+                            <div class="d-flex justify-content-end">
                                 <div class="btn-group mb-2 ">
-                                    <button type="button" class="btn btn-secondary dropdown-toggle"
+                                <a id="material-modal-shown-btn" type="button" class="btn btn-secondary mr-2 text-light"
+                                   data-toggle="modal"
+                                   data-target="#primary-header-modal">
+                                    <i class="mdi mdi-plus-circle mr-2"></i>
+                                    Προσθήκη COURSES
+                                </a>
+                                </div>
+                                <div class="btn-group mb-2 ">
+                                    <button type="button" class="btn btn-primary dropdown-toggle"
                                             data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false">Επιλογές
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a id="material-modal-shown-btn" type="button" class="dropdown-item"
-                                           data-toggle="modal"
-                                           data-target="#primary-header-modal">Προσθήκη COURSES
-                                        </a>
-                                        <div class="dropdown-divider"></div>
                                         <a class="dropdown-item js-chexbox-delete" href="#">Διαγραφή επιλεγμένων</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="#">Export</a>
@@ -107,14 +117,14 @@
                             <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                                 <li class="nav-item">
                                     <a href="#courses" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0  active">
+                                       class="nav-link rounded-0  {{$isActive}} ">
                                         Courses
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
                                     <a href="#settings" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0">
+                                       class="nav-link rounded-0 {{$isnotActive}} ">
                                         Επεξεργασία χρήστη
                                     </a>
                                 </li>
@@ -122,10 +132,10 @@
                             </ul>
 
                             <div class="tab-content">
-                                <div class="tab-pane active show" id="courses">
+                                <div class="tab-pane {{$isActive}} "  id="courses">
                                     @include("components.FindUserMaterial")
                                 </div>
-                                <div class="tab-pane" id="settings">
+                                <div class="tab-pane {{$isnotActive}} " id="settings">
                                     @include("components.tabsEdit")
                                 </div>
                             </div>
