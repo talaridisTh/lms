@@ -10,6 +10,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
+use App\DataTables\CourseStudentsDataTable;
 use App\DataTables\RemainingMaterialsDataTable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -204,5 +205,9 @@ class CourseController extends Controller
 
 		$course->updated_at = Carbon::now();
 		$course->save();
+	}
+
+	public function courseStudents ( CourseStudentsDataTable $dataTable ) {
+		return $dataTable->render('courses.students');
 	}
 }

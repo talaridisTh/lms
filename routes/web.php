@@ -94,6 +94,7 @@ Route::delete('/user/multiple/delete', 'Ajax\UserController@destroyMultiple')->n
 Route::post( 'courses/courses-datatable', 'Ajax\CourseController@index' );
 Route::post( 'courses/course-materials-datatable', 'Ajax\CourseController@courseMaterials' );
 Route::post( 'courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials' );
+Route::post( 'courses/course-students-datatable', 'Ajax\CourseController@courseStudents' );
 
 //! Ajax Courses CRUD
 Route::delete( 'courses/destroy/{ids}', 'Ajax\CourseController@destroy' );

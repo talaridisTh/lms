@@ -114,20 +114,25 @@
 					<!-- Tab Buttons -->
 					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
 						<li class="nav-item">
-						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $materialsActive }}">
+						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{-- {{ $materialsActive }} --}}">
 								Μαθήματα
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $settingsActive }}">
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{-- {{ $settingsActive }} --}}">
 								Επεξεργασία
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#students" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+								Μαθητές
 							</a>
 						</li>
 					</ul><!-- /.End Tab Buttons -->
 
 					<div class="tab-content">
 						<!-- Materials table tab-->
-						<div class="tab-pane {{ $materialsActive }} table-cnt" id="materials">
+						<div class="tab-pane {{-- {{ $materialsActive }} --}} table-cnt" id="materials">
 
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
@@ -182,9 +187,9 @@
 						<!-- end about me section content -->
 
 						<!-- Course edit form tab-pane -->
-						<div class="tab-pane {{ $settingsActive }}" id="settings">
+						<div class="tab-pane {{-- {{ $settingsActive }} --}}" id="settings">
 							<form action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
-
+								
 								@csrf
 								@method('PATCH')
 
@@ -192,10 +197,10 @@
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="name">Όνομα Course</label>
-											<input id="name" type="text"
-												class="form-control @error('name') is-invalid @enderror"
-												id="name" name="name"
-												value="{{ old('name') != "" ? old('name') : $course['name'] }}"
+											<input id="name" type="text" 
+												class="form-control @error('name') is-invalid @enderror" 
+												id="name" name="name" 
+												value="{{ old('name') != "" ? old('name') : $course['name'] }}" 
 												placeholder="Δώστε όνομα">
 											@error('name')
                             				    <span class="invalid-feedback" role="alert">
@@ -261,8 +266,52 @@
 							</form>
 						</div><!-- end tab-pane -->
 						<!-- end settings content-->
-					</div> <!-- end tab-content -->
 
+						<div class="tab-pane active table-cnt" id="students">
+
+							<table id="students-list" class="table w-100 nowrap center-not-second js-remove-table-classes">
+								<thead>
+									<tr>
+										<th class="text-center">Επιλογή</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center"></th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center">Επιλογή</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center"></th>
+									</tr>
+								</tfoot>
+							</table>
+
+							<div class="row mt-3">
+								<div class="col-sm-1">
+								</div>
+								<div class="col-sm-11 d-flex justify-content-end">
+									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#primary-header-modal">
+										<i class="mdi mdi-account-multiple-plus mr-2"></i>
+										Προσθήκη Μαθητών
+									</button>
+									<div class="dropdown ml-2">
+										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Επιλογές
+										</button>
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+											<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!-- end students tab-pane -->
+
+
+					</div> <!-- end tab-content -->
+					
 				</div> <!-- end card body -->
 			</div> <!-- end card -->
 		</div> <!-- end col -->
