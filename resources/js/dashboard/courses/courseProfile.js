@@ -258,14 +258,34 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
-		/* addMaterialsEventListerner();
-		remainingsCheckboxes(); */
+		addStudentBtnInit();
+		removeStudentBtnInit();
 	},
 	
 });
 //! DataTables /end
 
 //! DataTables function / EventListener
+
+function removeStudentBtnInit() {
+
+	$(".js-remove-student").click( function() {
+		
+		let id = [ this.dataset.userId ];
+
+		removeStudent( id ); 
+	})
+}
+
+function addStudentBtnInit() {
+
+	$(".js-add-student-btn").click( function() {
+		
+		let userId = [ this.dataset.userId ];
+
+		addStudent( userId );
+	})
+}
 
 function addMaterialsEventListerner() {
 	$('.js-add-material-btn').click( function() {
@@ -376,6 +396,46 @@ function activeMaterialsCheckboxHandler() {
 	let checkbox = $('.js-course-material-checkbox');
 
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
+}
+
+function addStudent( studentIds ) {
+	axios.patch( "/courses/add-students", {
+		courseId,
+		studentIds
+	})
+	.then( (res) => {
+
+		let message = studentIds.length == 1 ? "Ένας μαθητής προστέθηκε" : `${studentIds.length} μαθητές προστέθηκαν`;
+		utilities.toastAlert( 'success', message );
+		courseStudentsDatatable.ajax.reload();
+		addCourseStudentsDatatable.ajax.reload();
+
+	})
+	.catch( (err) => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+
+	})
+}
+
+function removeStudent( studentIds ) {
+	axios.patch( "/courses/remove-students", {
+		courseId,
+		studentIds
+	})
+	.then( (res) => {
+
+		let message = studentIds.length == 1 ? "Ένας μαθητής αφαιρέθηκε" : `${studentIds.length} μαθητές αφαιρέθηκαν`;
+		utilities.toastAlert( 'success', message );
+		courseStudentsDatatable.ajax.reload();
+		addCourseStudentsDatatable.ajax.reload();
+
+	})
+	.catch( (err) => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+
+	})
 }
 
 function postMaterialIds( materialId, lessonsCount, additionsCount ) {

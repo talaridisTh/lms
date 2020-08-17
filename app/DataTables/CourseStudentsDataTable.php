@@ -44,14 +44,14 @@ class CourseStudentsDataTable extends DataTable
 				$slug = preg_replace($pattern, "", $data->email);
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-remainings-checkbox' data-user-id='$data->userId' type='checkbox' id='$slug' autocomplete='off'>
+							<input class='js-remainings-checkbox' data-user-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
 							<label for='$slug'></label>
 						</div>";
 
 			})
-			->addColumn('btn', function() {
+			->addColumn('btn', function($data) {
 
-				return "<i class='h3 pt-1 uil uil-trash-alt'></i>";
+				return "<i class='js-remove-student h3 pt-1 uil uil-trash-alt cursor-pointer' data-user-id='$data->id'></i>";
 				
 			})
 			->rawColumns(['action', 'btn']);

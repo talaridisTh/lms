@@ -65,7 +65,7 @@ class AddCourseStudentsDataTable extends DataTable
 			})
             ->addColumn('addBtn', function($data) {
 
-				return "<button type='button' class='js-add-student btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
+				return "<button type='button' class='js-add-student-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
 
 			})
 			->rawColumns(['action', 'addBtn']);

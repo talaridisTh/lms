@@ -104,6 +104,8 @@ Route::patch( 'courses/priority', 'Ajax\CourseController@changePriority' );
 Route::patch( 'courses/toggle-materials', 'Ajax\CourseController@toggleCourseMaterials' );
 Route::post( 'courses/add-materials', 'Ajax\CourseController@addMaterials' );
 Route::patch( 'courses/remove-materials', 'Ajax\CourseController@removeMaterials' );
+Route::patch( 'courses/add-students', 'Ajax\CourseController@addStudents' );
+Route::patch( 'courses/remove-students', 'Ajax\CourseController@removeStudents' );
 
 //! Ajax Bundles Datatables
 Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );

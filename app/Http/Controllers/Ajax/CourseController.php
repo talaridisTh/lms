@@ -219,4 +219,26 @@ class CourseController extends Controller
 		return $dataTable->render('courses.add.students');
 
 	}
+
+	public function addStudents( Request $request ) {
+
+		$course = Course::find( $request->courseId );
+		$studentIds = $request->studentIds;
+
+		foreach ( $studentIds as $id ) {
+			$course->users()->attach( $id );
+		}
+
+	}
+
+	public function removeStudents( Request $request ) {
+		
+		$course = Course::find( $request->courseId );
+		$studentIds = $request->studentIds;
+
+		foreach ( $studentIds as $id ) {
+			$course->users()->detach( $id );
+		}
+		
+	}
 }
