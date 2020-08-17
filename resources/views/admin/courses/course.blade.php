@@ -10,11 +10,62 @@
 @endphp
 
 @section('content')
-	<div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+
+
+
+
+<div id="add-students-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-students-modalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header modal-colored-header bg-primary">
+				<h4 class="modal-title" id="add-students-modalLabel">Προσθήκη Μαθημάτων</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			</div>
+			<div class="modal-body table-cnt">
+				<table id="add-students-list" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+					<thead>
+						<tr>
+							<th class="select-all w-5">
+								<div class='icheck-primary d-inline'>
+									<input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
+									<label for='all-remainings-checkbox'></label>
+								</div>
+							</th>
+							<th class="text-center">Όνομα</th>
+							<th class="text-center">Επώνυμο</th>
+							<th class="text-center"></th>
+						</tr>
+					</thead>
+					<tbody class="tables-hover-effect"></tbody>
+					<tfoot>
+						<tr>
+							<th class="text-center">Επιλογή</th>
+							<th class="text-center">Όνομα</th>
+							<th class="text-center">Επώνυμο</th>
+							<th class="text-center"></th>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button id="add-remaingings-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+
+
+
+	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
 	            <div class="modal-header modal-colored-header bg-primary">
-	                <h4 class="modal-title" id="primary-header-modalLabel">Προσθήκη Μαθημάτων</h4>
+	                <h4 class="modal-title" id="add-materials-modalLabel">Προσθήκη Μαθημάτων</h4>
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body table-cnt">
@@ -169,7 +220,7 @@
 								<div class="col-sm-1">
 								</div>
 								<div class="col-sm-11 d-flex justify-content-end">
-									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#primary-header-modal">
+									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">
 										<i class="mdi mdi-plus-circle mr-2"></i>
 										Προσθήκη Μαθημάτων
 									</button>
@@ -269,10 +320,15 @@
 
 						<div class="tab-pane active table-cnt" id="students">
 
-							<table id="students-list" class="table w-100 nowrap center-not-second js-remove-table-classes">
+							<table id="students-list" class="table w-100 nowrap js-remove-table-classes">
 								<thead>
 									<tr>
-										<th class="text-center">Επιλογή</th>
+										<th class="text-center">
+											<div class='icheck-primary d-inline'>
+												<input type='checkbox' id='all-active-materials-checkbox' autocomplete='off'>
+												<label for='all-active-materials-checkbox'></label>
+											</div>
+										</th>
 										<th class="text-center">Όνομα</th>
 										<th class="text-center">Επώνυμο</th>
 										<th class="text-center"></th>
@@ -281,7 +337,7 @@
 								<tbody class="tables-hover-effect"></tbody>
 								<tfoot>
 									<tr>
-										<th class="text-center">Επιλογή</th>
+										<th class="text-center"></th>
 										<th class="text-center">Όνομα</th>
 										<th class="text-center">Επώνυμο</th>
 										<th class="text-center"></th>
@@ -293,7 +349,7 @@
 								<div class="col-sm-1">
 								</div>
 								<div class="col-sm-11 d-flex justify-content-end">
-									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#primary-header-modal">
+									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-students-modal">
 										<i class="mdi mdi-account-multiple-plus mr-2"></i>
 										Προσθήκη Μαθητών
 									</button>

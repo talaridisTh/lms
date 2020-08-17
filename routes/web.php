@@ -95,6 +95,7 @@ Route::post( 'courses/courses-datatable', 'Ajax\CourseController@index' );
 Route::post( 'courses/course-materials-datatable', 'Ajax\CourseController@courseMaterials' );
 Route::post( 'courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials' );
 Route::post( 'courses/course-students-datatable', 'Ajax\CourseController@courseStudents' );
+Route::post( 'courses/add-course-students-datatable', 'Ajax\CourseController@addCourseStudents' );
 
 //! Ajax Courses CRUD
 Route::delete( 'courses/destroy/{ids}', 'Ajax\CourseController@destroy' );

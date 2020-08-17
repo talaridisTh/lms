@@ -2,17 +2,17 @@
 
 namespace App\DataTables;
 
-use App\Course;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CourseStudentsDataTable extends DataTable
+class AddCourseStudentsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -20,22 +20,36 @@ class CourseStudentsDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable( $query, Request $request )
+    public function dataTable($query, Request $request)
     {
 
-		$query = Course::find( $request->courseId )
-			->users()
-			->whereIn( 'users.id', 
-				function($subquery) {
+		$query = DB::table('users')
+			->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+			->where('model_has_roles.role_id', 4)
+			->whereNotIn('users.id', function($subquery) use ($request) {
 
-					$subquery->select('model_id')
-						->from('model_has_roles')
-						->where('role_id', 4)
+				$subquery->select('user_id')
+					->from('course_user')
+					->where('course_id', $request->courseId)
+					->get();
+
+			})
+			->select(
+				'users.id as userId',
+				'first_name',
+				'last_name',
+				'email')
+			->get();
+
+			/* $query = Role::find(4)->users
+				->whereNotIn( 'model_id', function($subquery) use ($request) {
+
+					$subquery->select('user_id')
+						->from('course_user')
+						->where('course_id', $request->courseId )
 						->get();
 
-				}
-			)
-			->get();
+				}); */
 
         return datatables()::of($query)
             ->addColumn('action', function($data) {
@@ -44,26 +58,26 @@ class CourseStudentsDataTable extends DataTable
 				$slug = preg_replace($pattern, "", $data->email);
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-remainings-checkbox' data-user-id='$data->userId' type='checkbox' id='$slug' autocomplete='off'>
+							<input class='js-new-user-checkbox' data-user-id='$data->userId' type='checkbox' id='$slug' autocomplete='off'>
 							<label for='$slug'></label>
 						</div>";
 
 			})
-			->addColumn('btn', function() {
+            ->addColumn('addBtn', function($data) {
 
-				return "<i class='h3 pt-1 uil uil-trash-alt'></i>";
-				
+				return "<button type='button' class='js-add-student btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
+
 			})
-			->rawColumns(['action', 'btn']);
+			->rawColumns(['action', 'addBtn']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Course $model
+     * @param \User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(User $model)
     {
         return $model->newQuery();
     }
@@ -76,7 +90,7 @@ class CourseStudentsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('coursestudentsdatatable-table')
+                    ->setTableId('addcoursestudentsdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -117,6 +131,6 @@ class CourseStudentsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'CourseStudents_' . date('YmdHis');
+        return 'AddCourseStudents_' . date('YmdHis');
     }
 }

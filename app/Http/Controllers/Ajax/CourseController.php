@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Course;
 use App\CourseMaterial;
+use App\DataTables\AddCourseStudentsDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -207,7 +208,15 @@ class CourseController extends Controller
 		$course->save();
 	}
 
-	public function courseStudents ( CourseStudentsDataTable $dataTable ) {
+	public function courseStudents( CourseStudentsDataTable $dataTable ) {
+
 		return $dataTable->render('courses.students');
+		
+	}
+
+	public function addCourseStudents(AddCourseStudentsDataTable $dataTable) {
+
+		return $dataTable->render('courses.add.students');
+
 	}
 }

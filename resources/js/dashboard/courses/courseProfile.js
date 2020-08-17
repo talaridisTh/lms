@@ -192,7 +192,51 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 		{data: 'action', width: "5%", orderable: false, searchable: false},
 		{data: 'first_name', name: 'first_name' },
 		{data: 'last_name', name: 'last_name' },
-		{data: 'btn', name: 'btn', orderable: false, searchable: false },
+		{data: 'btn', width: "5%", orderable: false, searchable: false },
+	],
+	language:{
+		emptyTable: 		"Δεν υπάρχουν εγγραφές",
+		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+		lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+		loadingRecords: 	"Φόρτωση ...",
+		processing: 		"Επεξεργασία ...",
+		search: 			"Αναζήτηση: ",
+		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+		paginate:{
+			previous:"<i class='mdi mdi-chevron-left'>",
+			next:"<i class='mdi mdi-chevron-right'>"}
+	},
+	drawCallback:function(){
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
+
+		/* addMaterialsEventListerner();
+		remainingsCheckboxes(); */
+	},
+	
+});
+
+const addCourseStudentsDatatable = $("#add-students-list").DataTable({
+	order: [2, "asc"],
+	processing: true,
+	serverSide: true,
+	ajax: {
+		url: "/courses/add-course-students-datatable",
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		type: "post",
+		data: {
+			courseId: courseId
+		}
+	},
+	columns: [
+		{data: 'action', width: "5%", orderable: false, searchable: false},
+		{data: 'first_name', name: 'first_name' },
+		{data: 'last_name', name: 'last_name' },
+		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
 		emptyTable: 		"Δεν υπάρχουν εγγραφές",
