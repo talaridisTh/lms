@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class CourseStoreRequest extends FormRequest
+class BundleCourseRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,10 +30,17 @@ class CourseStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' 			=> 'required|string|max:50',
+			'name'			=> 'required|string|max:50',
 			'active' 		=> 'required|numeric|digits:1|gte:0|lte:1',
+			'cover'			=> 'max:150|dimensions:ratio=1.5|mimes:png,jpeg',
 			'description' 	=> 'required|string|max:500'
 		];
-		// return [];
-    }
+	}
+	
+	public function messages()
+{
+    return [
+        'dimensions' => "Οι διαστάσεις του :attribute πρέπει να είναι 600 x 400.",
+    ];
+}
 }

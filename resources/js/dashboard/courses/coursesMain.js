@@ -8,7 +8,11 @@ $("#submit-form-btn").click( function() {
 
 });
 
-$("#courses-datatable").DataTable({
+$("#cover-input").change( function() {
+	$("#cover-input-label")[0].textContent = this.value.replace("C:\\fakepath\\", "");
+});
+
+const coursesDatatable = $("#courses-datatable").DataTable({
 	order: [1, "asc"],
 	processing: true,
 	serverSide: true,
@@ -72,16 +76,14 @@ $('#delete-courses-btn').click( function() {
 
 		if (result.value) {
 
-			axios.delete(`/courses/massdestroy/${ids}`)
+			axios.delete(`/courses/destroy/${ids}`)
 			.then(function (response) {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
 
 				utilities.toastAlert( "success", message );
 
-				[...checkedBoxes].forEach(element => {
-					element.parentElement.parentElement.parentElement.remove();
-				});
+				coursesDatatable.ajax.reload();
 			})
 			.catch(function (error) {
 				

@@ -9,6 +9,7 @@ use App\DataTables\RemainingCoursesDataTable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class BundleController extends Controller
 {
@@ -86,9 +87,15 @@ class BundleController extends Controller
      * @param  \App\Bundle  $bundle
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Bundle $bundle)
+    public function destroy($ids)
     {
-        //
+        $idList = explode(',', $ids);
+
+		foreach( $idList as $id ) {
+			
+			Bundle::find( $id )->delete();
+			Storage::deleteDirectory("public/bundles/$id");
+		}
 	}
 	
 	public function remainingCourses(RemainingCoursesDataTable $dataTable) {

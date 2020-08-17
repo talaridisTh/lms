@@ -1,8 +1,13 @@
 @extends('layouts.dashboard')
 
 @section('css')
-	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 @endsection
+
+@php
+	$materialsActive = count( $errors ) > 0 ? "" : "active";
+	$settingsActive = count( $errors ) > 0 ? "active" : "";
+@endphp
 
 @section('content')
 	<div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="primary-header-modalLabel" aria-hidden="true">
@@ -52,7 +57,7 @@
 		<div class="col-xl-3 col-lg-5">
 			<div class="card text-center">
 				<div class="card-body">
-					<img src="https://via.placeholder.com/300x200" class="img-fluid"
+					<img src="{{ asset('storage/courses/'.$course->id.'/cover/'.$course->cover) }}" class="img-fluid"
 					alt="profile-image">
 
 					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
@@ -67,32 +72,19 @@
 							<strong>
 								Σύνολο Μαθημάτων :
 							</strong>
-							<span class="ml-2">
+							<span id="total-lessons" class="ml-2">
 								{{ $course->materials->where( 'type', 'Lesson')->count() }}
 							</span>
 						</p>
-
 						<p class="text-muted mb-2 font-13">
 							<strong>
 								Σύνολο Extra Υλικού :
 							</strong>
-							<span class="ml-2">
+							<span id="total-additions" class="ml-2">
 								{{ $course->materials->where( 'type', '!=', 'Lesson')->count() }}
 							</span>
 						</p>
-						<h4 class="font-13 text-uppercase mt-4">Εισηγητές μαθημάτων :</h4>
-							<ul id="authors-list">
-								@foreach ($authors as $key => $author)
-										<li class="js-authors">{{$author['first_name']}} {{$author['last_name']}}</li>
-								@endforeach
-								<li id="more-authors" 
-									data-shown="false" 
-									class="d-none mt-1 list-unstyled font-weight-bold cursor-pointer text-hover-underline">
-									Περρισότερα...
-								</li>
-							</ul>
-
-						<p class="text-muted mb-2 font-13 mt-4">
+						<p class="text-muted mb-2 font-13">
 							<strong>
 								Τελευταία Ανανέωση :
 							</strong>
@@ -100,8 +92,7 @@
 								{{ $course['updated_at'] }}
 							</span>
 						</p>
-
-						<p class="text-muted mb-1 font-13">
+						<p class="text-muted mb-2 font-13">
 							<strong>
 								Ημ. Δημιουργίας :
 							</strong>
@@ -123,12 +114,12 @@
 					<!-- Tab Buttons -->
 					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
 						<li class="nav-item">
-							<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $materialsActive }}">
 								Μαθήματα
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $settingsActive }}">
 								Επεξεργασία
 							</a>
 						</li>
@@ -136,7 +127,7 @@
 
 					<div class="tab-content">
 						<!-- Materials table tab-->
-						<div class="tab-pane show active table-cnt" id="materials">
+						<div class="tab-pane {{ $materialsActive }} table-cnt" id="materials">
 
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
@@ -191,23 +182,41 @@
 						<!-- end about me section content -->
 
 						<!-- Course edit form tab-pane -->
-						<div class="tab-pane" id="settings">
-							<form>
-							    <div class="row">
+						<div class="tab-pane {{ $settingsActive }}" id="settings">
+							<form action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+								
+								@csrf
+								@method('PATCH')
+
+								<div class="row">
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="name">Όνομα Course</label>
-											<input type="text" class="form-control" id="name" name="name" value="{{ $course['name'] }}" placeholder="Δώστε όνομα">
-							            </div>
+											<input id="name" type="text" 
+												class="form-control @error('name') is-invalid @enderror" 
+												id="name" name="name" 
+												value="{{ old('name') != "" ? old('name') : $course['name'] }}" 
+												placeholder="Δώστε όνομα">
+											@error('name')
+                            				    <span class="invalid-feedback" role="alert">
+                            				        <strong>{{ $message }}</strong>
+                            				    </span>
+                            				@enderror
+										</div>
 							        </div>
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="course-cover">Cover Εικόνα</label>
 											<div class="input-group">
 											    <div class="custom-file">
-											        <input type="file" class="custom-file-input" name="cover" value="{{ $course['cover'] }}" id="course-cover">
-											        <label class="custom-file-label" for="course-cover">"{{ $course['cover'] }}"</label>
-											    </div>
+													<input id="course-cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
+													<label id="course-cover-label" class="custom-file-label file-search-label-primary" for="course-cover-input">{{ $course->cover }}</label>
+												</div>
+												@error('cover')
+													<span class="invalid-feedback d-block" role="alert">
+														<strong>{{ $message }}</strong>
+													</span>
+												@enderror
 											</div>
 							            </div>
 							        </div> <!-- end col -->
@@ -217,8 +226,13 @@
 							        <div class="col-12">
 							            <div class="form-group">
 							                <label for="description">Περιγραφή</label>
-										<textarea class="form-control" id="description" name="description" rows="4" placeholder="Write something...">{{ $course['description'] }}</textarea>
-							            </div>
+											<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"rows="4" placeholder="Περιγραφή Course...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
+											@error('description')
+                            				    <span class="invalid-feedback" role="alert">
+                            				        <strong>{{ $message }}</strong>
+                            				    </span>
+                            				@enderror
+										</div>
 							        </div> <!-- end col -->
 							    </div> <!-- end row -->
 
@@ -226,10 +240,15 @@
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="example-select">Κατάσταση</label>
-											<select class="form-control" id="active">
-											    <option value="1">Ενεργό</option>
-											    <option value="0">Ανενεργό</option>
+											<select id="active" class="form-control @error('active') is-invalid @enderror" name="active">
+											    <option value="1" {{ $course['active'] == 1 ? "selected" : "" }}>Ενεργό</option>
+											    <option value="0" {{ $course['active'] == 0 ? "selected" : "" }}>Ανενεργό</option>
 											</select>
+											@error('active')
+											    <span class="invalid-feedback" role="alert">
+											        <strong>{{ $message }}</strong>
+											    </span>
+											@enderror
 							            </div>
 							        </div>
 							        <div class="col-xl-6">

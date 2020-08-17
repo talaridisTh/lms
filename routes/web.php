@@ -68,11 +68,13 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course}', 'CourseController@show')->name('course.show');
     Route::post('/dashboard/courses/store', 'CourseController@store')->name('course.store');
+    Route::patch('/dashboard/courses/update/{course}', 'CourseController@update')->name('course.update');
 
 	//!Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
     Route::get('/dashboard/bundle/{bundle}', 'BundleController@show')->name('bundle.show');
-    Route::get('/dashboard/bundles/create', 'BundleController@create')->name('bundle.create');
+    Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
+    Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
 
 });
 
@@ -94,7 +96,7 @@ Route::post( 'courses/course-materials-datatable', 'Ajax\CourseController@course
 Route::post( 'courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials' );
 
 //! Ajax Courses CRUD
-Route::delete( 'courses/massdestroy/{ids}', 'Ajax\CourseController@massdestroy' );
+Route::delete( 'courses/destroy/{ids}', 'Ajax\CourseController@destroy' );
 Route::patch( 'courses/active', 'Ajax\CourseController@toggleActive' );
 Route::patch( 'courses/priority', 'Ajax\CourseController@changePriority' );
 Route::patch( 'courses/toggle-materials', 'Ajax\CourseController@toggleCourseMaterials' );
@@ -107,6 +109,7 @@ Route::post( 'bundles/bundle-courses-datatable', 'Ajax\BundleController@show' );
 Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remainingCourses' );
 
 //! Ajax Bundles CRUD
+Route::delete( 'bundles/destroy/{ids}', 'Ajax\BundleController@destroy' );
 Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@update' );
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );

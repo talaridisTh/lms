@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
-use App\Http\Requests\CourseStoreRequest;
+use App\Http\Requests\BundleCourseRequest;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class CourseController extends Controller
 {
@@ -27,8 +28,13 @@ class CourseController extends Controller
     }
 
 
-    public function store(CourseStoreRequest $request)
+    public function store(BundleCourseRequest $request)
     {
+		if( !empty($_FILES['cover']['name']) ) {
+			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
+			$fileName = md5( $request->name ).$ext;
+		}
+
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
 		$course = new Course;
@@ -36,9 +42,18 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->active = $request->active;
 		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
-
+		$course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
+		
 		$course->save();
-		return redirect( '/dashboard/course/'. $course->id );
+		
+		if ( isset($fileName) ) {
+			$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
+		}
+		else {
+			Storage::copy("public/no_image_600x400.png", "public/courses/$course->id/cover/no_image_600x400.png");
+		}
+		
+		return redirect( "/dashboard/course/$course->id" );
 
     }
     /**
@@ -57,13 +72,10 @@ class CourseController extends Controller
 			array_push( $lessonIds, $lesson['id'] );
 		};
 
-		$authors = Course::courseAuthors( $lessonIds );
-
 		$data = [
 			'course' => $course,
 			'materials' => $materials,
 			'allRemainingMaterials' => json_decode($allRemainingMaterials, true),
-			'authors' => json_decode($authors, true),
 		];
 
         return view('admin.courses.course')->with($data);
@@ -87,9 +99,29 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Course $course)
+    public function update(BundleCourseRequest $request, Course $course)
     {
-        //
+		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+
+		$course->name = $request->name;
+		$course->description = $request->description;
+		$course->active = $request->active;
+		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
+
+		if ( !empty($_FILES['cover']['name']) ) {
+			
+			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
+			$fileName = md5( $request->name ).$ext;
+			
+			Storage::delete( "public/courses/$course->id/cover/$course->cover" );
+			$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
+			
+			$course->cover = $fileName;
+		}
+
+		$course->save();
+
+        return redirect( "/dashboard/course/$course->id" );
     }
 
     /**

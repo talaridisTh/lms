@@ -4,12 +4,17 @@
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 @endsection
 
+@php
+	$coursesActive = count( $errors ) > 0 ? "" : "active";
+	$settingsActive = count( $errors ) > 0 ? "active" : "";
+@endphp
+
 @section('content')
 	<div id="remaining-courses-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remaining-courses-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
 	        <div class="modal-content">
 	            <div class="modal-header modal-colored-header bg-primary">
-	                <h4 class="modal-title" id="remaining-courses-modalLabel">Προσθήκη Μαθημάτων</h4>
+	                <h4 class="modal-title" id="remaining-courses-modalLabel">Προσθήκη Course</h4>
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body table-cnt">
@@ -48,7 +53,7 @@
 		<div class="col-xl-3 col-lg-5">
 			<div class="card text-center">
 				<div class="card-body">
-					<img src="https://via.placeholder.com/300x200" class="img-fluid"
+					<img src="{{ asset('storage/bundles/'.$bundle->id.'/cover/'.$bundle->cover) }}" class="img-fluid"
 					alt="profile-image">
 
 					<h4 class="mb-0 mt-2">{{ $bundle['name'] }}</h4>
@@ -88,7 +93,7 @@
 					</div>
 
 				</div> <!-- end card-body -->
-			</div> <!-- end course info card -->
+			</div> <!-- end bundle info card -->
 
 		</div> <!-- end col-->
 
@@ -99,12 +104,12 @@
 					<!-- Tab Buttons -->
 					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
 						<li class="nav-item">
-							<a href="#courses" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+						<a href="#courses" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $coursesActive }}">
 								Courses
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+						<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $settingsActive }}">
 								Επεξεργασία
 							</a>
 						</li>
@@ -112,7 +117,7 @@
 
 					<div class="tab-content">
 						<!-- Courses table tab-->
-						<div class="tab-pane show active table-cnt" id="courses">
+						<div class="tab-pane {{ $coursesActive }} table-cnt" id="courses">
 
 							<table id="bundle-courses-list" data-bundle-id="{{ $bundle['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
@@ -145,7 +150,7 @@
 								<div class="col-sm-11 d-flex justify-content-end">
 									<button id="course-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#remaining-courses-modal">
 										<i class="mdi mdi-plus-circle mr-2"></i>
-										Προσθήκη Μαθημάτων
+										Προσθήκη Course
 									</button>
 									<div class="dropdown ml-2">
 										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -160,24 +165,44 @@
 						</div><!-- end material tab-pane -->
 						<!-- end about me section content -->
 
-						<!-- Course edit form tab-pane -->
-						<div class="tab-pane" id="settings">
-							<form>
-							    <div class="row">
+						<!-- Bundle edit form tab-pane -->
+						<div class="tab-pane {{ $settingsActive }}" id="settings">
+							<form action="{{ route('bundle.update', $bundle->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+								
+								@csrf
+								@method('PATCH')
+								
+								<div class="row">
 							        <div class="col-xl-6">
 							            <div class="form-group">
-							                <label for="name">Όνομα Course</label>
-											<input type="text" class="form-control" id="name" name="name" value="{{ $bundle['name'] }}" placeholder="Δώστε όνομα">
+							                <label for="name">Όνομα Bundle</label>
+											<input type="text" class="form-control @error('name') is-invalid @enderror" 
+												id="name" name="name" 
+												value="{{ old('name') != "" ? old('name') : $bundle['name'] }}"
+												placeholder="Δώστε όνομα...">
+											@error('name')
+												<span class="invalid-feedback" role="alert">
+												    <strong>{{ $message }}</strong>
+												</span>
+											@enderror
 							            </div>
 							        </div>
 							        <div class="col-xl-6">
 							            <div class="form-group">
-							                <label for="course-cover">Cover Εικόνα</label>
+							                <label for="cover-input">Cover Εικόνα</label>
 											<div class="input-group">
 											    <div class="custom-file">
-											        <input type="file" class="custom-file-input" name="cover" value="{{ $bundle['cover'] }}" id="cover-input">
-											        <label class="custom-file-label" for="cover-input">"{{ $bundle['cover'] }}"</label>
-											    </div>
+													<input type="file"
+														class="custom-file-input @error('cover') is-invalid @enderror"
+														name="cover" value="{{ $bundle['cover'] }}"
+														id="cover-input">
+											        <label class="custom-file-label  file-search-label-primary" for="cover-input">"{{ $bundle['cover'] }}"</label>
+												</div>
+												@error('cover')
+													<span class="invalid-feedback d-block" role="alert">
+														<strong>{{ $message }}</strong>
+													</span>
+												@enderror
 											</div>
 							            </div>
 							        </div> <!-- end col -->
@@ -187,8 +212,15 @@
 							        <div class="col-12">
 							            <div class="form-group">
 							                <label for="description">Περιγραφή</label>
-										<textarea class="form-control" id="description" name="description" rows="4" placeholder="Write something...">{{ $bundle['description'] }}</textarea>
-							            </div>
+											<textarea class="form-control @error('description') is-invalid @enderror"
+												id="description" name="description" rows="4"
+												placeholder="Περιγραφή Bundle...">{{ old('description') != "" ? old('description') : $bundle['description'] }}</textarea>
+											@error('description')
+                            				    <span class="invalid-feedback" role="alert">
+                            				        <strong>{{ $message }}</strong>
+                            				    </span>
+                            				@enderror
+										</div>
 							        </div> <!-- end col -->
 							    </div> <!-- end row -->
 
@@ -196,10 +228,15 @@
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="example-select">Κατάσταση</label>
-											<select class="form-control" id="active">
-											    <option value="1">Ενεργό</option>
-											    <option value="0">Ανενεργό</option>
+											<select id="active" class="form-control @error('active') is-invalid @enderror" name="active">
+											    <option value="1" {{ $bundle['active'] == 1 ? "selected" : "" }}>Ενεργό</option>
+											    <option value="0" {{ $bundle['active'] == 0 ? "selected" : "" }}>Ανενεργό</option>
 											</select>
+											@error('active')
+											    <span class="invalid-feedback" role="alert">
+											        <strong>{{ $message }}</strong>
+											    </span>
+											@enderror
 							            </div>
 							        </div>
 							        <div class="col-xl-6">
