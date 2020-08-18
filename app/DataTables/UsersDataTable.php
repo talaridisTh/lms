@@ -16,15 +16,15 @@ class UsersDataTable extends DataTable {
      * Build DataTable class.
      *
      * @param mixed $query Results from query() method.
-     * @return \Yajra\DataTables\DataTableAbstract
+     * @return \Yajra\DataTables\datatableabstract
      */
     public function dataTable($query)
     {
 
-        $query = User::query()->select();
+        $query = User::all();
 
-        return datatables()
-            ->eloquent($query)
+
+        return DataTables::of($query)
             ->addColumn('action', function ($data) {
 
                 return "{$data->getRoleNames()[0]}";

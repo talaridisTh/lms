@@ -31,13 +31,11 @@ Route::get('/clear', function() {
 });
 
 
+Route::get("/test", "HomeController@test")->name("user.test");
 
 Route::get("/user/link", "HomeController@createLink")->name("user.link");
 Route::post("/user/link/store", "HomeController@createLinkStore")->name("user.linkStore");
 Route::get("/user/view-link", "HomeController@showLinks")->name("user.showLinks");
-
-
-
 Route::get('/partner-links', function (Request $request) {
 
     if (! $request->hasValidSignature()) {
@@ -56,7 +54,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
 	//! User Routes
     Route::get('/dashboard/users', 'UserController@index')->name('user.index');
-    Route::get('/dashboard/create', 'UserController@create')->name('user.create');
+    Route::get('/dashboard/users/create', 'UserController@create')->name('user.create');
     Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
     Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
     Route::patch('/dashboard/users/{user}', 'UserController@update')->name('user.update');

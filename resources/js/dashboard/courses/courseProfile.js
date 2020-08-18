@@ -50,9 +50,9 @@ $("#course-cover-input").change( function() {
 
 $('#all-remainings-checkbox').change( function() {
 	let checkboxes = $('.js-remainings-checkbox')
-	
+
 	utilities.minorCheckboxSwitcher( this, checkboxes );
-	
+
 });
 
 $('#add-remaingings-btn').click( function() {
@@ -87,7 +87,7 @@ $('#remove-selection-btn').click( function() {
 	let ids = []
 
 	if ( checkboxes.length == 0 ) {
-		
+
 		utilities.toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 		return;
 	}
@@ -162,7 +162,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		sortInputsInit();
 		setRows();
 	},
-	
+
 });
 
 const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
@@ -207,7 +207,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		addMaterialsEventListerner();
 		remainingsCheckboxes();
 	},
-	
+
 });
 
 const courseStudentsDatatable = $("#students-list").DataTable({
@@ -253,7 +253,7 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 		removeStudentBtnInit();
 		studentLinkInit();
 	},
-	
+
 });
 
 const addCourseStudentsDatatable = $("#add-students-list").DataTable({
@@ -297,7 +297,7 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 		addStudentBtnInit();
 		studentLinkInit();
 	},
-	
+
 });
 //! DataTables /end
 
@@ -311,7 +311,7 @@ function studentLinkInit() {
 	link.click( function() {
 
 		let studentId = this.parentElement.dataset.studentId
-		
+
 		window.location = `/dashboard/users/${ studentId }`;
 	});
 }
@@ -319,23 +319,23 @@ function studentLinkInit() {
 function removeStudentBtnInit() {
 
 	let removeStudentBtn = $(".js-remove-student");
-	
+
 	removeStudentBtn.unbind();
 	removeStudentBtn.click( function() {
-		
+
 		let id = [ this.dataset.userId ];
 
-		removeStudent( id ); 
+		removeStudent( id );
 	})
 }
 
 function addStudentBtnInit() {
 
 	let addStudentBtn = $(".js-add-student-btn");
-	
+
 	addStudentBtn.unbind();
 	addStudentBtn.click( function() {
-		
+
 		let userId = [ this.dataset.userId ];
 
 		addStudent( userId );
@@ -345,7 +345,7 @@ function addStudentBtnInit() {
 function addMaterialsEventListerner() {
 
 	let addMaterialBtn = $('.js-add-material-btn');
-	
+
 	addMaterialBtn.unbind();
 	addMaterialBtn.click( function() {
 		const materialId = [this.dataset.materialId];
@@ -375,8 +375,8 @@ function sortInputsInit() {
 			axios.patch('/courses/priority', {
 				courseId: $('#course-materials-list')[0].dataset.courseId,
 				materialId: this.dataset.materialId,
-				priority: { 
-					new: this.value, 
+				priority: {
+					new: this.value,
 					old: this.dataset.currentPriority
 				},
 			})
@@ -427,7 +427,7 @@ function jsLinkEventListener() {
 
 	links.unbind();
 	links.click( function() {
-				
+
 	let id = this.parentElement.dataset.materialId;
 
 	window.location = `/dashboard/material/${id}`;
@@ -504,7 +504,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	})
 	.then( (res) => {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
-		
+
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
@@ -519,7 +519,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 }
 
 function removeMaterials( materialIds, lessonsCount, additionsCount ) {
-			
+
 	axios.patch( "/courses/remove-materials", {
 		courseId,
 		materialIds
@@ -527,7 +527,7 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 	.then( (res) => {
 
 		let message = materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ύλης`;
-		
+
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
@@ -542,13 +542,13 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 
 function setRows() {
 	let materialRows = $("#course-materials-list > tbody > tr");
-	
-	for ( let i = 0; i < materialRows.length; i++ ) {
-		
-		let newRow = createRow();
-		newRow.appendAfter(materialRows[i])
 
-	}
+	// for ( let i = 0; i < materialRows.length; i++ ) {
+	//
+	// 	let newRow = createRow();
+	// 	newRow.appendAfter(materialRows[i])
+    //
+	// }
 
 }
 

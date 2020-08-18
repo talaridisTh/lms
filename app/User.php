@@ -58,6 +58,13 @@ class User extends Authenticatable {
             ->withPivot("user_link",'id');
     }
 
+    public function role()
+    {
+
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'role_id', 'model_id');
+    }
+
+
     public function materials()
     {
 

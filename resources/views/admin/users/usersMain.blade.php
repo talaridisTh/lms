@@ -7,7 +7,7 @@
 @section('content')
     <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container" style="max-width:1370px">
-        <div class="row mb-2">
+        <div class="row mb-2 justify-content-end">
             <div class="col-sm-12">
                 <div class="text-right">
                     <a href="{{route('user.create')}}" class="btn btn-secondary mb-2"><i
@@ -36,15 +36,6 @@
         </div>
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
-            <tr>
-                <th class="text-left "></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-                <th class="text-left"></th>
-            </tr>
             <tr>
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>

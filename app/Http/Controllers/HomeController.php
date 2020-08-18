@@ -109,6 +109,11 @@ class HomeController extends Controller {
         return $diff->format('Απομένουν %h Ωρες, %i Λεπτα');
     }
 
+    public function test()
+    {
+
+    }
+
 
 }
 
