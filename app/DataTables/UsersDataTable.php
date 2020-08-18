@@ -27,13 +27,13 @@ class UsersDataTable extends DataTable {
             ->eloquent($query)
             ->addColumn('action', function ($data) {
 
-                return "<td>{$data->getRoleNames()[0]}</td>";
+                return "{$data->getRoleNames()[0]}";
             })
             ->editColumn('active', function ($data) {
 
                 $active = $data->active == 0 ? "" : "checked";
 
-                return "<input class='toggle-class' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+                return "<input  class='toggle-class' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
             ->editColumn('avatar', function ($data) {

@@ -51,6 +51,7 @@ class HomeController extends Controller {
     public function showLinks()
     {
 
+
         $userCurent = auth()->user()->guest;
         $usersOnlyAdmin = User::all()->map(function ($user) {
             if ($user->guest()->exists())

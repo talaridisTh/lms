@@ -15,10 +15,12 @@
                         Νέος χρήστης
                     </a>
 
+
                     <div class="btn-group mb-2">
                         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Επιλογές
                         </button>
+
                         <div class="dropdown-menu">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Print</a>
@@ -34,6 +36,15 @@
         </div>
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
+            <tr>
+                <th class="text-left "></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+                <th class="text-left"></th>
+            </tr>
             <tr>
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
@@ -64,6 +75,8 @@
 @section('scripts')
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+
     <x-routes></x-routes>
     <script src="{{ mix('js/dashboard/users/userMain.js') }}"></script>
 
