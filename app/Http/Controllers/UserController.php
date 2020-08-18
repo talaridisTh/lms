@@ -87,6 +87,10 @@ class UserController extends Controller {
         return redirect(route('user.index'));
     }
 
+	public function userCourses( User $user ) {
 
+		return view('courses/courses')->withUser( $user );
+		
+	}
 
 }

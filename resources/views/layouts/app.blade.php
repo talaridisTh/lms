@@ -16,7 +16,7 @@
 
 </head>
 
-<body class="loading authentication-bg" data-layout-config='{"darkMode":true}'>
+<body class="loading" data-layout="detached" data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
 <!-- Topbar Start -->
 <div class="navbar-custom topnav-navbar topnav-navbar-dark">
@@ -83,10 +83,104 @@
 </div>
 <!-- end Topbar -->
 
-<div class="row mt-5">
+<!-- Start Content-->
+<div class="container-fluid">
+    <!-- Begin page -->
+    <div class="wrapper">
 
-    @yield('content')
+		<!-- ========== Left Sidebar Start ========== -->
+<div class="left-side-menu left-side-menu-detached">
 
+	@auth
+		
+		<div class="leftbar-user">
+		    <a href="javascript: void(0);">
+		        <img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set5" alt="user-image" height="42" class="rounded-circle shadow-sm">
+				<span class="leftbar-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
+		    </a>
+		</div>
+
+	@endauth
+
+
+	<!--- Sidemenu -->
+    <ul class="metismenu side-nav">
+
+        <li class="side-nav-title side-nav-item">Navigation</li>
+
+		<li class="side-nav-item">
+		    <a href="javascript: void(0);" class="side-nav-link">
+		        <i class="uil-home-alt"></i>
+		        <span class="badge badge-info badge-pill float-right">4</span>
+		        <span> Dashboards </span>
+		    </a>
+		    <ul class="side-nav-second-level" aria-expanded="false">
+		        <li>
+		            <a href="dashboard-analytics.html">Analytics</a>
+		        </li>
+		        <li>
+		            <a href="dashboard-crm.html">CRM</a>
+		        </li>
+		        <li>
+		            <a href="index.html">Ecommerce</a>
+		        </li>
+		        <li>
+		            <a href="dashboard-projects.html">Projects</a>
+		        </li>
+		    </ul>
+		</li>
+
+        <li class="side-nav-title side-nav-item">Apps</li>
+
+		@auth
+			
+			<li class="side-nav-item">
+				<a href="/courses/{{ Auth::user()->id }}" class="side-nav-link">
+					<i class="uil-calender"></i>
+					<span>Courses</span>
+				</a>
+			</li>
+
+		@endauth
+
+        <li class="side-nav-item">
+            <a href="apps-chat.html" class="side-nav-link">
+                <i class="uil-comments-alt"></i>
+                <span> Chat </span>
+            </a>
+        </li>
+
+		<li class="side-nav-item">
+		    <a href="javascript: void(0);" class="side-nav-link">
+		        <i class="uil-envelope"></i>
+		        <span> Email </span>
+		        <span class="menu-arrow"></span>
+		    </a>
+		    <ul class="side-nav-second-level" aria-expanded="false">
+		        <li>
+		            <a href="apps-email-inbox.html">Inbox</a>
+		        </li>
+		        <li>
+		            <a href="apps-email-read.html">Read Email</a>
+		        </li>
+		    </ul>
+		</li>
+
+        <li class="side-nav-item">
+            <a href="apps-social-feed.html" class="side-nav-link">
+                <i class="uil-rss"></i>
+                <span> Social Feed </span>
+            </a>
+        </li>
+
+    </ul>
+
+</div>
+<!-- Left Sidebar End -->
+
+		@yield('content')
+	
+    </div>
 </div>
 <!-- end page -->
 
