@@ -44,7 +44,7 @@ class CourseStudentsDataTable extends DataTable
 				$slug = preg_replace($pattern, "", $data->email);
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-remainings-checkbox' data-user-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
+							<input class='js-active-student-checkbox' data-user-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
 							<label for='$slug'></label>
 						</div>";
 

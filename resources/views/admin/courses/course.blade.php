@@ -48,7 +48,7 @@
 				</table>
 			</div>
 			<div class="modal-footer">
-				<button id="add-remaingings-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+				<button id="add-multiple-students-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
 				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 			</div>
 		</div><!-- /.modal-content -->
@@ -358,7 +358,7 @@
 											Επιλογές
 										</button>
 										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-											<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+											<a id="remove-selected-students-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
 										</div>
 									</div>
 								</div>

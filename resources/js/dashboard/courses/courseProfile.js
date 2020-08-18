@@ -1,5 +1,4 @@
 import utilities from '../main';
-import { parseInt } from 'lodash';
 
 //! GLOBAL VARIABLES
 const courseId = $("#course-materials-list")[0].dataset.courseId
@@ -8,6 +7,29 @@ const totalAdditions = $('#total-additions')[0];
 const updatedAt = $("#last-update-cnt")[0];
 
 //! EventListerners
+
+$("#add-multiple-students-btn").click( function() {
+	let newStudents = $(".js-new-user-checkbox:checked");
+	let studentIds = [];
+
+	for ( let i = 0; i < newStudents.length; i++ ) {
+		studentIds.push( newStudents[i].dataset.userId );
+	}
+
+	addStudent(studentIds);
+})
+
+$("#remove-selected-students-btn").click( function() {
+
+	let studentsCheckbox = $(".js-active-student-checkbox:checked");
+	let studentIds = [];
+
+	for ( let i = 0; i < studentsCheckbox.length; i++ ) {
+		studentIds.push( studentsCheckbox[i].dataset.userId );
+	}
+
+	removeStudent(studentIds);
+})
 
 $("#course-cover-input").change( function() {
 	let label = $("#course-cover-label")[0];
