@@ -1,12 +1,23 @@
 import utilities from '../main';
 
 //! GLOBAL VARIABLES
+//!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
 const totalLessons = $('#total-lessons')[0];
 const totalAdditions = $('#total-additions')[0];
 const updatedAt = $("#last-update-cnt")[0];
 
+//! Prototype Additions
+//!============================================================
+
+Element.prototype.appendAfter = function (element) {
+
+	element.parentNode.insertBefore(this, element.nextSibling);
+
+},false;
+
 //! EventListerners
+//!============================================================
 
 $("#add-multiple-students-btn").click( function() {
 	let newStudents = $(".js-new-user-checkbox:checked");
@@ -118,7 +129,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		}
 	},
 	columns: [
-		{ data: 'action', name: 'action', orderable: false, width: "5%" },
+		{ data: 'action', name: 'action', orderable: false },
 		{ data: 'name', name: 'name', className: "js-link cursor-pointer" },
 		{ data: 'active', name: 'active' },
 		{ data: 'priority', name: 'priority',  width: "5%", searchable: false },
@@ -149,6 +160,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		activeMaterialsCheckboxToggle();
 		toggleCourseMaterial()
 		sortInputsInit();
+		setRows();
 	},
 	
 });
@@ -526,4 +538,33 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
+}
+
+function setRows() {
+	let materialRows = $("#course-materials-list > tbody > tr");
+	
+	for ( let i = 0; i < materialRows.length; i++ ) {
+		
+		let newRow = createRow();
+		newRow.appendAfter(materialRows[i])
+
+	}
+
+}
+
+function createRow() {
+
+	let row = document.createElement("tr");
+	row.classList.add("position-relative", "extra-content-row");
+
+	row.innerHTML = `
+					<td class='add-content-cell'>
+						<button type="button" class="btn btn-primary btn-sm">
+							<i class='mdi mdi-sticker-plus-outline mr-2'></i>
+							Προσθήκη Υλικού
+						</button>
+					</td>
+					`
+
+	return row;
 }

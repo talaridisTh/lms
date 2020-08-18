@@ -11,55 +11,46 @@
 
 @section('content')
 
-
-
-
-<div id="add-students-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-students-modalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header modal-colored-header bg-primary">
-				<h4 class="modal-title" id="add-students-modalLabel">Προσθήκη Μαθημάτων</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			</div>
-			<div class="modal-body table-cnt">
-				<table id="add-students-list" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
-					<thead>
-						<tr>
-							<th class="select-all w-5">
-								<div class='icheck-primary d-inline'>
-									<input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
-									<label for='all-remainings-checkbox'></label>
-								</div>
-							</th>
-							<th class="text-center">Όνομα</th>
-							<th class="text-center">Επώνυμο</th>
-							<th class="text-center"></th>
-						</tr>
-					</thead>
-					<tbody class="tables-hover-effect"></tbody>
-					<tfoot>
-						<tr>
-							<th class="text-center">Επιλογή</th>
-							<th class="text-center">Όνομα</th>
-							<th class="text-center">Επώνυμο</th>
-							<th class="text-center"></th>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button id="add-multiple-students-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
-				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-
-
-
+	<div id="add-students-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-students-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h4 class="modal-title" id="add-students-modalLabel">Προσθήκη Μαθημάτων</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body table-cnt">
+					<table id="add-students-list" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+						<thead>
+							<tr>
+								<th class="select-all w-5">
+									<div class='icheck-primary d-inline'>
+										<input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
+										<label for='all-remainings-checkbox'></label>
+									</div>
+								</th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Επώνυμο</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody class="tables-hover-effect"></tbody>
+						<tfoot>
+							<tr>
+								<th class="text-center">Επιλογή</th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Επώνυμο</th>
+								<th class="text-center"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button id="add-multiple-students-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-lg">
@@ -106,14 +97,67 @@
 
 	<div class="row">
 		<div class="col-xl-3 col-lg-5">
+
+
+	{{-- <div class="card">
+
+		<h5 class="card-header text-uppercase">
+			<i class="mdi mdi-briefcase mr-1"></i>
+			Experience
+		</h5>
+
+		<div class="card-body">
+			<div class="timeline-alt pb-0">
+				<div class="timeline-item">
+					<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
+					<div class="timeline-item-info">
+						<h5 class="mt-0 mb-1">Lead designer / Developer</h5>
+						<p class="font-14">websitename.com <span class="ml-2 font-12">Year: 2015 - 18</span></p>
+						<p class="text-muted mt-2 mb-0 pb-3">Everyone realizes why a new common language
+							would be desirable: one could refuse to pay expensive translators.
+							To achieve this, it would be necessary to have uniform grammar,
+							pronunciation and more common words.</p>
+					</div>
+				</div>
+
+				<div class="timeline-item">
+					<i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+					<div class="timeline-item-info">
+						<h5 class="mt-0 mb-1">Senior Graphic Designer</h5>
+						<p class="font-14">Software Inc. <span class="ml-2 font-12">Year: 2012 - 15</span></p>
+						<p class="text-muted mt-2 mb-0 pb-3">If several languages coalesce, the grammar
+							of the resulting language is more simple and regular than that of
+							the individual languages. The new common language will be more
+							simple and regular than the existing European languages.</p>
+
+					</div>
+				</div>
+
+				<div class="timeline-item">
+					<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
+					<div class="timeline-item-info">
+						<h5 class="mt-0 mb-1">Graphic Designer</h5>
+						<p class="font-14">Coderthemes Design LLP <span class="ml-2 font-12">Year: 2010 - 12</span></p>
+						<p class="text-muted mt-2 mb-0 pb-2">The European languages are members of
+							the same family. Their separate existence is a myth. For science
+							music sport etc, Europe uses the same vocabulary. The languages
+							only differ in their grammar their pronunciation.</p>
+					</div>
+				</div>
+
+			</div>
+			<!-- end timeline -->  
+		</div>
+	</div> --}}
+
 			<div class="card text-center">
 				<div class="card-body">
 					<img src="{{ asset('storage/courses/'.$course->id.'/cover/'.$course->cover) }}" class="img-fluid"
 					alt="profile-image">
-
+	
 					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
 					<p class="text-muted font-14">Course</p>
-
+	
 					<div class="text-left mt-3">
 						<h4 class="font-13 text-uppercase">About Course :</h4>
 						<p class="text-muted font-13 mb-3">
@@ -152,9 +196,13 @@
 							</span>
 						</p>
 					</div>
-
+	
 				</div> <!-- end card-body -->
 			</div> <!-- end course info card -->
+
+
+	
+
 
 		</div> <!-- end col-->
 
@@ -165,17 +213,17 @@
 					<!-- Tab Buttons -->
 					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
 						<li class="nav-item">
-						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{-- {{ $materialsActive }} --}}">
+						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $materialsActive }}">
 								Μαθήματα
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{-- {{ $settingsActive }} --}}">
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $settingsActive }}">
 								Επεξεργασία
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#students" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+							<a href="#students" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
 								Μαθητές
 							</a>
 						</li>
@@ -183,7 +231,7 @@
 
 					<div class="tab-content">
 						<!-- Materials table tab-->
-						<div class="tab-pane {{-- {{ $materialsActive }} --}} table-cnt" id="materials">
+						<div class="tab-pane {{ $materialsActive }} table-cnt" id="materials">
 
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
@@ -238,7 +286,7 @@
 						<!-- end about me section content -->
 
 						<!-- Course edit form tab-pane -->
-						<div class="tab-pane {{-- {{ $settingsActive }} --}}" id="settings">
+						<div class="tab-pane {{ $settingsActive }}" id="settings">
 							<form action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
 								
 								@csrf
@@ -318,7 +366,7 @@
 						</div><!-- end tab-pane -->
 						<!-- end settings content-->
 
-						<div class="tab-pane active table-cnt" id="students">
+						<div class="tab-pane table-cnt" id="students">
 
 							<table id="students-list" class="table w-100 nowrap js-remove-table-classes">
 								<thead>
@@ -371,6 +419,58 @@
 				</div> <!-- end card body -->
 			</div> <!-- end card -->
 		</div> <!-- end col -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</div>
 @endsection
 

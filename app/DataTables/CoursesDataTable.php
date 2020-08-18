@@ -47,6 +47,7 @@ class CoursesDataTable extends DataTable
 
 			})
 			->rawColumns(['action', 'active'])
+			->setRowClass("test")
 			->setRowAttr([ 'data-course-id' => function($data) {
 
 				return  $data->id;
