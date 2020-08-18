@@ -78,6 +78,6 @@
     <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
 
     <x-routes></x-routes>
-    <script src="{{ mix('js/dashboard/users/userMain.js') }}"></script>
+    <script src="{{ asset('js/dashboard/users/userMain.js') }}"></script>
 
 @endsection

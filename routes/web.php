@@ -141,3 +141,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 //!######################################################
 
 Route::get('/courses/{user}', 'UserController@userCourses');
+Route::get('/courses/course/{course}', 'CourseController@userCourse');

@@ -133,5 +133,11 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         //
-    }
+	}
+	
+	public function userCourse( Course $course ) {
+
+		return view('courses/courseProfile')->withCourse( $course );
+
+	}
 }
