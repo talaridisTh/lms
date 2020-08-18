@@ -61,4 +61,16 @@ class Course extends Model
 		return $materials;
 	}
 
+	public static function courseAuthors( $lessonIds ) {
+
+		$authors = DB::table('material_user')
+			->join('users', 'material_user.user_id', '=', 'users.id')
+			->whereIn('material_user.material_id', $lessonIds)
+			->select('users.first_name', 'users.last_name')
+			->orderBy('users.last_name')
+			->get();
+
+		return $authors;
+	}
+
 }

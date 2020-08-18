@@ -492,9 +492,9 @@ select.is-invalid {
 
 .add-content-cell {
   padding: 0 !important;
+  margin-top: 8px;
   position: absolute;
   left: 50%;
-  top: 16%;
 }
 
 /*!

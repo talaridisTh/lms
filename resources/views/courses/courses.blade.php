@@ -58,7 +58,7 @@
 
 				@endforeach
 
-				<div class="col-md-6 col-xl-3">
+				{{-- <div class="col-md-6 col-xl-3">
 					<!-- project card -->
 					<div class="card d-block">
 						<!-- project-thumbnail -->
@@ -208,7 +208,7 @@
 							</div><!-- /.progress -->
 						</div> <!-- end card-body-->
 					</div> <!-- end card-->
-				</div> <!-- end col -->
+				</div> <!-- end col --> --}}
 			</div>
 			<!-- end row-->
 

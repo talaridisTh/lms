@@ -137,7 +137,22 @@ class CourseController extends Controller
 	
 	public function userCourse( Course $course ) {
 
-		return view('courses/courseProfile')->withCourse( $course );
+		$materials = $course->materials;
+		$materialId = [];
 
+		foreach ($materials as $material) {
+			array_push( $materialId, $material['id'] );
+		}
+
+		$authors = Course::courseAuthors( $materialId );
+		$materials = $course->materials()->where('course_material.active', 1)->orderBy('priority')->get();
+
+		$data = [
+			'course' => $course,
+			'authors' => $authors,
+			'materials' => $materials
+		];
+
+		return view('courses/courseProfile')->with( $data );
 	}
 }

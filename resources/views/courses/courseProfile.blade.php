@@ -82,6 +82,89 @@
 
 
 
+
+
+
+
+
+
+
+
+
+	<div class="row">
+		<div class="col-lg-4">
+			<!-- Personal-Information -->
+			<div class="card">
+				<div class="card-body">
+					<h4 class="header-title mt-0 mb-3">Εισηγητές</h4>
+
+					<ul>
+						@foreach ( $authors as $author )
+							<li class="js-authors">{{ $author->first_name }} {{ $author->last_name }}</li>
+						@endforeach
+
+						<li id="more-authors" 
+							data-shown="false" 
+							class="d-none mt-1 list-unstyled font-weight-bold cursor-pointer text-hover-underline">
+							Περρισότερα...
+						</li>
+					</ul>
+				</div>
+			</div>
+			<!-- Personal-Information -->
+
+		</div> <!-- end col-->
+
+		<div class="col-lg-8">
+
+			<!-- Chart-->
+			<div class="card">
+				<div class="card-body">
+					<h4 class="header-title">Μαθήματα</h4>
+					<div class="card-body">
+						<table class="table table-centered mb-0">
+							<tbody>
+								@foreach ($materials as $material)
+									<tr>
+										<td>{{ $material->name}}</td>
+										<td>{{ $material->description}}</td>
+									</tr>
+								@endforeach
+							</tbody>
+						</table>
+																		
+					</div>        
+				</div>
+			</div>
+			<!-- End Chart-->
+
+
+
+		</div>
+		<!-- end col -->
+
+	</div>
+	<!-- end row -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	</div>
 </div>
 
@@ -89,4 +172,35 @@
 
 
 @section("script")
+
+<script>
+	
+	const authors = $('.js-authors');
+
+	if ( authors.length > 3 ) {
+		for ( let i = 3; i < authors.length; i++ ) {
+			authors[i].classList.add('d-none');
+		}
+		const moreAuthors = $('#more-authors')[0];
+		moreAuthors.classList.remove("d-none");
+	}
+
+	$('#more-authors').click( function() {
+		if ( this.dataset.shown == "true") {
+			this.dataset.shown = "false";
+			for ( let i = 3; i < authors.length; i++ ) {
+				authors[i].classList.add('d-none');
+			}
+			this.textContent = "Περισσότερα ..."
+		}
+		else {
+			this.textContent = "Λιγότερα ..."
+			this.dataset.shown = "true";
+			for ( let i = 3; i < authors.length; i++ ) {
+				authors[i].classList.remove('d-none');
+			}
+		}
+	});
+
+</script>
 @endsection

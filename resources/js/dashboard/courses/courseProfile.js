@@ -555,7 +555,7 @@ function setRows() {
 function createRow() {
 
 	let row = document.createElement("tr");
-	row.classList.add("position-relative", "extra-content-row");
+	row.classList.add("extra-content-row");
 
 	row.innerHTML = `
 					<td class='add-content-cell'>
