@@ -47,6 +47,9 @@ Route::get('/partner-links', function (Request $request) {
 
 })->name('link');
 
+//!########################################################
+//! Dashboard routes
+//!########################################################
 Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
@@ -78,50 +81,63 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
 });
 
-//! Ajax Users Datatables
+//! Dashboard Ajax Users Datatables
 Route::post('users/view-users', 'Ajax\UserController@index')->name("index.datatable");
 Route::post('users/view-user', 'Ajax\UserController@show')->name("show.datatable");
 Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->name("courseModal.datatable");
 
-//! Ajax Users CRUD
+//! Dashboard Ajax Users CRUD
 Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
 Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
 Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
 Route::delete('/user/multiple/delete', 'Ajax\UserController@destroyMultiple')->name("destroyMultiple.datatable");
 
 
-//! Ajax Courses Datatables
+//! Dashboard Ajax Courses Datatables
 Route::post( 'courses/courses-datatable', 'Ajax\CourseController@index' );
 Route::post( 'courses/course-materials-datatable', 'Ajax\CourseController@courseMaterials' );
 Route::post( 'courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials' );
 Route::post( 'courses/course-students-datatable', 'Ajax\CourseController@courseStudents' );
+Route::post( 'courses/add-course-students-datatable', 'Ajax\CourseController@addCourseStudents' );
 
-//! Ajax Courses CRUD
+//! Dashboard Ajax Courses CRUD
 Route::delete( 'courses/destroy/{ids}', 'Ajax\CourseController@destroy' );
 Route::patch( 'courses/active', 'Ajax\CourseController@toggleActive' );
 Route::patch( 'courses/priority', 'Ajax\CourseController@changePriority' );
 Route::patch( 'courses/toggle-materials', 'Ajax\CourseController@toggleCourseMaterials' );
 Route::post( 'courses/add-materials', 'Ajax\CourseController@addMaterials' );
 Route::patch( 'courses/remove-materials', 'Ajax\CourseController@removeMaterials' );
+Route::patch( 'courses/add-students', 'Ajax\CourseController@addStudents' );
+Route::patch( 'courses/remove-students', 'Ajax\CourseController@removeStudents' );
 
-//! Ajax Bundles Datatables
+//! Dashboard Ajax Bundles Datatables
 Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );
 Route::post( 'bundles/bundle-courses-datatable', 'Ajax\BundleController@show' );
 Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remainingCourses' );
 
-//! Ajax Bundles CRUD
+//! Dashboard Ajax Bundles CRUD
 Route::delete( 'bundles/destroy/{ids}', 'Ajax\BundleController@destroy' );
 Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@update' );
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 
-//! Ajax Materials Datatables
+//! Dashboard Ajax Materials Datatables
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
 
-//! Ajax Materials CRUD
+//! Dashboard Ajax Materials CRUD
 Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );
+
+//!======================================================
+//! 			End Dashboard Routes					|
+//!======================================================
 
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+//!######################################################
+//!					Index User Routes					#
+//!######################################################
+
+Route::get('/courses/{user}', 'UserController@userCourses');

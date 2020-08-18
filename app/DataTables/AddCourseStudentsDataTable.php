@@ -2,16 +2,17 @@
 
 namespace App\DataTables;
 
-use App\Course;
+use App\Role;
 use App\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CoursesDataTable extends DataTable
+class AddCourseStudentsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,38 +20,58 @@ class CoursesDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query, Request $request)
     {
 
-		// dd( Auth::user()->id );
-		// $userId = Auth::user()->id;
-		// $roleId = Auth::user()->roles[0]->id;
+		$query = DB::table('users')
+			->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+			->where('model_has_roles.role_id', 4)
+			->whereNotIn('users.id', function($subquery) use ($request) {
 
-		$query = Course::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
+				$subquery->select('user_id')
+					->from('course_user')
+					->where('course_id', $request->courseId)
+					->get();
 
-        return datatables()
-            ->eloquent($query)
-			->addColumn('action', function($data) {
-				
+			})
+			->select(
+				'users.id as userId',
+				'first_name',
+				'last_name',
+				'email')
+			->get();
+
+			/* $query = Role::find(4)->users
+				->whereNotIn( 'model_id', function($subquery) use ($request) {
+
+					$subquery->select('user_id')
+						->from('course_user')
+						->where('course_id', $request->courseId )
+						->get();
+
+				}); */
+
+        return datatables()::of($query)
+            ->addColumn('action', function($data) {
+
+				$pattern = "/[-!$%^&*(@)_+|~=`{}\[\]:\";'<>?,.\/]/m";
+				$slug = preg_replace($pattern, "", $data->email);
+
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-course-id='$data->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
-							<label for='$data->slug'></label>
+							<input class='js-new-user-checkbox' data-user-id='$data->userId' type='checkbox' id='$slug' autocomplete='off'>
+							<label for='$slug'></label>
 						</div>";
 
 			})
-			->editColumn('active', function($data) {
+            ->addColumn('addBtn', function($data) {
 
-				$active = $data->active == 0 ? "" : "checked";
-
-				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
-					<label for='$data->slug-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+				return "<button type='button' class='js-add-student-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
 
 			})
-			->rawColumns(['action', 'active'])
-			->setRowClass("test")
-			->setRowAttr([ 'data-course-id' => function($data) {
+			->rawColumns(['action', 'addBtn'])
+			->setRowAttr([ 'data-student-id' => function($data) {
 
-				return  $data->id;
+				return  $data->userId;
 
 			}]);
     }
@@ -58,10 +79,10 @@ class CoursesDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Course $model
+     * @param \User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(User $model)
     {
         return $model->newQuery();
     }
@@ -74,7 +95,7 @@ class CoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('courses-table')
+                    ->setTableId('addcoursestudentsdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -101,8 +122,8 @@ class CoursesDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('name'),
-            Column::make('active'),
+            Column::make('id'),
+            Column::make('add your columns'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];
@@ -115,6 +136,6 @@ class CoursesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Courses_' . date('YmdHis');
+        return 'AddCourseStudents_' . date('YmdHis');
     }
 }

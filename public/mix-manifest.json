@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "/js/app.js": "/js/app.js?id=6d7976811962a5f4febc",
     "/css/app.css": "/css/app.css?id=b702be23310986fa5cbd",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=4c83342fdd514767ec44",
@@ -9,4 +10,16 @@
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=4762dda613c557e902a9",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=d6d8832d72fa7c7a6eb2",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=e515da187132d16053cb"
+=======
+    "/js/app.js": "/js/app.js?id=8cb69bd25bf797ae2993",
+    "/css/app.css": "/css/app.css?id=5cf7292be8ada1e3b676",
+    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=dd17509c7cb8446437bd",
+    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=1d8d1b63cf5f74c9ccdc",
+    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=605dd22f1a9bf325ae5f",
+    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=853273f99216a807d470",
+    "/js/dashboard/main.js": "/js/dashboard/main.js?id=c0b9b9a35ed2b7e2a3ee",
+    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=99c87d9e4c2de8850943",
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=5fc369648af3c42d97ab",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=e25e48a9a79704c6f435"
+>>>>>>> 2707de3596193b072ecb37da37c9cc74288fcacb
 }

@@ -1,13 +1,46 @@
 import utilities from '../main';
-import { parseInt } from 'lodash';
 
 //! GLOBAL VARIABLES
+//!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
 const totalLessons = $('#total-lessons')[0];
 const totalAdditions = $('#total-additions')[0];
 const updatedAt = $("#last-update-cnt")[0];
 
+//! Prototype Additions
+//!============================================================
+
+Element.prototype.appendAfter = function (element) {
+
+	element.parentNode.insertBefore(this, element.nextSibling);
+
+},false;
+
 //! EventListerners
+//!============================================================
+
+$("#add-multiple-students-btn").click( function() {
+	let newStudents = $(".js-new-user-checkbox:checked");
+	let studentIds = [];
+
+	for ( let i = 0; i < newStudents.length; i++ ) {
+		studentIds.push( newStudents[i].dataset.userId );
+	}
+
+	addStudent(studentIds);
+})
+
+$("#remove-selected-students-btn").click( function() {
+
+	let studentsCheckbox = $(".js-active-student-checkbox:checked");
+	let studentIds = [];
+
+	for ( let i = 0; i < studentsCheckbox.length; i++ ) {
+		studentIds.push( studentsCheckbox[i].dataset.userId );
+	}
+
+	removeStudent(studentIds);
+})
 
 $("#course-cover-input").change( function() {
 	let label = $("#course-cover-label")[0];
@@ -96,7 +129,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		}
 	},
 	columns: [
-		{ data: 'action', name: 'action', orderable: false, width: "5%" },
+		{ data: 'action', name: 'action', orderable: false },
 		{ data: 'name', name: 'name', className: "js-link cursor-pointer" },
 		{ data: 'active', name: 'active' },
 		{ data: 'priority', name: 'priority',  width: "5%", searchable: false },
@@ -127,6 +160,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		activeMaterialsCheckboxToggle();
 		toggleCourseMaterial()
 		sortInputsInit();
+		setRows();
 	},
 	
 });
@@ -190,9 +224,55 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name' },
-		{data: 'last_name', name: 'last_name' },
-		{data: 'btn', name: 'btn', orderable: false, searchable: false },
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
+		{data: 'btn', width: "5%", orderable: false, searchable: false },
+	],
+	language:{
+		emptyTable: 		"Δεν υπάρχουν εγγραφές",
+		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+		lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+		loadingRecords: 	"Φόρτωση ...",
+		processing: 		"Επεξεργασία ...",
+		search: 			"Αναζήτηση: ",
+		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+		paginate:{
+			previous:"<i class='mdi mdi-chevron-left'>",
+			next:"<i class='mdi mdi-chevron-right'>"}
+	},
+	drawCallback:function(){
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-student-link");
+		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-student-link");
+
+		/* addMaterialsEventListerner();
+		remainingsCheckboxes(); */
+		removeStudentBtnInit();
+		studentLinkInit();
+	},
+	
+});
+
+const addCourseStudentsDatatable = $("#add-students-list").DataTable({
+	order: [2, "asc"],
+	processing: true,
+	serverSide: true,
+	ajax: {
+		url: "/courses/add-course-students-datatable",
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		type: "post",
+		data: {
+			courseId: courseId
+		}
+	},
+	columns: [
+		{data: 'action', width: "5%", orderable: false, searchable: false},
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
+		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
 		emptyTable: 		"Δεν υπάρχουν εγγραφές",
@@ -214,8 +294,8 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
-		/* addMaterialsEventListerner();
-		remainingsCheckboxes(); */
+		addStudentBtnInit();
+		studentLinkInit();
 	},
 	
 });
@@ -223,8 +303,51 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 
 //! DataTables function / EventListener
 
+function studentLinkInit() {
+
+	let link = $(".js-student-link");
+
+	link.unbind();
+	link.click( function() {
+
+		let studentId = this.parentElement.dataset.studentId
+		
+		window.location = `/dashboard/users/${ studentId }`;
+	});
+}
+
+function removeStudentBtnInit() {
+
+	let removeStudentBtn = $(".js-remove-student");
+	
+	removeStudentBtn.unbind();
+	removeStudentBtn.click( function() {
+		
+		let id = [ this.dataset.userId ];
+
+		removeStudent( id ); 
+	})
+}
+
+function addStudentBtnInit() {
+
+	let addStudentBtn = $(".js-add-student-btn");
+	
+	addStudentBtn.unbind();
+	addStudentBtn.click( function() {
+		
+		let userId = [ this.dataset.userId ];
+
+		addStudent( userId );
+	})
+}
+
 function addMaterialsEventListerner() {
-	$('.js-add-material-btn').click( function() {
+
+	let addMaterialBtn = $('.js-add-material-btn');
+	
+	addMaterialBtn.unbind();
+	addMaterialBtn.click( function() {
 		const materialId = [this.dataset.materialId];
 		const lessonsCount = this.dataset.materialType == "Lesson" ? 1 : 0;
 		const additionsCount = this.dataset.materialType != "Lesson" ? 1 : 0;
@@ -334,6 +457,46 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
 }
 
+function addStudent( studentIds ) {
+	axios.patch( "/courses/add-students", {
+		courseId,
+		studentIds
+	})
+	.then( (res) => {
+
+		let message = studentIds.length == 1 ? "Ένας μαθητής προστέθηκε" : `${studentIds.length} μαθητές προστέθηκαν`;
+		utilities.toastAlert( 'success', message );
+		courseStudentsDatatable.ajax.reload();
+		addCourseStudentsDatatable.ajax.reload();
+
+	})
+	.catch( (err) => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+
+	})
+}
+
+function removeStudent( studentIds ) {
+	axios.patch( "/courses/remove-students", {
+		courseId,
+		studentIds
+	})
+	.then( (res) => {
+
+		let message = studentIds.length == 1 ? "Ένας μαθητής αφαιρέθηκε" : `${studentIds.length} μαθητές αφαιρέθηκαν`;
+		utilities.toastAlert( 'success', message );
+		courseStudentsDatatable.ajax.reload();
+		addCourseStudentsDatatable.ajax.reload();
+
+	})
+	.catch( (err) => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+
+	})
+}
+
 function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	axios.post( "/courses/add-materials", {
 		courseId,
@@ -375,4 +538,33 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
+}
+
+function setRows() {
+	let materialRows = $("#course-materials-list > tbody > tr");
+	
+	for ( let i = 0; i < materialRows.length; i++ ) {
+		
+		let newRow = createRow();
+		newRow.appendAfter(materialRows[i])
+
+	}
+
+}
+
+function createRow() {
+
+	let row = document.createElement("tr");
+	row.classList.add("position-relative", "extra-content-row");
+
+	row.innerHTML = `
+					<td class='add-content-cell'>
+						<button type="button" class="btn btn-primary btn-sm">
+							<i class='mdi mdi-sticker-plus-outline mr-2'></i>
+							Προσθήκη Υλικού
+						</button>
+					</td>
+					`
+
+	return row;
 }

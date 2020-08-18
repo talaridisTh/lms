@@ -387,7 +387,7 @@ div.dt-buttons a.btn.processing:after {
   padding: 1.3rem 0.95rem 0.3rem;
 }
 
-.tables-hover-effect > tr:hover {
+.tables-hover-effect > tr:hover:not(.extra-content-row) {
   background-color: #3a444e;
 }
 
@@ -480,6 +480,21 @@ div.dt-buttons a.btn.processing:after {
 
 select.is-invalid {
   background-position: center right calc(.375em + .9000rem) !important;
+}
+
+#course-materials-list .extra-content-row {
+  height: 50px !important;
+}
+
+#course-materials-list > tbody > tr:not(.extra-content-row) td {
+  border-bottom: 1px solid #464f5b;
+}
+
+.add-content-cell {
+  padding: 0 !important;
+  position: absolute;
+  left: 50%;
+  top: 16%;
 }
 
 /*!
