@@ -212,8 +212,8 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name' },
-		{data: 'last_name', name: 'last_name' },
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
@@ -233,11 +233,13 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
-		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-student-link");
+		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-student-link");
 
 		/* addMaterialsEventListerner();
 		remainingsCheckboxes(); */
+		removeStudentBtnInit();
+		studentLinkInit();
 	},
 	
 });
@@ -256,8 +258,8 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name' },
-		{data: 'last_name', name: 'last_name' },
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
@@ -281,7 +283,7 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
 		addStudentBtnInit();
-		removeStudentBtnInit();
+		studentLinkInit();
 	},
 	
 });
@@ -289,9 +291,25 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 
 //! DataTables function / EventListener
 
+function studentLinkInit() {
+
+	let link = $(".js-student-link");
+
+	link.unbind();
+	link.click( function() {
+
+		let studentId = this.parentElement.dataset.studentId
+		
+		window.location = `/dashboard/users/${ studentId }`;
+	});
+}
+
 function removeStudentBtnInit() {
 
-	$(".js-remove-student").click( function() {
+	let removeStudentBtn = $(".js-remove-student");
+	
+	removeStudentBtn.unbind();
+	removeStudentBtn.click( function() {
 		
 		let id = [ this.dataset.userId ];
 
@@ -301,7 +319,10 @@ function removeStudentBtnInit() {
 
 function addStudentBtnInit() {
 
-	$(".js-add-student-btn").click( function() {
+	let addStudentBtn = $(".js-add-student-btn");
+	
+	addStudentBtn.unbind();
+	addStudentBtn.click( function() {
 		
 		let userId = [ this.dataset.userId ];
 
@@ -310,7 +331,11 @@ function addStudentBtnInit() {
 }
 
 function addMaterialsEventListerner() {
-	$('.js-add-material-btn').click( function() {
+
+	let addMaterialBtn = $('.js-add-material-btn');
+	
+	addMaterialBtn.unbind();
+	addMaterialBtn.click( function() {
 		const materialId = [this.dataset.materialId];
 		const lessonsCount = this.dataset.materialType == "Lesson" ? 1 : 0;
 		const additionsCount = this.dataset.materialType != "Lesson" ? 1 : 0;

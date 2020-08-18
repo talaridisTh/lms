@@ -68,7 +68,12 @@ class AddCourseStudentsDataTable extends DataTable
 				return "<button type='button' class='js-add-student-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
 
 			})
-			->rawColumns(['action', 'addBtn']);
+			->rawColumns(['action', 'addBtn'])
+			->setRowAttr([ 'data-student-id' => function($data) {
+
+				return  $data->userId;
+
+			}]);
     }
 
     /**

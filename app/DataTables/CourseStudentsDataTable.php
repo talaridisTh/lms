@@ -54,6 +54,11 @@ class CourseStudentsDataTable extends DataTable
 				return "<i class='js-remove-student h3 pt-1 uil uil-trash-alt cursor-pointer' data-user-id='$data->id'></i>";
 				
 			})
+			->setRowAttr([ 'data-student-id' => function($data) {
+
+				return  $data->id;
+
+			}])
 			->rawColumns(['action', 'btn']);
     }
 
