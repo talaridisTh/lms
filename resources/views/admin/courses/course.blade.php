@@ -11,15 +11,15 @@
 
 @section('content')
 
-	<div id="add-students-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-students-modalLabel" aria-hidden="true">
+	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header modal-colored-header bg-primary">
-					<h4 class="modal-title" id="add-students-modalLabel">Προσθήκη Μαθημάτων</h4>
+					<h4 class="modal-title" id="add-user-modalLabel">Προσθήκη Χρηστών</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body table-cnt">
-					<table id="add-students-list" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+					<table id="add-users-list" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
 						<thead>
 							<tr>
 								<th class="select-all w-5">
@@ -47,7 +47,7 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button id="add-multiple-students-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+					<button id="add-multiple-users-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</div>
 			</div><!-- /.modal-content -->
@@ -102,7 +102,7 @@
 
 			<div class="card text-center">
 				<div class="card-body">
-					<img src="{{ asset('storage/courses/'.$course->id.'/cover/'.$course->cover) }}" class="img-fluid"
+					<img src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' class="img-fluid"
 					alt="profile-image">
 	
 					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
@@ -163,17 +163,17 @@
 					<!-- Tab Buttons -->
 					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
 						<li class="nav-item">
-						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{-- {{ $materialsActive }} --}}">
+						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $materialsActive }}">
 								Μαθήματα
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{-- {{ $settingsActive }} --}}">
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $settingsActive }}">
 								Επεξεργασία
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#students" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+							<a href="#users" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
 								Χρήστες
 							</a>
 						</li>
@@ -181,7 +181,7 @@
 
 					<div class="tab-content">
 						<!-- Materials table tab-->
-						<div class="tab-pane {{-- {{ $materialsActive }} --}} table-cnt" id="materials">
+						<div class="tab-pane {{ $materialsActive }} table-cnt" id="materials">
 
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
@@ -236,7 +236,7 @@
 						<!-- end about me section content -->
 
 						<!-- Course edit form tab-pane -->
-						<div class="tab-pane {{-- {{ $settingsActive }} --}}" id="settings">
+						<div class="tab-pane {{ $settingsActive }}" id="settings">
 							<form action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
 								
 								@csrf
@@ -316,9 +316,9 @@
 						</div><!-- end tab-pane -->
 						<!-- end settings content-->
 
-						<div class="tab-pane table-cnt active" id="students">
+						<div class="tab-pane table-cnt" id="users">
 
-							<table id="students-list" class="table w-100 nowrap js-remove-table-classes">
+							<table id="active-users-list" class="table w-100 nowrap js-remove-table-classes">
 								<thead>
 									<tr>
 										<th class="text-center">
@@ -349,7 +349,7 @@
 								<div class="col-sm-1">
 								</div>
 								<div class="col-sm-11 d-flex justify-content-end">
-									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-students-modal">
+									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user-modal">
 										<i class="mdi mdi-account-multiple-plus mr-2"></i>
 										Προσθήκη Χρηστών
 									</button>
@@ -358,12 +358,12 @@
 											Επιλογές
 										</button>
 										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-											<a id="remove-selected-students-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+											<a id="remove-selected-users-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div><!-- end students tab-pane -->
+						</div><!-- end users tab-pane -->
 
 
 					</div> <!-- end tab-content -->
