@@ -34,6 +34,14 @@
             </div>
 
         </div>
+
+        <select id="dropdown1">
+            @foreach(App\User::all() as $user)
+            <option value="Software Engineer">{{$user->fullName}}</option>
+            @endforeach
+        </select>
+
+
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
             <tr>

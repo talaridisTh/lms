@@ -543,12 +543,12 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 function setRows() {
 	let materialRows = $("#course-materials-list > tbody > tr");
 
-	for ( let i = 0; i < materialRows.length; i++ ) {
-	
-		let newRow = createRow();
-		newRow.appendAfter(materialRows[i]);
-    
-	}
+	// for ( let i = 0; i < materialRows.length; i++ ) {
+	//
+	// 	let newRow = createRow();
+	// 	newRow.appendAfter(materialRows[i]);
+    //
+	// }
 
 }
 

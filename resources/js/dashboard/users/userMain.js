@@ -28,6 +28,8 @@ import utilities from '../main';
             {data: 'activeNum', name: 'activeNum'},
         ],
         language: config.datatable.language,
+
+
         drawCallback: () => {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
             $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
@@ -43,9 +45,12 @@ import utilities from '../main';
     })
 
 
-    $('.dt-buttons').detach().prependTo('.dataTables_length')
+$('#dropdown1').detach().insertAfter('.dataTables_length label')
 
 
+$('#dropdown1').on('change', function () {
+    tables.columns(1).search( this.value ).draw();
+} );
 
 
 

@@ -24,8 +24,8 @@
 				<h4 class="page-title">Profile</h4>
 			</div>
 		</div>
-	</div>     
-	<!-- end page title --> 
+	</div>
+	<!-- end page title -->
 
 
 
@@ -101,10 +101,10 @@
 					<ul>
 						@foreach ( $authors as $author )
 							<li class="js-authors">{{ $author->first_name }} {{ $author->last_name }}</li>
-						@endforeach
+                            @endforeach
 
-						<li id="more-authors" 
-							data-shown="false" 
+						<li id="more-authors"
+							data-shown="false"
 							class="d-none mt-1 list-unstyled font-weight-bold cursor-pointer text-hover-underline">
 							Περισσότερα...
 						</li>
@@ -132,8 +132,8 @@
 								@endforeach
 							</tbody>
 						</table>
-																		
-					</div>        
+
+					</div>
 				</div>
 			</div>
 			<!-- End Chart-->
@@ -174,7 +174,7 @@
 @section("script")
 
 <script>
-	
+
 	const authors = $('.js-authors');
 
 	if ( authors.length > 3 ) {
