@@ -61,6 +61,7 @@
 @section('scripts')
 	<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 	<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
-	
+	<script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+
 	<script src="{{ asset('js/dashboard/materials/materialsMain.js') }}"></script>
 @endsection

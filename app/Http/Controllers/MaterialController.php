@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Material;
+use App\Topic;
 use Illuminate\Http\Request;
 use App\User;
 
@@ -49,7 +50,14 @@ class MaterialController extends Controller
      */
     public function show(Material $material)
     {
-        return view('admin.materials.material')->with('material', $material);
+		$topics = Topic::all();
+
+		$data = [
+			'material' => $material,
+			'topics' => $topics,
+		];
+
+        return view('admin.materials.material')->with( $data );
     }
 
     /**

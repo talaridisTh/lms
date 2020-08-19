@@ -99,8 +99,10 @@ select.is-invalid {
 }
 
 .add-content-cell {
+	border-top: 0px !important;
 	padding: 0 !important;
-	margin-top: 8px;
+	margin-top: 16px;
 	position: absolute;
 	left: 50%;
+	z-index: 10;
 }

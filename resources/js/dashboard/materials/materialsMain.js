@@ -1,6 +1,8 @@
 import utilities from '../main';
 
-$("#materials-datatable").DataTable({
+const materialsDatatable = $("#materials-datatable").DataTable({
+	dom: 'lfrtip',
+
 	order: [1, "asc"],
 	processing: true,
 	serverSide: true,
@@ -37,6 +39,7 @@ $("#materials-datatable").DataTable({
 		toggleInit();
 	}
 });
+
 
 function toggleInit() {
 	$(".js-toggle").change( function() {

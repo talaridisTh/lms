@@ -223,7 +223,7 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', width: "5%", orderable: false, searchable: false},
+		{data: 'action', width: "5%", className: "text-center", orderable: false, searchable: false},
 		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
 		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
@@ -543,12 +543,12 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 function setRows() {
 	let materialRows = $("#course-materials-list > tbody > tr");
 
-	// for ( let i = 0; i < materialRows.length; i++ ) {
-	//
-	// 	let newRow = createRow();
-	// 	newRow.appendAfter(materialRows[i])
-    //
-	// }
+	for ( let i = 0; i < materialRows.length; i++ ) {
+	
+		let newRow = createRow();
+		newRow.appendAfter(materialRows[i]);
+    
+	}
 
 }
 
@@ -559,10 +559,10 @@ function createRow() {
 
 	row.innerHTML = `
 					<td class='add-content-cell'>
-						<button type="button" class="btn btn-primary btn-sm">
+						<a class="text-secondary" href="#">
 							<i class='mdi mdi-sticker-plus-outline mr-2'></i>
 							Προσθήκη Υλικού
-						</button>
+						</a>
 					</td>
 					`
 

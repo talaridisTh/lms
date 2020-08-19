@@ -106,7 +106,7 @@
 						<li id="more-authors" 
 							data-shown="false" 
 							class="d-none mt-1 list-unstyled font-weight-bold cursor-pointer text-hover-underline">
-							Περρισότερα...
+							Περισσότερα...
 						</li>
 					</ul>
 				</div>

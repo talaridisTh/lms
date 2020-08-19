@@ -98,58 +98,6 @@
 	<div class="row">
 		<div class="col-xl-3 col-lg-5">
 
-
-	{{-- <div class="card">
-
-		<h5 class="card-header text-uppercase">
-			<i class="mdi mdi-briefcase mr-1"></i>
-			Experience
-		</h5>
-
-		<div class="card-body">
-			<div class="timeline-alt pb-0">
-				<div class="timeline-item">
-					<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
-					<div class="timeline-item-info">
-						<h5 class="mt-0 mb-1">Lead designer / Developer</h5>
-						<p class="font-14">websitename.com <span class="ml-2 font-12">Year: 2015 - 18</span></p>
-						<p class="text-muted mt-2 mb-0 pb-3">Everyone realizes why a new common language
-							would be desirable: one could refuse to pay expensive translators.
-							To achieve this, it would be necessary to have uniform grammar,
-							pronunciation and more common words.</p>
-					</div>
-				</div>
-
-				<div class="timeline-item">
-					<i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
-					<div class="timeline-item-info">
-						<h5 class="mt-0 mb-1">Senior Graphic Designer</h5>
-						<p class="font-14">Software Inc. <span class="ml-2 font-12">Year: 2012 - 15</span></p>
-						<p class="text-muted mt-2 mb-0 pb-3">If several languages coalesce, the grammar
-							of the resulting language is more simple and regular than that of
-							the individual languages. The new common language will be more
-							simple and regular than the existing European languages.</p>
-
-					</div>
-				</div>
-
-				<div class="timeline-item">
-					<i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
-					<div class="timeline-item-info">
-						<h5 class="mt-0 mb-1">Graphic Designer</h5>
-						<p class="font-14">Coderthemes Design LLP <span class="ml-2 font-12">Year: 2010 - 12</span></p>
-						<p class="text-muted mt-2 mb-0 pb-2">The European languages are members of
-							the same family. Their separate existence is a myth. For science
-							music sport etc, Europe uses the same vocabulary. The languages
-							only differ in their grammar their pronunciation.</p>
-					</div>
-				</div>
-
-			</div>
-			<!-- end timeline -->  
-		</div>
-	</div> --}}
-
 			<div class="card text-center">
 				<div class="card-body">
 					<img src="{{ asset('storage/courses/'.$course->id.'/cover/'.$course->cover) }}" class="img-fluid"
