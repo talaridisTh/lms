@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AddCourseStudentsDataTable extends DataTable
+class AddCourseUsersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -25,7 +25,7 @@ class AddCourseStudentsDataTable extends DataTable
 
 		$query = DB::table('users')
 			->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-			->where('model_has_roles.role_id', 4)
+			->whereIn('model_has_roles.role_id', [ 2, 4 ])
 			->whereNotIn('users.id', function($subquery) use ($request) {
 
 				$subquery->select('user_id')
@@ -38,7 +38,8 @@ class AddCourseStudentsDataTable extends DataTable
 				'users.id as userId',
 				'first_name',
 				'last_name',
-				'email')
+				'email',
+				'model_has_roles.role_id')
 			->get();
 
 			/* $query = Role::find(4)->users
@@ -65,11 +66,16 @@ class AddCourseStudentsDataTable extends DataTable
 			})
             ->addColumn('addBtn', function($data) {
 
-				return "<button type='button' class='js-add-student-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
+				return "<button type='button' class='js-add-user-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
+
+			})
+			->addColumn('role', function($data) {
+
+				return $data->role_id == 2 ? "Εισηγητής" : "Μαθητής";
 
 			})
 			->rawColumns(['action', 'addBtn'])
-			->setRowAttr([ 'data-student-id' => function($data) {
+			->setRowAttr([ 'data-user-id' => function($data) {
 
 				return  $data->userId;
 

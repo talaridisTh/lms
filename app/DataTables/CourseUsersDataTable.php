@@ -6,13 +6,14 @@ use App\Course;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CourseStudentsDataTable extends DataTable
+class CourseUsersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,19 +24,23 @@ class CourseStudentsDataTable extends DataTable
     public function dataTable( $query, Request $request )
     {
 
-		$query = Course::find( $request->courseId )
+		/* $query = Course::find( $request->courseId )
 			->users()
-			->whereIn( 'users.id', 
-				function($subquery) {
+			->get(); */
 
-					$subquery->select('model_id')
-						->from('model_has_roles')
-						->where('role_id', 4)
-						->get();
 
-				}
+		$query = DB::table("course_user")
+			->join('users', 'course_user.user_id', '=', 'users.id')
+			->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+			->select(
+				'users.id',
+				'users.first_name',
+				'users.last_name',
+				'users.email',
+				'model_has_roles.role_id',
 			)
 			->get();
+
 
         return datatables()::of($query)
             ->addColumn('action', function($data) {
@@ -44,17 +49,22 @@ class CourseStudentsDataTable extends DataTable
 				$slug = preg_replace($pattern, "", $data->email);
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-active-student-checkbox' data-user-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
+							<input class='js-active-user-checkbox' data-user-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
 							<label for='$slug'></label>
 						</div>";
 
 			})
 			->addColumn('btn', function($data) {
 
-				return "<i class='js-remove-student h3 pt-1 uil uil-trash-alt cursor-pointer' data-user-id='$data->id'></i>";
+				return "<i class='js-remove-user h3 pt-1 uil uil-trash-alt cursor-pointer' data-user-id='$data->id'></i>";
 				
 			})
-			->setRowAttr([ 'data-student-id' => function($data) {
+			->addColumn('role', function($data) {
+
+				return $data->role_id == 2 ? "Εισηγητής" : "Μαθητής";
+
+			})
+			->setRowAttr([ 'data-user-id' => function($data) {
 
 				return  $data->id;
 
@@ -81,7 +91,7 @@ class CourseStudentsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('coursestudentsdatatable-table')
+                    ->setTableId('courseusersdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -122,6 +132,6 @@ class CourseStudentsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'CourseStudents_' . date('YmdHis');
+        return 'CourseUsers_' . date('YmdHis');
     }
 }
