@@ -19,27 +19,27 @@ Element.prototype.appendAfter = function (element) {
 //! EventListerners
 //!============================================================
 
-$("#add-multiple-students-btn").click( function() {
-	let newStudents = $(".js-new-user-checkbox:checked");
-	let studentIds = [];
+$("#add-multiple-users-btn").click( function() {
+	let newUsers = $(".js-new-user-checkbox:checked");
+	let userIds = [];
 
-	for ( let i = 0; i < newStudents.length; i++ ) {
-		studentIds.push( newStudents[i].dataset.userId );
+	for ( let i = 0; i < newUsers.length; i++ ) {
+		userIds.push( newUsers[i].dataset.userId );
 	}
 
-	addStudent(studentIds);
+	addUsers(userIds);
 })
 
-$("#remove-selected-students-btn").click( function() {
+$("#remove-selected-users-btn").click( function() {
 
-	let studentsCheckbox = $(".js-active-student-checkbox:checked");
-	let studentIds = [];
+	let usersCheckbox = $(".js-active-user-checkbox:checked");
+	let userIds = [];
 
-	for ( let i = 0; i < studentsCheckbox.length; i++ ) {
-		studentIds.push( studentsCheckbox[i].dataset.userId );
+	for ( let i = 0; i < usersCheckbox.length; i++ ) {
+		userIds.push( usersCheckbox[i].dataset.userId );
 	}
 
-	removeStudent(studentIds);
+	removeUsers(userIds);
 })
 
 $("#course-cover-input").change( function() {
@@ -113,9 +113,10 @@ $("#all-active-materials-checkbox").change( function() {
 	utilities.minorCheckboxSwitcher( this, checkboxes )
 
 });
-//! EventListerners /end
 
-//! Datatables
+//!##################################################
+//! 			Datatables Initialization			#
+//!##################################################
 const courseMaterialsTable = $("#course-materials-list").DataTable({
 	order: [3, "asc"],
 	processing: true,
@@ -141,10 +142,11 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		emptyTable: 		"Δεν υπάρχουν εγγραφές",
 		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
 		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+		lengthMenu: 		"_MENU_",
 		loadingRecords: 	"Φόρτωση ...",
 		processing: 		"Επεξεργασία ...",
-		search: 			"Αναζήτηση: ",
+		search: 			"",
+		searchPlaceholder: 	"Αναζήτηση... ",
 		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
 		paginate:{
 			previous:"<i class='mdi mdi-chevron-left'>",
@@ -188,10 +190,11 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		emptyTable: 		"Δεν υπάρχουν εγγραφές",
 		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
 		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+		lengthMenu: 		"_MENU_",
 		loadingRecords: 	"Φόρτωση ...",
 		processing: 		"Επεξεργασία ...",
-		search: 			"Αναζήτηση: ",
+		search: 			"",
+		searchPlaceholder: 	"Αναζήτηση... ",
 		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
 		paginate:{
 			previous:"<i class='mdi mdi-chevron-left'>",
@@ -210,7 +213,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 
 });
 
-const courseStudentsDatatable = $("#students-list").DataTable({
+const courseUsersDatatable = $("#active-users-list").DataTable({
 	order: [2, "asc"],
 	processing: true,
 	serverSide: true,
@@ -224,18 +227,20 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", className: "text-center", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
-		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-user-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-user-link" },
+		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
 		emptyTable: 		"Δεν υπάρχουν εγγραφές",
 		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
 		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+		lengthMenu: 		"_MENU_",
 		loadingRecords: 	"Φόρτωση ...",
 		processing: 		"Επεξεργασία ...",
-		search: 			"Αναζήτηση: ",
+		search: 			"",
+		searchPlaceholder: 	"Αναζήτηση... ",
 		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
 		paginate:{
 			previous:"<i class='mdi mdi-chevron-left'>",
@@ -245,18 +250,16 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-student-link");
-		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-student-link");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-user-link");
+		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-user-link");
 
-		/* addMaterialsEventListerner();
-		remainingsCheckboxes(); */
-		removeStudentBtnInit();
-		studentLinkInit();
+		removeUserBtnInit();
+		// studentLinkInit();
 	},
 
 });
 
-const addCourseStudentsDatatable = $("#add-students-list").DataTable({
+const addCourseUsersDatatable = $("#add-users-list").DataTable({
 	order: [2, "asc"],
 	processing: true,
 	serverSide: true,
@@ -270,18 +273,20 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
-		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-user-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-user-link" },
+		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
 		emptyTable: 		"Δεν υπάρχουν εγγραφές",
 		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
 		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"Αποτελέσματα ανα σελίδα: _MENU_",
+		lengthMenu: 		"_MENU_",
 		loadingRecords: 	"Φόρτωση ...",
 		processing: 		"Επεξεργασία ...",
-		search: 			"Αναζήτηση: ",
+		search: 			"",
+		searchPlaceholder: 	"Αναζήτηση... ",
 		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
 		paginate:{
 			previous:"<i class='mdi mdi-chevron-left'>",
@@ -294,51 +299,90 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
-		addStudentBtnInit();
-		studentLinkInit();
+		adduserBtnInit();
+		userLinkInit();
 	},
 
 });
-//! DataTables /end
+
+//!######################################
+//! 		Datatable Filters			#
+//!######################################
+
+//* active users table filters
+let activeUserslistLength = $('#active-users-list_length > label');
+let activeUsersFilter = createRoleSelect();
+
+activeUserslistLength.append( activeUsersFilter );
+activeUsersFilter.addEventListener('change', function () {
+	
+	courseUsersDatatable.columns(3).search( this.value ).draw();
+	
+});
+
+//* add new users table filters
+let addUsersListLength = $('#add-users-list_length > label');
+let addUsersFilter = createRoleSelect();
+
+addUsersListLength.append(addUsersFilter);
+
+addUsersFilter.addEventListener('change', function () {
+	
+	addCourseUsersDatatable.columns(3).search( this.value ).draw();
+	
+});
 
 //! DataTables function / EventListener
 
-function studentLinkInit() {
+function createRoleSelect() {
+	const selectElm = document.createElement("select");
+	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
 
-	let link = $(".js-student-link");
+	selectElm.innerHTML = `
+		<option value="">Όλες οι ιδιότητες</option>
+		<option value="Εισηγητής">Εισηγητές</option>
+		<option value="Μαθητής">Μαθητές</option>
+	`;
+	
+	return selectElm;
+}
+
+function userLinkInit() {
+
+	let link = $(".js-user-link");
 
 	link.unbind();
 	link.click( function() {
 
-		let studentId = this.parentElement.dataset.studentId
+		let userId = this.parentElement.dataset.userId
 
-		window.location = `/dashboard/users/${ studentId }`;
+		window.location = `/dashboard/users/${ userId }`;
 	});
 }
 
-function removeStudentBtnInit() {
+function removeUserBtnInit() {
 
-	let removeStudentBtn = $(".js-remove-student");
+	let removeUserBtn = $(".js-remove-user");
 
-	removeStudentBtn.unbind();
-	removeStudentBtn.click( function() {
+	removeUserBtn.unbind();
+	removeUserBtn.click( function() {
 
 		let id = [ this.dataset.userId ];
 
-		removeStudent( id );
+		removeUsers( id );
 	})
 }
 
-function addStudentBtnInit() {
+function adduserBtnInit() {
 
-	let addStudentBtn = $(".js-add-student-btn");
+	let addUserBtn = $(".js-add-user-btn");
 
-	addStudentBtn.unbind();
-	addStudentBtn.click( function() {
+	addUserBtn.unbind();
+	addUserBtn.click( function() {
 
 		let userId = [ this.dataset.userId ];
 
-		addStudent( userId );
+		addUsers( userId );
 	})
 }
 
@@ -457,17 +501,17 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
 }
 
-function addStudent( studentIds ) {
+function addUsers( userIds ) {
 	axios.patch( "/courses/add-students", {
 		courseId,
-		studentIds
+		userIds
 	})
 	.then( (res) => {
 
-		let message = studentIds.length == 1 ? "Ένας μαθητής προστέθηκε" : `${studentIds.length} μαθητές προστέθηκαν`;
+		let message = userIds.length == 1 ? "Ένας χρήστης προστέθηκε" : `${userIds.length} χρήστες προστέθηκαν`;
 		utilities.toastAlert( 'success', message );
-		courseStudentsDatatable.ajax.reload();
-		addCourseStudentsDatatable.ajax.reload();
+		courseUsersDatatable.ajax.reload();
+		addCourseUsersDatatable.ajax.reload();
 
 	})
 	.catch( (err) => {
@@ -477,17 +521,17 @@ function addStudent( studentIds ) {
 	})
 }
 
-function removeStudent( studentIds ) {
+function removeUsers( userIds ) {
 	axios.patch( "/courses/remove-students", {
 		courseId,
-		studentIds
+		userIds
 	})
 	.then( (res) => {
 
-		let message = studentIds.length == 1 ? "Ένας μαθητής αφαιρέθηκε" : `${studentIds.length} μαθητές αφαιρέθηκαν`;
+		let message = userIds.length == 1 ? "Ένας χρήστης αφαιρέθηκε" : `${userIds.length} χρήστες αφαιρέθηκαν`;
 		utilities.toastAlert( 'success', message );
-		courseStudentsDatatable.ajax.reload();
-		addCourseStudentsDatatable.ajax.reload();
+		courseUsersDatatable.ajax.reload();
+		addCourseUsersDatatable.ajax.reload();
 
 	})
 	.catch( (err) => {

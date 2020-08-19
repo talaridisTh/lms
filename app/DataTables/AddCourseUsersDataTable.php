@@ -42,16 +42,6 @@ class AddCourseUsersDataTable extends DataTable
 				'model_has_roles.role_id')
 			->get();
 
-			/* $query = Role::find(4)->users
-				->whereNotIn( 'model_id', function($subquery) use ($request) {
-
-					$subquery->select('user_id')
-						->from('course_user')
-						->where('course_id', $request->courseId )
-						->get();
-
-				}); */
-
         return datatables()::of($query)
             ->addColumn('action', function($data) {
 

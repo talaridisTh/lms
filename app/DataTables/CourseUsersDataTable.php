@@ -24,14 +24,10 @@ class CourseUsersDataTable extends DataTable
     public function dataTable( $query, Request $request )
     {
 
-		/* $query = Course::find( $request->courseId )
-			->users()
-			->get(); */
-
-
 		$query = DB::table("course_user")
 			->join('users', 'course_user.user_id', '=', 'users.id')
 			->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+			->where('course_user.course_id', $request->courseId)
 			->select(
 				'users.id',
 				'users.first_name',
