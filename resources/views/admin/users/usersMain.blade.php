@@ -44,6 +44,7 @@
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
+                <th class="text-left">test</th>
             </tr>
             </thead>
             <tbody class="tables-hover-effect">
@@ -57,6 +58,7 @@
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
+                <th class="text-left">test</th>
             </tr>
             </tfoot>
         </table>

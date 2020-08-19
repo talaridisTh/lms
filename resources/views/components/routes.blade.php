@@ -82,7 +82,24 @@
                                     }
                                 }
                             ],
-                        }]
+                        },
+                        {
+                                    className: 'btn-primary px-2 ml-2 border-0',
+                                    titleAttr: 'active',
+                                    text: 'Ενεργοι',
+                                    action: function ( e, dt, node, config ) {
+                                        if (dt.column(7).search() === '1') {
+                                            this.text('Ενεργοι');
+                                            dt.column(7).search(0).draw(true);
+                                        } else {
+                                            this.text('Μη ενεργοι');
+                                            dt.column(7).search(1).draw(true);
+                                        }
+                                    }
+                                },
+
+                            ],
+
         }
     };
 </script>

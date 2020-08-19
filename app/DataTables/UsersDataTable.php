@@ -29,6 +29,10 @@ class UsersDataTable extends DataTable {
 
                 return "{$data->getRoleNames()[0]}";
             })
+            ->addColumn('activeNum', function ($data) {
+
+                return $data->active;
+            })
             ->editColumn('active', function ($data) {
 
                 $active = $data->active == 0 ? "" : "checked";
@@ -40,7 +44,7 @@ class UsersDataTable extends DataTable {
 
                 return "<img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' > ";
             })
-            ->rawColumns(['action', 'active', "avatar"])
+            ->rawColumns(['action', 'active', "avatar","activeNum"])
             ->setRowAttr(['data-user-id' => function ($data) {
 
                 return $data->id;

@@ -1,7 +1,7 @@
 import utilities from '../main';
 
 
-$(document).ready(function() {
+
     const tables = $("#scroll-horizontal-datatable").DataTable({
         processing: true,
         serverSide: true,
@@ -14,7 +14,8 @@ $(document).ready(function() {
         },
         columnDefs: [
             {orderable: false, "targets": [0]},
-            {className: "js-link cursor-pointer", "targets": [0, 1, 2, 3, 4, 6]}
+            {className: "js-link cursor-pointer", "targets": [0, 1, 2, 3, 4, 6]},
+            {  targets: 7, visible: false}
         ],
         columns: [
             {data: "avatar", name: "avatar"},
@@ -24,24 +25,27 @@ $(document).ready(function() {
             {data: "email", name: "email"},
             {data: 'active', name: 'active'},
             {data: 'created_at', name: 'created_at'},
+            {data: 'activeNum', name: 'activeNum'},
         ],
         language: config.datatable.language,
         drawCallback: () => {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
             $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
-            $(".tabletr2 th").removeClass("js-link cursor-pointer");
+            $("thead >tr> th").removeClass("js-link cursor-pointer");
             $("tfoot > tr > th").removeClass("js-link cursor-pointer");
 
             toogleInput();
             routeLink();
         },
 
+
+
     })
 
 
     $('.dt-buttons').detach().prependTo('.dataTables_length')
 
-})
+
 
 
 
@@ -56,6 +60,7 @@ const toogleInput =() => {
                 'active': status,
                 'id': user_id
             })
+            tables.ajax.reload()
             utilities.toastAlert('success',this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε" )
         } catch (err) {
             utilities.toastAlert('error',"Παρουσιάστηκε κάποιο πρόβλημα" )
