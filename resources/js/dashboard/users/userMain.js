@@ -11,7 +11,7 @@ var tables = $("#scroll-horizontal-datatable").DataTable({
         },
         columnDefs: [
             {orderable: false, "targets": [0]},
-            {className: "js-link cursor-pointer", "targets": [ 1, 2, 3, 4, 6]},
+            {className: "js-link cursor-pointer", "targets": [ 1, 2, 3, 4, 5,7]},
             {  targets: 8, visible: false}
         ],
         columns: [
@@ -36,13 +36,12 @@ var tables = $("#scroll-horizontal-datatable").DataTable({
 
             toogleInput();
             routeLink();
+            selectMultipleCheckbox();
         },
 
 
 
     })
-
-
 
 const toogleInput =() => {
     $('.toggle-class').unbind();
@@ -74,8 +73,42 @@ const routeLink = () =>{
     });
 }
 
+const selectMultipleCheckbox = () => {
+    $('.js-multiple-delete').unbind();
+    $(".js-multiple-delete").click(() => {
+        let checkboxes = $(".js-user-checkbox:checked")
 
-utilities.selectAndDeselectChexbox(".js-user-checkbox")
+        let ids = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.userId);
+        }
+        axiosMultipleDelete(ids)
+
+    })
+}
+
+const axiosMultipleDelete = async (ids) =>{
+
+    try {
+        const {status} = await axios.delete(config.routes.destroyMultipleUsersDatatable,{
+            data:{
+                'user_id':ids,
+            }
+
+        })
+        if(status == 200){
+            utilities.toastAlert("success",`${ids.length} Διαγράφικαν`)
+            tables.ajax.reload()
+        }
+    }catch (e) {
+        utilities.toastAlert('error',"Παρουσιάστηκε κάποιο πρόβλημα" )
+    }
+}
+
+
+
+utilities.selectAndDeselectCheckbox(".js-user-checkbox")
 utilities.filterButton('#fullNameFilter',2,tables)
 utilities.filterButton('#rolesFilter',4,tables)
 utilities.filterButton('#activeFilter',8,tables)

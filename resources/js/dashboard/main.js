@@ -46,7 +46,7 @@ const filterButton = function (attr, column, table) {
     });
 }
 
-const selectAndDeselectChexbox = function (attr) {
+const selectAndDeselectCheckbox = function (attr) {
     $(attr).click(function () {
         let checkbox = $(attr)
 
@@ -68,5 +68,5 @@ export default {
     mainCheckboxSwitcher,
     minorCheckboxSwitcher,
     filterButton,
-    selectAndDeselectChexbox
+    selectAndDeselectCheckbox
 }

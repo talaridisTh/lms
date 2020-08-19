@@ -14,14 +14,14 @@
                             class="mdi mdi-plus-circle mr-2"></i>
                         Νέος χρήστης
                     </a>
-
-
                     <div class="btn-group mb-2">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Επιλογές
+                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Bulk action
                         </button>
 
                         <div class="dropdown-menu">
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item js-multiple-delete" href="#">Διαγραφη επιλεγμενων</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Print</a>
                             <div class="dropdown-divider"></div>
@@ -32,8 +32,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
+
         <select id="fullNameFilter">
             <option value="">Καθαρισμος</option>
             @foreach(App\User::all() as $user)
@@ -53,8 +53,6 @@
             <option value="1">Ενεργοι</option>
             <option value="0">Μη ενεργοι</option>
         </select>
-
-
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
             <tr>
@@ -75,7 +73,9 @@
             </tbody>
             <tfoot>
             <tr>
-                <th class="text-left">chexbox</th>
+                <th id='all-user-checkbox' class="text-left js-user-checkbox">
+                    <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                </th>
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
@@ -94,7 +94,6 @@
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
-
     <x-routes></x-routes>
     <script src="{{ asset('js/dashboard/users/userMain.js') }}"></script>
 
@@ -123,7 +122,5 @@
 
 
     </script>
-
-
 
 @endsection

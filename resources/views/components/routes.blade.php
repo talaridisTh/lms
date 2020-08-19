@@ -11,7 +11,8 @@
             //ajax routes
             changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
             addcoursesDatatable: "{{ route("addcourses.datatable") }}",
-            destroyMultipleDatatable: "{{ route("destroyMultiple.datatable") }}",
+            destroyMultipleCoursesDatatable: "{{ route("destroyMultipleCourses.datatable") }}",
+            destroyMultipleUsersDatatable: "{{ route("destroyMultipleUsers.datatable") }}",
             courseModaDatatable: "{{ route("courseModal.datatable") }}"
         },
         headers:{

@@ -23,8 +23,6 @@ class UserController {
         return $dataTable->render('users.profile');
     }
 
-
-
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
@@ -69,15 +67,21 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-
-    public function destroyMultiple(Request $request)
+    public function destroyMultipleCourses(Request $request)
     {
-
-//
         $user = User::find($request->user_id);
         $user->courses()->detach($request->course_id);
 
         return response()->json(['success' => 'Status change successfully.']);
+    }
+
+    public function destroyMultipleUsers(Request $request)
+    {
+
+        User::whereIn('id', $request->user_id)->delete();
+
+        dd($request->all());
+
     }
 
 }

@@ -136,7 +136,7 @@ const deleteMultipleCourse = () => {
         }
 
         try {
-            let {status} = await axios.delete(config.routes.destroyMultipleDatatable, {
+            let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
                 data: {
                     'course_id': ids,
                     'user_id': userId
