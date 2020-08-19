@@ -10,7 +10,7 @@
 }
 .swal2-modal {
 	background-color: #313a46 !important;
-	
+
 }
 .swal2-title {
 	color: #aab8c5 !important;
@@ -65,7 +65,7 @@
 #course-materials-list > tbody td:nth-child(4) {
 	padding-top: 13px;
 }
-   
+
 .table-cnt > .dataTables_wrapper > .row:nth-child(2) {
 	overflow-x: auto !important;
 }
@@ -105,4 +105,15 @@ select.is-invalid {
 	position: absolute;
 	left: 50%;
 	z-index: 10;
+}
+
+.select2-container{
+    width: 16%!important;
+}
+
+.select2-selection{
+    background-color: #3251e1 !important;
+}
+.select2-selection__clear{
+    left :-15px
 }

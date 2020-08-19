@@ -1,12 +1,13 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js",
     "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js",
     "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js",
     "/js/dashboard/main.js": "/js/dashboard/main.js",
+    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js",
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js"
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js",
+    "/css/app.css": "/css/app.css"
 }

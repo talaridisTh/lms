@@ -3258,6 +3258,18 @@ select.is-invalid {
   z-index: 10;
 }
 
+.select2-container {
+  width: 16% !important;
+}
+
+.select2-selection {
+  background-color: #3251e1 !important;
+}
+
+.select2-selection__clear {
+  left: -15px;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

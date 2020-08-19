@@ -105,7 +105,7 @@ eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../plugins/article-editor/article-editor */ \"./resources/plugins/article-editor/article-editor.js\");\n/* harmony import */ var _plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0__);\n\n$R('#small-description');\n_plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0___default()('#material-content');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvZGFzaGJvYXJkL21hdGVyaWFscy9tYXRlcmlhbC5qcz9kOGU4Il0sIm5hbWVzIjpbIiRSIiwiQXJ0aWNsZUVkaXRvciJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFFQUEsRUFBRSxDQUFDLG9CQUFELENBQUY7QUFFQUMsNkVBQWEsQ0FBQyxtQkFBRCxDQUFiIiwiZmlsZSI6Ii4vcmVzb3VyY2VzL2pzL2Rhc2hib2FyZC9tYXRlcmlhbHMvbWF0ZXJpYWwuanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgQXJ0aWNsZUVkaXRvciBmcm9tIFwiLi4vLi4vLi4vcGx1Z2lucy9hcnRpY2xlLWVkaXRvci9hcnRpY2xlLWVkaXRvclwiO1xyXG5cclxuJFIoJyNzbWFsbC1kZXNjcmlwdGlvbicpO1xyXG5cclxuQXJ0aWNsZUVkaXRvcignI21hdGVyaWFsLWNvbnRlbnQnKTsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/dashboard/materials/material.js\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../plugins/article-editor/article-editor */ \"./resources/plugins/article-editor/article-editor.js\");\n/* harmony import */ var _plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0__);\n\n$R('#small-description');\n_plugins_article_editor_article_editor__WEBPACK_IMPORTED_MODULE_0___default()('#material-content');//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvZGFzaGJvYXJkL21hdGVyaWFscy9tYXRlcmlhbC5qcz9kOGU4Il0sIm5hbWVzIjpbIiRSIiwiQXJ0aWNsZUVkaXRvciJdLCJtYXBwaW5ncyI6IkFBQUE7QUFBQTtBQUFBO0FBQUE7QUFFQUEsRUFBRSxDQUFDLG9CQUFELENBQUY7QUFFQUMsNkVBQWEsQ0FBQyxtQkFBRCxDQUFiIiwiZmlsZSI6Ii4vcmVzb3VyY2VzL2pzL2Rhc2hib2FyZC9tYXRlcmlhbHMvbWF0ZXJpYWwuanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgQXJ0aWNsZUVkaXRvciBmcm9tIFwiLi4vLi4vLi4vcGx1Z2lucy9hcnRpY2xlLWVkaXRvci9hcnRpY2xlLWVkaXRvclwiO1xuXG4kUignI3NtYWxsLWRlc2NyaXB0aW9uJyk7XG5cbkFydGljbGVFZGl0b3IoJyNtYXRlcmlhbC1jb250ZW50Jyk7Il0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/js/dashboard/materials/material.js\n");
 
 /***/ }),
 
@@ -127,7 +127,7 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { \"@b
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Real Projects\Demo LMS\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\lmsdemo\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
 
 
 /***/ })

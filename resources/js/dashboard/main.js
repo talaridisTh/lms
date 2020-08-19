@@ -40,8 +40,19 @@ function minorCheckboxSwitcher( main, minor ) {
 
 }
 
+const filterButton = function(attr,column,table){
+    $(attr).detach().insertAfter('.dataTables_length label')
+
+
+    $(attr).on('change', function () {
+        table.columns(column).search( this.value ).draw();
+    } );
+}
+
+
 export default {
 	toastAlert,
 	mainCheckboxSwitcher,
-	minorCheckboxSwitcher
+	minorCheckboxSwitcher,
+    filterButton
 }

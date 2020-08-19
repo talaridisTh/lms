@@ -35,10 +35,24 @@
 
         </div>
 
-        <select id="dropdown1">
-            @foreach(App\User::all() as $user)
-            <option value="Software Engineer">{{$user->fullName}}</option>
+        <select id="fullNameFilter">
+            <option value="">Καθαρισμος</option>
+        @foreach(App\User::all() as $user)
+            <option value="{{$user->first_name}}">{{$user->fullName}}</option>
             @endforeach
+        </select>
+
+        <select id="rolesFilter">
+            <option value="">Καθαρισμος</option>
+            @foreach(App\Role::all() as $role)
+                <option value="{{$role->name}}">{{$role->name}}</option>
+            @endforeach
+        </select>
+
+        <select id="activeFilter">
+            <option value="">Καθαρισμος</option>
+                <option value="1">Ενεργοι</option>
+                <option value="0">Μη ενεργοι</option>
         </select>
 
 
@@ -80,5 +94,29 @@
 
     <x-routes></x-routes>
     <script src="{{ asset('js/dashboard/users/userMain.js') }}"></script>
+
+    <script>
+        $(document).ready(function(){
+            $("#fullNameFilter").select2({
+                text: '',
+                placeholder: "Χρηστες",
+                allowClear: true,
+                minimumInputLength: 2,
+
+            });
+
+            $("#rolesFilter").select2({
+                placeholder: "Ρολος",
+                allowClear: true,
+            });
+
+            $("#activeFilter").select2({
+                placeholder: "Active",
+                allowClear: true,
+            });
+        })
+
+
+    </script>
 
 @endsection

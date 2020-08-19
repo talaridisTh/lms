@@ -2,11 +2,10 @@ import utilities from '../main';
 
 
 
-    const tables = $("#scroll-horizontal-datatable").DataTable({
+    var tables = $("#scroll-horizontal-datatable").DataTable({
         processing: true,
         serverSide: true,
-        dom: 'lBfrtip',
-        buttons: config.datatable.buttons,
+        // dom: 'lBfrtip',
         ajax: {
             url: config.routes.indexDatatable,
             headers: config.headers.csrf,
@@ -45,12 +44,19 @@ import utilities from '../main';
     })
 
 
-$('#dropdown1').detach().insertAfter('.dataTables_length label')
+const filterButton = function(attr,column){
+    $(attr).detach().insertAfter('.dataTables_length label')
 
 
-$('#dropdown1').on('change', function () {
-    tables.columns(1).search( this.value ).draw();
-} );
+    $(attr).on('change', function () {
+        tables.columns(column).search( this.value ).draw();
+    } );
+}
+
+
+filterButton('#fullNameFilter',1,tables)
+filterButton('#rolesFilter',3,tables)
+filterButton('#activeFilter',7,tables)
 
 
 
@@ -83,5 +89,6 @@ const routeLink = () =>{
         window.location = `/dashboard/users/${user}`;
     });
 }
+
 
 
