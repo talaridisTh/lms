@@ -8,7 +8,7 @@
     <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container" style="max-width:1370px">
         <div class="row mb-2 justify-content-end">
-            <div class="col-sm-12">
+            <div id="containerCol" class="col-sm-12">
                 <div class="text-right">
                     <a href="{{route('user.create')}}" class="btn btn-secondary mb-2"><i
                             class="mdi mdi-plus-circle mr-2"></i>
@@ -34,11 +34,10 @@
             </div>
 
         </div>
-
         <select id="fullNameFilter">
             <option value="">Καθαρισμος</option>
-        @foreach(App\User::all() as $user)
-            <option value="{{$user->first_name}}">{{$user->fullName}}</option>
+            @foreach(App\User::all() as $user)
+                <option value="{{$user->first_name}}">{{$user->fullName}}</option>
             @endforeach
         </select>
 
@@ -51,14 +50,17 @@
 
         <select id="activeFilter">
             <option value="">Καθαρισμος</option>
-                <option value="1">Ενεργοι</option>
-                <option value="0">Μη ενεργοι</option>
+            <option value="1">Ενεργοι</option>
+            <option value="0">Μη ενεργοι</option>
         </select>
 
 
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
             <tr>
+                <th id='all-user-checkbox' class="text-left js-user-checkbox">
+                    <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                </th>
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
@@ -73,6 +75,7 @@
             </tbody>
             <tfoot>
             <tr>
+                <th class="text-left">chexbox</th>
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
@@ -96,7 +99,7 @@
     <script src="{{ asset('js/dashboard/users/userMain.js') }}"></script>
 
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             $("#fullNameFilter").select2({
                 text: '',
                 placeholder: "Χρηστες",
@@ -107,10 +110,12 @@
 
             $("#rolesFilter").select2({
                 placeholder: "Ρολος",
+                minimumResultsForSearch: -1,
                 allowClear: true,
             });
 
             $("#activeFilter").select2({
+                minimumResultsForSearch: -1,
                 placeholder: "Active",
                 allowClear: true,
             });
@@ -118,5 +123,7 @@
 
 
     </script>
+
+
 
 @endsection

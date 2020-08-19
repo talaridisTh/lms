@@ -33,6 +33,14 @@ class UsersDataTable extends DataTable {
 
                 return $data->active;
             })
+            ->addColumn('chexbox', function($data) {
+
+                return "<div class='icheck-primary d-inline'>
+							<input class='js-user-checkbox' data-user-id='$data->id' type='checkbox' id='$data->first_name' autocomplete='off'>
+							<label for='$data->first_name'></label>
+						</div>";
+
+            })
             ->editColumn('active', function ($data) {
 
                 $active = $data->active == 0 ? "" : "checked";
@@ -44,7 +52,7 @@ class UsersDataTable extends DataTable {
 
                 return "<img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' > ";
             })
-            ->rawColumns(['action', 'active', "avatar","activeNum"])
+            ->rawColumns(['action', 'active', "avatar","activeNum","chexbox"])
             ->setRowAttr(['data-user-id' => function ($data) {
 
                 return $data->id;

@@ -1,8 +1,6 @@
 import utilities from '../main';
 
-
-
-    var tables = $("#scroll-horizontal-datatable").DataTable({
+var tables = $("#scroll-horizontal-datatable").DataTable({
         processing: true,
         serverSide: true,
         // dom: 'lBfrtip',
@@ -13,10 +11,11 @@ import utilities from '../main';
         },
         columnDefs: [
             {orderable: false, "targets": [0]},
-            {className: "js-link cursor-pointer", "targets": [0, 1, 2, 3, 4, 6]},
-            {  targets: 7, visible: false}
+            {className: "js-link cursor-pointer", "targets": [ 1, 2, 3, 4, 6]},
+            {  targets: 8, visible: false}
         ],
         columns: [
+            {data: "chexbox", name: "chexbox"},
             {data: "avatar", name: "avatar"},
             {data: "first_name", name: "first_name"},
             {data: "last_name", name: "last_name"},
@@ -42,21 +41,6 @@ import utilities from '../main';
 
 
     })
-
-
-const filterButton = function(attr,column){
-    $(attr).detach().insertAfter('.dataTables_length label')
-
-
-    $(attr).on('change', function () {
-        tables.columns(column).search( this.value ).draw();
-    } );
-}
-
-
-filterButton('#fullNameFilter',1,tables)
-filterButton('#rolesFilter',3,tables)
-filterButton('#activeFilter',7,tables)
 
 
 
@@ -89,6 +73,14 @@ const routeLink = () =>{
         window.location = `/dashboard/users/${user}`;
     });
 }
+
+
+utilities.selectAndDeselectChexbox(".js-user-checkbox")
+utilities.filterButton('#fullNameFilter',2,tables)
+utilities.filterButton('#rolesFilter',4,tables)
+utilities.filterButton('#activeFilter',8,tables)
+
+
 
 
 
