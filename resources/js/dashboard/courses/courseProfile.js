@@ -32,7 +32,7 @@ $("#add-multiple-students-btn").click( function() {
 
 $("#remove-selected-students-btn").click( function() {
 
-	let studentsCheckbox = $(".js-active-student-checkbox:checked");
+	let studentsCheckbox = $(".js-active-user-checkbox:checked");
 	let studentIds = [];
 
 	for ( let i = 0; i < studentsCheckbox.length; i++ ) {
@@ -211,6 +211,34 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 });
 
 const courseStudentsDatatable = $("#students-list").DataTable({
+	/* dom: 'Bfrtip',
+	buttons: [{
+		text: "omg",
+		className: "btn btn-primary dropdown-toggle",
+		autoClose: true,
+		buttons: [
+			{
+				className: 'dropdown-item',
+				titleAttr: 'instructor',
+				text: 'instructor',
+				action: function (e, dt, node, config) {
+					var table = $('#scroll-horizontal-datatable').DataTable();
+					dt.columns(3).search("instructor", true, false, true).draw();
+					$('#pref').parent().addClass("active");
+				}
+			},
+			{
+				className: 'dropdown-item',
+				titleAttr: 'student',
+				text: 'instructor',
+				action: function (e, dt, node, config) {
+					var table = $('#scroll-horizontal-datatable').DataTable();
+					dt.columns(3).search("instructor", true, false, true).draw();
+					$('#pref').parent().addClass("active");
+				}
+			},
+		]
+	}], */
 	order: [2, "asc"],
 	processing: true,
 	serverSide: true,
@@ -224,8 +252,9 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", className: "text-center", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
-		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-user-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-user-link" },
+		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
@@ -245,13 +274,13 @@ const courseStudentsDatatable = $("#students-list").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-student-link");
-		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-student-link");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-user-link");
+		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-user-link");
 
 		/* addMaterialsEventListerner();
 		remainingsCheckboxes(); */
 		removeStudentBtnInit();
-		studentLinkInit();
+		userLinkInit();
 	},
 
 });
@@ -270,8 +299,9 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-student-link" },
-		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-student-link" },
+		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-user-link" },
+		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-user-link" },
+		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language:{
@@ -295,7 +325,7 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
 		addStudentBtnInit();
-		studentLinkInit();
+		userLinkInit();
 	},
 
 });
@@ -303,22 +333,22 @@ const addCourseStudentsDatatable = $("#add-students-list").DataTable({
 
 //! DataTables function / EventListener
 
-function studentLinkInit() {
+function userLinkInit() {
 
-	let link = $(".js-student-link");
+	let link = $(".js-user-link");
 
 	link.unbind();
 	link.click( function() {
 
-		let studentId = this.parentElement.dataset.studentId
+		let userId = this.parentElement.dataset.userId
 
-		window.location = `/dashboard/users/${ studentId }`;
+		window.location = `/dashboard/users/${ userId }`;
 	});
 }
 
 function removeStudentBtnInit() {
 
-	let removeStudentBtn = $(".js-remove-student");
+	let removeStudentBtn = $(".js-remove-user");
 
 	removeStudentBtn.unbind();
 	removeStudentBtn.click( function() {
@@ -331,7 +361,7 @@ function removeStudentBtnInit() {
 
 function addStudentBtnInit() {
 
-	let addStudentBtn = $(".js-add-student-btn");
+	let addStudentBtn = $(".js-add-user-btn");
 
 	addStudentBtn.unbind();
 	addStudentBtn.click( function() {
@@ -457,14 +487,14 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
 }
 
-function addStudent( studentIds ) {
+function addStudent( userIds ) {
 	axios.patch( "/courses/add-students", {
 		courseId,
-		studentIds
+		userIds
 	})
 	.then( (res) => {
 
-		let message = studentIds.length == 1 ? "Ένας μαθητής προστέθηκε" : `${studentIds.length} μαθητές προστέθηκαν`;
+		let message = userIds.length == 1 ? "Ένας χρήστης προστέθηκε" : `${userIds.length} χρήστες προστέθηκαν`;
 		utilities.toastAlert( 'success', message );
 		courseStudentsDatatable.ajax.reload();
 		addCourseStudentsDatatable.ajax.reload();
@@ -477,14 +507,14 @@ function addStudent( studentIds ) {
 	})
 }
 
-function removeStudent( studentIds ) {
+function removeStudent( userIds ) {
 	axios.patch( "/courses/remove-students", {
 		courseId,
-		studentIds
+		userIds
 	})
 	.then( (res) => {
 
-		let message = studentIds.length == 1 ? "Ένας μαθητής αφαιρέθηκε" : `${studentIds.length} μαθητές αφαιρέθηκαν`;
+		let message = userIds.length == 1 ? "Ένας χρήστης αφαιρέθηκε" : `${userIds.length} χρήστες αφαιρέθηκαν`;
 		utilities.toastAlert( 'success', message );
 		courseStudentsDatatable.ajax.reload();
 		addCourseStudentsDatatable.ajax.reload();
@@ -547,7 +577,7 @@ function setRows() {
 	
 		let newRow = createRow();
 		newRow.appendAfter(materialRows[i]);
-    
+	
 	}
 
 }

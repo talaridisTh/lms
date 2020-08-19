@@ -4,14 +4,14 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Course;
 use App\CourseMaterial;
-use App\DataTables\AddCourseStudentsDataTable;
+use App\DataTables\AddCourseUsersDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
-use App\DataTables\CourseStudentsDataTable;
+use App\DataTables\CourseUsersDataTable;
 use App\DataTables\RemainingMaterialsDataTable;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -208,24 +208,24 @@ class CourseController extends Controller
 		$course->save();
 	}
 
-	public function courseStudents( CourseStudentsDataTable $dataTable ) {
+	public function courseStudents( CourseUsersDataTable $dataTable ) {
 
-		return $dataTable->render('courses.students');
+		return $dataTable->render('courses.users');
 		
 	}
 
-	public function addCourseStudents(AddCourseStudentsDataTable $dataTable) {
+	public function addCourseStudents(AddCourseUsersDataTable $dataTable) {
 
-		return $dataTable->render('courses.add.students');
+		return $dataTable->render('courses.add.users');
 
 	}
 
 	public function addStudents( Request $request ) {
 
 		$course = Course::find( $request->courseId );
-		$studentIds = $request->studentIds;
+		$userIds = $request->userIds;
 
-		foreach ( $studentIds as $id ) {
+		foreach ( $userIds as $id ) {
 			$course->users()->attach( $id );
 		}
 
@@ -234,9 +234,9 @@ class CourseController extends Controller
 	public function removeStudents( Request $request ) {
 		
 		$course = Course::find( $request->courseId );
-		$studentIds = $request->studentIds;
+		$userIds = $request->userIds;
 
-		foreach ( $studentIds as $id ) {
+		foreach ( $userIds as $id ) {
 			$course->users()->detach( $id );
 		}
 		
