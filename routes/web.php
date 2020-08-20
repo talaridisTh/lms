@@ -121,8 +121,9 @@ Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@u
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 
-//! Dashboard Ajax Materials Datatables
+//! Dashboard Ajax Materials
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
+Route::post( 'materials/material-types', 'Ajax\MaterialController@materialTypes' );
 
 //! Dashboard Ajax Materials CRUD
 Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );
