@@ -162,7 +162,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		activeMaterialsCheckboxToggle();
 		toggleCourseMaterial()
 		sortInputsInit();
-		setRows();
+		trHoverEffectInit();
 	},
 
 });
@@ -254,7 +254,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-user-link");
 
 		removeUserBtnInit();
-		// studentLinkInit();
+		userLinkInit();
 	},
 
 });
@@ -463,20 +463,47 @@ function remainingsCheckboxes() {
 	remainingCheckboxes.unbind();
 	remainingCheckboxes.change( remainingMaterialsCheckboxHandler );
 }
-// DataTables function / EventListener End
 
 function jsLinkEventListener() {
-
+	
 	let links = $(".js-link");
-
+	
 	links.unbind();
 	links.click( function() {
-
-	let id = this.parentElement.dataset.materialId;
-
-	window.location = `/dashboard/material/${id}`;
+		
+		let id = this.parentElement.dataset.materialId;
+		
+		window.location = `/dashboard/material/${id}`;
 	});
 }
+
+function trHoverEffectInit() {
+
+	let row = $("#course-materials-list > tbody > tr");
+
+	row.on( 'mouseover', function() {
+		let previousSibling = this.previousSibling;
+		if ( !previousSibling ) {
+			return;
+		}
+		let plusIcon = previousSibling.querySelector(".add-material");
+
+		plusIcon.style.display = "inline";
+		plusIcon.style.color = "green";
+	})
+	row.on( 'mouseleave', function() {
+		let previousSibling = this.previousSibling;
+
+		if ( !previousSibling ) {
+			return;
+		}
+		let plusIcon = previousSibling.querySelector(".add-material");
+
+		plusIcon.style.display = "none";
+	})
+
+}
+// DataTables function / EventListener End
 
 function remainingMaterialsCheckboxHandler() {
 
@@ -582,33 +609,4 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
-}
-
-function setRows() {
-	let materialRows = $("#course-materials-list > tbody > tr");
-
-	for ( let i = 0; i < materialRows.length; i++ ) {
-
-		let newRow = createRow();
-		newRow.appendAfter(materialRows[i]);
-
-	}
-
-}
-
-function createRow() {
-
-	let row = document.createElement("tr");
-	row.classList.add("extra-content-row");
-
-	row.innerHTML = `
-					<td class='add-content-cell'>
-						<a class="text-secondary" href="#">
-							<i class='mdi mdi-sticker-plus-outline mr-2'></i>
-							Προσθήκη Υλικού
-						</a>
-					</td>
-					`
-
-	return row;
 }

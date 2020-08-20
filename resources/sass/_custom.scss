@@ -90,21 +90,26 @@ select.is-invalid {
 	background-position: center right calc(.375em + .9000rem) !important;
 }
 
-#course-materials-list .extra-content-row {
-	height: 50px !important;
-}
-
 #course-materials-list > tbody > tr:not(.extra-content-row) td {
 	border-bottom: 1px solid #464f5b;
 }
 
-.add-content-cell {
-	border-top: 0px !important;
-	padding: 0 !important;
-	margin-top: 16px;
+.additions-cnt {
+	position: relative;
+	width: 22px;
+}
+.add-material {
+	display: none;
+	font-size: 20px;
 	position: absolute;
-	left: 50%;
+	left: 2%;
+	top: 145%;
 	z-index: 10;
+}
+#course-materials-list > tbody > tr:hover .add-material {
+	display: inline !important;
+	// color: #ff5b5b !important;
+	// background-color: red !important;
 }
 
 .select2-container{
