@@ -10,6 +10,57 @@
 @endphp
 
 @section('content')
+	<div class="modal fade" id="add-material-modal" tabindex="-1" aria-labelledby="add-material-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+		  	<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="add-material-modalLabel">Προσθήκη Υλικού</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row px-3">
+
+						<div class="col-6">
+							<div class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-file-document-outline	display-3"></i>
+									<h5 class="card-title mt-2">Μάθημα</h5>
+								</div>
+							</div>
+							<div class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-camcorder	display-3"></i>
+									<h5 class="card-title mt-2">Video</h5>
+								</div>
+							</div>
+						</div>
+					
+						<div class="col-6">
+							<div class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-comment-quote-outline display-3"></i>
+									<h5 class="card-title mt-2">Ανακοίνωση</h5>
+								</div>
+							</div>
+							<div class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-link-variant-plus	display-3"></i>
+									<h5 class="card-title mt-2">Link</h5>
+								</div>
+							</div>
+						</div>
+					
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">

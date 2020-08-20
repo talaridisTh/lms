@@ -149,7 +149,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		activeMaterialsCheckboxToggle();
 		toggleCourseMaterial()
 		sortInputsInit();
-		trHoverEffectInit();
+		// trHoverEffectInit();
 	},
 
 });
