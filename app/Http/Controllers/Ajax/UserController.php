@@ -8,11 +8,13 @@ use App\DataTables\UserProfileDataTable;
 use App\DataTables\UsersDataTable;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserController {
 
-    public function index(UsersDataTable $dataTable)
+    public function index(UsersDataTable $dataTable,Request $request)
     {
+
 
         return $dataTable->render('users.index');
     }
@@ -92,5 +94,9 @@ class UserController {
         dd($request->all());
 
     }
+
+
+
+
 
 }

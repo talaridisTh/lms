@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Column;
@@ -21,13 +22,29 @@ class UsersDataTable extends DataTable {
     public function dataTable($query)
     {
 
-        $query = User::all();
+//        $query = User::all();
 
 
-        return DataTables::of($query)
+            if(!empty(request()->from_date))
+            {
+                $data = DB::table('users')
+                    ->whereBetween('created_at', array(request()->from_date, request()->to_date))
+                    ->get();
+            }
+            else
+            {
+                $data = DB::table('users')
+                    ->get();
+            }
+
+
+
+
+        return DataTables::of($data)
             ->addColumn('action', function ($data) {
 
-                return "{$data->getRoleNames()[0]}";
+                return 5;
+//                return "{$data->getRoleNames()[0]}";
             })
             ->addColumn('activeNum', function ($data) {
 
