@@ -36,7 +36,8 @@ var tables = $("#scroll-horizontal-datatable").DataTable({
 
             toogleInput();
             routeLink();
-            selectMultipleCheckbox();
+            selectMultipleCheckboxDelete();
+            selectMultipleCheckboxUpdate();
         },
 
 
@@ -73,7 +74,7 @@ const routeLink = () =>{
     });
 }
 
-const selectMultipleCheckbox = () => {
+const selectMultipleCheckboxDelete = () => {
     $('.js-multiple-delete').unbind();
     $(".js-multiple-delete").click(() => {
         let checkboxes = $(".js-user-checkbox:checked")
@@ -83,6 +84,7 @@ const selectMultipleCheckbox = () => {
         for (let i = 0; i < checkboxes.length; i++) {
             ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.userId);
         }
+
         axiosMultipleDelete(ids)
 
     })
@@ -102,6 +104,40 @@ const axiosMultipleDelete = async (ids) =>{
             tables.ajax.reload()
         }
     }catch (e) {
+        utilities.toastAlert('error',"Παρουσιάστηκε κάποιο πρόβλημα" )
+    }
+}
+
+const selectMultipleCheckboxUpdate = () => {
+    $('.js-multiple-update').unbind();
+    $(".js-multiple-update").click(function (){
+        let checkboxes = $(".js-user-checkbox:checked")
+
+        let ids = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.userId);
+        }
+
+        axiosMultipleUpdate(ids,this.dataset.coursesId)
+
+    })
+}
+
+const axiosMultipleUpdate = async (ids,courseId) =>{
+
+    try {
+        const {status} = await axios.patch(config.routes.addCoursesMultipleUsersDatatable,{
+            'user_id':ids,
+            "course_id":courseId
+        })
+
+        if(status == 200){
+            utilities.toastAlert("success",`${ids.length} μαθητές προστέθηκαν`)
+            console.log(status)
+        }
+    }catch (e) {
+        console.log(e)
         utilities.toastAlert('error',"Παρουσιάστηκε κάποιο πρόβλημα" )
     }
 }

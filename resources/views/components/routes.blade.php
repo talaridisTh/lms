@@ -13,7 +13,8 @@
             addcoursesDatatable: "{{ route("addcourses.datatable") }}",
             destroyMultipleCoursesDatatable: "{{ route("destroyMultipleCourses.datatable") }}",
             destroyMultipleUsersDatatable: "{{ route("destroyMultipleUsers.datatable") }}",
-            courseModaDatatable: "{{ route("courseModal.datatable") }}"
+            courseModaDatatable: "{{ route("courseModal.datatable") }}",
+            addCoursesMultipleUsersDatatable: "{{ route("addCoursesMultipleUsers.datatable") }}"
         },
         headers:{
             csrf: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}

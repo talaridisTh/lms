@@ -19,8 +19,8 @@ const courses = $(".course-materials-list").DataTable({
     },
     columns: [
         {data: 'chexbox', name: 'chexbox'},
-        {data: 'name', name: 'name'},
-        {data: 'students', name: 'students'},
+        {data: 'name', name: 'name',className: "js-link cursor-pointer"},
+        {data: 'students', name: 'students',className: "js-link cursor-pointer"},
         {data: 'action', name: 'action'},
     ],
     language: config.datatable.language,
@@ -31,6 +31,7 @@ const courses = $(".course-materials-list").DataTable({
         $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
         deleteCourse()
         deleteMultipleCourse()
+        routeLink()
     },
 
 });
@@ -187,6 +188,16 @@ const clickModal = (ids) => {
 
 }
 
+const routeLink = () =>{
+    $('.js-link').click(function () {
+        $('.js-link').unbind();
+
+        let course = this.parentElement.dataset.courseId;
+
+
+        window.location = `/dashboard/course/${course}`;
+    });
+}
 
 $('#alertSumbit').submit(async (e) => {
     e.preventDefault()

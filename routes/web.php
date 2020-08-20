@@ -87,6 +87,7 @@ Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->nam
 //! Dashboard Ajax Users CRUD
 Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
 Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
+Route::patch('/user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers')->name("addCoursesMultipleUsers.datatable");
 Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
 Route::delete('/user/multiple/courses/delete', 'Ajax\UserController@destroyMultipleCourses')->name("destroyMultipleCourses.datatable");
 Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers')->name("destroyMultipleUsers.datatable");

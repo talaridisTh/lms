@@ -153,6 +153,13 @@ class User extends Authenticatable {
        return $test;
     }
 
+    public static function courseWhereActive()
+    {
+
+        return Course::where("active",1)->get();
+
+    }
+
     public static function getCountStudent($course)
     {
         return DB::table("course_user")

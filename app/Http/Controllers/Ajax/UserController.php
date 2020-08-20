@@ -41,20 +41,29 @@ class UserController {
     public function addCourses(Request $request)
     {
 
-//
         $coursess= [];
         foreach ($request->course_id as  $course){
             array_push($coursess,  Course::findOrFail($course));
 
         }
 
-//        dd($courses);
-
-
         $user = User::find($request->user_id);
         $user->courses()->attach($request->course_id);
 
         return response()->json($coursess);
+    }
+
+    public function addCoursesMultipleUsers(Request $request)
+    {
+
+
+        $course = Course::findOrFail($request->course_id);
+
+
+
+        $course->users()->syncWithoutDetaching($request->user_id);
+
+        return response()->json(['success' => 'Status change successfully.']);
     }
 
     public function destroy(Request $request)

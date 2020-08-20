@@ -2,6 +2,12 @@
 
 @section('css')
     <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .dropleft:hover>.dropdown-menu {
+            display: block;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -15,13 +21,26 @@
                         Νέος χρήστης
                     </a>
                     <div class="btn-group mb-2">
-                        <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown"
+                        <button type="button" class="btn btn-warning dropdown-toggle " data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Bulk action
                         </button>
 
-                        <div class="dropdown-menu">
+                        <div class="dropdown-menu dropdown-menu-animated">
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item js-multiple-delete" href="#">Διαγραφη επιλεγμενων</a>
+                            <div class="dropdown-divider"></div>
+                            <div class="btn-group dropleft">
+                            <div class="dropdown-divider"></div>
+                                <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Mετακίνηση σε course
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @foreach($activeCourses as $courses)
+                                    <a class="dropdown-item js-multiple-update cursor-pointer" data-courses-id="{{$courses->id}}">{{$courses->name}}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="#">Print</a>
                             <div class="dropdown-divider"></div>
@@ -120,6 +139,10 @@
             });
         })
 
+
+    </script>
+
+    <script>
 
     </script>
 

@@ -20,8 +20,9 @@ class UserController extends Controller {
 
     public function index()
     {
+        $activeCourses = User::courseWhereActive();
 
-        return view('admin.users.usersMain');
+        return view('admin.users.usersMain',compact("activeCourses"));
     }
 
     public function create()
@@ -90,7 +91,7 @@ class UserController extends Controller {
 	public function userCourses( User $user ) {
 
 		return view('courses/courses')->withUser( $user );
-		
+
 	}
 
 }
