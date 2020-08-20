@@ -132,26 +132,13 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', orderable: false },
 		{ data: 'name', name: 'name', className: "js-link cursor-pointer" },
-		{ data: 'active', name: 'active' },
+		{ data: 'active', name: 'course_material.active' },
 		{ data: 'priority', name: 'priority',  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "js-link cursor-pointer" },
 		{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer" },
 		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
 	],
-	language:{
-		emptyTable: 		"Δεν υπάρχουν εγγραφές",
-		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"_MENU_",
-		loadingRecords: 	"Φόρτωση ...",
-		processing: 		"Επεξεργασία ...",
-		search: 			"",
-		searchPlaceholder: 	"Αναζήτηση... ",
-		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-		paginate:{
-			previous:"<i class='mdi mdi-chevron-left'>",
-			next:"<i class='mdi mdi-chevron-right'>"}
-	},
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -186,20 +173,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		{data: 'type', name: 'materials.type', className: "cursor-default"},
 		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 	],
-	language:{
-		emptyTable: 		"Δεν υπάρχουν εγγραφές",
-		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"_MENU_",
-		loadingRecords: 	"Φόρτωση ...",
-		processing: 		"Επεξεργασία ...",
-		search: 			"",
-		searchPlaceholder: 	"Αναζήτηση... ",
-		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-		paginate:{
-			previous:"<i class='mdi mdi-chevron-left'>",
-			next:"<i class='mdi mdi-chevron-right'>"}
-	},
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -232,20 +206,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
-	language:{
-		emptyTable: 		"Δεν υπάρχουν εγγραφές",
-		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"_MENU_",
-		loadingRecords: 	"Φόρτωση ...",
-		processing: 		"Επεξεργασία ...",
-		search: 			"",
-		searchPlaceholder: 	"Αναζήτηση... ",
-		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-		paginate:{
-			previous:"<i class='mdi mdi-chevron-left'>",
-			next:"<i class='mdi mdi-chevron-right'>"}
-	},
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -278,20 +239,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
-	language:{
-		emptyTable: 		"Δεν υπάρχουν εγγραφές",
-		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"_MENU_",
-		loadingRecords: 	"Φόρτωση ...",
-		processing: 		"Επεξεργασία ...",
-		search: 			"",
-		searchPlaceholder: 	"Αναζήτηση... ",
-		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-		paginate:{
-			previous:"<i class='mdi mdi-chevron-left'>",
-			next:"<i class='mdi mdi-chevron-right'>"}
-	},
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -332,20 +280,18 @@ addUsersFilter.addEventListener('change', function () {
 	
 });
 
+//* Active Materials filters
+let courseMaterialListLength = $("#course-materials-list_length");
+let courseMaterialState = createStateSelect();
+
+courseMaterialListLength.append( courseMaterialState );
+courseMaterialState.addEventListener( "change", function() {
+
+	courseMaterialsTable.columns( 2 ).search( this.value ).draw();
+
+});
+
 //! DataTables function / EventListener
-
-function createRoleSelect() {
-	const selectElm = document.createElement("select");
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
-
-	selectElm.innerHTML = `
-		<option value="">Όλες οι ιδιότητες</option>
-		<option value="Εισηγητής">Εισηγητές</option>
-		<option value="Μαθητής">Μαθητές</option>
-	`;
-	
-	return selectElm;
-}
 
 function userLinkInit() {
 
@@ -609,4 +555,30 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
+}
+
+function createRoleSelect() {
+	const selectElm = document.createElement("select");
+	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+
+	selectElm.innerHTML = `
+		<option value="">Όλες οι ιδιότητες</option>
+		<option value="Εισηγητής">Εισηγητές</option>
+		<option value="Μαθητής">Μαθητές</option>
+	`;
+	
+	return selectElm;
+}
+
+function createStateSelect() {
+	const selectElm = document.createElement("select");
+	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+
+	selectElm.innerHTML = `
+		<option value="">Όλα</option>
+		<option value="1">Ενεργά</option>
+		<option value="0">Ανενεργά</option>
+	`;
+	
+	return selectElm;
 }
