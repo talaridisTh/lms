@@ -69,11 +69,22 @@
 @endsection
 
 @section('scripts')
+
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
     <x-routes></x-routes>
     <script src="{{ asset('js/dashboard/users/userMain.js') }}"></script>
+
+
+
+
+
+
 
     <script>
         $(document).ready(function () {

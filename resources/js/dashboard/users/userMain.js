@@ -11,6 +11,12 @@ function load_data(from_date = '', to_date = '') {
 //! 			Datatables Initialization
 //!##################################################
     const tables = $("#scroll-horizontal-datatable").DataTable({
+        // dom: 'Bfrtip',
+        //
+        // buttons: [
+        //     'excelHtml5',
+        //     'pdfHtml5'
+        // ],
         processing: true,
         serverSide: true,
         ajax: {
@@ -80,10 +86,10 @@ function load_data(from_date = '', to_date = '') {
             },
             columns: [
                 {data: 'action', name: 'action', orderable: false},
-                {data: 'name', name: 'name',},
+                {data: 'name', name: 'name',className : "js-link-course cursor-pointer" },
                 // {data: 'active', name: 'active', orderable: false},
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'created_at', name: 'created_at',},
+                {data: 'updated_at', name: 'updated_at',className : "js-link-course cursor-pointer"},
+                {data: 'created_at', name: 'created_at',className : "js-link-course cursor-pointer"},
             ],
             language: config.datatable.language,
 
@@ -96,6 +102,7 @@ function load_data(from_date = '', to_date = '') {
 
                 selectAlljscheckboxSubTable()
                 selectDetachCourses();
+                routeLinkCourse();
             },
 
 
@@ -384,6 +391,17 @@ function load_data(from_date = '', to_date = '') {
 
 
             }
+        });
+    }
+
+    const routeLinkCourse = () => {
+        $('.js-link-course').click(function () {
+            $('.js-link-course').unbind();
+
+            let user = this.parentElement.dataset.courseId;
+
+            window.open(`/dashboard/course/${user}`, '_blank');
+            // window.location = `/dashboard/course/${user}`;
         });
     }
 

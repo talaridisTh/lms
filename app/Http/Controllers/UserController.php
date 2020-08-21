@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\DataTables\UsersDataTable;
+use App\Exports\UsersExportView;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\User;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
+use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
@@ -93,5 +95,7 @@ class UserController extends Controller {
 		return view('courses/courses')->withUser( $user );
 
 	}
+
+
 
 }

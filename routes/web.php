@@ -18,7 +18,7 @@ use Spatie\UrlSigner\MD5UrlSigner;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Route::get("/expot/users", "ExportController@usersAll")->name("export.usersAll");
 Route::get('/', function () {
     return view('welcome');
 });

@@ -23,7 +23,7 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="#">Print</a>
-                <a class="dropdown-item button-Excel" href="#">Excel</a>
+                <a class="dropdown-item button-Excel" href="{{route('export.usersAll')}}">Excel</a>
                 <a class="dropdown-item" href="#">CVS </a>
             </div>
         </div>
