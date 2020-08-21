@@ -131,7 +131,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 	},
 	columns: [
 		{ data: 'action', name: 'action', orderable: false },
-		{ data: 'name', name: 'name', className: "js-link cursor-pointer" },
+		{ data: 'title', name: 'title', className: "js-link cursor-pointer" },
 		{ data: 'active', name: 'course_material.active' },
 		{ data: 'priority', name: 'priority',  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "js-link cursor-pointer" },
@@ -168,7 +168,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false},
-		{data: 'materialName', name: 'materials.name', className: "cursor-default"},
+		{data: 'materialName', name: 'materials.title', className: "cursor-default"},
 		{data: 'topicName', name: 'topics.name', className: "cursor-default"},
 		{data: 'type', name: 'materials.type', className: "cursor-default"},
 		{data: 'addBtn', width: "12%", searchable: false, orderable: false},

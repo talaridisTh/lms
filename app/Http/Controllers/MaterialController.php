@@ -16,7 +16,7 @@ class MaterialController extends Controller
      */
     public function index()
     {
-		$materials = Material::all(['name', 'description', 'active', 'type']);
+		$materials = Material::all(['title', 'description', 'active', 'type']);
 
         return view('admin/materials/materialsMain')->withMaterials($materials);
     }

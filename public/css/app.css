@@ -3252,6 +3252,7 @@ select.is-invalid {
 }
 
 .add-material {
+  display: none;
   font-size: 20px;
   position: absolute;
   left: 2%;

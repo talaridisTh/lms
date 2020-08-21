@@ -29,7 +29,7 @@ class RemainingMaterialsDataTable extends DataTable
 			->join('topics', 'material_topic.topic_id', '=', 'topics.id')
 			->select( 'materials.id',
 				'topics.name as topicName',
-				'materials.name as materialName',
+				'materials.title as materialName',
 				'materials.type',
 				'materials.slug', 
 			)

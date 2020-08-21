@@ -27,7 +27,7 @@ class CourseMaterialsDataTable extends DataTable
 		$query = DB::table('materials')
 			->join('course_material', 'materials.id', '=', 'course_material.material_id')
 			->select('materials.id as materialId', 
-				'materials.name', 
+				'materials.title', 
 				'materials.active as materialActive', 
 				'course_material.active as active', 
 				'course_material.priority', 

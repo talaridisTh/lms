@@ -24,7 +24,8 @@ $factory->define(Material::class, function (Faker $faker) {
 
 
     return [
-		'name' => "Name of Lesson ".$counter ,
+		'title' => "Title of Lesson ".$counter ,
+		'subtitle' => "Subtitle of Lesson ".$counter ,
 		'cover' => $faker->imageUrl(),
 		'description' => "Description of Lesson ".$counter ,
 		'content' => "Content of Lesson ".$counter++ ,

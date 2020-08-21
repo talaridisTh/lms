@@ -15,12 +15,17 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 80);
+            $table->string('title');
+            $table->string('slug');
+            $table->string('subtitle');
+            $table->string('summary')->nullable();
             $table->string('cover');
-            $table->text('description');
-            $table->text('content');
+            $table->text('description')->nullable();
+            $table->text('video_id')->nullable();
+            $table->text('content')->nullable();
+            $table->text('gallery')->nullable();
+            $table->text('file')->nullable();
             $table->unsignedTinyInteger('active');
-            $table->string('slug', 100);
             $table->string('type', 20);
             $table->timestamps();
         });

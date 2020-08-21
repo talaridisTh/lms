@@ -16,7 +16,7 @@
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="inputEmail4">Όνομα</label>
-					<input type="text" class="form-control" id="inputEmail4" value="{{ $material->name }}" placeholder="Δώστε όνομα...">
+					<input name="title" type="text" class="form-control" id="inputEmail4" value="{{ $material->title }}" placeholder="Δώστε όνομα...">
 				</div>
 				<div class="form-group col-md-6">
 					<label for="course-cover">Cover Εικόνα</label>

@@ -13,7 +13,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 	},
 	columns: [
 		{ data: "action", name: "action", width: "5%", searchable: false, orderable: false },
-		{ data: "name", name: "name", className: "js-link cursor-pointer" },
+		{ data: "title", name: "title", className: "js-link cursor-pointer" },
 		{ data: "active", name: "active", width: "5%", searchable: false },
 		{ data: "type", name: "type", className: "js-link cursor-pointer" },
 		{ data: "updated_at", name: "updated_at",  className: "js-link cursor-pointer js-updated-at" },
