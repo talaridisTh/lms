@@ -9,7 +9,10 @@
 <div class="container">
 	<h1>{{ $material['name'] }}</h1>
 
-		<form action="" autocomplete="off">
+	<form id="edit-material-form" data-material-id="{{ $material->id }}" action="/dashboard/materials/update/{{ $material->id }}" method="POST"enctype="multipart/form-data" autocomplete="off">
+			
+			@csrf
+
 			<div class="form-row">
 				<div class="form-group col-md-6">
 					<label for="inputEmail4">Όνομα</label>
@@ -26,8 +29,8 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="small-description">Απλή περιγραφή</label>
-				<textarea id="small-description" type="text" class="form-control"  placeholder="Δώστε περιγραφή...">{{ $material->small_description }}</textarea>
+				<label for="description">Περιγραφή</label>
+				<textarea id="description" type="text" name="description" class="form-control" placeholder="Δώστε περιγραφή...">{{ $material->description }}</textarea>
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-6">
@@ -50,9 +53,9 @@
 			</div>
 			<div class="form-group">
 				<label for="material-content">Περιεχόμενο</label>
-				<textarea id="material-content" type="text" class="form-control"  placeholder="Περιεχόμενο...">{{ $material->description }}</textarea>
+				<textarea id="material-content" type="text" class="form-control"  placeholder="Περιεχόμενο...">{{ $material->content }}</textarea>
 			</div>
-			<button type="submit" class="btn btn-primary">Sign in</button>
+			<button type="submit" class="btn btn-primary">Αποθήκευση</button>
 		</form>
 	</div>
 
