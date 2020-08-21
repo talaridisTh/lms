@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 Route::post('users/view-users', 'Ajax\UserController@index')->name("index.datatable");
 Route::post('users/view-user', 'Ajax\UserController@show')->name("show.datatable");
 Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->name("courseModal.datatable");
+Route::post('/user/courses-inside-users', 'Ajax\UserController@coursesInsideUsers')->name("coursesInsideUsers.datatable");
 
 //! Dashboard Ajax Users CRUD
 Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Course;
 use App\DataTables\AddCoursesDataTable;
+use App\DataTables\CoursesInsideUsersDataTable;
 use App\DataTables\UserProfileDataTable;
 use App\DataTables\UsersDataTable;
 use App\User;
@@ -12,9 +13,8 @@ use Illuminate\Support\Facades\DB;
 
 class UserController {
 
-    public function index(UsersDataTable $dataTable,Request $request)
+    public function index(UsersDataTable $dataTable, Request $request)
     {
-
 
         return $dataTable->render('users.index');
     }
@@ -25,6 +25,20 @@ class UserController {
         return $dataTable->render('users.profile');
     }
 
+    public function addCourseModal(AddCoursesDataTable $dataTable)
+    {
+
+        return $dataTable->render('users.addCourses');
+    }
+
+    public function coursesInsideUsers(CoursesInsideUsersDataTable $dataTable)
+    {
+
+        return $dataTable->render('users.coursesInsideUsers');
+    }
+
+
+
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
@@ -34,21 +48,14 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function addCourseModal(AddCoursesDataTable $dataTable)
-    {
-
-        return $dataTable->render('users.addCourses');
-    }
-
     public function addCourses(Request $request)
     {
 
-        $coursess= [];
-        foreach ($request->course_id as  $course){
-            array_push($coursess,  Course::findOrFail($course));
-
+        $coursess = [];
+        foreach ($request->course_id as $course)
+        {
+            array_push($coursess, Course::findOrFail($course));
         }
-
         $user = User::find($request->user_id);
         $user->courses()->attach($request->course_id);
 
@@ -58,11 +65,7 @@ class UserController {
     public function addCoursesMultipleUsers(Request $request)
     {
 
-
         $course = Course::findOrFail($request->course_id);
-
-
-
         $course->users()->syncWithoutDetaching($request->user_id);
 
         return response()->json(['success' => 'Status change successfully.']);
@@ -90,13 +93,7 @@ class UserController {
     {
 
         User::whereIn('id', $request->user_id)->delete();
-
         dd($request->all());
-
     }
-
-
-
-
 
 }

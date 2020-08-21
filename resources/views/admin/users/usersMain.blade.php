@@ -27,8 +27,6 @@
 
                         <div class="dropdown-menu dropdown-menu-animated">
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item js-multiple-delete" href="#">Διαγραφη επιλεγμενων</a>
-                            <div class="dropdown-divider"></div>
                             <div class="btn-group dropleft">
                             <div class="dropdown-divider"></div>
                                 <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,32 +38,32 @@
                                     @endforeach
                                 </div>
                             </div>
+                            <div class="dropdown-divider"></div>
+                            <div class="btn-group dropleft">
+                                <div class="dropdown-divider"></div>
+                                <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Export
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Print</a>
+                                    <a class="dropdown-item" href="#">Excel</a>
+                                    <a class="dropdown-item" href="#">CVS </a>
+                                </div>
+                            </div>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item js-multiple-delete" href="#">Διαγραφη επιλεγμενων</a>
 
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Print</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Excel</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">CVS </a>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class=" select2-container form-group ragneButton" style="width: 13%!important;" >
+            <input type="text" class="form-control  date"   id="daterange" name="daterange" data-toggle="date-picker" data-cancel-class="btn-warning" />
+        </div>
 
-{{--        <div class="row input-daterange">--}}
-{{--            <div class="col-md-4">--}}
-{{--                <input type="text" name="from_date" id="from_date" class="form-control" placeholder="From Date" readonly />--}}
-{{--            </div>--}}
-{{--            <div class="col-md-4">--}}
-{{--                <input type="text" name="to_date" id="to_date" class="form-control" placeholder="To Date" readonly />--}}
-{{--            </div>--}}
-{{--            <div class="col-md-4">--}}
-{{--                <button type="button" name="filter" id="filter" class="btn btn-primary">Filter</button>--}}
-{{--                <button type="button" name="refresh" id="refresh" class="btn btn-default">Refresh</button>--}}
-{{--            </div>--}}
-{{--        </div>--}}
 
         <select id="fullNameFilter">
             <option value="">Καθαρισμος</option>
@@ -89,6 +87,7 @@
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
             <tr>
+                <th class="text-left"></th>
                 <th id='all-user-checkbox' class="text-left js-user-checkbox">
                     <i class="h3 mdi mdi-checkbox-marked-outline"></i>
                 </th>
@@ -106,6 +105,7 @@
             </tbody>
             <tfoot>
             <tr>
+                <th class="text-left"></th>
                 <th id='all-user-checkbox' class="text-left js-user-checkbox">
                     <i class="h3 mdi mdi-checkbox-marked-outline"></i>
                 </th>
@@ -157,8 +157,20 @@
     </script>
 
     <script>
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                locale: {
+                    format: 'YY/MM/DD '
+                },
+                startDate: moment().startOf('hour'),
+                opens: 'right'
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
 
 
-    </script>
+        $(".ragneButton").detach().prependTo('#containerCol')
+    </script>.
 
 @endsection

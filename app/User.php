@@ -44,6 +44,12 @@ class User extends Authenticatable {
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        // your other new column
+    ];
+
     public function courses()
     {
 
@@ -192,6 +198,11 @@ class User extends Authenticatable {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
 
+    public function getCreatedAtAttribute($value)
+    {
+        $carbonDate = new Carbon($value);
+        return $carbonDate->format('m-d-yy');
+    }
 
 
 }

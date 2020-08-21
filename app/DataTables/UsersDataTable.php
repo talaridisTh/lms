@@ -22,41 +22,29 @@ class UsersDataTable extends DataTable {
     public function dataTable($query)
     {
 
-//        $query = User::all();
-
-
-            if(!empty(request()->from_date))
-            {
-                $data = DB::table('users')
-                    ->whereBetween('created_at', array(request()->from_date, request()->to_date))
-                    ->get();
-            }
-            else
-            {
-                $data = DB::table('users')
-                    ->get();
-            }
-
-
-
+        if (!empty(request()->from_date))
+        {
+            $data = User:: whereBetween('created_at', [request()->from_date, request()->to_date])->get();
+        } else
+        {
+            $data = User::all();
+        }
 
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
 
-                return 5;
-//                return "{$data->getRoleNames()[0]}";
+                return "{$data->getRoleNames()[0]}";
             })
             ->addColumn('activeNum', function ($data) {
 
                 return $data->active;
             })
-            ->addColumn('chexbox', function($data) {
+            ->addColumn('chexbox', function ($data) {
 
                 return "<div class='icheck-primary d-inline'>
 							<input class='js-user-checkbox' data-user-id='$data->id' type='checkbox' id='$data->first_name' autocomplete='off'>
 							<label for='$data->first_name'></label>
 						</div>";
-
             })
             ->editColumn('active', function ($data) {
 
@@ -69,7 +57,7 @@ class UsersDataTable extends DataTable {
 
                 return "<img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' > ";
             })
-            ->rawColumns(['action', 'active', "avatar","activeNum","chexbox"])
+            ->rawColumns(['action', 'active', "avatar", "activeNum", "chexbox"])
             ->setRowAttr(['data-user-id' => function ($data) {
 
                 return $data->id;
@@ -126,8 +114,6 @@ class UsersDataTable extends DataTable {
             Column::make('id'),
             Column::make('first_name'),
             Column::make('active'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

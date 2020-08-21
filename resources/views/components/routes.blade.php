@@ -7,6 +7,7 @@
             //datatable routes
             indexDatatable: "{{ route("index.datatable") }}",
             showDatatable: "{{ route("show.datatable") }}",
+            coursesInsideUsersDatatable: "{{ route("coursesInsideUsers.datatable") }}",
             destroyDatatable: "{{ route("destroy.datatable") }}",
             //ajax routes
             changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
@@ -24,11 +25,11 @@
                 emptyTable: "Δεν υπάρχουν εγγραφές",
                 info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
                 infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
-                @if (\Request::path() == "dashboard/users")
-                lengthMenu: "_MENU_",
-                @else
+{{--                @if (\Request::path() == "dashboard/users")--}}
+{{--                lengthMenu: "_MENU_",--}}
+{{--                @else--}}
                 lengthMenu: "_MENU_ Αποτελέσματα ανα σελίδα",
-                @endif
+{{--                @endif--}}
                 loadingRecords: "Φόρτωση ...",
                 processing: "Επεξεργασία ...",
                 search: "Αναζήτηση: ",

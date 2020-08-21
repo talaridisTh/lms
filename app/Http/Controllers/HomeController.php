@@ -112,6 +112,10 @@ class HomeController extends Controller {
     public function test()
     {
 
+       return $data = User::
+            whereBetween('created_at', array('2018-06-27 ','2020-08-20'))
+            ->get();
+
     }
 
 

@@ -3265,6 +3265,7 @@ select.is-invalid {
 
 .select2-container {
   width: 10% !important;
+  margin: 5px;
 }
 
 .select2-selection {
