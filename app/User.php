@@ -198,11 +198,11 @@ class User extends Authenticatable {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        $carbonDate = new Carbon($value);
-        return $carbonDate->format('m-d-yy');
-    }
+//    public function getCreatedAtAttribute($value)
+//    {
+//        $carbonDate = new Carbon($value);
+//        return $carbonDate->format('m-d-yy');
+//    }
 
 
 }

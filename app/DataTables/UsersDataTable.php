@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\User;
+use http\Env\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\DataTables;
@@ -21,6 +22,8 @@ class UsersDataTable extends DataTable {
      */
     public function dataTable($query)
     {
+//        $user = User::findOrFail($request->user_id);
+//        $query = $user->courses()->get();
 
         if (!empty(request()->from_date))
         {
@@ -46,6 +49,17 @@ class UsersDataTable extends DataTable {
 							<label for='$data->first_name'></label>
 						</div>";
             })
+            ->addColumn('dateChange', function ($data) {
+
+                return $data->created_at->diffForHumans();
+            })
+            ->addColumn('allcourse', function ($data) {
+
+                $user = User::findOrFail($data->id);
+                $query = $user->courses()->get();
+
+                return $query;
+            })
             ->editColumn('active', function ($data) {
 
                 $active = $data->active == 0 ? "" : "checked";
@@ -57,7 +71,7 @@ class UsersDataTable extends DataTable {
 
                 return "<img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' > ";
             })
-            ->rawColumns(['action', 'active', "avatar", "activeNum", "chexbox"])
+            ->rawColumns(['action', 'active', "avatar", "activeNum", "chexbox",'dateChange',"allcourse"])
             ->setRowAttr(['data-user-id' => function ($data) {
 
                 return $data->id;

@@ -23,22 +23,26 @@ class CoursesInsideUsersDataTable extends DataTable
         $query = $user->courses()->get();
 
         return DataTables::of($query)
-       ->addColumn('action', function($data) {
+       ->addColumn('action', function($data) use($user) {
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-user-checkbox-sub' data-course-id='$data->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-user-checkbox-sub' data-course-id='$data->id' data-user-id='$user->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
 
 			})
-//			->editColumn('active', function($data) {
-//
-//				$active = $data->active == 0 ? "" : "checked";
-//
-//				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
-//					<label for='$data->slug-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
-//
-//			})
+			->editColumn('updated_at', function($data) {
+
+				return $data->updated_at->diffForHumans();
+
+
+			})
+            ->editColumn('created_at', function($data) {
+
+                return $data->created_at->diffForHumans();
+
+
+            })
 			->rawColumns(['action', 'active'])
 			->setRowClass("test")
 			->setRowAttr([ 'data-course-id' => function($data) {

@@ -24,18 +24,20 @@ function load_data(from_date = '', to_date = '') {
                 data: null,
                 name: "extra",
                 orderable: false,
-                className: 'details-control',
+                className: 'details-control cursor-pointer',
                 defaultContent: `<i class="mdi text-success h4 mdi-plus-thick"></i>`
             },
-            {data: "chexbox", name: "chexbox", orderable: false},
+            {data: "chexbox", name: "chexbox", orderable: false,},
             {data: "avatar", name: "avatar", orderable: false, className: "js-link cursor-pointer"},
             {data: "first_name", name: "first_name", className: "js-link cursor-pointer"},
             {data: "last_name", name: "last_name", className: "js-link cursor-pointer"},
             {data: "action", name: "action", className: "js-link cursor-pointer"},
             {data: "email", name: "email", className: "js-link cursor-pointer"},
             {data: 'active', name: 'active', orderable: false},
-            {data: 'created_at', name: 'created_at', className: "js-link cursor-pointer"},
+            {data: 'created_at', name: 'created_at', className: "js-link cursor-pointer",visible: false},
             {data: 'activeNum', name: 'activeNum', visible: false},
+            {data: 'dateChange', name: 'dateChange'},
+            {data: 'allcourse', name: 'allcourse', visible: false},
         ],
         language: config.datatable.language,
 
@@ -53,6 +55,7 @@ function load_data(from_date = '', to_date = '') {
             selectMultipleCheckboxUpdate();
             pickDay();
             collapse();
+            buttonEx()
         },
 
 
@@ -60,7 +63,7 @@ function load_data(from_date = '', to_date = '') {
 
     const sub_DataTable = (vtask_id, table_id, attr) => {
 
-        const subtable = $('#' + table_id).DataTable({
+        window.subtabletable_id = $('#' + table_id).DataTable({
             processing: true,
             serverSide: true,
             searching: false,
@@ -92,6 +95,7 @@ function load_data(from_date = '', to_date = '') {
                 $("tfoot > tr > th").removeClass("js-link cursor-pointer");
 
                 selectAlljscheckboxSubTable()
+                selectDetachCourses();
             },
 
 
@@ -103,9 +107,9 @@ function load_data(from_date = '', to_date = '') {
 //! GLOBAL FUNCTION
 //!============================================================
     utilities.selectAndDeselectCheckbox(".js-user-checkbox")
-    utilities.filterButton('#fullNameFilter', 2, tables)
-    utilities.filterButton('#rolesFilter', 4, tables)
-    utilities.filterButton('#activeFilter', 8, tables)
+    utilities.filterButton('#fullNameFilter', 11, tables)
+    utilities.filterButton('#rolesFilter', 5, tables)
+    utilities.filterButton('#activeFilter', 9, tables)
 
 //! FILTER DATATABLE
 //!============================================================
@@ -222,9 +226,78 @@ function load_data(from_date = '', to_date = '') {
     }
 
     const selectAlljscheckboxSubTable = () => {
-        utilities.selectAndDeselectCheckbox('.js-user-checkbox-sub')
+        $(".js-user-multipleChexbox-sub").click(function () {
+            let checkbox = $(".js-user-checkbox-sub")
+
+
+            for (let i = 0; i < checkbox.length; i++) {
+                checkbox[i].checked = !checkbox[i].checked
+            }
+
+            if (this.checked) {
+                this.innerHTML = '<i class=" h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
+            } else {
+                this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
+            }
+        })
+
+
 
     }
+
+    const selectDetachCourses = ()=>{
+        $('.js-detach-delete').unbind();
+        $(".js-detach-delete").click(function () {
+            let checkboxes = $(".js-user-checkbox-sub:checked")
+
+            let ids = [];
+
+            for (let i = 0; i < checkboxes.length; i++) {
+                ids.push(checkboxes[i].dataset.courseId);
+            }
+
+
+
+
+            detachCoursesFromUser(ids,checkboxes[0].dataset.userId)
+
+        })
+    }
+
+    const detachCoursesFromUser = async (courseId,userID)=>{
+
+        const datatableId = $(".js-user-multipleChexbox-sub")[0].parentElement.parentElement.parentElement
+
+        try {
+            let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
+                data: {
+                    'course_id': courseId,
+                    'user_id': userID
+                }
+
+            })
+            if (status == 200) {
+                utilities.toastAlert('error', `${courseId.length}  Aφαιρέθηκαν `)
+                subtabletable_id.ajax.reload();
+
+            }
+
+        } catch (e) {
+            console.log(e)
+            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+        }
+    }
+
+    function buttonEx (){
+        $('.button-Excel').unbind();
+        $('.button-Excel').on('click', function (e, dt, node, config) {
+            console.log(e)
+            console.log(node)
+        });
+    }
+
+
+
 
 
 //! METHOD FIRST TABLE
@@ -268,7 +341,7 @@ function load_data(from_date = '', to_date = '') {
    <table id="${table_id}" class="table sub-table">
       <thead>
            <tr class="sub-table-tr">
-                 <th id='all-user-checkbox' onclick="" class="text-left js-user-checkbox-sub">
+                 <th id='all-user-checkbox' onclick="" class="text-left js-user-multipleChexbox-sub">
                     <i class="h3 mdi mdi-checkbox-marked-outline"></i>
                 </th>
                <th class="text-left">Όνομα</th>
@@ -285,9 +358,11 @@ function load_data(from_date = '', to_date = '') {
     }
 
     const collapse = () => {
+        $('#scroll-horizontal-datatable tbody').off('click', 'td.details-control');
         $('#scroll-horizontal-datatable tbody').on('click', 'td.details-control', function () {
             let tr = $(this).closest('tr');
             let row = tables.row(tr);
+
 
             if (row.child.isShown()) {
                 row.child.hide();
@@ -295,14 +370,17 @@ function load_data(from_date = '', to_date = '') {
                 this.firstChild.classList.remove("text-danger")
                 this.firstChild.classList.add("text-success")
 
-            } else {
+
+            }
+            else {
                 let virtual_task_id = row.data().id;
                 let subId = "subtable-" + virtual_task_id;
-                row.child(formatSubTable(subId)).show();
                 tr.addClass('shown');
+                row.child(formatSubTable(subId)).show();
                 this.firstChild.classList.add("text-danger")
                 this.firstChild.classList.remove("text-success")
                 sub_DataTable(virtual_task_id, subId, this);
+;
 
 
             }

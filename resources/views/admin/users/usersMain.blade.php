@@ -20,70 +20,11 @@
                             class="mdi mdi-plus-circle mr-2"></i>
                         Νέος χρήστης
                     </a>
-                    <div class="btn-group mb-2">
-                        <button type="button" class="btn btn-warning dropdown-toggle " data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">Bulk action
-                        </button>
-
-                        <div class="dropdown-menu dropdown-menu-animated">
-                            <div class="dropdown-divider"></div>
-                            <div class="btn-group dropleft">
-                            <div class="dropdown-divider"></div>
-                                <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Mετακίνηση σε course
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    @foreach($activeCourses as $courses)
-                                    <a class="dropdown-item js-multiple-update cursor-pointer" data-courses-id="{{$courses->id}}">{{$courses->name}}</a>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <div class="btn-group dropleft">
-                                <div class="dropdown-divider"></div>
-                                <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Export
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Print</a>
-                                    <a class="dropdown-item" href="#">Excel</a>
-                                    <a class="dropdown-item" href="#">CVS </a>
-                                </div>
-                            </div>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item js-multiple-delete" href="#">Διαγραφη επιλεγμενων</a>
-
-
-                        </div>
-                    </div>
+                @include("components.bulkActionDatatable")
                 </div>
             </div>
         </div>
-
-        <div class=" select2-container form-group ragneButton" style="width: 13%!important;" >
-            <input type="text" class="form-control  date"   id="daterange" name="daterange" data-toggle="date-picker" data-cancel-class="btn-warning" />
-        </div>
-
-
-        <select id="fullNameFilter">
-            <option value="">Καθαρισμος</option>
-            @foreach(App\User::all() as $user)
-                <option value="{{$user->first_name}}">{{$user->fullName}}</option>
-            @endforeach
-        </select>
-
-        <select id="rolesFilter">
-            <option value="">Καθαρισμος</option>
-            @foreach(App\Role::all() as $role)
-                <option value="{{$role->name}}">{{$role->name}}</option>
-            @endforeach
-        </select>
-
-        <select id="activeFilter">
-            <option value="">Καθαρισμος</option>
-            <option value="1">Ενεργοι</option>
-            <option value="0">Μη ενεργοι</option>
-        </select>
+       @include("components.filterDatatable")
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
             <tr>
@@ -99,6 +40,8 @@
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
                 <th class="text-left">test</th>
+                <th class="text-left">Ημ. Εγγραφής</th>
+                <th class="text-left">courses</th>
             </tr>
             </thead>
             <tbody class="tables-hover-effect">
@@ -117,6 +60,8 @@
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
                 <th class="text-left">test</th>
+                <th class="text-left">Ημ. Εγγραφής</th>
+                <th class="text-left">courses</th>
             </tr>
             </tfoot>
         </table>
@@ -134,9 +79,9 @@
         $(document).ready(function () {
             $("#fullNameFilter").select2({
                 text: '',
-                placeholder: "Χρηστες",
+                placeholder: "Courses",
                 allowClear: true,
-                minimumInputLength: 2,
+                // minimumInputLength: 2,
 
             });
 
