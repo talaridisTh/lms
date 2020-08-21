@@ -26,8 +26,8 @@ $factory->define(Material::class, function (Faker $faker) {
     return [
 		'name' => "Name of Lesson ".$counter ,
 		'cover' => $faker->imageUrl(),
-		'small_description' => "Small Description of Lesson ".$counter ,
-		'description' => "Description of Lesson ".$counter++ ,
+		'description' => "Description of Lesson ".$counter ,
+		'content' => "Content of Lesson ".$counter++ ,
 		'active' => rand( 0, 1 ),
 		'slug' => $faker->slug,
 		'type' => $faker->numberBetween( 0, 1) == 0 ? "Lesson" : $faker->fileExtension,

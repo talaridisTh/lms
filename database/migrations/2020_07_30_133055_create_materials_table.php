@@ -17,8 +17,8 @@ class CreateMaterialsTable extends Migration
             $table->id();
             $table->string('name', 80);
             $table->string('cover');
-            $table->string('small_description');
             $table->text('description');
+            $table->text('content');
             $table->unsignedTinyInteger('active');
             $table->string('slug', 100);
             $table->string('type', 20);

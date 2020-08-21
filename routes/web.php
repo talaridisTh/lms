@@ -129,6 +129,10 @@ Route::post( 'materials/material-types', 'Ajax\MaterialController@materialTypes'
 //! Dashboard Ajax Materials CRUD
 Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );
 
+//! Ajax Upload Files
+Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
+Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadContentImages' );
+
 //!======================================================
 //! 			End Dashboard Routes					|
 //!======================================================

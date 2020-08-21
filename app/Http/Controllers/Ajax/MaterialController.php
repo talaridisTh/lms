@@ -6,6 +6,7 @@ use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends Controller
 {
@@ -95,5 +96,57 @@ class MaterialController extends Controller
 	public function materialTypes() {
 
 		return Material::select('type')->distinct('type')->get();
+	}
+
+	public function uploadDescImages(Request $request) {
+
+		$allowedTypes = ["image/png", "image/jpeg"];
+		$files = [];
+
+		foreach( $request->file as $key => $image ) {
+			if ( $image->isValid() ) {
+				if ( in_array( $image->getClientMimeType(), $allowedTypes) ) {
+					if ( $image->getSize() <= 512000) {
+						$id = md5( $image->getClientOriginalName() );
+
+						$path = Storage::disk('public')->put( "materials/$request->id/descriptionImages", $image );
+
+						$files["file-".$key] = array(
+							"url" => url("/storage/$path"),
+							"id" => $id
+						);
+					}
+				}
+			}
+		}
+
+		echo json_encode($files);
+	}
+
+	public function uploadContentImages( Request $request ) {
+
+
+		$allowedTypes = ["image/png", "image/jpeg"];
+		$files = [];
+
+		foreach( $request->file as $key => $image ) {
+			if ( $image->isValid() ) {
+				if ( in_array( $image->getClientMimeType(), $allowedTypes) ) {
+					if ( $image->getSize() <= 512000) {
+						$id = md5( $image->getClientOriginalName() );
+
+						$path = Storage::disk('public')->put( "materials/$request->id/contentImages", $image );
+
+						$files["file-".$key] = array(
+							"url" => url("/storage/$path"),
+							"id" => $id
+						);
+					}
+				}
+			}
+		}
+
+		echo json_encode($files);
+
 	}
 }
