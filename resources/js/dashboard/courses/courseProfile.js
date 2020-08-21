@@ -149,7 +149,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		activeMaterialsCheckboxToggle();
 		toggleCourseMaterial()
 		sortInputsInit();
-		trHoverEffectInit();
+		// trHoverEffectInit();
 	},
 
 });
@@ -281,7 +281,7 @@ addUsersFilter.addEventListener('change', function () {
 });
 
 //* Active Materials filters
-let courseMaterialListLength = $("#course-materials-list_length");
+const courseMaterialListLength = $("#course-materials-list_length");
 let courseMaterialState = createStateSelect();
 
 courseMaterialListLength.append( courseMaterialState );
@@ -575,10 +575,40 @@ function createStateSelect() {
 	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
 
 	selectElm.innerHTML = `
-		<option value="">Όλα</option>
+		<option value="">Όλοι οι χρήστες</option>
 		<option value="1">Ενεργά</option>
 		<option value="0">Ανενεργά</option>
 	`;
 	
 	return selectElm;
+}
+
+axios.post("/materials/material-types")
+	.then( (res) => {
+		createTopicSelect( res );
+	})
+	.catch( (err) => {
+		console.log(err);
+	})
+
+function createTopicSelect( res ) {
+	const selectElm = document.createElement("select");
+	let data = res.data;
+	let options = "<option value=''>Όλοι οι τύποι</option>";
+
+	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+
+	for ( let i = 0; i < data.length; i++ ) {
+		options += `<option value="${data[i].type}">${data[i].type}</option>`;
+	}
+
+	selectElm.innerHTML = options;
+
+	courseMaterialListLength.append( selectElm );
+
+	selectElm.addEventListener('change', function() {
+
+		courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+
+	})
 }

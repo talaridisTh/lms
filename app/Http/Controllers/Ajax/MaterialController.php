@@ -91,4 +91,9 @@ class MaterialController extends Controller
 		$material->save();
 
 	}
+
+	public function materialTypes() {
+
+		return Material::select('type')->distinct('type')->get();
+	}
 }

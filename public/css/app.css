@@ -3251,7 +3251,6 @@ select.is-invalid {
 }
 
 .add-material {
-  display: none;
   font-size: 20px;
   position: absolute;
   left: 2%;
@@ -3274,6 +3273,10 @@ select.is-invalid {
 
 .select2-selection__clear {
   left: -15px;
+}
+
+.card-hover:hover {
+  background-color: #282f36;
 }
 
 /*!

@@ -46,7 +46,7 @@ class CourseMaterialsDataTable extends DataTable
 								<input class='js-course-material-checkbox' data-material-id='$data->materialId' data-material-type='$data->type' type='checkbox' id='$data->slug' autocomplete='off'>
 								<label for='$data->slug'></label>
 							</div>
-							<a class='text-success add-material' href='#'>
+							<a class='text-secondary add-material' href='#' data-toggle='modal' data-target='#add-material-modal'>
 								<i class='mdi mdi-plus-circle-outline mr-1'></i>
 							</a>
 						</div>";
