@@ -22,8 +22,30 @@ class CoursesInsideUsersDataTable extends DataTable
         $user = User::findOrFail($request->user_id);
         $query = $user->courses()->get();
 
-        return DataTables::of($query);
-//            ->addColumn('action', 'coursesinsideusers.action');
+        return DataTables::of($query)
+       ->addColumn('action', function($data) {
+
+				return "<div class='icheck-primary d-inline'>
+							<input class='js-user-checkbox-sub' data-course-id='$data->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
+							<label for='$data->slug'></label>
+						</div>";
+
+			})
+//			->editColumn('active', function($data) {
+//
+//				$active = $data->active == 0 ? "" : "checked";
+//
+//				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+//					<label for='$data->slug-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+//
+//			})
+			->rawColumns(['action', 'active'])
+			->setRowClass("test")
+			->setRowAttr([ 'data-course-id' => function($data) {
+
+				return  $data->id;
+
+			}]);
     }
 
 

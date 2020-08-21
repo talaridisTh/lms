@@ -197,14 +197,14 @@ function load_data(from_date = '', to_date = '') {
     }
 
     function format(table_id) {
-        // `d` is the original data object for the row
-
         return `
 
-   <table id="${table_id}" class="table">
+   <table id="${table_id}" class="table sub-table">
       <thead>
-           <tr>
-<!--               <th class="text-center option-column">Επιλογή</th>-->
+           <tr class="sub-table-tr">
+                 <th id='all-user-checkbox' onclick="" class="text-left js-user-checkbox-sub">
+                    <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                </th>
                <th class="text-left">Όνομα</th>
 <!--               <th class="text-center">Ενεργό</th>-->
                <th class="text-left">Τελ. Ενημέρωση</th>
@@ -216,16 +216,17 @@ function load_data(from_date = '', to_date = '') {
 
         `
 
-
     }
 
+    function selectAlljscheckboxSubTable(){
+        utilities.selectAndDeselectCheckbox('.js-user-checkbox-sub')
+
+    }
 
     function collapse() {
         $('#scroll-horizontal-datatable tbody').on('click', 'td.details-control', function () {
             let tr = $(this).closest('tr');
             let row = tables.row(tr);
-
-
 
             if (row.child.isShown()) {
                 row.child.hide();
@@ -265,7 +266,7 @@ function load_data(from_date = '', to_date = '') {
                 }
             },
             columns: [
-                // {data: 'action', name: 'action', orderable: false},
+                {data: 'action', name: 'action', orderable: false},
                 {data: 'name', name: 'name',},
                 // {data: 'active', name: 'active', orderable: false},
                 {data: 'updated_at', name: 'updated_at',},
@@ -279,6 +280,8 @@ function load_data(from_date = '', to_date = '') {
                 $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
                 $("thead >tr> th").removeClass("js-link cursor-pointer");
                 $("tfoot > tr > th").removeClass("js-link cursor-pointer");
+
+                selectAlljscheckboxSubTable()
             },
 
 

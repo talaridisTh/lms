@@ -3146,7 +3146,8 @@ div.dt-buttons a.btn.processing:after {
   padding: 1.3rem 0.95rem 0.3rem;
 }
 
-.tables-hover-effect > tr:hover:not(.extra-content-row) {
+.odd:hover,
+.even:hover {
   background-color: #3a444e;
 }
 
@@ -3273,6 +3274,10 @@ select.is-invalid {
 
 .select2-selection__clear {
   left: -15px;
+}
+
+.sub-table {
+  background-color: rgba(59, 63, 69, 0.79);
 }
 
 .card-hover:hover {
