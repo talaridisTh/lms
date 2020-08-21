@@ -1,9 +1,11 @@
 import utilities from '../main';
 
-//global var
+//! GLOBAL VAR
+//!============================================================
 const userId = $(".course-materials-list")[0].dataset.id
 
-
+//! DATATABLES INIT
+//!============================================================
 const courses = $(".course-materials-list").DataTable({
     scrollX: !0,
     processing: true,
@@ -35,6 +37,7 @@ const courses = $(".course-materials-list").DataTable({
     },
 
 });
+// MODAL
 const addCourse = $("#datatableAddCourse").DataTable({
     scrollX: !0,
     processing: true,
@@ -73,6 +76,49 @@ const addCourse = $("#datatableAddCourse").DataTable({
 
 });
 
+
+//! GLOBAL METHID
+//!============================================================
+
+const routeLink = () =>{
+    $('.js-link').click(function () {
+        $('.js-link').unbind();
+
+        let course = this.parentElement.dataset.courseId;
+
+
+        window.location = `/dashboard/course/${course}`;
+    });
+}
+
+$('#alertSumbit').submit(async (e) => {
+    e.preventDefault()
+    let buttonDelete = $('.js-delete');
+    const user = buttonDelete[0].dataset.id;
+    try {
+        const {value} = await Swal.fire({
+            title: 'Είστε σίγουρος;',
+            text: "αρχεία θα διαγραφούν",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ναί, διαγραφή!',
+            cancelButtonText: 'Άκυρο'
+        });
+        if (value) {
+            const res = await axios.post(`/dashboard/users/${user}`, {_method: 'DELETE'})
+            utilities.toastAlert('success', "Διεγράφη")
+            window.location = `http://127.0.0.1:8000/dashboard/users`;
+        }
+    } catch (e) {
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+
+
+});
+
+
+//! METHOD COURS DATATABLE
+//!============================================================
 const deleteCourse = () => {
     $('.js-button-delete').unbind();
     $(".js-button-delete").click(async function() {
@@ -161,6 +207,9 @@ const deleteMultipleCourse = () => {
     })
 }
 
+
+//! METHOD ADDCOURSE DATATABLE
+//!============================================================
 const clickModal = (ids) => {
     $(".modal-save").click(async function () {
         $('.modal-save').unbind();
@@ -188,41 +237,6 @@ const clickModal = (ids) => {
 
 }
 
-const routeLink = () =>{
-    $('.js-link').click(function () {
-        $('.js-link').unbind();
-
-        let course = this.parentElement.dataset.courseId;
-
-
-        window.location = `/dashboard/course/${course}`;
-    });
-}
-
-$('#alertSumbit').submit(async (e) => {
-    e.preventDefault()
-    let buttonDelete = $('.js-delete');
-    const user = buttonDelete[0].dataset.id;
-    try {
-        const {value} = await Swal.fire({
-            title: 'Είστε σίγουρος;',
-            text: "αρχεία θα διαγραφούν",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Ναί, διαγραφή!',
-            cancelButtonText: 'Άκυρο'
-        });
-        if (value) {
-            const res = await axios.post(`/dashboard/users/${user}`, {_method: 'DELETE'})
-            utilities.toastAlert('success', "Διεγράφη")
-            window.location = `http://127.0.0.1:8000/dashboard/users`;
-        }
-    } catch (e) {
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-    }
-
-
-});
 
 const modalDismiss = () => {
     $('.modal-dismiss').unbind();

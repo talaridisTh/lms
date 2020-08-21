@@ -1,10 +1,15 @@
 import utilities from '../main';
-
+//! GLOBAL VARIABLES
+//!============================================================
 $("#singledaterange").datepicker({dateFormat: 'dd-mm-yy'});
-
 load_data();
 
+
 function load_data(from_date = '', to_date = '') {
+
+
+//! 			Datatables Initialization
+//!##################################################
     const tables = $("#scroll-horizontal-datatable").DataTable({
         processing: true,
         serverSide: true,
@@ -53,11 +58,57 @@ function load_data(from_date = '', to_date = '') {
 
     })
 
+    const sub_DataTable = (vtask_id, table_id, attr) => {
+
+        const subtable = $('#' + table_id).DataTable({
+            processing: true,
+            serverSide: true,
+            searching: false,
+            pageLength: 5,
+            bInfo: false,
+            lengthChange: false,
+            ajax: {
+                url: config.routes.coursesInsideUsersDatatable,
+                headers: config.headers.csrf,
+                type: "post",
+                data: {
+                    'user_id': attr.parentElement.dataset.userId
+                }
+            },
+            columns: [
+                {data: 'action', name: 'action', orderable: false},
+                {data: 'name', name: 'name',},
+                // {data: 'active', name: 'active', orderable: false},
+                {data: 'updated_at', name: 'updated_at',},
+                {data: 'created_at', name: 'created_at',},
+            ],
+            language: config.datatable.language,
+
+
+            drawCallback: () => {
+                $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
+                $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
+                $("thead >tr> th").removeClass("js-link cursor-pointer");
+                $("tfoot > tr > th").removeClass("js-link cursor-pointer");
+
+                selectAlljscheckboxSubTable()
+            },
+
+
+        })
+
+    }
+
+
+//! GLOBAL FUNCTION
+//!============================================================
     utilities.selectAndDeselectCheckbox(".js-user-checkbox")
     utilities.filterButton('#fullNameFilter', 2, tables)
     utilities.filterButton('#rolesFilter', 4, tables)
     utilities.filterButton('#activeFilter', 8, tables)
 
+//! FILTER DATATABLE
+//!============================================================
 
     const pickDay = () => {
         $('.drp-buttons .applyBtn').click(function () {
@@ -98,35 +149,9 @@ function load_data(from_date = '', to_date = '') {
     //     });
     // }
 
-    const toogleInput = () => {
-        $('.toggle-class').unbind();
 
-        $('.toggle-class').change(async function () {
-            const status = $(this).prop('checked') == true ? 1 : 0;
-            const user_id = $(this).data('id');
-            try {
-                const {data} = await axios.patch(config.routes.changeStatusDatatable, {
-                    'active': status,
-                    'id': user_id
-                })
-                tables.ajax.reload()
-                utilities.toastAlert('success', this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε")
-            } catch (err) {
-                utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-            }
-        })
-    }
-
-    const routeLink = () => {
-        $('.js-link').click(function () {
-            $('.js-link').unbind();
-
-            let user = this.parentElement.dataset.userId;
-
-
-            window.location = `/dashboard/users/${user}`;
-        });
-    }
+//! BULK ACTION
+//!============================================================
 
     const selectMultipleCheckboxDelete = () => {
         $('.js-multiple-delete').unbind();
@@ -196,7 +221,48 @@ function load_data(from_date = '', to_date = '') {
         }
     }
 
-    function format(table_id) {
+    const selectAlljscheckboxSubTable = () => {
+        utilities.selectAndDeselectCheckbox('.js-user-checkbox-sub')
+
+    }
+
+
+//! METHOD FIRST TABLE
+//!============================================================
+    const toogleInput = () => {
+        $('.toggle-class').unbind();
+
+        $('.toggle-class').change(async function () {
+            const status = $(this).prop('checked') == true ? 1 : 0;
+            const user_id = $(this).data('id');
+            try {
+                const {data} = await axios.patch(config.routes.changeStatusDatatable, {
+                    'active': status,
+                    'id': user_id
+                })
+                tables.ajax.reload()
+                utilities.toastAlert('success', this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε")
+            } catch (err) {
+                utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+            }
+        })
+    }
+
+    const routeLink = () => {
+        $('.js-link').click(function () {
+            $('.js-link').unbind();
+
+            let user = this.parentElement.dataset.userId;
+
+
+            window.location = `/dashboard/users/${user}`;
+        });
+    }
+
+
+//!METHOD SUB-TABLE
+//!============================================================
+    const formatSubTable = (table_id) => {
         return `
 
    <table id="${table_id}" class="table sub-table">
@@ -218,12 +284,7 @@ function load_data(from_date = '', to_date = '') {
 
     }
 
-    function selectAlljscheckboxSubTable(){
-        utilities.selectAndDeselectCheckbox('.js-user-checkbox-sub')
-
-    }
-
-    function collapse() {
+    const collapse = () => {
         $('#scroll-horizontal-datatable tbody').on('click', 'td.details-control', function () {
             let tr = $(this).closest('tr');
             let row = tables.row(tr);
@@ -237,56 +298,15 @@ function load_data(from_date = '', to_date = '') {
             } else {
                 let virtual_task_id = row.data().id;
                 let subId = "subtable-" + virtual_task_id;
-                row.child(format(subId)).show();
+                row.child(formatSubTable(subId)).show();
                 tr.addClass('shown');
                 this.firstChild.classList.add("text-danger")
                 this.firstChild.classList.remove("text-success")
-                sub_DataTable(virtual_task_id, subId,this);
+                sub_DataTable(virtual_task_id, subId, this);
 
 
             }
         });
-    }
-
-    function sub_DataTable(vtask_id, table_id,attr) {
-
-        let subtable = $('#' + table_id).DataTable({
-            processing: true,
-            serverSide: true,
-            searching: false,
-            pageLength: 5,
-            bInfo: false,
-            lengthChange: false,
-            ajax: {
-                url: config.routes.coursesInsideUsersDatatable,
-                headers: config.headers.csrf,
-                type: "post",
-                data:{
-                    'user_id' : attr.parentElement.dataset.userId
-                }
-            },
-            columns: [
-                {data: 'action', name: 'action', orderable: false},
-                {data: 'name', name: 'name',},
-                // {data: 'active', name: 'active', orderable: false},
-                {data: 'updated_at', name: 'updated_at',},
-                {data: 'created_at', name: 'created_at',},
-            ],
-            language: config.datatable.language,
-
-
-            drawCallback: () => {
-                $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
-                $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
-                $("thead >tr> th").removeClass("js-link cursor-pointer");
-                $("tfoot > tr > th").removeClass("js-link cursor-pointer");
-
-                selectAlljscheckboxSubTable()
-            },
-
-
-        })
-
     }
 
 
