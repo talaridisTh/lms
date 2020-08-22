@@ -731,6 +731,10 @@ function addContent() {
 	let link = container.getElementsByClassName("js-link")[0];
 	let data = new FormData();
 
+	axios.post( "/materials/add-additionnal-content", {
+		test: "test"
+	});
+
 	console.log(priority);
 	console.log(type);
 	console.log(title);

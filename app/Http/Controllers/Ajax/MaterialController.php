@@ -149,4 +149,11 @@ class MaterialController extends Controller
 		echo json_encode($files);
 
 	}
+
+	
+	public function addContent( Request $request ) {
+
+		return "hit";
+		
+	}
 }
