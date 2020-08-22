@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\Course;
+use App\CourseMaterial;
 use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
@@ -153,7 +155,27 @@ class MaterialController extends Controller
 	
 	public function addContent( Request $request ) {
 
-		return "hit";
+		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+
+		$material = new Material;
+		$material->title = $request->title;
+		$material->subtitle = $request->subtitle;
+		$material->type = $request->type;
+		$material->active = $request->state;
+		$material->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
+
+		if ( $request->type == "Video" ) {
+			$material->video_link = $request->video;
+		}
+		elseif ( $request->type == "Link" ) {
+			$material->file = $request->link;
+		}
+		$material->save();
+
+		CourseMaterial::incrementPriority( $request->courseId, $request->priority );
+
+		Course::find( $request->courseId )->materials()
+			->attach( $material->id, ["active" => $request->state, "priority" => $request->priority + 1 ] );
 		
 	}
 }

@@ -423,9 +423,12 @@ function jsLinkEventListener() {
 	});
 }
 
+//* emfanizi sto hover to pano + apo ka8e row
 function trHoverEffectInit() {
 
 	let row = $("#course-materials-list > tbody > tr");
+
+	// row.unbind();
 
 	row.on( 'mouseover', function() {
 		let previousSibling = this.previousSibling;
@@ -630,47 +633,58 @@ $(".js-material").click( function() {
 	let newRow = "";
 	let rowId = "";
 
-		for ( let i = 0; i < rows.length; i++ ) {
-			rowId = rows[i].dataset.materialId;
+	for ( let i = 0; i < rows.length; i++ ) {
+		rowId = rows[i].dataset.materialId;
 
-			if ( id == rowId ) {
-				newRow = createTableRow( type, priority );
-				newRow.appendAfter( rows[i] );
-			}
+		if ( id == rowId ) {
+			newRow = createTableRow( type, priority );
+			newRow.appendAfter( rows[i] );
 		}
+	}
+
+	$('#add-material-modal').modal('hide')
 
 });
 
 function linkFormContent( type, priority) {
 
-	return `<td colspan="7">
+	return `<td class="text-left" colspan="7">
 				<div id="additional-content-form">
 					<div class="form-row">
 						<div class="form-group col-6">
 							<label for="new-title">Τίτλος</label>
-							<input type="text" id="new-title" class="js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+							<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
+							<div class="invalid-feedback">
+        						Παρακαλώ εισάγετε τίτλο.
+							</div>
 						</div>
 						<div class="form-group col-6">
 							<label for="new-subtitle">Υπότιτλος</label>
-							<input type="text" id="new-subtitle" class="js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..."/>
+							<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..."/>
+							<div class="invalid-feedback">
+        						Παρακαλώ εισάγετε υπότιτλο.
+							</div>
 						</div>
 						
 					</div>
 					<div class="form-row">
 						<div class="form-group col-6">
 							<label for="link-input">${ type }</label>
-							<input type="text" id="link-input" class="js-link form-control" placeholder="Εισάγετε link..."/>
+							<input type="text" id="link-input" class="js-empty js-link form-control" placeholder="Εισάγετε link..."/>
+							<div class="invalid-feedback">
+        						Παρακαλώ εισάγετε link.
+							</div>
 						</div>
 						<div class="form-group col-3">
 							<label for="state-select">Κατάσταση</label>
-							<select class="form-control" id="state-select">
+							<select class="js-state form-control" id="state-select">
 								<option value="1">Ενεργό</option>
 								<option value="0" selected>Ανενεργό</option>
 							</select>
 						</div>
-						<div class="form-group col-3 d-flex justify-content-center align-items-end">
+						<div class="form-group col-3 d-flex justify-content-center align-items-start" style="padding-top: 1.85rem;">
 							<button  class="js-add-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
-							<button  class="btn btn-secondary ml-2">Άκυρο</button>
+							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
 					</div>
 				</div>
@@ -679,17 +693,20 @@ function linkFormContent( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td colspan="7">
+	return `<td class="text-left" colspan="7">
 				<div id="additional-content-form">
 					<div class="form-row">
 						<div class="form-group col-9">
 							<label for="new-title">Τίτλος</label>
-							<input type="text" id="new-title" class="js-title form-control" placeholder="Εισάγετε τίτλο..." />
+							<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
+							<div class="invalid-feedback">
+        						Παρακαλώ εισάγετε τίτλο.
+							</div>
 						</div>
 						
 						<div class="form-group col-3">
 							<label for="state-select">Κατάσταση</label>
-							<select class="form-control" id="state-select">
+							<select class="js-state form-control" id="state-select">
 								<option value="1">Ενεργό</option>
 								<option value="0" selected>Ανενεργό</option>
 							</select>
@@ -698,11 +715,14 @@ function annoucementForm( priority ) {
 					<div class="form-row">
 						<div class="form-group col-9">
 							<label for="new-subtitle">Ανακοίνωση</label>
-							<input type="text" id="new-subtitle" class="js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."/>
+							<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."/>
+							<div class="invalid-feedback">
+        						Παρακαλώ εισάγετε τίτλο.
+							</div>
 						</div>
-						<div class="form-group col-3 d-flex justify-content-center align-items-end">
+						<div class="form-group col-3 d-flex justify-content-center align-items-start" style="padding-top: 1.85rem;">
 							<button  class="js-add-content btn btn-primary" data-type="Annoucement" data-priority="${ priority }">Αποθήκευση</button>
-							<button  class="btn btn-secondary ml-2">Άκυρο</button>
+							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
 					</div>
 				</div>
@@ -716,9 +736,22 @@ function createTableRow( type, priority ) {
 	rowElm.innerHTML = type == "Annoucement" ? annoucementForm( priority ) : linkFormContent( type, priority)
 
 	let saveBtn = rowElm.getElementsByClassName("js-add-content")[0];
+	let cancelBtn = rowElm.getElementsByClassName("js-cancel-addition")[0];
 	saveBtn.addEventListener("click", addContent);
+	cancelBtn.addEventListener("click", cancelAddition );
 
 	return rowElm;
+}
+
+function cancelAddition() {
+
+	let parent = this.parentElement.parentElement.parentElement.parentElement;
+	let saveBtn = parent.getElementsByClassName("js-add-content")[0];
+
+	saveBtn.removeEventListener( "click", addContent );
+	this.removeEventListener( "click", cancelAddition );
+
+	parent.remove();
 }
 
 function addContent() {
@@ -727,19 +760,54 @@ function addContent() {
 	let type = this.dataset.type;
 	let title = container.getElementsByClassName("js-title")[0];
 	let subtitle = container.getElementsByClassName("js-subtitle")[0];
-	let videoLink = container.getElementsByClassName("js-video-link")[0];
 	let link = container.getElementsByClassName("js-link")[0];
+	let state = container.getElementsByClassName("js-state")[0];
+	let valid = checkEmpty( container, "js-empty" );
+
+	if ( !valid ) {
+		return
+	}
+
 	let data = new FormData();
 
-	axios.post( "/materials/add-additionnal-content", {
-		test: "test"
-	});
+	data.append( "courseId", courseId );
+	data.append( "title", title.value );
+	data.append( "subtitle", subtitle.value );
+	data.append( "priority", priority );
+	data.append( "type", type );
+	data.append( "state", state.value );
 
-	console.log(priority);
-	console.log(type);
-	console.log(title);
-	console.log(subtitle);
-	console.log(videoLink);
-	console.log(link);
+	if ( link ) {
+		data.append( `${ type.toLowerCase() }`, link.value );
+	}
 
+	axios.post( "/materials/add-additionnal-content", 
+		data
+	)
+		.then( (res) => {
+
+			courseMaterialsTable.ajax.reload();
+			utilities.toastAlert( "success", "Αποθηκεύτηκε" )
+		})
+		.catch( (err) => {
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
+		});
+
+}
+
+function checkEmpty( container, elmClass) {
+
+	let elements = container.getElementsByClassName( elmClass );
+	let valid = true;
+
+	for ( let i = 0; i < elements.length; i++ ) {
+		
+		if ( !elements[i].value ) {
+			elements[i].classList.add("is-invalid");
+			valid = false;
+		}
+
+	}
+
+	return valid;
 }
