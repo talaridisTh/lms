@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('css')
-	
+
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
 	<h1>{{ $material['name'] }}</h1>
 
 	<form id="edit-material-form" data-material-id="{{ $material->id }}" action="/dashboard/materials/update/{{ $material->id }}" method="POST"enctype="multipart/form-data" autocomplete="off">
-			
+
 			@csrf
 
 			<div class="form-row">

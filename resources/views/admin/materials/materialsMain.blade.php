@@ -12,7 +12,7 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-					<a href="materials/new" class="btn btn-secondary mb-2">
+					<a href="{{route('material.create')}}" class="btn btn-secondary mb-2">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Δημιουργία
 					</a>

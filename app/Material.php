@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Material extends Model
 {
+
+    protected $guarded = [];
+
     public function courses() {
 
 		return $this->belongsToMany(Course::class)->withPivot('active', 'priority');

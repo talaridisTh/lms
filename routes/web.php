@@ -63,7 +63,8 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 	//! Material Routes
     Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
     Route::get('/dashboard/material/{material}', 'MaterialController@show')->name('material.show');
-    Route::get('/dashboard/materials/new', 'MaterialController@newMaterial')->name('material.new');
+    Route::get('/dashboard/materials/create', 'MaterialController@create')->name('material.create');
+    Route::post('/dashboard/materials/store', 'MaterialController@store')->name('material.store');
 
 	//! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');

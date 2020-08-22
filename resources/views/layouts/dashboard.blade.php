@@ -20,7 +20,7 @@
 
 	</head>
 
-	<body class="loading" data-layout-config='{"leftSideBarTheme":"default","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":true, "showRightSidebarOnStart": true}'>
+	<body class="loading right-bar-enabled" data-layout-config='{"leftSideBarTheme":"default","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":true, "showRightSidebarOnStart": true }'>
 		<!-- Begin page -->
 		<div class="wrapper">
 			<!-- ========== Left Sidebar Start ========== -->
@@ -111,6 +111,11 @@
 									</form>
 								</div>
 							</li>
+                            <li class="notification-list">
+                                <a class="nav-link right-bar-toggle" href="javascript: void(0);">
+                                    <i class="dripicons-gear noti-icon"></i>
+                                </a>
+                            </li>
 
 							<li class="dropdown notification-list">
 								<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -410,6 +415,9 @@
 			@csrf
 		</form>
 
+
+
+        <!-- /Right-bar -->
 		<!-- bundle -->
 		<script src="/assets/js/vendor.min.js"></script>
 		<script src="/assets/js/app.min.js"></script>

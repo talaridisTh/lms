@@ -7,6 +7,7 @@
     "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js",
     "/js/dashboard/main.js": "/js/dashboard/main.js",
     "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js",
+    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js",
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js"

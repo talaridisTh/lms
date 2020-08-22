@@ -3285,6 +3285,10 @@ select.is-invalid {
   background-color: #282f36;
 }
 
+.redactor-box {
+  background-color: #404954 !important;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

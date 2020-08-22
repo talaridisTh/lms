@@ -39,8 +39,6 @@ function minorCheckboxSwitcher(main, minor) {
 
 const filterButton = function (attr, column, table) {
     $(attr).detach().prependTo('#containerCol')
-
-
     $(attr).on('change', function () {
         table.columns(column).search(this.value).draw();
     });
