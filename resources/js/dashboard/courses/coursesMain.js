@@ -1,5 +1,3 @@
-import utilities from '../main.js';
-
 //! EventListeners
 
 $("#submit-form-btn").click( function() {
@@ -81,13 +79,13 @@ $('#delete-courses-btn').click( function() {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
 
-				utilities.toastAlert( "success", message );
+				toastAlert( "success", message );
 
 				coursesDatatable.ajax.reload();
 			})
 			.catch(function (error) {
 				
-				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+				toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 			});
 			
@@ -111,13 +109,13 @@ function toggleActive() {
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 
-			utilities.toastAlert( icon, message );
+			toastAlert( icon, message );
 
 			updatedAtElm.textContent = "Μόλις τώρα";
 		})
 		.catch( (err) => {
 
-			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 		});
 	});
@@ -128,4 +126,16 @@ function atLinkEventListener() {
 		let courseId = this.parentElement.dataset.courseId;
 		window.location = `course/${courseId}`;
 	});
+}
+
+function toastAlert(icon, message) {
+    Swal.fire({
+        toast: 'true',
+        position: 'top-end',
+        icon: icon,
+        title: message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
 }

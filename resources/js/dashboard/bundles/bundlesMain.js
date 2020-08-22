@@ -1,5 +1,3 @@
-import utilities from '../main';
-
 //! EventListeners
 //!==================
 
@@ -33,13 +31,13 @@ $("#delete-bundles-btn").click( function() {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
 
-				utilities.toastAlert( "success", message );
+				toastAlert( "success", message );
 
 				bundlesDatatable.ajax.reload();
 			})
 			.catch(function (error) {
 				
-				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+				toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 			});
 			
@@ -96,10 +94,10 @@ function activeToggleInit() {
 		.then( (res) => {
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε!" : "Απενεργοποιήθηκε";
-			utilities.toastAlert( icon, message );
+			toastAlert( icon, message );
 		})
 		.catch( (err) => {
-			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 		})
 	});
 }
@@ -112,4 +110,16 @@ function jsLinkInit() {
 		window.location = `bundle/${bundleId}`;
 	});
 
+}
+
+function toastAlert(icon, message) {
+    Swal.fire({
+        toast: 'true',
+        position: 'top-end',
+        icon: icon,
+        title: message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
 }

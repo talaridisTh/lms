@@ -1,11 +1,23 @@
-import utilities from '../main';
-
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
 const totalLessons = $('#total-lessons')[0];
 const totalAdditions = $('#total-additions')[0];
 const updatedAt = $("#last-update-cnt")[0];
+const tableLocale = {
+	emptyTable: 		"Δεν υπάρχουν εγγραφές",
+	info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+	infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
+	lengthMenu: 		"_MENU_",
+	loadingRecords: 	"Φόρτωση ...",
+	processing: 		"Επεξεργασία ...",
+	search: 			"",
+	searchPlaceholder: 	"Αναζήτηση... ",
+	zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
+	paginate:{
+		previous:"<i class='mdi mdi-chevron-left'>",
+		next:"<i class='mdi mdi-chevron-right'>"}
+}
 
 //! Prototype Additions
 //!============================================================
@@ -51,7 +63,7 @@ $("#course-cover-input").change( function() {
 $('#all-remainings-checkbox').change( function() {
 	let checkboxes = $('.js-remainings-checkbox')
 
-	utilities.minorCheckboxSwitcher( this, checkboxes );
+	minorCheckboxSwitcher( this, checkboxes );
 
 });
 
@@ -62,7 +74,7 @@ $('#add-remaingings-btn').click( function() {
 	let ids = [];
 
 	if ( checkboxes.length == 0 ) {
-		utilities.toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
+		toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 		return;
 	}
 	else {
@@ -88,7 +100,7 @@ $('#remove-selection-btn').click( function() {
 
 	if ( checkboxes.length == 0 ) {
 
-		utilities.toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
+		toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 		return;
 	}
 	else {
@@ -110,7 +122,7 @@ $("#all-active-materials-checkbox").change( function() {
 
 	let checkboxes = $(".js-course-material-checkbox");
 
-	utilities.minorCheckboxSwitcher( this, checkboxes )
+	minorCheckboxSwitcher( this, checkboxes )
 
 });
 
@@ -138,7 +150,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer" },
 		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
 	],
-	language: utilities.tableLocale,
+	language: tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -173,7 +185,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		{data: 'type', name: 'materials.type', className: "cursor-default"},
 		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 	],
-	language: utilities.tableLocale,
+	language: tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -206,7 +218,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
-	language: utilities.tableLocale,
+	language: tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -239,7 +251,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
-	language: utilities.tableLocale,
+	language: tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -393,11 +405,11 @@ function toggleCourseMaterial() {
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 
-			utilities.toastAlert( icon, message );
+			toastAlert( icon, message );
 			updatedAt.textContent = "Μόλις τώρα";
 		})
 		.catch( (err) => {
-			utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 		});
 	});
 }
@@ -459,7 +471,7 @@ function remainingMaterialsCheckboxHandler() {
 	let mainCheckbox = $('#all-remainings-checkbox')[0];
 	let checkbox = $('.js-remainings-checkbox');
 
-	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox );
+	mainCheckboxSwitcher( mainCheckbox, checkbox );
 }
 
 function activeMaterialsCheckboxToggle() {
@@ -474,7 +486,7 @@ function activeMaterialsCheckboxHandler() {
 	let mainCheckbox = $('#all-active-materials-checkbox')[0];
 	let checkbox = $('.js-course-material-checkbox');
 
-	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
+	mainCheckboxSwitcher( mainCheckbox, checkbox);
 }
 
 function addUsers( userIds ) {
@@ -485,14 +497,14 @@ function addUsers( userIds ) {
 	.then( (res) => {
 
 		let message = userIds.length == 1 ? "Ένας χρήστης προστέθηκε" : `${userIds.length} χρήστες προστέθηκαν`;
-		utilities.toastAlert( 'success', message );
+		toastAlert( 'success', message );
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
 
 	})
 	.catch( (err) => {
 		console.log(err);
-		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 	})
 }
@@ -505,14 +517,14 @@ function removeUsers( userIds ) {
 	.then( (res) => {
 
 		let message = userIds.length == 1 ? "Ένας χρήστης αφαιρέθηκε" : `${userIds.length} χρήστες αφαιρέθηκαν`;
-		utilities.toastAlert( 'success', message );
+		toastAlert( 'success', message );
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
 
 	})
 	.catch( (err) => {
 		console.log(err);
-		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 	})
 }
@@ -525,7 +537,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	.then( (res) => {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
 
-		utilities.toastAlert( 'success', message );
+		toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 		totalLessons.textContent = parseInt(totalLessons.textContent) + lessonsCount;
@@ -534,7 +546,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	})
 	.catch( (err) => {
 		console.log(err);
-		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
 
@@ -548,7 +560,7 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 
 		let message = materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ύλης`;
 
-		utilities.toastAlert( 'success', message );
+		toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 		totalLessons.textContent = parseInt(totalLessons.textContent) - lessonsCount;
@@ -556,7 +568,7 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 		updatedAt.textContent = "Μόλις τώρα";
 	})
 	.catch( (err) => {
-		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
 
@@ -787,10 +799,10 @@ function addContent() {
 		.then( (res) => {
 
 			courseMaterialsTable.ajax.reload();
-			utilities.toastAlert( "success", "Αποθηκεύτηκε" )
+			toastAlert( "success", "Αποθηκεύτηκε" )
 		})
 		.catch( (err) => {
-			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
+			toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
 		});
 
 }
@@ -810,4 +822,43 @@ function checkEmpty( container, elmClass) {
 	}
 
 	return valid;
+}
+
+function toastAlert(icon, message) {
+    Swal.fire({
+        toast: 'true',
+        position: 'top-end',
+        icon: icon,
+        title: message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+}
+
+function mainCheckboxSwitcher(main, minor) {
+
+    for (let i = 0; i < minor.length; i++) {
+        if (!minor[i].checked) {
+            main.checked = false;
+            break;
+        } else {
+            main.checked = true;
+        }
+    }
+
+}
+
+function minorCheckboxSwitcher(main, minor) {
+
+    if (main.checked) {
+        for (let i = 0; i < minor.length; i++) {
+            minor[i].checked = true;
+        }
+    } else {
+        for (let i = 0; i < minor.length; i++) {
+            minor[i].checked = false;
+        }
+    }
+
 }
