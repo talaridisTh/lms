@@ -575,7 +575,7 @@ function createStateSelect() {
 	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
 
 	selectElm.innerHTML = `
-		<option value="">Όλοι οι χρήστες</option>
+		<option value="">Όλες οι Καταστάσεις</option>
 		<option value="1">Ενεργά</option>
 		<option value="0">Ανενεργά</option>
 	`;
@@ -611,4 +611,131 @@ function createTopicSelect( res ) {
 		courseMaterialsTable.columns( 4 ).search( this.value ).draw();
 
 	})
+}
+
+$("#add-material-modal").on("show.bs.modal", function(event) {
+	let button = $( event.relatedTarget );
+	let id = button.data("material-id");
+	let priority = button.data("priority");
+
+	$(this).find("#store-material-id").val( id );
+	$(this).find("#store-material-priority").val( priority );
+})
+
+$(".js-material").click( function() {
+	let id = $("#store-material-id").val();
+	let priority = $("#store-material-priority").val();
+	let rows = $("#course-materials-list > tbody > tr");
+	let type = this.dataset.type;
+	let newRow = "";
+	let rowId = "";
+
+		for ( let i = 0; i < rows.length; i++ ) {
+			rowId = rows[i].dataset.materialId;
+
+			if ( id == rowId ) {
+				newRow = createTableRow( type, priority );
+				newRow.appendAfter( rows[i] );
+			}
+		}
+
+});
+
+function linkFormContent( type, priority) {
+
+	return `<td colspan="7">
+				<div id="additional-content-form">
+					<div class="form-row">
+						<div class="form-group col-6">
+							<label for="new-title">Τίτλος</label>
+							<input type="text" id="new-title" class="js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+						</div>
+						<div class="form-group col-6">
+							<label for="new-subtitle">Υπότιτλος</label>
+							<input type="text" id="new-subtitle" class="js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..."/>
+						</div>
+						
+					</div>
+					<div class="form-row">
+						<div class="form-group col-6">
+							<label for="link-input">${ type }</label>
+							<input type="text" id="link-input" class="js-link form-control" placeholder="Εισάγετε link..."/>
+						</div>
+						<div class="form-group col-3">
+							<label for="state-select">Κατάσταση</label>
+							<select class="form-control" id="state-select">
+								<option value="1">Ενεργό</option>
+								<option value="0" selected>Ανενεργό</option>
+							</select>
+						</div>
+						<div class="form-group col-3 d-flex justify-content-center align-items-end">
+							<button  class="js-add-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
+							<button  class="btn btn-secondary ml-2">Άκυρο</button>
+						</div>
+					</div>
+				</div>
+			</td>`;
+}
+
+function annoucementForm( priority ) {
+
+	return `<td colspan="7">
+				<div id="additional-content-form">
+					<div class="form-row">
+						<div class="form-group col-9">
+							<label for="new-title">Τίτλος</label>
+							<input type="text" id="new-title" class="js-title form-control" placeholder="Εισάγετε τίτλο..." />
+						</div>
+						
+						<div class="form-group col-3">
+							<label for="state-select">Κατάσταση</label>
+							<select class="form-control" id="state-select">
+								<option value="1">Ενεργό</option>
+								<option value="0" selected>Ανενεργό</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="form-group col-9">
+							<label for="new-subtitle">Ανακοίνωση</label>
+							<input type="text" id="new-subtitle" class="js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."/>
+						</div>
+						<div class="form-group col-3 d-flex justify-content-center align-items-end">
+							<button  class="js-add-content btn btn-primary" data-type="Annoucement" data-priority="${ priority }">Αποθήκευση</button>
+							<button  class="btn btn-secondary ml-2">Άκυρο</button>
+						</div>
+					</div>
+				</div>
+			</td>`
+}
+
+
+function createTableRow( type, priority ) {
+	let rowElm = document.createElement("tr");
+
+	rowElm.innerHTML = type == "Annoucement" ? annoucementForm( priority ) : linkFormContent( type, priority)
+
+	let saveBtn = rowElm.getElementsByClassName("js-add-content")[0];
+	saveBtn.addEventListener("click", addContent);
+
+	return rowElm;
+}
+
+function addContent() {
+	let container = this.parentElement.parentElement.parentElement;
+	let priority = this.dataset.priority;
+	let type = this.dataset.type;
+	let title = container.getElementsByClassName("js-title")[0];
+	let subtitle = container.getElementsByClassName("js-subtitle")[0];
+	let videoLink = container.getElementsByClassName("js-video-link")[0];
+	let link = container.getElementsByClassName("js-link")[0];
+	let data = new FormData();
+
+	console.log(priority);
+	console.log(type);
+	console.log(title);
+	console.log(subtitle);
+	console.log(videoLink);
+	console.log(link);
+
 }

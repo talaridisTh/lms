@@ -29,7 +29,7 @@
 									<h5 class="card-title mt-2">Μάθημα</h5>
 								</div>
 							</div>
-							<div class="card cursor-pointer">
+							<div class="card cursor-pointer js-material" data-type="Video">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-camcorder	display-3"></i>
 									<h5 class="card-title mt-2">Video</h5>
@@ -38,22 +38,23 @@
 						</div>
 					
 						<div class="col-6">
-							<div class="card cursor-pointer">
+							<div class="card cursor-pointer js-material" data-type="Annoucement">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-comment-quote-outline display-3"></i>
 									<h5 class="card-title mt-2">Ανακοίνωση</h5>
 								</div>
 							</div>
-							<div class="card cursor-pointer">
+							<div class="card cursor-pointer js-material" data-type="Link">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-link-variant-plus	display-3"></i>
 									<h5 class="card-title mt-2">Link</h5>
 								</div>
 							</div>
 						</div>
-					
 					</div>
 				</div>
+				<input id="store-material-id" type="text" value="" hidden>
+				<input id="store-material-priority" type="text" value="" hidden>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
@@ -422,9 +423,6 @@
 				</div> <!-- end card body -->
 			</div> <!-- end card -->
 		</div> <!-- end col -->
-
-
-
 
 	</div>
 @endsection

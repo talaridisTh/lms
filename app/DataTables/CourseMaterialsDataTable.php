@@ -12,6 +12,7 @@ use Yajra\DataTables\Services\DataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Carbon;
 
 class CourseMaterialsDataTable extends DataTable
 {
@@ -46,12 +47,22 @@ class CourseMaterialsDataTable extends DataTable
 								<input class='js-course-material-checkbox' data-material-id='$data->materialId' data-material-type='$data->type' type='checkbox' id='$data->slug' autocomplete='off'>
 								<label for='$data->slug'></label>
 							</div>
-							<a class='text-secondary add-material' href='#' data-toggle='modal' data-target='#add-material-modal'>
+							<a class='text-secondary add-material' href='#' data-material-id='$data->materialId' data-priority='$data->priority' data-toggle='modal' data-target='#add-material-modal'>
 								<i class='mdi mdi-plus-circle-outline mr-1'></i>
 							</a>
 						</div>";
 
 			})
+			/* ->editColumn('updated_at', function($data) {
+
+				return Carbon::parse($data->updated_at)->diffForHumans();
+
+			})
+			->editColumn('created_at', function($data) {
+
+				return Carbon::parse($data->created_at)->diffForHumans();
+
+			}) */
 			->editColumn('active', function($data) use ($request) {
 
 				$active = $data->active == 0 ? "" : "checked";
