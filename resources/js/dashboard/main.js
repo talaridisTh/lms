@@ -61,6 +61,19 @@ const selectAndDeselectCheckbox = function (attr) {
     })
 }
 
+const changeInputHidden = (attr, hiddenAttr)=>{
+
+
+    $(attr).change(function(){
+        if(attr =="#activeMaterial"){
+             this.value = $(this).prop('checked') == true ? 1 : 0;
+        }
+        let hiddenValue = $(hiddenAttr)[0].value =this.value
+        console.log(hiddenValue)
+
+    })
+}
+
 const tableLocale = {
 	emptyTable: 		"Δεν υπάρχουν εγγραφές",
 	info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
@@ -83,5 +96,6 @@ export default {
     minorCheckboxSwitcher,
     filterButton,
 	selectAndDeselectCheckbox,
-	tableLocale
+	tableLocale,
+    changeInputHidden
 }
