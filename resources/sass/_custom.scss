@@ -111,8 +111,8 @@ select.is-invalid {
 }
 
 .select2-container{
-    width: 14%!important;
-    margin: 5px;
+    //width: 14%!important;
+
 }
 
 .select2-selection{
@@ -134,5 +134,12 @@ select.is-invalid {
 .redactor-box{
     background-color:#404954!important;
 
+}
+
+.border-material{
+    margin-top: 26px;
+    padding: 36px 12px 39px 12px;
+    border-radius:8px;
+    background-color: #37404B;
 }
 
