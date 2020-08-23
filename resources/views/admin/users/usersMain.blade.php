@@ -83,7 +83,6 @@
                 placeholder: "Courses",
                 allowClear: true,
                 // minimumInputLength: 2,
-
             });
 
             $("#rolesFilter").select2({
@@ -116,7 +115,7 @@
         });
 
 
-        $(".ragneButton").detach().prependTo('#containerCol')
+        $(".ragneButton").detach().appendTo('.dataTables_length label')
     </script>.
 
 @endsection

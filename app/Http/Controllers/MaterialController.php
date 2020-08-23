@@ -10,99 +10,104 @@ use App\User;
 use Illuminate\Support\Str;
 use PHPUnit\Util\Type;
 
-class MaterialController extends Controller
-{
+class MaterialController extends Controller {
 
     public function index()
     {
-		$materials = Material::all(['title', 'description', 'active', 'type']);
+        $materials = Material::all(['title', 'description', 'active', 'type']);
 
         return view('admin/materials/materialsMain')->withMaterials($materials);
     }
 
-
     public function create()
     {
 
-        $types = Topic::all();
-        $instructors  = User::getInstructor();
+        $topics = Topic::all();
+        $instructors = User::getInstructor();
         $courses = Course::all();
+        $types = Material::all()->unique('type');
 
 
-        return view('admin.materials.newMaterial',compact("types","instructors","courses"));
+        return view('admin.materials.newMaterial', compact("topics", "instructors", "courses" ,"types"));
     }
-
 
     public function store(Request $request)
     {
 
 
         $material = new Material();
-        $data = collect($request)->except( "instructor","courses")->all();
-
+        $data = collect($request)->except("instructor", "topic")->all();
         if ($files = $request->file('cover'))
         {
-            $destinationPath = public_path("images") . '/lessson'.$request->title;
+            $destinationPath = public_path("images") . '/lessson' . $request->title;
             $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
             $files->move($destinationPath, $profileImage);
             $data['cover'] = $profileImage;
         } else
         {
             $data["cover"] = "https://via.placeholder.com/600x400.png";
-
-
-
         }
+
 
         $data["slug"] = Str::slug($request->title, '-');
 //        dd($data);
-
-      $newMaterial = $material->create($data);
-
-        if($request->instructor){
+        $newMaterial = $material->create($data);
+        if ($request->instructor)
+        {
 
             $newMaterial->users()->attach($request->instructor);
-
         }
-        if($request->courses){
-            $newMaterial->courses()->attach($request->courses);
+        if ($request->topic)
+        {
 
+            $newMaterial->topics()->attach($request->topic);
         }
-
-        return redirect(route("material.index"));
+//        if($request->courses){
+//            $newMaterial->courses()->attach($request->courses);
+//
+//        }
+        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $data["title"] .  ' δημιουργήθηκε');;
 //        dd($data);
-
-
     }
-
 
     public function show(Material $material)
     {
-		$topics = Topic::all();
 
-		$data = [
-			'material' => $material,
-			'topics' => $topics,
-		];
+        $tops = Topic::all();
 
-        return view('admin.materials.material')->with( $data );
+        $instructors = User::getInstructor();
+        $courses = Course::all();
+        $types = Material::all()->unique('type');
+
+        return view('admin.materials.material', compact("tops", "instructors", "courses", "material","types"));
     }
 
-    public function edit(Material $material)
-    {
-
-    }
 
     public function update(Request $request, Material $material)
     {
 
-    }
+        $data = collect($request)->except("instructor", "topic")->all();
+         $material->update($data);
 
+        if ($request->instructor)
+        {
+            $material->users()->update(['user_id' => $request->instructor]);
+        }
+        if ($request->topic)
+        {
+
+            $material->topics()->update(['topic_id' => $request->topic]);
+        }
+
+        return redirect(route("material.index"))->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
+
+
+
+    }
 
     public function destroy(Material $material)
     {
 
-	}
-
+    }
 
 }

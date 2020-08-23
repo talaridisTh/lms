@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-
+    <x-alertMsg :msg="'update'"></x-alertMsg>
+    <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container table-cnt" style="max-width:1370px">
 
 		<div class="row mb-2">

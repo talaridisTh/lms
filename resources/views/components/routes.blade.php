@@ -25,11 +25,9 @@
                 emptyTable: "Δεν υπάρχουν εγγραφές",
                 info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
                 infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
-{{--                @if (\Request::path() == "dashboard/users")--}}
-{{--                lengthMenu: "_MENU_",--}}
-{{--                @else--}}
-                lengthMenu: "_MENU_ Αποτελέσματα ανα σελίδα",
-{{--                @endif--}}
+
+                lengthMenu: "_MENU_",
+
                 loadingRecords: "Φόρτωση ...",
                 processing: "Επεξεργασία ...",
                 search: "Αναζήτηση: ",

@@ -38,7 +38,7 @@ function minorCheckboxSwitcher(main, minor) {
 }
 
 const filterButton = function (attr, column, table) {
-    $(attr).detach().prependTo('#containerCol')
+    $(attr).detach().appendTo('.dataTables_length label')
     $(attr).on('change', function () {
         table.columns(column).search(this.value).draw();
     });
@@ -68,8 +68,9 @@ const changeInputHidden = (attr, hiddenAttr)=>{
         if(attr =="#activeMaterial"){
              this.value = $(this).prop('checked') == true ? 1 : 0;
         }
+
+        // console.log($(hiddenAttr))
         let hiddenValue = $(hiddenAttr)[0].value =this.value
-        console.log(hiddenValue)
 
     })
 }

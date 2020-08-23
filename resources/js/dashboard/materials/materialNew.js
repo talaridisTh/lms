@@ -17,8 +17,34 @@ ArticleEditor('#contentMaterial')
 
 utilities.changeInputHidden('#urlMaterial','#urlMaterialHiden')
 utilities.changeInputHidden('#createAtMaterial','#createAtMaterialHidden')
-utilities.changeInputHidden('#coverMaterial','#coverMaterialHidden')
 utilities.changeInputHidden('#activeMaterial','#activeMaterialHidden')
 utilities.changeInputHidden('#typeMaterial','#typeMaterialHidden')
 utilities.changeInputHidden('#instructorMaterial','#instructorMaterialHidden')
-utilities.changeInputHidden('#coursesMaterial','#coursesMaterialHidden')
+utilities.changeInputHidden('#topicMaterial','#topicMaterialHidden')
+// utilities.changeInputHidden('#coursesMaterial','#coursesMaterialHidden')
+
+
+
+
+//! SELECT2
+//!============================================================
+$("#typeMaterial").select2({
+    minimumResultsForSearch: -1,
+    allowClear: true,
+    placeholder: 'Ολοι οι Τύποι'
+});
+
+// $("#coursesMaterial").select2({
+//     allowClear: true,
+//     placeholder: 'Ολα τα courses'
+// });
+
+$("#instructorMaterial").select2({
+    allowClear: true,
+    placeholder: 'Ολοι οι Εισηγητής'
+});
+
+$("#topicMaterial").select2({
+    allowClear: true,
+    placeholder: 'Ολα τα Τοpic'
+});

@@ -6,63 +6,195 @@
 
 @section('content')
 
-<div class="container">
-	<h1>{{ $material['name'] }}</h1>
+    <section class="container-fruid" style="max-width: 1400px">
+        <div class="row">
+            <div class="col-md-8" id="material-form">
+                <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item">
+                        <a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                            <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Content</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                            <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Profile</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                    <li class="nav-item">
+                        <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
+                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                            <span class="d-none d-md-block">Settings</span>
+                        </a>
+                    </li>
+                </ul>
 
-	<form id="edit-material-form" data-material-id="{{ $material->id }}" action="/dashboard/materials/update/{{ $material->id }}" method="POST"enctype="multipart/form-data" autocomplete="off">
 
-			@csrf
+                <div class="tab-content ">
+                    <div class="tab-pane show active" id="content">
+                        <form class="needs-validation formPrevent" method="post" action="{{route('material.update',$material->id)}}"
+                              enctype="multipart/form-data" novalidate>
+                            @method('PATCH')
+                            @csrf
+                            <div class="form-group mb-3">
+                                <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
+                                <input name="title" type="text" class="form-control" id="titleMaterial"
+                                       value="{{old('material', $material->title)}}"
+                                       placeholder="Εισάγετε τίτλο...">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="subtitleMaterial">Υποτίτλο<span class="text-danger"> *</span></label>
+                                <input name="subtitle" type="text" class="form-control" id="subtitleMaterial"
+                                       value="{{old('material', $material->subtitle)}}"
+                                       placeholder="Εισάγετε υποτίτλο...">
+                                <div class="valid-feedback">
+                                    Looks good!
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="summaryMaterial">Περίληψη</label>
+                                <textarea  name="summary" class="form-control" placeholder="Εισάγετε περίληψη..."
+                                          id="summaryMaterial"
+                                          rows="5">{{$material->summary}}</textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="descriptionMaterial">Περιγραφή<span class="text-danger"> *</span></label>
+                                <textarea name="description" class="form-control" placeholder="Εισάγετε περιγραφή..."
+                                          id="descriptionMaterial" rows="5">{{$material->description}}</textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="contentMaterial">Περιεχόμενο μαθήματος <span
+                                        class="text-danger"> *</span></label>
+                                <textarea name="content" class="form-control"
+                                          value="{{old('material', $material->content)}}"
+                                          id="contentMaterial" rows="5">{{$material->content}}</textarea>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Submit form</button>
 
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label for="inputEmail4">Όνομα</label>
-					<input name="title" type="text" class="form-control" id="inputEmail4" value="{{ $material->title }}" placeholder="Δώστε όνομα...">
-				</div>
-				<div class="form-group col-md-6">
-					<label for="course-cover">Cover Εικόνα</label>
-					<div class="input-group">
-					    <div class="custom-file">
-							<input id="course-cover-input" type="file" class="custom-file-input" name="cover">
-							<label id="course-cover-label" class="custom-file-label file-search-label-primary" for="course-cover-input">{{ $material->cover }}</label>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="description">Περιγραφή</label>
-				<textarea id="description" type="text" name="description" class="form-control" placeholder="Δώστε περιγραφή...">{{ $material->description }}</textarea>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-md-6">
-					<label for="topic">Topic</label>
-					<select id="topic" class="form-control">
-						@foreach ($topics as $topic)
-							<option value="{{ $topic['id'] }}" {{ $topic->id == $material->topics[0]['id'] ? "selected" : "" }}>
-								{{ $topic['name'] }}
-							</option>
-						@endforeach
-					</select>
-				</div>
-				<div class="form-group col-md-6">
-					<label for="state">Κατάσταση</label>
-					<select id="state" class="form-control">
-						<option value="1" {{ $material['active'] == 1 ? "selected" : "" }}>Ενεργό</option>
-						<option value="0" {{ $material['active'] == 0 ? "selected" : "" }}>Ανενεργό</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="material-content">Περιεχόμενο</label>
-				<textarea id="material-content" type="text" class="form-control"  placeholder="Περιεχόμενο...">{{ $material->content }}</textarea>
-			</div>
-			<button type="submit" class="btn btn-primary">Αποθήκευση</button>
-		</form>
-	</div>
+                            <input name="topic" type="hidden" class="form-control" id="topicMaterialHidden">
+                            <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
+                            <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
+                            <input name="video_id" type="hidden" class="form-control" id="urlMaterialHiden">
+                            <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
+                            <input name="cover" hidden type="file" class="form-control" id="coverMaterialHidden">
+                            <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
+                        </form>
+                    </div>
+                    <div class="tab-pane " id="profile">
+                        <p>...</p>
+                    </div>
+                    <div class="tab-pane" id="settings">
+                        <p>...</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <aside class="col-md-4">
+                <div class="border-material">
+                    <div class="form-group mb-3">
+                        <label for="urlMaterial">URL video</label>
+                        <input type="text" class="form-control" id="urlMaterial"
+                               value="{{old('material', $material->video_id)}}"
+                               placeholder="Εισάγετε URL video...">
+                        <div class="valid-feedback">
+                            Looks good!
+                        </div>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="topicMaterial">Topic <span class="text-danger"> *</span></label>
+                        <select name="topic" id="topicMaterial" class="form-control" >
+                            @foreach ($tops as $topic)
+                                <option
+                                    value="{{$topic->id}}" {{$material->topics->first()->id ==$topic->id? "selected":""}}>{{$topic->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+
+                    <div class="form-group mb-3">
+                        <label for="typeMaterial">Τύπος <span class="text-danger"> *</span></label>
+                        <select name="type" id="typeMaterial" class="form-control " data-toggle="select2">
+
+                            @foreach($types as $type)
+                                <option  value="{{$type->id}}" {{$type->type==$material->type? "selected":""}}>{{$type->type}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="createAtMaterial">Created</label>
+                        <input type="text" class="form-control date"  value="{{old('material', date('m/d/Y', strtotime($material->created_at)))}}"   placeholder="ss" id="createAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
+
+                    </div>
+
+                    <div class="form-group">
+                        <label for="updateAtMaterial">Published</label>
+                        <input type="text" class="form-control date" id="updateAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
+
+                    </div>
+                    <hR>
+                    <div class="form-group mb-3">
+                        <label for="instructorMaterial">Εισηγητής <span class="text-danger"> *</span></label>
+                        <select name="instructor" id="instructorMaterial" class="form-control " data-toggle="select2">
+                            @foreach($instructors as $k=> $instructor)
+                                <option  value="{{$instructor->id}}" {{$instructor->fullName==$material->users->first()->fullName? "selected":""}}>{{$instructor->fullName}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class=" form-group ">
+                        <h3>Creator</h3>
+                        <input type="text" class="form-control" id="creatorMaterialHidden" disabled
+                               value="{{auth()->user()->fullName}}"
+                               placeholder="Εισάγετε URL video...">
+                    </div>
+                    <hr>
+
+                    <div class="form-row justify-content-between">
+                        <div class="col-10">
+                            <label for="createAtMaterial">Κατάσταση</label>
+                        </div>
+                        <div class="col-2 ">
+                            <input type="checkbox" id="activeMaterial" {{$material->active == 0 ? "" : "checked"}} data-switch="bool"/>
+                            <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-material">
+
+                    <div class="form-group">
+                        <label>Cover<span class="text-danger"> *</span></label>
+                        <div class="input-group">
+                            <div class="custom-file">
+                                <label class="custom-file-label" for="coverMaterialHidden">Εισάγετε αρχειο</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="border-material">
+                    <h3>Tags</h3>
+                </div>
+            </aside>
+
+        </div>
+    </section>
+
 
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 
-<script src="{{ asset('js/dashboard/materials/material.js') }}"
+    <script>
+
+    </script>
 
 @endsection

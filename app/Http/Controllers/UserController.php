@@ -24,6 +24,8 @@ class UserController extends Controller {
     {
         $activeCourses = User::courseWhereActive();
 
+
+
         return view('admin.users.usersMain',compact("activeCourses"));
     }
 

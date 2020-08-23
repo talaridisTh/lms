@@ -118,6 +118,7 @@ function load_data(from_date = '', to_date = '') {
     utilities.filterButton('#rolesFilter', 5, tables)
     utilities.filterButton('#activeFilter', 9, tables)
 
+
 //! FILTER DATATABLE
 //!============================================================
 
@@ -144,8 +145,6 @@ function load_data(from_date = '', to_date = '') {
             load_data(from_date, to_date);
         }
 
-        console.log(from_date)
-        console.log(to_date)
 
 
     }

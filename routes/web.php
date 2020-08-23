@@ -61,11 +61,11 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
 	//! Material Routes
-    Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
+        Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
     Route::get('/dashboard/material/{material}', 'MaterialController@show')->name('material.show');
     Route::get('/dashboard/materials/create', 'MaterialController@create')->name('material.create');
     Route::post('/dashboard/materials/store', 'MaterialController@store')->name('material.store');
-
+    Route::patch('/dashboard/materials/update/{material}', 'MaterialController@update')->name('material.update');
 	//! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course}', 'CourseController@show')->name('course.show');

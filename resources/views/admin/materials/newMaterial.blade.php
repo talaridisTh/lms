@@ -5,6 +5,7 @@
 @endsection
 
 @section('content')
+    <x-alertMsg :msg="'create'"></x-alertMsg>
     <section class="container-fruid" style="max-width: 1400px">
         <div class="row">
             <div class="col-md-8" id="material-form">
@@ -45,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="form-group mb-3">
-                                <label for="subtitleMaterial">Υποτίτλο<span class="text-danger"> *</span></label>
+                                <label for="subtitleMaterial">Υποτίτλος<span class="text-danger"> *</span></label>
                                 <input name="subtitle" type="text" class="form-control" id="subtitleMaterial"
                                        placeholder="Εισάγετε υποτίτλο...">
                                 <div class="valid-feedback">
@@ -76,9 +77,10 @@
                             <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
                             <input name="video_id" type="hidden" class="form-control" id="urlMaterialHiden">
                             <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
-                            <input name="cover" type="hidden" class="form-control" id="coverMaterialHidden">
-                            <input name="instructor"  type="hidden"class="form-control" id="instructorMaterialHidden">
-                            <input name="courses"  type="hidden"class="form-control" id="coursesMaterialHidden">
+                            <input name="cover" type="file" hidden class="form-control" id="coverMaterialHidden">
+                            <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
+                            <input name="topic" type="hidden" class="form-control" id="topicMaterialHidden">
+                            {{--                            <input name="courses"  type="hidden"class="form-control" id="coursesMaterialHidden">--}}
                         </form>
                     </div>
                     <div class="tab-pane " id="profile">
@@ -94,15 +96,15 @@
 
             <aside class="col-md-4">
                 <div class="border-material">
-                    <div class="form-group mb-3">
-                        <label for="coursesMaterial">Courses <span class="text-danger"> *</span></label>
-                        <select name="courses" id="coursesMaterial" class="form-control" data-toggle="select2">
-                            <option value="">Ολα τα courses</option>
-                            @foreach($courses as $course)
-                                <option value="{{$course->id}}">{{$course->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    {{--                    <div class="form-group mb-3">--}}
+                    {{--                        <label for="coursesMaterial">Courses <span class="text-danger"> *</span></label>--}}
+                    {{--                        <select name="courses" id="coursesMaterial" class="form-control select2-hidden-accessible" data-toggle="select2">--}}
+                    {{--                            <option></option>--}}
+                    {{--                            @foreach($courses as $course)--}}
+                    {{--                                <option value="{{$course->id}}">{{$course->name}}</option>--}}
+                    {{--                            @endforeach--}}
+                    {{--                        </select>--}}
+                    {{--                    </div>--}}
 
                     <div class="form-group mb-3">
                         <label for="urlMaterial">URL video</label>
@@ -113,35 +115,43 @@
                         </div>
                     </div>
                     <div class="form-group mb-3">
-                    <label for="typeMaterial">Type <span class="text-danger"> *</span></label>
-                    <select name="type" id="typeMaterial" class="form-control " data-toggle="select2">
-                        <option value="">Ολα τα topics</option>
-                        @foreach($types as $type)
-                            <option value="{{$type->id}}">{{$type->name}}</option>
-                        @endforeach
-                    </select>
+                        <label for="topicMaterial">Type <span class="text-danger"> *</span></label>
+                        <select  id="topicMaterial" class="form-control " data-toggle="select2">
+                            @foreach ($topics as $topic)
+                                <option value=""></option>
+                                <option value="{{$topic->id}}">{{$topic->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="typeMaterial">Τύπος <span class="text-danger"> *</span></label>
+                        <select id="typeMaterial" class="form-control " data-toggle="select2">
+                            @foreach ($types as $key=> $type)
+                                <option value=""></option>
+                                <option value="{{$type->id}}">{{$type->type}}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class="form-group ">
                         <label for="createAtMaterial">Created</label>
-                        <input type="text" class="form-control" id="createAtMaterial" data-provide="datepicker"
-                               data-date-format="MM yyyy" data-date-min-view-mode="1">
+                        <input type="text" class="form-control date" id="createAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
+
                     </div>
 
                     <div class="form-group">
                         <label for="updateAtMaterial">Published</label>
-                        <input type="text" class="form-control" id="updateAtMaterial" data-provide="datepicker"
-                               data-date-format="MM yyyy" data-date-min-view-mode="1">
+                        <input type="text" class="form-control date" id="updateAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
                     </div>
                     <hR>
                     <div class="form-group mb-3">
-                    <label for="instructorMaterial">Εισηγητής <span class="text-danger"> *</span></label>
-                    <select name="instructor" id="instructorMaterial" class="form-control " data-toggle="select2">
-                        <option value="">Ολοι οι Εισηγητής</option>
-                        @foreach($instructors as $instructor)
-                            <option value="{{$instructor->id}}">{{$instructor->fullName}}</option>
-                        @endforeach
-                    </select>
+                        <label for="instructorMaterial">Εισηγητής <span class="text-danger"> *</span></label>
+                        <select name="instructor" id="instructorMaterial" class="form-control " data-toggle="select2">
+                            <option></option>
+                            @foreach($instructors as $instructor)
+                                <option value="{{$instructor->id}}">{{$instructor->fullName}}</option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <div class=" form-group ">
@@ -158,18 +168,17 @@
                         </div>
                         <div class="col-2 ">
                             <input type="checkbox" id="activeMaterial" checked data-switch="bool"/>
-                            <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
+                            <label for="activeMaterial"  data-on-label="On" data-off-label="Off"></label>
                         </div>
                     </div>
                 </div>
                 <div class="border-material">
-
+                    <option></option>
                     <div class="form-group">
                         <label>Cover<span class="text-danger"> *</span></label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <input name="cover" type="file" class="custom-file-input" id="coverMaterial">
-                                <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                                <label class="custom-file-label" id="cover-material" for="coverMaterialHidden">Choose file</label>
                             </div>
                         </div>
                     </div>
@@ -189,6 +198,8 @@
     <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 
     <script>
+
+
 
     </script>
 

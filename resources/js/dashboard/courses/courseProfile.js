@@ -275,9 +275,9 @@ let activeUsersFilter = createRoleSelect();
 
 activeUserslistLength.append( activeUsersFilter );
 activeUsersFilter.addEventListener('change', function () {
-	
+
 	courseUsersDatatable.columns(3).search( this.value ).draw();
-	
+
 });
 
 //* add new users table filters
@@ -287,9 +287,9 @@ let addUsersFilter = createRoleSelect();
 addUsersListLength.append(addUsersFilter);
 
 addUsersFilter.addEventListener('change', function () {
-	
+
 	addCourseUsersDatatable.columns(3).search( this.value ).draw();
-	
+
 });
 
 //* Active Materials filters
@@ -423,14 +423,14 @@ function remainingsCheckboxes() {
 }
 
 function jsLinkEventListener() {
-	
+
 	let links = $(".js-link");
-	
+
 	links.unbind();
 	links.click( function() {
-		
+
 		let id = this.parentElement.dataset.materialId;
-		
+
 		window.location = `/dashboard/material/${id}`;
 	});
 }
@@ -581,7 +581,7 @@ function createRoleSelect() {
 		<option value="Εισηγητής">Εισηγητές</option>
 		<option value="Μαθητής">Μαθητές</option>
 	`;
-	
+
 	return selectElm;
 }
 
@@ -594,7 +594,7 @@ function createStateSelect() {
 		<option value="1">Ενεργά</option>
 		<option value="0">Ανενεργά</option>
 	`;
-	
+
 	return selectElm;
 }
 
@@ -677,7 +677,7 @@ function linkFormContent( type, priority) {
         						Παρακαλώ εισάγετε υπότιτλο.
 							</div>
 						</div>
-						
+
 					</div>
 					<div class="form-row">
 						<div class="form-group col-6">
@@ -715,7 +715,7 @@ function annoucementForm( priority ) {
         						Παρακαλώ εισάγετε τίτλο.
 							</div>
 						</div>
-						
+
 						<div class="form-group col-3">
 							<label for="state-select">Κατάσταση</label>
 							<select class="js-state form-control" id="state-select">
@@ -793,7 +793,7 @@ function addContent() {
 		data.append( `${ type.toLowerCase() }`, link.value );
 	}
 
-	axios.post( "/materials/add-additionnal-content", 
+	axios.post( "/materials/add-additionnal-content",
 		data
 	)
 		.then( (res) => {
@@ -813,7 +813,7 @@ function checkEmpty( container, elmClass) {
 	let valid = true;
 
 	for ( let i = 0; i < elements.length; i++ ) {
-		
+
 		if ( !elements[i].value ) {
 			elements[i].classList.add("is-invalid");
 			valid = false;

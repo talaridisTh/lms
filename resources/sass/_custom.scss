@@ -110,10 +110,19 @@ select.is-invalid {
 	display: inline !important;
 }
 
-.select2-container{
-    //width: 14%!important;
+.dataTables_length .select2-container{
+    width: 145px!important;
+    margin-right: 3px;
+    margin-left: 3px;
+
 
 }
+.dataTables_length .select2-container .select2-selection--single, #daterange{
+
+        height: calc(1.8725rem + 2px) !important;
+
+}
+
 
 .select2-selection{
     background-color: #404954  !important;
@@ -142,4 +151,5 @@ select.is-invalid {
     border-radius:8px;
     background-color: #37404B;
 }
+
 
