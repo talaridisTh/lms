@@ -1,9 +1,7 @@
 .custom-center-table td {
 	padding: 1.30rem 0.95rem 0.3rem;
 }
-.odd:hover,.even:hover {
-    background-color: #50565d;
-}
+
 .trHover{ background-color: #4b4e53;}
 .option-column::after, .option-column::before {
 	display: none !important;
@@ -99,11 +97,11 @@ select.is-invalid {
 	width: 22px;
 }
 .add-material {
-	display: none;
+	// display: none;
 	font-size: 20px;
 	position: absolute;
-	left: 2%;
-	top: 145%;
+	left: -10%;
+	top: 77%;
 	z-index: 10;
 }
 #course-materials-list > tbody > tr:hover .add-material {
@@ -141,8 +139,21 @@ select.is-invalid {
 }
 
 .redactor-box{
-    background-color:#404954!important;
+	background-color:#404954 !important;
+	border: 1px solid #47515d !important;
+}
+.redactor-box > div:nth-child( 3 ) > * {
+	color: #aab8c5;
+}
 
+.redactor-placeholder::before {
+	color: #aab8c5;
+}
+.redactor-toolbar a:hover {
+	background: #536de6 !important;
+}
+.redactor-toolbar a, .redactor-air a {
+	background: #dee2e6;
 }
 
 .border-material{
@@ -159,3 +170,14 @@ select.is-invalid {
     color: red;
 }
 
+.tables-hover-effect > tr:hover:not(.extra-content-row) {
+	background-color: #3a444e;
+}
+
+.line-height-05 {
+	line-height: 0.5;
+}
+
+.underline {
+	text-decoration: underline;
+}

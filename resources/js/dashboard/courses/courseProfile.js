@@ -43,6 +43,11 @@ const dateRangeConfig = {
 	},
 }
 
+const redactorConfig = {
+	style: false,
+	minHeight: '150px'
+}
+
 //! Prototype Additions
 //!============================================================
 
@@ -175,7 +180,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 
 	},
 	columns: [
-		{ data: 'action', name: 'action', orderable: false },
+		{ data: 'action', name: 'action', className: "position-relative", orderable: false },
 		{ data: 'title', name: 'title', className: "js-link cursor-pointer" },
 		{ data: 'active', name: 'course_material.active' },
 		{ data: 'priority', name: 'course_material.priority',  width: "5%", searchable: false },
@@ -214,9 +219,6 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 				endDate: endDate( $("#remaining-materials-date-range")[0] )
 			})
 		}
-		/* data: {
-			courseId: courseId
-		} */
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false},
@@ -379,32 +381,6 @@ dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 	$(`#${tableId}`).DataTable().ajax.reload();
 
 });
-
-//* Remaining Materials Date Filter
-/* let remainingMaterialsSearchInput = $("#remaining-materials-table_filter > label > input")[0];
-let remainingMaterialsDateInput = createDateElm( "remaining-materials-date-range" );
-
-remainingMaterialsDateInput.appendBefore( remainingMaterialsSearchInput );
-
-let remainingMaterialsDateRange = $("#remaining-materials-date-range");
-
-remainingMaterialsDateRange.daterangepicker( dateRangeConfig );
-
-remainingMaterialsDateRange.on( "apply.daterangepicker", function(event, picker) {
-		
-	let startDate = picker.startDate.format('DD/MM/YYYY');
-	let endDate = picker.endDate.format('DD/MM/YYYY');
-	this.value = `${ startDate } - ${ endDate }`;
-
-	courseMaterialsTable.ajax.reload();
-
-});
-
-remainingMaterialsDateRange.on( 'cancel.daterangepicker', function(event, picker) {
-	remainingMaterialsDateInput.value = "";
-	courseMaterialsTable.ajax.reload();
-}); */
-
 
 //! DataTables function / EventListener
 
@@ -762,17 +738,23 @@ $(".js-material").click( function() {
 		if ( id == rowId ) {
 			newRow = createTableRow( type, priority );
 			newRow.appendAfter( rows[i] );
+			break;
 		}
+	}
+
+	if ( type == "Announcement" ) {
+		$R('#new-announcement', redactorConfig );
 	}
 
 	$('#add-material-modal').modal('hide')
 
 });
 
-function linkFormContent( type, priority) {
+function linkForm( type, priority) {
 
 	return `<td class="text-left" colspan="7">
 				<div id="additional-content-form">
+					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη ${ type }</h3>
 					<div class="form-row">
 						<div class="form-group col-6">
 							<label for="new-title">Τίτλος</label>
@@ -818,6 +800,7 @@ function annoucementForm( priority ) {
 
 	return `<td class="text-left" colspan="7">
 				<div id="additional-content-form">
+					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη Ανακοίνωσης</h3>
 					<div class="form-row">
 						<div class="form-group col-9">
 							<label for="new-title">Τίτλος</label>
@@ -835,28 +818,25 @@ function annoucementForm( priority ) {
 							</select>
 						</div>
 					</div>
-					<div class="form-row">
-						<div class="form-group col-9">
-							<label for="new-subtitle">Ανακοίνωση</label>
-							<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."/>
-							<div class="invalid-feedback">
-        						Παρακαλώ εισάγετε τίτλο.
-							</div>
+					
+						<div class="form-group">
+							<label for="new-announcement">Ανακοίνωση</label>
+							<textarea id="new-announcement" class="js-empty js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."></textarea>
 						</div>
-						<div class="form-group col-3 d-flex justify-content-center align-items-start" style="padding-top: 1.85rem;">
-							<button  class="js-add-content btn btn-primary" data-type="Annoucement" data-priority="${ priority }">Αποθήκευση</button>
+						<div class="form-group float-right">
+							<button  class="js-add-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
 							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
-					</div>
+					
 				</div>
 			</td>`
 }
 
-
 function createTableRow( type, priority ) {
 	let rowElm = document.createElement("tr");
+	rowElm.classList.add("extra-content-row")
 
-	rowElm.innerHTML = type == "Annoucement" ? annoucementForm( priority ) : linkFormContent( type, priority)
+	rowElm.innerHTML = type == "Announcement" ? annoucementForm( priority ) : linkForm( type, priority)
 
 	let saveBtn = rowElm.getElementsByClassName("js-add-content")[0];
 	let cancelBtn = rowElm.getElementsByClassName("js-cancel-addition")[0];

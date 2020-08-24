@@ -30,10 +30,10 @@ class CourseController extends Controller
 
     public function store(BundleCourseRequest $request)
     {
-		if( !empty($_FILES['cover']['name']) ) {
-			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
-			$fileName = md5( $request->name ).$ext;
-		}
+		// if( !empty($_FILES['cover']['name']) ) {
+		// 	$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
+		// 	$fileName = md5( $request->name ).$ext;
+		// }
 
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
@@ -42,16 +42,17 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->active = $request->active;
 		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
-		$course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
+		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
+		$course->cover = "https://placehold.co/600x400";
 		
 		$course->save();
 		
-		if ( isset($fileName) ) {
-			$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
-		}
-		else {
-			Storage::copy("public/no_image_600x400.png", "public/courses/$course->id/cover/no_image_600x400.png");
-		}
+		// if ( isset($fileName) ) {
+		// 	$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
+		// }
+		// else {
+		// 	Storage::copy("public/no_image_600x400.png", "public/courses/$course->id/cover/no_image_600x400.png");
+		// }
 		
 		return redirect( "/dashboard/course/$course->id" );
 
