@@ -1,6 +1,11 @@
 <div class=" select2-container form-group ragneButton" style="width: 179px!important;" >
     <input type="text" class="form-control  date"   id="daterange" name="daterange" data-toggle="date-picker" data-cancel-class="btn-warning" />
 </div>
+<select id="activeFilter">
+    <option value="">Καθαρισμος</option>
+    <option value="1">Ενεργοι</option>
+    <option value="0">Μη ενεργοι</option>
+</select>
 
 <select id="fullNameFilter">
     <option value="">Καθαρισμος</option>
@@ -16,8 +21,4 @@
     @endforeach
 </select>
 
-<select id="activeFilter">
-    <option value="">Καθαρισμος</option>
-    <option value="1">Ενεργοι</option>
-    <option value="0">Μη ενεργοι</option>
-</select>
+

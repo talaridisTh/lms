@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
 use Maatwebsite\Excel\Facades\Excel;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
 
@@ -23,8 +24,6 @@ class UserController extends Controller {
     public function index()
     {
         $activeCourses = User::courseWhereActive();
-
-
 
         return view('admin.users.usersMain',compact("activeCourses"));
     }
@@ -41,8 +40,9 @@ class UserController extends Controller {
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
         $allMaterials = User::findMaterials($user->id);
+        $activities  = Activity::where("causer_id",$user->id)->get();
 
-        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs"));
+        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs","activities"));
     }
 
     public function store(UserCreateRequest $request)

@@ -34,7 +34,7 @@
 
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
-                        <form class="needs-validation formPrevent" method="post" action="{{route('material.update',$material->id)}}"
+                        <form class="needs-validation formPrevent" method="post" action="{{route('material.update',$material->slug)}}"
                               enctype="multipart/form-data" novalidate>
                             @method('PATCH')
                             @csrf

@@ -22,8 +22,6 @@ class UsersDataTable extends DataTable {
      */
     public function dataTable($query)
     {
-//        $user = User::findOrFail($request->user_id);
-//        $query = $user->courses()->get();
 
         if (!empty(request()->from_date))
         {
@@ -45,7 +43,7 @@ class UsersDataTable extends DataTable {
             ->addColumn('chexbox', function ($data) {
 
                 return "<div class='icheck-primary d-inline'>
-							<input class='js-user-checkbox' data-user-id='$data->id' type='checkbox' id='$data->first_name' autocomplete='off'>
+							<input class='js-user-checkbox' data-user-id='$data->id'  type='checkbox' id='$data->first_name' autocomplete='off'>
 							<label for='$data->first_name'></label>
 						</div>";
             })
@@ -69,13 +67,23 @@ class UsersDataTable extends DataTable {
             })
             ->editColumn('avatar', function ($data) {
 
-                return "<img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' > ";
+
+                return "<div>
+                            <img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' >
+                            <div class=' mt-2  extraContentEdit'>
+                                <span class='hover cursor-pointer  edit'> Edit</span> | <span class='hover cursor-pointer '> Delete</span>
+                            </div>
+                       </div> ";
             })
             ->rawColumns(['action', 'active', "avatar", "activeNum", "chexbox",'dateChange',"allcourse"])
-            ->setRowAttr(['data-user-id' => function ($data) {
-
-                return $data->id;
-            }]);
+            ->setRowAttr([
+                'data-user-id' => function($data) {
+                    return $data->id;
+                },
+                'data-user-slug' => function($data) {
+                    return $data->slug;
+                }
+            ]);
     }
 
     /**

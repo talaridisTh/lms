@@ -13,44 +13,43 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-					<a href="{{route('material.create')}}" class="btn btn-secondary mb-2">
+					<a href="{{route('material.create')}}" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Δημιουργία
 					</a>
-					<div class="btn-group mb-2">
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Επιλογές</button>
-						<div class="dropdown-menu">
-							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Προσθήκη σε Course</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Export</a>
-						</div>
-					</div>
+					@include("components.bulkActionMaterial")
 				</div>
             </div>
         </div>
-
+        @include("components.filterDatatableMaterial")
 		<table id="materials-datatable" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
-					<th class="text-center">Επιλογή</th>
-					<th class="text-center">Μάθημα</th>
-					<th class="text-center">Ενεργό</th>
-					<th class="text-center">Τύπος</th>
-					<th class="text-center">Τελ. Ανανέωση</th>
-					<th class="text-center">Ημ. Δημιουργίας</th>
+                    <th id='all-user-checkbox' class="text-left js-user-checkbox">
+                        <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                    </th>
+					<th class="text-left">Μάθημα</th>
+					<th class="text-left">Ενεργό</th>
+					<th class="text-left">Τύπος</th>
+					<th class="text-left">Τελ. Ανανέωση</th>
+					<th class="text-left">Ημ. Δημιουργίαςhide</th>
+					<th class="text-left">Ημ. Δημιουργίας</th>
+					<th class="text-left">create</th>
 				</tr>
 			</thead>
 			<tbody  class="tables-hover-effect"></tbody>
 			<tfoot>
 				<tr>
-					<th class="text-center">Επιλογή</th>
-					<th class="text-center">Μάθημα</th>
-					<th class="text-center">Ενεργό</th>
-					<th class="text-center">Τύπος</th>
-					<th class="text-center">Τελ. Ανανέωση</th>
-					<th class="text-center">Ημ. Δημιουργίας</th>
+                    <th id='all-user-checkbox' class="text-left js-user-checkbox">
+                        <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                    </th>
+                    <th class="text-left">Μάθημα</th>
+					<th class="text-left">Ενεργό</th>
+					<th class="text-left">Τύπος</th>
+					<th class="text-left">Τελ. Ανανέωση</th>
+					<th class="text-left">Ημ. Δημιουργίαςhide</th>
+                    <th class="text-left">Ημ. Δημιουργίας</th>
+                    <th class="text-left">create</th>
 				</tr>
 			</tfoot>
 		</table>
@@ -63,6 +62,24 @@
 	<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 	<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 	<script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
-
+    <x-routes></x-routes>
 	<script src="{{ asset('js/dashboard/materials/materialsMain.js') }}"></script>
+
+
+
+    <script>
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                locale: {
+                    format: 'YY/MM/DD '
+                },
+                startDate: moment().startOf('hour'),
+                opens: 'right'
+            }, function(start, end, label) {
+                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+        });
+
+        $(".ragneButton").detach().appendTo('.dataTables_length label')
+    </script>
 @endsection

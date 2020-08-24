@@ -29,6 +29,18 @@ class Material extends Model
 
 	}
 
-    // $user->created_at  // egrafi prin 20 lepta
+    public function getUpdatedAtAttribute($value)
+	{
+
+	    return  Carbon::parse($value)->diffForHumans();
+
+
+	}
+
+    public function getRouteKeyName()
+    {
+        return "slug";
+
+    }
 
 }

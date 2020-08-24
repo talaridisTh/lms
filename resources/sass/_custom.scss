@@ -2,9 +2,9 @@
 	padding: 1.30rem 0.95rem 0.3rem;
 }
 .odd:hover,.even:hover {
-    background-color: #3a444e;
+    background-color: #50565d;
 }
-
+.trHover{ background-color: #4b4e53;}
 .option-column::after, .option-column::before {
 	display: none !important;
 }
@@ -151,5 +151,11 @@ select.is-invalid {
     border-radius:8px;
     background-color: #37404B;
 }
+.dropleft:hover>.dropdown-menu {
+    display: block;
+}
 
+.hover:hover{
+    color: red;
+}
 

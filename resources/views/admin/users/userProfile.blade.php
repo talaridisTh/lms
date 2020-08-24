@@ -129,6 +129,12 @@
                                     </a>
                                 </li>
 
+                                <li class="nav-item">
+                                    <a href="#timeline" data-toggle="tab" aria-expanded="false"
+                                       class="nav-link rounded-0 {{$isnotActive}} ">
+                                       Timeline
+                                    </a>
+                                </li>
                             </ul>
 
                             <div class="tab-content">
@@ -137,6 +143,9 @@
                                 </div>
                                 <div class="tab-pane {{$isnotActive}} " id="settings">
                                     @include("components.tabsEdit")
+                                </div>
+                                <div class="tab-pane {{$isnotActive}} " id="timeline">
+                                    @include("components.timelineUser")
                                 </div>
                             </div>
                         </div>

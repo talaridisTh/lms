@@ -14,9 +14,10 @@ class MaterialController extends Controller {
 
     public function index()
     {
+        $activeCourses = User::courseWhereActive();
         $materials = Material::all(['title', 'description', 'active', 'type']);
 
-        return view('admin/materials/materialsMain')->withMaterials($materials);
+        return view('admin.materials.materialsMain',compact("materials","activeCourses"));
     }
 
     public function create()
@@ -27,13 +28,11 @@ class MaterialController extends Controller {
         $courses = Course::all();
         $types = Material::all()->unique('type');
 
-
-        return view('admin.materials.newMaterial', compact("topics", "instructors", "courses" ,"types"));
+        return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "types"));
     }
 
     public function store(Request $request)
     {
-
 
         $material = new Material();
         $data = collect($request)->except("instructor", "topic")->all();
@@ -47,8 +46,6 @@ class MaterialController extends Controller {
         {
             $data["cover"] = "https://via.placeholder.com/600x400.png";
         }
-
-
         $data["slug"] = Str::slug($request->title, '-');
 //        dd($data);
         $newMaterial = $material->create($data);
@@ -66,7 +63,7 @@ class MaterialController extends Controller {
 //            $newMaterial->courses()->attach($request->courses);
 //
 //        }
-        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $data["title"] .  ' δημιουργήθηκε');;
+        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $data["title"] . ' δημιουργήθηκε');;
 //        dd($data);
     }
 
@@ -74,21 +71,18 @@ class MaterialController extends Controller {
     {
 
         $tops = Topic::all();
-
         $instructors = User::getInstructor();
         $courses = Course::all();
         $types = Material::all()->unique('type');
 
-        return view('admin.materials.material', compact("tops", "instructors", "courses", "material","types"));
+        return view('admin.materials.material', compact("tops", "instructors", "courses", "material", "types"));
     }
-
 
     public function update(Request $request, Material $material)
     {
 
         $data = collect($request)->except("instructor", "topic")->all();
-         $material->update($data);
-
+        $material->update($data);
         if ($request->instructor)
         {
             $material->users()->update(['user_id' => $request->instructor]);
@@ -100,9 +94,6 @@ class MaterialController extends Controller {
         }
 
         return redirect(route("material.index"))->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
-
-
-
     }
 
     public function destroy(Material $material)

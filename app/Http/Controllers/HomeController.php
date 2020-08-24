@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Material;
 use App\User;
 use Carbon\Carbon;
 use DateTime;
@@ -112,9 +113,10 @@ class HomeController extends Controller {
     public function test()
     {
 
-       return $data = User::
-            whereBetween('created_at', array('2018-06-27 ','2020-08-20'))
-            ->get();
+
+        $material  = Material::findOrFail(3);
+
+        dd($material->courses->pluck("name"));
 
     }
 

@@ -28,8 +28,6 @@
             </div>
         </div>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item js-detach-delete" href="#">Αφαιρεση Course</a>
-        <div class="dropdown-divider"></div>
         <a class="dropdown-item js-multiple-delete" href="#">Διαγραφη επιλεγμενων</a>
     </div>
 </div>

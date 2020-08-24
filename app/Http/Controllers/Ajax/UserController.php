@@ -93,7 +93,7 @@ class UserController {
     {
 
         User::whereIn('id', $request->user_id)->delete();
-        dd($request->all());
+
     }
 
 }

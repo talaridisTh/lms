@@ -1,4 +1,4 @@
-<form id="buttonUser" class="px-4" action="{{route('user.update',$user->id)}}"
+<form id="buttonUser" class="px-4" action="{{route('user.update',$user->slug)}}"
       method="Post" enctype="multipart/form-data">
     @csrf
     @method('PATCH')

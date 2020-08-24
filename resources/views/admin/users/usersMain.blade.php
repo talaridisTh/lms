@@ -3,11 +3,6 @@
 @section('css')
     <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 
-    <style>
-        .dropleft:hover>.dropdown-menu {
-            display: block;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -16,7 +11,7 @@
         <div class="row mb-2 justify-content-end">
             <div id="containerCol" class="col-sm-12">
                 <div class="text-right">
-                    <a href="{{route('user.create')}}" class="btn btn-secondary mb-2"><i
+                    <a href="{{route('user.create')}}" class="btn btn-primary mb-2"><i
                             class="mdi mdi-plus-circle mr-2"></i>
                         Νέος χρήστης
                     </a>
@@ -24,7 +19,7 @@
                 </div>
             </div>
         </div>
-       @include("components.filterDatatable")
+       @include("components.filterDatatableUser")
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
             <thead>
             <tr>

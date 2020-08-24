@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\URL;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\UrlSigner\MD5UrlSigner;
 
 
@@ -27,6 +28,13 @@ Route::get('/clear', function() {
     Artisan::call('cache:clear');
 
     return redirect(route("home"));
+
+});
+
+Route::get('/active', function() {
+
+
+    return Activity::all();
 
 });
 
@@ -55,17 +63,17 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 	//! User Routes
     Route::get('/dashboard/users', 'UserController@index')->name('user.index');
     Route::get('/dashboard/users/create', 'UserController@create')->name('user.create');
-    Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
+    Route::get('/dashboard/users/{user:slug}', 'UserController@show')->name('user.show');
     Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
-    Route::patch('/dashboard/users/{user}', 'UserController@update')->name('user.update');
+    Route::patch('/dashboard/users/{user:slug}', 'UserController@update')->name('user.update');
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
 	//! Material Routes
-        Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
-    Route::get('/dashboard/material/{material}', 'MaterialController@show')->name('material.show');
+    Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
+    Route::get('/dashboard/material/{material:slug}', 'MaterialController@show')->name('material.show');
     Route::get('/dashboard/materials/create', 'MaterialController@create')->name('material.create');
     Route::post('/dashboard/materials/store', 'MaterialController@store')->name('material.store');
-    Route::patch('/dashboard/materials/update/{material}', 'MaterialController@update')->name('material.update');
+    Route::patch('/dashboard/materials/update/{material:slug}', 'MaterialController@update')->name('material.update');
 	//! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course}', 'CourseController@show')->name('course.show');
@@ -127,6 +135,9 @@ Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
 Route::post( 'materials/material-types', 'Ajax\MaterialController@materialTypes' );
 Route::post( 'materials/add-additionnal-content', 'Ajax\MaterialController@addContent' );
+Route::delete('/materials/multiple/delete', 'Ajax\MaterialController@destroyMultipleMaterials')->name("destroyMultipleMaterials.datatable");
+Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMaterialMultiple')->name("addMaterialMultiple.datatable");
+
 
 //! Dashboard Ajax Materials CRUD
 Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );

@@ -1,12 +1,20 @@
 @extends('layouts.dashboard')
 
 @section('css')
-
+    <style>
+        .sticky-button {
+            position: fixed;
+            top: 14%;
+            left: 90%;
+            display: flex;
+            z-index: 9999;
+        }
+    </style>
 @endsection
 
 @section('content')
     <x-alertMsg :msg="'create'"></x-alertMsg>
-    <section class="container-fruid" style="max-width: 1400px">
+    <section class="container-fruid position-relative" style="max-width: 1400px">
         <div class="row">
             <div class="col-md-8" id="material-form">
                 <ul class="nav nav-tabs mb-3">
@@ -71,7 +79,10 @@
                                           placeholder="Εισάγετε περιεχόμενο μαθήματος..."
                                           id="contentMaterial" rows="5"></textarea>
                             </div>
-                            <button class="btn btn-primary" type="submit">Submit form</button>
+                            <div class="sticky-button">
+                                <button class="btn btn-sm btn-success mr-2" type="submit">Δημιουργία</button>
+                                <button class="btn btn-sm btn-primary" type="submit"><i class=" mdi mdi-eye"></i></button>
+                            </div>
 
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
                             <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
@@ -116,7 +127,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="topicMaterial">Type <span class="text-danger"> *</span></label>
-                        <select  id="topicMaterial" class="form-control " data-toggle="select2">
+                        <select id="topicMaterial" class="form-control " data-toggle="select2">
                             @foreach ($topics as $topic)
                                 <option value=""></option>
                                 <option value="{{$topic->id}}">{{$topic->name}}</option>
@@ -135,13 +146,15 @@
 
                     <div class="form-group ">
                         <label for="createAtMaterial">Created</label>
-                        <input type="text" class="form-control date" id="createAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
+                        <input type="text" class="form-control date" id="createAtMaterial" data-toggle="date-picker"
+                               data-single-date-picker="true">
 
                     </div>
 
                     <div class="form-group">
                         <label for="updateAtMaterial">Published</label>
-                        <input type="text" class="form-control date" id="updateAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
+                        <input type="text" class="form-control date" id="updateAtMaterial" data-toggle="date-picker"
+                               data-single-date-picker="true">
                     </div>
                     <hR>
                     <div class="form-group mb-3">
@@ -155,7 +168,7 @@
                     </div>
 
                     <div class=" form-group ">
-                        <h3>Creator</h3>
+                        <p class="font-weight-bold">Creator</p>
                         <input type="text" class="form-control" id="creatorMaterialHidden" disabled
                                value="{{auth()->user()->fullName}}"
                                placeholder="Εισάγετε URL video...">
@@ -168,7 +181,7 @@
                         </div>
                         <div class="col-2 ">
                             <input type="checkbox" id="activeMaterial" checked data-switch="bool"/>
-                            <label for="activeMaterial"  data-on-label="On" data-off-label="Off"></label>
+                            <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                         </div>
                     </div>
                 </div>
@@ -178,7 +191,8 @@
                         <label>Cover<span class="text-danger"> *</span></label>
                         <div class="input-group">
                             <div class="custom-file">
-                                <label class="custom-file-label" id="cover-material" for="coverMaterialHidden">Choose file</label>
+                                <label class="custom-file-label" id="cover-material" for="coverMaterialHidden">Choose
+                                    file</label>
                             </div>
                         </div>
                     </div>
@@ -198,7 +212,6 @@
     <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 
     <script>
-
 
 
     </script>

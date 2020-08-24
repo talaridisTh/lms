@@ -12,82 +12,43 @@ use Illuminate\Support\Facades\Storage;
 
 class MaterialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(MaterialsDataTable $dataTable)
     {
+
         return $dataTable->render('materials.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
     public function show(Material $material)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Material $material)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Material $material)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Material $material)
     {
         //
 	}
-	
+
 	public function toggleActive(Material $material, Request $request) {
 
 		$material->active = $request->state;
@@ -152,7 +113,6 @@ class MaterialController extends Controller
 
 	}
 
-	
 	public function addContent( Request $request ) {
 
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
@@ -176,6 +136,20 @@ class MaterialController extends Controller
 
 		Course::find( $request->courseId )->materials()
 			->attach( $material->id, ["active" => $request->state, "priority" => $request->priority + 1 ] );
-		
+
+	}
+
+    public function destroyMultipleMaterials(Request $request)
+	{
+
+        Material::whereIn('id', $request->material_id)->delete();
+
+	}
+    public function addMaterialMultiple(Request $request)
+	{
+
+        $course = Course::findOrFail($request->course_id);
+        $course->materials()->syncWithoutDetaching($request->material_id);
+
 	}
 }

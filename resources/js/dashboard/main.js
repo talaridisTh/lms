@@ -48,6 +48,7 @@ const selectAndDeselectCheckbox = function (attr) {
     $(attr).click(function () {
         let checkbox = $(attr)
 
+        console.log(checkbox)
 
         for (let i = 0; i < checkbox.length; i++) {
             checkbox[i].checked = !checkbox[i].checked

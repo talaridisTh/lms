@@ -7,16 +7,10 @@ load_data();
 
 function load_data(from_date = '', to_date = '') {
 
-
 //! 			Datatables Initialization
 //!##################################################
     const tables = $("#scroll-horizontal-datatable").DataTable({
-        // dom: 'Bfrtip',
-        //
-        // buttons: [
-        //     'excelHtml5',
-        //     'pdfHtml5'
-        // ],
+        order: [3, "asc"],
         processing: true,
         serverSide: true,
         ajax: {
@@ -31,11 +25,11 @@ function load_data(from_date = '', to_date = '') {
                 name: "extra",
                 orderable: false,
                 className: 'details-control cursor-pointer',
-                defaultContent: `<i class="mdi text-success h4 mdi-plus-thick"></i>`
+                defaultContent: `<i class="mdi h4 mdi-plus-circle-outline text-success"></i>`
             },
             {data: "chexbox", name: "chexbox", orderable: false,},
-            {data: "avatar", name: "avatar", orderable: false, className: "js-link cursor-pointer"},
-            {data: "first_name", name: "first_name", className: "js-link cursor-pointer"},
+            {data: "avatar", name: "avatar", orderable: false, className: " "},
+            {data: "first_name", name: "first_name", className: "js-link cursor-pointer text-primary"},
             {data: "last_name", name: "last_name", className: "js-link cursor-pointer"},
             {data: "action", name: "action", className: "js-link cursor-pointer"},
             {data: "email", name: "email", className: "js-link cursor-pointer"},
@@ -51,7 +45,7 @@ function load_data(from_date = '', to_date = '') {
         drawCallback: () => {
             $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
             $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
-            $("thead >tr> th").removeClass("js-link cursor-pointer");
+            $("thead >tr> th").removeClass("js-link cursor-pointer  text-primary");
             $("tfoot > tr > th").removeClass("js-link cursor-pointer");
             // filter();
             // refresh();
@@ -61,7 +55,9 @@ function load_data(from_date = '', to_date = '') {
             selectMultipleCheckboxUpdate();
             pickDay();
             collapse();
-            buttonEx()
+            buttonEx();
+            editColapse()
+           NumOfCheckBox();
         },
 
 
@@ -70,6 +66,7 @@ function load_data(from_date = '', to_date = '') {
     const sub_DataTable = (vtask_id, table_id, attr) => {
 
         window.subtabletable_id = $('#' + table_id).DataTable({
+
             processing: true,
             serverSide: true,
             searching: false,
@@ -114,9 +111,9 @@ function load_data(from_date = '', to_date = '') {
 //! GLOBAL FUNCTION
 //!============================================================
     utilities.selectAndDeselectCheckbox(".js-user-checkbox")
-    utilities.filterButton('#fullNameFilter', 11, tables)
-    utilities.filterButton('#rolesFilter', 5, tables)
     utilities.filterButton('#activeFilter', 9, tables)
+    utilities.filterButton('#rolesFilter', 5, tables)
+    utilities.filterButton('#fullNameFilter', 11, tables)
 
 
 //! FILTER DATATABLE
@@ -173,6 +170,7 @@ function load_data(from_date = '', to_date = '') {
             for (let i = 0; i < checkboxes.length; i++) {
                 ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.userId);
             }
+
 
             axiosMultipleDelete(ids)
 
@@ -231,6 +229,30 @@ function load_data(from_date = '', to_date = '') {
         }
     }
 
+    const detachCoursesFromUser = async (courseId,userID)=>{
+
+        const datatableId = $(".js-user-multipleChexbox-sub")[0].parentElement.parentElement.parentElement
+
+        try {
+            let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
+                data: {
+                    'course_id': courseId,
+                    'user_id': userID
+                }
+
+            })
+            if (status == 200) {
+                utilities.toastAlert('error', `${courseId.length}  Aφαιρέθηκαν `)
+                subtabletable_id.ajax.reload();
+
+            }
+
+        } catch (e) {
+            console.log(e)
+            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+        }
+    }
+
     const selectAlljscheckboxSubTable = () => {
         $(".js-user-multipleChexbox-sub").click(function () {
             let checkbox = $(".js-user-checkbox-sub")
@@ -270,30 +292,6 @@ function load_data(from_date = '', to_date = '') {
         })
     }
 
-    const detachCoursesFromUser = async (courseId,userID)=>{
-
-        const datatableId = $(".js-user-multipleChexbox-sub")[0].parentElement.parentElement.parentElement
-
-        try {
-            let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
-                data: {
-                    'course_id': courseId,
-                    'user_id': userID
-                }
-
-            })
-            if (status == 200) {
-                utilities.toastAlert('error', `${courseId.length}  Aφαιρέθηκαν `)
-                subtabletable_id.ajax.reload();
-
-            }
-
-        } catch (e) {
-            console.log(e)
-            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-        }
-    }
-
     function buttonEx (){
         $('.button-Excel').unbind();
         $('.button-Excel').on('click', function (e, dt, node, config) {
@@ -301,9 +299,6 @@ function load_data(from_date = '', to_date = '') {
             console.log(node)
         });
     }
-
-
-
 
 
 //! METHOD FIRST TABLE
@@ -331,11 +326,27 @@ function load_data(from_date = '', to_date = '') {
         $('.js-link').click(function () {
             $('.js-link').unbind();
 
-            let user = this.parentElement.dataset.userId;
+            let slug = this.parentElement.dataset.userSlug;
+            console.log(this.parentElement.dataset)
 
 
-            window.location = `/dashboard/users/${user}`;
+            window.location = `/dashboard/users/${slug}`;
         });
+    }
+
+    const NumOfCheckBox = ()=>{
+        $(".dropdown-toggle").click(function (){
+              let checkboxes = $(".js-user-checkbox:checked").length
+              let checkboxesSub = $(".js-user-checkbox-sub:checked").length
+            console.log(checkboxesSub)
+
+
+           $("#dropdownMenuButton")[0].innerText = ` Προσθήκη σε Course ${checkboxes==0? "":`( ${checkboxes} ) `} `
+           $(".js-multiple-delete")[0].innerText = ` Διαγραφη επιλεγμενων ${checkboxes==0? "":`( ${checkboxes} ) `} `
+           $(".js-detach-delete")[0].innerText = ` Αφαιρεση  Course ${checkboxesSub==0? "":`( ${checkboxesSub} ) `} `
+
+
+        })
     }
 
 
@@ -363,6 +374,55 @@ function load_data(from_date = '', to_date = '') {
 
     }
 
+    const EditSubtable = () => {
+        return `
+
+<form>
+  <div class="form-group row">
+    <label for="staticEmail" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+    </div>
+  </div>
+</form>
+
+        `
+
+    }
+
+    const editColapse = () => {
+        $('#scroll-horizontal-datatable tbody').off('click', '.extraContentEdit .edit');
+        $('#scroll-horizontal-datatable tbody').on('click', '.extraContentEdit .edit', function () {
+
+
+
+
+            let tr = $(this).closest('tr');
+            let row = tables.row(tr);
+
+
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('shown');
+
+
+
+            }
+            else {
+                let virtual_task_id = row.data().id;
+                let subId = "subtable-" + virtual_task_id;
+                tr.addClass('shown');
+                row.child(EditSubtable()).show();
+
+            }
+        });
+    }
     const collapse = () => {
         $('#scroll-horizontal-datatable tbody').off('click', 'td.details-control');
         $('#scroll-horizontal-datatable tbody').on('click', 'td.details-control', function () {
@@ -372,16 +432,17 @@ function load_data(from_date = '', to_date = '') {
 
             if (row.child.isShown()) {
                 row.child.hide();
-                tr.removeClass('shown');
+                tr.removeClass('shown trHover');
                 this.firstChild.classList.remove("text-danger")
                 this.firstChild.classList.add("text-success")
+
 
 
             }
             else {
                 let virtual_task_id = row.data().id;
                 let subId = "subtable-" + virtual_task_id;
-                tr.addClass('shown');
+                tr.addClass("trHover shown");
                 row.child(formatSubTable(subId)).show();
                 this.firstChild.classList.add("text-danger")
                 this.firstChild.classList.remove("text-success")

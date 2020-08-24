@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable {
@@ -21,7 +22,7 @@ class User extends Authenticatable {
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar",
+        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar","slug",
     ];
 
     protected $guarded = [];
@@ -59,6 +60,7 @@ class User extends Authenticatable {
     public function guest()
     {
 
+
         return $this->belongsToMany('App\Course', 'guest_course', 'user_id', 'course_id')
             ->withTimestamps()
             ->withPivot("user_link",'id');
@@ -87,6 +89,7 @@ class User extends Authenticatable {
             if ($user->getRoleNames()[0] == "instructor")
                 array_push($instructor, $user);
         }
+
 
         return $instructor;
     }
@@ -196,6 +199,12 @@ class User extends Authenticatable {
     public function getFullNameAttribute()
     {
         return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
+    }
+
+    public function getRouteKeyName()
+    {
+        return "slug";
+
     }
 
 //    public function getCreatedAtAttribute($value)
