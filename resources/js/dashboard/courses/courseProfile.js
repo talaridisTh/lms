@@ -19,8 +19,36 @@ const tableLocale = {
 		next:"<i class='mdi mdi-chevron-right'>"}
 }
 
+
+//!######################################
+//!				Configurations			#
+//!######################################
+
+const dateRangeConfig = {
+	ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	},
+	alwaysShowCalendars: true,
+	showCustomRangeLabel: false,
+	drops: "auto",
+	autoUpdateInput: false,
+	opens: "center",
+	locale: {
+		format: "DD/MM/YYYY",
+	},
+}
+
 //! Prototype Additions
 //!============================================================
+
+Element.prototype.appendBefore = function (element) {
+	element.parentNode.insertBefore(this, element);
+},false;
 
 Element.prototype.appendAfter = function (element) {
 
@@ -137,18 +165,23 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		url: "/courses/course-materials-datatable",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
-		data: {
-			courseId: courseId
+		data: function( d ) {
+			return $.extend( {}, d, {
+				courseId: courseId,
+				startDate: startDate( $("#course-material-date-range")[0] ),
+				endDate: endDate( $("#course-material-date-range")[0] )
+			})
 		}
+
 	},
 	columns: [
 		{ data: 'action', name: 'action', orderable: false },
 		{ data: 'title', name: 'title', className: "js-link cursor-pointer" },
 		{ data: 'active', name: 'course_material.active' },
-		{ data: 'priority', name: 'priority',  width: "5%", searchable: false },
+		{ data: 'priority', name: 'course_material.priority',  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "js-link cursor-pointer" },
-		{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer" },
-		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
+		{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer", searchable: false },
+		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer", searchable: false },
 	],
 	language: tableLocale,
 	drawCallback:function(){
@@ -174,9 +207,16 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		url: "/courses/not-incourse-materials-datatable",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
-		data: {
-			courseId: courseId
+		data: function( d ) {
+			return $.extend( {}, d, {
+				courseId: courseId,
+				startDate: startDate( $("#remaining-materials-date-range")[0] ),
+				endDate: endDate( $("#remaining-materials-date-range")[0] )
+			})
 		}
+		/* data: {
+			courseId: courseId
+		} */
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false},
@@ -275,9 +315,9 @@ let activeUsersFilter = createRoleSelect();
 
 activeUserslistLength.append( activeUsersFilter );
 activeUsersFilter.addEventListener('change', function () {
-
+	
 	courseUsersDatatable.columns(3).search( this.value ).draw();
-
+	
 });
 
 //* add new users table filters
@@ -287,9 +327,9 @@ let addUsersFilter = createRoleSelect();
 addUsersListLength.append(addUsersFilter);
 
 addUsersFilter.addEventListener('change', function () {
-
+	
 	addCourseUsersDatatable.columns(3).search( this.value ).draw();
-
+	
 });
 
 //* Active Materials filters
@@ -302,6 +342,69 @@ courseMaterialState.addEventListener( "change", function() {
 	courseMaterialsTable.columns( 2 ).search( this.value ).draw();
 
 });
+
+//* Append Course Materials Date Picker Filter
+let courseMaterialSearchInput = $("#course-materials-list_filter > label > input")[0];
+let courseMaterialDateInput = createDateElm( "course-material-date-range" );
+
+courseMaterialDateInput.appendBefore( courseMaterialSearchInput );
+
+//* Append Remainging Materials Date Picker Filter
+let remainingMaterialsSearchInput = $("#remaining-materials-table_filter > label > input")[0];
+let remainingMaterialsDateInput = createDateElm( "remaining-materials-date-range" );
+
+remainingMaterialsDateInput.appendBefore( remainingMaterialsSearchInput );
+
+
+//! Date Search 
+let dateRange = $(".js-date-search");
+
+dateRange.daterangepicker( dateRangeConfig );
+
+dateRange.on( "apply.daterangepicker", function(event, picker) {
+		
+	let startDate = picker.startDate.format('DD/MM/YYYY');
+	let endDate = picker.endDate.format('DD/MM/YYYY');
+	this.value = `${ startDate } - ${ endDate }`;
+
+	let tableId = $(this).closest(".table-cnt").find(".js-table").attr("id");
+	$(`#${tableId}`).DataTable().ajax.reload();
+
+});
+
+dateRange.on( 'cancel.daterangepicker', function(event, picker) {
+	
+	this.value = "";
+	let tableId = $(this).closest(".table-cnt").find(".js-table").attr("id");
+	$(`#${tableId}`).DataTable().ajax.reload();
+
+});
+
+//* Remaining Materials Date Filter
+/* let remainingMaterialsSearchInput = $("#remaining-materials-table_filter > label > input")[0];
+let remainingMaterialsDateInput = createDateElm( "remaining-materials-date-range" );
+
+remainingMaterialsDateInput.appendBefore( remainingMaterialsSearchInput );
+
+let remainingMaterialsDateRange = $("#remaining-materials-date-range");
+
+remainingMaterialsDateRange.daterangepicker( dateRangeConfig );
+
+remainingMaterialsDateRange.on( "apply.daterangepicker", function(event, picker) {
+		
+	let startDate = picker.startDate.format('DD/MM/YYYY');
+	let endDate = picker.endDate.format('DD/MM/YYYY');
+	this.value = `${ startDate } - ${ endDate }`;
+
+	courseMaterialsTable.ajax.reload();
+
+});
+
+remainingMaterialsDateRange.on( 'cancel.daterangepicker', function(event, picker) {
+	remainingMaterialsDateInput.value = "";
+	courseMaterialsTable.ajax.reload();
+}); */
+
 
 //! DataTables function / EventListener
 
@@ -423,14 +526,14 @@ function remainingsCheckboxes() {
 }
 
 function jsLinkEventListener() {
-
+	
 	let links = $(".js-link");
-
+	
 	links.unbind();
 	links.click( function() {
-
+		
 		let id = this.parentElement.dataset.materialId;
-
+		
 		window.location = `/dashboard/material/${id}`;
 	});
 }
@@ -464,6 +567,14 @@ function trHoverEffectInit() {
 	})
 
 }
+
+$(".js-date-search").on( "input", function() {
+
+	this.value = this.value.replace( /[^0-9]/g, "" )
+		.replace(/^(\d{2})?(\d{2})?(\d{4})?(\d{2})?(\d{2})?(\d{4})?/g, '$1/$2/$3 - $4/$5/$6')
+		.substr(0, 23)
+
+});
 // DataTables function / EventListener End
 
 function remainingMaterialsCheckboxHandler() {
@@ -581,7 +692,7 @@ function createRoleSelect() {
 		<option value="Εισηγητής">Εισηγητές</option>
 		<option value="Μαθητής">Μαθητές</option>
 	`;
-
+	
 	return selectElm;
 }
 
@@ -594,7 +705,7 @@ function createStateSelect() {
 		<option value="1">Ενεργά</option>
 		<option value="0">Ανενεργά</option>
 	`;
-
+	
 	return selectElm;
 }
 
@@ -677,7 +788,7 @@ function linkFormContent( type, priority) {
         						Παρακαλώ εισάγετε υπότιτλο.
 							</div>
 						</div>
-
+						
 					</div>
 					<div class="form-row">
 						<div class="form-group col-6">
@@ -715,7 +826,7 @@ function annoucementForm( priority ) {
         						Παρακαλώ εισάγετε τίτλο.
 							</div>
 						</div>
-
+						
 						<div class="form-group col-3">
 							<label for="state-select">Κατάσταση</label>
 							<select class="js-state form-control" id="state-select">
@@ -793,7 +904,7 @@ function addContent() {
 		data.append( `${ type.toLowerCase() }`, link.value );
 	}
 
-	axios.post( "/materials/add-additionnal-content",
+	axios.post( "/materials/add-additionnal-content", 
 		data
 	)
 		.then( (res) => {
@@ -813,7 +924,7 @@ function checkEmpty( container, elmClass) {
 	let valid = true;
 
 	for ( let i = 0; i < elements.length; i++ ) {
-
+		
 		if ( !elements[i].value ) {
 			elements[i].classList.add("is-invalid");
 			valid = false;
@@ -861,4 +972,47 @@ function minorCheckboxSwitcher(main, minor) {
         }
     }
 
+}
+
+function createDateElm( id ) {
+
+	let input = document.createElement("input");
+
+	input.classList.add("form-control", "date", "d-inline-block", "ml-1", "js-date-search");
+	input.id = id;
+	input.dataset.toggle = "date-picker";
+	input.dataset.cancelClass = "btn-secondary";
+	input.style.height = "31.96px";
+	input.style.width = "195px";
+	input.placeholder = "Επιλέξτε ημερομηνίες...";
+
+	return input;
+}
+
+function startDate( input ) {
+
+	let dateInput = input;
+
+	if ( !dateInput || dateInput.value == "" ) {
+		return "";
+	}
+
+	let dateInputValue = dateInput.value.split(" - ");
+	let firstDate = dateInputValue[0].split("/").reverse().join("-");
+
+	return firstDate;
+}
+
+function endDate( input ) {
+
+	let dateInput = input;
+
+	if ( !dateInput || dateInput.value == "" ) {
+		return "";
+	}
+	
+	let dateInputValue = dateInput.value.split(" - ");
+	let secondDate = dateInputValue[1].split("/").reverse().join("-");
+	
+	return secondDate;
 }

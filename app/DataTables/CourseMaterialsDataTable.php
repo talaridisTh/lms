@@ -12,7 +12,8 @@ use Yajra\DataTables\Services\DataTable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use Illuminate\Support\Carbon;
+use Carbon\Carbon;
+
 
 class CourseMaterialsDataTable extends DataTable
 {
@@ -25,21 +26,35 @@ class CourseMaterialsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-		$query = DB::table('materials')
+		if ( is_null($request->startDate) && is_null($request->endDate) ) {
+			$query = DB::table('materials')
 			->join('course_material', 'materials.id', '=', 'course_material.material_id')
-			->select('materials.id as materialId', 
-				'materials.title', 
-				'materials.active as materialActive', 
-				'course_material.active as active', 
-				'course_material.priority', 
-				'materials.type', 
-				'materials.slug', 
-				'materials.updated_at as updated_at', 
-				'materials.created_at as created_at', 
+			->select('materials.id as materialId', 'materials.title', 
+				'materials.active as materialActive', 'course_material.active as active', 
+				'course_material.priority', 'materials.type', 'materials.slug', 
+				'materials.updated_at as updatedAt', 'materials.created_at as createdAt', 
 				'course_material.id')
 			->where('course_id', $request->courseId);
 
-        return Datatables::queryBuilder($query)
+		}
+		else {
+
+			$query = DB::table('materials')
+			->join('course_material', 'materials.id', '=', 'course_material.material_id')
+			->select('materials.id as materialId', 'materials.title', 
+				'materials.active as materialActive', 'course_material.active as active', 
+				'course_material.priority', 'materials.type', 'materials.slug', 
+				'materials.updated_at as updatedAt', 'materials.created_at as createdAt', 
+				'course_material.id')
+			->where('course_id', $request->courseId)
+			->where( function( $subquery ) use ($request) {
+				$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+			});
+		}
+		
+
+        return Datatables::of($query)
             ->addColumn('action', function($data) use ($request) {
 
 				return "<div class='additions-cnt d-inline'>
@@ -53,16 +68,16 @@ class CourseMaterialsDataTable extends DataTable
 						</div>";
 
 			})
-			/* ->editColumn('updated_at', function($data) {
+			->editColumn('updated_at', function($data) {
 
-				return Carbon::parse($data->updated_at)->diffForHumans();
+				return Carbon::parse($data->updatedAt)->format( "d / m / Y");
 
 			})
 			->editColumn('created_at', function($data) {
 
-				return Carbon::parse($data->created_at)->diffForHumans();
+				return Carbon::parse($data->createdAt)->format( "d / m / Y");
 
-			}) */
+			})
 			->editColumn('active', function($data) use ($request) {
 
 				$active = $data->active == 0 ? "" : "checked";

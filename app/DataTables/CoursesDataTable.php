@@ -4,6 +4,8 @@ namespace App\DataTables;
 
 use App\Course;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -19,14 +21,21 @@ class CoursesDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query, Request $request)
     {
-
-		// dd( Auth::user()->id );
-		// $userId = Auth::user()->id;
-		// $roleId = Auth::user()->roles[0]->id;
-
-		$query = Course::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
+		if ( is_null($request->startDate) && is_null($request->endDate) ) {
+			$query = Course::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
+		}
+		else {
+			$query = Course::query()
+				->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' )
+				->where( function($subquery) use ($request) {
+					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				})
+				->whereBetween("updated_at", [ $request->startDate, $request->endDate ])
+				->orWhereBetween("created_at", [ $request->startDate, $request->endDate ]);
+		}
 
         return datatables()
             ->eloquent($query)
@@ -44,6 +53,16 @@ class CoursesDataTable extends DataTable
 
 				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
 					<label for='$data->slug-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+
+			})
+			->editColumn('updated_at', function($data) {
+
+				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
+
+			})
+			->editColumn('created_at', function($data) {
+
+				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
 
 			})
 			->rawColumns(['action', 'active'])

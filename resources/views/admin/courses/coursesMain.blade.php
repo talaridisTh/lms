@@ -85,11 +85,11 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-					<a href="courses/create" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#new-course-modal"><i class="mdi mdi-plus-circle mr-2"></i>
+					<a href="courses/create" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal"><i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
 					<div class="btn-group mb-2">
-						<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Επιλογές</button>
+						<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Επιλογές</button>
 						<div class="dropdown-menu">
 							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
 							<div class="dropdown-divider"></div>
@@ -105,7 +105,7 @@
         <table id="courses-datatable" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
             <thead>
             	<tr>
-            	    <th class="text-center option-column">Επιλογή</th>
+            	    <th class="text-center">Επιλογή</th>
             	    <th class="text-center">Όνομα</th>
             	    <th class="text-center">Ενεργό</th>
             	    <th class="text-center">Τελ. Ενημέρωση</th>

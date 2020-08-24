@@ -71,7 +71,7 @@
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body table-cnt">
-					<table id="add-users-list" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+					<table id="add-users-list" class="js-table table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
 						<thead>
 							<tr>
 								<th class="select-all w-5">
@@ -107,14 +107,14 @@
 	</div><!-- /.modal -->
 
 	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
-	    <div class="modal-dialog modal-lg">
+	    <div class="modal-dialog modal-xl">
 	        <div class="modal-content">
 	            <div class="modal-header modal-colored-header bg-primary">
 	                <h4 class="modal-title" id="add-materials-modalLabel">Προσθήκη Μαθημάτων</h4>
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body table-cnt">
-	                <table id="remaining-materials-table" class="table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+	                <table id="remaining-materials-table" class="js-table table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
 						<thead>
 							<tr>
 								<th class="select-all w-5">
@@ -154,7 +154,8 @@
 
 			<div class="card text-center">
 				<div class="card-body">
-					<img src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' class="img-fluid"
+					{{-- <img src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' class="img-fluid" --}}
+					<img src="https://placehold.co/600x400" class="img-fluid"
 					alt="profile-image">
 	
 					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
@@ -235,7 +236,7 @@
 						<!-- Materials table tab-->
 						<div class="tab-pane {{ $materialsActive }} table-cnt" id="materials">
 
-							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
+							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">
@@ -370,7 +371,7 @@
 
 						<div class="tab-pane table-cnt" id="users">
 
-							<table id="active-users-list" class="table w-100 nowrap js-remove-table-classes">
+							<table id="active-users-list" class="js-table table w-100 nowrap js-remove-table-classes">
 								<thead>
 									<tr>
 										<th class="text-center">

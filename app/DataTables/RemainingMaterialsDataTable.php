@@ -23,27 +23,48 @@ class RemainingMaterialsDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
+		if ( is_null($request->startDate) && is_null($request->endDate) ) {
+			$query = DB::table('materials')
+				->join('material_topic', 'materials.id', '=', 'material_topic.material_id')
+				->join('topics', 'material_topic.topic_id', '=', 'topics.id')
+				->select( 'materials.id', 'topics.name as topicName',
+					'materials.title as materialName', 'materials.type', 'materials.slug', 
+				)
+				->where('active', 1)
+				->whereNotIn('materials.id', 
+					function($subquery) use ($request) {
 
-		$query = DB::table('materials')
-			->join('material_topic', 'materials.id', '=', 'material_topic.material_id')
-			->join('topics', 'material_topic.topic_id', '=', 'topics.id')
-			->select( 'materials.id',
-				'topics.name as topicName',
-				'materials.title as materialName',
-				'materials.type',
-				'materials.slug', 
-			)
-			->where('active', 1)
-			->whereNotIn('materials.id', 
-				function($subquery) use ($request) {
+						$subquery->select('material_id')
+							->from('course_material')
+							->where('course_id', $request->courseId)
+							->get();
 
-					$subquery->select('material_id')
-						->from('course_material')
-						->where('course_id', $request->courseId)
-						->get();
+					}
+				);
+		}
+		else {
+			$query = DB::table('materials')
+				->join('material_topic', 'materials.id', '=', 'material_topic.material_id')
+				->join('topics', 'material_topic.topic_id', '=', 'topics.id')
+				->select( 'materials.id', 'topics.name as topicName',
+					'materials.title as materialName', 'materials.type', 'materials.slug', 
+				)
+				->where('active', 1)
+				->where( function($subquery) use ($request) {
+					$subquery->whereBetween('materials.updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+						->orWhereBetween('materials.created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				})
+				->whereNotIn('materials.id', 
+					function($subquery) use ($request) {
 
-				}
-			);
+						$subquery->select('material_id')
+							->from('course_material')
+							->where('course_id', $request->courseId)
+							->get();
+
+					}
+				);
+		}
 
         return Datatables::of($query)
             ->addColumn('action', function($data) {
