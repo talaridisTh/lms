@@ -105,6 +105,8 @@ class CourseController extends Controller
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
 		$course->title = $request->title;
+		$course->subtitle = $request->subtitle;
+		$course->summary = $request->summary;
 		$course->description = $request->description;
 		$course->active = $request->active;
 		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );

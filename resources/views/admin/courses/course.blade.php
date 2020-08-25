@@ -62,7 +62,6 @@
 		</div>
 	</div>
 
-
 	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
@@ -162,10 +161,6 @@
 					<p class="text-muted font-14">Course</p>
 	
 					<div class="text-left mt-3">
-						<h4 class="font-13 text-uppercase">About Course :</h4>
-						<p class="text-muted font-13 mb-3">
-							{{ $course['description'] }}
-						</p>
 						<p class="text-muted mb-2 font-13">
 							<strong>
 								Σύνολο Μαθημάτων :
@@ -202,11 +197,6 @@
 	
 				</div> <!-- end card-body -->
 			</div> <!-- end course info card -->
-
-
-	
-
-
 		</div> <!-- end col-->
 
 		<div class="col-xl-9 col-lg-7">
@@ -290,20 +280,20 @@
 
 						<!-- Course edit form tab-pane -->
 						<div class="tab-pane {{ $settingsActive }}" id="settings">
-							<form action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+							<form id="edit-course-form" action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
 								
 								@csrf
 								@method('PATCH')
 
-								<div class="row">
+								<div class="form-row">
 							        <div class="col-xl-6">
 							            <div class="form-group">
-							                <label for="name">Όνομα Course</label>
-											<input id="name" type="text" 
+							                <label for="title">Τίτλος</label>
+											<input id="title" type="text" 
 												class="form-control @error('title') is-invalid @enderror" 
 												id="title" name="title" 
 												value="{{ old('title') != "" ? old('title') : $course['title'] }}" 
-												placeholder="Δώστε όνομα">
+												placeholder="Εισάγετε τίτλο...">
 											@error('title')
                             				    <span class="invalid-feedback" role="alert">
                             				        <strong>{{ $message }}</strong>
@@ -313,7 +303,7 @@
 							        </div>
 							        <div class="col-xl-6">
 							            <div class="form-group">
-							                <label for="course-cover">Cover Εικόνα</label>
+							                <label for="course-cover">Cover</label>
 											<div class="input-group">
 											    <div class="custom-file">
 													<input id="course-cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
@@ -327,44 +317,77 @@
 											</div>
 							            </div>
 							        </div> <!-- end col -->
-							    </div> <!-- end row -->
+								</div> <!-- end row -->
+								
 
-							    <div class="row">
-							        <div class="col-12">
+								<div class="form-row">
+							        <div class="col-xl-6">
 							            <div class="form-group">
-							                <label for="description">Περιγραφή</label>
-											<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"rows="4" placeholder="Περιγραφή Course...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
-											@error('description')
+							                <label for="subtitle">Υπότιτλος</label>
+											<input id="subtitle" type="text" 
+												class="form-control @error('subtitle') is-invalid @enderror" 
+												id="subtitle" name="subtitle" 
+												value="{{ old('subtitle') != "" ? old('subtitle') : $course['subtitle'] }}" 
+												placeholder="Εισάγετε υπότιτλο...">
+											@error('subtitle')
                             				    <span class="invalid-feedback" role="alert">
                             				        <strong>{{ $message }}</strong>
                             				    </span>
                             				@enderror
 										</div>
-							        </div> <!-- end col -->
-							    </div> <!-- end row -->
-
-							    <div class="row">
-							        <div class="col-xl-6">
-							            <div class="form-group">
-							                <label for="example-select">Κατάσταση</label>
-											<select id="active" class="form-control @error('active') is-invalid @enderror" name="active">
-											    <option value="1" {{ $course['active'] == 1 ? "selected" : "" }}>Ενεργό</option>
-											    <option value="0" {{ $course['active'] == 0 ? "selected" : "" }}>Ανενεργό</option>
-											</select>
-											@error('active')
-											    <span class="invalid-feedback" role="alert">
-											        <strong>{{ $message }}</strong>
-											    </span>
-											@enderror
-							            </div>
 							        </div>
 							        <div class="col-xl-6">
+
+										<div class="form-group">
+											<label for="example-select">Κατάσταση</label>
+											<select id="active" class="form-control @error('active') is-invalid @enderror" name="active">
+												<option value="1" {{ $course['active'] == 1 ? "selected" : "" }}>Ενεργό</option>
+												<option value="0" {{ $course['active'] == 0 ? "selected" : "" }}>Ανενεργό</option>
+											</select>
+											@error('active')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
+										</div>
+
 									</div> <!-- end col -->
 							    </div> <!-- end row -->
 
-							    <div class="text-right">
-							        <button type="submit" class="btn btn-primary mt-2 w-100"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
-							    </div>
+								<div class="form-row">
+									<div class="col-12">
+										<div class="form-group">
+											<label for="summary">Σύνοψη</label>
+											<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Εισάγετε σύνοψη...">{{ old('summary') != "" ? old('summary') : $course['summary'] }}</textarea>
+											@error('summary')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
+										</div>
+									</div> <!-- end col -->
+								</div> <!-- end row -->
+
+								<div class="form-row">
+									<div class="col-12">
+										<div class="form-group">
+											<label for="description">Περιγραφή</label>
+											<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
+											@error('description')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
+										</div>
+									</div> <!-- end col -->
+								</div> <!-- end row -->
+
+							    <button id="delete-course-btn" type="submit" class="btn btn-danger" name="delete" disabled><i class="mdi mdi-file-remove mr-1"></i>Διαγραφή</button>
+								<div class="float-right">	
+									<button type="submit" class="btn btn-primary" name="save"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
+							        <button id="edit-course-reset-btn" type="reset" class="btn btn-secondary"><i class="mdi mdi-refresh-circle mr-1"></i>Επαναφορά</button>
+								</div>
+									{{-- </div> --}}
 							</form>
 						</div><!-- end tab-pane -->
 						<!-- end settings content-->
