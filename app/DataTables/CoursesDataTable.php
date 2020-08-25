@@ -32,9 +32,7 @@ class CoursesDataTable extends DataTable
 				->where( function($subquery) use ($request) {
 					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-				})
-				->whereBetween("updated_at", [ $request->startDate, $request->endDate ])
-				->orWhereBetween("created_at", [ $request->startDate, $request->endDate ]);
+				});
 		}
 
         return datatables()
@@ -47,12 +45,21 @@ class CoursesDataTable extends DataTable
 						</div>";
 
 			})
+			->editColumn('title', function($data) {
+
+				return "<a href='/dashboard/course/$data->id' class='h5 custom-link-primary'>$data->title</a>
+				<p class='mb-1'>$data->slug</p>
+				<a href='/dashboard/course/$data->id' class='custom-link-primary'>Edit</a>
+				<span class='mx-2'>|</span>
+				<a href='#' class='custom-link-primary'>View</a>";
+
+			})
 			->editColumn('active', function($data) {
 
 				$active = $data->active == 0 ? "" : "checked";
 
 				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
-					<label for='$data->slug-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+					<label for='$data->slug-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
 			->editColumn('updated_at', function($data) {
@@ -65,7 +72,7 @@ class CoursesDataTable extends DataTable
 				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
 
 			})
-			->rawColumns(['action', 'active'])
+			->rawColumns(['action', 'title', 'active'])
 			->setRowClass("test")
 			->setRowAttr([ 'data-course-id' => function($data) {
 

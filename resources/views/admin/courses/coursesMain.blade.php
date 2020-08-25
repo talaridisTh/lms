@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <table id="courses-datatable" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
+        <table id="courses-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
             <thead>
             	<tr>
             	    <th class="text-center">Επιλογή</th>
