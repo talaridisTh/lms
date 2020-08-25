@@ -90,11 +90,11 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', name: 'action', width: "5%", orderable: false },
-		{data: 'title', name: 'title', className: "js-link cursor-pointer" },
-		{data: 'active', name: 'active'},
-		{data: 'updated_at', name: 'updated_at', className: "js-link cursor-pointer js-updated-at" },
-		{data: 'created_at', name: 'created_at',  className: "js-link cursor-pointer"},
+		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
+		{data: 'title', name: 'title' },
+		{data: 'active', name: 'active', className: "align-middle"},
+		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
+		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
 	language:{
 		emptyTable: 		"Δεν υπάρχουν εγγραφές",
@@ -114,7 +114,6 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
 
-		atLinkEventListener();
 		toggleActive();
 	}
 })
@@ -148,13 +147,6 @@ function toggleActive() {
 			toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 		});
-	});
-}
-
-function atLinkEventListener() {
-	$('.js-link').click( function() {
-		let courseId = this.parentElement.dataset.courseId;
-		window.location = `course/${courseId}`;
 	});
 }
 
