@@ -13,6 +13,7 @@ use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
 use App\DataTables\CourseUsersDataTable;
 use App\DataTables\RemainingMaterialsDataTable;
+use App\Material;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
@@ -154,14 +155,13 @@ class CourseController extends Controller
 		$data = $request->all();
 		$course = Course::find( $data['courseId'] );
 
-		$material = $course->materials()
-			->where('material_id', $data['materialId']);
+		$state = $data['state'] == 1 ? 1 : 0;
 
-		$material->active = $data['state'] == 1 ? 1 : 0;
-		$material->update( ['course_material.active'=> $data['state'] == 1 ? 1 : 0 ] );
+		$course->materials()->updateExistingPivot( $data['materialId'], [ 'active' => $state ]);
 
 		$course->updated_at = Carbon::now();
 		$course->save();
+		
 	}
 
 	public function addMaterials( Request $request ) {

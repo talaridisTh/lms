@@ -4,6 +4,11 @@ const courseId = $("#course-materials-list")[0].dataset.courseId
 const totalLessons = $('#total-lessons')[0];
 const totalAdditions = $('#total-additions')[0];
 const updatedAt = $("#last-update-cnt")[0];
+
+//!######################################
+//!				Configurations			#
+//!######################################
+
 const tableLocale = {
 	emptyTable: 		"Δεν υπάρχουν εγγραφές",
 	info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
@@ -18,11 +23,6 @@ const tableLocale = {
 		previous:"<i class='mdi mdi-chevron-left'>",
 		next:"<i class='mdi mdi-chevron-right'>"}
 }
-
-
-//!######################################
-//!				Configurations			#
-//!######################################
 
 const dateRangeConfig = {
 	ranges: {
@@ -180,26 +180,24 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 
 	},
 	columns: [
-		{ data: 'action', name: 'action', className: "position-relative", orderable: false },
-		{ data: 'title', name: 'title', className: "js-link cursor-pointer" },
-		{ data: 'active', name: 'course_material.active' },
-		{ data: 'priority', name: 'course_material.priority',  width: "5%", searchable: false },
-		{ data: 'type', name: 'type', className: "js-link cursor-pointer" },
-		{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer", searchable: false },
-		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer", searchable: false },
+		{ data: 'action', name: 'action', className: "position-relative align-middle", orderable: false },
+		{ data: 'title', name: 'title' },
+		{ data: 'active', name: 'course_material.active', className: "align-middle", },
+		{ data: 'priority', name: 'course_material.priority', className: "align-middle",  width: "5%", searchable: false },
+		{ data: 'type', name: 'type', className: "cursor-default align-middle" },
+		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default align-middle", searchable: false },
+		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
 	],
 	language: tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
-		jsLinkEventListener();
 		activeMaterialsCheckboxToggle();
 		toggleCourseMaterial()
 		sortInputsInit();
-		// trHoverEffectInit();
 	},
 
 });
@@ -499,50 +497,6 @@ function remainingsCheckboxes() {
 
 	remainingCheckboxes.unbind();
 	remainingCheckboxes.change( remainingMaterialsCheckboxHandler );
-}
-
-function jsLinkEventListener() {
-	
-	let links = $(".js-link");
-	
-	links.unbind();
-	links.click( function() {
-		
-		// let id = this.parentElement.dataset.materialId;
-		let slug = this.parentElement.dataset.materialSlug;
-		
-		window.location = `/dashboard/material/${slug}`;
-	});
-}
-
-//* emfanizi sto hover to pano + apo ka8e row
-function trHoverEffectInit() {
-
-	let row = $("#course-materials-list > tbody > tr");
-
-	// row.unbind();
-
-	row.on( 'mouseover', function() {
-		let previousSibling = this.previousSibling;
-		if ( !previousSibling ) {
-			return;
-		}
-		let plusIcon = previousSibling.querySelector(".add-material");
-
-		plusIcon.style.display = "inline";
-		plusIcon.style.color = "green";
-	})
-	row.on( 'mouseleave', function() {
-		let previousSibling = this.previousSibling;
-
-		if ( !previousSibling ) {
-			return;
-		}
-		let plusIcon = previousSibling.querySelector(".add-material");
-
-		plusIcon.style.display = "none";
-	})
-
 }
 
 $(".js-date-search").on( "input", function() {

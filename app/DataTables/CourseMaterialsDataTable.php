@@ -55,38 +55,38 @@ class CourseMaterialsDataTable extends DataTable
 		
 
         return Datatables::of($query)
-            /* ->addColumn('action', function($data) use ($request) {
+			->addColumn('action', function($data) use ($request) {
 
-				return "<div class='additions-cnt d-inline'>
-							<div class='icheck-primary d-inline'>
+				return "
+							<div class='icheck-primary'>
 								<input class='js-course-material-checkbox' data-material-id='$data->materialId' data-material-type='$data->type' type='checkbox' id='$data->slug' autocomplete='off'>
 								<label for='$data->slug'></label>
 							</div>
 							<a class='text-secondary add-material' href='#' data-material-id='$data->materialId' data-priority='$data->priority' data-toggle='modal' data-target='#add-material-modal'>
 								<i class='mdi mdi-plus-circle-outline mr-1'></i>
 							</a>
-						</div>";
+						";
 
-			}) */
-			->addColumn('action', function($data) use ($request) {
+			})
+			->editColumn('title', function($data) {
 
-				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-material-checkbox' data-material-id='$data->materialId' data-material-type='$data->type' type='checkbox' id='$data->slug' autocomplete='off'>
-							<label for='$data->slug'></label>
-						</div>
-						<a class='text-secondary add-material' href='#' data-material-id='$data->materialId' data-priority='$data->priority' data-toggle='modal' data-target='#add-material-modal'>
-							<i class='mdi mdi-plus-circle-outline mr-1'></i>
-						</a>";
+				return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+						<p class='mb-1'>$data->slug</p>
+						<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
+						<span class='mx-2'>|</span>
+						<a href='#' class='custom-link-primary'>View</a>";
 
 			})
 			->editColumn('updated_at', function($data) {
 
-				return Carbon::parse($data->updatedAt)->format( "d / m / Y");
+				$updatedAt = Carbon::parse($data->updatedAt)->format( "d / m / Y");
+				return "<p class='mb-1'>$updatedAt</p>";
 
 			})
 			->editColumn('created_at', function($data) {
 
-				return Carbon::parse($data->createdAt)->format( "d / m / Y");
+				$createdAt = Carbon::parse($data->createdAt)->format( "d / m / Y");
+				return "<p class='mb-1'>$createdAt</p>";
 
 			})
 			->editColumn('active', function($data) use ($request) {
@@ -96,7 +96,7 @@ class CourseMaterialsDataTable extends DataTable
 				return "<input class='js-toggle' data-course-id='$request->courseId'
 					type='checkbox' id='". $data->slug ."-toggle-checkbox' 
 					data-material-id='$data->materialId' $active data-switch='bool' autocomplete='off'/>
-					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
 			->editColumn('priority', function($data) {
@@ -108,7 +108,10 @@ class CourseMaterialsDataTable extends DataTable
 								value='$data->priority' autocomplete='off'>
 						</div>";
 			})
-			->rawColumns(['action', 'active', 'priority'])
+			->editColumn('type', function($data) {
+				return "<p class='mb-1'>$data->type</p>";
+			})
+			->rawColumns(['action', 'title', 'active', 'priority', 'type', 'updated_at', 'created_at'])
 			->setRowAttr(
 				[ 'data-material-id' => function($data) {
 

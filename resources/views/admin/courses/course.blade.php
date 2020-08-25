@@ -236,7 +236,7 @@
 						<!-- Materials table tab-->
 						<div class="tab-pane {{ $materialsActive }} table-cnt" id="materials">
 
-							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes js-table">
+							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">

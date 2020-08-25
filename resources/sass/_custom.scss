@@ -101,7 +101,7 @@ select.is-invalid {
 	font-size: 20px;
 	position: absolute;
 	left: -10%;
-	top: 77%;
+	top: 85%;
 	z-index: 10;
 }
 #course-materials-list > tbody > tr:hover .add-material {
@@ -180,4 +180,12 @@ select.is-invalid {
 
 .underline {
 	text-decoration: underline;
+}
+
+.custom-link-primary {
+	color: #519dff !important;
+}
+
+.custom-link-primary:hover {
+	color: #536de6 !important;
 }
