@@ -30,7 +30,7 @@ class BundleCourseRequest extends FormRequest
     public function rules()
     {
         return [
-			'name'			=> 'required|string|max:50',
+			'title'			=> 'required|string|max:50',
 			'active' 		=> 'required|numeric|digits:1|gte:0|lte:1',
 			'cover'			=> 'max:150|dimensions:ratio=1.5|mimes:png,jpeg',
 			'description' 	=> 'required|string|max:500'

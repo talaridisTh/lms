@@ -65,7 +65,7 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 	},
 	columns: [
 		{ data: 'action', name: 'action', orderable: false, width: "5%" },
-		{ data: 'name', name: 'name', className: "js-link cursor-pointer" },
+		{ data: 'title', name: 'title', className: "js-link cursor-pointer" },
 		{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer" },
 		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
 	],
@@ -119,7 +119,7 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 	},
 	columns: [
 		{data: 'action', name:'action', orderable: false, searchable: false, className: "text-center"},
-		{data: 'name', name: 'name', className: "cursor-default"},
+		{data: 'title', name: 'title', className: "cursor-default"},
 		{data: 'addBtn', name: 'addBtn', orderable: false, searchable: false, className: "text-center"}
 	],
 	language:{

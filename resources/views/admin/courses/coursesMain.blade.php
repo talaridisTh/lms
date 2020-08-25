@@ -20,7 +20,7 @@
 						
 						<div class="form-group">
 							<label for="name">Όνομα</label>
-							<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" placeholder="Δώστε όνομα...">
+							<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="title" value="{{ old('title') }}" placeholder="Δώστε τίτλο...">
 							@error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -106,7 +106,7 @@
             <thead>
             	<tr>
             	    <th class="text-center">Επιλογή</th>
-            	    <th class="text-center">Όνομα</th>
+            	    <th class="text-center">Τίτλος</th>
             	    <th class="text-center">Ενεργό</th>
             	    <th class="text-center">Τελ. Ενημέρωση</th>
             	    <th class="text-center">Ημ. Δημιουργίας</th>
@@ -116,7 +116,7 @@
             <tfoot>
             	<tr>
             	    <th class="text-center">Επιλογή</th>
-            	    <th class="text-center">Όνομα</th>
+            	    <th class="text-center">Τίτλος</th>
             	    <th class="text-center">Ενεργό</th>
             	    <th class="text-center">Τελ. Ενημέρωση</th>
             	    <th class="text-center">Ημ. Δημιουργίας</th>

@@ -24,7 +24,7 @@ class BundleCoursesDataTable extends DataTable
 			->courses()
 			->select(
 				'courses.id', 
-				'courses.name', 
+				'courses.title', 
 				'courses.slug', 
 				'courses.updated_at', 
 				'courses.created_at'

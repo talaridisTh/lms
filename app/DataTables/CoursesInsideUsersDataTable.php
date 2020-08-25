@@ -26,7 +26,7 @@ class CoursesInsideUsersDataTable extends DataTable
        ->addColumn('action', function($data) use($user) {
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-user-checkbox-sub' data-course-id='$data->id' data-user-id='$user->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-user-checkbox-sub' data-course-id='$data->id' data-user-id='$user->id' data-course-title='$data->title' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
 

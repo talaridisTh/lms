@@ -110,7 +110,7 @@
 	    <div class="modal-dialog modal-xl">
 	        <div class="modal-content">
 	            <div class="modal-header modal-colored-header bg-primary">
-	                <h4 class="modal-title" id="add-materials-modalLabel">Προσθήκη Μαθημάτων</h4>
+	                <h4 class="modal-title" id="add-materials-modalLabel">Προσθήκη Υλικού</h4>
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body table-cnt">
@@ -123,7 +123,7 @@
 										<label for='all-remainings-checkbox'></label>
 									</div>
 								</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Τίτλος</th>
 								<th class="text-center">Topic</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center"></th>
@@ -133,7 +133,7 @@
 						<tfoot>
 							<tr>
 								<th class="text-center">Επιλογή</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Τίτλος</th>
 								<th class="text-center">Topic</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center"></th>
@@ -158,7 +158,7 @@
 					<img src="https://placehold.co/600x400" class="img-fluid"
 					alt="profile-image">
 	
-					<h4 class="mb-0 mt-2">{{ $course['name'] }}</h4>
+					<h4 class="mb-0 mt-2">{{ $course['title'] }}</h4>
 					<p class="text-muted font-14">Course</p>
 	
 					<div class="text-left mt-3">
@@ -245,7 +245,7 @@
 												<label for='all-active-materials-checkbox'></label>
 											</div>
 										</th>
-										<th class="text-center">Όνομα</th>
+										<th class="text-center">Τίτλος</th>
 										<th class="text-center">Ενεργό</th>
 										<th class="text-center">Κατάταξη</th>
 										<th class="text-center">Τύπος</th>
@@ -257,7 +257,7 @@
 								<tfoot>
 									<tr>
 										<th class="text-center"></th>
-										<th class="text-center">Όνομα</th>
+										<th class="text-center">Τίτλος</th>
 										<th class="text-center">Ενεργό</th>
 										<th class="text-center">Κατάταξη</th>
 										<th class="text-center">Τύπος</th>
@@ -273,7 +273,7 @@
 								<div class="col-sm-11 d-flex justify-content-end">
 									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">
 										<i class="mdi mdi-plus-circle mr-2"></i>
-										Προσθήκη Μαθημάτων
+										Προσθήκη Υλικού
 									</button>
 									<div class="dropdown ml-2">
 										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -300,11 +300,11 @@
 							            <div class="form-group">
 							                <label for="name">Όνομα Course</label>
 											<input id="name" type="text" 
-												class="form-control @error('name') is-invalid @enderror" 
-												id="name" name="name" 
-												value="{{ old('name') != "" ? old('name') : $course['name'] }}" 
+												class="form-control @error('title') is-invalid @enderror" 
+												id="title" name="title" 
+												value="{{ old('title') != "" ? old('title') : $course['title'] }}" 
 												placeholder="Δώστε όνομα">
-											@error('name')
+											@error('title')
                             				    <span class="invalid-feedback" role="alert">
                             				        <strong>{{ $message }}</strong>
                             				    </span>

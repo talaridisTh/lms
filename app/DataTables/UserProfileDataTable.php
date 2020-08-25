@@ -32,7 +32,7 @@ class UserProfileDataTable extends DataTable {
             })
             ->addColumn('action', function ($data) {
 
-                return "<td><h3><i data-course-id='{$data->id}' data-course-name='{$data->name}' class=' js-button-delete mdi text-danger mdi-delete-circle cursor-pointer'></i></h3></td>";
+                return "<td><h3><i data-course-id='{$data->id}' data-course-title='{$data->title}' class=' js-button-delete mdi text-danger mdi-delete-circle cursor-pointer'></i></h3></td>";
             })
             ->addColumn('chexbox', function ($data) {
 
@@ -43,8 +43,8 @@ class UserProfileDataTable extends DataTable {
             })
             ->setRowAttr(['data-course-id' => function ($data) {
                 return [$data->id];
-            }, 'data-course-name' => function ($data) {
-                return $data->name;
+            }, 'data-course-title' => function ($data) {
+                return $data->title;
             }])
             ->rawColumns(['students', 'action', "chexbox"]);
     }

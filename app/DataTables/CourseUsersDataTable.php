@@ -33,6 +33,7 @@ class CourseUsersDataTable extends DataTable
 				'users.first_name',
 				'users.last_name',
 				'users.email',
+				'users.slug',
 				'model_has_roles.role_id',
 			)
 			->get();
@@ -63,6 +64,10 @@ class CourseUsersDataTable extends DataTable
 			->setRowAttr([ 'data-user-id' => function($data) {
 
 				return  $data->id;
+
+			}, "data-user-slug" => function($data) {
+
+				return $data->slug;
 
 			}])
 			->rawColumns(['action', 'btn']);

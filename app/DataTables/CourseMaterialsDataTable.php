@@ -109,11 +109,17 @@ class CourseMaterialsDataTable extends DataTable
 						</div>";
 			})
 			->rawColumns(['action', 'active', 'priority'])
-			->setRowAttr([ 'data-material-id' => function($data) {
+			->setRowAttr(
+				[ 'data-material-id' => function($data) {
 
-				return  $data->materialId;
+						return  $data->materialId;
 
-			}]);
+					},
+					'data-material-slug' => function($data) {
+
+						return $data->slug;
+					}
+				]);
     }
 
     /**

@@ -24,11 +24,11 @@ class CoursesDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 		if ( is_null($request->startDate) && is_null($request->endDate) ) {
-			$query = Course::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
+			$query = Course::query()->select( 'id', 'title', 'active', 'slug', 'updated_at', 'created_at' );
 		}
 		else {
 			$query = Course::query()
-				->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' )
+				->select( 'id', 'title', 'active', 'slug', 'updated_at', 'created_at' )
 				->where( function($subquery) use ($request) {
 					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
@@ -42,7 +42,7 @@ class CoursesDataTable extends DataTable
 			->addColumn('action', function($data) {
 				
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-course-id='$data->id' data-course-name='$data->name' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-course-checkbox' data-course-id='$data->id' data-course-title='$data->title' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
 
@@ -120,7 +120,7 @@ class CoursesDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('name'),
+            Column::make('title'),
             Column::make('active'),
             Column::make('created_at'),
             Column::make('updated_at'),

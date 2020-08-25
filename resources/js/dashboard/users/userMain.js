@@ -83,7 +83,7 @@ function load_data(from_date = '', to_date = '') {
             },
             columns: [
                 {data: 'action', name: 'action', orderable: false},
-                {data: 'name', name: 'name',className : "js-link-course cursor-pointer" },
+                {data: 'title', name: 'title',className : "js-link-course cursor-pointer" },
                 // {data: 'active', name: 'active', orderable: false},
                 {data: 'updated_at', name: 'updated_at',className : "js-link-course cursor-pointer"},
                 {data: 'created_at', name: 'created_at',className : "js-link-course cursor-pointer"},

@@ -21,7 +21,7 @@ const courses = $(".course-materials-list").DataTable({
     },
     columns: [
         {data: 'chexbox', name: 'chexbox'},
-        {data: 'name', name: 'name',className: "js-link cursor-pointer"},
+        {data: 'title', name: 'title',className: "js-link cursor-pointer"},
         {data: 'students', name: 'students',className: "js-link cursor-pointer"},
         {data: 'action', name: 'action'},
     ],
@@ -52,7 +52,7 @@ const addCourse = $("#datatableAddCourse").DataTable({
         }
     },
     columns: [
-        {data: 'name', name: 'name'},
+        {data: 'title', name: 'title'},
         {data: 'action', name: 'action'},
 
     ],
@@ -130,7 +130,7 @@ const deleteCourse = () => {
                 }
             })
             if (status == 200) {
-                utilities.toastAlert('error', `${this.dataset.courseName}  Διεγραφη`)
+                utilities.toastAlert('error', `${this.dataset.courseTitle}  Διεγραφη`)
                 courses.ajax.reload();
                 addCourse.ajax.reload();
             }
@@ -147,7 +147,7 @@ const addCourseToUser = () => {
     let jsButton = $(".js-button").click(function () {
         const parent = this.parentElement.parentElement
         if (parent.dataset.exist) {
-            utilities.toastAlert('warning', `${this.dataset.courseName}  αφαιρεθηκε`)
+            utilities.toastAlert('warning', `${this.dataset.courseTitle}  αφαιρεθηκε`)
             ids = ids.filter(val => val !== this.dataset.courseId);
             this.value = 'Επιλογη'
             this.classList.remove("btn-danger")
@@ -157,7 +157,7 @@ const addCourseToUser = () => {
             if (!ids.includes(this.dataset.courseId)) {
                 ids.push(this.dataset.courseId)
             }
-            utilities.toastAlert('success', `${this.dataset.courseName} Επιλέχθηκε`)
+            utilities.toastAlert('success', `${this.dataset.courseTitle} Επιλέχθηκε`)
             this.classList.remove("btn-primary")
             this.classList.add("btn-danger")
             this.value = 'Αφαιρεση'
@@ -217,7 +217,7 @@ const clickModal = (ids) => {
         const parent = this.parentElement.parentElement
         let id = [];
 
-        const courseName = [...ids];
+        const courseTitle = [...ids];
 
 
         try {

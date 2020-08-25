@@ -50,7 +50,7 @@ class MaterialsDataTable extends DataTable {
 
                   $material  = Material::findOrFail($data->id);
 
-                  return $material->courses->pluck("name");
+                  return $material->courses->pluck("title");
             })
             ->editColumn('active', function ($data) {
 

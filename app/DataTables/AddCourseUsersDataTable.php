@@ -39,6 +39,7 @@ class AddCourseUsersDataTable extends DataTable
 				'first_name',
 				'last_name',
 				'email',
+				'slug',
 				'model_has_roles.role_id')
 			->get();
 
@@ -68,6 +69,11 @@ class AddCourseUsersDataTable extends DataTable
 			->setRowAttr([ 'data-user-id' => function($data) {
 
 				return  $data->userId;
+
+			},
+			"data-user-slug" => function($data) {
+
+				return $data->slug;
 
 			}]);
     }

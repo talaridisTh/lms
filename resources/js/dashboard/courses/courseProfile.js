@@ -391,9 +391,9 @@ function userLinkInit() {
 	link.unbind();
 	link.click( function() {
 
-		let userId = this.parentElement.dataset.userId
+		let userSlug = this.parentElement.dataset.userSlug
 
-		window.location = `/dashboard/users/${ userId }`;
+		window.location = `/dashboard/users/${ userSlug }`;
 	});
 }
 
@@ -508,9 +508,10 @@ function jsLinkEventListener() {
 	links.unbind();
 	links.click( function() {
 		
-		let id = this.parentElement.dataset.materialId;
+		// let id = this.parentElement.dataset.materialId;
+		let slug = this.parentElement.dataset.materialSlug;
 		
-		window.location = `/dashboard/material/${id}`;
+		window.location = `/dashboard/material/${slug}`;
 	});
 }
 

@@ -14,7 +14,7 @@ class CourseController extends Controller
 
     public function index()
     {
-		$courses = Course::all(['id', 'name', 'active', 'slug', 'updated_at', 'created_at']);
+		$courses = Course::all(['id', 'title', 'active', 'slug', 'updated_at', 'created_at']);
 
         return view('admin/courses/coursesMain')->withCourses($courses);
     }
@@ -38,10 +38,10 @@ class CourseController extends Controller
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
 		$course = new Course;
-		$course->name = $request->name;
+		$course->title = $request->title;
 		$course->description = $request->description;
 		$course->active = $request->active;
-		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
+		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		$course->cover = "https://placehold.co/600x400";
 		
@@ -104,15 +104,15 @@ class CourseController extends Controller
     {
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
-		$course->name = $request->name;
+		$course->title = $request->title;
 		$course->description = $request->description;
 		$course->active = $request->active;
-		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
+		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
 
 		if ( !empty($_FILES['cover']['name']) ) {
 			
 			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
-			$fileName = md5( $request->name ).$ext;
+			$fileName = md5( $request->title ).$ext;
 			
 			Storage::delete( "public/courses/$course->id/cover/$course->cover" );
 			$request->cover->storeAs("public/courses/$course->id/cover", $fileName);

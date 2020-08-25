@@ -18,7 +18,7 @@
 <select id="courseFilterMaterial">
     <option value="">Καθαρισμος</option>
     @foreach(App\Course::all() as $course)
-        <option value="{{$course->name}}">{{$course->name}}</option>
+        <option value="{{$course->title}}">{{$course->title}}</option>
     @endforeach
 </select>
 

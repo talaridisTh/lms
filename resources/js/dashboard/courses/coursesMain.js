@@ -91,7 +91,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 	},
 	columns: [
 		{data: 'action', name: 'action', width: "5%", orderable: false },
-		{data: 'name', name: 'name', className: "js-link cursor-pointer" },
+		{data: 'title', name: 'title', className: "js-link cursor-pointer" },
 		{data: 'active', name: 'active'},
 		{data: 'updated_at', name: 'updated_at', className: "js-link cursor-pointer js-updated-at" },
 		{data: 'created_at', name: 'created_at',  className: "js-link cursor-pointer"},

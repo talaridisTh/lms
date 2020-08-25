@@ -20,7 +20,7 @@ $factory->define(Course::class, function (Faker $faker) {
 	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
     return [
-        'name' => "Name of Course ".$counter,
+        'title' => "Title of Course ".$counter,
 		'description' => "Description of Course ".$counter++." ".$faker->slug($nbSentences = 3, $variableNbSentences = true),
 		'cover' => $faker->md5 .".jpg",
 		'slug' => $faker->slug,
