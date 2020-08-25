@@ -1,4 +1,5 @@
 import utilities from '../main';
+
 load_data();
 
 
@@ -15,12 +16,12 @@ function load_data(from_date = '', to_date = '') {
             data: {from_date: from_date, to_date: to_date}
         },
         columns: [
-            {data: "action", name: "action", searchable: false, orderable: false ,className: "text-left"},
+            {data: "action", name: "action", searchable: false, orderable: false, className: "text-left"},
             {data: "title", name: "title", className: "js-link cursor-pointer text-left"},
-            {data: "active", name: "active",className: "text-left"},
+            {data: "active", name: "active", className: "text-left"},
             {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
             {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
-            {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left",visible: false},
+            {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left", visible: false},
             {data: "humans", name: "humans", className: "js-link cursor-pointer text-left"},
             {data: "courses", name: "courses", className: "js-link cursor-pointer text-left", visible: false},
         ],
@@ -47,6 +48,7 @@ function load_data(from_date = '', to_date = '') {
             selectMultipleCheckboxDelete()
             selectMultipleCheckboxUpdate()
             NumOfCheckBox()
+            hoverOnSelect()
         }
     });
 
@@ -83,36 +85,57 @@ function load_data(from_date = '', to_date = '') {
 
 //! METHOD FIRST TABLE
 //!============================================================
-        function toggleInit() {
-            $(".js-toggle").change(function () {
+    function toggleInit() {
+        $(".js-toggle").change(function () {
 
-                let materialSlug = this.parentElement.parentElement.dataset.materialSlug
-                let updatedAtCnt = this.parentElement.parentElement.getElementsByClassName("js-updated-at")[0];
+            let materialSlug = this.parentElement.parentElement.dataset.materialSlug
+            let updatedAtCnt = this.parentElement.parentElement.getElementsByClassName("js-updated-at")[0];
 
-                axios.patch(`/materials/toggle-active/${materialSlug}`, {
-                    state: this.checked ? 1 : 0
+            axios.patch(`/materials/toggle-active/${materialSlug}`, {
+                state: this.checked ? 1 : 0
+            })
+                .then((res) => {
+                    let icon = this.checked ? "success" : "info";
+                    let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+                    utilities.toastAlert(icon, message);
+                    updatedAtCnt.textContent = "Μόλις τώρα";
                 })
-                    .then((res) => {
-                        let icon = this.checked ? "success" : "info";
-                        let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-                        utilities.toastAlert(icon, message);
-                        updatedAtCnt.textContent = "Μόλις τώρα";
-                    })
-                    .catch((err) => {
-                        console.log(err)
-                        utilities.toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
-                    })
-            });
-        }
+                .catch((err) => {
+                    console.log(err)
+                    utilities.toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+                })
+        });
+    }
 
-        function atLinkEventListener() {
-            $('.js-link').click(function () {
-                let materialSlug = this.parentElement.dataset.materialSlug;
+    function atLinkEventListener() {
+        $('.js-link').click(function () {
+            let materialSlug = this.parentElement.dataset.materialSlug;
 
-                window.location = `material/${materialSlug}`;
-            });
-        }
+            window.location = `material/${materialSlug}`;
+        });
+    }
 
+
+
+
+    const hoverOnSelect = () => {
+
+        $(".js-user-checkbox").change(function () {
+
+            $(".bulk-action")[0].hidden = false
+
+            let checkboxes = $(".js-user-checkbox:checked").length
+            if(!checkboxes) $(".bulk-action")[0].hidden = true
+            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
+
+            if (this.checked) {
+                this.parentElement.parentElement.parentElement.classList.add("trHover")
+
+            } else {
+                this.parentElement.parentElement.parentElement.classList.remove("trHover")
+            }
+        })
+    }
 
 
 //! DATAPICKER
@@ -211,15 +234,15 @@ function load_data(from_date = '', to_date = '') {
         }
     }
 
-    const NumOfCheckBox = ()=>{
-        $(".dropdown-toggle").click(function (){
+    const NumOfCheckBox = () => {
+        $(".dropdown-toggle").click(function () {
             let checkboxes = $(".js-user-checkbox:checked").length
             let checkboxesSub = $(".js-user-checkbox-sub:checked").length
             console.log(checkboxesSub)
 
 
-            $("#dropdownMenuButton")[0].innerText = ` Προσθήκη σε Course ${checkboxes==0? "":`( ${checkboxes} ) `} `
-            $(".js-multiple-delete")[0].innerText = ` Διαγραφη επιλεγμενων ${checkboxes==0? "":`( ${checkboxes} ) `} `
+            $("#dropdownMenuButton")[0].innerText = ` Προσθήκη σε Course ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
+            $(".js-multiple-delete")[0].innerText = ` Διαγραφη επιλεγμενων ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
 
 
         })

@@ -93,27 +93,7 @@
                 <div class="col-xl-8 col-lg-7">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex justify-content-end">
-                                <div class="btn-group mb-2 ">
-                                <a id="material-modal-shown-btn" type="button" class="btn btn-secondary mr-2 text-light"
-                                   data-toggle="modal"
-                                   data-target="#primary-header-modal">
-                                    <i class="mdi mdi-plus-circle mr-2"></i>
-                                    Προσθήκη COURSES
-                                </a>
-                                </div>
-                                <div class="btn-group mb-2 ">
-                                    <button type="button" class="btn btn-primary dropdown-toggle"
-                                            data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">Επιλογές
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item js-chexbox-delete" href="#">Διαγραφή επιλεγμένων</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Export</a>
-                                    </div>
-                                </div>
-                            </div>
+
                             <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                                 <li class="nav-item">
                                     <a href="#courses" data-toggle="tab" aria-expanded="false"
@@ -146,6 +126,28 @@
                                 </div>
                                 <div class="tab-pane {{$isnotActive}} " id="timeline">
                                     @include("components.timelineUser")
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="btn-group mb-2 ">
+                                <a id="material-modal-shown-btn" type="button" class="btn btn-primary mr-2 "
+                                   style="color: white"
+                                   data-toggle="modal"
+                                   data-target="#primary-header-modal">
+                                    <i class="mdi mdi-plus-circle mr-2"></i>
+                                    Προσθήκη COURSES
+                                </a>
+                            </div>
+                            <div class="btn-group mb-2 ">
+                                <button type="button" class="btn btn-secondary dropdown-toggle"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">Επιλογές
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item js-chexbox-delete" href="#">Διαγραφή επιλεγμένων</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Export</a>
                                 </div>
                             </div>
                         </div>

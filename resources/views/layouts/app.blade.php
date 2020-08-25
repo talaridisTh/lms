@@ -92,7 +92,7 @@
 <div class="left-side-menu left-side-menu-detached">
 
 	@auth
-		
+
 		<div class="leftbar-user">
 		    <a href="javascript: void(0);">
 		        <img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set5" alt="user-image" height="42" class="rounded-circle shadow-sm">
@@ -133,9 +133,9 @@
         <li class="side-nav-title side-nav-item">Apps</li>
 
 		@auth
-			
+
 			<li class="side-nav-item">
-				<a href="/courses/{{ Auth::user()->id }}" class="side-nav-link">
+				<a href="/courses/{{ Auth::user()->slug }}" class="side-nav-link">
 					<i class="uil-calender"></i>
 					<span>Courses</span>
 				</a>
@@ -179,7 +179,7 @@
 <!-- Left Sidebar End -->
 
 		@yield('content')
-	
+
     </div>
 </div>
 <!-- end page -->

@@ -3182,7 +3182,7 @@ div.dt-buttons a.btn.processing:after {
 }
 
 .trHover {
-  background-color: #4b4e53;
+  background-color: #3a444e;
 }
 
 .option-column::after,
@@ -3334,7 +3334,7 @@ select.is-invalid {
 }
 
 .redactor-placeholder::before {
-  color: #aab8c5;
+  color: #8391a2;
 }
 
 .redactor-toolbar a:hover {
@@ -3362,6 +3362,16 @@ select.is-invalid {
 }
 
 .tables-hover-effect > tr:hover:not(.extra-content-row) {
+  background-color: #3a444e;
+}
+
+#subtable-1_wrapper .odd:hover,
+#subtable-1_wrapper .even:hover {
+  background-color: #3a444e;
+}
+
+#scroll-horizontal-datatable .odd:hover,
+#scroll-horizontal-datatable .even:hover {
   background-color: #3a444e;
 }
 

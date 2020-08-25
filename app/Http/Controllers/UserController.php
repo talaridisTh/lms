@@ -94,6 +94,8 @@ class UserController extends Controller {
 
 	public function userCourses( User $user ) {
 
+
+
 		return view('courses/courses')->withUser( $user );
 
 	}

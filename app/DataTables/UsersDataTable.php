@@ -66,9 +66,15 @@ class UsersDataTable extends DataTable {
                 return "<input  class='toggle-class' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
+            ->editColumn('first_name', function($data) {
+
+                return "<a href='/dashboard/users/$data->slug' class='h5 custom-link-primary'><p>$data->first_name</p></a>
+						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
+						<span class='mx-2'>|</span>
+						<a href='#' class='custom-link-primary'>View</a>";
+
+            })
             ->editColumn('avatar', function ($data) {
-
-
                 return "<div>
                             <img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' >
                             <div class=' mt-2  extraContentEdit'>
@@ -76,7 +82,7 @@ class UsersDataTable extends DataTable {
                             </div>
                        </div> ";
             })
-            ->rawColumns(['action', 'active', "avatar", "activeNum", "chexbox",'dateChange',"allcourse"])
+            ->rawColumns(['action', 'active', "avatar", "activeNum", "chexbox",'dateChange',"allcourse","first_name"])
             ->setRowAttr([
                 'data-user-id' => function($data) {
                     return $data->id;

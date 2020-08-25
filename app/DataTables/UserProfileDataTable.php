@@ -31,8 +31,7 @@ class UserProfileDataTable extends DataTable {
                 return "<td>{$user->getCountStudent($data->id)}</td>";
             })
             ->addColumn('action', function ($data) {
-
-                return "<td><h3><i data-course-id='{$data->id}' data-course-title='{$data->title}' class=' js-button-delete mdi text-danger mdi-delete-circle cursor-pointer'></i></h3></td>";
+                return "<td><h3><i data-course-id='{$data->id}' data-course-title='{$data->title}' class=' js-button-delete h3 pt-1 uil uil-trash-alt cursor-pointer'></i></h3></td>";
             })
             ->addColumn('chexbox', function ($data) {
 
@@ -41,12 +40,22 @@ class UserProfileDataTable extends DataTable {
 							<label for='$data->slug' ></label>
 						</div>";
             })
+            ->editColumn('title', function($data) {
+
+                return "<a href='/dashboard/course/$data->id' class='h5 custom-link-primary'>$data->title</a>
+						<p class='mb-1'>$data->slug</p>
+						<a href='/dashboard/course/$data->id' class='custom-link-primary'>Edit</a>
+						<span class='mx-2'>|</span>
+						<a href='#' class='custom-link-primary'>View</a>";
+
+            })
+
             ->setRowAttr(['data-course-id' => function ($data) {
                 return [$data->id];
             }, 'data-course-title' => function ($data) {
                 return $data->title;
             }])
-            ->rawColumns(['students', 'action', "chexbox"]);
+            ->rawColumns(['students', 'action', "chexbox","title"]);
     }
 
     /**

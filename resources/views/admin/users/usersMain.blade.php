@@ -39,7 +39,7 @@
                 <th class="text-left">courses</th>
             </tr>
             </thead>
-            <tbody class="tables-hover-effect">
+            <tbody class="">
             </tbody>
             <tfoot>
             <tr>

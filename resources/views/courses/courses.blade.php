@@ -11,11 +11,11 @@
 			<div class="row">
 
 				@foreach ($user->courses as $key => $course)
-					
+
 				@if ( $key % 4 == 0 )
 					</div><div class="row">
 				@endif
-				
+
 				<div class="col-md-6 col-xl-3">
 					<!-- project card -->
 					<div class="card d-block">
@@ -28,7 +28,7 @@
 						<div class="card-body position-relative">
 							<!-- project title-->
 							<h4 class="mt-0">
-								<a href="/courses/course/{{ $course->id }}" class="text-title">{{ $course->name }}</a>
+								<a href="/courses/course/{{ $course->id }}" class="text-title">{{ $course->title }}</a>
 							</h4>
 
 							<!-- project detail-->
