@@ -47,7 +47,7 @@
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                <input name="title" type="text" class="form-control" id="titleMaterial"
+                                <input name="tigtle" type="text" class="form-control" id="titleMaterial"
                                        placeholder="Εισάγετε τίτλο...">
                                 <div class="valid-feedback">
                                     Looks good!

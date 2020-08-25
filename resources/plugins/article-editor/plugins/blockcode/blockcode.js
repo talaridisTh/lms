@@ -95,6 +95,8 @@ ArticleEditor.add('plugin', 'blockcode', {
     },
     _buildCodemirror: function(stack) {
         var $input = stack.getInput('code');
+
         this.app.codemirror.create({ el: $input, height: '200px', focus: true });
+        this.app.popup.updatePosition();
     },
 });

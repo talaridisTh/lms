@@ -19,15 +19,18 @@ ArticleEditor.add('plugin', 'inlineformat', {
         itemsObj: {
             u: {
                 title: '<span style="text-decoration: underline;">## inlineformat.underline ##</span>',
-                params: { tag: 'u' }
+                params: { tag: 'u' },
+                shortcut: 'Ctrl+u'
             },
             sup: {
                 title: '## inlineformat.superscript ##<sup>x</sup>',
-                params: { tag: 'sup' }
+                params: { tag: 'sup' },
+                shortcut: 'Ctrl+h'
             },
             sub: {
                 title: '## inlineformat.subscript ##<sub>x</sub>',
-                params: { tag: 'sub' }
+                params: { tag: 'sub' },
+                shortcut: 'Ctrl+l'
             },
             mark: {
                 title: '<span style="background: yellow;">## inlineformat.mark ##</span>',
@@ -74,7 +77,10 @@ ArticleEditor.add('plugin', 'inlineformat', {
             };
         }
 
-        this.app.popup.create('inlineformat', { items: items });
+        this.app.popup.create('inlineformat', {
+            width: '300px',
+            items: items
+        });
         this.app.popup.open({ button: button });
     }
 });

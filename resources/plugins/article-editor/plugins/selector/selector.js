@@ -30,6 +30,10 @@ ArticleEditor.add('plugin', 'selector', {
         this.app.toolbar.add('selector', {
             title: '## selector.selector ##',
             icon: this.opts.selector.icon,
+            blocks: {
+                all: 'all',
+                except: ['variable']
+            },
             command: 'selector.popup'
         });
     },

@@ -1,7 +1,7 @@
 /*
     Article Editor JS
-    Version 2.0.1
-    Updated: August 10, 2020
+    Version 2.1.0
+    Updated: August 19, 2020
 
     http://imperavi.com/article/
 
@@ -1078,7 +1078,7 @@ $ARX.ajax = Ajax;
 $ARX.instances = [];
 $ARX.namespace = 'article-editor';
 $ARX.prefix = 'arx';
-$ARX.version = '2.0.1';
+$ARX.version = '2.1.0';
 $ARX.settings = {};
 $ARX.lang = {};
 $ARX._mixins = {};
@@ -1149,8 +1149,8 @@ $ARX.add = function(type, name, obj) {
 
         // mixins
         if (obj.mixins) {
-            for (var i = 0; i < obj.mixins.length; i++) {
-                $ARX.inherit(F, $ARX._mixins[obj.mixins[i]]);
+            for (var z = 0; z < obj.mixins.length; z++) {
+                $ARX.inherit(F, $ARX._mixins[obj.mixins[z]]);
             }
         }
 
@@ -1634,7 +1634,8 @@ ArticleEditor.opts = {
     formatObj: {
         p: {
             title: '## blocks.paragraph ##',
-            type: 'paragraph'
+            type: 'paragraph',
+            shortcut: 'Ctrl+Alt+0'
         },
         div: {
             title: '## blocks.text ##',
@@ -1642,35 +1643,43 @@ ArticleEditor.opts = {
         },
         h1: {
             title: '<span style="font-size: 20px; font-weight: bold;">## headings.h1 ##</span>',
-            type: 'heading'
+            type: 'heading',
+            shortcut: 'Ctrl+Alt+1'
         },
         h2: {
             title: '<span style="font-size: 16px; font-weight: bold;">## headings.h2 ##</span>',
-            type: 'heading'
+            type: 'heading',
+            shortcut: 'Ctrl+Alt+2'
         },
         h3: {
             title: '<span style="font-weight: bold;">## headings.h3 ##</span>',
-            type: 'heading'
+            type: 'heading',
+            shortcut: 'Ctrl+Alt+3'
         },
         h4: {
             title: '<span style="font-weight: bold;">## headings.h4 ##</span>',
-            type: 'heading'
+            type: 'heading',
+            shortcut: 'Ctrl+Alt+4'
         },
         h5: {
             title: '<span style="font-weight: bold;">## headings.h5 ##</span>',
-            type: 'heading'
+            type: 'heading',
+            shortcut: 'Ctrl+Alt+5'
         },
         h6: {
             title: '<span style="font-weight: bold;">## headings.h6 ##</span>',
-            type: 'heading'
+            type: 'heading',
+            shortcut: 'Ctrl+Alt+6'
         },
         ul: {
             title: '&bull; ## list.unordered-list ##',
-            type: 'list'
+            type: 'list',
+            shortcut: 'Ctrl+Shift+7'
         },
         ol: {
             title: '1. ## list.ordered-list ##',
-            type: 'list'
+            type: 'list',
+            shortcut: 'Ctrl+Shift+8'
         },
         dl: {
             title: '## blocks.dlist ##',
@@ -3299,6 +3308,11 @@ ArticleEditor.add('module', 'editor', {
         this.$editor.removeClass(this.prefix + '-select-all');
     },
 
+    // add
+    addButton: function(name, obj) {
+        this.opts.buttons.editor[name] = obj;
+    },
+
     // get
     getButtons: function() {
         var buttons = this.opts.buttons.editor;
@@ -3536,6 +3550,11 @@ ArticleEditor.add('module', 'editor', {
         style.setProperty('--' + this.prefix + '-grid-gutter', this.opts.grid.gutter);
         style.setProperty('--' + this.prefix + '-grid-offset-left', this.opts.grid.offset.left);
         style.setProperty('--' + this.prefix + '-grid-offset-right', this.opts.grid.offset.right);
+
+        // patterns opts
+        if (this.app.initialSettings.grid && this.app.initialSettings.grid.patterns) {
+            this.opts.grid.patterns = this.app.initialSettings.grid.patterns;
+        }
     },
     _buildParserTags: function() {
         var parser = this.opts.parser;
@@ -3547,6 +3566,18 @@ ArticleEditor.add('module', 'editor', {
                 this.opts.parserTags[tag].push(parser[key].parse);
             }
         }
+    },
+    _buildDraggable: function() {
+        var $items = this.app.$body.find('[data-' + this.prefix + '-drop-id]');
+        $items.each(function($node) {
+            $node.attr('draggable', true);
+            $node.on('dragstart', function(e) {
+                var $target = this.dom(e.target);
+                var id = $target.attr('data-' + this.prefix + '-drop-id');
+                e.dataTransfer.setData('item', id);
+            }.bind(this));
+        }.bind(this));
+
     },
 
     // load
@@ -3571,6 +3602,7 @@ ArticleEditor.add('module', 'editor', {
         this._buildEditorCss();
         this._buildCustomCss();
         this._buildGridCssVar();
+        this._buildDraggable();
 
         // adjust on resize
         this.getWin().on('resize.' + this.prefix + '-editor-frame', this.adjustHeight.bind(this));
@@ -3952,6 +3984,18 @@ ArticleEditor.add('module', 'utils', {
         }, 0);
     },
 
+    // object
+    getObjectIndex: function(obj, key) {
+        return Object.keys(obj).indexOf(key);
+    },
+    insertToObject: function (key, value, obj, pos) {
+        return Object.keys(obj).reduce(function(ac, a, i) {
+            if (i === pos) ac[key] = value;
+            ac[a] = obj[a];
+            return ac;
+        }, {});
+    },
+
     // random
     getRandomId: function() {
         var id = '';
@@ -4318,7 +4362,7 @@ ArticleEditor.add('module', 'content', {
     },
 
     // drop
-    drop: function(e, html) {
+    drop: function(e, html, position, cleanDrop) {
         var target = this.app.element.getDataBlock(e.target);
         target = (target.length === 0) ? this.app.blocks.getFirst() : target;
 
@@ -4326,8 +4370,9 @@ ArticleEditor.add('module', 'content', {
         this.app.block.set(target);
 
         // drop point
-        this.app.insertion.insertPoint(e);
-
+        if (!position) {
+            this.app.insertion.insertPoint(e);
+        }
 
         var clean = true;
         var parse = true;
@@ -4340,6 +4385,10 @@ ArticleEditor.add('module', 'content', {
             html = this.getTextFromHtml(html, { nl: true, trimlines: false });
         }
 
+        if (cleanDrop === false) {
+            clean = false;
+        }
+
         // empty
         if (html === '') {
             return;
@@ -4349,7 +4398,7 @@ ArticleEditor.add('module', 'content', {
         html = (clean) ? this.app.autolink.parse(html) : html;
 
         // insert
-        this.app.insertion.insertContent({ html: html, clean: clean, parse: parse });
+        this.app.insertion.insertContent({ html: html, clean: clean, parse: parse, position: position });
     },
 
     // paste
@@ -5193,6 +5242,8 @@ ArticleEditor.add('module', 'parser', {
             case 'article':
                 type = 'layer';
                 break;
+            default:
+                break;
         }
 
         return type;
@@ -5493,7 +5544,7 @@ ArticleEditor.add('module', 'element', {
     // split
     split: function(el) {
         var $el = this.dom(el);
-        var el = $el.get();
+        el = $el.get();
         var tag = el.tagName.toLowerCase();
         var fragment = this.app.content.extractHtmlFromCaret(el);
         if (fragment.nodeType && fragment.nodeType === 11) {
@@ -5996,55 +6047,17 @@ ArticleEditor.add('module', 'block', {
     popup: function(params, button, name) {
 
         // alignment
-        var form, obj, segments = {};
+        var form;
         if (name === 'alignment') {
-            obj = this.opts.align;
-            for (var key in obj) {
-                if (!obj[key]) continue;
-                segments[key] = { name: obj[key], prefix: 'align' };
-            }
-
-            form = {
-                'align': {
-                    type: 'segment',
-                    label: '## form.alignment ##',
-                    segments: segments
-                }
-            };
+            form = this._buildSegments('align', 'alignment');
         }
         // valign
         else if (name === 'valign') {
-            obj = this.opts.valign;
-            for (var key in obj) {
-                if (!obj[key]) continue;
-                segments[key] = { name: obj[key], prefix: 'valign' };
-            }
-
-            form = {
-                'valign': {
-                    type: 'segment',
-                    label: '## form.valign ##',
-                    segments: segments
-                }
-            };
-
+            form = this._buildSegments('valign');
         }
         // outset
         else if (name === 'outset') {
-            obj = this.opts.outset;
-            for (var key in obj) {
-                if (!obj[key]) continue;
-                segments[key] = { name: obj[key], prefix: 'outset' };
-            }
-
-            form = {
-                'outset': {
-                    type: 'segment',
-                    label: '## form.outset ##',
-                    segments: segments
-                }
-            };
-
+            form = this._buildSegments('outset');
         }
 
         // popup
@@ -6079,6 +6092,24 @@ ArticleEditor.add('module', 'block', {
     },
     _isAction: function() {
         return (!this.app.blocks.is() && this.is());
+    },
+    _buildSegments: function(name, title) {
+        var form = {};
+        var segments = {};
+        var obj = this.opts[name];
+        for (var key in obj) {
+            if (!obj[key]) continue;
+            segments[key] = { name: obj[key], prefix: name };
+        }
+
+        title = title || name;
+        form[name] = {
+            type: 'segment',
+            label: '## form.' + title + ' ##',
+            segments: segments
+        };
+
+        return form;
     },
     _appendToEmptyBlock: function(instance) {
         var emptyBlock = this.app.block.create();
@@ -6245,20 +6276,45 @@ ArticleEditor.add('module', 'event', {
         if (event.isStopped()) return e.preventDefault();
 
         // drop
+        var html;
         var dt = e.dataTransfer;
-        if (this.opts.image && this.opts.image.upload && dt.files !== null && dt.files.length > 0) {
+        var item = dt.getData('item');
+        if (item !== '') {
+            e.preventDefault();
+
+            if (this.opts.draggable && typeof this.opts.draggable[item] !== 'undefined') {
+                html = this.opts.draggable[item];
+            }
+            else {
+                html = this.dom('[data-' + this.prefix + '-drop-item=' + item + ']').html();
+                html = html.trim();
+            }
+
+            // drop
+            if (html) {
+                var position = 'after';
+                var $over = this.app.editor.getBody().find('.' + this.prefix + '-draggable-over');
+                if ($over.length !== 0) {
+                    position = 'append';
+                }
+
+                this.app.content.drop(e, html, position, false);
+            }
+        }
+        else if (this.opts.image && this.opts.image.upload && dt.files !== null && dt.files.length > 0) {
             e.preventDefault();
             this.app.image.drop(e, dt);
         }
         else {
-            var html = dt.getData("text/html");
+            html = dt.getData("text/html");
             html = (html.trim() === '') ? dt.getData('Text') : html;
 
             // drop
             this.app.content.drop(e, html);
         }
 
-
+        this._removeDragPlaceholder();
+        this.app.observer.trigger = true;
     },
     ondragstart: function(e) {
         // broadcast
@@ -6267,6 +6323,25 @@ ArticleEditor.add('module', 'event', {
     ondragover: function(e) {
         e.preventDefault();
         this.dragoverEvent = true;
+        this.app.observer.trigger = false;
+        this._removeDragPlaceholder();
+
+        // data
+        var types = e.dataTransfer.types;
+        if (types.indexOf('item') !== -1) {
+            var $block = this._getBlock(e.target);
+            if ($block.length !== 0) {
+
+                var instance = $block.dataget('instance');
+                if (instance.getType('layer') && instance.isEmpty()) {
+                    $block.addClass(this.prefix + '-draggable-over');
+                }
+                else {
+                    var $pl = this.dom('<div>').addClass(this.prefix + '-draggable-placeholder');
+                    $block.after($pl);
+                }
+            }
+        }
 
         // broadcast
         this.app.broadcast('editor.dragover', { e: e });
@@ -6274,6 +6349,9 @@ ArticleEditor.add('module', 'event', {
     ondragleave: function(e) {
         e.preventDefault();
         this.dragoverEvent = false;
+
+        this._removeDragPlaceholder();
+        this.app.observer.trigger = true;
 
         // broadcast
         this.app.broadcast('editor.dragleave', { e: e });
@@ -6458,6 +6536,11 @@ ArticleEditor.add('module', 'event', {
     _isLinkClick: function(e) {
         return (this.dom(e.target).closest('a').length !== 0);
     },
+    _removeDragPlaceholder: function() {
+        var $body = this.app.editor.getBody();
+        $body.find('.' + this.prefix + '-draggable-placeholder').remove();
+        $body.find('.' + this.prefix + '-draggable-over').removeClass(this.prefix + '-draggable-over');
+    },
     _preventLinks: function(e) {
         if (this._isLinkClick(e)) e.preventDefault();
     }
@@ -6596,6 +6679,19 @@ ArticleEditor.add('module', 'selection', {
         }
 
         return html;
+    },
+    getPosition: function() {
+        var range = this.getRange();
+        var pos = { top: 0, left: 0, width: 0, height: 0 };
+        if (this.win.getSelection && range.getBoundingClientRect) {
+            range = range.cloneRange();
+            var offset = (range.startOffset-1);
+            range.setStart(range.startContainer, (offset < 0) ? 0 : offset);
+            var rect = range.getBoundingClientRect();
+            pos = { top: rect.top, left: rect.left, width: (rect.right - rect.left) , height: (rect.bottom - rect.top) };
+        }
+
+        return pos;
     },
 
     // set
@@ -6786,7 +6882,7 @@ ArticleEditor.add('module', 'selection', {
             for (node = start.parentNode; node; node = node.parentNode) {
                 if (this.app.editor.isLayout(node)) break;
                 nodes.push(node);
-                if (node == commonAncestor) break;
+                if (node === commonAncestor) break;
             }
 
             nodes.reverse();
@@ -6795,7 +6891,7 @@ ArticleEditor.add('module', 'selection', {
                 if (node.nodeType !== 3 && this.dom(node.parentNode).closest(commonAncestor).length === 0) break;
 
                 nodes.push(node);
-                if (node == end) break;
+                if (node === end) break;
             }
         }
         else {
@@ -6805,11 +6901,11 @@ ArticleEditor.add('module', 'selection', {
             }
 
             for (node = start; node; node = this._getNextNode(node)) {
-                if (node == commonAncestor) break;
+                if (node === commonAncestor) break;
                 if (node.nodeType !== 3 && this.dom(node.parentNode).closest(commonAncestor).length === 0) break;
 
                 nodes.push(node);
-                if (node == end) break;
+                if (node === end) break;
             }
         }
 
@@ -7654,7 +7750,6 @@ ArticleEditor.add('module', 'input', {
 
         // editable
         if (instance.isEditable()) {
-
             // all block selected
             if (instance.isAllSelected()) {
                 e.preventDefault();
@@ -7698,7 +7793,6 @@ ArticleEditor.add('module', 'input', {
             e.preventDefault();
             instance.insertEmpty({ position: 'after', caret: 'start' });
         }
-
 
         // handle block enter
         if (instance.handleEnter) {
@@ -7766,12 +7860,13 @@ ArticleEditor.add('module', 'input', {
         var direction = (pointer === 'left') ? 'before' : 'after';
         var sel = this.app.selection.get();
         var isChar = this._isInvisibleChar(direction);
+        var el;
         if (isChar && pointer === 'left') {
-            var el = sel.current;
+            el = sel.current;
             this.dom(el).replaceWith(el.textContent.replace(/\s+$/,""));
         }
         else if (isChar && remove && sel.current && sel.current.nextSibling) {
-            var el = sel.current.nextSibling;
+            el = sel.current.nextSibling;
             this.dom(el).replaceWith(el.textContent.replace(/^\s+/,""));
         }
         else if (isChar && pointer === 'right') {
@@ -7959,8 +8054,8 @@ ArticleEditor.add('module', 'shortcut', {
         }
 
         var len = keys.length;
-        for (var i = 0; i < len; i++) {
-            if (possible[keys[i]]) {
+        for (var z = 0; z < len; z++) {
+            if (possible[keys[z]]) {
 
                 e.preventDefault();
                 this.triggered = true;
@@ -7984,7 +8079,6 @@ ArticleEditor.add('module', 'toolbar', {
         this.toggledClass = 'toggled';
         this.disableClass = 'disable';
         this.customButtons = {};
-        this.editorButtons = {};
         this.aTags = {};
         this.aTypes = {};
     },
@@ -7997,17 +8091,19 @@ ArticleEditor.add('module', 'toolbar', {
         }
 
         if (this._isToolbar()) {
-
             this.$container = this.app.container.get('toolbar');
             this._build();
-            this._buildEditorButtons();
-            this._buildButtons();
         }
 
         this._buildSticky();
     },
     load: function() {
         this._buildActiveButtons();
+
+        if (this._isToolbar()) {
+            this.$toolbar.html('');
+            this._buildButtons();
+        }
     },
     stop: function() {
         this.$toolbar.remove();
@@ -8034,10 +8130,11 @@ ArticleEditor.add('module', 'toolbar', {
         var inlines = this.app.selection.getNodes({ type: 'inline', selected: 'inside', links: true });
         var tags = this._getObservedTags(tag, inlines);
         var buttons = [];
+        var keys;
 
         // tags
         for (var i = 0; i < tags.length; i++) {
-            var keys = this.aTags[tags[i]];
+            keys = this.aTags[tags[i]];
             if (keys) {
                 buttons = buttons.concat(keys);
             }
@@ -8046,7 +8143,7 @@ ArticleEditor.add('module', 'toolbar', {
 
         // types
         if (type) {
-            var keys = this.aTypes[type];
+            keys = this.aTypes[type];
             if (keys) {
                 buttons = buttons.concat(keys);
             }
@@ -8140,9 +8237,6 @@ ArticleEditor.add('module', 'toolbar', {
             $scrollTarget.on('scroll.' + this.prefix + '-toolbar', this._observeSticky.bind(this));
         }
     },
-    _buildEditorButtons: function() {
-        this.editorButtons = this.app.editor.getButtons();
-    },
     _buildActiveButtons: function() {
 
         this.aTags = (this.opts.buttons.tags) ? this.opts.buttons.tags : {};
@@ -8173,7 +8267,7 @@ ArticleEditor.add('module', 'toolbar', {
     },
     _buildButtons: function() {
         var instance = this._getCurrentInstance();
-        var buttons = (instance) ? instance.toolbar : this.editorButtons;
+        var buttons = (instance) ? instance.toolbar : this.app.editor.getButtons();
 
         // create button
         this._createButtons(buttons, instance);
@@ -9111,8 +9205,10 @@ ArticleEditor.add('module', 'insertion', {
 
         return inserted;
     },
-    insertNewline: function(caret) {
-        return this._insertFragment({ node: document.createTextNode('\n') }, (caret) ? caret : 'after');
+    insertNewline: function(caret, doublenode) {
+        var str = (doublenode) ? '\n\n' : '\n';
+
+        return this._insertFragment({ node: document.createTextNode(str) }, (caret) ? caret : 'after');
     },
     insertPoint: function(e) {
         var range;
@@ -9303,11 +9399,11 @@ ArticleEditor.add('module', 'insertion', {
         var current = this.app.block.get();
         var position = false;
         var remove = false;
+        var nodes, $block;
 
         // check
         this._checkEmpty();
         this._checkLine();
-
 
         // blocks
         if (this.app.blocks.is()) {
@@ -9325,7 +9421,7 @@ ArticleEditor.add('module', 'insertion', {
             this._parseBuild();
 
             // nodes
-            var nodes = this._buildParsedNodes();
+            nodes = this._buildParsedNodes();
 
             // insert
             var last = this.app.blocks.getLastSelected();
@@ -9351,18 +9447,29 @@ ArticleEditor.add('module', 'insertion', {
             this._parseBuild();
 
             // nodes
-            var nodes = this._buildParsedNodes();
+            nodes = this._buildParsedNodes();
+            var positions = ['after', 'before', 'append'];
+            var emptyLayer = false;
 
             if (this.isPosition === 'top' || (!this.isPosition && this.opts.editor.add === 'top')) {
                 current = this.app.blocks.getFirst();
                 position = 'before';
+            }
+            else if (current && positions.indexOf(this.isPosition) !== -1) {
+                position = this.isPosition;
+                emptyLayer = (current.getType('layer') && current.isEmpty());
             }
             else {
                 current = this.app.blocks.getLast();
                 position = 'after';
             }
 
-            var $block = current.getBlock();
+            $block = current.getBlock();
+            if (emptyLayer) {
+                $block.removeClass(this.prefix + '-empty-layer');
+                $block.html('');
+            }
+
             $block[position](nodes);
         }
         // list to list
@@ -9376,7 +9483,7 @@ ArticleEditor.add('module', 'insertion', {
             this._parseBuild();
 
             // insert
-            var $block = current.getBlock();
+            $block = current.getBlock();
             var $list = this.$parsed.children().first();
             this.$nodes = this.insertListToList($list, $block, 'end');
             this.isCaret = false;
@@ -9419,8 +9526,8 @@ ArticleEditor.add('module', 'insertion', {
                 }
 
                 // nodes
-                var nodes = this._buildParsedNodes();
-                var $block = current.getBlock();
+                nodes = this._buildParsedNodes();
+                $block = current.getBlock();
 
                 // insert
                 this._insertToEditable(current, $block, nodes, position, remove);
@@ -9448,8 +9555,8 @@ ArticleEditor.add('module', 'insertion', {
                 this._parseBuild();
 
                 // nodes
-                var nodes = this._buildParsedNodes();
-                var $block = current.getBlock();
+                nodes = this._buildParsedNodes();
+                $block = current.getBlock();
 
                 // emptiable empty
                 if (current.isEmptiable() && current.isEmpty()) {
@@ -9785,7 +9892,7 @@ ArticleEditor.add('module', 'addbar', {
 
         // create
         this.app.popup.create('addbar', {
-            width: '480px',
+            width: '476px',
         	items: this.buildItems()
         });
 
@@ -9821,8 +9928,8 @@ ArticleEditor.add('module', 'addbar', {
         }
 
         // build all
-        for (var key in items) {
-            this._buildItem(instance, items, items[key], key);
+        for (var index in items) {
+            this._buildItem(instance, items, items[index], index);
         }
 
         return items;
@@ -9842,24 +9949,13 @@ ArticleEditor.add('module', 'addbar', {
             return;
         }
 
-        var $item = this.dom('<div>').addClass(this.prefix + '-popup-addbar-item');
-        var $title = this.dom('<span>').addClass(this.prefix + '-popup-addbar-item-title');
-        var $icon = this.dom('<span>').addClass(this.prefix + '-popup-addbar-item-icon');
-
-        // icon
-        if (item.icon) $icon.html(item.icon);
-        else $icon.addClass(this.prefix + '-icon-' + key);
-
-        // title
-        $title.html(this.lang.parse(item.title));
-
-        // append
-        $item.append($icon);
-        $item.append($title);
-
-        items[key].title = false;
-        items[key].html = $item;
-        items[key].params = { name: key };
+        items[key] = {
+            container: true,
+            title: item.title,
+            icon: item.icon || key,
+            command: item.command,
+            params: { name: key }
+        }
     }
 });
 ArticleEditor.add('module', 'marker', {
@@ -9947,7 +10043,12 @@ ArticleEditor.add('module', 'marker', {
 
             this.app.selection.setRange(range);
 
+            var fix = (start && end) ? 2 : 1;
             var offset = this.app.offset.get();
+            offset = {
+                start: offset.start-fix,
+                end: offset.end-fix
+            };
 
             if (start) start.parentNode.removeChild(start);
             if (end) end.parentNode.removeChild(end);
@@ -9980,9 +10081,6 @@ ArticleEditor.add('module', 'marker', {
     }
 });
 ArticleEditor.add('module', 'format', {
-    init: function() {
-
-    },
     popup: function(params, button) {
         var instance = this.app.block.get();
         var tag = instance.getTag();
@@ -9996,11 +10094,13 @@ ArticleEditor.add('module', 'format', {
                 title: this.opts.formatObj[key].title,
                 params: { tag: key },
                 command: 'block.format',
+                shortcut: this.opts.formatObj[key].shortcut,
                 active: (key === tag)
             }
         }
 
         this.app.popup.create('format', {
+            width: '300px',
             items: items
         });
 
@@ -10310,9 +10410,9 @@ ArticleEditor.add('module', 'inline', {
 
         // apply attr
         if (this.params && typeof this.params.attr !== 'undefined') {
-            for (var i = 0; i < finalNodes.length; i++) {
+            for (var z = 0; z < finalNodes.length; z++) {
                 for (var name in this.params.attr) {
-                    finalNodes[i].setAttribute(name, this.params.attr[name]);
+                    finalNodes[z].setAttribute(name, this.params.attr[name]);
                 }
             }
         }
@@ -11305,7 +11405,9 @@ ArticleEditor.add('module', 'popup', {
     },
     stop: function() {
         this._stopEvents();
-        this.$popup.remove();
+        if (this.$popup) {
+            this.$popup.remove();
+        }
     },
     isOpen: function(name) {
         var opened = this.$popup.hasClass('open');
@@ -11321,12 +11423,17 @@ ArticleEditor.add('module', 'popup', {
         }
 
         this._reset(name);
-
-        // set name
         this.name = name;
 
+        if (params) {
+            params.collapse = false;
+        }
+
         // create stack
-        return this._createStack(name, params, true);
+        this.stack = this._createStack(name, params, true);
+        this.stack.setActive();
+
+        return this.stack;
     },
     add: function(name, params) {
         return this._createStack(name, params);
@@ -11371,6 +11478,9 @@ ArticleEditor.add('module', 'popup', {
     getStack: function(name) {
         return (name) ? this._findStack(name) : this._findStackActive();
     },
+    renderHeaderBack: function(stack) {
+        this._buildHeaderBack(stack);
+    },
     closeStacks: function() {
         this._findStacks().each(function($node) {
             var stack = $node.dataget('instance');
@@ -11394,9 +11504,20 @@ ArticleEditor.add('module', 'popup', {
         // build
         this._buildButton(params);
         this._buildName();
-        this._buildPosition();
         this._setToolbarToggledButton();
         this._startEvents();
+
+        // broadcast
+        this.app.broadcast('popup.before.open');
+
+        // render stack
+        this.stack.render();
+
+        // build header
+        this._buildHeader();
+
+        // build position
+        this._buildPosition();
 
         // show
         if (animation === false) {
@@ -11413,6 +11534,15 @@ ArticleEditor.add('module', 'popup', {
         this.$popup = this.dom('<div>').addClass(this.prefix + '-popup ' + this.prefix + '-popup-' + this.uuid).hide();
         this.$popup.attr('dir', this.opts.editor.direction);
 
+        // header
+        this.$header = this.dom('<div>').addClass(this.prefix + '-popup-header');
+        this.$popup.append(this.$header);
+
+        // stacks
+        this.$stacks = this.dom('<div>').addClass(this.prefix + '-popup-stacks');
+        this.$popup.append(this.$stacks);
+
+        // append
         this.app.$body.append(this.$popup);
     },
     _buildDepth: function() {
@@ -11428,7 +11558,6 @@ ArticleEditor.add('module', 'popup', {
         if (this.focus) {
             this.getStack().setFocus(this.focus);
         }
-
     },
     _buildName: function() {
         this.$popup.attr('data-' + this.prefix + '-popup-name', this.name);
@@ -11495,20 +11624,128 @@ ArticleEditor.add('module', 'popup', {
 
         return pos;
     },
+    _buildHeader: function() {
+        var stacks = [];
 
-    // create
-    _createStack: function(name, params, active) {
-        this.stack = this.app.create('popup.stack', name, params);
+        this.$header.html('');
+        this._findStacks().each(function($node) {
+            var stack = $node.dataget('instance');
+            var title = stack.getTitle();
+            if (title) {
+                stacks.push(stack);
+            }
+        });
 
-        // open
-        if (active) {
-            this.stack.setActive();
+        var len = stacks.length;
+
+        // path
+        if (len !== 0) {
+            this._buildPath();
+            this._buildClose();
         }
 
-        this.$popup.append(this.stack.getElement());
+        // items
+        for (var i = 0; i < len; i++) {
+            var $item = this._buildPathItem(stacks[i]);
+            this.$path.append($item);
+        }
+    },
+    _buildHeaderBack: function(stack) {
+        this._buildPath();
+        this._buildBack(stack);
+        this._buildBackItem(stack);
+    },
+    _buildPath: function() {
+        var name = this.prefix + '-popup-header-path';
+        this.$header.find('.' + name).remove();
 
+        this.$path = this.dom('<div>').addClass(name);
+        this.$header.append(this.$path);
+    },
+    _buildPathItem: function(stack) {
+        var title = stack.getTitle();
+        var $item = this.dom('<span>').addClass(this.prefix + '-popup-header-item');
+        $item.html(this.lang.parse(title));
+        $item.dataset('stack', stack);
+        $item.on('click', this._catchOpen.bind(this));
 
-        return this.stack;
+        if (stack.isActive()) {
+            $item.addClass('active');
+        }
+
+        return $item;
+    },
+    _buildBack: function(stack) {
+        var $back = this.dom('<span>').addClass(this.prefix + '-popup-header-item');
+        $back.html(this.lang.get('popup.back'));
+        $back.dataset('stack-prev', stack.prev);
+        $back.dataset('stack-current', stack);
+        $back.on('click', this._catchBack.bind(this));
+
+        this.$path.append($back);
+    },
+    _buildBackItem: function(stack) {
+        var title = stack.getTitle();
+        var $item = this.dom('<span>').addClass(this.prefix + '-popup-header-item');
+        $item.html(this.lang.parse(title));
+        $item.addClass('active');
+
+        this.$path.append($item);
+    },
+    _buildClose: function() {
+        var $close = this.dom('<span>').addClass(this.prefix + '-popup-close');
+        $close.one('click', this._catchClose.bind(this));
+
+        this.$header.append($close);
+    },
+
+    // create
+    _createStack: function(name, params) {
+        var stack = this.app.create('popup.stack', name, params);
+        this.$stacks.append(stack.getElement());
+
+        return stack;
+    },
+
+    // catch
+    _catchClose: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        this.close();
+    },
+    _catchOpen: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var $target = this.dom(e.target);
+        var targetStack = $target.dataget('stack');
+
+        var $items = this.$path.find('.' + this.prefix + '-popup-header-item');
+        $items.each(function($item) {
+            var stack = $item.dataget('stack');
+            stack.close();
+
+            $item.removeClass('active');
+        });
+
+        $target.addClass('active');
+        targetStack.open();
+    },
+    _catchBack: function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var $item = this.dom(e.target);
+        var prev = $item.dataget('stack-prev');
+        var current = $item.dataget('stack-current');
+
+        current.collapse();
+        prev.rebuild();
+        prev.open();
+
+        // rebuild header
+        this._buildHeader();
     },
 
     // find
@@ -11544,12 +11781,18 @@ ArticleEditor.add('module', 'popup', {
         this._buildFocus();
         this._cropHeight();
         this.$popup.addClass('open');
+
+        // broadcast
+        this.app.broadcast('popup.open');
     },
 
     // closed
     _closed: function() {
         this.$popup.removeAttr('data-' + this.prefix + '-popup-name');
         this.$popup.removeClass('open');
+
+        // broadcast
+        this.app.broadcast('popup.close');
     },
 
     // crop
@@ -11605,8 +11848,9 @@ ArticleEditor.add('module', 'popup', {
     _reset: function(name) {
         this.stack = false;
         this.button = false;
-        this.$popup.html('');
-        this.$popup.removeClass('has-items has-form has-footer has-header');
+        this.$header.html('');
+        this.$stacks.html('');
+        this.$popup.removeClass('has-items has-form has-footer');
     },
     _resetToolbarToggledButton: function() {
         if (!this.button) return;
@@ -11616,6 +11860,7 @@ ArticleEditor.add('module', 'popup', {
 });
 ArticleEditor.add('class', 'popup.item', {
     defaults: {
+        container: false,
         title: false,
         html: false,
         active: false,
@@ -11633,7 +11878,11 @@ ArticleEditor.add('class', 'popup.item', {
         this.params = this._buildParams(params);
 
         this._build();
+        this._buildContainer();
+        this._buildIcon();
         this._buildTitle();
+        this._buildImage();
+        this._buildShortcut();
         this._buildActive();
         this._buildHidden();
         this._buildDivider();
@@ -11661,13 +11910,54 @@ ArticleEditor.add('class', 'popup.item', {
     // private
     _build: function() {
         this.$item = (this.params.html) ? this.dom(this.params.html) : this.dom('<div>');
-        this.$item.addClass(this.prefix + '-popup-stack-item');
+        this.$item.addClass(this.prefix + '-popup-item ' + this.prefix + '-popup-stack-item');
         this.$item.attr({ 'name': this.name });
+    },
+    _buildContainer: function() {
+        if (this.params.container) {
+            this.$item.addClass(this.prefix + '-popup-item-container');
+        }
     },
     _buildTitle: function() {
         if (this.params.title) {
-            this.$item.addClass(this.prefix + '-popup-item');
-            this.$item.html(this.lang.parse(this.params.title));
+            this.$title = this.dom('<span>').addClass(this.prefix + '-popup-item-title');
+            this.$title.html(this.lang.parse(this.params.title));
+
+            this.$item.append(this.$title);
+        }
+    },
+    _buildImage: function() {
+        if (this.params.image) {
+            this.$image = this.dom('<span>').addClass(this.prefix + '-popup-item-image');
+            this.$image.html(this.params.image);
+
+            this.$item.append(this.$image);
+        }
+    },
+    _buildIcon: function() {
+        if (this.params.icon) {
+            this.$icon = this.dom('<span>').addClass(this.prefix + '-popup-item-icon');
+
+            // html icon
+            if (this.params.icon.search(/</) !== -1) {
+                this.$icon.html(this.params.icon);
+            }
+            else {
+                this.$icon.addClass(this.prefix + '-icon-' + this.params.icon);
+            }
+
+            this.$item.append(this.$icon);
+        }
+    },
+    _buildShortcut: function() {
+        if (this.params.shortcut) {
+            var meta = (/(Mac|iPhone|iPod|iPad)/i.test(navigator.platform)) ? '<b>&#8984;</b>' : 'ctrl';
+            meta = this.params.shortcut.replace('Ctrl', meta);
+
+            this.$shortcut = this.dom('<span>').addClass(this.prefix + '-popup-item-shortcut');
+            this.$shortcut.html(meta);
+
+            this.$item.append(this.$shortcut);
         }
     },
     _buildParams: function(params) {
@@ -11740,12 +12030,14 @@ ArticleEditor.add('class', 'popup.stack', {
         title: false,
         type: false, // grid
         name: false,
+        path: false,
         width: false, // string like '200px' or '100%'
         setter: false,
         getter: false,
         builder: false,
         observer: false,
         instance: false,
+        collapse: true,
         form: false,
         items: false,
         focus: false,
@@ -11756,25 +12048,54 @@ ArticleEditor.add('class', 'popup.stack', {
         this.prev = this.app.popup.getStack();
         this.name = name;
         this.tools = {};
-        this.data = false;
-        this.instance = false;
         this.params = this._buildParams(params);
+        this.$popup = this.app.popup.getElement();
 
+        // data
+        this.instance = false;
+        this.width = false;
+        this.type = false;
+        this.data = false;
+        this.form = false;
+        this.items = false;
+        this.footer = false;
+        this.getter = false;
+        this.setter = false;
+
+        // build
         this._build();
+
+        // observe
+        if (this.params.observer) {
+            this.app.api(this.params.observer, this);
+        }
     },
     rebuild: function() {
-        this._buildItems();
+        this._renderItems();
     },
     open: function(params) {
-        this.app.popup.closeStacks();
+        if (this.isCollapsed()) {
+            this.app.popup.closeStacks();
+            this.app.popup.renderHeaderBack(this);
+        }
 
+        // active
         this.setActive();
+
+        // broadcast
+        this.app.broadcast('popup.before.open');
+
+        // render
+        this.render();
         this.app.popup.updatePosition();
 
         // focus
         if (params && params.focus) {
             this.setFocus(params.focus);
         }
+
+        // broadcast
+        this.app.broadcast('popup.open');
     },
     close: function() {
         this.$stack.hide();
@@ -11783,26 +12104,42 @@ ArticleEditor.add('class', 'popup.stack', {
     collapse: function() {
         this.$stack.remove();
     },
+    render: function() {
+        this._renderWidth();
+        this._renderType();
+        this._renderItems();
+        this._renderForm();
+        this._renderFooter();
+    },
+
+    // updatePosition
+    updatePosition: function() {
+        this.app.popup.updatePosition();
+    },
+
+    // is
+    isCollapsed: function() {
+        return this.params.collapse;
+    },
+    isActive: function() {
+        return this.$stack.hasClass('open');
+    },
 
     // set
-    setData: function(data) {
-        for (var name in data) {
-            if (typeof this.tools[name] !== 'undefined') {
-                this.tools[name].setValue(data[name]);
-            }
-        }
-    },
     setActive: function() {
         this.$stack.show();
         this.$stack.addClass('open');
-
-        // observe
-        if (this.params.observer) {
-            this.app.api(this.params.observer, this);
-        }
+    },
+    setData: function(data) {
+        this.data = data;
+    },
+    setForm: function(form) {
+        this.form = form;
+    },
+    setFooter: function(footer) {
+        this.footer = footer;
     },
     setWidth: function(width) {
-
         this.$stack.attr('data-width', width);
 
         if (width === '100%') {
@@ -11819,16 +12156,18 @@ ArticleEditor.add('class', 'popup.stack', {
         }
     },
     setItems: function(items) {
-        this.params.items = items;
-        this._buildItems();
+        this.items = items;
+    },
+    setType: function(type) {
+        this.type = type;
     },
 
     // get
-    getTitle: function() {
-        return this.params.title;
-    },
     getElement: function() {
         return this.$stack;
+    },
+    getTitle: function() {
+        return this.params.title;
     },
     getName: function() {
         return this.name;
@@ -11837,7 +12176,7 @@ ArticleEditor.add('class', 'popup.stack', {
         return this.instance;
     },
     getItems: function() {
-
+        return this.items;
     },
     getTool: function(name) {
         return (typeof this.tools[name] !== 'undefined') ? this.tools[name] : false;
@@ -11847,8 +12186,19 @@ ArticleEditor.add('class', 'popup.stack', {
 
         return (tool) ? tool.getInput() : this.dom();
     },
-    getForm: function() {
+    getFormItem: function(name) {
+        var tool = this.getTool(name);
+
+        return (tool) ? tool.getInput().closest('.' + this.prefix + '-form-item') : this.dom();
+    },
+    getFormElement: function() {
         return this.$form;
+    },
+    getForm: function() {
+        return this.form;
+    },
+    getFooter: function () {
+        return this.footer;
     },
     getBody: function() {
         return this.$body;
@@ -11873,30 +12223,8 @@ ArticleEditor.add('class', 'popup.stack', {
     // build
     _build: function() {
         this._buildElement();
-        this._buildWidth();
-        this._buildType();
         this._buildBody();
-        this._buildInstance();
-        this._buildForm();
-        this._buildItems();
-        this._buildHeader();
-        this._buildFooter();
-    },
-    _buildInstance: function() {
-        if (this.params.instance) {
-            this.instance = this.params.instance;
-        }
-    },
-    _buildType: function() {
-        this.$stack.removeClass(this.prefix + '-popup-stack-type-grid');
-
-        if (this.params.type) {
-            this.$stack.addClass(this.prefix + '-popup-stack-type-' + this.params.type);
-        }
-    },
-    _buildWidth: function() {
-        var width = (this.params.width) ? this.params.width : this.defaultWidth;
-        this.setWidth(width);
+        this._buildRender();
     },
     _buildParams: function(params) {
         return $ARX.extend({}, true, this.defaults, params);
@@ -11912,71 +12240,109 @@ ArticleEditor.add('class', 'popup.stack', {
         this.$items = this.dom('<div>').addClass(this.prefix + '-popup-items');
         this.$stack.append(this.$body);
     },
-    _buildForm: function() {
-        if (!this.params.form) return;
-
+    _buildRender: function() {
+        this.width = (this.params.width) ? this.params.width : this.defaultWidth;
+        this.type = this.params.type;
+        this.form = this.params.form;
+        this.footer = this.params.footer;
+        this.instance = this.params.instance;
         this.setter = (this.params.setter) ? this.params.setter : false;
         this.getter = (this.params.getter) ? this.params.getter : false;
+        this.data = (this.getter) ? this.app.api(this.getter, this) : false;
 
-        // build form element
-        this.$form = this.dom('<form>');
-        this.formitems = this.params.form;
-
-        this._buildData();
-        this._buildTools();
-        this._buildSetData();
-
-        var $popup = this.app.popup.getElement();
-        $popup.addClass('has-form');
-
-        // append
-        this.$body.html('');
-        this.$body.append(this.$form);
-    },
-    _buildItems: function() {
-        var $popup = this.app.popup.getElement();
-        var items = false;
-
-        $popup.removeClass('has-items');
-
+        // items
         if (this.params.builder) {
-            items = this.app.api(this.params.builder, this);
+            this.items = this.app.api(this.params.builder, this);
         }
         else if (this.params.items) {
-            items = this.params.items;
+            this.items = this.params.items;
         }
 
-        if (!items) return;
+    },
 
-        $popup.addClass('has-items');
+    // render
+    _renderType: function() {
+        this.$stack.removeClass(this.prefix + '-popup-stack-type-grid');
 
-        this.$body.find('.' + this.prefix + '-popup-stack-item').off('.' + this.prefix + '-popup-item-' + this.uuid);
+        if (this.type) {
+            this.$stack.addClass(this.prefix + '-popup-stack-type-' + this.type);
+        }
+    },
+    _renderWidth: function() {
+        this.setWidth(this.width);
+    },
+    _renderForm: function() {
+        if (!this.form) return;
+
+        // build form element
+        this.$form = this.dom('<form>').addClass(this.prefix + '-popup-form');
+        this.formitems = this.form;
+
+        this._renderTools();
+        this._renderData();
+
+        this.$popup.addClass('has-form');
+
+        // append
+        this.$body.find('.' + this.prefix + '-popup-form').remove();
+        this.$body.append(this.$form);
+    },
+    _renderTools: function() {
+        for (var name in this.formitems) {
+            this._renderTool(name, this.formitems[name]);
+        }
+    },
+    _renderTool: function(name, obj) {
+        var tool = this.app.create('tool.' + obj.type, name, obj, this, this.data, this.instance);
+        var $tool = tool.getElement();
+        if ($tool) {
+            this.tools[name] = tool;
+            this.$form.append($tool);
+        }
+    },
+    _renderData: function() {
+        if (!this.data) return;
+        for (var name in this.data) {
+            if (typeof this.tools[name] !== 'undefined') {
+                this.tools[name].setValue(this.data[name]);
+            }
+        }
+    },
+    _renderItems: function() {
+        this.$popup.removeClass('has-items');
+        if (!this.items) return;
+
+        this.$popup.addClass('has-items');
+
+        this.$body.find('.' + this.prefix + '-popup-item').off('.' + this.prefix + '-popup-item-' + this.uuid);
         this.$items.html('');
         this.$body.html('');
         this.$body.append(this.$items);
 
         // build items
-        for (var name in items) {
-            if (items[name].hasOwnProperty('observer')) {
-                var res = this.app.api(items[name].observer, items[name], name, this);
+        for (var name in this.items) {
+            if (this.items[name].hasOwnProperty('observer')) {
+                var res = this.app.api(this.items[name].observer, this.items[name], name, this);
                 if (typeof res !== 'undefined') {
-                    items[name] = res;
+                    this.items[name] = res;
                 }
             }
 
-            if (items[name] === false) continue;
+            if (this.items[name] === false) continue;
 
-            var item = this.app.create('popup.item', this, name, items[name]);
+            var item = this.app.create('popup.item', this, name, this.items[name]);
             this.$items.append(item.getElement());
         }
     },
-    _buildFooter: function() {
-        if (!this.params.footer) return;
+    _renderFooter: function() {
+        this.$popup.removeClass('has-footer');
+        if (!this.footer) return;
+        if (this.$footer) this.$footer.remove();
 
         this.$footer = this.dom('<div>').addClass(this.prefix + '-popup-footer');
 
         // buttons
-        var buttons = this.params.footer;
+        var buttons = this.footer;
         var len = 0;
         for (var key in buttons) {
             if (buttons[key] === false) continue;
@@ -11988,82 +12354,8 @@ ArticleEditor.add('class', 'popup.stack', {
 
         if (len !== 0) {
             this.$stack.append(this.$footer);
-            this.app.popup.getElement().addClass('has-footer');
+            this.$popup.addClass('has-footer');
         }
-    },
-    _buildHeader: function() {
-        if (!this.prev && !this.params.title) return;
-
-        this.$header = this.dom('<div>').addClass(this.prefix + '-popup-header');
-        this.$stack.prepend(this.$header);
-
-        var $popup = this.app.popup.getElement();
-        $popup.addClass('has-header');
-
-        if (this.prev) {
-            var prevTitle = this.prev.getTitle();
-            if (!prevTitle) {
-                prevTitle = '## popup.back ##';
-            }
-
-            var $back = this.dom('<span>').addClass(this.prefix + '-popup-header-back');
-            $back.html(this.lang.parse(prevTitle));
-            $back.dataset('stack-prev', this.prev);
-            $back.dataset('stack-current', this);
-            $back.on('click', this._catchBack.bind(this));
-            this.$header.append($back);
-        }
-
-        var $item = this.dom('<span>').html(this.lang.parse(this.params.title));
-        this.$header.append($item);
-
-        // close
-        var $close = this.dom('<span>').addClass(this.prefix + '-popup-close');
-        $close.one('click', this._catchClose.bind(this));
-
-        this.$header.append($close);
-
-    },
-    _buildTools: function() {
-        for (var name in this.formitems) {
-            this._buildTool(name, this.formitems[name]);
-        }
-    },
-    _buildTool: function(name, obj) {
-        var tool = this.app.create('tool.' + obj.type, name, obj, this, this.data, this.instance);
-        var $tool = tool.getElement();
-        if ($tool) {
-            this.tools[name] = tool;
-            this.$form.append($tool);
-        }
-    },
-    _buildData: function() {
-        if (this.getter) {
-            this.data = this.app.api(this.getter, this);
-        }
-    },
-    _buildSetData: function() {
-        if (this.data) {
-            this.setData(this.data);
-        }
-    },
-    _catchBack: function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        var $item = this.dom(e.target);
-        var prev = $item.dataget('stack-prev');
-        var current = $item.dataget('stack-current');
-
-        current.collapse();
-        prev.rebuild();
-        prev.open();
-    },
-    _catchClose: function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        this.app.popup.close();
     },
     _resize: function() {
         var data = this.$stack.attr('data-width');
@@ -12127,11 +12419,11 @@ ArticleEditor.add('class', 'popup.button', {
 ArticleEditor.add('module', 'link', {
     popups: {
         format: {
-            format: { title: '## link.link ##', command: 'link.format' },
+            format: { title: '## link.link ##', command: 'link.format', shortcut: 'Ctrl+k' },
             unlink: { title: '## link.unlink ##', command: 'link.unlink' }
         },
         edit: {
-            edit: { title: '## link.edit-link ##', command: 'link.edit' },
+            edit: { title: '## link.edit-link ##', command: 'link.edit', shortcut: 'Ctrl+k' },
             unlink: { title: '## link.unlink ##', command: 'link.unlink' }
         },
         form: {
@@ -12150,7 +12442,7 @@ ArticleEditor.add('module', 'link', {
     },
     popup: function(params, button) {
         // get link
-        var $link = this._getLink();
+        var $link = this.getLink();
         var popup = ($link.length === 0) ? this.popups.format : this.popups.edit;
 
         this.app.popup.create('link', { items: popup });
@@ -12161,22 +12453,30 @@ ArticleEditor.add('module', 'link', {
         var text = this.app.selection.getText();
 
         // popup
-        this.app.popup.create('link-create', { title: '## popup.link ##', width: '600px', form: this.popups.form, footer: this.popups.insert });
-        this.app.popup.open({ focus: (text) ? 'url' : 'text' });
+        var stack = this.app.popup.create('link-create', {
+            title: '## popup.link ##',
+            width: '600px',
+            form: this.popups.form,
+            footer: this.popups.insert
+        });
 
         // set data
-        var stack = this.app.popup.getStack();
         stack.setData({ text: text });
+
+        // open
+        this.app.popup.open({ focus: (text) ? 'url' : 'text' });
     },
     edit: function() {
         // get link
-        var $link = this._getLink();
-
-        this.app.popup.create('link-edit', { title: '## popup.link ##', width: '600px', form: this.popups.form, footer: this.popups.save });
-        this.app.popup.open({ focus: 'url' });
+        var $link = this.getLink();
+        var stack = this.app.popup.create('link-edit', {
+            title: '## popup.link ##',
+            width: '600px',
+            form: this.popups.form,
+            footer: this.popups.save
+        });
 
         // set
-        var stack = this.app.popup.getStack();
         var data = {
             text: $link.text(),
             url: $link.attr('href'),
@@ -12188,6 +12488,9 @@ ArticleEditor.add('module', 'link', {
 
         // set data
         stack.setData(data);
+
+        // open
+        this.app.popup.open({ focus: 'url' });
 
     },
     insert: function(stack) {
@@ -12202,7 +12505,7 @@ ArticleEditor.add('module', 'link', {
     save: function(stack) {
         this.app.popup.close();
 
-        var $link = this._getLink();
+        var $link = this.getLink();
 
         // data
         this._save(stack, $link, 'change');
@@ -12223,6 +12526,12 @@ ArticleEditor.add('module', 'link', {
 
         // ui
         this.app.toolbar.observe();
+    },
+    getLink: function() {
+        var links = this.app.selection.getNodes({ tags: ['a'] });
+        var $link = (links.length !== 0) ? this.dom(links[0]) : this.dom([]);
+
+        return $link;
     },
 
     // private
@@ -12266,11 +12575,6 @@ ArticleEditor.add('module', 'link', {
         else $link.removeAttr('target');
 
         return data;
-    },
-    _getLink: function() {
-        var links = this.app.selection.getNodes({ tags: ['a'] });
-
-        return (links.length !== 0) ? this.dom(links[0]) : this.dom([]);
     }
 });
 ArticleEditor.add('module', 'embed', {
@@ -12308,6 +12612,7 @@ ArticleEditor.add('module', 'embed', {
 
         var popup = this.popups.edit;
         popup.footer = this.popups.insert;
+        popup.collapse = true;
 
         var stack = this.app.popup.add('embed', popup);
         stack.open({ focus: 'embed' });
@@ -12374,7 +12679,9 @@ ArticleEditor.add('module', 'embed', {
     // private
     _buildCodemirror: function(stack) {
         var $input = stack.getInput('embed');
+
         this.app.codemirror.create({ el: $input, height: '200px', focus: true });
+        this.app.popup.updatePosition();
     },
     _findScripts: function() {
         var scripts = this.app.editor.getLayout().find('[data-' + this.prefix + '-type=embed]').find('script').getAll();
@@ -12388,7 +12695,6 @@ ArticleEditor.add('module', 'embed', {
                 this.app.editor.getDoc().find('head script[src="' + src + '"]').remove();
                 var $script = this.dom('<script>').attr({ 'src': src, 'async': true, 'defer': 'true' });
                 $script.on('load', function() {
-
                     if (src.search('instagram') !== -1) {
                         var win = this.app.editor.getWinNode();
                         if (win.instgrm) {
@@ -12470,7 +12776,7 @@ ArticleEditor.add('module', 'embed', {
     }
 });
 ArticleEditor.add('module', 'list', {
-    indent: function(params, item) {
+    indent: function(params, itemInstance) {
 
         var sel = this.app.selection.get();
         var item = this.app.selection.getBlock();
@@ -12500,7 +12806,7 @@ ArticleEditor.add('module', 'list', {
 
         this.app.selection.restore();
     },
-    outdent: function(params, item) {
+    outdent: function(params, itemInstance) {
 
         var sel = this.app.selection.get();
         var item = this.app.selection.getBlock();
@@ -12569,13 +12875,13 @@ ArticleEditor.add('module', 'grid', {
     popup: function() {
 
         // create
-        var gridStack = this.app.popup.add('grid', {
+        var stack = this.app.popup.add('grid', {
             title: '## popup.grid ##',
-            width: '334px',
+            width: '320px',
             items: this.buildItems()
         });
 
-        gridStack.open();
+        stack.open();
     },
     observe: function() {
         if (!this.opts.grid) return false;
@@ -14190,7 +14496,16 @@ ArticleEditor.add('block', 'block.code', {
     },
     handleEnter: function(e, key, event) {
         e.preventDefault();
-        this.app.insertion.insertNewline();
+
+        var last = this.$block.html().search(/\n$/);
+
+
+        if (this.isCaretEnd() && last === -1) {
+            this.app.insertion.insertNewline('after', true);
+        }
+        else {
+            this.app.insertion.insertNewline();
+        }
         return true;
     }
 });

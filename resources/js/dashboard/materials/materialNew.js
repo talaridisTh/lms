@@ -2,7 +2,7 @@ import utilities from '../main';
 //! EDITOR INIT
 //!============================================================
 
-import ArticleEditor from "../../../plugins/article-editor/article-editor";
+import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
 $R('#summaryMaterial',{
     minHeight: '150px'
@@ -10,7 +10,7 @@ $R('#summaryMaterial',{
 $R('#descriptionMaterial',{
     minHeight: '150px'
 });
-ArticleEditor('#contentMaterial')
+ArticleEditor('#contentMaterial',{})
 
 //! METHOD INIT
 //!============================================================

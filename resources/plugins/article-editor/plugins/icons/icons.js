@@ -44,14 +44,14 @@ ArticleEditor.add('plugin', 'icons', {
     },
     popup: function(params, button) {
         var items = {};
-        var chars = this.opts.icons.items;
+        var icons = this.opts.icons.items;
 
-        for (var i = 0; i < chars.length; i++) {
+        for (var i = 0; i < icons.length; i++) {
             items[i] = {
-                title: chars[i],
+                html: this.dom('<div>').addClass(this.prefix + '-popup-item').html(icons[i]),
                 command: 'icons.insert',
                 params: {
-                    icon: chars[i]
+                    icon: icons[i]
                 }
             };
         }

@@ -40,7 +40,7 @@ ArticleEditor.add('plugin', 'specialchars', {
 
         for (var i = 0; i < chars.length; i++) {
             items[i] = {
-                title: chars[i],
+                html: this.dom('<div>').addClass(this.prefix + '-popup-item').html(chars[i]),
                 command: 'specialchars.insert',
                 params: {
                     character: chars[i]

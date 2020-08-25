@@ -97,20 +97,8 @@
     </script>
 
     <script>
-        $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                locale: {
-                    format: 'YY/MM/DD '
-                },
-                startDate: moment().startOf('hour'),
-                opens: 'right'
-            }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            });
-        });
 
 
-        $(".ragneButton").detach().appendTo('.dataTables_length label')
     </script>.
 
 @endsection

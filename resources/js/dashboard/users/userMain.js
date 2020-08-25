@@ -1,11 +1,8 @@
 import utilities from '../main';
 //! GLOBAL VARIABLES
 //!============================================================
-$("#singledaterange").datepicker({dateFormat: 'dd-mm-yy'});
-load_data();
 
 
-function load_data(from_date = '', to_date = '') {
 
 //! 			Datatables Initialization
 //!##################################################
@@ -17,7 +14,12 @@ function load_data(from_date = '', to_date = '') {
             url: config.routes.indexDatatable,
             headers: config.headers.csrf,
             type: "post",
-            data: {from_date: from_date, to_date: to_date}
+            data: function( d ) {
+                return $.extend( {}, d, {
+                    from_date: fromDay,
+                    to_date: toDay
+                })
+            }
         },
         columns: [
             {
@@ -47,13 +49,10 @@ function load_data(from_date = '', to_date = '') {
             $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
             $("thead >tr> th").removeClass("js-link cursor-pointer  text-primary");
             $("tfoot > tr > th").removeClass("js-link cursor-pointer");
-            // filter();
-            // refresh();
             toogleInput();
             routeLink();
             selectMultipleCheckboxDelete();
             selectMultipleCheckboxUpdate();
-            pickDay();
             collapse();
             buttonEx();
             editColapse()
@@ -119,32 +118,63 @@ function load_data(from_date = '', to_date = '') {
 //! FILTER DATATABLE
 //!============================================================
 
-    const pickDay = () => {
-        $('.drp-buttons .applyBtn').click(function () {
-            $('.drp-buttons .applyBtn').unbind();
+    const fromDay = () => {
             let date = $('.drp-selected').text();
-            console.log(date)
-
             let dateSepareted = date.split("-")
-
             let from_date = dateSepareted[0]
-            let to_date = dateSepareted[1]
-
-
-            filter(from_date.replace(/\//g, "-").trim(), to_date.replace(/\//g, "-").trim())
-        });
-
-    }
-
-    const filter = (from_date, to_date) => {
-        if (from_date != '' && to_date != '') {
-            $('#scroll-horizontal-datatable').DataTable().destroy();
-            load_data(from_date, to_date);
-        }
-
+            return from_date.replace(/\//g, "-").trim();
 
 
     }
+
+const toDay = () => {
+        let date = $('.drp-selected').text();
+        let dateSepareted = date.split("-")
+        let to_date = dateSepareted[1]
+        return to_date.replace(/\//g, "-").trim()
+
+
+}
+
+
+    let dataRange = $("#daterange")
+    dataRange[0].value=""
+
+    dataRange.daterangepicker({
+        locale: {
+            format: 'YY/MM/DD '
+        },
+        startDate: moment().startOf('hour'),
+        ranges: {
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        alwaysShowCalendars: true,
+        showCustomRangeLabel: false,
+        drops: "auto",
+        autoUpdateInput: false,
+        opens: "center",
+    });
+
+
+
+    $(".ragneButton").detach().appendTo('.dataTables_length label')
+
+    dataRange.on( "apply.daterangepicker", function(event, picker) {
+
+        let startDate = picker.startDate.format('DD/MM/YYYY');
+        let endDate = picker.endDate.format('DD/MM/YYYY');
+        this.value = `${ startDate } - ${ endDate }`;
+
+        tables.ajax.reload();
+
+    })
+
+
     //
     // const refresh = () => {
     //     $('.drp-buttons .cancelBtn').click(function () {
@@ -466,7 +496,9 @@ function load_data(from_date = '', to_date = '') {
     }
 
 
-}
+
+
+
 
 
 

@@ -167,6 +167,17 @@ a {
   .arx-plus-button:empty:hover:before {
     background-color: #2E5DCA; }
 
+.arx-draggable-placeholder {
+  height: 20px;
+  min-width: 80px;
+  outline: 3px dashed gold;
+  background-color: rgba(255, 215, 0, 0.4);
+  margin-bottom: 20px; }
+
+.arx-draggable-over {
+  outline: 3px dashed gold !important;
+  background-color: rgba(255, 215, 0, 0.4) !important; }
+
 .arx-drag-active {
   outline: 3px dashed gold !important;
   outline-offset: 0 !important;
