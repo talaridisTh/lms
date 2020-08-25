@@ -35,6 +35,7 @@
 					<th class="text-left">Ημ. Δημιουργίαςhide</th>
 					<th class="text-left">Ημ. Δημιουργίας</th>
 					<th class="text-left">create</th>
+					<th class="text-left">activeHidden</th>
 				</tr>
 			</thead>
 			<tbody  class="tables-hover-effect"></tbody>
@@ -50,6 +51,7 @@
 					<th class="text-left">Ημ. Δημιουργίαςhide</th>
                     <th class="text-left">Ημ. Δημιουργίας</th>
                     <th class="text-left">create</th>
+                    <th class="text-left">activeHidden</th>
 				</tr>
 			</tfoot>
 		</table>
@@ -68,17 +70,7 @@
 
 
     <script>
-        $(function() {
-            $('input[name="daterange"]').daterangepicker({
-                locale: {
-                    format: 'YY/MM/DD '
-                },
-                startDate: moment().startOf('hour'),
-                opens: 'right'
-            }, function(start, end, label) {
-                console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-            });
-        });
+
 
         $(".ragneButton").detach().appendTo('.dataTables_length label')
     </script>

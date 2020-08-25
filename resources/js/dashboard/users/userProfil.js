@@ -94,7 +94,8 @@ const routeLink = () =>{
 $('#alertSumbit').submit(async (e) => {
     e.preventDefault()
     let buttonDelete = $('.js-delete');
-    const user = buttonDelete[0].dataset.id;
+    const slug = buttonDelete[0].dataset.slug;
+
     try {
         const {value} = await Swal.fire({
             title: 'Είστε σίγουρος;',
@@ -105,7 +106,7 @@ $('#alertSumbit').submit(async (e) => {
             cancelButtonText: 'Άκυρο'
         });
         if (value) {
-            const res = await axios.post(`/dashboard/users/${user}`, {_method: 'DELETE'})
+            const res = await axios.post(`/dashboard/users/${slug}`, {_method: 'DELETE'})
             utilities.toastAlert('success', "Διεγράφη")
             window.location = `http://127.0.0.1:8000/dashboard/users`;
         }

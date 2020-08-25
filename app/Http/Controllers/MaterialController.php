@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Http\Requests\CreateMaterialRequest;
+use App\Http\Requests\UpdateMaterialRequest;
 use App\Material;
 use App\Topic;
 use Illuminate\Http\Request;
@@ -31,7 +33,7 @@ class MaterialController extends Controller {
         return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "types"));
     }
 
-    public function store(Request $request)
+    public function store(CreateMaterialRequest $request)
     {
 
         $material = new Material();
@@ -78,7 +80,7 @@ class MaterialController extends Controller {
         return view('admin.materials.material', compact("tops", "instructors", "courses", "material", "types"));
     }
 
-    public function update(Request $request, Material $material)
+    public function update(UpdateMaterialRequest $request, Material $material)
     {
 
         $data = collect($request)->except("instructor", "topic")->all();

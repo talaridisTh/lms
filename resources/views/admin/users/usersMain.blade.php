@@ -75,20 +75,20 @@
         $(document).ready(function () {
             $("#fullNameFilter").select2({
                 text: '',
-                placeholder: "Courses",
+                placeholder: " Ολα τα Courses ",
                 allowClear: true,
                 // minimumInputLength: 2,
             });
 
             $("#rolesFilter").select2({
-                placeholder: "Ρολος",
+                placeholder: "Ολoi oi ρόλοι",
                 minimumResultsForSearch: -1,
                 allowClear: true,
             });
 
             $("#activeFilter").select2({
                 minimumResultsForSearch: -1,
-                placeholder: "Active",
+                placeholder: "Κατάσταση",
                 allowClear: true,
             });
         })

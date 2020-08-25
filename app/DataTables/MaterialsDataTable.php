@@ -44,13 +44,20 @@ class MaterialsDataTable extends DataTable {
             })
             ->addColumn('humans', function ($data) {
 
-                return $data->created_at->diffForHumans() ;
+                if($data->created_at){
+
+                    return $data->created_at->diffForHumans() ;
+                }
             })
             ->addColumn('courses', function ($data) {
 
                   $material  = Material::findOrFail($data->id);
 
                   return $material->courses->pluck("title");
+            })
+            ->addColumn('activeHidden', function ($data) {
+
+                return $data->active;
             })
             ->editColumn('title', function($data) {
 
@@ -68,7 +75,7 @@ class MaterialsDataTable extends DataTable {
                 return "<input class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->slug . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
-            ->rawColumns(['action', 'active',"courses","humans","title"])
+            ->rawColumns(['action', 'active',"courses","humans","title","activeHidden"])
             ->setRowAttr(['data-material-id' => function ($data) {
 
                 return $data->id;

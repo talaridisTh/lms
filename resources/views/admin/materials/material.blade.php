@@ -35,7 +35,7 @@
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
                         <form class="needs-validation formPrevent" method="post" action="{{route('material.update',$material->slug)}}"
-                              enctype="multipart/form-data" novalidate>
+                              enctype="multipart/form-data" >
                             @method('PATCH')
                             @csrf
                             <div class="form-group mb-3">
@@ -43,18 +43,20 @@
                                 <input name="title" type="text" class="form-control" id="titleMaterial"
                                        value="{{old('material', $material->title)}}"
                                        placeholder="Εισάγετε τίτλο...">
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                                @error("title")
+                                <div class="invalid-feedback d-block">{{$message}}</div>
+                                @enderror
+
                             </div>
                             <div class="form-group mb-3">
                                 <label for="subtitleMaterial">Υποτίτλο<span class="text-danger"> *</span></label>
                                 <input name="subtitle" type="text" class="form-control" id="subtitleMaterial"
                                        value="{{old('material', $material->subtitle)}}"
                                        placeholder="Εισάγετε υποτίτλο...">
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                                @error("subtitle")
+                                <div class="invalid-feedback d-block">{{$message}}</div>
+                                @enderror
+
                             </div>
                             <div class="form-group mb-3">
                                 <label for="summaryMaterial">Περίληψη</label>
@@ -74,12 +76,12 @@
                                           value="{{old('material', $material->content)}}"
                                           id="contentMaterial" rows="5">{{$material->content}}</textarea>
                             </div>
-                            <button class="btn btn-primary" type="submit">Submit form</button>
+                            <button class="btn btn-primary" type="submit">Ενημερωση</button>
 
                             <input name="topic" type="hidden" class="form-control" id="topicMaterialHidden">
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
                             <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
-                            <input name="video_id" type="hidden" class="form-control" id="urlMaterialHiden">
+                            <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
                             <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
                             <input name="cover" hidden type="file" class="form-control" id="coverMaterialHidden">
                             <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
@@ -103,9 +105,6 @@
                         <input type="text" class="form-control" id="urlMaterial"
                                value="{{old('material', $material->video_id)}}"
                                placeholder="Εισάγετε URL video...">
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
                     </div>
                     <div class="form-group mb-3">
                         <label for="topicMaterial">Topic <span class="text-danger"> *</span></label>

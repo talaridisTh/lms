@@ -1,5 +1,5 @@
 <div class=" select2-container form-group ragneButton" style="width: 179px!important;">
-    <input type="text" class="form-control  date" placeholder="Επιλέξτε ημερομηνίες..." id="daterange" name="daterange"
+    <input type="text" class="form-control  date" value="" placeholder="Επιλέξτε ημερομηνίες..." id="daterange" name="daterange"
         data-toggle="date-picker" data-cancel-class="btn-warning" />
 </div>
 

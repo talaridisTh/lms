@@ -1,15 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('css')
-    <style>
-        .sticky-button {
-            position: fixed;
-            top: 14%;
-            left: 90%;
-            display: flex;
-            z-index: 9999;
-        }
-    </style>
+{{--    <style>--}}
+{{--        .sticky-button {--}}
+{{--            position: fixed;--}}
+{{--            top: 14%;--}}
+{{--            left: 90%;--}}
+{{--            display: flex;--}}
+{{--            z-index: 9999;--}}
+{{--        }--}}
+{{--    </style>--}}
 @endsection
 
 @section('content')
@@ -43,23 +43,24 @@
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
                         <form class="needs-validation formPrevent" method="post" action="{{route('material.store')}}"
-                              enctype="multipart/form-data" novalidate>
+                              enctype="multipart/form-data" >
                             @csrf
                             <div class="form-group mb-3">
                                 <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                <input name="tigtle" type="text" class="form-control" id="titleMaterial"
-                                       placeholder="Εισάγετε τίτλο...">
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                                <input name="title" type="text" class="form-control" id="titleMaterial"
+                                       placeholder="Εισάγετε τίτλο..."  >
+                                @error("title")
+                                <div class="invalid-feedback d-block">{{$message}}</div>
+                                @enderror
                             </div>
                             <div class="form-group mb-3">
                                 <label for="subtitleMaterial">Υποτίτλος<span class="text-danger"> *</span></label>
                                 <input name="subtitle" type="text" class="form-control" id="subtitleMaterial"
-                                       placeholder="Εισάγετε υποτίτλο...">
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
+                                       placeholder="Εισάγετε υποτίτλο..." >
+                                @error("subtitle")
+                                <div class="invalid-feedback d-block">{{$message}}</div>
+                                @enderror
+
                             </div>
                             <div class="form-group mb-3">
                                 <label for="summaryMaterial">Περίληψη</label>
@@ -80,13 +81,13 @@
                                           id="contentMaterial" rows="5"></textarea>
                             </div>
                             <div class="sticky-button">
-                                <button class="btn btn-sm btn-success mr-2" type="submit">Δημιουργία</button>
-                                <button class="btn btn-sm btn-primary" type="submit"><i class=" mdi mdi-eye"></i></button>
+                                <button class="btn btn-sm btn-primary mr-2" type="submit">Δημιουργία</button>
+{{--                                <button class="btn btn-sm btn-primary" type="submit"><i class=" mdi mdi-eye"></i></button>--}}
                             </div>
 
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
                             <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
-                            <input name="video_id" type="hidden" class="form-control" id="urlMaterialHiden">
+                            <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
                             <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
                             <input name="cover" type="file" hidden class="form-control" id="coverMaterialHidden">
                             <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
@@ -114,16 +115,13 @@
                     {{--                            @foreach($courses as $course)--}}
                     {{--                                <option value="{{$course->id}}">{{$course->name}}</option>--}}
                     {{--                            @endforeach--}}
-                    {{--                        </select>--}}
+                    {{--                        </SELECT>--}}
                     {{--                    </div>--}}
 
                     <div class="form-group mb-3">
                         <label for="urlMaterial">URL video</label>
                         <input type="text" class="form-control" id="urlMaterial"
                                placeholder="Εισάγετε URL video...">
-                        <div class="valid-feedback">
-                            Looks good!
-                        </div>
                     </div>
                     <div class="form-group mb-3">
                         <label for="topicMaterial">Type <span class="text-danger"> *</span></label>

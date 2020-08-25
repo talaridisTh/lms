@@ -2,15 +2,16 @@ import utilities from '../main';
 //! EDITOR INIT
 //!============================================================
 
-import ArticleEditor from "../../../plugins/article-editor/article-editor"
-
 $R('#summaryMaterial',{
     minHeight: '150px'
 });
 $R('#descriptionMaterial',{
     minHeight: '150px'
 });
-ArticleEditor('#contentMaterial',{})
+$R('#contentMaterial',{
+    minHeight: '150px'
+});
+
 
 //! METHOD INIT
 //!============================================================
@@ -22,10 +23,6 @@ utilities.changeInputHidden('#typeMaterial','#typeMaterialHidden')
 utilities.changeInputHidden('#instructorMaterial','#instructorMaterialHidden')
 utilities.changeInputHidden('#topicMaterial','#topicMaterialHidden')
 // utilities.changeInputHidden('#coursesMaterial','#coursesMaterialHidden')
-
-
-
-
 
 
 

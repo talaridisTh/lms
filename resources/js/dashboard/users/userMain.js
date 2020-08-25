@@ -55,7 +55,6 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         collapse();
         buttonEx();
         editColapse()
-        NumOfCheckBox();
         hoverOnSelect()
     },
 
@@ -138,7 +137,6 @@ const toDay = () => {
 
 }
 
-
 let dataRange = $("#daterange")
 dataRange[0].value = ""
 
@@ -147,14 +145,14 @@ dataRange.daterangepicker({
         format: 'YY/MM/DD '
     },
     startDate: moment().startOf('hour'),
-    ranges: {
-        'Today': [moment(), moment()],
-        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    },
+    // ranges: {
+    //     'Today': [moment(), moment()],
+    //     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+    //     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+    //     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+    //     'This Month': [moment().startOf('month'), moment().endOf('month')],
+    //     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    // },
     alwaysShowCalendars: true,
     showCustomRangeLabel: false,
     drops: "auto",
@@ -362,28 +360,17 @@ const routeLink = () => {
     });
 }
 
-const NumOfCheckBox = () => {
-    $(".dropdown-toggle").click(function () {
-        let checkboxes = $(".js-user-checkbox:checked").length
-        let checkboxesSub = $(".js-user-checkbox-sub:checked").length
-        console.log(checkboxesSub)
-
-
-        $("#dropdownMenuButton")[0].innerText = ` Προσθήκη σε Course ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-        $(".js-multiple-delete")[0].innerText = ` Διαγραφη επιλεγμενων ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-        $(".js-detach-delete")[0].innerText = ` Αφαιρεση  Course ${checkboxesSub == 0 ? "" : `( ${checkboxesSub} ) `} `
-
-
-    })
-}
-
-
 const hoverOnSelect = () => {
 
     $(".js-user-checkbox").change(function () {
         $(".bulk-action")[0].hidden = false
+
         let checkboxes = $(".js-user-checkbox:checked").length
-        if(!checkboxes) $(".bulk-action")[0].hidden = true
+
+        if(!checkboxes){
+            $(".bulk-action")[0].hidden = true
+        }
+
         $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
         if(this.checked){
             this.parentElement.parentElement.parentElement.classList.add("trHover")
@@ -391,6 +378,7 @@ const hoverOnSelect = () => {
             this.parentElement.parentElement.parentElement.classList.remove("trHover")
         }
     })
+
 }
 
 
