@@ -45,7 +45,13 @@ const dateRangeConfig = {
 
 const redactorConfig = {
 	style: false,
-	minHeight: '150px'
+	minHeight: '150px',
+	callbacks: {
+        undo: function(html, offset)
+        {
+            // ...
+        }
+    }
 }
 
 //! Prototype Additions
@@ -63,6 +69,27 @@ Element.prototype.appendAfter = function (element) {
 
 //! EventListerners
 //!============================================================
+
+$("#delete-course-btn").hover( function() {
+	Swal.fire({
+        toast: 'true',
+        position: 'top-end',
+        icon: "info",
+        title: "Under Development...",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+})
+
+$("#edit-course-reset-btn").click( function() {
+	let summary = $("#summary")[0].defaultValue;
+	let description = $("#description")[0].defaultValue;
+
+	$R('#summary', 'source.setCode', summary);
+	$R('#description', 'source.setCode', description);
+
+});
 
 $("#add-multiple-users-btn").click( function() {
 	let newUsers = $(".js-new-user-checkbox:checked");
@@ -951,3 +978,15 @@ function endDate( input ) {
 	
 	return secondDate;
 }
+
+//!##########################################
+//!				Initializations				#
+//!##########################################
+
+$R("#summary", redactorConfig);
+
+$R("#description", redactorConfig);
+
+//!######################################
+//!				Testing					#
+//!######################################
