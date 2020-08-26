@@ -73,7 +73,7 @@ const changeInputHidden = (attr, hiddenAttr)=>{
              this.value = $(this).prop('checked') == true ? 1 : 0;
         }
 
-        // console.log($(hiddenAttr))
+        console.log($(hiddenAttr))
         let hiddenValue = $(hiddenAttr)[0].value =this.value
 
     })

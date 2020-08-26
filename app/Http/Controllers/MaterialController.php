@@ -7,6 +7,8 @@ use App\Http\Requests\CreateMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Material;
 use App\Topic;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Str;
@@ -19,7 +21,7 @@ class MaterialController extends Controller {
         $activeCourses = User::courseWhereActive();
         $materials = Material::all(['title', 'description', 'active', 'type']);
 
-        return view('admin.materials.materialsMain',compact("materials","activeCourses"));
+        return view('admin.materials.materialsMain', compact("materials", "activeCourses"));
     }
 
     public function create()
@@ -83,8 +85,7 @@ class MaterialController extends Controller {
     public function update(UpdateMaterialRequest $request, Material $material)
     {
 
-        $data = collect($request)->except("instructor", "topic")->all();
-        $material->update($data);
+        $data = collect($request)->except("instructor", "topic", "type", "active")->all();
         if ($request->instructor)
         {
             $material->users()->update(['user_id' => $request->instructor]);
@@ -94,6 +95,22 @@ class MaterialController extends Controller {
 
             $material->topics()->update(['topic_id' => $request->topic]);
         }
+        if ($request->created_at == null)
+        {
+            $dt = new DateTime();
+            $data["created_at"] = $dt->format('Y-m-d H:i:s');
+        }
+        if ($request->type)
+        {
+
+            $data["type"] = $request->type;
+        }
+        if ($request->active)
+        {
+
+            $data["active"] = $request->active;
+        }
+        $material->update($data);
 
         return redirect(route("material.index"))->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
     }

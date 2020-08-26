@@ -120,17 +120,19 @@
 
                     <div class="form-group mb-3">
                         <label for="typeMaterial">Τύπος <span class="text-danger"> *</span></label>
-                        <select name="type" id="typeMaterial" class="form-control " data-toggle="select2">
+                        <select  id="typeMaterial" class="form-control " data-toggle="select2">
+
 
                             @foreach($types as $type)
-                                <option  value="{{$type->id}}" {{$type->type==$material->type? "selected":""}}>{{$type->type}}</option>
+
+                                <option  value="{{$type->type}}" {{$type->type==$material->type? "selected":""}}>{{$type->type}}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="form-group ">
                         <label for="createAtMaterial">Created</label>
-                        <input type="text" class="form-control date"  value="{{old('material', date('m/d/Y', strtotime($material->created_at)))}}"   placeholder="ss" id="createAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
+                        <input type="text" class="form-control date" data-format="yyyy-MM-dd hh:mm:ss"  placeholder="ss" id="createAtMaterial" data-toggle="date-picker" data-single-date-picker="true">
 
                     </div>
 
