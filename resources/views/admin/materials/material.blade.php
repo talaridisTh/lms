@@ -111,7 +111,7 @@
                         <select name="topic" id="topicMaterial" class="form-control" >
                             @foreach ($tops as $topic)
                                 <option
-                                    value="{{$topic->id}}" {{$material->topics->first()->id ==$topic->id? "selected":""}}>{{$topic->name}}</option>
+                                    value="{{$topic->id}}" {{$material->topics->first()->id ==$topic->id? "selected":""}}>{{$topic->title}}</option>
                             @endforeach
                         </select>
                     </div>

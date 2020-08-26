@@ -128,7 +128,7 @@
                         <select id="topicMaterial" class="form-control " data-toggle="select2">
                             @foreach ($topics as $topic)
                                 <option value=""></option>
-                                <option value="{{$topic->id}}">{{$topic->name}}</option>
+                                <option value="{{$topic->id}}">{{$topic->title}}</option>
                             @endforeach
                         </select>
                     </div>
