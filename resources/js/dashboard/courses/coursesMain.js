@@ -94,7 +94,8 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		data: function( d ) {
 			return $.extend( {}, d, {
 				startDate: startDate( $("#course-date-range")[0] ),
-				endDate: endDate( $("#course-date-range")[0] )
+				endDate: endDate( $("#course-date-range")[0] ),
+				topicId: $("#topic-filter").val()
 			})
 		}
 	},
@@ -102,7 +103,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
 		{data: 'active', name: 'active', className: "align-middle"},
-		{data: 'topics', name: 'topics.title', className: "align-middle" },
+		{data: 'topic', name: 'topic', className: "align-middle", searchable: false },
 		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
@@ -211,6 +212,18 @@ dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 	dateInput.value = "";
 	coursesDatatable.ajax.reload();
 })
+
+let tablesLengthLabel = $("#courses-datatable_length > label")[0];
+let topicFIlter = $("#topic-filter")[0];
+
+tablesLengthLabel.appendChild(topicFIlter);
+
+topicFIlter.addEventListener('change', function() {
+
+	coursesDatatable.ajax.reload();
+
+})
+
 
 //!##########################################
 //!				script functions			#

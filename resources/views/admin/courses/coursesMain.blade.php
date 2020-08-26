@@ -151,6 +151,14 @@
 			</tfoot>
 		</table>
 	</div>
+
+	<select id="topic-filter" class="ml-1 custom-select custom-select-sm form-control form-control-sm">
+		<option value="" selected>Όλα τα Topic</option>
+		@foreach ($topics as $topic)
+			<option value="{{ $topic->id }}">{{ $topic->title }}</option>
+		@endforeach
+	</select>
+
 @endsection
 
 @section('scripts')

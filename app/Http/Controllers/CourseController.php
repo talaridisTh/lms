@@ -6,17 +6,19 @@ use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\BundleCourseRequest;
+use App\Topic;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
 
     public function index()
     {
-		$courses = Course::all(['id', 'title', 'active', 'slug', 'updated_at', 'created_at']);
+		$topics = Topic::all();
 
-        return view('admin/courses/coursesMain')->withCourses($courses);
+        return view('admin/courses/coursesMain')->withTopics( $topics );
     }
 
 
@@ -43,7 +45,7 @@ class CourseController extends Controller
 		$course->summary = $request->summary;
 		$course->description = $request->description;
 		$course->active = $request->active;
-		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
+		$course->slug = Str::slug($request->title, "-");
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		$course->cover = "https://placehold.co/600x400";
 		

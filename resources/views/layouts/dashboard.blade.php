@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="csrf-token" content="{{ csrf_token() }}" />
-		<title>Vertical Layout | Hyper - Responsive Bootstrap 4 Admin Dashboard</title>
+		<title>DarkponyLMS</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 		<meta content="Coderthemes" name="author" />
@@ -28,7 +28,7 @@
 				<!-- LOGO -->
 				<a href="{{route('home')}}" class="logo text-center logo-light">
 					<span class="logo-lg">
-						<img src="/assets/images/preview-lightbox-logo.png" alt="" height="16">
+						<img src="/assets/images/preview-lightbox-logo.png" alt="">
 					</span>
 					<span class="logo-sm">
 						<img src="/assets/images/preview-lightbox-logo.png" alt="" height="16">
@@ -38,7 +38,7 @@
 				<!-- LOGO -->
 				<a href="{{route('home')}}" class="logo text-center logo-dark">
 					<span class="logo-lg">
-						<img src="/assets/images/preview-lightbox-logo.png" alt="" height="16">
+						<img src="/assets/images/preview-lightbox-logo.png" alt="">
 					</span>
 					<span class="logo-sm">
 						<img src="/assets/images/preview-lightbox-logo.png" alt="" height="16">
@@ -387,7 +387,7 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-6">
-								2018 - 2020 © Hyper - Coderthemes.com
+								DarkponyLMS
 							</div>
 							<div class="col-md-6">
 								<div class="text-md-right footer-links d-none d-md-block">
