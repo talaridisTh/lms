@@ -77,6 +77,7 @@
                                           id="contentMaterial" rows="5">{{$material->content}}</textarea>
                             </div>
                             <button class="btn btn-primary" type="submit">Ενημερωση</button>
+                            <a target="_blank" href="{{route('index.material.show',$material->slug)}}" class="btn btn-outline-secondary" type="submit">Προεπισκόπηση </a>
 
                             <input name="topic" type="hidden" class="form-control" id="topicMaterialHidden">
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">

@@ -48,19 +48,30 @@ const selectAndDeselectCheckbox = function (attr) {
     $(attr).click(function () {
         let checkbox = $(attr)
 
-
         for (let i = 0; i < checkbox.length; i++) {
             checkbox[i].checked = !checkbox[i].checked
         }
 
         if (this.checked) {
-            $(".bulk-action")[0].hidden = false
-           let checkboxes= document.querySelectorAll(".js-user-checkbox:checked").length
-            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-            this.innerHTML = '<i class=" h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
+
+            this.innerHTML = '<i class="h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
         } else {
-            $(".bulk-action")[0].hidden = true
+
             this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
+        }
+
+        if(this.childNodes[0].className=="h3 mdi mdi-checkbox-multiple-blank-outline"){
+            for (let i = 0; i < checkbox.length; i++) {
+                checkbox[i].checked = true
+            }
+            $(".bulk-action")[0].hidden = false
+            let checkboxes= document.querySelectorAll(".js-user-checkbox:checked").length
+            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
+        }else{
+            for (let i = 0; i < checkbox.length; i++) {
+                checkbox[i].checked = false
+            }
+            $(".bulk-action")[0].hidden = true
         }
     })
 }

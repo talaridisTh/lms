@@ -1,11 +1,12 @@
 import utilities from '../main';
 //! GLOBAL VARIABLES
 //!============================================================
-
-
+let dataRange = $("#daterange")
+dataRange[0].value = ""
 //! 			Datatables Initialization
 //!##################################################
 const tables = $("#scroll-horizontal-datatable").DataTable({
+    // caseInsensitive: false,
     order: [3, "asc"],
     processing: true,
     serverSide: true,
@@ -48,6 +49,10 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
         $("thead >tr> th").removeClass("js-link cursor-pointer  text-primary");
         $("tfoot > tr > th").removeClass("js-link cursor-pointer");
+        $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:first-child").removeClass(" col-md-6");
+        $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
+        $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
+        $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
         toogleInput();
         routeLink();
         selectMultipleCheckboxDelete();
@@ -122,10 +127,16 @@ utilities.filterButton('#fullNameFilter', 11, tables)
 
 const fromDay = () => {
     let date = $('.drp-selected').text();
+
     let dateSepareted = date.split("-")
     let from_date = dateSepareted[0]
-    if(from_date){
+    if (dataRange[0].value == "cancel") {
+        dataRange[0].value = ""
+        return
+    }
+    if (from_date) {
 
+        console.log(from_date)
         return from_date.replace(/\//g, "-").trim();
     }
 
@@ -136,14 +147,16 @@ const toDay = () => {
     let date = $('.drp-selected').text();
     let dateSepareted = date.split("-")
     let to_date = dateSepareted[1]
-    if(to_date) {
+    if (dataRange[0].value == "cancel") {
+        dataRange[0].value = ""
+        return
+    }
+    if (to_date) {
         return to_date.replace(/\//g, "-").trim()
     }
 
 }
 
-let dataRange = $("#daterange")
-dataRange[0].value = ""
 
 dataRange.daterangepicker({
     locale: {
@@ -176,6 +189,11 @@ dataRange.on("apply.daterangepicker", function (event, picker) {
 
     tables.ajax.reload();
 
+})
+
+$(".cancelBtn ").click(function (event, picker) {
+    dataRange[0].value = "cancel"
+    tables.ajax.reload();
 })
 
 
@@ -295,7 +313,7 @@ const selectAlljscheckboxSubTable = () => {
             checkbox[i].checked = !checkbox[i].checked
         }
 
-        let checkboxes= document.querySelectorAll(".js-user-checkbox-sub:checked").length
+        let checkboxes = document.querySelectorAll(".js-user-checkbox-sub:checked").length
         if (checkboxes) {
             $(".bulk-action")[0].hidden = false
             $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
@@ -373,14 +391,14 @@ const hoverOnSelect = () => {
 
         let checkboxes = $(".js-user-checkbox:checked").length
 
-        if(!checkboxes){
+        if (!checkboxes) {
             $(".bulk-action")[0].hidden = true
         }
 
         $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-        if(this.checked){
+        if (this.checked) {
             this.parentElement.parentElement.parentElement.classList.add("trHover")
-        }else{
+        } else {
             this.parentElement.parentElement.parentElement.classList.remove("trHover")
         }
     })
@@ -443,8 +461,6 @@ const editColapse = () => {
         let row = tables.row(tr);
 
 
-
-
         if (row.child.isShown()) {
             row.child.hide();
             tr.removeClass('shown');
@@ -465,7 +481,6 @@ const collapse = () => {
     $('#scroll-horizontal-datatable tbody').on('click', 'td.details-control', function () {
         let tr = $(this).closest('tr');
         let row = tables.row(tr);
-
 
 
         if (row.child.isShown()) {
@@ -508,14 +523,14 @@ const hoverOnSelectSub = () => {
 
         let checkboxes = $(".js-user-checkbox-sub:checked").length
 
-        if(!checkboxes){
+        if (!checkboxes) {
             $(".bulk-action")[0].hidden = true
         }
 
         $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-        if(this.checked){
+        if (this.checked) {
             this.parentElement.parentElement.parentElement.classList.add("trHover")
-        }else{
+        } else {
             this.parentElement.parentElement.parentElement.classList.remove("trHover")
         }
     })

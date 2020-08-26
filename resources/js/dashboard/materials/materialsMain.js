@@ -47,7 +47,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         {data: "active", name: "active", className: "text-left"},
         {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
         {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
-        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left", visible: true},
+        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left", visible: false},
         {data: "humans", name: "humans", className: "js-link cursor-pointer text-left"},
         {data: "courses", name: "courses", className: "js-link cursor-pointer text-left", visible: false},
         {data: "activeHidden", name: "activeHidden", visible: false},
@@ -69,6 +69,10 @@ const materialsDatatable = $("#materials-datatable").DataTable({
     drawCallback: function () {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+        $("#materials-datatable_wrapper > .row:first-child > div:first-child").removeClass(" col-md-6");
+        $("#materials-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
+        $("#materials-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
+        $("#materials-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
         atLinkEventListener();
         toggleInit();
         selectMultipleCheckboxDelete()
@@ -91,7 +95,11 @@ const fromDay = () => {
     let date = $('.drp-selected').text();
     let dateSepareted = date.split("-")
     let from_date = dateSepareted[0]
-    if(from_date){
+    if (dataRange[0].value == "cancel") {
+        dataRange[0].value = ""
+        return
+    }
+    if (from_date) {
 
         return from_date.replace(/\//g, "-").trim();
     }
@@ -103,7 +111,11 @@ const toDay = () => {
     let date = $('.drp-selected').text();
     let dateSepareted = date.split("-")
     let to_date = dateSepareted[1]
-    if(to_date) {
+    if (dataRange[0].value == "cancel") {
+        dataRange[0].value = ""
+        return
+    }
+    if (to_date) {
         return to_date.replace(/\//g, "-").trim()
     }
 
@@ -117,12 +129,15 @@ dataRange.on("apply.daterangepicker", function (event, picker) {
     let endDate = picker.endDate.format('DD/MM/YYYY');
     this.value = `${startDate} - ${endDate}`;
 
-    console.log(this.value)
 
     materialsDatatable.ajax.reload();
 
 })
 
+$(".cancelBtn ").click(function (event, picker) {
+    dataRange[0].value = "cancel"
+    materialsDatatable.ajax.reload();
+})
 
 //! METHOD FIRST TABLE
 //!============================================================
