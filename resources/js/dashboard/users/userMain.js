@@ -124,7 +124,10 @@ const fromDay = () => {
     let date = $('.drp-selected').text();
     let dateSepareted = date.split("-")
     let from_date = dateSepareted[0]
-    return from_date.replace(/\//g, "-").trim();
+    if(from_date){
+
+        return from_date.replace(/\//g, "-").trim();
+    }
 
 
 }
@@ -133,8 +136,9 @@ const toDay = () => {
     let date = $('.drp-selected').text();
     let dateSepareted = date.split("-")
     let to_date = dateSepareted[1]
-    return to_date.replace(/\//g, "-").trim()
-
+    if(to_date) {
+        return to_date.replace(/\//g, "-").trim()
+    }
 
 }
 
