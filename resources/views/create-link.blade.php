@@ -19,7 +19,7 @@
                 @endforeach
                 @endrole
                 @hasanyrole('instructor|partner')
-                    <option value="{{auth()->user()->id}}">{{auth()->user()->fullName}}</option>
+                    <option value="{{auth()->user()->slug}}">{{auth()->user()->fullName}}</option>
                 @endrole
             </select>
         </div>
@@ -30,7 +30,7 @@
             <select name="course_id"  class="custom-select" id="inputGroupSelect01">
                 <option selected>Choose...</option>
                 @foreach($courses as $course)
-                    <option value="{{$course->id}}">{{$course->name}}</option>
+                    <option value="{{$course->id}}">{{$course->title}}</option>
                 @endforeach
             </select>
         </div>

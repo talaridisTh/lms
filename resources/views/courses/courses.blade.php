@@ -20,7 +20,7 @@
 					<!-- project card -->
 					<div class="card d-block">
 						<!-- project-thumbnail -->
-						<img class="card-img-top" src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' alt="project image cap">
+						<img class="card-img-top" src='https://placehold.co/600x400' alt="project image cap">
 						{{-- <div class="card-img-overlay">
 							<div class="badge badge-secondary p-1">Ongoing</div>
 						</div> --}}

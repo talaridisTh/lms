@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Material;
 use App\User;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -101,7 +102,7 @@ class HomeController extends Controller
     {
 
         $minutes = Carbon::now()->diffInMinutes($hour, false) + 240;
-        $zero = new DateTime('@0');
+        $zero = new DateTime();
         $offset = new DateTime('@' . $minutes * 60);
         $diff = $zero->diff($offset);
 
