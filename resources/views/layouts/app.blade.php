@@ -25,12 +25,12 @@
 
         <div class="row">
             <div class="col-3">
-                <a href="index.html" class="topnav-logo">
+                <a href="{{route('home')}}" class="topnav-logo">
                 		    <span class="topnav-logo-lg">
-                		        <img src="assets/images/logo-light.png" alt="" height="16">
+                		        <img src="assets/images/preview-lightbox-logo.png" alt="" height="16">
                 		    </span>
                     <span class="topnav-logo-sm">
-                		        <img src="assets/images/logo_sm.png" alt="" height="16">
+                		        <img src="assets/images/preview-lightbox-logo.png" alt="" height="16">
                 		    </span>
                 </a>
             </div>
