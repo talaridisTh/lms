@@ -13,7 +13,8 @@
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style"/>
     <link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style"/>
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @yield("style")
 </head>
 
 <body class="loading" data-layout="detached" data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
@@ -184,9 +185,9 @@
 </div>
 <!-- end page -->
 
-<footer class="footer footer-alt">
-    2018 - 2020 © Hyper - Coderthemes.com
-</footer>
+{{--<footer class="footer footer-alt ">--}}
+{{--    2018 - 2020 © Hyper - Coderthemes.com--}}
+{{--</footer>--}}
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST">
     @csrf

@@ -342,9 +342,9 @@ let activeUsersFilter = createRoleSelect();
 
 activeUserslistLength.append( activeUsersFilter );
 activeUsersFilter.addEventListener('change', function () {
-	
+
 	courseUsersDatatable.columns(3).search( this.value ).draw();
-	
+
 });
 
 //* add new users table filters
@@ -354,9 +354,9 @@ let addUsersFilter = createRoleSelect();
 addUsersListLength.append(addUsersFilter);
 
 addUsersFilter.addEventListener('change', function () {
-	
+
 	addCourseUsersDatatable.columns(3).search( this.value ).draw();
-	
+
 });
 
 //* Active Materials filters
@@ -383,13 +383,13 @@ let remainingMaterialsDateInput = createDateElm( "remaining-materials-date-range
 remainingMaterialsDateInput.appendBefore( remainingMaterialsSearchInput );
 
 
-//! Date Search 
+//! Date Search
 let dateRange = $(".js-date-search");
 
 dateRange.daterangepicker( dateRangeConfig );
 
 dateRange.on( "apply.daterangepicker", function(event, picker) {
-		
+
 	let startDate = picker.startDate.format('DD/MM/YYYY');
 	let endDate = picker.endDate.format('DD/MM/YYYY');
 	this.value = `${ startDate } - ${ endDate }`;
@@ -400,7 +400,7 @@ dateRange.on( "apply.daterangepicker", function(event, picker) {
 });
 
 dateRange.on( 'cancel.daterangepicker', function(event, picker) {
-	
+
 	this.value = "";
 	let tableId = $(this).closest(".table-cnt").find(".js-table").attr("id");
 	$(`#${tableId}`).DataTable().ajax.reload();
@@ -650,7 +650,7 @@ function createRoleSelect() {
 		<option value="Εισηγητής">Εισηγητές</option>
 		<option value="Μαθητής">Μαθητές</option>
 	`;
-	
+
 	return selectElm;
 }
 
@@ -663,7 +663,7 @@ function createStateSelect() {
 		<option value="1">Ενεργά</option>
 		<option value="0">Ανενεργά</option>
 	`;
-	
+
 	return selectElm;
 }
 
@@ -752,7 +752,7 @@ function linkForm( type, priority) {
         						Παρακαλώ εισάγετε υπότιτλο.
 							</div>
 						</div>
-						
+
 					</div>
 					<div class="form-row">
 						<div class="form-group col-6">
@@ -791,7 +791,7 @@ function annoucementForm( priority ) {
         						Παρακαλώ εισάγετε τίτλο.
 							</div>
 						</div>
-						
+
 						<div class="form-group col-3">
 							<label for="state-select">Κατάσταση</label>
 							<select class="js-state form-control" id="state-select">
@@ -800,7 +800,7 @@ function annoucementForm( priority ) {
 							</select>
 						</div>
 					</div>
-					
+
 						<div class="form-group">
 							<label for="new-announcement">Ανακοίνωση</label>
 							<textarea id="new-announcement" class="js-empty js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."></textarea>
@@ -809,7 +809,7 @@ function annoucementForm( priority ) {
 							<button  class="js-add-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
 							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
-					
+
 				</div>
 			</td>`
 }
@@ -866,7 +866,7 @@ function addContent() {
 		data.append( `${ type.toLowerCase() }`, link.value );
 	}
 
-	axios.post( "/materials/add-additionnal-content", 
+	axios.post( "/materials/add-additionnal-content",
 		data
 	)
 		.then( (res) => {
@@ -886,7 +886,7 @@ function checkEmpty( container, elmClass) {
 	let valid = true;
 
 	for ( let i = 0; i < elements.length; i++ ) {
-		
+
 		if ( !elements[i].value ) {
 			elements[i].classList.add("is-invalid");
 			valid = false;
@@ -972,10 +972,10 @@ function endDate( input ) {
 	if ( !dateInput || dateInput.value == "" ) {
 		return "";
 	}
-	
+
 	let dateInputValue = dateInput.value.split(" - ");
 	let secondDate = dateInputValue[1].split("/").reverse().join("-");
-	
+
 	return secondDate;
 }
 

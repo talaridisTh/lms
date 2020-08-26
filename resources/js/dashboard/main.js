@@ -54,15 +54,16 @@ const selectAndDeselectCheckbox = function (attr) {
         }
 
         if (this.checked) {
+            $(".bulk-action")[0].hidden = false
+           let checkboxes= document.querySelectorAll(".js-user-checkbox:checked").length
+            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
             this.innerHTML = '<i class=" h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
         } else {
+            $(".bulk-action")[0].hidden = true
             this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
         }
     })
 }
-
-
-
 
 const changeInputHidden = (attr, hiddenAttr)=>{
 
@@ -92,7 +93,6 @@ const tableLocale = {
 		previous:"<i class='mdi mdi-chevron-left'>",
 		next:"<i class='mdi mdi-chevron-right'>"}
 }
-
 
 export default {
     toastAlert,

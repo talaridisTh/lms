@@ -26,32 +26,14 @@ Route::get('/', function () {
 
 Route::get('/clear', function() {
     Artisan::call('cache:clear');
-
     return redirect(route("home"));
-
-});
-
-Route::get('/active', function() {
-
-
-    return Activity::all();
-
 });
 
 
-Route::get("/test", "HomeController@test")->name("user.test");
 
-Route::get("/user/link", "HomeController@createLink")->name("user.link");
-Route::post("/user/link/store", "HomeController@createLinkStore")->name("user.linkStore");
-Route::get("/user/view-link", "HomeController@showLinks")->name("user.showLinks");
-Route::get('/partner-links', function (Request $request) {
-
-    if (! $request->hasValidSignature()) {
-        abort(401);
-    }
+Route::get("/test", "Index\HomeController@test")->name("user.test");
 
 
-})->name('link');
 
 //!########################################################
 //! Dashboard routes
@@ -87,6 +69,15 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
 
 });
+
+//!======================================================
+//! 			End Dashboard Routes					|
+//!======================================================
+
+
+//!########################################################
+//! AJAX routes
+//!########################################################
 
 //! Dashboard Ajax Users Datatables
 Route::post('users/view-users', 'Ajax\UserController@index')->name("index.datatable");
@@ -147,17 +138,41 @@ Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@upl
 Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadContentImages' );
 
 //!======================================================
-//! 			End Dashboard Routes					|
+//! 			End ajax Routes					|
 //!======================================================
 
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 //!######################################################
-//!					Index User Routes					#
+//!					Index  Routes					#
 //!######################################################
 
+Route::get('/home', 'Index\HomeController@index')->name('home');
+//! User routees
 Route::get('/courses/{user}', 'UserController@userCourses');
 Route::get('/courses/course/{course}', 'CourseController@userCourse');
+
+
+//! partner routes link
+Route::get("/user/link", "Index\HomeController@createLink")->name("user.link");
+
+Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
+Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
+Route::get('/partner-links', function (Request $request) {
+    if (! $request->hasValidSignature()) {
+        abort(401);
+    }
+})->name('link');
+
+
+//! Material routes link
+Route::get("/material/{materials}", "Index\MaterialController@show")->name("index.material.show");
+
+
+//!######################################################
+//!					END Index  Routes					#
+//!######################################################
+

@@ -56,6 +56,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         buttonEx();
         editColapse()
         hoverOnSelect()
+
     },
 
 
@@ -98,7 +99,7 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
             selectAlljscheckboxSubTable()
             selectDetachCourses();
             routeLinkCourse();
-
+            hoverOnSelectSub()
 
         },
 
@@ -286,19 +287,20 @@ const selectAlljscheckboxSubTable = () => {
     $(".js-user-multipleChexbox-sub").click(function () {
         let checkbox = $(".js-user-checkbox-sub")
 
-
         for (let i = 0; i < checkbox.length; i++) {
             checkbox[i].checked = !checkbox[i].checked
         }
 
-        if (this.checked) {
+        let checkboxes= document.querySelectorAll(".js-user-checkbox-sub:checked").length
+        if (checkboxes) {
+            $(".bulk-action")[0].hidden = false
+            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
             this.innerHTML = '<i class=" h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
         } else {
+            $(".bulk-action")[0].hidden = true
             this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
         }
     })
-
-
 }
 
 const selectDetachCourses = () => {
@@ -453,6 +455,7 @@ const editColapse = () => {
         }
     });
 }
+
 const collapse = () => {
     $('#scroll-horizontal-datatable tbody').off('click', 'td.details-control');
     $('#scroll-horizontal-datatable tbody').on('click', 'td.details-control', function () {
@@ -494,8 +497,26 @@ const routeLinkCourse = () => {
     });
 }
 
+const hoverOnSelectSub = () => {
 
+    $(".js-user-checkbox-sub").change(function () {
+        $(".bulk-action")[0].hidden = false
 
+        let checkboxes = $(".js-user-checkbox-sub:checked").length
+
+        if(!checkboxes){
+            $(".bulk-action")[0].hidden = true
+        }
+
+        $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
+        if(this.checked){
+            this.parentElement.parentElement.parentElement.classList.add("trHover")
+        }else{
+            this.parentElement.parentElement.parentElement.classList.remove("trHover")
+        }
+    })
+
+}
 
 
 
