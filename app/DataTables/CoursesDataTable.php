@@ -23,12 +23,13 @@ class CoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
+
 		if ( is_null($request->startDate) && is_null($request->endDate) ) {
-			$query = Course::query()->select( 'id', 'title', 'active', 'slug', 'updated_at', 'created_at' );
+			$query = Course::with("topics");
+		
 		}
 		else {
-			$query = Course::query()
-				->select( 'id', 'title', 'active', 'slug', 'updated_at', 'created_at' )
+			$query = Course::with("topics")
 				->where( function($subquery) use ($request) {
 					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
@@ -60,6 +61,17 @@ class CoursesDataTable extends DataTable
 
 				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
 					<label for='$data->slug-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
+
+			})
+			->editColumn('topics', function( $data ) {
+
+				$topics = [];
+
+				foreach ( $data->topics as $topic ) {
+					array_push($topics, $topic['title']);
+				}
+
+				return implode(", ", $topics);
 
 			})
 			->editColumn('updated_at', function($data) {

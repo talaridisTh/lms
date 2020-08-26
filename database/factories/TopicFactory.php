@@ -20,7 +20,7 @@ $factory->define(Topic::class, function (Faker $faker) {
 	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
     return [
-        'name' => "Topic Name ". $counter++,
+        'title' => "Topic Title ". $counter++,
         'created_at' => $date->format('Y-m-d H:i:s'),
 		'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
     ];

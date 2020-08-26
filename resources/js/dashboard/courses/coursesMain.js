@@ -1,3 +1,12 @@
+//!######################################
+//!				Configurations			#
+//!######################################
+
+const redactorConfig = {
+	style: false,
+	minHeight: '150px',
+}
+
 //!##############################################
 //! 				Prototypes					#
 //!##############################################
@@ -93,6 +102,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
 		{data: 'active', name: 'active', className: "align-middle"},
+		{data: 'topics', name: 'topics.title', className: "align-middle" },
 		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
@@ -260,3 +270,11 @@ function endDate( input ) {
 	
 	return secondDate;
 }
+
+//!##########################################
+//!				Initializations				#
+//!##########################################
+
+$R("#summary", redactorConfig);
+
+$R("#description", redactorConfig);

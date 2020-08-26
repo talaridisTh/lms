@@ -25,7 +25,7 @@ class Material extends Model
 
 	public function topics() {
 
-		return $this->belongsToMany(Topic::class);
+		return $this->morphToMany('App\Topic', 'topicable');
 
 	}
 

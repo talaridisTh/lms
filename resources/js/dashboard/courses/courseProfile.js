@@ -46,12 +46,6 @@ const dateRangeConfig = {
 const redactorConfig = {
 	style: false,
 	minHeight: '150px',
-	callbacks: {
-        undo: function(html, offset)
-        {
-            // ...
-        }
-    }
 }
 
 //! Prototype Additions
@@ -247,8 +241,8 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false},
-		{data: 'materialName', name: 'materials.title', className: "cursor-default"},
-		{data: 'topicName', name: 'topics.name', className: "cursor-default"},
+		{data: 'title', name: 'materials.title', className: "cursor-default"},
+		{data: 'topics', name: 'topics.title', className: "cursor-default"},
 		{data: 'type', name: 'materials.type', className: "cursor-default"},
 		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 	],

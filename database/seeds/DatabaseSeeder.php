@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder {
 			$bundle->courses()->saveMany(factory(App\Course::class, 5)->create()
 			->each(function($course) {
 
+				$course->topics()->attach(App\Topic::all()->random()->id);
+				$course->topics()->attach(App\Topic::all()->random()->id);
 				$course->users()->saveMany(factory(App\User::class, 5)->create())
 				->each(function($user) {
 

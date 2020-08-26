@@ -39,6 +39,8 @@ class CourseController extends Controller
 
 		$course = new Course;
 		$course->title = $request->title;
+		$course->subtitle = $request->subtitle;
+		$course->summary = $request->summary;
 		$course->description = $request->description;
 		$course->active = $request->active;
 		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );

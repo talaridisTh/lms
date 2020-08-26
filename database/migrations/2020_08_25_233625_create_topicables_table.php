@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTopicsTable extends Migration
+class CreateTopicablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTopicsTable extends Migration
      */
     public function up()
     {
-        Schema::create('topics', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 30);
-            $table->timestamps();
+        Schema::create('topicables', function (Blueprint $table) {
+            $table->unsignedBigInteger('topic_id');
+            $table->unsignedBigInteger('topicable_id');
+            $table->string('topicable_type');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateTopicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('topicables');
     }
 }

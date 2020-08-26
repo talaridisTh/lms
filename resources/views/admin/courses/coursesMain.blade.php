@@ -7,7 +7,7 @@
 @section('content')
 
 	<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header modal-colored-header bg-primary">
 					<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
@@ -18,14 +18,29 @@
 						
 						@csrf
 						
-						<div class="form-group">
-							<label for="name">Όνομα</label>
-							<input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="title" value="{{ old('title') }}" placeholder="Δώστε τίτλο...">
-							@error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+						<div class="row">
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="title">Τίτλος</label>
+									<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+									@error('title')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="subtitle">Υπότιτλος</label>
+									<input type="text" class="form-control @error('subtitle') is-invalid @enderror" id="subtitle" name="subtitle" value="{{ old('subtitle') }}" placeholder="Εισάγετε υπότιτλο...">
+									@error('subtitle')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							</div>
 						</div>
 
 						<div class="row">
@@ -62,13 +77,23 @@
 						</div>
 
 						<div class="form-group">
+							<label for="summary">Σύνοψη</label>
+							<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Σύνοψη Course...">{{ old('summary') }}</textarea>
+							@error('summary')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
+
+						<div class="form-group">
 							<label for="description">Περιγραφή</label>
 							<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Περιγραφή Course...">{{ old('description') }}</textarea>
 							@error('description')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
 						</div>
 					</form>
 				</div>
@@ -80,11 +105,11 @@
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-    <div class="container table-cnt" style="max-width:1370px">
-        <div class="row mb-2">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-8">
-                <div class="text-sm-right">
+	<div class="container table-cnt" style="max-width:1370px">
+		<div class="row mb-2">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8">
+				<div class="text-sm-right">
 					<a href="courses/create" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal"><i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
@@ -99,31 +124,33 @@
 						</div>
 					</div>
 				</div>
-            </div>
-        </div>
+			</div>
+		</div>
 
-        <table id="courses-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
-            <thead>
-            	<tr>
-            	    <th class="text-center">Επιλογή</th>
-            	    <th class="text-center">Τίτλος</th>
-            	    <th class="text-center">Ενεργό</th>
-            	    <th class="text-center">Τελ. Ενημέρωση</th>
-            	    <th class="text-center">Ημ. Δημιουργίας</th>
-            	</tr>
-            </thead>
-            <tbody class="tables-hover-effect"></tbody>
-            <tfoot>
-            	<tr>
-            	    <th class="text-center">Επιλογή</th>
-            	    <th class="text-center">Τίτλος</th>
-            	    <th class="text-center">Ενεργό</th>
-            	    <th class="text-center">Τελ. Ενημέρωση</th>
-            	    <th class="text-center">Ημ. Δημιουργίας</th>
-            	</tr>
-            </tfoot>
-        </table>
-    </div>
+		<table id="courses-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
+			<thead>
+				<tr>
+					<th class="text-center">Επιλογή</th>
+					<th class="text-center">Τίτλος</th>
+					<th class="text-center">Ενεργό</th>
+					<th class="text-center">Topics</th>
+					<th class="text-center">Τελ. Ενημέρωση</th>
+					<th class="text-center">Ημ. Δημιουργίας</th>
+				</tr>
+			</thead>
+			<tbody class="tables-hover-effect"></tbody>
+			<tfoot>
+				<tr>
+					<th class="text-center">Επιλογή</th>
+					<th class="text-center">Τίτλος</th>
+					<th class="text-center">Ενεργό</th>
+					<th class="text-center">Topics</th>
+					<th class="text-center">Τελ. Ενημέρωση</th>
+					<th class="text-center">Ημ. Δημιουργίας</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
 @endsection
 
 @section('scripts')

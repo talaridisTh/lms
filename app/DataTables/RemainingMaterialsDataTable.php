@@ -24,12 +24,8 @@ class RemainingMaterialsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 		if ( is_null($request->startDate) && is_null($request->endDate) ) {
-			$query = DB::table('materials')
-				->join('material_topic', 'materials.id', '=', 'material_topic.material_id')
-				->join('topics', 'material_topic.topic_id', '=', 'topics.id')
-				->select( 'materials.id', 'topics.name as topicName',
-					'materials.title as materialName', 'materials.type', 'materials.slug', 
-				)
+
+			$query = Material::with("topics")
 				->where('active', 1)
 				->whereNotIn('materials.id', 
 					function($subquery) use ($request) {
@@ -43,12 +39,7 @@ class RemainingMaterialsDataTable extends DataTable
 				);
 		}
 		else {
-			$query = DB::table('materials')
-				->join('material_topic', 'materials.id', '=', 'material_topic.material_id')
-				->join('topics', 'material_topic.topic_id', '=', 'topics.id')
-				->select( 'materials.id', 'topics.name as topicName',
-					'materials.title as materialName', 'materials.type', 'materials.slug', 
-				)
+			$query = Material::with("topics")
 				->where('active', 1)
 				->where( function($subquery) use ($request) {
 					$subquery->whereBetween('materials.updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
@@ -78,6 +69,17 @@ class RemainingMaterialsDataTable extends DataTable
 			->addColumn('addBtn', function($data) {
 
 				return "<button type='button' class='btn btn-primary js-add-material-btn' data-material-id='$data->id' data-material-type='$data->type'>Προσθήκη</button>";
+
+			})
+			->editColumn('topics', function($data) {
+
+				$topics = [];
+
+				foreach ( $data->topics as $topic ) {
+					array_push( $topics, $topic['title'] );
+				}
+
+				return implode( ', ', $topics );
 
 			})
 			->setRowClass('last-column-p-10')

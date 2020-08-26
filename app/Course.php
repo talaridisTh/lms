@@ -8,6 +8,12 @@ use Illuminate\Support\Facades\DB;
 
 class Course extends Model
 {
+	public function topics() {
+
+		return $this->morphToMany('App\Topic', 'topicable');
+		
+	}
+
     public function materials() {
 
 		return $this->belongsToMany(Material::class)->withPivot('active', 'priority');
