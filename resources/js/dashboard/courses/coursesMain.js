@@ -1,11 +1,7 @@
 //!######################################
-//!				Configurations			#
+//! 				Imports				#
 //!######################################
-
-const redactorConfig = {
-	style: false,
-	minHeight: '150px',
-}
+import utilities from '../main';
 
 //!##############################################
 //! 				Prototypes					#
@@ -66,13 +62,13 @@ $('#delete-courses-btn').click( function() {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
 
-				toastAlert( "success", message );
+				utilities.toastAlert( "success", message );
 
 				coursesDatatable.ajax.reload();
 			})
 			.catch(function (error) {
 				
-				toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 			});
 			
@@ -94,7 +90,8 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		data: function( d ) {
 			return $.extend( {}, d, {
 				startDate: startDate( $("#course-date-range")[0] ),
-				endDate: endDate( $("#course-date-range")[0] )
+				endDate: endDate( $("#course-date-range")[0] ),
+				topicId: $("#topic-filter").val()
 			})
 		}
 	},
@@ -102,7 +99,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
 		{data: 'active', name: 'active', className: "align-middle"},
-		{data: 'topics', name: 'topics.title', className: "align-middle" },
+		{data: 'topic', name: 'topic', className: "align-middle", searchable: false },
 		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
@@ -148,13 +145,13 @@ function toggleActive() {
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 
-			toastAlert( icon, message );
+			utilities.toastAlert( icon, message );
 
 			updatedAtElm.textContent = "Μόλις τώρα";
 		})
 		.catch( (err) => {
 
-			toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 		});
 	});
@@ -178,24 +175,7 @@ dateInput.addEventListener("input", function() {
 
 let dateRange = $("#course-date-range");
 
-dateRange.daterangepicker({
-	ranges: {
-        'Today': [moment(), moment()],
-        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-	},
-	alwaysShowCalendars: true,
-	showCustomRangeLabel: false,
-	drops: "auto",
-	autoUpdateInput: false,
-	opens: "center",
-	locale: {
-		format: "DD/MM/YYYY",
-	},
-});
+dateRange.daterangepicker( utilities.datePickerConfig );
 
 dateRange.on( "apply.daterangepicker", function(event, picker) {
 		
@@ -212,21 +192,30 @@ dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 	coursesDatatable.ajax.reload();
 })
 
+let tablesLengthLabel = $("#courses-datatable_length > label")[0];
+let topicFIlter = $("#topic-filter")[0];
+
+
+let activeCoursesFilter = utilities.createStateSelect();
+tablesLengthLabel.append( activeCoursesFilter );
+
+activeCoursesFilter.addEventListener('change', function () {
+
+	coursesDatatable.columns(2).search( this.value ).draw();
+
+});
+
+tablesLengthLabel.append(topicFIlter);
+
+topicFIlter.addEventListener('change', function() {
+
+	coursesDatatable.ajax.reload();
+
+});
+
 //!##########################################
 //!				script functions			#
 //!##########################################
-
-function toastAlert(icon, message) {
-    Swal.fire({
-        toast: 'true',
-        position: 'top-end',
-        icon: icon,
-        title: message,
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-    });
-}
 
 function createDateElm() {
 
@@ -275,6 +264,6 @@ function endDate( input ) {
 //!				Initializations				#
 //!##########################################
 
-$R("#summary", redactorConfig);
+$R("#summary", utilities.redactorConfig);
 
-$R("#description", redactorConfig);
+$R("#description", utilities.redactorConfig);

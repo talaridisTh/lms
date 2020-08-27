@@ -121,7 +121,7 @@
 
                             <div class="tab-content">
                                 <div class="tab-pane {{$isActive}} "  id="courses">
-                                    @include("components.FindUserMaterial")
+                                    @include("components.findUserMaterial")
                                 </div>
                                 <div class="tab-pane {{$isnotActive}} " id="settings">
                                     @include("components.tabsEdit")

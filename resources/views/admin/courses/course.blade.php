@@ -75,8 +75,8 @@
 							<tr>
 								<th class="select-all w-5">
 									<div class='icheck-primary d-inline'>
-										<input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
-										<label for='all-remainings-checkbox'></label>
+										<input class='js-course-checkbox' type='checkbox' id='add-user-checkbox' autocomplete='off'>
+										<label for='add-user-checkbox'></label>
 									</div>
 								</th>
 								<th class="text-center">Όνομα</th>
@@ -326,7 +326,7 @@
 							                <label for="subtitle">Υπότιτλος</label>
 											<input id="subtitle" type="text" 
 												class="form-control @error('subtitle') is-invalid @enderror" 
-												id="subtitle" name="subtitle" 
+												name="subtitle" 
 												value="{{ old('subtitle') != "" ? old('subtitle') : $course['subtitle'] }}" 
 												placeholder="Εισάγετε υπότιτλο...">
 											@error('subtitle')
@@ -372,7 +372,7 @@
 									<div class="col-12">
 										<div class="form-group">
 											<label for="description">Περιγραφή</label>
-											<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description"rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
+											<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
 											@error('description')
 												<span class="invalid-feedback" role="alert">
 													<strong>{{ $message }}</strong>
@@ -457,5 +457,5 @@
 <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
 
 
-<script src="{{ asset('js/dashboard/courses/courseProfile.js') }}"></script>
+<script src="{{ mix('js/dashboard/courses/courseProfile.js') }}"></script>
 @endsection

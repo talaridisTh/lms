@@ -151,13 +151,21 @@
 			</tfoot>
 		</table>
 	</div>
+
+	<select id="topic-filter" class="ml-1 custom-select custom-select-sm form-control form-control-sm">
+		<option value="" selected>Όλα τα Topic</option>
+		@foreach ($topics as $topic)
+			<option value="{{ $topic->id }}">{{ $topic->title }}</option>
+		@endforeach
+	</select>
+
 @endsection
 
 @section('scripts')
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 
-<script src="{{ asset('js/dashboard/courses/coursesMain.js') }}"></script>
+<script src="{{ mix('js/dashboard/courses/coursesMain.js') }}"></script>
 
 @if ( count($errors) > 0 )
 	<script>

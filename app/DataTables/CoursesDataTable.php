@@ -3,8 +3,10 @@
 namespace App\DataTables;
 
 use App\Course;
+use App\Topic;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
@@ -12,6 +14,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Facades\DB;
 
 class CoursesDataTable extends DataTable
 {
@@ -23,17 +26,27 @@ class CoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-
-		if ( is_null($request->startDate) && is_null($request->endDate) ) {
-			$query = Course::with("topics");
-		
-		}
-		else {
+		if ( !is_null($request->startDate) && !is_null($request->endDate) && is_null($request->topicId) ) {
 			$query = Course::with("topics")
+			->where( function($subquery) use ($request) {
+				$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+				->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+			});
+		}
+		elseif ( is_null($request->startDate) && is_null($request->endDate) && !is_null($request->topicId) ) {
+			
+			$query = Topic::find( $request->topicId )->courses();
+			
+		}
+		elseif ( !is_null($request->startDate) && !is_null($request->endDate) && !is_null($request->topicId) ) {
+			
+			$query = Topic::find( $request->topicId )->courses()
 				->where( function($subquery) use ($request) {
 					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
 				});
+				
+
 		}
 
         return datatables()
@@ -63,7 +76,7 @@ class CoursesDataTable extends DataTable
 					<label for='$data->slug-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
-			->editColumn('topics', function( $data ) {
+			->editColumn('topic', function( $data ) {
 
 				$topics = [];
 
@@ -85,7 +98,6 @@ class CoursesDataTable extends DataTable
 
 			})
 			->rawColumns(['action', 'title', 'active'])
-			->setRowClass("test")
 			->setRowAttr([ 'data-course-id' => function($data) {
 
 				return  $data->id;

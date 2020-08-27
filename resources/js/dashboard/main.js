@@ -1,3 +1,12 @@
+//!##########################################
+//!				Configurations				#
+//!##########################################
+
+const redactorConfig = {
+	style: false,
+	minHeight: '150px',
+}
+
 function toastAlert(icon, message) {
     Swal.fire({
         toast: 'true',
@@ -110,12 +119,53 @@ const tableLocale = {
     }
 }
 
+function createStateSelect() {
+	const selectElm = document.createElement("select");
+	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+
+	selectElm.innerHTML = `
+		<option value="">Όλες οι Καταστάσεις</option>
+		<option value="1">Ενεργά</option>
+		<option value="0">Ανενεργά</option>
+	`;
+
+	return selectElm;
+}
+
+const datePickerConfig = {
+	ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+	},
+	alwaysShowCalendars: true,
+	showCustomRangeLabel: false,
+	drops: "auto",
+	autoUpdateInput: false,
+	opens: "center",
+	locale: {
+		format: "DD/MM/YYYY",
+	},
+}
+
 export default {
     toastAlert,
     mainCheckboxSwitcher,
     minorCheckboxSwitcher,
     filterButton,
+<<<<<<< HEAD
     selectAndDeselectCheckbox,
     tableLocale,
     changeInputHidden
+=======
+	selectAndDeselectCheckbox,
+	tableLocale,
+	changeInputHidden,
+	redactorConfig,
+	createStateSelect,
+	datePickerConfig
+>>>>>>> 0d6c9cf0014612da5f3797f0a207213ca8e11b8d
 }

@@ -27,10 +27,10 @@
             <div class="col-3">
                 <a href="{{route('home')}}" class="topnav-logo">
                 		    <span class="topnav-logo-lg">
-                		        <img src="/assets/images/preview-lightbox-logo.png" alt="" height="16">
+                		        <img src="/assets/images/preview-lightbox-logo.png" alt="">
                 		    </span>
                     <span class="topnav-logo-sm">
-                		        <img src="/assets/images/preview-lightbox-logo.png" alt="" height="16">
+                		        <img src="/assets/images/preview-lightbox-logo.png" alt="" height="33">
                 		    </span>
                 </a>
             </div>

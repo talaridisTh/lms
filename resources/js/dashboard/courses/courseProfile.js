@@ -6,47 +6,9 @@ const totalAdditions = $('#total-additions')[0];
 const updatedAt = $("#last-update-cnt")[0];
 
 //!######################################
-//!				Configurations			#
+//! 				Imports				#
 //!######################################
-
-const tableLocale = {
-	emptyTable: 		"Δεν υπάρχουν εγγραφές",
-	info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-	infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-	lengthMenu: 		"_MENU_",
-	loadingRecords: 	"Φόρτωση ...",
-	processing: 		"Επεξεργασία ...",
-	search: 			"",
-	searchPlaceholder: 	"Αναζήτηση... ",
-	zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-	paginate:{
-		previous:"<i class='mdi mdi-chevron-left'>",
-		next:"<i class='mdi mdi-chevron-right'>"}
-}
-
-const dateRangeConfig = {
-	ranges: {
-        'Today': [moment(), moment()],
-        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-	},
-	alwaysShowCalendars: true,
-	showCustomRangeLabel: false,
-	drops: "auto",
-	autoUpdateInput: false,
-	opens: "center",
-	locale: {
-		format: "DD/MM/YYYY",
-	},
-}
-
-const redactorConfig = {
-	style: false,
-	minHeight: '150px',
-}
+import utilities from '../main';
 
 //! Prototype Additions
 //!============================================================
@@ -117,7 +79,7 @@ $("#course-cover-input").change( function() {
 $('#all-remainings-checkbox').change( function() {
 	let checkboxes = $('.js-remainings-checkbox')
 
-	minorCheckboxSwitcher( this, checkboxes );
+	utilities.minorCheckboxSwitcher( this, checkboxes );
 
 });
 
@@ -128,7 +90,7 @@ $('#add-remaingings-btn').click( function() {
 	let ids = [];
 
 	if ( checkboxes.length == 0 ) {
-		toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
+		utilities.toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 		return;
 	}
 	else {
@@ -154,7 +116,7 @@ $('#remove-selection-btn').click( function() {
 
 	if ( checkboxes.length == 0 ) {
 
-		toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
+		utilities.toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 		return;
 	}
 	else {
@@ -176,7 +138,7 @@ $("#all-active-materials-checkbox").change( function() {
 
 	let checkboxes = $(".js-course-material-checkbox");
 
-	minorCheckboxSwitcher( this, checkboxes )
+	utilities.minorCheckboxSwitcher( this, checkboxes )
 
 });
 
@@ -209,7 +171,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default align-middle", searchable: false },
 		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
 	],
-	language: tableLocale,
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -246,7 +208,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		{data: 'type', name: 'materials.type', className: "cursor-default"},
 		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 	],
-	language: tableLocale,
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -279,7 +241,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
-	language: tableLocale,
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -312,7 +274,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
-	language: tableLocale,
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -380,7 +342,7 @@ remainingMaterialsDateInput.appendBefore( remainingMaterialsSearchInput );
 //! Date Search
 let dateRange = $(".js-date-search");
 
-dateRange.daterangepicker( dateRangeConfig );
+dateRange.daterangepicker( utilities.datePickerConfig );
 
 dateRange.on( "apply.daterangepicker", function(event, picker) {
 
@@ -503,11 +465,11 @@ function toggleCourseMaterial() {
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 
-			toastAlert( icon, message );
+			utilities.toastAlert( icon, message );
 			updatedAt.textContent = "Μόλις τώρα";
 		})
 		.catch( (err) => {
-			toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 		});
 	});
 }
@@ -534,7 +496,7 @@ function remainingMaterialsCheckboxHandler() {
 	let mainCheckbox = $('#all-remainings-checkbox')[0];
 	let checkbox = $('.js-remainings-checkbox');
 
-	mainCheckboxSwitcher( mainCheckbox, checkbox );
+	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox );
 }
 
 function activeMaterialsCheckboxToggle() {
@@ -549,7 +511,7 @@ function activeMaterialsCheckboxHandler() {
 	let mainCheckbox = $('#all-active-materials-checkbox')[0];
 	let checkbox = $('.js-course-material-checkbox');
 
-	mainCheckboxSwitcher( mainCheckbox, checkbox);
+	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
 }
 
 function addUsers( userIds ) {
@@ -560,14 +522,14 @@ function addUsers( userIds ) {
 	.then( (res) => {
 
 		let message = userIds.length == 1 ? "Ένας χρήστης προστέθηκε" : `${userIds.length} χρήστες προστέθηκαν`;
-		toastAlert( 'success', message );
+		utilities.toastAlert( 'success', message );
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
 
 	})
 	.catch( (err) => {
 		console.log(err);
-		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 	})
 }
@@ -580,14 +542,14 @@ function removeUsers( userIds ) {
 	.then( (res) => {
 
 		let message = userIds.length == 1 ? "Ένας χρήστης αφαιρέθηκε" : `${userIds.length} χρήστες αφαιρέθηκαν`;
-		toastAlert( 'success', message );
+		utilities.toastAlert( 'success', message );
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
 
 	})
 	.catch( (err) => {
 		console.log(err);
-		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 	})
 }
@@ -600,7 +562,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	.then( (res) => {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
 
-		toastAlert( 'success', message );
+		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 		totalLessons.textContent = parseInt(totalLessons.textContent) + lessonsCount;
@@ -609,7 +571,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	})
 	.catch( (err) => {
 		console.log(err);
-		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
 
@@ -623,7 +585,7 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 
 		let message = materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ύλης`;
 
-		toastAlert( 'success', message );
+		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 		totalLessons.textContent = parseInt(totalLessons.textContent) - lessonsCount;
@@ -631,7 +593,7 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 		updatedAt.textContent = "Μόλις τώρα";
 	})
 	.catch( (err) => {
-		toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
 
@@ -719,7 +681,7 @@ $(".js-material").click( function() {
 	}
 
 	if ( type == "Announcement" ) {
-		$R('#new-announcement', redactorConfig );
+		$R('#new-announcement', utilities.redactorConfig );
 	}
 
 	$('#add-material-modal').modal('hide')
@@ -866,10 +828,10 @@ function addContent() {
 		.then( (res) => {
 
 			courseMaterialsTable.ajax.reload();
-			toastAlert( "success", "Αποθηκεύτηκε" )
+			utilities.toastAlert( "success", "Αποθηκεύτηκε" )
 		})
 		.catch( (err) => {
-			toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
 		});
 
 }
@@ -889,45 +851,6 @@ function checkEmpty( container, elmClass) {
 	}
 
 	return valid;
-}
-
-function toastAlert(icon, message) {
-    Swal.fire({
-        toast: 'true',
-        position: 'top-end',
-        icon: icon,
-        title: message,
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-    });
-}
-
-function mainCheckboxSwitcher(main, minor) {
-
-    for (let i = 0; i < minor.length; i++) {
-        if (!minor[i].checked) {
-            main.checked = false;
-            break;
-        } else {
-            main.checked = true;
-        }
-    }
-
-}
-
-function minorCheckboxSwitcher(main, minor) {
-
-    if (main.checked) {
-        for (let i = 0; i < minor.length; i++) {
-            minor[i].checked = true;
-        }
-    } else {
-        for (let i = 0; i < minor.length; i++) {
-            minor[i].checked = false;
-        }
-    }
-
 }
 
 function createDateElm( id ) {
@@ -977,9 +900,9 @@ function endDate( input ) {
 //!				Initializations				#
 //!##########################################
 
-$R("#summary", redactorConfig);
+$R("#summary", utilities.redactorConfig);
 
-$R("#description", redactorConfig);
+$R("#description", utilities.redactorConfig);
 
 //!######################################
 //!				Testing					#
