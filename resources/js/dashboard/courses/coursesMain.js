@@ -99,24 +99,12 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
 		{data: 'active', name: 'active', className: "align-middle"},
+		{data: 'curator', name: 'curator', className: "align-middle", searchable: false },
 		{data: 'topic', name: 'topic', className: "align-middle", searchable: false },
 		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
-	language:{
-		emptyTable: 		"Δεν υπάρχουν εγγραφές",
-		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"_MENU_",
-		loadingRecords: 	"Φόρτωση ...",
-		processing: 		"Επεξεργασία ...",
-		search: 			"",
-		searchPlaceholder: 	"Αναζήτηση...",
-		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-		paginate:{
-			previous:"<i class='mdi mdi-chevron-left'>",
-			next:"<i class='mdi mdi-chevron-right'>"}
-	},
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");

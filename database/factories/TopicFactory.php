@@ -21,6 +21,7 @@ $factory->define(Topic::class, function (Faker $faker) {
 
     return [
         'title' => "Topic Title ". $counter++,
+        'slug' => $faker->slug,
         'created_at' => $date->format('Y-m-d H:i:s'),
 		'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
     ];
