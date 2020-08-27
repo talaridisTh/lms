@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <section class="container-fruid" style="max-width: 1400px">
         <div class="row">
             <div class="col-md-8" id="material-form">
@@ -109,10 +108,11 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="topicMaterial">Topic <span class="text-danger"> *</span></label>
-                        <select name="topic" id="topicMaterial" class="form-control" >
-                            @foreach ($tops as $topic)
+                        <select name="topic[]" multiple="multiple" name="topic" id="topicMaterial" class="form-control" >
+                            @foreach ($topics as $topic)>
                                 <option
-                                    value="{{$topic->id}}" {{$material->topics->first()->id ==$topic->id? "selected":""}}>{{$topic->title}}</option>
+                                    value="{{$topic->id}}" @foreach($material->topics as $top ){{$top->id == $topic->id? "selected":""}} @endforeach>{{$topic->title}}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -143,14 +143,14 @@
 
                     </div>
                     <hR>
-                    <div class="form-group mb-3">
-                        <label for="instructorMaterial">Εισηγητής <span class="text-danger"> *</span></label>
-                        <select name="instructor" id="instructorMaterial" class="form-control " data-toggle="select2">
-                            @foreach($instructors as $k=> $instructor)
-                                <option  value="{{$instructor->id}}" {{$instructor->fullName==$material->users->first()->fullName? "selected":""}}>{{$instructor->fullName}}</option>
-                            @endforeach
-                        </select>
-                    </div>
+{{--                    <div class="form-group mb-3">--}}
+{{--                        <label for="instructorMaterial">Εισηγητής <span class="text-danger"> *</span></label>--}}
+{{--                        <select name="instructor" id="instructorMaterial" class="form-control " data-toggle="select2">--}}
+{{--                            @foreach($instructors as $k=> $instructor)--}}
+{{--                                <option  value="{{$instructor->id}}" {{$instructor->fullName==$material->users->first()->fullName? "selected":""}}>{{$instructor->fullName}}</option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
+{{--                    </div>--}}
 
                     <div class=" form-group ">
                         <h3>Creator</h3>

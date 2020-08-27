@@ -97,11 +97,24 @@ const changeInputHidden = (attr, hiddenAttr) => {
             this.value = $(this).prop('checked') == true ? 1 : 0;
         }
 
-        console.log($(hiddenAttr))
+
         let hiddenValue = $(hiddenAttr)[0].value = this.value
+
+
+
+      // let test  =   $("#topicMaterial").clone()
+      //   console.log(test)
+
 
     })
 }
+
+
+$(".test").click(function(e){
+    $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
+
+    console.log(this)
+})
 
 const tableLocale = {
     emptyTable: "Δεν υπάρχουν εγγραφές",
@@ -156,16 +169,11 @@ export default {
     mainCheckboxSwitcher,
     minorCheckboxSwitcher,
     filterButton,
-<<<<<<< HEAD
     selectAndDeselectCheckbox,
     tableLocale,
-    changeInputHidden
-=======
-	selectAndDeselectCheckbox,
-	tableLocale,
-	changeInputHidden,
+    changeInputHidden,
 	redactorConfig,
 	createStateSelect,
 	datePickerConfig
->>>>>>> 0d6c9cf0014612da5f3797f0a207213ca8e11b8d
+
 }

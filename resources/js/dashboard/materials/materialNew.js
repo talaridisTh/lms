@@ -46,9 +46,15 @@ $("#instructorMaterial").select2({
 
 $("#topicMaterial").select2({
     allowClear: true,
-    placeholder: 'Ολα τα Τοpic'
+    placeholder: 'Ολα τα Τοpic',
+    tags: true
 });
 
+//sortable
+
+$("ul.select2-selection__rendered").sortable({
+    containment: 'parent'
+});
 
 
 let dataRange = $("#createAtMaterial")

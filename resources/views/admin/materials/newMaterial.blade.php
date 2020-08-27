@@ -81,7 +81,7 @@
                                           id="contentMaterial" rows="5"></textarea>
                             </div>
                             <div class="sticky-button">
-                                <button class="btn btn-sm btn-primary mr-2" type="submit">Δημιουργία</button>
+                                <button class="test btn btn-sm btn-primary mr-2" type="submit">Δημιουργία</button>
 {{--                                <button class="btn btn-sm btn-primary" type="submit"><i class=" mdi mdi-eye"></i></button>--}}
                             </div>
 
@@ -91,7 +91,7 @@
                             <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
                             <input name="cover" type="file" hidden class="form-control" id="coverMaterialHidden">
                             <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
-                            <input name="topic" type="hidden" class="form-control" id="topicMaterialHidden">
+                            <input   multiple="multiple" type="hidden" class="form-control" id="topicMaterialHidden">
                             {{--                            <input name="courses"  type="hidden"class="form-control" id="coursesMaterialHidden">--}}
                         </form>
                     </div>
@@ -124,8 +124,8 @@
                                placeholder="Εισάγετε URL video...">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="topicMaterial">Type <span class="text-danger"> *</span></label>
-                        <select id="topicMaterial" class="form-control " data-toggle="select2">
+                        <label  for="topicMaterial">Type <span class="text-danger"> *</span></label>
+                        <select  name="topic[]"multiple="multiple" id="topicMaterial" class="form-control " data-toggle="select2">
                             @foreach ($topics as $topic)
                                 <option value=""></option>
                                 <option value="{{$topic->id}}">{{$topic->title}}</option>
@@ -207,6 +207,8 @@
 @endsection
 
 @section('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
     <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 
     <script>

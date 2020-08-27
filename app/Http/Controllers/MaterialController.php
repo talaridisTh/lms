@@ -60,8 +60,11 @@ class MaterialController extends Controller {
         }
         if ($request->topic)
         {
+            foreach ($request->topic as $topic)
+            {
 
-            $newMaterial->topics()->attach($request->topic);
+                $newMaterial->topics()->attach($topic);
+            }
         }
 //        if($request->courses){
 //            $newMaterial->courses()->attach($request->courses);
@@ -74,12 +77,20 @@ class MaterialController extends Controller {
     public function show(Material $material)
     {
 
-        $tops = Topic::all();
+        $topics = Topic::all();
         $instructors = User::getInstructor();
         $courses = Course::all();
         $types = Material::all()->unique('type');
+        $topicMaterial = [];
 
-        return view('admin.materials.material', compact("tops", "instructors", "courses", "material", "types"));
+        foreach ($material->topics as $topic){
+             array_push($topicMaterial,$topic);
+        }
+
+        $topicMaterial = collect($topicMaterial)->pluck('title',"id");
+
+
+        return view('admin.materials.material', compact("topics", "instructors", "courses", "material", "types","topicMaterial"));
     }
 
     public function update(UpdateMaterialRequest $request, Material $material)
@@ -118,6 +129,9 @@ class MaterialController extends Controller {
     public function destroy(Material $material)
     {
 
+        foreach ($material->topics as $mat)
+        {
+        }
     }
 
 }
