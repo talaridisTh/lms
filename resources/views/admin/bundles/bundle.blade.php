@@ -261,5 +261,5 @@
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 
-<script src="{{ asset('js/dashboard/bundles/bundleProfile.js') }}"></script>
+<script src="{{ mix('js/dashboard/bundles/bundleProfile.js') }}"></script>
 @endsection

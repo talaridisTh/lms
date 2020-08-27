@@ -165,7 +165,7 @@
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 
-<script src="{{ asset('js/dashboard/courses/coursesMain.js') }}"></script>
+<script src="{{ mix('js/dashboard/courses/coursesMain.js') }}"></script>
 
 @if ( count($errors) > 0 )
 	<script>

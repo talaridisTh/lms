@@ -1,14 +1,14 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js",
-    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js",
-    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js",
-    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js",
-    "/js/dashboard/main.js": "/js/dashboard/main.js",
-    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js",
-    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js",
-    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js"
+    "/js/app.js": "/js/app.js?id=2f09a9d5c8e57b2f3123",
+    "/css/app.css": "/css/app.css?id=df32d6ee68d078bc7e24",
+    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=d940ca316431562100a3",
+    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=f04b01043d0678716b60",
+    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=9da721116eaaafba9d1d",
+    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=e07e17f7afde2e146358",
+    "/js/dashboard/main.js": "/js/dashboard/main.js?id=dc1e5695bc8d742064e9",
+    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=ea54a0d0878afdf08ec6",
+    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=645d18aee9b324e15649",
+    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=4f2ed5aeff9b17d7bb0d",
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=860da82a9bb29c16d3f1",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=153c6ddb361e9d4d874c"
 }

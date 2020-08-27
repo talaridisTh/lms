@@ -1,3 +1,8 @@
+//!######################################
+//! 				Imports				#
+//!######################################
+import utilities from '../main';
+
 //! EventListeners
 //!==================
 
@@ -31,13 +36,13 @@ $("#delete-bundles-btn").click( function() {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
 
-				toastAlert( "success", message );
+				utilities.toastAlert( "success", message );
 
 				bundlesDatatable.ajax.reload();
 			})
 			.catch(function (error) {
 				
-				toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 			});
 			
@@ -60,19 +65,7 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post"
 	},
-	language: {
-		emptyTable: 		"Δεν υπάρχουν εγγραφές",
-		info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-		infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-		lengthMenu: 		"_MENU_ Αποτελέσματα ανα σελίδα",
-		loadingRecords: 	"Φόρτωση ...",
-		processing: 		"Επεξεργασία ...",
-		search: 			"Αναζήτηση: ",
-		zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-		paginate:{
-			previous:"<i class='mdi mdi-chevron-left'>",
-			next:"<i class='mdi mdi-chevron-right'>"}
-	},
+	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
@@ -94,10 +87,10 @@ function activeToggleInit() {
 		.then( (res) => {
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε!" : "Απενεργοποιήθηκε";
-			toastAlert( icon, message );
+			utilities.toastAlert( icon, message );
 		})
 		.catch( (err) => {
-			toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 		})
 	});
 }
@@ -110,16 +103,4 @@ function jsLinkInit() {
 		window.location = `bundle/${bundleId}`;
 	});
 
-}
-
-function toastAlert(icon, message) {
-    Swal.fire({
-        toast: 'true',
-        position: 'top-end',
-        icon: icon,
-        title: message,
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-    });
 }
