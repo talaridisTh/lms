@@ -40,4 +40,3 @@ ArticleEditor('#material-content', {
 });
 
 
-

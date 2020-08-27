@@ -36,6 +36,7 @@ class UsersDataTable extends DataTable {
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
 
+
                 return "{$data->getRoleNames()[0]}";
             })
             ->addColumn('activeNum', function ($data) {

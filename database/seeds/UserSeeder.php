@@ -19,29 +19,38 @@ class UserSeeder extends Seeder {
         User::create([
             'first_name' => "admin",
             'last_name' => "admin",
-            'avatar' => "https://lorempixel.com/640/480/?10211",
             'email' => "admin@gmail.com",
+            "phone"=>"6978565698",
+            "profil"=>"admin profil",
+            'avatar' => "https://lorempixel.com/640/480/?10211",
             'slug' => "admin",
             'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
+
+
         ])->assignRole("admin");
         User::create([
             'first_name' => "instructor",
             'last_name' => "instructor",
-            'avatar' => "https://lorempixel.com/640/480/?10961",
             'email' => "instructor@gmail.com",
+            "phone"=>"6978562698",
+            "profil"=>"instructor profil",
+            'avatar' => "https://lorempixel.com/640/480/?10961",
             'slug' => "instructor",
             'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("instructor");
+
         User::create([
             'first_name' => "partner",
             'last_name' => "partner",
-            'avatar' => "https://lorempixel.com/640/480/?10914",
             'email' => "partner@gmail.com",
-            'slug' => "partner",
+            "phone"=>"6978564398",
+            "profil"=>"admin",
+            'avatar' => "https://lorempixel.com/640/480/?10914",
+            'slug' => "partner profil",
             'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
@@ -49,8 +58,10 @@ class UserSeeder extends Seeder {
         User::create([
             'first_name' => "student",
             'last_name' => "student",
-            'avatar' => "https://lorempixel.com/640/480/?10917",
             'email' => "student@gmail.com",
+            "phone"=>"6978523498",
+            "profil"=>"student profil",
+            'avatar' => "https://lorempixel.com/640/480/?10917",
             'slug' => "student",
             'password' => Hash::make('password'),
             'active' => 1,

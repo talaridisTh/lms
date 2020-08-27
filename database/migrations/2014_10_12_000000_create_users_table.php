@@ -17,9 +17,15 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('avatar');
             $table->string('email')->unique();
-            $table->string('slug')->nullable();
+            $table->bigInteger('phone')->unique()->nullable();
+            $table->text('profil')->nullable();
+            $table->string('avatar')->nullable();
+            $table->string('facebook_link')->unique()->nullable();
+            $table->string('instagram_link')->unique()->nullable();
+            $table->string('linkedin_link')->unique()->nullable();
+            $table->string('youtube_link')->unique()->nullable();
+            $table->string('slug');
             $table->string('password');
             $table->unsignedBigInteger('active');
             $table->timestamp('email_verified_at')->nullable();

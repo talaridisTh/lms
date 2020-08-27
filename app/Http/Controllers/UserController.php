@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+
 use App\DataTables\UsersDataTable;
-use App\Exports\UsersExportView;
+
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Mail\NewUserNotification;
 use App\User;
-use Carbon\Carbon;
-use DateTime;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\URL;
+
+use Illuminate\Support\Facades\Mail;
+
 use Illuminate\Support\Str;
-use Maatwebsite\Excel\Facades\Excel;
+
 use Spatie\Activitylog\Models\Activity;
-use Spatie\Permission\Models\Role;
-use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+
 
 class UserController extends Controller {
 
@@ -49,11 +48,13 @@ class UserController extends Controller {
     public function store(UserCreateRequest $request)
     {
         //
+
         $user = new User();
-        $data = collect($request)->except('password', "avatar")->all();
+        $data = collect($request)->except('password', "avatar","sendMail","roles")->all();
         $data['password'] = Hash::make("password");
-        $data['active'] = 1;
         $data["slug"]= Str::slug($request->first_name,"-");
+
+
         if ($files = $request->file('avatar'))
         {
             $destinationPath = public_path("images") . '/student';
@@ -64,7 +65,29 @@ class UserController extends Controller {
         {
             $data["avatar"] = "https://robohash.org/default.png?set=set4";
         }
-        $user->create($data)->assignRole($request->role);
+        if($request->active){
+
+
+        }
+        if($request->password){
+            $data["password"] =  bcrypt(request("password"));
+        }
+        if($request->active){
+            $data["active"] =  1;
+        }else{
+            $data["active"] =  0;
+        }
+
+
+        $user->create($data)->assignRole($request->roles);
+
+
+        if($request->sendMail){
+            $mail = ['message' => 'This is a test!'];
+
+            Mail::to('john@example.com')->send(new NewUserNotification($mail));
+        }
+
 
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }

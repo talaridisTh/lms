@@ -110,11 +110,7 @@ const changeInputHidden = (attr, hiddenAttr) => {
 }
 
 
-$(".test").click(function(e){
-    $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
 
-    console.log(this)
-})
 
 const tableLocale = {
     emptyTable: "Δεν υπάρχουν εγγραφές",

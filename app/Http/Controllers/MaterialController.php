@@ -58,6 +58,7 @@ class MaterialController extends Controller {
 
             $newMaterial->users()->attach($request->instructor);
         }
+
         if ($request->topic)
         {
             foreach ($request->topic as $topic)
@@ -66,12 +67,9 @@ class MaterialController extends Controller {
                 $newMaterial->topics()->attach($topic);
             }
         }
-//        if($request->courses){
-//            $newMaterial->courses()->attach($request->courses);
-//
-//        }
+
         return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $data["title"] . ' δημιουργήθηκε');;
-//        dd($data);
+//
     }
 
     public function show(Material $material)
@@ -81,21 +79,14 @@ class MaterialController extends Controller {
         $instructors = User::getInstructor();
         $courses = Course::all();
         $types = Material::all()->unique('type');
-        $topicMaterial = [];
-
-        foreach ($material->topics as $topic){
-             array_push($topicMaterial,$topic);
-        }
-
-        $topicMaterial = collect($topicMaterial)->pluck('title',"id");
 
 
-        return view('admin.materials.material', compact("topics", "instructors", "courses", "material", "types","topicMaterial"));
+
+        return view('admin.materials.material', compact("topics", "instructors", "courses", "material", "types"));
     }
 
     public function update(UpdateMaterialRequest $request, Material $material)
     {
-
         $data = collect($request)->except("instructor", "topic", "type", "active")->all();
         if ($request->instructor)
         {
@@ -104,8 +95,12 @@ class MaterialController extends Controller {
         if ($request->topic)
         {
 
-            $material->topics()->update(['topic_id' => $request->topic]);
+            foreach ($request->topic as $topic)
+            {
+              $material->topics()->sync( $request->topic);
+            }
         }
+
         if ($request->created_at == null)
         {
             $dt = new DateTime();

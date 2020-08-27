@@ -34,11 +34,6 @@ $("#typeMaterial").select2({
     placeholder: 'Ολοι οι Τύποι'
 });
 
-// $("#coursesMaterial").select2({
-//     allowClear: true,
-//     placeholder: 'Ολα τα courses'
-// });
-
 $("#instructorMaterial").select2({
     allowClear: true,
     placeholder: 'Ολοι οι Εισηγητής'
@@ -56,6 +51,9 @@ $("ul.select2-selection__rendered").sortable({
     containment: 'parent'
 });
 
+
+//! DATARANGE
+//!============================================================
 
 let dataRange = $("#createAtMaterial")
 
@@ -78,3 +76,23 @@ dataRange.daterangepicker({
     autoUpdateInput: false,
     opens: "center",
 });
+
+
+
+
+
+//! METHOD
+//!============================================================
+$(".buton-create-material").click(function(e){
+    $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
+
+})
+
+$(".buton-update-material").click(function(e){
+
+    $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
+
+})
+
+
+

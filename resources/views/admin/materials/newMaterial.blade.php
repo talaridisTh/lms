@@ -1,15 +1,22 @@
 @extends('layouts.dashboard')
 
 @section('css')
-{{--    <style>--}}
-{{--        .sticky-button {--}}
-{{--            position: fixed;--}}
-{{--            top: 14%;--}}
-{{--            left: 90%;--}}
-{{--            display: flex;--}}
-{{--            z-index: 9999;--}}
-{{--        }--}}
-{{--    </style>--}}
+    <style>
+        .sticky-button {
+            position: fixed;
+            top: 8%;
+            left: 65%;
+            display: flex;
+            z-index: 9999;
+        }
+        .sticky-buttons {
+            position: fixed;
+            top: 8%;
+            left: 74%;
+            display: flex;
+            z-index: 9999;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -81,8 +88,8 @@
                                           id="contentMaterial" rows="5"></textarea>
                             </div>
                             <div class="sticky-button">
-                                <button class="test btn btn-sm btn-primary mr-2" type="submit">Δημιουργία</button>
-{{--                                <button class="btn btn-sm btn-primary" type="submit"><i class=" mdi mdi-eye"></i></button>--}}
+                                <button class="buton-create-material btn btn-sm btn-primary mr-2" type="submit">Δημιουργία</button>
+                                <button class="btn btn-sm btn-warning" type="submit"><i class=" mdi mdi-eye"></i></button>
                             </div>
 
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
@@ -173,11 +180,11 @@
                     </div>
                     <hr>
 
-                    <div class="form-row justify-content-between">
-                        <div class="col-10">
+                    <div class="form-row justify-content-between sticky-buttons">
+                        <div class="col-7">
                             <label for="createAtMaterial">Κατάσταση</label>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-5 ">
                             <input type="checkbox" id="activeMaterial" checked data-switch="bool"/>
                             <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                         </div>

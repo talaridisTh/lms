@@ -1,7 +1,22 @@
 @extends('layouts.dashboard')
 
 @section('css')
-
+    <style>
+        .sticky-button {
+            position: fixed;
+            top: 8%;
+            left: 65%;
+            display: flex;
+            z-index: 9999;
+        }
+        .sticky-buttons {
+            position: fixed;
+            top: 8%;
+            left: 74%;
+            display: flex;
+            z-index: 9999;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -75,10 +90,12 @@
                                           value="{{old('material', $material->content)}}"
                                           id="contentMaterial" rows="5">{{$material->content}}</textarea>
                             </div>
-                            <button class="btn btn-primary" type="submit">Ενημερωση</button>
-                            <a target="_blank" href="{{route('index.material.show',$material->slug)}}" class="btn btn-outline-secondary" type="submit">Προεπισκόπηση </a>
+                            <div class="sticky-button">
+                                <button class="buton-update-material btn btn-sm btn-primary mr-2" type="submit">Ενημερωση</button>
+                                <a target="_blank" href="{{route('index.material.show',$material->slug)}}" class="btn btn-sm btn-warning" type="submit"><i class=" mdi mdi-eye"></i></a>
+                            </div>
 
-                            <input name="topic" type="hidden" class="form-control" id="topicMaterialHidden">
+                            <input type="hidden" class="form-control" id="topicMaterialHidden">
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
                             <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
                             <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
@@ -160,11 +177,11 @@
                     </div>
                     <hr>
 
-                    <div class="form-row justify-content-between">
-                        <div class="col-10">
+                    <div class="form-row justify-content-between sticky-buttons">
+                        <div class="col-7">
                             <label for="createAtMaterial">Κατάσταση</label>
                         </div>
-                        <div class="col-2 ">
+                        <div class="col-5 ">
                             <input type="checkbox" id="activeMaterial" {{$material->active == 0 ? "" : "checked"}} data-switch="bool"/>
                             <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                         </div>
@@ -193,9 +210,12 @@
 @endsection
 
 @section('scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
     <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 
     <script>
+
 
     </script>
 
