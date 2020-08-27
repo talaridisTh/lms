@@ -7,7 +7,7 @@
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
             <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Mετακίνηση σε course
+                Προσθήκη σε course
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($activeCourses as $courses)
@@ -28,8 +28,8 @@
             </div>
         </div>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item js-detach-delete" href="#">Αφαιρεση Course</a>
+        <a class="dropdown-item js-detach-delete" href="#">Αφαίρεση άπο Course</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item js-multiple-delete" href="#">Διαγραφη επιλεγμενων</a>
+        <a class="dropdown-item js-multiple-delete" href="#">Διαγραφή επιλεγμένων</a>
     </div>
 </div>

@@ -30,7 +30,7 @@
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
-                <th class="text-left">Ρολος</th>
+                <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
@@ -50,7 +50,7 @@
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
-                <th class="text-left">Ρολος</th>
+                <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
@@ -75,13 +75,13 @@
         $(document).ready(function () {
             $("#fullNameFilter").select2({
                 text: '',
-                placeholder: " Ολα τα Courses ",
+                placeholder: "Όλα τα Courses ",
                 allowClear: true,
                 // minimumInputLength: 2,
             });
 
             $("#rolesFilter").select2({
-                placeholder: "Ολoi oi ρόλοι",
+                placeholder: "Όλοι οι ρόλοι",
                 minimumResultsForSearch: -1,
                 allowClear: true,
             });

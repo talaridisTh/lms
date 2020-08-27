@@ -47,6 +47,7 @@ const filterButton = function (attr, column, table) {
 const selectAndDeselectCheckbox = function (attr) {
     $(attr).click(function () {
         let checkbox = $(attr)
+        let checkboxes = document.querySelectorAll(".js-user-checkbox:checked").length
 
         for (let i = 0; i < checkbox.length; i++) {
             checkbox[i].checked = !checkbox[i].checked
@@ -60,49 +61,53 @@ const selectAndDeselectCheckbox = function (attr) {
             this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
         }
 
-        if(this.childNodes[0].className=="h3 mdi mdi-checkbox-multiple-blank-outline"){
+        if (this.childNodes[0].className == "h3 mdi mdi-checkbox-multiple-blank-outline") {
+
             for (let i = 0; i < checkbox.length; i++) {
                 checkbox[i].checked = true
+                checkbox[i].parentElement.parentElement.parentElement.classList.add("trHover")
             }
             $(".bulk-action")[0].hidden = false
-            let checkboxes= document.querySelectorAll(".js-user-checkbox:checked").length
+
             $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-        }else{
+        } else {
             for (let i = 0; i < checkbox.length; i++) {
                 checkbox[i].checked = false
+                checkbox[i].parentElement.parentElement.parentElement.classList.remove("trHover")
             }
             $(".bulk-action")[0].hidden = true
         }
     })
 }
 
-const changeInputHidden = (attr, hiddenAttr)=>{
+const changeInputHidden = (attr, hiddenAttr) => {
 
 
-    $(attr).change(function(){
-        if(attr =="#activeMaterial"){
-             this.value = $(this).prop('checked') == true ? 1 : 0;
+    $(attr).change(function () {
+        if (attr == "#activeMaterial") {
+            this.value = $(this).prop('checked') == true ? 1 : 0;
         }
 
         console.log($(hiddenAttr))
-        let hiddenValue = $(hiddenAttr)[0].value =this.value
+        let hiddenValue = $(hiddenAttr)[0].value = this.value
 
     })
 }
 
 const tableLocale = {
-	emptyTable: 		"Δεν υπάρχουν εγγραφές",
-	info: 				"_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-	infoEmpty:      	"0 απο 0 τα 0 αποτελέσματα",
-	lengthMenu: 		"_MENU_",
-	loadingRecords: 	"Φόρτωση ...",
-	processing: 		"Επεξεργασία ...",
-	search: 			"",
-	searchPlaceholder: 	"Αναζήτηση... ",
-	zeroRecords: 		"Δεν βρέθηκαν αποτελέσματα",
-	paginate:{
-		previous:"<i class='mdi mdi-chevron-left'>",
-		next:"<i class='mdi mdi-chevron-right'>"}
+    emptyTable: "Δεν υπάρχουν εγγραφές",
+    info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+    infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
+    lengthMenu: "_MENU_",
+    loadingRecords: "Φόρτωση ...",
+    processing: "Επεξεργασία ...",
+    search: "",
+    searchPlaceholder: "Αναζήτηση... ",
+    zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
+    paginate: {
+        previous: "<i class='mdi mdi-chevron-left'>",
+        next: "<i class='mdi mdi-chevron-right'>"
+    }
 }
 
 export default {
@@ -110,7 +115,7 @@ export default {
     mainCheckboxSwitcher,
     minorCheckboxSwitcher,
     filterButton,
-	selectAndDeselectCheckbox,
-	tableLocale,
+    selectAndDeselectCheckbox,
+    tableLocale,
     changeInputHidden
 }

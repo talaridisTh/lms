@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
@@ -52,6 +53,7 @@ class UserController extends Controller {
         $data = collect($request)->except('password', "avatar")->all();
         $data['password'] = Hash::make("password");
         $data['active'] = 1;
+        $data["slug"]= Str::slug($request->first_name,"-");
         if ($files = $request->file('avatar'))
         {
             $destinationPath = public_path("images") . '/student';
