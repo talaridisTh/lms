@@ -399,8 +399,8 @@
 									<tr>
 										<th class="text-center">
 											<div class='icheck-primary d-inline'>
-												<input type='checkbox' id='all-active-materials-checkbox' autocomplete='off'>
-												<label for='all-active-materials-checkbox'></label>
+												<input type='checkbox' id='all-active-users-checkbox' autocomplete='off'>
+												<label for='all-active-users-checkbox'></label>
 											</div>
 										</th>
 										<th class="text-center">Όνομα</th>

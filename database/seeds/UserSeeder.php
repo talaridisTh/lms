@@ -25,6 +25,16 @@ class UserSeeder extends Seeder {
             'password' => Hash::make('password'),
             'active' => 1,
             'remember_token' => Str::random(10),
+		])->assignRole("admin");
+		User::create([
+            'first_name' => "Υδρόγειος",
+            'last_name' => "Idrogios",
+            'avatar' => "https://lorempixel.com/640/480/?10211",
+            'email' => "idrogios@gmail.com",
+            'slug' => "Idrogios",
+            'password' => Hash::make('password'),
+            'active' => 1,
+            'remember_token' => Str::random(10),
         ])->assignRole("admin");
         User::create([
             'first_name' => "instructor",
