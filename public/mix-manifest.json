@@ -1,14 +1,14 @@
 {
-    "/js/app.js": "/js/app.js?id=2f09a9d5c8e57b2f3123",
+    "/js/app.js": "/js/app.js?id=746806818cbc17c18b21",
     "/css/app.css": "/css/app.css?id=0e82a2ccadba5ff39ea9",
-    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=9c3f11445b2e8c491a7d",
-    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=b1c508072fa3a277f4d6",
-    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=118a124e0c50e890e358",
+    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=f29ab4411237254f0b21",
+    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=4ec329c5ad241ace4819",
+    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=90a1a65ec8e811dd1f70",
     "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=2d0fdf48c5878281a62e",
-    "/js/dashboard/main.js": "/js/dashboard/main.js?id=7db42601864e243cfd85",
-    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=112a220952c8cfdee035",
-    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=4fee0e69e0910373d748",
-    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=f3be14f16b6c468a406a",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=7268b2346f045f10c1ff",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=c7fd65b3d099b0f917cf"
+    "/js/dashboard/main.js": "/js/dashboard/main.js?id=d7a7dcfadfb53dab3fee",
+    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=53e5bd38c89640b3961d",
+    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=2565e5b2b16310b9b3fa",
+    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=838da4f05b2f9cece6d3",
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=4635173c8d4451a2afce",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=4218c64526f5059d0aec"
 }
