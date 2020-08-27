@@ -133,6 +133,7 @@
 					<th class="text-center">Επιλογή</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Ενεργό</th>
+					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
@@ -144,6 +145,7 @@
 					<th class="text-center">Επιλογή</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Ενεργό</th>
+					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>

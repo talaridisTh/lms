@@ -26,8 +26,11 @@ class CoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
+
+		$query = Course::with("topics", "curator");
+
 		if ( !is_null($request->startDate) && !is_null($request->endDate) && is_null($request->topicId) ) {
-			$query = Course::with("topics")
+			$query = Course::with("topics", "curator")
 			->where( function($subquery) use ($request) {
 				$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 				->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
@@ -85,6 +88,13 @@ class CoursesDataTable extends DataTable
 				}
 
 				return implode(", ", $topics);
+
+			})
+			->editColumn('curator', function($data) {
+
+				$fullName = $data->curator->first_name ." ". $data->curator->last_name;
+
+				return $fullName;
 
 			})
 			->editColumn('updated_at', function($data) {

@@ -20,7 +20,7 @@ class CreateCoursesTable extends Migration
             $table->string('summary')->nullable();
             $table->string('cover');
             $table->string('description')->nullable();
-            $table->unsignedBigInteger('curator');
+            $table->unsignedBigInteger('user_id')->references('id')->on('users');
             $table->string('slug');
             $table->unsignedTinyInteger('active');
             $table->timestamps();

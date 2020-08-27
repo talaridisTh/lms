@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class Course extends Model
 {
+
+	public function curator() {
+
+		return $this->belongsTo('App\User', "user_id");
+
+	}
+
 	public function topics() {
 
 		return $this->morphToMany('App\Topic', 'topicable');
