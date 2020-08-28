@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Material extends Model
 {
@@ -12,9 +13,26 @@ class Material extends Model
 
     public function courses() {
 
-		return $this->belongsToMany(Course::class)->withPivot('active', 'priority');
+		return $this->belongsToMany(Course::class)->withPivot('active', 'priority')->orderBy('priority');
 
 	}
+
+    public function coursesMaterial() {
+
+        return $this->hasMany(CourseMaterial::class);
+
+
+
+	}
+
+    public function priority( $material , $course) {
+
+        return DB::table('course_material')
+            ->where("course_id",$course)
+            ->where("material_id",$material)
+            ->select("priority")
+            ->first()->priority;
+    }
 
 	public function users() {
 

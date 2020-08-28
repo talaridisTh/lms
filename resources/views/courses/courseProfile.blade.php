@@ -126,7 +126,7 @@
 							<tbody>
 								@foreach ($materials as $material)
 									<tr>
-										<td><a href="{{route('index.material.show',$material->slug)}}">{{ $material->title}}</a></td>
+										<td><a href="{{route('index.material.show',[$course->id,$material->slug])}}">{{ $material->title}}</a></td>
 										<td>{!! $material->subtitle !!} </td>
 									</tr>
 								@endforeach

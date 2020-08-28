@@ -9,6 +9,7 @@ use App\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
 class HomeController extends Controller
@@ -19,11 +20,11 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Material $material)
     {
 
 
-        return view('home');
+        return view('home',compact($material));
     }
 
     public function createLink()
@@ -113,9 +114,15 @@ class HomeController extends Controller
     {
 
 
-        $material  = Material::findOrFail(3);
+         $test = DB::table("materials")
+            ->join("course_material","course_material.material_id","=","materials.id")
+            ->where("course_id",6)
+            ->where("priority",'>',100)
+             ->orderBy("priority",'asc')
+             ->limit(1)
+            ->get();
 
-        dd($material->courses->pluck("name"));
+        dd($test);
 
     }
 }

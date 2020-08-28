@@ -33,6 +33,8 @@ class UserSeeder extends Seeder {
             'last_name' => "Idrogios",
             'avatar' => "https://lorempixel.com/640/480/?10211",
             'email' => "idrogios@gmail.com",
+            "phone"=>"6978df65698",
+            "profil"=>"Idrogios profil",
             'slug' => "Idrogios",
             'password' => Hash::make('password'),
             'active' => 1,

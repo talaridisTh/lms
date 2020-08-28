@@ -18,12 +18,12 @@ class Course extends Model
 	public function topics() {
 
 		return $this->morphToMany('App\Topic', 'topicable');
-		
+
 	}
 
     public function materials() {
 
-		return $this->belongsToMany(Material::class)->withPivot('active', 'priority');
+		return $this->belongsToMany(Material::class)->withPivot('active', 'priority')->orderBy('priority');
 
 	}
 
@@ -71,5 +71,36 @@ class Course extends Model
 
 		return $authors;
 	}
+
+    public static function materialsOrderByPriority($courseId)
+	{
+        return  DB::table("materials")
+            ->join("course_material","course_material.material_id","=","materials.id")
+            ->where("course_id",$courseId)
+            ->orderBy("priority",'asc')
+            ->get();
+
+	}
+
+    public static function nextMaterial($courseId,$materialPriority)
+    {
+        return  DB::table("materials")
+            ->join("course_material","course_material.material_id","=","materials.id")
+            ->where("course_id",$courseId)
+            ->where("priority",'>',$materialPriority)
+            ->orderBy("priority",'asc')
+            ->first();
+
+    }
+    public static function prevMaterial($courseId,$materialPriority)
+    {
+        return  DB::table("materials")
+            ->join("course_material","course_material.material_id","=","materials.id")
+            ->where("course_id",$courseId)
+            ->where("priority",'<',$materialPriority)
+            ->orderBy("priority",'desc')
+            ->first();
+
+    }
 
 }

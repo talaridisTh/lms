@@ -79,6 +79,7 @@ class UserController extends Controller {
         }
 
 
+        dd($data);
         $user->create($data)->assignRole($request->roles);
 
 
