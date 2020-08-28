@@ -196,3 +196,17 @@ select.is-invalid {
 .custom-link-primary:hover {
 	color: #536de6 !important;
 }
+
+.image-dropzone {
+	border: 2px dashed #47515d;
+	background: #404954;
+	border-radius: 6px;
+	cursor: pointer;
+	min-height: 150px;
+	padding: 20px;
+}
+
+.image-dropzone .dz-message {
+	text-align: center;
+	margin: 2rem 0;
+}

@@ -2,17 +2,27 @@
 
 @section('css')
 <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-@endsection
 
-@php
-	$materialsActive = count( $errors ) > 0 ? "" : "active";
-	$settingsActive = count( $errors ) > 0 ? "active" : "";
-@endphp
+<style>
+	.content-page {
+		overflow: initial;
+	}
+	.wrapper {
+		overflow: initial;
+	}
+	.sticky {
+		background-color: #333a3f;
+		position: sticky;
+		top: 70px;
+		z-index: 2000;
+	}
+</style>
+@endsection
 
 @section('content')
 	<div class="modal fade" id="add-material-modal" tabindex="-1" aria-labelledby="add-material-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
-		  	<div class="modal-content">
+			  <div class="modal-content">
 				<div class="modal-header">
 					<h5 class="modal-title" id="add-material-modalLabel">Προσθήκη Υλικού</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -106,14 +116,14 @@
 	</div><!-- /.modal -->
 
 	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
-	    <div class="modal-dialog modal-xl">
-	        <div class="modal-content">
-	            <div class="modal-header modal-colored-header bg-primary">
-	                <h4 class="modal-title" id="add-materials-modalLabel">Προσθήκη Υλικού</h4>
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	            </div>
-	            <div class="modal-body table-cnt">
-	                <table id="remaining-materials-table" class="js-table table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h4 class="modal-title" id="add-materials-modalLabel">Προσθήκη Υλικού</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body table-cnt">
+					<table id="remaining-materials-table" class="js-table table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
 						<thead>
 							<tr>
 								<th class="select-all w-5">
@@ -139,93 +149,116 @@
 							</tr>
 						</tfoot>
 					</table>
-	            </div>
-	            <div class="modal-footer">
-	                <button id="add-remaingings-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
-	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal-dialog -->
+				</div>
+				<div class="modal-footer">
+					<button id="add-remaingings-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-	<div class="row">
-		<div class="col-xl-3 col-lg-5">
+	<div class="wrapper">
+		<div class="content">
 
-			<div class="card text-center">
-				<div class="card-body">
-					{{-- <img src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' class="img-fluid" --}}
-					<img src="https://placehold.co/600x400" class="img-fluid"
-					alt="profile-image">
-	
-					<h4 class="mb-0 mt-2">{{ $course['title'] }}</h4>
-					<p class="text-muted font-14">Course</p>
-	
-					<div class="text-left mt-3">
-						<p class="text-muted mb-2 font-13">
-							<strong>
-								Σύνολο Μαθημάτων :
-							</strong>
-							<span id="total-lessons" class="ml-2">
-								{{ $course->materials->where( 'type', 'Lesson')->count() }}
-							</span>
-						</p>
-						<p class="text-muted mb-2 font-13">
-							<strong>
-								Σύνολο Extra Υλικού :
-							</strong>
-							<span id="total-additions" class="ml-2">
-								{{ $course->materials->where( 'type', '!=', 'Lesson')->count() }}
-							</span>
-						</p>
-						<p class="text-muted mb-2 font-13">
-							<strong>
-								Τελευταία Ανανέωση :
-							</strong>
-							<span id="last-update-cnt" class="ml-2">
-								{{ $course['updated_at'] }}
-							</span>
-						</p>
-						<p class="text-muted mb-2 font-13">
-							<strong>
-								Ημ. Δημιουργίας :
-							</strong>
-							<span class="ml-2">
-								{{ $course['created_at'] }}
-							</span>
-						</p>
-					</div>
-	
-				</div> <!-- end card-body -->
-			</div> <!-- end course info card -->
-		</div> <!-- end col-->
+			<div class="row">
+				<div class="col-xl-9 col-lg-7 col-md-12">
 
-		<div class="col-xl-9 col-lg-7">
-			<div class="card">
-				<div class="card-body">
-
-					<!-- Tab Buttons -->
-					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
-						<li class="nav-item">
-						<a href="#materials" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $materialsActive }}">
-								Μαθήματα
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $settingsActive }}">
-								Επεξεργασία
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="#users" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-								Χρήστες
-							</a>
-						</li>
-					</ul><!-- /.End Tab Buttons -->
+					<ul class="nav nav-tabs nav-bordered mb-3">
+					<li class="nav-item">
+						<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
+							Περιεχόμενο
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#materials" data-toggle="tab" aria-expanded="true" class="nav-link">
+							Υλικό
+						</a>
+					</li>
+					<li class="nav-item">
+						<a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link">
+							Χρήστες
+						</a>
+					</li>
+					</ul> <!-- end nav-->
 
 					<div class="tab-content">
-						<!-- Materials table tab-->
-						<div class="tab-pane {{ $materialsActive }} table-cnt" id="materials">
 
+						<div id="settings" class="tab-pane show active">
+
+
+							<form id="edit-course-form" action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+								
+								@csrf
+								@method('PATCH')
+
+
+								<div class="form-group">
+									<label for="title">Τίτλος</label>
+									<input id="title" type="text" 
+										class="form-control @error('title') is-invalid @enderror" 
+										id="title" name="title" 
+										value="{{ old('title') != "" ? old('title') : $course['title'] }}" 
+										placeholder="Εισάγετε τίτλο...">
+									@error('title')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+
+								{{-- <div class="form-group">
+									<label for="course-cover">Cover</label>
+									<div class="input-group">
+										<div class="custom-file">
+											<input id="course-cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
+											<label id="course-cover-label" class="custom-file-label file-search-label-primary" for="course-cover-input">{{ $course->cover }}</label>
+										</div>
+										@error('cover')
+											<span class="invalid-feedback d-block" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
+									</div>
+								</div> --}}
+
+								<div class="form-group">
+									<label for="subtitle">Υπότιτλος</label>
+									<input id="subtitle" type="text" 
+										class="form-control @error('subtitle') is-invalid @enderror" 
+										name="subtitle" 
+										value="{{ old('subtitle') != "" ? old('subtitle') : $course['subtitle'] }}" 
+										placeholder="Εισάγετε υπότιτλο...">
+									@error('subtitle')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+
+								<div class="form-group">
+									<label for="summary">Σύνοψη</label>
+									<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Εισάγετε σύνοψη...">{{ old('summary') != "" ? old('summary') : $course['summary'] }}</textarea>
+									@error('summary')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+
+								<div class="form-group">
+									<label for="description">Περιγραφή</label>
+									<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
+									@error('description')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							</form>
+						</div><!-- settings tab-pane -->
+
+						<div id="materials" class="tab-pane table-cnt mb-3">
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
@@ -275,125 +308,9 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- end material tab-pane -->
-						<!-- end about me section content -->
+						</div><!-- materials tab-pane -->
 
-						<!-- Course edit form tab-pane -->
-						<div class="tab-pane {{ $settingsActive }}" id="settings">
-							<form id="edit-course-form" action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
-								
-								@csrf
-								@method('PATCH')
-
-								<div class="form-row">
-							        <div class="col-xl-6">
-							            <div class="form-group">
-							                <label for="title">Τίτλος</label>
-											<input id="title" type="text" 
-												class="form-control @error('title') is-invalid @enderror" 
-												id="title" name="title" 
-												value="{{ old('title') != "" ? old('title') : $course['title'] }}" 
-												placeholder="Εισάγετε τίτλο...">
-											@error('title')
-                            				    <span class="invalid-feedback" role="alert">
-                            				        <strong>{{ $message }}</strong>
-                            				    </span>
-                            				@enderror
-										</div>
-							        </div>
-							        <div class="col-xl-6">
-							            <div class="form-group">
-							                <label for="course-cover">Cover</label>
-											<div class="input-group">
-											    <div class="custom-file">
-													<input id="course-cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
-													<label id="course-cover-label" class="custom-file-label file-search-label-primary" for="course-cover-input">{{ $course->cover }}</label>
-												</div>
-												@error('cover')
-													<span class="invalid-feedback d-block" role="alert">
-														<strong>{{ $message }}</strong>
-													</span>
-												@enderror
-											</div>
-							            </div>
-							        </div> <!-- end col -->
-								</div> <!-- end row -->
-								
-
-								<div class="form-row">
-							        <div class="col-xl-6">
-							            <div class="form-group">
-							                <label for="subtitle">Υπότιτλος</label>
-											<input id="subtitle" type="text" 
-												class="form-control @error('subtitle') is-invalid @enderror" 
-												name="subtitle" 
-												value="{{ old('subtitle') != "" ? old('subtitle') : $course['subtitle'] }}" 
-												placeholder="Εισάγετε υπότιτλο...">
-											@error('subtitle')
-                            				    <span class="invalid-feedback" role="alert">
-                            				        <strong>{{ $message }}</strong>
-                            				    </span>
-                            				@enderror
-										</div>
-							        </div>
-							        <div class="col-xl-6">
-
-										<div class="form-group">
-											<label for="example-select">Κατάσταση</label>
-											<select id="active" class="form-control @error('active') is-invalid @enderror" name="active">
-												<option value="1" {{ $course['active'] == 1 ? "selected" : "" }}>Ενεργό</option>
-												<option value="0" {{ $course['active'] == 0 ? "selected" : "" }}>Ανενεργό</option>
-											</select>
-											@error('active')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
-											@enderror
-										</div>
-
-									</div> <!-- end col -->
-							    </div> <!-- end row -->
-
-								<div class="form-row">
-									<div class="col-12">
-										<div class="form-group">
-											<label for="summary">Σύνοψη</label>
-											<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Εισάγετε σύνοψη...">{{ old('summary') != "" ? old('summary') : $course['summary'] }}</textarea>
-											@error('summary')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
-											@enderror
-										</div>
-									</div> <!-- end col -->
-								</div> <!-- end row -->
-
-								<div class="form-row">
-									<div class="col-12">
-										<div class="form-group">
-											<label for="description">Περιγραφή</label>
-											<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
-											@error('description')
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
-											@enderror
-										</div>
-									</div> <!-- end col -->
-								</div> <!-- end row -->
-
-							    <button id="delete-course-btn" type="submit" class="btn btn-danger" name="delete" disabled><i class="mdi mdi-file-remove mr-1"></i>Διαγραφή</button>
-								<div class="float-right">	
-									<button type="submit" class="btn btn-primary" name="save"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
-							        <button id="edit-course-reset-btn" type="reset" class="btn btn-secondary"><i class="mdi mdi-refresh-circle mr-1"></i>Επαναφορά</button>
-								</div>
-									{{-- </div> --}}
-							</form>
-						</div><!-- end tab-pane -->
-						<!-- end settings content-->
-
-						<div class="tab-pane table-cnt" id="users">
-
+						<div id="users" class="tab-pane table-cnt">
 							<table id="active-users-list" class="js-table table w-100 nowrap js-remove-table-classes">
 								<thead>
 									<tr>
@@ -421,6 +338,8 @@
 								</tfoot>
 							</table>
 
+
+
 							<div class="row mt-3">
 								<div class="col-sm-1">
 								</div>
@@ -439,15 +358,101 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- end users tab-pane -->
 
 
-					</div> <!-- end tab-content -->
+
+
+
+
+
+
+						</div><!-- users tab-pane -->
 					
-				</div> <!-- end card body -->
-			</div> <!-- end card -->
-		</div> <!-- end col -->
+					</div><!-- tab-content -->
+				</div>
+				<div class="col-xl-3 col-lg-5 col-md-12">
 
+					<div class="sticky pb-3 px-2">
+						<button id="update-btn" class="btn btn-primary">Ενημέρωση</button>
+						<button id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i> </button>
+						<button id="delete-btn" class="under-development btn btn-danger float-right">Διαγραφή</button>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<hr>
+							<div class="d-flex justify-content-between">
+								<span><strong>Κατάσταση</strong></span>
+								<input type="checkbox" id="active-switch" {{ $course['active'] == 1 ? "checked" : "" }} data-switch="bool"/>
+								<label class="mb-0" for="active-switch" data-on-label="On" data-off-label="Off"></label>
+							</div>
+							<hr>
+						</div>
+					</div>
+
+					<!-- Cover Preview -->
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title mb-0">Cover</h4>
+
+						</div>
+						<div class="card-body">
+							{{-- <img src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' class="img-fluid" --}}
+							<img src="https://placehold.co/600x400" class="img-fluid"
+							alt="profile-image">
+						
+						</div> <!-- end card-body -->
+					</div> <!-- end course info card -->
+				
+					<!-- Dropzone -->
+					<div class="card">
+						<div class="card-body">
+
+							<form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
+								<div class="fallback">
+									<input name="file" type="file" multiple />
+								</div>
+
+								<div class="dz-message needsclick">
+									<i class="h1 text-muted dripicons-cloud-upload"></i>
+									<h3>Drop files here or click to upload.</h3>
+									<span class="text-muted font-13">(This is just a demo dropzone. Selected files are
+										<strong>not</strong> actually uploaded.)</span>
+								</div>
+							</form>
+
+							<!-- Preview -->
+							<div class="dropzone-previews mt-3" id="file-previews"></div>  
+						
+							<div class="d-none" id="uploadPreviewTemplate">
+								<div class="card mt-1 mb-0 shadow-none border">
+									<div class="p-2">
+										<div class="row align-items-center">
+											<div class="col-auto">
+												<img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+											</div>
+											<div class="col pl-0">
+												<a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
+												<p class="mb-0" data-dz-size></p>
+											</div>
+											<div class="col-auto">
+												<!-- Button -->
+												<a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+													<i class="dripicons-cross"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div> <!-- end card-body -->
+					</div> <!-- end course info card -->
+
+
+				</div>
+			</div>
+		</div>
 	</div>
 @endsection
 
@@ -458,4 +463,5 @@
 
 
 <script src="{{ mix('js/dashboard/courses/courseProfile.js') }}"></script>
+
 @endsection
