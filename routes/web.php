@@ -153,7 +153,7 @@ Auth::routes();
 Route::get('/home', 'Index\HomeController@index')->name('home');
 //! User routees
 Route::get('/courses/{user}', 'UserController@userCourses');
-Route::get('/courses/course/{course}', 'CourseController@userCourse');
+Route::get('/courses/course/{course}', 'CourseController@userCourse')->name("index.userCourse");
 
 
 //! partner routes link

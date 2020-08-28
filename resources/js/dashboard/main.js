@@ -71,11 +71,9 @@ const selectAndDeselectCheckbox = function (attr) {
         }
 
         if (this.childNodes[0].className == "h3 mdi mdi-checkbox-multiple-blank-outline") {
-
             for (let i = 0; i < checkbox.length; i++) {
                 checkbox[i].checked = true
                 checkbox[i].parentElement.parentElement.parentElement.classList.add("trHover")
-
             }
             $(".bulk-action")[0].disabled = false
             $(".bulk-action")[0].classList.add("bg-warning")

@@ -178,17 +178,21 @@ const hoverOnSelect = () => {
 
         let checkboxes = $(".js-user-checkbox:checked").length
 
-        $(".bulk-action")[0].hidden = false
+        $(".bulk-action")[0].disabled = false
 
         if (!checkboxes) {
-            $(".bulk-action")[0].hidden = true
+            $(".bulk-action")[0].disabled = true
         }
         $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
 
         if (this.checked) {
             this.parentElement.parentElement.parentElement.classList.add("trHover")
+            $(".bulk-action")[0].classList.add("bg-warning")
+            $(".bulk-action")[0].classList.remove("bg-secontary")
 
         } else {
+            $(".bulk-action")[0].classList.remove("bg-warning")
+            $(".bulk-action")[0].classList.add("bg-secontary")
             this.parentElement.parentElement.parentElement.classList.remove("trHover")
         }
     })
