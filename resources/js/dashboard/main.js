@@ -3,8 +3,8 @@
 //!##########################################
 
 const redactorConfig = {
-	style: false,
-	minHeight: '150px',
+    style: false,
+    minHeight: '150px',
 }
 
 function toastAlert(icon, message) {
@@ -55,14 +55,13 @@ const filterButton = function (attr, column, table) {
 
 const selectAndDeselectCheckbox = function (attr) {
     $(attr).click(function () {
-        console.log("Test")
         let checkbox = $(attr)
-        let checkboxes = document.querySelectorAll(".js-user-checkbox:checked").length
 
         for (let i = 0; i < checkbox.length; i++) {
             checkbox[i].checked = !checkbox[i].checked
         }
-
+        let checkboxes = document.querySelectorAll(".js-user-checkbox:checked").length
+        $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
         if (this.checked) {
 
             this.innerHTML = '<i class="h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
@@ -76,14 +75,13 @@ const selectAndDeselectCheckbox = function (attr) {
             for (let i = 0; i < checkbox.length; i++) {
                 checkbox[i].checked = true
                 checkbox[i].parentElement.parentElement.parentElement.classList.add("trHover")
+
             }
             $(".bulk-action")[0].disabled = false
             $(".bulk-action")[0].classList.add("bg-warning")
             $(".bulk-action")[0].classList.remove("bg-secontary")
-            console.log("ASd")
 
 
-            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
         } else {
             for (let i = 0; i < checkbox.length; i++) {
                 checkbox[i].checked = false
@@ -92,7 +90,6 @@ const selectAndDeselectCheckbox = function (attr) {
             $(".bulk-action")[0].disabled = true
             $(".bulk-action")[0].classList.remove("bg-warning")
             $(".bulk-action")[0].classList.add("bg-secontary")
-            console.log("ASd")
 
         }
     })
@@ -110,9 +107,8 @@ const changeInputHidden = (attr, hiddenAttr) => {
         let hiddenValue = $(hiddenAttr)[0].value = this.value
 
 
-
-      // let test  =   $("#topicMaterial").clone()
-      //   console.log(test)
+        // let test  =   $("#topicMaterial").clone()
+        //   console.log(test)
 
 
     })
@@ -136,35 +132,35 @@ const tableLocale = {
 }
 
 function createStateSelect() {
-	const selectElm = document.createElement("select");
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+    const selectElm = document.createElement("select");
+    selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
 
-	selectElm.innerHTML = `
+    selectElm.innerHTML = `
 		<option value="">Όλες οι Καταστάσεις</option>
 		<option value="1">Ενεργά</option>
 		<option value="0">Ανενεργά</option>
 	`;
 
-	return selectElm;
+    return selectElm;
 }
 
 const datePickerConfig = {
-	ranges: {
+    ranges: {
         'Today': [moment(), moment()],
         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
         'Last 7 Days': [moment().subtract(6, 'days'), moment()],
         'Last 30 Days': [moment().subtract(29, 'days'), moment()],
         'This Month': [moment().startOf('month'), moment().endOf('month')],
         'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-	},
-	alwaysShowCalendars: true,
-	showCustomRangeLabel: false,
-	drops: "auto",
-	autoUpdateInput: false,
-	opens: "center",
-	locale: {
-		format: "DD/MM/YYYY",
-	},
+    },
+    alwaysShowCalendars: true,
+    showCustomRangeLabel: false,
+    drops: "auto",
+    autoUpdateInput: false,
+    opens: "center",
+    locale: {
+        format: "DD/MM/YYYY",
+    },
 }
 
 export default {
@@ -175,8 +171,8 @@ export default {
     selectAndDeselectCheckbox,
     tableLocale,
     changeInputHidden,
-	redactorConfig,
-	createStateSelect,
-	datePickerConfig
+    redactorConfig,
+    createStateSelect,
+    datePickerConfig
 
 }

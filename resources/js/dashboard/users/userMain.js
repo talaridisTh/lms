@@ -313,17 +313,20 @@ const selectAlljscheckboxSubTable = () => {
             checkbox[i].checked = !checkbox[i].checked
         }
 
-
-
-
         let checkboxes = document.querySelectorAll(".js-user-checkbox-sub:checked").length
         if (checkboxes) {
             $(".bulk-action")[0].disabled = false
             $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
+
             this.innerHTML = '<i class=" h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
+            $(".bulk-action")[0].classList.add("bg-warning")
+            $(".bulk-action")[0].classList.remove("bg-secontary")
         } else {
+            $(".bulk-action")[0].innerText = ` Επιλογές  `
             $(".bulk-action")[0].disabled = true
             this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
+            $(".bulk-action")[0].classList.remove("bg-warning")
+            $(".bulk-action")[0].classList.add("bg-secontary")
         }
     })
 }
