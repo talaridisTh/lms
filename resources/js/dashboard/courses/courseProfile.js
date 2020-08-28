@@ -25,14 +25,18 @@ Element.prototype.appendAfter = function (element) {
 //! EventListerners
 //!============================================================
 
+$("#select-all-active-users").change( function() {
+
+	let minorCheckboxes = $(".js-active-user-checkbox")
+
+	utilities.minorCheckboxSwitcher(this, minorCheckboxes);
+});
+
 $("#update-btn").click( function() {
 	$("#edit-course-form").submit();
 });
 
 $("#active-switch").change( function() {
-	// let state = this.value;
-
-	console.log(this.checked);
 
 	axios.patch( "/courses/active", {
 		course: courseId,
@@ -267,6 +271,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 
 		removeUserBtnInit();
 		userLinkInit();
+		activeUsersCheckboxInit()
 	},
 
 });
@@ -355,7 +360,7 @@ let remainingMaterialsDateInput = createDateElm( "remaining-materials-date-range
 remainingMaterialsDateInput.appendBefore( remainingMaterialsSearchInput );
 
 
-//! Date Search
+//* Date Search
 let dateRange = $(".js-date-search");
 
 dateRange.daterangepicker( utilities.datePickerConfig );
@@ -380,6 +385,18 @@ dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 });
 
 //! DataTables function / EventListener
+
+function activeUsersCheckboxInit() {
+
+	let mainCheckbox = $("#select-all-active-users")[0];
+	let minorCheckboxes = $(".js-active-user-checkbox");
+
+	minorCheckboxes.unbind();
+
+	minorCheckboxes.change( function() {
+		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes );
+	})
+}
 
 function userLinkInit() {
 
@@ -664,7 +681,7 @@ function createTopicSelect( res ) {
 	})
 }
 
-$("#add-material-modal").on("show.bs.modal", function(event) {
+$("#add-additions-modal").on("show.bs.modal", function(event) {
 	let button = $( event.relatedTarget );
 	let id = button.data("material-id");
 	let priority = button.data("priority");
@@ -695,7 +712,7 @@ $(".js-material").click( function() {
 		$R('#new-announcement', utilities.redactorConfig );
 	}
 
-	$('#add-material-modal').modal('hide')
+	$('#add-additions-modal').modal('hide')
 
 });
 
