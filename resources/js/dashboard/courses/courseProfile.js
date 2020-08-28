@@ -1,14 +1,13 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
-const totalLessons = $('#total-lessons')[0];
-const totalAdditions = $('#total-additions')[0];
-const updatedAt = $("#last-update-cnt")[0];
 
 //!######################################
 //! 				Imports				#
 //!######################################
 import utilities from '../main';
+import Dropzone from "../../../plugins/dropzone/js/dropzone";
+import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
 //! Prototype Additions
 //!============================================================
@@ -26,7 +25,33 @@ Element.prototype.appendAfter = function (element) {
 //! EventListerners
 //!============================================================
 
-$("#delete-course-btn").hover( function() {
+$("#update-btn").click( function() {
+	$("#edit-course-form").submit();
+});
+
+$("#active-switch").change( function() {
+	// let state = this.value;
+
+	console.log(this.checked);
+
+	axios.patch( "/courses/active", {
+		course: courseId,
+		state: this.checked ? 1 : 0
+	})
+	.then( (res) => {
+
+		let icon = this.checked ? "success" : "info";
+		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+		utilities.toastAlert( icon, message );
+	})
+	.catch( (err) => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	});
+});
+
+$(".under-development").click( function() {
 	Swal.fire({
         toast: 'true',
         position: 'top-end',
@@ -37,15 +62,6 @@ $("#delete-course-btn").hover( function() {
         timerProgressBar: true
     });
 })
-
-$("#edit-course-reset-btn").click( function() {
-	let summary = $("#summary")[0].defaultValue;
-	let description = $("#description")[0].defaultValue;
-
-	$R('#summary', 'source.setCode', summary);
-	$R('#description', 'source.setCode', description);
-
-});
 
 $("#add-multiple-users-btn").click( function() {
 	let newUsers = $(".js-new-user-checkbox:checked");
@@ -444,7 +460,7 @@ function sortInputsInit() {
 			})
 			.then( (res) => {
 				courseMaterialsTable.ajax.reload();
-				updatedAt.textContent = "Μόλις τώρα";
+
 			})
 		}
 
@@ -466,7 +482,7 @@ function toggleCourseMaterial() {
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 
 			utilities.toastAlert( icon, message );
-			updatedAt.textContent = "Μόλις τώρα";
+
 		})
 		.catch( (err) => {
 			utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
@@ -565,9 +581,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
-		totalLessons.textContent = parseInt(totalLessons.textContent) + lessonsCount;
-		totalAdditions.textContent = parseInt(totalAdditions.textContent) + additionsCount;
-		updatedAt.textContent = "Μόλις τώρα";
+
 	})
 	.catch( (err) => {
 		console.log(err);
@@ -588,9 +602,6 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
-		totalLessons.textContent = parseInt(totalLessons.textContent) - lessonsCount;
-		totalAdditions.textContent = parseInt(totalAdditions.textContent) - additionsCount;
-		updatedAt.textContent = "Μόλις τώρα";
 	})
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
@@ -902,8 +913,44 @@ function endDate( input ) {
 
 $R("#summary", utilities.redactorConfig);
 
-$R("#description", utilities.redactorConfig);
+ArticleEditor('#description', {
+	// css: "/css/",
+	custom: {
+		css: [
+			// "/css/app.css"
+		]
+	},
+	editor: {
+		minHeight: "300px"
+	},
+	// classes: {
+	// 	'p': 'text-muted',
+	// 	'h1': 'text-muted',
+	// 	'h2': 'text-muted',
+	// 	'h3': 'text-muted',
+	// 	'h4': 'text-muted',
+	// 	'h5': 'text-muted',
+	// }
+	/* image: {
+		upload: "/materials/upload-content-images",
+		data: {
+			"_token": $('meta[name="csrf-token"]').attr('content')
+		}
+	} */
+});
+
+
+let dropzone = new Dropzone("#cover-dropzone", {
+	previewTemplate: $("#uploadPreviewTemplate").html(),
+	// url: "/target-url",
+  	thumbnailWidth: 80,
+  	thumbnailHeight: 80,
+})
 
 //!######################################
 //!				Testing					#
 //!######################################
+
+// let search = $(".sticky").parents().css("overflow", "visible");
+
+// console.log(search);

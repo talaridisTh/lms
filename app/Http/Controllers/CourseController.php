@@ -112,8 +112,9 @@ class CourseController extends Controller
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
-		$course->active = $request->active;
-		$course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
+		// $course->active = $request->active;
+		$course->slug = Str::slug($request->title, "-");
+		// $course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
 
 		if ( !empty($_FILES['cover']['name']) ) {
 			
