@@ -34,6 +34,7 @@ class MaterialsDataTable extends DataTable {
         }
 
 
+//        dd($data);
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
 

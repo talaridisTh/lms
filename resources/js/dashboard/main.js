@@ -55,6 +55,7 @@ const filterButton = function (attr, column, table) {
 
 const selectAndDeselectCheckbox = function (attr) {
     $(attr).click(function () {
+        console.log("Test")
         let checkbox = $(attr)
         let checkboxes = document.querySelectorAll(".js-user-checkbox:checked").length
 
@@ -76,7 +77,11 @@ const selectAndDeselectCheckbox = function (attr) {
                 checkbox[i].checked = true
                 checkbox[i].parentElement.parentElement.parentElement.classList.add("trHover")
             }
-            $(".bulk-action")[0].hidden = false
+            $(".bulk-action")[0].disabled = false
+            $(".bulk-action")[0].classList.add("bg-warning")
+            $(".bulk-action")[0].classList.remove("bg-secontary")
+            console.log("ASd")
+
 
             $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
         } else {
@@ -84,7 +89,11 @@ const selectAndDeselectCheckbox = function (attr) {
                 checkbox[i].checked = false
                 checkbox[i].parentElement.parentElement.parentElement.classList.remove("trHover")
             }
-            $(".bulk-action")[0].hidden = true
+            $(".bulk-action")[0].disabled = true
+            $(".bulk-action")[0].classList.remove("bg-warning")
+            $(".bulk-action")[0].classList.add("bg-secontary")
+            console.log("ASd")
+
         }
     })
 }
@@ -108,8 +117,6 @@ const changeInputHidden = (attr, hiddenAttr) => {
 
     })
 }
-
-
 
 
 const tableLocale = {

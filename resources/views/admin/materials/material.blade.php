@@ -90,9 +90,10 @@
                                           value="{{old('material', $material->content)}}"
                                           id="contentMaterial" rows="5">{{$material->content}}</textarea>
                             </div>
+
                             <div class="sticky-button">
                                 <button class="buton-update-material btn btn-sm btn-primary mr-2" type="submit">Ενημερωση</button>
-                                <a target="_blank" href="{{route('index.material.show',$material->slug)}}" class="btn btn-sm btn-warning" type="submit"><i class=" mdi mdi-eye"></i></a>
+                                <a target="_blank" href="" class="btn btn-sm btn-warning" type="submit"><i class=" mdi mdi-eye"></i></a>
                             </div>
 
                             <input type="hidden" class="form-control" id="topicMaterialHidden">

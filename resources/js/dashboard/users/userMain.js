@@ -313,13 +313,16 @@ const selectAlljscheckboxSubTable = () => {
             checkbox[i].checked = !checkbox[i].checked
         }
 
+
+
+
         let checkboxes = document.querySelectorAll(".js-user-checkbox-sub:checked").length
         if (checkboxes) {
-            $(".bulk-action")[0].hidden = false
+            $(".bulk-action")[0].disabled = false
             $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
             this.innerHTML = '<i class=" h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
         } else {
-            $(".bulk-action")[0].hidden = true
+            $(".bulk-action")[0].disabled = true
             this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
         }
     })
@@ -385,14 +388,17 @@ const routeLink = () => {
 }
 
 const hoverOnSelect = () => {
-
     $(".js-user-checkbox").change(function () {
-        $(".bulk-action")[0].hidden = false
+        $(".bulk-action")[0].disabled = false
+        $(".bulk-action")[0].classList.add("bg-warning")
+        $(".bulk-action")[0].classList.remove("bg-secontary")
 
         let checkboxes = $(".js-user-checkbox:checked").length
 
         if (!checkboxes) {
-            $(".bulk-action")[0].hidden = true
+            $(".bulk-action")[0].disabled = true
+            $(".bulk-action")[0].classList.remove("bg-warning")
+            $(".bulk-action")[0].classList.add("bg-secontary")
         }
 
         $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
@@ -519,12 +525,15 @@ const routeLinkCourse = () => {
 const hoverOnSelectSub = () => {
 
     $(".js-user-checkbox-sub").change(function () {
-        $(".bulk-action")[0].hidden = false
-
+        $(".bulk-action")[0].disabled = false
+        $(".bulk-action")[0].classList.add("bg-warning")
+        $(".bulk-action")[0].classList.remove("bg-secontary")
         let checkboxes = $(".js-user-checkbox-sub:checked").length
 
         if (!checkboxes) {
-            $(".bulk-action")[0].hidden = true
+            $(".bulk-action")[0].disabled = true
+            $(".bulk-action")[0].classList.remove("bg-warning")
+            $(".bulk-action")[0].classList.add("bg-secontary")
         }
 
         $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `

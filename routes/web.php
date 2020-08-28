@@ -169,6 +169,7 @@ Route::get('/partner-links', function (Request $request) {
 
 
 //! Material routes link
+//Route::get("/material/{materials}", "Index\MaterialController@globalShow")->name("index.material.global");
 Route::get("/material/{course}/{materials}", "Index\MaterialController@show")->name("index.material.show");
 
 

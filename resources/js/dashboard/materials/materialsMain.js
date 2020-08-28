@@ -166,6 +166,7 @@ function toggleInit() {
 function atLinkEventListener() {
     $('.js-link').click(function () {
         let materialSlug = this.parentElement.dataset.materialSlug;
+        // let materialSlug = this.parentElement.dataset.materialSlug;
 
         window.location = `material/${materialSlug}`;
     });

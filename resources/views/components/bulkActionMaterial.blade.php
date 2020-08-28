@@ -1,5 +1,5 @@
 <div class="btn-group mb-2">
-    <button type="button" hidden class="btn btn-secondary dropdown-toggle bulk-action" data-toggle="dropdown"
+    <button type="button" disabled class="btn btn-secondary dropdown-toggle bulk-action" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">Επιλογές
     </button>
     <div class="dropdown-menu dropdown-menu-animated">

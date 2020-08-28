@@ -26,7 +26,6 @@ class MaterialController extends Controller {
 
     public function create()
     {
-
         $topics = Topic::all();
         $instructors = User::getInstructor();
         $courses = Course::all();
@@ -75,10 +74,14 @@ class MaterialController extends Controller {
     public function show(Material $material)
     {
 
+
+
+
         $topics = Topic::all();
         $instructors = User::getInstructor();
-        $courses = Course::all();
+        $courses = Course::with("materials")->get();
         $types = Material::all()->unique('type');
+
 
 
 
