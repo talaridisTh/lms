@@ -37,13 +37,30 @@ class UserController {
         return $dataTable->render('users.coursesInsideUsers');
     }
 
-
-
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
         $user->active = $request->active;
         $user->save();
+
+        return response()->json(['success' => 'Status change successfully.']);
+    }
+
+    public function changeStatusMultiple(Request $request)
+    {
+
+        foreach ($request->user_id as $user_id)
+        {
+            $user = User::findOrFail($user_id);
+            if($request->status=="on"){
+                $user->active = true;
+                $user->save();
+            }
+            else{
+                $user->active = false;
+                $user->save();
+            }
+        }
 
         return response()->json(['success' => 'Status change successfully.']);
     }
@@ -93,7 +110,6 @@ class UserController {
     {
 
         User::whereIn('id', $request->user_id)->delete();
-
     }
 
 }

@@ -19,6 +19,17 @@ function toastAlert(icon, message) {
     });
 }
 
+function toastAlertDelete(text,icon="warning"){
+  return   Swal.fire({
+        title: 'Είστε σίγουρος;',
+        text:text,
+        icon: icon,
+        showCancelButton: true,
+        confirmButtonText: 'Ναί, διαγραφή!',
+        cancelButtonText: 'Άκυρο'
+    });
+}
+
 function mainCheckboxSwitcher(main, minor) {
 
     for (let i = 0; i < minor.length; i++) {
@@ -171,6 +182,7 @@ export default {
     changeInputHidden,
     redactorConfig,
     createStateSelect,
-    datePickerConfig
+    datePickerConfig,
+    toastAlertDelete
 
 }

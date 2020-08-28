@@ -97,20 +97,15 @@ $('#alertSumbit').submit(async (e) => {
     const slug = buttonDelete[0].dataset.slug;
 
     try {
-        const {value} = await Swal.fire({
-            title: 'Είστε σίγουρος;',
-            text: "αρχεία θα διαγραφούν",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Ναί, διαγραφή!',
-            cancelButtonText: 'Άκυρο'
-        });
+        const {value} = await utilities.toastAlertDelete("Θέλετε να διαγράψετε αυτόν τον χρήστη ")
         if (value) {
-            const res = await axios.post(`/dashboard/users/${slug}`, {_method: 'DELETE'})
+            // const res = await axios.post(`/dashboard/users/${slug}`, {_method: 'DELETE'})
             utilities.toastAlert('success', "Διεγράφη")
             window.location = `http://127.0.0.1:8000/dashboard/users`;
         }
+
     } catch (e) {
+        console.log(e)
         utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
     }
 
@@ -124,18 +119,23 @@ const deleteCourse = () => {
     $('.js-button-delete').unbind();
     $(".js-button-delete").click(async function() {
         try {
-            let {status} = await axios.delete(config.routes.destroyDatatable, {
-                data: {
-                    'course_id': this.dataset.courseId,
-                    'user_id': userId
+            const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${this.dataset.courseTitle} απο τον χρήστη `)
+            if (value) {
+                let {status} = await axios.delete(config.routes.destroyDatatable, {
+                    data: {
+                        'course_id': this.dataset.courseId,
+                        'user_id': userId
+                    }
+                })
+                if (status == 200) {
+                    utilities.toastAlert('error', `${this.dataset.courseTitle}  Διεγραφη`)
+                    courses.ajax.reload();
+                    addCourse.ajax.reload();
                 }
-            })
-            if (status == 200) {
-                utilities.toastAlert('error', `${this.dataset.courseTitle}  Διεγραφη`)
-                courses.ajax.reload();
-                addCourse.ajax.reload();
             }
+
         } catch (e) {
+            console.log(e)
             utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
         }
 
@@ -183,21 +183,26 @@ const deleteMultipleCourse = () => {
             ids.push(checkedBoxes[i].dataset.courseId);
         }
 
+        console.log(checkedBoxes)
         try {
-            let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
-                data: {
-                    'course_id': ids,
-                    'user_id': userId
-                }
+            const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε ${ids.length}  απο τον χρήστη `)
+            if (value) {
+                let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
+                    data: {
+                        'course_id': ids,
+                        'user_id': userId
+                    }
 
-            })
-            if (status == 200) {
-                utilities.toastAlert('error', `${ids.length}  Διεγραφηκαν`)
-                courses.ajax.reload();
-                addCourse.ajax.reload();
+                })
+                if (status == 200) {
+                    utilities.toastAlert('error', `${ids.length}  Διεγραφηκαν`)
+                    courses.ajax.reload();
+                    addCourse.ajax.reload();
+                }
             }
 
         } catch (e) {
+            console.log(e)
             utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
         }
 

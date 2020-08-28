@@ -245,15 +245,18 @@ const selectMultipleCheckboxDelete = () => {
 const axiosMultipleDelete = async (ids) => {
 
     try {
-        const {status} = await axios.delete(config.routes.destroyMultipleMaterialDatatable, {
-            data: {
-                'material_id': ids,
-            }
+        const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${ids.length} απο τον χρήστη `)
+        if (value) {
+            const {status} = await axios.delete(config.routes.destroyMultipleMaterialDatatable, {
+                data: {
+                    'material_id': ids,
+                }
 
-        })
-        if (status == 200) {
-            utilities.toastAlert("success", `${ids.length} Διαγράφικαν`)
-            materialsDatatable.ajax.reload()
+            })
+            if (status == 200) {
+                utilities.toastAlert("success", `${ids.length} Διαγράφικαν`)
+                materialsDatatable.ajax.reload()
+            }
         }
     } catch (e) {
         console.log(e)

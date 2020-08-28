@@ -3,6 +3,8 @@ import utilities from '../main';
 //!============================================================
 let dataRange = $("#daterange")
 dataRange[0].value = ""
+
+
 //! 			Datatables Initialization
 //!##################################################
 const tables = $("#scroll-horizontal-datatable").DataTable({
@@ -61,6 +63,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         buttonEx();
         editColapse()
         hoverOnSelect()
+        selectStatusMultiple()
 
     },
 
@@ -197,18 +200,6 @@ $(".cancelBtn ").click(function (event, picker) {
 })
 
 
-//
-// const refresh = () => {
-//     $('.drp-buttons .cancelBtn').click(function () {
-//         $('.drp-button .cancelBtn').unbind();
-//         $('.daterangepicker .left').val('');
-//         $('.daterangepicker .right').val('');
-//         $('#scroll-horizontal-datatable').DataTable().destroy();
-//         load_data();
-//     });
-// }
-
-
 //! BULK ACTION
 //!============================================================
 
@@ -232,15 +223,18 @@ const selectMultipleCheckboxDelete = () => {
 const axiosMultipleDelete = async (ids) => {
 
     try {
-        const {status} = await axios.delete(config.routes.destroyMultipleUsersDatatable, {
-            data: {
-                'user_id': ids,
-            }
+        const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${ids.length} απο τον χρήστη `)
+        if (value) {
+            const {status} = await axios.delete(config.routes.destroyMultipleUsersDatatable, {
+                data: {
+                    'user_id': ids,
+                }
 
-        })
-        if (status == 200) {
-            utilities.toastAlert("success", `${ids.length} Διαγράφικαν`)
-            tables.ajax.reload()
+            })
+            if (status == 200) {
+                utilities.toastAlert("success", `${ids.length} Διαγράφικαν`)
+                tables.ajax.reload()
+            }
         }
     } catch (e) {
         utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
@@ -286,19 +280,21 @@ const detachCoursesFromUser = async (courseId, userID) => {
     const datatableId = $(".js-user-multipleChexbox-sub")[0].parentElement.parentElement.parentElement
 
     try {
-        let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
-            data: {
-                'course_id': courseId,
-                'user_id': userID
+        const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε  απο τον χρήστη `)
+        if (value) {
+            let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
+                data: {
+                    'course_id': courseId,
+                    'user_id': userID
+                }
+
+            })
+            if (status == 200) {
+                utilities.toastAlert('error', `${courseId.length}  Aφαιρέθηκαν `)
+                subtabletable_id.ajax.reload();
+
             }
-
-        })
-        if (status == 200) {
-            utilities.toastAlert('error', `${courseId.length}  Aφαιρέθηκαν `)
-            subtabletable_id.ajax.reload();
-
         }
-
     } catch (e) {
         console.log(e)
         utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
@@ -347,6 +343,45 @@ const selectDetachCourses = () => {
 
     })
 }
+
+const selectStatusMultiple = () => {
+    $('.js-multiple-change').unbind();
+    $(".js-multiple-change").click(function () {
+        let checkboxes = $(".js-user-checkbox:checked")
+
+        let ids = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.userId);
+        }
+
+
+        changeStatusMultiple(ids,this.dataset.coursesChange)
+
+    })
+}
+
+
+const changeStatusMultiple =async (ids,stat) => {
+
+    try{
+        let {status} = await axios.patch(config.routes.changeStatusMultipleDatatable,{
+            "user_id":ids,
+            "status":stat,
+        })
+
+        if (status == 200) {
+            utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
+            tables.ajax.reload();
+        }
+    } catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+}
+
+
+
 
 function buttonEx() {
     $('.button-Excel').unbind();

@@ -11,6 +11,8 @@
             destroyDatatable: "{{ route("destroy.datatable") }}",
             //ajax user routes
             changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
+            changeStatusMultipleDatatable: "{{ route("changeStatusMultiple.datatable") }}",
+            changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
             addcoursesDatatable: "{{ route("addcourses.datatable") }}",
             destroyMultipleCoursesDatatable: "{{ route("destroyMultipleCourses.datatable") }}",
             destroyMultipleUsersDatatable: "{{ route("destroyMultipleUsers.datatable") }}",

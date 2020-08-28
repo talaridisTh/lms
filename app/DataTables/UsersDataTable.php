@@ -65,7 +65,7 @@ class UsersDataTable extends DataTable {
 
                 $active = $data->active == 0 ? "" : "checked";
 
-                return "<input  class='toggle-class' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+                return "<input  class='toggle-class' data-user-checked='$active' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
             ->editColumn('first_name', function($data) {
