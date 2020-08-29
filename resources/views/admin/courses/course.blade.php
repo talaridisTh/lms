@@ -73,19 +73,19 @@
 	</div>
 
 	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
 				<div class="modal-header modal-colored-header bg-primary">
 					<h4 class="modal-title" id="add-user-modalLabel">Προσθήκη Χρηστών</h4>
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 				</div>
 				<div class="modal-body table-cnt">
-					<table id="add-users-list" class="js-table table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+					<table id="add-users-list" class="js-table table w-100 nowrap modal-table js-remove-table-classes">
 						<thead>
 							<tr>
-								<th class="select-all w-5">
+								<th class="text-center">
 									<div class='icheck-primary d-inline'>
-										<input class='js-course-checkbox' type='checkbox' id='add-user-checkbox' autocomplete='off'>
+										<input id='add-user-checkbox' type='checkbox' autocomplete='off'>
 										<label for='add-user-checkbox'></label>
 									</div>
 								</th>
@@ -95,10 +95,10 @@
 								<th class="text-center"></th>
 							</tr>
 						</thead>
-						<tbody class="tables-hover-effect"></tbody>
+						<tbody class="tables-hover-effect table-text-center table-vertical-align-middle"></tbody>
 						<tfoot>
 							<tr>
-								<th class="text-center">Επιλογή</th>
+								<th class="text-center"></th>
 								<th class="text-center">Όνομα</th>
 								<th class="text-center">Επώνυμο</th>
 								<th class="text-center">Ιδιότητα</th>
@@ -108,7 +108,11 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button id="add-multiple-users-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+					<button id="add-multiple-users-btn" type="button"
+						class="btn btn-primary" data-text="Προσθήκη Επιλογών"
+						data-enabled-color="btn-primary" data-disabled-color="btn-secondary">
+						Προσθήκη Επιλογών (0)
+					</button>
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</div>
 			</div><!-- /.modal-content -->
@@ -126,7 +130,7 @@
 					<table id="remaining-materials-table" class="js-table table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
 						<thead>
 							<tr>
-								<th class="select-all w-5">
+								<th class="text-center">
 									<div class='icheck-primary d-inline'>
 										<input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
 										<label for='all-remainings-checkbox'></label>
@@ -151,7 +155,11 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button id="add-remaingings-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+					<button id="add-remaingings-btn" 
+						data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary" 
+						data-disabled-color="btn-secondary" class="btn btn-secondary" disabled>
+						Προσθήκη Επιλογών (0)
+					</button>
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</div>
 			</div><!-- /.modal-content -->
@@ -284,8 +292,10 @@
 										Προσθήκη Υλικού
 									</button>
 									<div class="dropdown ml-2">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Επιλογές
+										<button id="active-material-bulk" class="btn btn-secondary dropdown-toggle"
+											type="button" data-toggle="dropdown" data-text="Επιλογές"
+											aria-haspopup="true" aria-expanded="false" disabled>
+											Επιλογές (0)
 										</button>
 										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 											<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
@@ -334,8 +344,10 @@
 										Προσθήκη Χρηστών
 									</button>
 									<div class="dropdown ml-2">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Επιλογές
+										<button class="btn btn-secondary dropdown-toggle"
+											type="button" id="active-users-bulk" data-toggle="dropdown" 
+											aria-haspopup="true" aria-expanded="false" disabled>
+											Επιλογές (0)
 										</button>
 										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 											<a id="remove-selected-users-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>

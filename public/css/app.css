@@ -3244,6 +3244,14 @@ div.dt-buttons a.btn.processing:after {
   text-align: center;
 }
 
+.table-text-center > tr {
+  text-align: center;
+}
+
+.table-vertical-align-middle > tr td {
+  vertical-align: middle;
+}
+
 #course-materials-list > tbody td:nth-child(4) .form-group {
   margin-bottom: 0px !important;
 }
@@ -3403,6 +3411,10 @@ select.is-invalid {
 .image-dropzone .dz-message {
   text-align: center;
   margin: 2rem 0;
+}
+
+.bg-selected {
+  background-color: #313a46;
 }
 
 /*!
