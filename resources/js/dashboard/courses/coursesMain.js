@@ -21,6 +21,14 @@ Element.prototype.appendAfter = function (element) {
 //! 			EventListeners				#
 //!##########################################
 
+$("#select-all-courses").change( function() {
+	let minorCheckboxes = $(".js-course-checkbox");
+	let bulkBtn = $("#course-bulk-action-btn")[0];
+
+	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+
+})
+
 $("#submit-form-btn").click( function() {
 	
 	$("#new-course-form").submit()
@@ -65,6 +73,7 @@ $('#delete-courses-btn').click( function() {
 				utilities.toastAlert( "success", message );
 
 				coursesDatatable.ajax.reload();
+				resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses") );
 			})
 			.catch(function (error) {
 				
@@ -110,6 +119,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
 
 		toggleActive();
+		checkeBoxesEventListener();
 	}
 })
 
@@ -117,8 +127,21 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 //!		Datatable event initialazion functions		#
 //! #################################################
 
-function toggleActive() {
+function checkeBoxesEventListener() {
 
+	let minorCheckboxes = $(".js-course-checkbox");
+	let mainCheckbox = $("#select-all-courses")[0];
+	let bulkBtn = $("#course-bulk-action-btn")[0];
+
+	minorCheckboxes.unbind();
+
+	minorCheckboxes.change( function() {
+		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
+	})
+
+}
+
+function toggleActive() {
 	$('.js-toggle').unbind();
 
 	$('.js-toggle').on('change', function() {
@@ -204,6 +227,15 @@ topicFIlter.addEventListener('change', function() {
 //!##########################################
 //!				script functions			#
 //!##########################################
+
+function resetBulk( bulkBtn, checkbox ) {
+
+	bulkBtn.text("Επιλογές  (0)");
+	bulkBtn.addClass("btn-secondary");
+	bulkBtn.removeClass("btn-warning");
+	bulkBtn.prop("disabled", true);
+	checkbox.prop("checked", false);
+}
 
 function createDateElm() {
 

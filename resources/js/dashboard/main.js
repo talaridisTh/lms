@@ -1,3 +1,13 @@
+Element.prototype.findParent = function (loops) {
+	let parent = this;
+
+	for ( let i = 0; i < loops; i++ ) {
+		parent = parent.parentElement;
+	}
+
+	return parent;
+}
+
 //!##########################################
 //!				Configurations				#
 //!##########################################
@@ -26,7 +36,6 @@ function toastAlertDelete(text,icon="warning"){
         cancelButtonText: 'Άκυρο'
     });
 }
-
 
 
 //!CONFIG
@@ -87,20 +96,72 @@ function mainCheckboxSwitcher(main, minor) {
         }
     }
 
+function mainCheckboxSwitcher(main, minor, bulkBtn = false ) {
+	let status = true;
+	let counter = 0;
+	main.checked = true;
+
+    for (var i = 0; i < minor.length; i++) {
+        if ( !minor[i].checked ) {
+			minor[i].findParent(3).classList.remove("bg-selected");
+			main.checked = false;
+		}
+		else {
+			minor[i].findParent(3).classList.add("bg-selected");
+			counter++
+			status = false;
+		}
+	}
+
+	if ( bulkBtn ) {
+		bulkModifier( bulkBtn, status, counter );
+	}
 }
 
-function minorCheckboxSwitcher(main, minor) {
+function minorCheckboxSwitcher(main, minor, bulkBtn = false) {
+	let counter = 0;
+	let status = true;
 
-    if (main.checked) {
-        for (let i = 0; i < minor.length; i++) {
-            minor[i].checked = true;
-        }
-    } else {
-        for (let i = 0; i < minor.length; i++) {
-            minor[i].checked = false;
-        }
-    }
+    if ( main.checked && minor.length > 0 ) {
 
+		counter = minor.length;
+		status = false;
+
+        for (var i = 0; i < minor.length; i++) {
+			minor[i].checked = true;
+			minor[i].findParent(3).classList.add("bg-selected");
+		}
+	}
+	else {
+		for (var i = 0; i < minor.length; i++) {
+			minor[i].checked = false;
+			minor[i].findParent(3).classList.remove("bg-selected");
+		}
+	}
+
+	if ( bulkBtn ) {
+		bulkModifier( bulkBtn, status, counter );
+	}
+}
+
+function bulkModifier( bulkBtn, status, sum ) {
+
+	let text = bulkBtn.dataset.text ? bulkBtn.dataset.text : "Επιλογές";
+	let enabledColor = bulkBtn.dataset.enabledColor ? bulkBtn.dataset.enabledColor : "btn-warning";
+	let disabledColor = bulkBtn.dataset.disabledColor ? bulkBtn.dataset.disabledColor : "btn-secondary";
+
+	if ( status ) {
+		bulkBtn.classList.add( disabledColor )
+		bulkBtn.classList.remove( enabledColor )
+		bulkBtn.textContent = `${text} (0)  `
+		bulkBtn.disabled = true;
+	}
+	else {
+		bulkBtn.classList.add( enabledColor );
+		bulkBtn.classList.remove( disabledColor );
+		bulkBtn.textContent = `${text}  (${sum})  `
+		bulkBtn.disabled = false;
+	}
 }
 
 const filterButton = function (attr, column, table) {

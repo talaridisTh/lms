@@ -25,11 +25,19 @@ Element.prototype.appendAfter = function (element) {
 //! EventListerners
 //!============================================================
 
+$("#add-user-checkbox").change( function() {
+	let minorCheckboxes = $(".js-new-user-checkbox");
+	let bulkBtn = $("#add-multiple-users-btn")[0]
+
+	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
+})
+
 $("#select-all-active-users").change( function() {
 
 	let minorCheckboxes = $(".js-active-user-checkbox")
+	let bulkBtn = $("#active-users-bulk")[0]
 
-	utilities.minorCheckboxSwitcher(this, minorCheckboxes);
+	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 });
 
 $("#update-btn").click( function() {
@@ -76,6 +84,7 @@ $("#add-multiple-users-btn").click( function() {
 	}
 
 	addUsers(userIds);
+	$('#add-user-modal').modal('hide')
 })
 
 $("#remove-selected-users-btn").click( function() {
@@ -87,7 +96,7 @@ $("#remove-selected-users-btn").click( function() {
 		userIds.push( usersCheckbox[i].dataset.userId );
 	}
 
-	removeUsers(userIds);
+	removeUsers(userIds, this);
 })
 
 $("#course-cover-input").change( function() {
@@ -97,9 +106,10 @@ $("#course-cover-input").change( function() {
 });
 
 $('#all-remainings-checkbox').change( function() {
-	let checkboxes = $('.js-remainings-checkbox')
+	let checkboxes = $('.js-remainings-checkbox');
+	let bulkBtn = $("#add-remaingings-btn")[0];
 
-	utilities.minorCheckboxSwitcher( this, checkboxes );
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
 
 });
 
@@ -126,6 +136,8 @@ $('#add-remaingings-btn').click( function() {
 		}
 		postMaterialIds( ids, lessonsCount, additionsCount );
 	}
+
+	$('#add-materials-modal').modal('hide');
 });
 
 $('#remove-selection-btn').click( function() {
@@ -150,15 +162,16 @@ $('#remove-selection-btn').click( function() {
 				additionsCount++
 			}
 		}
-		removeMaterials(ids, lessonsCount, additionsCount);
+		removeMaterials( ids );
 	}
 });
 
 $("#all-active-materials-checkbox").change( function() {
 
 	let checkboxes = $(".js-course-material-checkbox");
+	let bulkBtn = $("#active-material-bulk")[0];
 
-	utilities.minorCheckboxSwitcher( this, checkboxes )
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
 
 });
 
@@ -305,6 +318,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 
 		adduserBtnInit();
 		userLinkInit();
+		newUserCheckboxInit();
 	},
 
 });
@@ -386,16 +400,31 @@ dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 
 //! DataTables function / EventListener
 
-function activeUsersCheckboxInit() {
+function newUserCheckboxInit() {
 
-	let mainCheckbox = $("#select-all-active-users")[0];
-	let minorCheckboxes = $(".js-active-user-checkbox");
+	let mainCheckbox = $("#add-user-checkbox")[0];
+	let minorCheckboxes = $(".js-new-user-checkbox");
+	let bulkBtn = $("#add-multiple-users-btn")[0]
 
 	minorCheckboxes.unbind();
 
 	minorCheckboxes.change( function() {
-		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes );
-	})
+		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
+	});
+
+}
+
+function activeUsersCheckboxInit() {
+
+	let mainCheckbox = $("#select-all-active-users")[0];
+	let minorCheckboxes = $(".js-active-user-checkbox");
+	let bulkBtn = $("#active-users-bulk")[0]
+
+	minorCheckboxes.unbind();
+
+	minorCheckboxes.change( function() {
+		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
+	});
 }
 
 function userLinkInit() {
@@ -528,8 +557,9 @@ function remainingMaterialsCheckboxHandler() {
 
 	let mainCheckbox = $('#all-remainings-checkbox')[0];
 	let checkbox = $('.js-remainings-checkbox');
+	let addMaterialsBulk = $("#add-remaingings-btn")[0];
 
-	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox );
+	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, addMaterialsBulk );
 }
 
 function activeMaterialsCheckboxToggle() {
@@ -543,8 +573,9 @@ function activeMaterialsCheckboxHandler() {
 
 	let mainCheckbox = $('#all-active-materials-checkbox')[0];
 	let checkbox = $('.js-course-material-checkbox');
+	let bulkBtn = $("#active-material-bulk")[0];
 
-	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox);
+	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
 }
 
 function addUsers( userIds ) {
@@ -559,6 +590,9 @@ function addUsers( userIds ) {
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
 
+		resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
+		resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
+
 	})
 	.catch( (err) => {
 		console.log(err);
@@ -567,7 +601,7 @@ function addUsers( userIds ) {
 	})
 }
 
-function removeUsers( userIds ) {
+function removeUsers( userIds, caller ) {
 	axios.patch( "/courses/remove-students", {
 		courseId,
 		userIds
@@ -578,6 +612,9 @@ function removeUsers( userIds ) {
 		utilities.toastAlert( 'success', message );
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
+
+		resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
+		resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
 
 	})
 	.catch( (err) => {
@@ -599,6 +636,9 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 
+		resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
+		resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
+
 	})
 	.catch( (err) => {
 		console.log(err);
@@ -606,7 +646,7 @@ function postMaterialIds( materialId, lessonsCount, additionsCount ) {
 	})
 }
 
-function removeMaterials( materialIds, lessonsCount, additionsCount ) {
+function removeMaterials( materialIds ) {
 
 	axios.patch( "/courses/remove-materials", {
 		courseId,
@@ -619,6 +659,9 @@ function removeMaterials( materialIds, lessonsCount, additionsCount ) {
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
+
+		resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
+		resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	})
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
@@ -924,6 +967,22 @@ function endDate( input ) {
 	return secondDate;
 }
 
+function resetBulk( bulkBtn, checkbox ) {
+
+	bulkBtn.text("Επιλογές  (0)");
+	bulkBtn.addClass("btn-secondary");
+	bulkBtn.removeClass("btn-warning");
+	bulkBtn.prop("disabled", true);
+	checkbox.prop("checked", false);
+}
+
+function resetAddButton( addBtn, checkbox ) {
+	addBtn.text("Προσθήκη Επιλογών (0)");
+	addBtn.addClass("btn-secondary");
+	addBtn.removeClass("btn-primary");
+	addBtn.prop("disabled", true);
+	checkbox.prop("checked", false);
+}
 //!##########################################
 //!				Initializations				#
 //!##########################################
@@ -963,11 +1022,3 @@ let dropzone = new Dropzone("#cover-dropzone", {
   	thumbnailWidth: 80,
   	thumbnailHeight: 80,
 })
-
-//!######################################
-//!				Testing					#
-//!######################################
-
-// let search = $(".sticky").parents().css("overflow", "visible");
-
-// console.log(search);

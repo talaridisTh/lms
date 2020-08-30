@@ -114,7 +114,11 @@
 						Νέο Course
 					</a>
 					<div class="btn-group mb-2">
-						<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Επιλογές</button>
+						<button id="course-bulk-action-btn" disabled type="button" 
+							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Επιλογές (0)
+						</button>
 						<div class="dropdown-menu">
 							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
 							<div class="dropdown-divider"></div>
@@ -130,7 +134,12 @@
 		<table id="courses-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
-					<th class="text-center">Επιλογή</th>
+					<th class="text-center">
+						<div class='icheck-primary d-inline'>
+							<input type='checkbox' id='select-all-courses' autocomplete='off'>
+							<label for='select-all-courses'></label>
+						</div>
+					</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Ενεργό</th>
 					<th class="text-center">Εισηγητής</th>
