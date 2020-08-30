@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder {
 		factory(App\Bundle::class, 3)->create()
 		->each(function ($bundle) {
 
-			$bundle->courses()->saveMany(factory(App\Course::class, 500)->create()
+			$bundle->courses()->saveMany(factory(App\Course::class, 5)->create()
 			->each(function($course) {
 
 				$course->topics()->attach(App\Topic::all()->random()->id);
