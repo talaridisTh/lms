@@ -152,4 +152,26 @@ class MaterialController extends Controller
         $course->materials()->syncWithoutDetaching($request->material_id);
 
 	}
+    public function changeStatusMultiple(Request $request)
+	{
+
+
+        foreach ($request->material_id as $material_id)
+        {
+            $material = Material::findOrFail($material_id);
+            if($request->status=="on"){
+                $material->active = true;
+                $material->save();
+            }
+            else{
+                $material->active = false;
+                $material->save();
+            }
+        }
+
+        return response()->json(['success' => 'Status change successfully.']);
+
+	}
+
+
 }

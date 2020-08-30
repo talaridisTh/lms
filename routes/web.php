@@ -129,10 +129,12 @@ Route::post( 'materials/material-types', 'Ajax\MaterialController@materialTypes'
 Route::post( 'materials/add-additionnal-content', 'Ajax\MaterialController@addContent' );
 Route::delete('/materials/multiple/delete', 'Ajax\MaterialController@destroyMultipleMaterials')->name("destroyMultipleMaterials.datatable");
 Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMaterialMultiple')->name("addMaterialMultiple.datatable");
+Route::patch('/materials/multiple/changeStatus', 'Ajax\MaterialController@changeStatusMultiple')->name("changeStatusMultipleMaterial.datatable");;
+Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );
+
 
 
 //! Dashboard Ajax Materials CRUD
-Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );
 
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
@@ -152,14 +154,14 @@ Auth::routes();
 //!######################################################
 
 Route::get('/home', 'Index\HomeController@index')->name('home');
-//! User routees
+
+//! User routes
 Route::get('/courses/{user}', 'UserController@userCourses');
 Route::get('/courses/course/{course}', 'CourseController@userCourse')->name("index.userCourse");
 
 
 //! partner routes link
 Route::get("/user/link", "Index\HomeController@createLink")->name("user.link");
-
 Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
 Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
 Route::get('/partner-links', function (Request $request) {

@@ -1,8 +1,7 @@
 import utilities from '../main';
 //! GLOBAL VARIABLES
 //!============================================================
-let dataRange = $("#daterange")
-dataRange[0].value = ""
+
 
 
 //! 			Datatables Initialization
@@ -117,6 +116,8 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
 }
 
 
+
+
 //! GLOBAL FUNCTION
 //!============================================================
 utilities.selectAndDeselectCheckbox(".js-user-checkbox")
@@ -125,8 +126,14 @@ utilities.filterButton('#rolesFilter', 5, tables)
 utilities.filterButton('#fullNameFilter', 11, tables)
 
 
-//! FILTER DATATABLE
+
+
+
+//! DATAPICKER METHOD
 //!============================================================
+let dataRange = $("#daterange")
+
+dataRange[0].value = ""
 
 const fromDay = () => {
     let date = $('.drp-selected').text();
@@ -160,7 +167,6 @@ const toDay = () => {
 
 }
 
-
 dataRange.daterangepicker({
     locale: {
         format: 'YY/MM/DD '
@@ -181,7 +187,6 @@ dataRange.daterangepicker({
     opens: "center",
 });
 
-
 $(".ragneButton").detach().appendTo('.dataTables_length label')
 
 dataRange.on("apply.daterangepicker", function (event, picker) {
@@ -200,9 +205,10 @@ $(".cancelBtn ").click(function (event, picker) {
 })
 
 
+
+
 //! BULK ACTION
 //!============================================================
-
 const selectMultipleCheckboxDelete = () => {
     $('.js-multiple-delete').unbind();
     $(".js-multiple-delete").click(() => {
@@ -361,7 +367,6 @@ const selectStatusMultiple = () => {
     })
 }
 
-
 const changeStatusMultiple =async (ids,stat) => {
 
     try{
@@ -382,7 +387,8 @@ const changeStatusMultiple =async (ids,stat) => {
 
 
 
-
+//! EXPORT
+//!============================================================
 function buttonEx() {
     $('.button-Excel').unbind();
     $('.button-Excel').on('click', function (e, dt, node, config) {

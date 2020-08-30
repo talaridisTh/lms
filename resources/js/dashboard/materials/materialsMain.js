@@ -1,29 +1,6 @@
 import utilities from '../main';
-//! GLOBAL VAR
-//!============================================================
-let dataRange = $("#daterange")
 
-dataRange[0].value = ""
 
-dataRange.daterangepicker({
-    locale: {
-        format: 'YY/MM/DD '
-    },
-    startDate: moment().startOf('hour'),
-    // ranges: {
-    //     'Today': [moment(), moment()],
-    //     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-    //     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-    //     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-    //     'This Month': [moment().startOf('month'), moment().endOf('month')],
-    //     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    // },
-    alwaysShowCalendars: true,
-    showCustomRangeLabel: false,
-    drops: "auto",
-    autoUpdateInput: false,
-    opens: "center",
-});
 //! INIT DATATABLE
 //!============================================================
 const materialsDatatable = $("#materials-datatable").DataTable({
@@ -78,8 +55,11 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         selectMultipleCheckboxDelete()
         selectMultipleCheckboxUpdate()
         hoverOnSelect()
+        selectStatusMultiple()
     }
 });
+
+
 
 //! FILTER DATATABLE
 //!============================================================
@@ -88,9 +68,6 @@ utilities.filterButton('#activeFilterMaterial', 8, materialsDatatable);
 utilities.filterButton('#typeFilterMaterial', 3, materialsDatatable);
 utilities.filterButton('#courseFilterMaterial', 7, materialsDatatable);
 
-
-//! FILTER DATE
-//!============================================================
 const fromDay = () => {
     let date = $('.drp-selected').text();
     let dateSepareted = date.split("-")
@@ -123,6 +100,32 @@ const toDay = () => {
 }
 
 
+//! DATAPICKER FUNCTION
+//!============================================================
+let dataRange = $("#daterange")
+
+dataRange[0].value = ""
+
+dataRange.daterangepicker({
+    locale: {
+        format: 'YY/MM/DD '
+    },
+    startDate: moment().startOf('hour'),
+    // ranges: {
+    //     'Today': [moment(), moment()],
+    //     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+    //     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+    //     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+    //     'This Month': [moment().startOf('month'), moment().endOf('month')],
+    //     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    // },
+    alwaysShowCalendars: true,
+    showCustomRangeLabel: false,
+    drops: "auto",
+    autoUpdateInput: false,
+    opens: "center",
+});
+
 dataRange.on("apply.daterangepicker", function (event, picker) {
 
     let startDate = picker.startDate.format('DD/MM/YYYY');
@@ -138,6 +141,8 @@ $(".cancelBtn ").click(function (event, picker) {
     dataRange[0].value = "cancel"
     materialsDatatable.ajax.reload();
 })
+
+
 
 //! METHOD FIRST TABLE
 //!============================================================
@@ -199,28 +204,27 @@ const hoverOnSelect = () => {
 }
 
 
-//! DATAPICKER
+//! SELECT
 //!============================================================
-$(document).ready(function () {
-    $("#courseFilterMaterial").select2({
-        text: '',
-        placeholder: "Ολα τα Courses",
-        allowClear: true,
-        // minimumInputLength: 2,
-    });
+$("#courseFilterMaterial").select2({
+    text: '',
+    placeholder: "Ολα τα Courses",
+    allowClear: true,
+    // minimumInputLength: 2,
+});
 
-    $("#typeFilterMaterial").select2({
-        placeholder: "Ολοι οι Τύποι",
-        minimumResultsForSearch: -1,
-        allowClear: true,
-    });
+$("#typeFilterMaterial").select2({
+    placeholder: "Ολοι οι Τύποι",
+    minimumResultsForSearch: -1,
+    allowClear: true,
+});
 
-    $("#activeFilterMaterial").select2({
-        minimumResultsForSearch: -1,
-        placeholder: "Kατάσταση ",
-        allowClear: true,
-    });
-})
+$("#activeFilterMaterial").select2({
+    minimumResultsForSearch: -1,
+    placeholder: "Kατάσταση ",
+    allowClear: true,
+});
+
 
 //! BULK ACTION
 //!============================================================
@@ -291,6 +295,42 @@ const axiosMultipleUpdate = async (ids, courseId) => {
         if (status == 200) {
             utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
             console.log(status)
+        }
+    } catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+}
+
+const selectStatusMultiple = () => {
+    $('.js-multiple-change').unbind();
+    $(".js-multiple-change").click(function () {
+        let checkboxes = $(".js-material-checkbox:checked")
+
+        let ids = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.materialId);
+        }
+
+
+        console.log("S")
+        changeStatusMultiple(ids, this.dataset.coursesChange)
+
+    })
+}
+
+const changeStatusMultiple = async (ids, stat) => {
+
+    try {
+        let {status} = await axios.patch(config.routes.changeStatusMultipleMaterialDatatable, {
+            "material_id": ids,
+            "status": stat,
+        })
+
+        if (status == 200) {
+            utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
+            materialsDatatable.ajax.reload();
         }
     } catch (e) {
         console.log(e)

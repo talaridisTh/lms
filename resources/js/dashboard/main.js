@@ -2,11 +2,8 @@
 //!				Configurations				#
 //!##########################################
 
-const redactorConfig = {
-    style: false,
-    minHeight: '150px',
-}
-
+//!ALERT
+//!============================================================
 function toastAlert(icon, message) {
     Swal.fire({
         toast: 'true',
@@ -20,7 +17,7 @@ function toastAlert(icon, message) {
 }
 
 function toastAlertDelete(text,icon="warning"){
-  return   Swal.fire({
+    return   Swal.fire({
         title: 'Είστε σίγουρος;',
         text:text,
         icon: icon,
@@ -30,6 +27,55 @@ function toastAlertDelete(text,icon="warning"){
     });
 }
 
+
+
+//!CONFIG
+//!============================================================
+const redactorConfig = {
+    style: false,
+    minHeight: '150px',
+}
+
+const datePickerConfig = {
+    ranges: {
+        'Today': [moment(), moment()],
+        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+        'This Month': [moment().startOf('month'), moment().endOf('month')],
+        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+    },
+    alwaysShowCalendars: true,
+    showCustomRangeLabel: false,
+    drops: "auto",
+    autoUpdateInput: false,
+    opens: "center",
+    locale: {
+        format: "DD/MM/YYYY",
+    },
+}
+
+const tableLocale = {
+    emptyTable: "Δεν υπάρχουν εγγραφές",
+    info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+    infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
+    lengthMenu: "_MENU_",
+    loadingRecords: "Φόρτωση ...",
+    processing: "Επεξεργασία ...",
+    search: "",
+    searchPlaceholder: "Αναζήτηση... ",
+    zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
+    paginate: {
+        previous: "<i class='mdi mdi-chevron-left'>",
+        next: "<i class='mdi mdi-chevron-right'>"
+    }
+}
+
+
+
+
+//!GLOBAL FUNCTION
+//!============================================================
 function mainCheckboxSwitcher(main, minor) {
 
     for (let i = 0; i < minor.length; i++) {
@@ -112,32 +158,9 @@ const changeInputHidden = (attr, hiddenAttr) => {
             this.value = $(this).prop('checked') == true ? 1 : 0;
         }
 
-
         let hiddenValue = $(hiddenAttr)[0].value = this.value
 
-
-        // let test  =   $("#topicMaterial").clone()
-        //   console.log(test)
-
-
     })
-}
-
-
-const tableLocale = {
-    emptyTable: "Δεν υπάρχουν εγγραφές",
-    info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-    infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
-    lengthMenu: "_MENU_",
-    loadingRecords: "Φόρτωση ...",
-    processing: "Επεξεργασία ...",
-    search: "",
-    searchPlaceholder: "Αναζήτηση... ",
-    zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
-    paginate: {
-        previous: "<i class='mdi mdi-chevron-left'>",
-        next: "<i class='mdi mdi-chevron-right'>"
-    }
 }
 
 function createStateSelect() {
@@ -153,24 +176,7 @@ function createStateSelect() {
     return selectElm;
 }
 
-const datePickerConfig = {
-    ranges: {
-        'Today': [moment(), moment()],
-        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-        'This Month': [moment().startOf('month'), moment().endOf('month')],
-        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    },
-    alwaysShowCalendars: true,
-    showCustomRangeLabel: false,
-    drops: "auto",
-    autoUpdateInput: false,
-    opens: "center",
-    locale: {
-        format: "DD/MM/YYYY",
-    },
-}
+
 
 export default {
     toastAlert,
