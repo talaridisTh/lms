@@ -166,7 +166,9 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+		$course->delete();
+
+        return redirect("/dashboard/courses");
 	}
 	
 	public function userCourse( Course $course ) {

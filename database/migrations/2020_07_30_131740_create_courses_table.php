@@ -24,7 +24,8 @@ class CreateCoursesTable extends Migration
             $table->string('slug');
 			$table->unsignedTinyInteger('status');
 			$table->timestamp('publish_at');
-            $table->timestamps();
+			$table->timestamps();
+			$table->softDeletes();
         });
     }
 

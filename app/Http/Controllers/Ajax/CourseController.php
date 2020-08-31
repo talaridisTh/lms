@@ -97,7 +97,7 @@ class CourseController extends Controller
 		foreach( $idList as $id ) {
 			
 			Course::find( $id )->delete();
-			Storage::deleteDirectory("public/courses/$id");
+			// Storage::deleteDirectory("public/courses/$id");
 		}
 	}
 	
