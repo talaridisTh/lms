@@ -17,10 +17,12 @@ class NewUserNotification extends Mailable
      * @return void
      */
     public $data;
+    public $password;
 
-    public function __construct($data)
+    public function __construct($data,$password)
     {
         $this->data = $data;
+        $this->password = $password;
     }
 
     /**
@@ -33,6 +35,6 @@ class NewUserNotification extends Mailable
 
 
         return $this->view('mails.newUsers')
-            ->with([ 'msg' => $this->data ]);
+            ->with([ 'msg' => $this->data,'password' => $this->password ]);
     }
 }

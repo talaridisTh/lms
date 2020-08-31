@@ -145,8 +145,11 @@
                                     <label for="createAtMaterial">Κατάσταση</label>
                                 </div>
                                 <div class="col-5 text-right">
+
+                                    {{$user->status}}
                                     <input name="status" type="checkbox" id="activeMaterial"
-                                           {{$user->status? "checked":""}}
+                                           {{$user->status == 0 ? "" : "checked"}}
+                                           value="{{$user->status ? 0 : $user->status}}"
                                            data-switch="bool"/>
                                     <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                                 </div>
