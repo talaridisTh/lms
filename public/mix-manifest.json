@@ -1,29 +1,14 @@
 {
-<<<<<<< HEAD
-    "/js/app.js": "/js/app.js?id=2f09a9d5c8e57b2f3123",
+    "/js/app.js": "/js/app.js?id=746806818cbc17c18b21",
     "/css/app.css": "/css/app.css?id=14bcda2408f49c8afad6",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=6918c62f5851ba053158",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=a5d6f9a667bd892acc85",
     "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=b361b6fb6452a9f0fdff",
     "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=785b6e00dd11022a546a",
     "/js/dashboard/main.js": "/js/dashboard/main.js?id=1621f06242429138d57f",
-    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=394ada6a90d65b49def2",
+    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=9bdac6049f8003a56470",
     "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=0ff3c0faa1a6fd002b5c",
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=735d6d329e90e4e98fd2",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=95fe1a14a7d2f1a817d9",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=ea45209fef1596448a73"
-=======
-    "/js/app.js": "/js/app.js?id=b6daeecfc3b649bb6e21",
-    "/css/app.css": "/css/app.css?id=b28d5c59b32f1513271f",
-    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=3117da62e67e3edee117",
-    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=8115230b364a13efe4e4",
-    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=3c20dd6dd869401cd8df",
-    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=4ba4844bf7b2382e87f7",
-    "/js/dashboard/main.js": "/js/dashboard/main.js?id=a105e202c9a3438580a8",
-    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=4b9f89bb9594f0f51005",
-    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=62f25c7b904a9ae38dee",
-    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=77b25cd36d3961314f08",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=8bc5bc6d3df6f001c842",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=ac6d1b2ef2cb19c697e1"
->>>>>>> 47fb29b759f488342e064d3fc8a201b654cc6fac
 }
