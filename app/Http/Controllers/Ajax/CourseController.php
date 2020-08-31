@@ -168,6 +168,8 @@ class CourseController extends Controller
 
 		$course = Course::find( $request->courseId );
 		$materialIds = $request->materialId;
+
+		$publish = Carbon::now()->format("Y-m-d H:i:s");
 		
 		if ( $course->materials()->count() > 0 ) {
 			$lastMaterialId = $course->materials()->orderBy('priority', 'desc')->first()->pivot->priority;
@@ -177,7 +179,7 @@ class CourseController extends Controller
 		}
 
 		foreach ( $materialIds as $key => $id ) {
-			$course->materials()->attach( $id, ['status' => 0, 'priority' => $lastMaterialId + $key + 1 ] );
+			$course->materials()->attach( $id, ['status' => 0, 'priority' => $lastMaterialId + $key + 1 , 'publish_at' => $publish ]);
 		}
 
 		$course->updated_at = Carbon::now();
