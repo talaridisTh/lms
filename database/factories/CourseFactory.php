@@ -27,8 +27,9 @@ $factory->define(Course::class, function (Faker $faker) {
 		'cover' => $faker->md5 .".jpg",
 		'user_id' => 2,
 		'slug' => $faker->slug,
-		'active' => $faker->numberBetween( 0 , 1 ),
+		'status' => $faker->numberBetween( 0 , 1 ),
 		'created_at' => $date->format('Y-m-d H:i:s'),
-		'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
+		'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s'),
+		'publish_at' => $date->addYears( rand(1, 2) ),
     ];
 });

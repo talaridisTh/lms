@@ -26,7 +26,7 @@ class RemainingMaterialsDataTable extends DataTable
 		if ( is_null($request->startDate) && is_null($request->endDate) ) {
 
 			$query = Material::with("topics")
-				->where('active', 1)
+				->where('status', 1)
 				->whereNotIn('materials.id', 
 					function($subquery) use ($request) {
 
@@ -40,7 +40,7 @@ class RemainingMaterialsDataTable extends DataTable
 		}
 		else {
 			$query = Material::with("topics")
-				->where('active', 1)
+				->where('status', 1)
 				->where( function($subquery) use ($request) {
 					$subquery->whereBetween('materials.updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 						->orWhereBetween('materials.created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);

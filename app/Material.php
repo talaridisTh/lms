@@ -13,7 +13,7 @@ class Material extends Model
 
     public function courses() {
 
-		return $this->belongsToMany(Course::class)->withPivot('active', 'priority')->orderBy('priority');
+		return $this->belongsToMany(Course::class)->withPivot('status', 'priority')->orderBy('priority');
 
 	}
 

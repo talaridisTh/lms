@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('youtube_link')->unique()->nullable();
             $table->string('slug');
             $table->string('password');
-            $table->unsignedBigInteger('active');
+            $table->unsignedBigInteger('status');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -22,7 +22,7 @@ class RemainingCoursesDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 		$query = DB::table('courses')
-			->whereActive( 1 )
+			->whereStatus( 1 )
 			->whereNotIn( 'id', 
 
 				function($subquery) use ( $request ){

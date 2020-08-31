@@ -44,6 +44,76 @@
                     next: "<i class='mdi mdi-chevron-right'>"
                 }
             },
+<<<<<<< HEAD
+=======
+            // buttons:
+            //         [
+            //             {
+            //                 extend: 'collection',
+            //                 className: 'btn btn-primary dropdown-toggle',
+            //                 text: 'Ρόλος',
+            //                 autoClose: true,
+            //                 buttons: [
+            //                     {
+            //                         className: 'dropdown-item',
+            //                         titleAttr: 'admin',
+            //                         text: 'admin',
+            //                         action: function (e, dt, node, config) {
+            //                             var table = $('#scroll-horizontal-datatable').DataTable();
+            //                             dt.columns(3).search("admin", true, false, true).draw();
+            //                             $('#pref').parent().addClass("active");
+            //                         }
+            //                     },
+            //                     {
+            //                         className: 'dropdown-item',
+            //                         titleAttr: 'instructor',
+            //                         text: 'instructor',
+            //                         action: function (e, dt, node, config) {
+            //                             var table = $('#scroll-horizontal-datatable').DataTable();
+            //                             dt.columns(3).search("instructor", true, false, true).draw();
+            //                             $('#pref').parent().addClass("active");
+            //                         }
+            //                     },
+            //                     {
+            //                         className: 'dropdown-item',
+            //                         titleAttr: 'partner',
+            //                         text: 'partner',
+            //                         action: function (e, dt, node, config) {
+            //                             var table = $('#scroll-horizontal-datatable').DataTable();
+            //                             dt.columns(3).search("partner", true, false, true).draw();
+            //                             $('#pref').parent().addClass("active");
+            //                         }
+            //                     },
+            //                     {
+            //                         className: 'dropdown-item',
+            //                         titleAttr: 'student',
+            //                         text: 'student',
+            //                         action: function (e, dt, node, config) {
+            //                             var table = $('#scroll-horizontal-datatable').DataTable();
+            //                             dt.columns(3).search("student", true, false, true).draw();
+            //                             $('#pref').parent().addClass("active");
+            //
+            //                         }
+            //                     }
+            //                 ],
+            //             },
+            //             {
+            //                         className: 'btn-primary px-2 ml-2 border-0',
+            //                         titleAttr: 'status',
+            //                         text: 'Ενεργοι',
+            //                         action: function ( e, dt, node, config ) {
+            //                             if (dt.column(7).search() === '1') {
+            //                                 this.text('Ενεργοι');
+            //                                 dt.column(7).search(0).draw(true);
+            //                             } else {
+            //                                 this.text('Μη ενεργοι');
+            //                                 dt.column(7).search(1).draw(true);
+            //                             }
+            //                         }
+            //                     },
+            //
+            //                 ],
+>>>>>>> 2559cce6d9ee3c8c6f5f872af6dc1a05b83605d8
 
         }
     };

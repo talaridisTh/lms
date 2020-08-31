@@ -19,7 +19,7 @@ class MaterialController extends Controller {
     public function index()
     {
         $activeCourses = User::courseWhereActive();
-        $materials = Material::all(['title', 'description', 'active', 'type']);
+        $materials = Material::all(['title', 'description', 'status', 'type']);
 
         return view('admin.materials.materialsMain', compact("materials", "activeCourses"));
     }
@@ -90,7 +90,7 @@ class MaterialController extends Controller {
 
     public function update(UpdateMaterialRequest $request, Material $material)
     {
-        $data = collect($request)->except("instructor", "topic", "type", "active")->all();
+        $data = collect($request)->except("instructor", "topic", "type", "status")->all();
         if ($request->instructor)
         {
             $material->users()->update(['user_id' => $request->instructor]);
@@ -114,10 +114,10 @@ class MaterialController extends Controller {
 
             $data["type"] = $request->type;
         }
-        if ($request->active)
+        if ($request->status)
         {
 
-            $data["active"] = $request->active;
+            $data["status"] = $request->status;
         }
         $material->update($data);
 

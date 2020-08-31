@@ -104,7 +104,7 @@ Route::post( 'courses/add-course-students-datatable', 'Ajax\CourseController@add
 
 //! Dashboard Ajax Courses CRUD
 Route::delete( 'courses/destroy/{ids}', 'Ajax\CourseController@destroy' );
-Route::patch( 'courses/active', 'Ajax\CourseController@toggleActive' );
+Route::patch( 'courses/status', 'Ajax\CourseController@toggleStatus' );
 Route::patch( 'courses/priority', 'Ajax\CourseController@changePriority' );
 Route::patch( 'courses/toggle-materials', 'Ajax\CourseController@toggleCourseMaterials' );
 Route::post( 'courses/add-materials', 'Ajax\CourseController@addMaterials' );
@@ -119,7 +119,7 @@ Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remai
 
 //! Dashboard Ajax Bundles CRUD
 Route::delete( 'bundles/destroy/{ids}', 'Ajax\BundleController@destroy' );
-Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Ajax\BundleController@update' );
+Route::patch( 'bundles/bundles-toggle-status/{bundle}', 'Ajax\BundleController@update' );
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 
@@ -135,6 +135,10 @@ Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@tog
 
 
 //! Dashboard Ajax Materials CRUD
+
+
+Route::patch( 'materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus' );
+
 
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );

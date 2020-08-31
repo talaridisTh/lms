@@ -21,7 +21,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
     columns: [
         {data: "action", name: "action", searchable: false, orderable: false, className: "text-left"},
         {data: "title", name: "title", className: "js-link cursor-pointer text-left"},
-        {data: "active", name: "active", className: "text-left"},
+        {data: "status", name: "status", className: "text-left"},
         {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
         {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
         {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left", visible: false},
@@ -152,7 +152,7 @@ function toggleInit() {
         let materialSlug = this.parentElement.parentElement.dataset.materialSlug
         let updatedAtCnt = this.parentElement.parentElement.getElementsByClassName("js-updated-at")[0];
 
-        axios.patch(`/materials/toggle-active/${materialSlug}`, {
+        axios.patch(`/materials/toggle-status/${materialSlug}`, {
             state: this.checked ? 1 : 0
         })
             .then((res) => {

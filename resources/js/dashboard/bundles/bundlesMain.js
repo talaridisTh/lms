@@ -54,7 +54,7 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 	columns: [
 		{ data: "action", name: "action", width: "5%", orderable: false, searchable: false },
 		{ data: "name", name: "name", className: "js-link cursor-pointer"},
-		{ data: "active", name: "active", width: "5%", searchable: false },
+		{ data: "status", name: "status", width: "5%", searchable: false },
 		{ data: "updated_at", name: "updated_at", className: "js-link cursor-pointer"},
 		{ data: "created_at", name: "created_at", className: "js-link cursor-pointer"},
 	],
@@ -81,7 +81,7 @@ function activeToggleInit() {
 
 	toggle.change( function() {
 
-		axios.patch( `/bundles/bundles-toggle-active/${this.dataset.bundleId}`, {
+		axios.patch( `/bundles/bundles-toggle-status/${this.dataset.bundleId}`, {
 			state: this.checked ? 1 : 0
 		})
 		.then( (res) => {

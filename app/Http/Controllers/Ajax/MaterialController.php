@@ -10,8 +10,7 @@ use App\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class MaterialController extends Controller
-{
+class MaterialController extends Controller {
 
     public function index(MaterialsDataTable $dataTable)
     {
@@ -47,131 +46,127 @@ class MaterialController extends Controller
     public function destroy(Material $material)
     {
         //
-	}
+    }
 
-	public function toggleActive(Material $material, Request $request) {
+    public function toggleStatus(Material $material, Request $request)
+    {
 
-		$material->active = $request->state;
-		$material->save();
+        $material->status = $request->state;
+        $material->save();
+    }
 
-	}
+    public function materialTypes()
+    {
 
-	public function materialTypes() {
+        return Material::select('type')->distinct('type')->get();
+    }
 
-		return Material::select('type')->distinct('type')->get();
-	}
+    public function uploadDescImages(Request $request)
+    {
 
-	public function uploadDescImages(Request $request) {
+        $allowedTypes = ["image/png", "image/jpeg"];
+        $files = [];
+        foreach ($request->file as $key => $image)
+        {
+            if ($image->isValid())
+            {
+                if (in_array($image->getClientMimeType(), $allowedTypes))
+                {
+                    if ($image->getSize() <= 512000)
+                    {
+                        $id = md5($image->getClientOriginalName());
+                        $path = Storage::disk('public')->put("materials/$request->id/descriptionImages", $image);
+                        $files["file-" . $key] = [
+                            "url" => url("/storage/$path"),
+                            "id" => $id
+                        ];
+                    }
+                }
+            }
+        }
+        echo json_encode($files);
+    }
 
-		$allowedTypes = ["image/png", "image/jpeg"];
-		$files = [];
+    public function uploadContentImages(Request $request)
+    {
 
-		foreach( $request->file as $key => $image ) {
-			if ( $image->isValid() ) {
-				if ( in_array( $image->getClientMimeType(), $allowedTypes) ) {
-					if ( $image->getSize() <= 512000) {
-						$id = md5( $image->getClientOriginalName() );
+        $allowedTypes = ["image/png", "image/jpeg"];
+        $files = [];
+        foreach ($request->file as $key => $image)
+        {
+            if ($image->isValid())
+            {
+                if (in_array($image->getClientMimeType(), $allowedTypes))
+                {
+                    if ($image->getSize() <= 512000)
+                    {
+                        $id = md5($image->getClientOriginalName());
+                        $path = Storage::disk('public')->put("materials/$request->id/contentImages", $image);
+                        $files["file-" . $key] = [
+                            "url" => url("/storage/$path"),
+                            "id" => $id
+                        ];
+                    }
+                }
+            }
+        }
+        echo json_encode($files);
+    }
 
-						$path = Storage::disk('public')->put( "materials/$request->id/descriptionImages", $image );
+    public function addContent(Request $request)
+    {
 
-						$files["file-".$key] = array(
-							"url" => url("/storage/$path"),
-							"id" => $id
-						);
-					}
-				}
-			}
-		}
-
-		echo json_encode($files);
-	}
-
-	public function uploadContentImages( Request $request ) {
-
-
-		$allowedTypes = ["image/png", "image/jpeg"];
-		$files = [];
-
-		foreach( $request->file as $key => $image ) {
-			if ( $image->isValid() ) {
-				if ( in_array( $image->getClientMimeType(), $allowedTypes) ) {
-					if ( $image->getSize() <= 512000) {
-						$id = md5( $image->getClientOriginalName() );
-
-						$path = Storage::disk('public')->put( "materials/$request->id/contentImages", $image );
-
-						$files["file-".$key] = array(
-							"url" => url("/storage/$path"),
-							"id" => $id
-						);
-					}
-				}
-			}
-		}
-
-		echo json_encode($files);
-
-	}
-
-	public function addContent( Request $request ) {
-
-		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
-
-		$material = new Material;
-		$material->title = $request->title;
-		$material->subtitle = $request->subtitle;
-		$material->type = $request->type;
-		$material->active = $request->state;
-		$material->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
-
-		if ( $request->type == "Video" ) {
-			$material->video_link = $request->video;
-		}
-		elseif ( $request->type == "Link" ) {
-			$material->file = $request->link;
-		}
-		$material->save();
-
-		CourseMaterial::incrementPriority( $request->courseId, $request->priority );
-
-		Course::find( $request->courseId )->materials()
-			->attach( $material->id, ["active" => $request->state, "priority" => $request->priority + 1 ] );
-
-	}
+        $pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+        $material = new Material;
+        $material->title = $request->title;
+        $material->subtitle = $request->subtitle;
+        $material->type = $request->type;
+        $material->status = $request->state;
+        $material->slug = preg_replace($pattern, "-", mb_strtolower($request->title));
+        if ($request->type == "Video")
+        {
+            $material->video_link = $request->video;
+        } elseif ($request->type == "Link")
+        {
+            $material->file = $request->link;
+        }
+        $material->save();
+        CourseMaterial::incrementPriority($request->courseId, $request->priority);
+        Course::find($request->courseId)->materials()
+            ->attach($material->id, ["status" => $request->state, "priority" => $request->priority + 1]);
+    }
 
     public function destroyMultipleMaterials(Request $request)
-	{
+    {
 
         Material::whereIn('id', $request->material_id)->delete();
+    }
 
-	}
     public function addMaterialMultiple(Request $request)
-	{
+    {
 
         $course = Course::findOrFail($request->course_id);
         $course->materials()->syncWithoutDetaching($request->material_id);
+    }
 
-	}
     public function changeStatusMultiple(Request $request)
-	{
-
+    {
 
         foreach ($request->material_id as $material_id)
         {
             $material = Material::findOrFail($material_id);
-            if($request->status=="on"){
+            if ($request->status == "on")
+            {
                 $material->active = true;
                 $material->save();
-            }
-            else{
+            } else
+            {
                 $material->active = false;
                 $material->save();
             }
         }
 
         return response()->json(['success' => 'Status change successfully.']);
-
-	}
-
+    }
 
 }

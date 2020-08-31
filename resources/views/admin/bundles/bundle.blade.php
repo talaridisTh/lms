@@ -53,8 +53,9 @@
 		<div class="col-xl-3 col-lg-5">
 			<div class="card text-center">
 				<div class="card-body">
-					<img src="{{ asset('storage/bundles/'.$bundle->id.'/cover/'.$bundle->cover) }}" class="img-fluid"
-					alt="profile-image">
+					{{-- <img src="{{ asset('storage/bundles/'.$bundle->id.'/cover/'.$bundle->cover) }}" class="img-fluid" --}}
+					<img src="{{ $bundle->cover }}" class="img-fluid"
+					alt="{{ $bundle->title }}">
 
 					<h4 class="mb-0 mt-2">{{ $bundle['name'] }}</h4>
 					<p class="text-muted font-14">Bundle</p>
@@ -228,11 +229,11 @@
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="example-select">Κατάσταση</label>
-											<select id="active" class="form-control @error('active') is-invalid @enderror" name="active">
-											    <option value="1" {{ $bundle['active'] == 1 ? "selected" : "" }}>Ενεργό</option>
-											    <option value="0" {{ $bundle['active'] == 0 ? "selected" : "" }}>Ανενεργό</option>
+											<select id="active" class="form-control @error('status') is-invalid @enderror" name="status">
+											    <option value="1" {{ $bundle['status'] == 1 ? "selected" : "" }}>Ενεργό</option>
+											    <option value="0" {{ $bundle['status'] == 0 ? "selected" : "" }}>Ανενεργό</option>
 											</select>
-											@error('active')
+											@error('status')
 											    <span class="invalid-feedback" role="alert">
 											        <strong>{{ $message }}</strong>
 											    </span>

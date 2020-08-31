@@ -34,7 +34,7 @@
                                         class="ml-2 ">{{$user->email}}</span></p>
 
                                 <p class="text-muted mb-1 font-13"><strong>Active :</strong> <span
-                                        class="ml-2">{{$user->active == 1 ? 'Ενεργος' : "Ανενεργος"}}</span></p>
+                                        class="ml-2">{{$user->status == 1 ? 'Ενεργος' : "Ανενεργος"}}</span></p>
 
                                 <p class="text-muted mb-1 font-13"><strong>Ρολος :</strong> <span
                                         class="ml-2">    {{$userIs }}</span></p>

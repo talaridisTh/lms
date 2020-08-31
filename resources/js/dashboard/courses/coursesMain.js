@@ -107,7 +107,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 	columns: [
 		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
-		{data: 'active', name: 'active', className: "align-middle"},
+		{data: 'status', name: 'status', className: "align-middle"},
 		{data: 'curator', name: 'curator', className: "align-middle", searchable: false },
 		{data: 'topic', name: 'topic', className: "align-middle", searchable: false },
 		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
@@ -118,7 +118,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
 
-		toggleActive();
+		toggleStatus();
 		checkeBoxesEventListener();
 	}
 })
@@ -141,13 +141,13 @@ function checkeBoxesEventListener() {
 
 }
 
-function toggleActive() {
+function toggleStatus() {
 	$('.js-toggle').unbind();
 
 	$('.js-toggle').on('change', function() {
 		let courseCnt = this.parentElement.parentElement;
 		let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
-		axios.patch('/courses/active', {
+		axios.patch('/courses/status', {
 			course: this.dataset.courseId,
 			state: this.checked
 		})

@@ -31,7 +31,7 @@ class BundleCourseRequest extends FormRequest
     {
         return [
 			/* 'title'			=> 'required|string|max:50',
-			'active' 		=> 'required|numeric|digits:1|gte:0|lte:1',
+			'status' 		=> 'required|numeric|digits:1|gte:0|lte:1',
 			'cover'			=> 'max:150|dimensions:ratio=1.5|mimes:png,jpeg',
 			'description' 	=> 'required|string|max:500' */
 		];

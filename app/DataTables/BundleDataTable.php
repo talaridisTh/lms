@@ -19,7 +19,7 @@ class BundleDataTable extends DataTable
      */
     public function dataTable($query)
     {
-		$query = Bundle::query()->select( 'id', 'name', 'active', 'slug', 'updated_at', 'created_at' );
+		$query = Bundle::query()->select( 'id', 'name', 'status', 'slug', 'updated_at', 'created_at' );
 
         return datatables()
             ->eloquent($query)
@@ -31,15 +31,15 @@ class BundleDataTable extends DataTable
 						</div>";
 
 			})
-			->editColumn('active', function($data) {
+			->editColumn('status', function($data) {
 
-				$active = $data->active == 0 ? "" : "checked";
+				$status = $data->status == 0 ? "" : "checked";
 
-				return "<input class='js-toggle' data-bundle-id='$data->id' type='checkbox' id='". $data->slug ."-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+				return "<input class='js-toggle' data-bundle-id='$data->id' type='checkbox' id='". $data->slug ."-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
 
 			})
-			->rawColumns(['action', 'active'])
+			->rawColumns(['action', 'status'])
 			->setRowAttr([ 'data-bundle-id' => function($data) {
 
 				return  $data->id;
