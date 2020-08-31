@@ -39,7 +39,7 @@ class UserSeeder extends Seeder {
             'password' => Hash::make('password'),
             'status' => 1,
             'remember_token' => Str::random(10),
-        ])->assignRole("admin");
+        ])->assignRole("instructor");
         User::create([
             'first_name' => "instructor",
             'last_name' => "instructor",

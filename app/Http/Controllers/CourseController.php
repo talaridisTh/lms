@@ -75,11 +75,9 @@ class CourseController extends Controller
 		$allRemainingMaterials = Course::notInCourseMaterials( $course );
 		$materials = $course->materials()->orderBy('priority')->get();
 		$topics = Topic::all();
-		// $instructors = Role::whereIn( 'id', [ 1, 2])->users();
-		// $instructors = User::all();
+		$instructors = Role::find( 2 )->users;
 		$lessonIds = [];
 
-		// dd($instructors);
 		foreach ($materials as $lesson) {
 			array_push( $lessonIds, $lesson['id'] );
 		};
@@ -88,7 +86,7 @@ class CourseController extends Controller
 			'course' => $course,
 			'materials' => $materials,
 			'topics' => $topics,
-			// 'instructors' => $instructors,
+			'instructors' => $instructors,
 			'publish' => Carbon::parse( $course->publish_at )->format("d-m-Y H:i"),
 			'allRemainingMaterials' => json_decode($allRemainingMaterials, true),
 		];
@@ -129,6 +127,7 @@ class CourseController extends Controller
 		$course->summary = $request->summary;
 		$course->description = $request->description;
 		$course->publish_at = $dateTime;
+		$course->user_id = $request->curator;
 		// $course->status = $request->status;
 		$course->slug = Str::slug($request->title, "-");
 

@@ -384,17 +384,19 @@
 
 								</select>
 							</div>
-							{{-- <hr>
-							<select form="edit-course-form" class="select2 form-control select2-multiple" name="curator" data-toggle="select2" multiple="multiple" data-placeholder="Επιλέξτε Topics...">
+							<hr>
+							<label for="curator">Κύριος Εισηγητής</label>
+							<select id="curator" form="edit-course-form" class="select2 form-control" name="curator" data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή...">
 										
 								@foreach ($instructors as $instructor)
 									@if ( $course->user_id == $instructor->id )
 										<option value="{{ $instructor->id }}" selected>{{ $instructor->first_name }} {{ $instructor->last_name }}</option>	
+										@continue
 									@endif
 									<option value="{{ $instructor->id }}">{{ $instructor->first_name }} {{ $instructor->last_name }}</option>
 								@endforeach
 
-							</select> --}}
+							</select>
 							<hr>
 							<div class="form-group">
 								<div class="row">
