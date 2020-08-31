@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Material;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class MaterialController extends Controller {
 
@@ -116,7 +117,9 @@ class MaterialController extends Controller {
     public function addContent(Request $request)
     {
 
-        $pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+		$publish = Carbon::now()->format("Y-m-d H:i:s");
+
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
@@ -133,7 +136,7 @@ class MaterialController extends Controller {
         $material->save();
         CourseMaterial::incrementPriority($request->courseId, $request->priority);
         Course::find($request->courseId)->materials()
-            ->attach($material->id, ["status" => $request->state, "priority" => $request->priority + 1]);
+            ->attach($material->id, ["status" => $request->state, "priority" => $request->priority + 1, "publish_at" => $publish]);
     }
 
     public function destroyMultipleMaterials(Request $request)
