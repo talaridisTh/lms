@@ -42,6 +42,7 @@ class CourseController extends Controller
 
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
+
 		$course = new Course;
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
@@ -49,6 +50,7 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->status = $request->status;
 		$course->slug = Str::slug($request->title, "-");
+		$course->publish_at = Carbon::now()->format("Y-m-d H:i:s");
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		$course->cover = "https://placehold.co/600x400";
 		
