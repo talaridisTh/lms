@@ -10,7 +10,7 @@
 @section('content')
     <section class="container-fruid">
         <div class="row">
-            <div class="col-xl-9 col-lg-7 col-md-12" id="material-form">
+            <div class="col-xl-9 col-lg-12 col-md-12" id="material-form">
                 <ul class="nav nav-tabs mb-3">
                     <li class="nav-item">
                         <a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">

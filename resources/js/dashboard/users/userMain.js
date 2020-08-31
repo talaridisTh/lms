@@ -103,7 +103,6 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
             $("thead >tr> th").removeClass("js-link cursor-pointer");
             $("tfoot > tr > th").removeClass("js-link cursor-pointer");
 
-            selectAlljscheckboxSubTable()
             selectDetachCourses();
             routeLinkCourse();
             hoverOnSelectSub()

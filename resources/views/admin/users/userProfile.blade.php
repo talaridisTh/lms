@@ -22,7 +22,7 @@
     <div class="container-fruid">
         <div class="content">
             <div class="row">
-                <div class="col-xl-12 col-lg-7 col-md-12">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
 

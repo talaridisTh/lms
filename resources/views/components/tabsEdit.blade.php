@@ -3,7 +3,7 @@
     @method("patch")
     @csrf
     <div class="row">
-        <div class="col-md-4 border-material">
+        <div class="col-lg-4 col-md-6 col-sm-12  border-material">
             <h4>Πληροφορίες</h4>
             <div class="form-group my-3">
                 <label for="first_name">Όνομα</label>
@@ -61,7 +61,7 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-6 col-sm-12">
             <div class="col-md-12 border-material">
                 <h4>Photo</h4>
             </div>
@@ -117,7 +117,7 @@
 
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-12 col-sm-12">
             <div class="sticky" style="margin-top:-60px;margin-bottom: 54px">
                 <button class="buton-create-material btn btn-sm btn-primary mr-2">Ενημέρωση</button>
 {{--                <form method="POST" id="alertSumbit"--}}
