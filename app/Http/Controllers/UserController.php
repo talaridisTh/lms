@@ -80,9 +80,9 @@ class UserController extends Controller {
 
 
         if($request->sendMail){
-            $mail = ['message' => 'This is a test!'];
 
-            Mail::to('john@example.com')->send(new NewUserNotification($mail));
+
+            Mail::to(auth()->user()->email)->send(new NewUserNotification($user->fullName));
         }
 
 
@@ -92,11 +92,12 @@ class UserController extends Controller {
     public function update(Request $request, User $user)
     {
         //
-        $user->update($request->except('roles','password','avatar','password_confirmation'));
-        $data = collect($request)->except("avatar")->all();
+
+        $user->update($request->except('roles','password','avatar','password_confirmation',"status","sendMail"));
+        $data = collect($request)->except("avatar","sendMail")->all();
 
 
-        $user->syncRoles($request->role);
+        $user->syncRoles($request->roles);
         if ($files = $request->file('avatar'))
         {
             $destinationPath = 'public/image/users';
@@ -105,6 +106,11 @@ class UserController extends Controller {
             $data['avatar'] = $profileImage;
         }
 
+        if($request->sendMail){
+
+
+            Mail::to(auth()->user()->email)->send(new NewUserNotification($user->fullName));
+        }
         return redirect()->back()->with('update', 'Ο ' . $user->fullName . ' ενημερώθηκε');
     }
 

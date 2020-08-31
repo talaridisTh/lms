@@ -1,4 +1,6 @@
 
 
-<p>Thank you</p>
+{{$msg}}  Thanks,<br>
+
+    {{ config('app.name') }}
 

@@ -69,10 +69,9 @@
                 <h4>Security</h4>
                 <div class="form-group">
                     <select name="roles" id="roles" class="form-control  select2" data-toggle="select2">
-                        <option value="{{$user->roles[0]->id}}">{{$user->roles[0]->name}}</option>
                         @foreach($rolesName as $role)
                             <option
-                                value="{{$role->id}} {{$role->id==$user->roles[0]->id? "selected":""}}">{{$role->name }}</option>
+                                value="{{$role->id}}" {{$role->id==$user->roles[0]->id? "selected":""}}">{{$role->name }}</option>
                         @endforeach
                     </select>
                     @error('roles')
@@ -177,7 +176,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="my-2"><img height="60" class="rounded-circle"
-                                               src="https://recap-project.eu/wp-content/uploads/2017/02/default-user.jpg"
+                                               src="{{$user->avatar}}"
                                                alt=""></div>
                     </div>
                 </div>
