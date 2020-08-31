@@ -173,7 +173,7 @@ class CourseController extends Controller
 		}
 
 		$authors = Course::courseAuthors( $materialId );
-		$materials = $course->materials()->where('course_material.active', 1)->orderBy('priority')->get();
+		$materials = $course->materials()->where('course_material.status', 1)->orderBy('priority')->get();
 
 		$data = [
 			'course' => $course,

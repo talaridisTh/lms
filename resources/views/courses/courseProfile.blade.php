@@ -40,7 +40,8 @@
 					<div class="row">
 						<div class="col-sm-8">
 							<div class="media">
-								<span class="float-left m-2 mr-4"><img src='{{ asset("storage/courses/$course->id/cover/$course->cover" )}}' style="height: 100px;" alt="" class="rounded-circle img-thumbnail"></span>
+								{{-- <span class="float-left m-2 mr-4"><img src='{{ asset("storage/courses/$course->id/cover/$course->cover" )}}' style="height: 100px;" alt="" class="rounded-circle img-thumbnail"></span> --}}
+								<span class="float-left m-2 mr-4"><img src='https://placehold.co/400x400' style="height: 100px;" alt="" class="rounded-circle img-thumbnail"></span>
 								<div class="media-body">
 
 									<h4 class="mt-1 mb-1 text-white">{{ $course->name }}</h4>
