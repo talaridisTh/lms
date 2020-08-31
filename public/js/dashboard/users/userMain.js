@@ -139,7 +139,11 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bab
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! C:\laragon\www\lmsdemo\resources\js\dashboard\users\userMain.js */"./resources/js/dashboard/users/userMain.js");
+=======
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo - HEAD\resources\js\dashboard\users\userMain.js */"./resources/js/dashboard/users/userMain.js");
+>>>>>>> 47fb29b759f488342e064d3fc8a201b654cc6fac
 
 
 /***/ })

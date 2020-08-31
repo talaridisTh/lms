@@ -105,7 +105,11 @@ eval("__webpack_require__.r(__webpack_exports__);\nElement.prototype.findParent 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! C:\laragon\www\lmsdemo\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
+=======
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo - HEAD\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
+>>>>>>> 47fb29b759f488342e064d3fc8a201b654cc6fac
 
 
 /***/ })

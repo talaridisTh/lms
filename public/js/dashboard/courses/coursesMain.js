@@ -117,7 +117,11 @@ eval("__webpack_require__.r(__webpack_exports__);\nElement.prototype.findParent 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+<<<<<<< HEAD
 module.exports = __webpack_require__(/*! C:\laragon\www\lmsdemo\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
+=======
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo - HEAD\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
+>>>>>>> 47fb29b759f488342e064d3fc8a201b654cc6fac
 
 
 /***/ })

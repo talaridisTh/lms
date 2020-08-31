@@ -127,7 +127,7 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { \"@b
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo - HEAD\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
 
 
 /***/ })
