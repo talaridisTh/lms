@@ -147,7 +147,7 @@ $('#add-remaingings-btn').click( function() {
 				additionsCount++
 			}
 		}
-		postMaterialIds( ids, lessonsCount, additionsCount );
+		postMaterialIds( ids);
 	}
 
 	$('#add-materials-modal').modal('hide');
@@ -488,7 +488,7 @@ function addMaterialsEventListerner() {
 		const materialId = [this.dataset.materialId];
 		const lessonsCount = this.dataset.materialType == "Lesson" ? 1 : 0;
 		const additionsCount = this.dataset.materialType != "Lesson" ? 1 : 0;
-		postMaterialIds( materialId, lessonsCount, additionsCount );
+		postMaterialIds( materialId );
 	});
 }
 
@@ -637,7 +637,7 @@ function removeUsers( userIds, caller ) {
 	})
 }
 
-function postMaterialIds( materialId, lessonsCount, additionsCount ) {
+function postMaterialIds( materialId ) {
 	axios.post( "/courses/add-materials", {
 		courseId,
 		materialId

@@ -43,7 +43,7 @@ class UserController extends Controller {
     {
         //
         $user = new User();
-        $data = collect($request)->except('password', "avatar", "sendMail", "roles")->all();
+        $data = collect($request)->except('password', "avatar", "sendMail", "roles","password_confirmation")->all();
         $data['password'] = Hash::make("password");
         $data["slug"] = Str::slug($request->first_name, "-");
         if ($files = $request->file('avatar'))
