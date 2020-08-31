@@ -84,17 +84,29 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */,
-/* 1 */
+/******/ ({
+
+/***/ "./resources/js/dashboard/courses/coursesCreate.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/dashboard/courses/coursesCreate.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuL3Jlc291cmNlcy9qcy9kYXNoYm9hcmQvY291cnNlcy9jb3Vyc2VzQ3JlYXRlLmpzLmpzIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/dashboard/courses/coursesCreate.js\n");
+
+/***/ }),
+
+/***/ 1:
 /*!***************************************************************!*\
   !*** multi ./resources/js/dashboard/courses/coursesCreate.js ***!
   \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-!(function webpackMissingModule() { var e = new Error("Cannot find module 'D:\\Coding\\DarkProjects\\Demo LMS\\resources\\js\\dashboard\\courses\\coursesCreate.js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\courses\coursesCreate.js */"./resources/js/dashboard/courses/coursesCreate.js");
 
 
 /***/ })
-/******/ ]);
+
+/******/ });
