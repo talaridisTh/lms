@@ -151,7 +151,7 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {\n\nfunction _typeof(obj) {\
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\courses\courseProfile.js */"./resources/js/dashboard/courses/courseProfile.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo - HEAD\resources\js\dashboard\courses\courseProfile.js */"./resources/js/dashboard/courses/courseProfile.js");
 
 
 /***/ })
