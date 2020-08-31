@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use DateTime;
 
 class CourseController extends Controller
 {
@@ -27,8 +26,14 @@ class CourseController extends Controller
 
     public function create()
     {
+		$topics = Topic::all();
+		$instructors = Role::find( 2 )->users;
 
-		return view('admin/courses/newCourse');
+		$data = [
+			'topics' => $topics,
+			'instructors' => $instructors
+		];
+		return view('admin/courses/newCourse')->with( $data );
 
     }
 
@@ -42,6 +47,7 @@ class CourseController extends Controller
 
 		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
+
 		$course = new Course;
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
@@ -49,6 +55,7 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->status = $request->status;
 		$course->slug = Str::slug($request->title, "-");
+		$course->publish_at = Carbon::now()->format("Y-m-d H:i:s");
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		$course->cover = "https://placehold.co/600x400";
 		
@@ -159,7 +166,9 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+		$course->delete();
+
+        return redirect("/dashboard/courses");
 	}
 	
 	public function userCourse( Course $course ) {

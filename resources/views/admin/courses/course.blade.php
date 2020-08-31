@@ -363,7 +363,7 @@
 					<div class="sticky pb-3 px-2">
 						<button form="edit-course-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
 						<button id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i> </button>
-						<button id="delete-btn" class="under-development btn btn-danger float-right">Διαγραφή</button>
+						<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
 					</div>
 
 					<div class="card">
@@ -478,6 +478,13 @@
 			</div>
 		</div>
 	</div>
+	{{-- <form id="delete-course-form" action="{{ route("course.destroy", $course->id ) }}" method="POST"> --}}
+	<form id="delete-course-form" action="{{ $course->id }}" method="POST">
+		
+		@csrf
+		@method('DELETE')
+
+	</form>
 @endsection
 
 @section('scripts')

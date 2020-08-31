@@ -23,6 +23,7 @@ class RemainingCoursesDataTable extends DataTable
     {
 		$query = DB::table('courses')
 			->whereStatus( 1 )
+			->where("deleted_at", null)
 			->whereNotIn( 'id', 
 
 				function($subquery) use ( $request ){

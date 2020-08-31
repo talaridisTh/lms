@@ -45,7 +45,7 @@ $('#delete-courses-btn').click( function() {
 		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? "αρχείο θα διαγραφεί" : " αρχεία θα διαγραφούν"}`,
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonText: 'Ναί, διαγραφή!',
+		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
 
@@ -102,7 +102,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 	language: utilities.tableLocale,
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-updated-at");
 
 		toggleStatus();
 		checkeBoxesEventListener();

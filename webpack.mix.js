@@ -12,6 +12,7 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
+	.js('resources/js/dashboard/courses/coursesCreate.js', 'public/js/dashboard/courses')
 	.js('resources/js/dashboard/courses/coursesMain.js', 'public/js/dashboard/courses')
 	.js('resources/js/dashboard/courses/courseProfile.js', 'public/js/dashboard/courses')
 	.js('resources/js/dashboard/bundles/bundlesMain.js', 'public/js/dashboard/bundles')

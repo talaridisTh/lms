@@ -59,8 +59,10 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 	//! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course}', 'CourseController@show')->name('course.show');
+    Route::get('/dashboard/courses/create', 'CourseController@create')->name('course.create');
     Route::post('/dashboard/courses/store', 'CourseController@store')->name('course.store');
     Route::patch('/dashboard/courses/update/{course}', 'CourseController@update')->name('course.update');
+    Route::delete('/dashboard/course/{course}', 'CourseController@destroy')->name('course.destroy');
 
 	//!Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');

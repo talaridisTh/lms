@@ -12,6 +12,24 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! EventListerners
 //!============================================================
 
+$("#course-delete-btn").click( function() {
+	Swal.fire({
+		title: 'Είστε σίγουρος;',
+		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, διαγραφή!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			$("#delete-course-form").submit();
+			
+		}
+	})
+})
+
 $("#publish-date-select").daterangepicker({
 	singleDatePicker: true,
 	drops: "auto",
