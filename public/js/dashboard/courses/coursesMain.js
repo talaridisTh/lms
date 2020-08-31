@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -110,14 +110,14 @@ eval("__webpack_require__.r(__webpack_exports__);\nElement.prototype.findParent 
 
 /***/ }),
 
-/***/ 1:
+/***/ 2:
 /*!*************************************************************!*\
   !*** multi ./resources/js/dashboard/courses/coursesMain.js ***!
   \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
 
 
 /***/ })

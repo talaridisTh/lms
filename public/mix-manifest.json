@@ -1,14 +1,15 @@
 {
-    "/js/app.js": "/js/app.js?id=674fb1e101a90cf507b1",
+    "/js/app.js": "/js/app.js?id=2f09a9d5c8e57b2f3123",
     "/css/app.css": "/css/app.css?id=b28d5c59b32f1513271f",
-    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=b3f4522568f83483288a",
-    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=6094b5e4d827f7a2456b",
-    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=561fdd35688fbafad617",
-    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=00f2b3c22fda1895e389",
-    "/js/dashboard/main.js": "/js/dashboard/main.js?id=ea0a1709922bc51001cb",
-    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=7771eb3e02788bc0a757",
-    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=f8f278d9f1e1deac8656",
-    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=c69bda53b59a31cd7872",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=f9605301a1545201e2ea",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=51cfea391bb997271c7e"
+    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=253a3ce45242e0391675",
+    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=2a079cd4e26ef141e35a",
+    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=0a77cef94478ba85dd84",
+    "/js/dashboard/courses/coursesCreate.js": "/js/dashboard/courses/coursesCreate.js?id=f0c404739d4f8847c70c",
+    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=d16aad9daf39ea2162a8",
+    "/js/dashboard/main.js": "/js/dashboard/main.js?id=cd5e2a986e1a0f2cd5e2",
+    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=eaca11b6cb79092fa257",
+    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=44c6b8fab4a26ce75473",
+    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=79ed273cb1e23cb6a144",
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=9ed344f270467b4d7332",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=b3e384bc837f28fcf95f"
 }

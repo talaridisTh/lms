@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 5);
+/******/ 	return __webpack_require__(__webpack_require__.s = 6);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -132,14 +132,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bab
 
 /***/ }),
 
-/***/ 5:
+/***/ 6:
 /*!*****************************************************************!*\
   !*** multi ./resources/js/dashboard/materials/materialsMain.js ***!
   \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo\resources\js\dashboard\materials\materialsMain.js */"./resources/js/dashboard/materials/materialsMain.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\materials\materialsMain.js */"./resources/js/dashboard/materials/materialsMain.js");
 
 
 /***/ })

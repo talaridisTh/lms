@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -144,14 +144,14 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {\n\nfunction _typeof(obj) {\
 
 /***/ }),
 
-/***/ 2:
+/***/ 3:
 /*!***************************************************************!*\
   !*** multi ./resources/js/dashboard/courses/courseProfile.js ***!
   \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo\resources\js\dashboard\courses\courseProfile.js */"./resources/js/dashboard/courses/courseProfile.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\courses\courseProfile.js */"./resources/js/dashboard/courses/courseProfile.js");
 
 
 /***/ })

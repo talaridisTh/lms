@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -120,14 +120,14 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { \"@b
 
 /***/ }),
 
-/***/ 6:
+/***/ 7:
 /*!************************************************************!*\
   !*** multi ./resources/js/dashboard/materials/material.js ***!
   \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\lmsdemo\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
 
 
 /***/ })

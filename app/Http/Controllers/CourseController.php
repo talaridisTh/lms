@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-use DateTime;
 
 class CourseController extends Controller
 {
@@ -27,8 +26,14 @@ class CourseController extends Controller
 
     public function create()
     {
+		$topics = Topic::all();
+		$instructors = Role::find( 2 )->users;
 
-		return view('admin/courses/newCourse');
+		$data = [
+			'topics' => $topics,
+			'instructors' => $instructors
+		];
+		return view('admin/courses/newCourse')->with( $data );
 
     }
 
