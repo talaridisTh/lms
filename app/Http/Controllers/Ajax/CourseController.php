@@ -101,12 +101,12 @@ class CourseController extends Controller
 		}
 	}
 	
-	public function toggleActive(Request $request) {
+	public function toggleStatus(Request $request) {
 
 		$data = $request->all();
 
 		$course = Course::find($data['course']);
-		$course->active = $data['state'] == 1 ? 1 : 0;
+		$course->status = $data['state'] == 1 ? 1 : 0;
 		$course->updated_at = Carbon::now();
 		$course->save();
 	}
@@ -157,7 +157,7 @@ class CourseController extends Controller
 
 		$state = $data['state'] == 1 ? 1 : 0;
 
-		$course->materials()->updateExistingPivot( $data['materialId'], [ 'active' => $state ]);
+		$course->materials()->updateExistingPivot( $data['materialId'], [ 'status' => $state ]);
 
 		$course->updated_at = Carbon::now();
 		$course->save();
@@ -177,7 +177,7 @@ class CourseController extends Controller
 		}
 
 		foreach ( $materialIds as $key => $id ) {
-			$course->materials()->attach( $id, ['active' => 0, 'priority' => $lastMaterialId + $key + 1 ] );
+			$course->materials()->attach( $id, ['status' => 0, 'priority' => $lastMaterialId + $key + 1 ] );
 		}
 
 		$course->updated_at = Carbon::now();

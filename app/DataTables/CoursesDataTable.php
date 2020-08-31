@@ -71,11 +71,11 @@ class CoursesDataTable extends DataTable
 				<a href='#' class='custom-link-primary'>View</a>";
 
 			})
-			->editColumn('active', function($data) {
+			->editColumn('status', function($data) {
 
-				$active = $data->active == 0 ? "" : "checked";
+				$status = $data->status == 0 ? "" : "checked";
 
-				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='$data->slug-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
@@ -92,7 +92,12 @@ class CoursesDataTable extends DataTable
 			})
 			->editColumn('curator', function($data) {
 
-				$fullName = $data->curator->first_name ." ". $data->curator->last_name;
+				if ( $data->curator ) {
+					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
+				}
+				else {
+					$fullName = "";
+				}
 
 				return $fullName;
 
@@ -107,7 +112,7 @@ class CoursesDataTable extends DataTable
 				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
 
 			})
-			->rawColumns(['action', 'title', 'active'])
+			->rawColumns(['action', 'title', 'status'])
 			->setRowAttr([ 'data-course-id' => function($data) {
 
 				return  $data->id;
@@ -162,7 +167,7 @@ class CoursesDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('title'),
-            Column::make('active'),
+            Column::make('status'),
             Column::make('created_at'),
             Column::make('updated_at'),
         ];

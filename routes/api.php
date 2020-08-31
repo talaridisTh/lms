@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //!	Courses Ajax Calls
 // Route::delete( 'courses/massdestroy/{ids}', 'Api\CourseController@massdestroy' );
-// Route::patch( 'courses/active', 'Api\CourseController@toggleActive' );
+// Route::patch( 'courses/status', 'Api\CourseController@toggleStatus' );
 // Route::patch( 'courses/priority', 'Api\CourseController@changePriority' );
 // Route::patch( 'courses/toggle-materials', 'Api\CourseController@toggleCourseMaterials' );
 // Route::post( 'courses/add-materials', 'Api\CourseController@addMaterials' );
@@ -34,7 +34,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //! Bundles Datatables
 // Route::post( 'bundles/bundles-datatable', 'Api\BundleController@index' );
-// Route::patch( 'bundles/bundles-toggle-active/{bundle}', 'Api\BundleController@update' );
+// Route::patch( 'bundles/bundles-toggle-status/{bundle}', 'Api\BundleController@update' );
 
 //Users
 // Route::post('users/view-users', 'Api\UserController@index')->name("index.datatable");

@@ -25,7 +25,7 @@ class UserSeeder extends Seeder {
             'avatar' => "https://lorempixel.com/640/480/?10211",
             'slug' => "admin",
             'password' => Hash::make('password'),
-            'active' => 1,
+            'status' => 1,
             'remember_token' => Str::random(10),
 		])->assignRole("admin");
 		User::create([
@@ -33,11 +33,11 @@ class UserSeeder extends Seeder {
             'last_name' => "Idrogios",
             'avatar' => "https://lorempixel.com/640/480/?10211",
             'email' => "idrogios@gmail.com",
-            "phone"=>"6978df65698",
+            "phone"=>"6978512598",
             "profil"=>"Idrogios profil",
             'slug' => "Idrogios",
             'password' => Hash::make('password'),
-            'active' => 1,
+            'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("admin");
         User::create([
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder {
             'avatar' => "https://lorempixel.com/640/480/?10961",
             'slug' => "instructor",
             'password' => Hash::make('password'),
-            'active' => 1,
+            'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("instructor");
         User::create([
@@ -61,7 +61,7 @@ class UserSeeder extends Seeder {
             'avatar' => "https://lorempixel.com/640/480/?10914",
             'slug' => "partner profil",
             'password' => Hash::make('password'),
-            'active' => 1,
+            'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("partner");
         User::create([
@@ -73,7 +73,7 @@ class UserSeeder extends Seeder {
             'avatar' => "https://lorempixel.com/640/480/?10917",
             'slug' => "student",
             'password' => Hash::make('password'),
-            'active' => 1,
+            'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("student");
 

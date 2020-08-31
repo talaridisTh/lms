@@ -63,11 +63,11 @@
 							<div class="col-md-6">
 								<div class="form-group">
 									<label for="example-select">Κατάσταση</label>
-									<select class="form-control @error('active') is-invalid @enderror" id="active" name="active">
-										<option value="1" {{ old('active') == 1 ? "selected" : "" }}>Ενεργό</option>
-										<option value="0" {{ old('active') == 0 ? "selected" : "" }}>Ανενεργό</option>
+									<select class="form-control @error('status') is-invalid @enderror" id="active" name="status">
+										<option value="1" {{ old('status') == 1 ? "selected" : "" }}>Ενεργό</option>
+										<option value="0" {{ old('status') == 0 ? "selected" : "" }}>Ανενεργό</option>
 									</select>
-									@error('active')
+									@error('status')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
 										</span>

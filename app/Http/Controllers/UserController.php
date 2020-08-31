@@ -65,17 +65,17 @@ class UserController extends Controller {
         {
             $data["avatar"] = "https://robohash.org/default.png?set=set4";
         }
-        if($request->active){
+        if($request->status){
 
 
         }
         if($request->password){
             $data["password"] =  bcrypt(request("password"));
         }
-        if($request->active){
-            $data["active"] =  1;
+        if($request->status){
+            $data["status"] =  1;
         }else{
-            $data["active"] =  0;
+            $data["status"] =  0;
         }
 
 

@@ -93,7 +93,7 @@
             //             },
             //             {
             //                         className: 'btn-primary px-2 ml-2 border-0',
-            //                         titleAttr: 'active',
+            //                         titleAttr: 'status',
             //                         text: 'Ενεργοι',
             //                         action: function ( e, dt, node, config ) {
             //                             if (dt.column(7).search() === '1') {

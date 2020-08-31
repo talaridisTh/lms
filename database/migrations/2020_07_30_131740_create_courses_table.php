@@ -20,9 +20,10 @@ class CreateCoursesTable extends Migration
             $table->string('summary')->nullable();
             $table->string('cover');
             $table->string('description')->nullable();
-            $table->unsignedBigInteger('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('user_id')->references('id')->on('users')->nullable();
             $table->string('slug');
-            $table->unsignedTinyInteger('active');
+			$table->unsignedTinyInteger('status');
+			$table->timestamp('publish_at');
             $table->timestamps();
         });
     }

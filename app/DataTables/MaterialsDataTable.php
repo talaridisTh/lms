@@ -58,7 +58,7 @@ class MaterialsDataTable extends DataTable {
             })
             ->addColumn('activeHidden', function ($data) {
 
-                return $data->active;
+                return $data->status;
             })
             ->editColumn('title', function($data) {
 
@@ -69,14 +69,14 @@ class MaterialsDataTable extends DataTable {
 						<a href='#' class='custom-link-primary'>View</a>";
 
             })
-            ->editColumn('active', function ($data) {
+            ->editColumn('status', function ($data) {
 
-                $active = $data->active == 0 ? "" : "checked";
+                $status = $data->status == 0 ? "" : "checked";
 
-                return "<input class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $active data-switch='bool' autocomplete='off'/>
+                return "<input class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->slug . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
-            ->rawColumns(['action', 'active',"courses","humans","title","activeHidden"])
+            ->rawColumns(['action', 'status',"courses","humans","title","activeHidden"])
             ->setRowAttr(['data-material-id' => function ($data) {
 
                 return $data->id;

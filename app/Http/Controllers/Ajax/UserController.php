@@ -40,7 +40,7 @@ class UserController {
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
-        $user->active = $request->active;
+        $user->status = $request->status;
         $user->save();
 
         return response()->json(['success' => 'Status change successfully.']);
@@ -53,11 +53,11 @@ class UserController {
         {
             $user = User::findOrFail($user_id);
             if($request->status=="on"){
-                $user->active = true;
+                $user->status = true;
                 $user->save();
             }
             else{
-                $user->active = false;
+                $user->status = false;
                 $user->save();
             }
         }

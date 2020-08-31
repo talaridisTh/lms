@@ -46,7 +46,7 @@ $("#update-btn").click( function() {
 
 $("#active-switch").change( function() {
 
-	axios.patch( "/courses/active", {
+	axios.patch( "/courses/status", {
 		course: courseId,
 		state: this.checked ? 1 : 0
 	})
@@ -198,7 +198,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', className: "position-relative align-middle", orderable: false },
 		{ data: 'title', name: 'title' },
-		{ data: 'active', name: 'course_material.active', className: "align-middle", },
+		{ data: 'status', name: 'course_material.status', className: "align-middle", },
 		{ data: 'priority', name: 'course_material.priority', className: "align-middle",  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "cursor-default align-middle" },
 		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default align-middle", searchable: false },

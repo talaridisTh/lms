@@ -98,7 +98,7 @@
 
                             <input type="hidden" class="form-control" id="topicMaterialHidden">
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
-                            <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
+                            <input name="status" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
                             <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
                             <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
                             <input name="cover" hidden type="file" class="form-control" id="coverMaterialHidden">
@@ -183,7 +183,7 @@
                             <label for="createAtMaterial">Κατάσταση</label>
                         </div>
                         <div class="col-5 ">
-                            <input type="checkbox" id="activeMaterial" {{$material->active == 0 ? "" : "checked"}} data-switch="bool"/>
+                            <input type="checkbox" id="activeMaterial" {{$material->status == 0 ? "" : "checked"}} data-switch="bool"/>
                             <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                         </div>
                     </div>

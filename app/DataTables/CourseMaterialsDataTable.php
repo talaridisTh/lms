@@ -30,7 +30,7 @@ class CourseMaterialsDataTable extends DataTable
 			$query = DB::table('materials')
 			->join('course_material', 'materials.id', '=', 'course_material.material_id')
 			->select('materials.id as materialId', 'materials.title', 
-				'materials.active as materialActive', 'course_material.active as active', 
+				'materials.status as materialActive', 'course_material.status as status', 
 				'course_material.priority', 'materials.type', 'materials.slug', 
 				'materials.updated_at as updatedAt', 'materials.created_at as createdAt', 
 				'course_material.id')
@@ -42,7 +42,7 @@ class CourseMaterialsDataTable extends DataTable
 			$query = DB::table('materials')
 			->join('course_material', 'materials.id', '=', 'course_material.material_id')
 			->select('materials.id as materialId', 'materials.title', 
-				'materials.active as materialActive', 'course_material.active as active', 
+				'materials.status as materialActive', 'course_material.status as status', 
 				'course_material.priority', 'materials.type', 'materials.slug', 
 				'materials.updated_at as updatedAt', 'materials.created_at as createdAt', 
 				'course_material.id')
@@ -89,13 +89,13 @@ class CourseMaterialsDataTable extends DataTable
 				return "<p class='mb-1'>$createdAt</p>";
 
 			})
-			->editColumn('active', function($data) use ($request) {
+			->editColumn('status', function($data) use ($request) {
 
-				$active = $data->active == 0 ? "" : "checked";
+				$status = $data->status == 0 ? "" : "checked";
 
 				return "<input class='js-toggle' data-course-id='$request->courseId'
 					type='checkbox' id='". $data->slug ."-toggle-checkbox' 
-					data-material-id='$data->materialId' $active data-switch='bool' autocomplete='off'/>
+					data-material-id='$data->materialId' $status data-switch='bool' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
@@ -111,7 +111,7 @@ class CourseMaterialsDataTable extends DataTable
 			->editColumn('type', function($data) {
 				return "<p class='mb-1'>$data->type</p>";
 			})
-			->rawColumns(['action', 'title', 'active', 'priority', 'type', 'updated_at', 'created_at'])
+			->rawColumns(['action', 'title', 'status', 'priority', 'type', 'updated_at', 'created_at'])
 			->setRowAttr(
 				[ 'data-material-id' => function($data) {
 
@@ -172,7 +172,7 @@ class CourseMaterialsDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('name'),
-            Column::make('active'),
+            Column::make('status'),
             Column::make('priority'),
             Column::make('type'),
             Column::make('updated_at'),

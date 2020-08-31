@@ -25,7 +25,7 @@ class CreateMaterialsTable extends Migration
             $table->text('content')->nullable();
             $table->text('gallery')->nullable();
             $table->text('file')->nullable();
-            $table->unsignedTinyInteger('active');
+            $table->unsignedTinyInteger('status');
             $table->string('type', 20)->nullable();
             $table->timestamps();
         });

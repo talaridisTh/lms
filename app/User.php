@@ -22,7 +22,7 @@ class User extends Authenticatable {
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'avatar', 'active', 'email', 'password', "avatar","slug",
+        'first_name', 'last_name', 'avatar', 'status', 'email', 'password', "avatar","slug",
     ];
 
     protected $guarded = [];
@@ -148,7 +148,7 @@ class User extends Authenticatable {
     public static function courseWhereNotExist($user)
     {
        $test = DB::table('courses')
-           ->where('active', 1)
+           ->where('status', 1)
             ->whereNotIn('id',
                 function ($query) use ($user) {
 
@@ -165,7 +165,7 @@ class User extends Authenticatable {
     public static function courseWhereActive()
     {
 
-        return Course::where("active",1)->get();
+        return Course::where("status",1)->get();
 
     }
 

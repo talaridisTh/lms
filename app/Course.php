@@ -23,7 +23,7 @@ class Course extends Model
 
     public function materials() {
 
-		return $this->belongsToMany(Material::class)->withPivot('active', 'priority')->orderBy('priority');
+		return $this->belongsToMany(Material::class)->withPivot('status', 'priority')->orderBy('priority');
 
 	}
 
@@ -44,7 +44,7 @@ class Course extends Model
 	public static function notInCourseMaterials( Course $course ) {
 
 		$materials =  DB::table('materials')
-			->where('active', 1)
+			->where('status', 1)
 			->whereNotIn( 'id',
 				function($query) use ($course) {
 

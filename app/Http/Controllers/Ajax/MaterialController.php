@@ -49,9 +49,9 @@ class MaterialController extends Controller
         //
 	}
 
-	public function toggleActive(Material $material, Request $request) {
+	public function toggleStatus(Material $material, Request $request) {
 
-		$material->active = $request->state;
+		$material->status = $request->state;
 		$material->save();
 
 	}
@@ -121,7 +121,7 @@ class MaterialController extends Controller
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
 		$material->type = $request->type;
-		$material->active = $request->state;
+		$material->status = $request->state;
 		$material->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
 
 		if ( $request->type == "Video" ) {
@@ -135,7 +135,7 @@ class MaterialController extends Controller
 		CourseMaterial::incrementPriority( $request->courseId, $request->priority );
 
 		Course::find( $request->courseId )->materials()
-			->attach( $material->id, ["active" => $request->state, "priority" => $request->priority + 1 ] );
+			->attach( $material->id, ["status" => $request->state, "priority" => $request->priority + 1 ] );
 
 	}
 

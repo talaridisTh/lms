@@ -93,7 +93,7 @@
                             </div>
 
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
-                            <input name="active" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
+                            <input name="status" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
                             <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
                             <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
                             <input name="cover" type="file" hidden class="form-control" id="coverMaterialHidden">

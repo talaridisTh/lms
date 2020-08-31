@@ -71,7 +71,7 @@ class RegisterController extends Controller
             'avatar' => "dfadsfdgfsadfvg",
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'active' => 0,
+            'status' => 0,
         ])->assignRole('student');
     }
 }

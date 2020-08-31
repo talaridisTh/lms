@@ -203,7 +203,7 @@
                             <label for="createAtMaterial">Κατάσταση</label>
                         </div>
                         <div class="col-5 ">
-                            <input name="active"  type="checkbox" id="activeMaterial" checked data-switch="bool"/>
+                            <input name="status"  type="checkbox" id="activeMaterial" checked data-switch="bool"/>
                             <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                         </div>
                     </div>

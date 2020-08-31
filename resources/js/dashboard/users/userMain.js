@@ -37,7 +37,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         {data: "last_name", name: "last_name", className: "js-link cursor-pointer"},
         {data: "action", name: "action", className: "js-link cursor-pointer"},
         {data: "email", name: "email", className: "js-link cursor-pointer"},
-        {data: 'active', name: 'active', orderable: false},
+        {data: 'status', name: 'status', orderable: false},
         {data: 'created_at', name: 'created_at', className: "js-link cursor-pointer", visible: false},
         {data: 'activeNum', name: 'activeNum', visible: false},
         {data: 'dateChange', name: 'dateChange'},
@@ -91,7 +91,7 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
         columns: [
             {data: 'action', name: 'action', orderable: false},
             {data: 'title', name: 'title', className: "js-link-course cursor-pointer"},
-            // {data: 'active', name: 'active', orderable: false},
+            // {data: 'status', name: 'status', orderable: false},
             {data: 'updated_at', name: 'updated_at', className: "js-link-course cursor-pointer"},
             {data: 'created_at', name: 'created_at', className: "js-link-course cursor-pointer"},
         ],
@@ -402,7 +402,7 @@ const toogleInput = () => {
         const user_id = $(this).data('id');
         try {
             const {data} = await axios.patch(config.routes.changeStatusDatatable, {
-                'active': status,
+                'status': status,
                 'id': user_id
             })
             tables.ajax.reload()

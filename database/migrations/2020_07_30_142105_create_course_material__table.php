@@ -13,13 +13,13 @@ class CreateCourseMaterialTable extends Migration
      */
     public function up()
     {
-        $secs = rand(0, 59);
         Schema::create('course_material', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
-           	$table->unsignedSmallInteger('active')->default(0);
-           	$table->unsignedSmallInteger('priority')->nullable();
+			$table->id();
+			$table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
+			$table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
+			$table->unsignedSmallInteger('status')->default(0);
+			$table->unsignedSmallInteger('priority');
+			$table->timestamp('publish_at');
         });
     }
 

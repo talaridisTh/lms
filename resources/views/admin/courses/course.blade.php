@@ -372,7 +372,7 @@
 							<hr>
 							<div class="d-flex justify-content-between">
 								<span><strong>Κατάσταση</strong></span>
-								<input type="checkbox" id="active-switch" {{ $course['active'] == 1 ? "checked" : "" }} data-switch="bool"/>
+								<input type="checkbox" id="active-switch" {{ $course['status'] == 1 ? "checked" : "" }} data-switch="bool"/>
 								<label class="mb-0" for="active-switch" data-on-label="On" data-off-label="Off"></label>
 							</div>
 							<hr>
@@ -388,7 +388,7 @@
 						<div class="card-body">
 							{{-- <img src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' class="img-fluid" --}}
 							<img src="https://placehold.co/600x400" class="img-fluid"
-							alt="profile-image">
+							alt="{{ $course->title }}">
 						
 						</div> <!-- end card-body -->
 					</div> <!-- end course info card -->
