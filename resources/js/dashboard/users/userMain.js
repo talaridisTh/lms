@@ -61,8 +61,8 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         collapse();
         buttonEx();
         editColapse()
-        hoverOnSelect()
         selectStatusMultiple()
+        checkeBoxesEventListener()
 
     },
 
@@ -120,7 +120,6 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
 
 //! GLOBAL FUNCTION
 //!============================================================
-utilities.selectAndDeselectCheckbox(".js-user-checkbox")
 utilities.filterButton('#activeFilter', 9, tables)
 utilities.filterButton('#rolesFilter', 5, tables)
 utilities.filterButton('#fullNameFilter', 11, tables)
@@ -307,31 +306,28 @@ const detachCoursesFromUser = async (courseId, userID) => {
     }
 }
 
-const selectAlljscheckboxSubTable = () => {
-    $(".js-user-multipleChexbox-sub").click(function () {
-        let checkbox = $(".js-user-checkbox-sub")
+function checkeBoxesEventListener() {
 
-        for (let i = 0; i < checkbox.length; i++) {
-            checkbox[i].checked = !checkbox[i].checked
-        }
+    let minorCheckboxes = $(".js-user-checkbox");
+    let mainCheckbox = $("#select-all-courses")[0];
+    let bulkBtn = $("#course-bulk-action-btn")[0];
 
-        let checkboxes = document.querySelectorAll(".js-user-checkbox-sub:checked").length
-        if (checkboxes) {
-            $(".bulk-action")[0].disabled = false
-            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
 
-            this.innerHTML = '<i class=" h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
-            $(".bulk-action")[0].classList.add("bg-warning")
-            $(".bulk-action")[0].classList.remove("bg-secontary")
-        } else {
-            $(".bulk-action")[0].innerText = ` Επιλογές  `
-            $(".bulk-action")[0].disabled = true
-            this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
-            $(".bulk-action")[0].classList.remove("bg-warning")
-            $(".bulk-action")[0].classList.add("bg-secontary")
-        }
+    minorCheckboxes.unbind();
+
+    minorCheckboxes.change( function() {
+        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
     })
+
 }
+
+$("#select-all-courses").change( function() {
+    let minorCheckboxes = $(".js-user-checkbox");
+    let bulkBtn = $("#course-bulk-action-btn")[0];
+
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+
+})
 
 const selectDetachCourses = () => {
     $('.js-detach-delete').unbind();
@@ -429,30 +425,6 @@ const routeLink = () => {
 
         window.location = `/dashboard/users/${slug}`;
     });
-}
-
-const hoverOnSelect = () => {
-    $(".js-user-checkbox").change(function () {
-        $(".bulk-action")[0].disabled = false
-        $(".bulk-action")[0].classList.add("bg-warning")
-        $(".bulk-action")[0].classList.remove("bg-secontary")
-
-        let checkboxes = $(".js-user-checkbox:checked").length
-
-        if (!checkboxes) {
-            $(".bulk-action")[0].disabled = true
-            $(".bulk-action")[0].classList.remove("bg-warning")
-            $(".bulk-action")[0].classList.add("bg-secontary")
-        }
-
-        $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-        if (this.checked) {
-            this.parentElement.parentElement.parentElement.classList.add("trHover")
-        } else {
-            this.parentElement.parentElement.parentElement.classList.remove("trHover")
-        }
-    })
-
 }
 
 

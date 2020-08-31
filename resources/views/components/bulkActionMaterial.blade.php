@@ -1,6 +1,8 @@
 <div class="btn-group mb-2">
-    <button type="button" disabled class="btn btn-secondary dropdown-toggle bulk-action" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">Επιλογές
+    <button id="course-bulk-action-btn" disabled type="button"
+            class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        Επιλογές (0)
     </button>
 
     <div class="dropdown-menu dropdown-menu-animated">

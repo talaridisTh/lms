@@ -24,8 +24,11 @@
             <thead>
             <tr>
                 <th class="text-left"></th>
-                <th id='all-user-checkbox' class="text-left js-user-checkbox">
-                    <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                <th id='all-user-checkbox' class="text-left ">
+                    <div class='icheck-primary d-inline'>
+                        <input type='checkbox' id='select-all-courses' autocomplete='off'>
+                        <label for='select-all-courses'></label>
+                    </div>
                 </th>
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
@@ -44,8 +47,11 @@
             <tfoot>
             <tr>
                 <th class="text-left"></th>
-                <th id='all-user-checkbox' class="text-left js-user-checkbox">
-                    <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                <th id='all-user-checkbox' class="text-left ">
+                    <div class='icheck-primary d-inline'>
+                        <input type='checkbox' id='select-all-courses' autocomplete='off'>
+                        <label for='select-all-courses'></label>
+                    </div>
                 </th>
                 <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>

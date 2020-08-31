@@ -25,8 +25,11 @@
 		<table id="materials-datatable" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
-                    <th id='all-user-checkbox' class="text-left js-user-checkbox">
-                        <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                    <th id='all-user-checkbox' class="text-left">
+                        <div class='icheck-primary d-inline'>
+                            <input type='checkbox' id='select-all-courses' autocomplete='off'>
+                            <label for='select-all-courses'></label>
+                        </div>
                     </th>
 					<th class="text-left">Μάθημα</th>
 					<th class="text-left">Ενεργό</th>
@@ -41,8 +44,11 @@
 			<tbody  class="tables-hover-effect"></tbody>
 			<tfoot>
 				<tr>
-                    <th id='all-user-checkbox' class="text-left js-user-checkbox">
-                        <i class="h3 mdi mdi-checkbox-marked-outline"></i>
+                    <th id='all-user-checkbox' class="text-left">
+                        <div class='icheck-primary d-inline'>
+                            <input type='checkbox' id='select-all-courses' autocomplete='off'>
+                            <label for='select-all-courses'></label>
+                        </div>
                     </th>
                     <th class="text-left">Μάθημα</th>
 					<th class="text-left">Ενεργό</th>

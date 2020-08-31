@@ -157,46 +157,6 @@ const tableLocale = {
         });
     }
 
-    const selectAndDeselectCheckbox = function (attr) {
-        $(attr).click(function () {
-            let checkbox = $(attr)
-
-            for (let i = 0; i < checkbox.length; i++) {
-                checkbox[i].checked = !checkbox[i].checked
-            }
-            let checkboxes = document.querySelectorAll(".js-user-checkbox:checked").length
-            $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-            if (this.checked) {
-
-                this.innerHTML = '<i class="h3 mdi mdi-checkbox-multiple-blank-outline"></i>'
-            } else {
-
-                this.innerHTML = '<i class="h3 mdi mdi-checkbox-marked-outline"></i>\n'
-            }
-
-            if (this.childNodes[0].className == "h3 mdi mdi-checkbox-multiple-blank-outline") {
-                for (let i = 0; i < checkbox.length; i++) {
-                    checkbox[i].checked = true
-                    checkbox[i].parentElement.parentElement.parentElement.classList.add("trHover")
-                }
-                $(".bulk-action")[0].disabled = false
-                $(".bulk-action")[0].classList.add("bg-warning")
-                $(".bulk-action")[0].classList.remove("bg-secontary")
-
-
-            } else {
-                for (let i = 0; i < checkbox.length; i++) {
-                    checkbox[i].checked = false
-                    checkbox[i].parentElement.parentElement.parentElement.classList.remove("trHover")
-                }
-                $(".bulk-action")[0].disabled = true
-                $(".bulk-action")[0].classList.remove("bg-warning")
-                $(".bulk-action")[0].classList.add("bg-secontary")
-
-            }
-        })
-    }
-
     const changeInputHidden = (attr, hiddenAttr) => {
 
 
@@ -229,7 +189,6 @@ const tableLocale = {
         mainCheckboxSwitcher,
         minorCheckboxSwitcher,
         filterButton,
-        selectAndDeselectCheckbox,
         tableLocale,
         changeInputHidden,
         redactorConfig,

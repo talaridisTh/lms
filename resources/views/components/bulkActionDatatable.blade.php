@@ -1,41 +1,46 @@
 <div class="btn-group mb-2">
-    <button type="button"  disabled class="btn btn-secondary dropdown-toggle bulk-action" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">Επιλογές
+    <button id="course-bulk-action-btn" disabled type="button"
+            class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+        Επιλογές (0)
     </button>
 
     <div class="dropdown-menu dropdown-menu-animated">
         <div class="dropdown-divider"></div>
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
-            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                 Προσθήκη σε course
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($activeCourses as $courses)
-                    <a class="dropdown-item js-multiple-update cursor-pointer" data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
+                    <a class="dropdown-item js-multiple-update cursor-pointer"
+                       data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
                 @endforeach
             </div>
         </div>
 
 
+        <div class="dropdown-divider"></div>
+        <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
-            <div class="btn-group dropleft">
-                <div class="dropdown-divider"></div>
-                <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Αλλαγή κατάστασης
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="on">Ενεργά</a>
-                        <a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="off">Μη ενεργά</a>
-                </div>
+            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                Αλλαγή κατάστασης
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="on">Ενεργά</a>
+                <a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="off">Μη ενεργά</a>
             </div>
-
+        </div>
 
 
         <div class="dropdown-divider"></div>
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
-            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
                 Export
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

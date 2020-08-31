@@ -54,8 +54,8 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         toggleInit();
         selectMultipleCheckboxDelete()
         selectMultipleCheckboxUpdate()
-        hoverOnSelect()
         selectStatusMultiple()
+        checkeBoxesEventListener()
     }
 });
 
@@ -63,7 +63,6 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 
 //! FILTER DATATABLE
 //!============================================================
-utilities.selectAndDeselectCheckbox(".js-user-checkbox");
 utilities.filterButton('#activeFilterMaterial', 8, materialsDatatable);
 utilities.filterButton('#typeFilterMaterial', 3, materialsDatatable);
 utilities.filterButton('#courseFilterMaterial', 7, materialsDatatable);
@@ -175,32 +174,6 @@ function atLinkEventListener() {
 
         window.location = `material/${materialSlug}`;
     });
-}
-
-const hoverOnSelect = () => {
-
-    $(".js-user-checkbox").change(function () {
-
-        let checkboxes = $(".js-user-checkbox:checked").length
-
-        $(".bulk-action")[0].disabled = false
-
-        if (!checkboxes) {
-            $(".bulk-action")[0].disabled = true
-        }
-        $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-
-        if (this.checked) {
-            this.parentElement.parentElement.parentElement.classList.add("trHover")
-            $(".bulk-action")[0].classList.add("bg-warning")
-            $(".bulk-action")[0].classList.remove("bg-secontary")
-
-        } else {
-            $(".bulk-action")[0].classList.remove("bg-warning")
-            $(".bulk-action")[0].classList.add("bg-secontary")
-            this.parentElement.parentElement.parentElement.classList.remove("trHover")
-        }
-    })
 }
 
 
@@ -337,6 +310,29 @@ const changeStatusMultiple = async (ids, stat) => {
         utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
     }
 }
+
+function checkeBoxesEventListener() {
+
+    let minorCheckboxes = $(".js-user-checkbox");
+    let mainCheckbox = $("#select-all-courses")[0];
+    let bulkBtn = $("#course-bulk-action-btn")[0];
+
+
+    minorCheckboxes.unbind();
+
+    minorCheckboxes.change( function() {
+        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
+    })
+
+}
+
+$("#select-all-courses").change( function() {
+    let minorCheckboxes = $(".js-user-checkbox");
+    let bulkBtn = $("#course-bulk-action-btn")[0];
+
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+
+})
 
 
 
