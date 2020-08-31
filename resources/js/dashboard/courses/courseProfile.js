@@ -9,21 +9,34 @@ import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
-//! Prototype Additions
-//!============================================================
-
-Element.prototype.appendBefore = function (element) {
-	element.parentNode.insertBefore(this, element);
-},false;
-
-Element.prototype.appendAfter = function (element) {
-
-	element.parentNode.insertBefore(this, element.nextSibling);
-
-},false;
-
 //! EventListerners
 //!============================================================
+
+$("#publish-date-select").daterangepicker({
+	singleDatePicker: true,
+	drops: "auto",
+    opens: "center",
+	timePicker: true,
+	timePicker24Hour: true,
+
+	locale: {
+        format: "DD-MM-YYYY H:mm",
+    },
+});
+
+$("#enable-publish-select").change( function() {
+	let input = $("#publish-date-select");
+	if ( !this.checked ) {
+		input.attr("placeholder", "Άμεσα...");
+		input.prop("disabled", true);
+		input.val("");
+	}
+	else {
+		input.attr("placeholder", "Εισάγετε ημμερομηνία...");
+		input.prop("disabled", false);
+		input[0].value = input[0].defaultValue;
+	}
+})
 
 $("#add-user-checkbox").change( function() {
 	let minorCheckboxes = $(".js-new-user-checkbox");

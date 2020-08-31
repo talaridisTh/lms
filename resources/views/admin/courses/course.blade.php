@@ -1,6 +1,8 @@
 @extends('layouts.dashboard')
+
 @section('css')
 <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
 <style>
 	.content-page {
 		overflow: initial;
@@ -16,6 +18,7 @@
 	}
 </style>
 @endsection
+
 @section('content')
 	<div class="modal fade" id="add-additions-modal" tabindex="-1" aria-labelledby="add-additions-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
@@ -28,6 +31,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="row px-3">
+
 						<div class="col-6">
 							<div class="card cursor-pointer">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
@@ -42,6 +46,7 @@
 								</div>
 							</div>
 						</div>
+					
 						<div class="col-6">
 							<div class="card cursor-pointer js-material" data-type="Announcement">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
@@ -66,6 +71,7 @@
 			</div>
 		</div>
 	</div>
+
 	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
@@ -112,6 +118,7 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+
 	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
@@ -158,10 +165,13 @@
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
+
 	<div class="wrapper">
 		<div class="content">
+
 			<div class="row">
 				<div class="col-xl-9 col-lg-7 col-md-12">
+
 					<ul class="nav nav-tabs nav-bordered mb-3">
 						<li class="nav-item">
 							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
@@ -179,11 +189,17 @@
 							</a>
 						</li>
 					</ul> <!-- end nav-->
+
 					<div class="tab-content">
+
 						<div id="settings" class="tab-pane show active">
+
+
 							<form id="edit-course-form" action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+								
 								@csrf
 								@method('PATCH')
+
 								<div class="form-group">
 									<label for="title">Τίτλος</label>
 									<input id="title" type="text" 
@@ -197,6 +213,7 @@
 										</span>
 									@enderror
 								</div>
+
 								<div class="form-group">
 									<label for="subtitle">Υπότιτλος</label>
 									<input id="subtitle" type="text" 
@@ -210,6 +227,7 @@
 										</span>
 									@enderror
 								</div>
+
 								<div class="form-group">
 									<label for="summary">Σύνοψη</label>
 									<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Εισάγετε σύνοψη...">{{ old('summary') != "" ? old('summary') : $course['summary'] }}</textarea>
@@ -219,6 +237,7 @@
 										</span>
 									@enderror
 								</div>
+
 								<div class="form-group">
 									<label for="description">Περιγραφή</label>
 									<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description') : $course['description'] }}</textarea>
@@ -230,6 +249,7 @@
 								</div>
 							</form>
 						</div><!-- settings tab-pane -->
+
 						<div id="materials" class="tab-pane table-cnt mb-3">
 							<table id="course-materials-list" data-course-id="{{ $course['id'] }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
@@ -261,6 +281,7 @@
 									</tr>
 								</tfoot>
 							</table>
+
 							<div class="row mt-3">
 								<div class="col-sm-1">
 								</div>
@@ -282,6 +303,7 @@
 								</div>
 							</div>
 						</div><!-- materials tab-pane -->
+
 						<div id="users" class="tab-pane table-cnt">
 							<table id="active-users-list" class="js-table table w-100 nowrap js-remove-table-classes">
 								<thead>
@@ -309,6 +331,9 @@
 									</tr>
 								</tfoot>
 							</table>
+
+
+
 							<div class="row mt-3">
 								<div class="col-sm-1">
 								</div>
@@ -330,43 +355,86 @@
 								</div>
 							</div>
 						</div><!-- users tab-pane -->
+					
 					</div><!-- tab-content -->
 				</div>
 				<div class="col-xl-3 col-lg-5 col-md-12">
+
 					<div class="sticky pb-3 px-2">
-						<button id="update-btn" class="btn btn-primary">Ενημέρωση</button>
+						<button form="edit-course-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
 						<button id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i> </button>
 						<button id="delete-btn" class="under-development btn btn-danger float-right">Διαγραφή</button>
 					</div>
+
 					<div class="card">
 						<div class="card-body">
+							<div class="form-group">
+								<label for="topic">Topic</label>
+								<select form="edit-course-form" class="select2 form-control select2-multiple" name="topics[]" data-toggle="select2" multiple="multiple" data-placeholder="Επιλέξτε Topics...">
+										
+									@foreach ($topics as $topic)
+										@foreach ( $course->topics as $courseTopic )
+											@if ( $courseTopic->id == $topic->id )
+												<option value="{{ $courseTopic->id }}" selected>{{ $courseTopic->title }}</option>
+												@break
+											@endif
+										@endforeach
+										<option value="{{ $topic->id }}">{{ $topic->title }}</option>
+									@endforeach
+
+								</select>
+							</div>
+							{{-- <hr>
+							<select form="edit-course-form" class="select2 form-control select2-multiple" name="curator" data-toggle="select2" multiple="multiple" data-placeholder="Επιλέξτε Topics...">
+										
+								@foreach ($instructors as $instructor)
+									@if ( $course->user_id == $instructor->id )
+										<option value="{{ $instructor->id }}" selected>{{ $instructor->first_name }} {{ $instructor->last_name }}</option>	
+									@endif
+									<option value="{{ $instructor->id }}">{{ $instructor->first_name }} {{ $instructor->last_name }}</option>
+								@endforeach
+
+							</select> --}}
 							<hr>
-							<div class="d-flex justify-content-between">
-								<span><strong>Κατάσταση</strong></span>
-								<input type="checkbox" id="active-switch" {{ $course['status'] == 1 ? "checked" : "" }} data-switch="bool"/>
-								<label class="mb-0" for="active-switch" data-on-label="On" data-off-label="Off"></label>
+							<div class="form-group">
+								<div class="row">
+									<div class="col-8">
+										<p><strong>Δημοσίευση απο:</strong></p>
+									</div>
+									<div class="col-4 text-right">
+										<input id="enable-publish-select" type="checkbox" data-switch="bool" checked autocomplete="off"/>
+										<label class="mb-0" for="enable-publish-select" data-on-label="On" data-off-label="Off"></label>
+									</div>
+								</div>
+								<input form="edit-course-form" type="text" class="form-control" id="publish-date-select" name="publishDate" value="{{ $publish }}" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
 							</div>
 							<hr>
 						</div>
 					</div>
+
 					<!-- Cover Preview -->
 					<div class="card">
 						<div class="card-header">
 							<h4 class="card-title mb-0">Cover</h4>
+
 						</div>
 						<div class="card-body">
 							{{-- <img src='{{ asset("storage/courses/$course->id/cover/$course->cover") }}' class="img-fluid" --}}
 							<img src="https://placehold.co/600x400" class="img-fluid"
 							alt="{{ $course->title }}">
+						
 						</div> <!-- end card-body -->
 					</div> <!-- end course info card -->
+				
 					<!-- Dropzone -->
 					<div class="card">
 						<div class="card-body">
+
 							<form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
 								<div class="fallback">
 									<input name="file" type="file" multiple />
 								</div>
+
 								<div class="dz-message needsclick">
 									<i class="h1 text-muted dripicons-cloud-upload"></i>
 									<h3>Drop files here or click to upload.</h3>
@@ -374,8 +442,10 @@
 										<strong>not</strong> actually uploaded.)</span>
 								</div>
 							</form>
+
 							<!-- Preview -->
 							<div class="dropzone-previews mt-3" id="file-previews"></div>  
+						
 							<div class="d-none" id="uploadPreviewTemplate">
 								<div class="card mt-1 mb-0 shadow-none border">
 									<div class="p-2">
@@ -397,16 +467,23 @@
 									</div>
 								</div>
 							</div>
+
 						</div> <!-- end card-body -->
 					</div> <!-- end course info card -->
+
+
 				</div>
 			</div>
 		</div>
 	</div>
 @endsection
+
 @section('scripts')
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+
+
 <script src="{{ mix('js/dashboard/courses/courseProfile.js') }}"></script>
+
 @endsection

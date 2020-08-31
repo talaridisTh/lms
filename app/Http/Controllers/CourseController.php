@@ -6,10 +6,13 @@ use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\BundleCourseRequest;
+use App\Role;
 use App\Topic;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use DateTime;
 
 class CourseController extends Controller
 {
@@ -71,8 +74,12 @@ class CourseController extends Controller
     {
 		$allRemainingMaterials = Course::notInCourseMaterials( $course );
 		$materials = $course->materials()->orderBy('priority')->get();
+		$topics = Topic::all();
+		// $instructors = Role::whereIn( 'id', [ 1, 2])->users();
+		// $instructors = User::all();
 		$lessonIds = [];
 
+		// dd($instructors);
 		foreach ($materials as $lesson) {
 			array_push( $lessonIds, $lesson['id'] );
 		};
@@ -80,6 +87,9 @@ class CourseController extends Controller
 		$data = [
 			'course' => $course,
 			'materials' => $materials,
+			'topics' => $topics,
+			// 'instructors' => $instructors,
+			'publish' => Carbon::parse( $course->publish_at )->format("d-m-Y H:i"),
 			'allRemainingMaterials' => json_decode($allRemainingMaterials, true),
 		];
 
@@ -106,17 +116,23 @@ class CourseController extends Controller
      */
     public function update(BundleCourseRequest $request, Course $course)
     {
-		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+
+		if ( $request->publishDate ) {
+			$dateTime = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		}
+		else {
+			$dateTime = Carbon::now()->format("Y-m-d H:i:s");
+		}
 
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
+		$course->publish_at = $dateTime;
 		// $course->status = $request->status;
 		$course->slug = Str::slug($request->title, "-");
-		// $course->slug = preg_replace($pattern, "-", mb_strtolower($request->title) );
 
-		if ( !empty($_FILES['cover']['name']) ) {
+		/* if ( !empty($_FILES['cover']['name']) ) {
 			
 			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
 			$fileName = md5( $request->title ).$ext;
@@ -125,9 +141,13 @@ class CourseController extends Controller
 			$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
 			
 			$course->cover = $fileName;
-		}
+		} */
 
 		$course->save();
+
+
+		$course->topics()->sync( $request->topics );
+
 
         return redirect( "/dashboard/course/$course->id" );
     }
