@@ -40,3 +40,11 @@ ArticleEditor('#material-content', {
 });
 
 
+
+//! EVENT listener
+//!============================================================
+$("#update-btn").click( function() {
+
+
+    $(".formPrevent").submit();
+});

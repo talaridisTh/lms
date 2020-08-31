@@ -2,6 +2,12 @@
 
 @section('css')
     <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+        .border-material{
+            background:#343A3F ;
+        }
+    </style>
 @endsection
 
 @php
@@ -13,117 +19,42 @@
 
 @section('content')
     <x-alertMsg :msg="'update'"></x-alertMsg>
-    <div class="container" style="max-width:1400px">
+    <div class="container-fruid">
         <div class="content">
             <div class="row">
-                <div class="col-xl-4 col-lg-5">
-                    <div class="card text-center">
-                        <div class="card-body">
-                            <img src="{{$user->avatar}}"
-                                 class="rounded-circle avatar-lg img-thumbnail"
-                                 alt="profile-image">
-                            <div class="text-left mt-5">
-                                <p class="text-muted mb-2 font-13"><strong>Όνομα :</strong> <span class="ml-2">
-                                        {{$user->first_name}}
-                                    </span></p>
-                                <p class="text-muted mb-2 font-13"><strong>Επώνυμο :</strong> <span class="ml-2">
-                                        {{$user->last_name}}
-                                    </span></p>
-
-                                <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span
-                                        class="ml-2 ">{{$user->email}}</span></p>
-
-                                <p class="text-muted mb-1 font-13"><strong>Active :</strong> <span
-                                        class="ml-2">{{$user->status == 1 ? 'Ενεργος' : "Ανενεργος"}}</span></p>
-
-                                <p class="text-muted mb-1 font-13"><strong>Ρολος :</strong> <span
-                                        class="ml-2">    {{$userIs }}</span></p>
-
-
-                                <div class="d-flex justify-content-end align-items-center mt-3">
-                                    <div>
-                                        <form method="POST" id="alertSumbit"
-                                              action="{{route('user.destroy',$user->id)}}">
-                                            @csrf
-                                            @method('DELETE')
-                                            <input type="submit" value="Διαγραφη {{$user->fullName}}"
-                                                   data-id="{{ $user->id }}"
-                                                   data-slug="{{ $user->slug }}"
-
-                                                   class=" js-delete btn btn-danger "/>
-                                        </form>
-                                    </div>
-
-
-                                    <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog"
-                                         aria-labelledby="primary-header-modalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header modal-colored-header bg-primary">
-                                                    <h4 class="modal-title" id="primary-header-modalLabel">Προσθήκη
-                                                        Courses</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-hidden="true">×
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    @include("components.addCourses")
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-light modal-dismiss"
-                                                            data-dismiss="modal">
-                                                        Κλείσιμο
-                                                    </button>
-                                                    <button type="button" onClick="window.location.reload();"
-                                                            class="btn btn-primary modal-save">Προσθήκη
-                                                    </button>
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
-
-
-                                </div>
-                            </div>
-
-                        </div> <!-- end card-body -->
-                    </div> <!-- end card -->
-
-
-                </div> <!-- end col-->
-
-                <div class="col-xl-8 col-lg-7">
+                <div class="col-xl-12 col-lg-7 col-md-12">
                     <div class="card">
                         <div class="card-body">
 
-                            <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
-                                <li class="nav-item">
-                                    <a href="#courses" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0  {{$isActive}} ">
-                                        Courses
-                                    </a>
-                                </li>
+                            <ul class="nav nav-tabs mb-3 d-flex">
+                                    <li class="nav-item">
+                                        <a href="#courses" data-toggle="tab" aria-expanded="false"
+                                           class="nav-link rounded-0   {{$isnotActive}}">
+                                            Courses
+                                        </a>
+                                    </li>
 
-                                <li class="nav-item">
-                                    <a href="#settings" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0 {{$isnotActive}} ">
-                                        Επεξεργασία χρήστη
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="#settings" data-toggle="tab" aria-expanded="false"
+                                           class="nav-link rounded-0 {{$isActive}} ">
+                                            Επεξεργασία χρήστη
+                                        </a>
+                                    </li>
 
-                                <li class="nav-item">
-                                    <a href="#timeline" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0 {{$isnotActive}} ">
-                                       Timeline
-                                    </a>
-                                </li>
+                                    <li class="nav-item">
+                                        <a href="#timeline" data-toggle="tab" aria-expanded="false"
+                                           class="nav-link rounded-0 {{$isnotActive}} ">
+                                            Timeline
+                                        </a>
+                                    </li>
+
                             </ul>
 
                             <div class="tab-content">
-                                <div class="tab-pane {{$isActive}} "  id="courses">
+                                <div class="tab-pane {{$isnotActive}} "  id="courses">
                                     @include("components.findUserMaterial")
                                 </div>
-                                <div class="tab-pane {{$isnotActive}} " id="settings">
+                                <div class="tab-pane  {{$isActive}}" id="settings">
                                     @include("components.tabsEdit")
                                 </div>
                                 <div class="tab-pane {{$isnotActive}} " id="timeline">
@@ -133,8 +64,38 @@
                         </div>
 
                     </div>
-
                 </div>
+                <!-- modal -->
+                <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog"
+                     aria-labelledby="primary-header-modalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header modal-colored-header bg-primary">
+                                <h4 class="modal-title" id="primary-header-modalLabel">Προσθήκη
+                                    Courses</h4>
+                                <button type="button" class="close" data-dismiss="modal"
+                                        aria-hidden="true">×
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                @include("components.addCourses")
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-light modal-dismiss"
+                                        data-dismiss="modal">
+                                    Κλείσιμο
+                                </button>
+                                <button type="button" onClick="window.location.reload();"
+                                        class="btn btn-primary modal-save">Προσθήκη
+                                </button>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+
+
+                </div> <!-- end col-->
+
             </div>
             <!-- end row-->
         </div> <!-- End Content -->

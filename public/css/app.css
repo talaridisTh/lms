@@ -3417,6 +3417,21 @@ select.is-invalid {
   background-color: #313a46;
 }
 
+.content-page {
+  overflow: initial;
+}
+
+.wrapper {
+  overflow: initial;
+}
+
+.sticky {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 70px;
+  z-index: 999;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

@@ -17,7 +17,6 @@ $R('#contentMaterial',{
 //!============================================================
 
 utilities.changeInputHidden('#urlMaterial','#urlMaterialHiden')
-utilities.changeInputHidden('#createAtMaterial','#createAtMaterialHidden')
 utilities.changeInputHidden('#activeMaterial','#activeMaterialHidden')
 utilities.changeInputHidden('#typeMaterial','#typeMaterialHidden')
 utilities.changeInputHidden('#instructorMaterial','#instructorMaterialHidden')
@@ -88,11 +87,16 @@ $(".buton-create-material").click(function(e){
 
 })
 
-$(".buton-update-material").click(function(e){
 
+
+
+//! EVENT listener
+//!============================================================
+$("#update-btn").click( function() {
     $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
+    $(".formPrevent").submit();
+});
 
-})
 
 
 

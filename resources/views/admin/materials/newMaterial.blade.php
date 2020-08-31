@@ -1,29 +1,14 @@
 @extends('layouts.dashboard')
 
 @section('css')
-    <style>
-        .sticky-button {
-            position: fixed;
-            top: 8%;
-            left: 65%;
-            display: flex;
-            z-index: 9999;
-        }
-        .sticky-buttons {
-            position: fixed;
-            top: 8%;
-            left: 74%;
-            display: flex;
-            z-index: 9999;
-        }
-    </style>
+
 @endsection
 
 @section('content')
     <x-alertMsg :msg="'create'"></x-alertMsg>
-    <section class="container-fruid position-relative" style="max-width: 1400px">
+    <section class="container-fruid position-relative" >
         <div class="row">
-            <div class="col-md-8" id="material-form">
+            <div class="col-xl-9 col-lg-7 col-md-12" id="material-form">
                 <ul class="nav nav-tabs mb-3">
                     <li class="nav-item">
                         <a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
@@ -45,11 +30,9 @@
                         </a>
                     </li>
                 </ul>
-
-
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
-                        <form class="needs-validation formPrevent" method="post" action="{{route('material.store')}}"
+                        <form class=" formPrevent" method="post" action="{{route('material.store')}}"
                               enctype="multipart/form-data" >
                             @csrf
                             <div class="form-group mb-3">
@@ -87,15 +70,10 @@
                                           placeholder="Εισάγετε περιεχόμενο μαθήματος..."
                                           id="contentMaterial" rows="5"></textarea>
                             </div>
-                            <div class="sticky-button">
-                                <button class="buton-create-material btn btn-sm btn-primary mr-2" type="submit">Δημιουργία</button>
-                                <button class="btn btn-sm btn-warning" type="submit"><i class=" mdi mdi-eye"></i></button>
-                            </div>
 
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
                             <input name="status" value="0" type="hidden" class="form-control" id="activeMaterialHidden">
                             <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
-                            <input name="created_at" type="hidden" class="form-control" id="createAtMaterialHidden">
                             <input name="cover" type="file" hidden class="form-control" id="coverMaterialHidden">
                             <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
                             <input   multiple="multiple" type="hidden" class="form-control" id="topicMaterialHidden">
@@ -109,21 +87,27 @@
                         <p>...</p>
                     </div>
                 </div>
-
-
             </div>
 
-            <aside class="col-md-4">
+            <aside class="col-xl-3 col-lg-5 col-md-12">
+                <div class="sticky pb-3 px-2">
+                    <button id="update-btn" class="btn btn-primary">Δημιουργια </button>
+                    <button id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i>
+                    </button>
+                </div>
+
                 <div class="border-material">
-                    {{--                    <div class="form-group mb-3">--}}
-                    {{--                        <label for="coursesMaterial">Courses <span class="text-danger"> *</span></label>--}}
-                    {{--                        <select name="courses" id="coursesMaterial" class="form-control select2-hidden-accessible" data-toggle="select2">--}}
-                    {{--                            <option></option>--}}
-                    {{--                            @foreach($courses as $course)--}}
-                    {{--                                <option value="{{$course->id}}">{{$course->name}}</option>--}}
-                    {{--                            @endforeach--}}
-                    {{--                        </SELECT>--}}
-                    {{--                    </div>--}}
+
+                    <div class="form-group mb-3">
+                        <hr>
+                        <div class="d-flex justify-content-between">
+                            <span><strong>Κατάσταση</strong></span>
+                            <input type="checkbox" id="activeMaterial"  data-switch="bool"/>
+                            <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
+                        </div>
+                        <hr>
+                    </div>
+
 
                     <div class="form-group mb-3">
                         <label for="urlMaterial">URL video</label>
@@ -144,17 +128,12 @@
                         <select id="typeMaterial" class="form-control " data-toggle="select2">
                             @foreach ($types as $key=> $type)
                                 <option value=""></option>
-                                <option value="{{$type->id}}">{{$type->type}}</option>
+                                <option value="{{$type->type}}">{{$type->type}}</option>
                             @endforeach
                         </select>
                     </div>
 
-                    <div class="form-group ">
-                        <label for="createAtMaterial">Created</label>
-                        <input type="text" class="form-control date" id="createAtMaterial" data-toggle="date-picker"
-                               data-single-date-picker="true">
 
-                    </div>
 
                     <div class="form-group">
                         <label for="updateAtMaterial">Published</label>
@@ -180,15 +159,6 @@
                     </div>
                     <hr>
 
-                    <div class="form-row justify-content-between sticky-buttons">
-                        <div class="col-7">
-                            <label for="createAtMaterial">Κατάσταση</label>
-                        </div>
-                        <div class="col-5 ">
-                            <input type="checkbox" id="activeMaterial" checked data-switch="bool"/>
-                            <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
-                        </div>
-                    </div>
                 </div>
                 <div class="border-material">
                     <option></option>

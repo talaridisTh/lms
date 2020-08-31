@@ -221,3 +221,15 @@ select.is-invalid {
 .bg-selected {
 	background-color: #313a46;
 }
+
+.content-page {
+    overflow: initial;
+}
+.wrapper {
+    overflow: initial;
+}
+.sticky {
+    position: sticky;
+    top: 70px;
+    z-index: 999;
+}

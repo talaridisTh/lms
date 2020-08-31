@@ -9,7 +9,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Mail\NewUserNotification;
 use App\User;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Support\Facades\Mail;
@@ -65,10 +65,7 @@ class UserController extends Controller {
         {
             $data["avatar"] = "https://robohash.org/default.png?set=set4";
         }
-        if($request->status){
 
-
-        }
         if($request->password){
             $data["password"] =  bcrypt(request("password"));
         }
@@ -79,7 +76,6 @@ class UserController extends Controller {
         }
 
 
-        dd($data);
         $user->create($data)->assignRole($request->roles);
 
 
@@ -93,11 +89,13 @@ class UserController extends Controller {
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
 
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
         //
+        $user->update($request->except('roles','password','avatar','password_confirmation'));
         $data = collect($request)->except("avatar")->all();
-        $user->update($data);
+
+
         $user->syncRoles($request->role);
         if ($files = $request->file('avatar'))
         {

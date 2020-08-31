@@ -57,7 +57,6 @@ class MaterialController extends Controller {
 
             $newMaterial->users()->attach($request->instructor);
         }
-
         if ($request->topic)
         {
             foreach ($request->topic as $topic)
@@ -74,22 +73,18 @@ class MaterialController extends Controller {
     public function show(Material $material)
     {
 
-
-
-
         $topics = Topic::all();
         $instructors = User::getInstructor();
         $courses = Course::with("materials")->get();
         $types = Material::all()->unique('type');
 
-
-
-
         return view('admin.materials.material', compact("topics", "instructors", "courses", "material", "types"));
     }
 
-    public function update(UpdateMaterialRequest $request, Material $material)
+    public function update(Request $request, Material $material)
     {
+
+        $material->update($request->except("instructor", "topic", "type", "status"));
         $data = collect($request)->except("instructor", "topic", "type", "status")->all();
         if ($request->instructor)
         {
@@ -100,14 +95,8 @@ class MaterialController extends Controller {
 
             foreach ($request->topic as $topic)
             {
-              $material->topics()->sync( $request->topic);
+                $material->topics()->sync($request->topic);
             }
-        }
-
-        if ($request->created_at == null)
-        {
-            $dt = new DateTime();
-            $data["created_at"] = $dt->format('Y-m-d H:i:s');
         }
         if ($request->type)
         {
@@ -116,10 +105,12 @@ class MaterialController extends Controller {
         }
         if ($request->status)
         {
+            $material->update(['status' => $request->status]);
+        } else
+        {
 
-            $data["status"] = $request->status;
+            $material->update(['status' => $request->status == null ? 0 : $request->status]);
         }
-        $material->update($data);
 
         return redirect(route("material.index"))->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
     }
