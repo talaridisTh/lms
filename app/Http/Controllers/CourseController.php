@@ -191,4 +191,47 @@ class CourseController extends Controller
 
 		return view('courses/courseProfile')->with( $data );
 	}
+
+	public function clone(Request $request) {
+
+		$validate = $request->validate([
+			'title' => 'required|unique:courses'
+		]);
+
+		$course = Course::find( $request->id );
+		$course->load( "materials", "topics" );
+		$newCourse = $course->replicate();
+		$newCourse->title = $request->title;
+		$newCourse->slug = Str::slug($request->title, "-");
+
+		$newCourse->push();
+
+		$relations = $course->getRelations();
+
+		foreach ( $relations as $key => $relation ) {
+			if ( $key === "materials" ) {
+
+				foreach ( $relation as $material ) {
+	
+					// $status = $material->pivot->status;
+					$priority = $material->pivot->priority;
+					$publish_at = $material->pivot->publish_at;
+	
+					$newCourse->materials()->attach($material->id, [
+						'status' => 0,
+						'priority' => $priority,
+						'publish_at' => $publish_at
+					]);
+				}
+			}
+			else {
+				foreach ($relation as $topic ) {
+
+					$newCourse->topics()->attach( $topic->id );
+				}
+			}
+		}
+
+		return redirect("/dashboard/courses");
+	}
 }

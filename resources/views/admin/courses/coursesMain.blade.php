@@ -6,111 +6,47 @@
 
 @section('content')
 
-	<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl">
+	<!-- Modal -->
+	<div class="modal fade" id="clone-course-modal" tabindex="-1" role="dialog" aria-labelledby="clone-course-modalLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<div class="modal-header modal-colored-header bg-primary">
-					<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<div class="modal-header">
+					<h5 class="modal-title" id="clone-course-modalLabel">Αντιγραφή Course</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-				<div class="modal-body table-cnt">
-					<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
+				<div class="modal-body">
+					<form id="clone-form" action="courses/clone" method="POST">
 						
 						@csrf
-						
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="title">Τίτλος</label>
-									<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
-									@error('title')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-									@enderror
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="subtitle">Υπότιτλος</label>
-									<input type="text" class="form-control @error('subtitle') is-invalid @enderror" id="subtitle" name="subtitle" value="{{ old('subtitle') }}" placeholder="Εισάγετε υπότιτλο...">
-									@error('subtitle')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-									@enderror
-								</div>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="course-cover">Cover</label>
-									<div class="input-group">
-										<div class="custom-file">
-											<input id="cover-input" type="file" class="custom-file-input @error('cover') is-invalid @enderror" name="cover">
-											<label id="cover-input-label" class="custom-file-label file-search-label-primary" for="cover-input">"Εισάγετε αρχείο"</label>
-										</div>
-										@error('cover')
-											<span class="invalid-feedback d-block" role="alert">
-												<strong>{{ $message }}</strong>
-											</span>
-										@enderror
-									</div>
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="example-select">Κατάσταση</label>
-									<select class="form-control @error('status') is-invalid @enderror" id="active" name="status">
-										<option value="1" {{ old('status') == 1 ? "selected" : "" }}>Ενεργό</option>
-										<option value="0" {{ old('status') == 0 ? "selected" : "" }}>Ανενεργό</option>
-									</select>
-									@error('status')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-									@enderror
-								</div>
-							</div>
-						</div>
 
 						<div class="form-group">
-							<label for="summary">Σύνοψη</label>
-							<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Σύνοψη Course...">{{ old('summary') }}</textarea>
-							@error('summary')
+							<label for="clone-title">Τίτλος</label>
+							<input type="text" class="form-control @error('title') is-invalid @enderror" id="clone-title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+							@error('title')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
 						</div>
-
-						<div class="form-group">
-							<label for="description">Περιγραφή</label>
-							<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Περιγραφή Course...">{{ old('description') }}</textarea>
-							@error('description')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
-						</div>
+						<input id="cloning-course-id" class="form-control" type="text" name="id" value="{{ old('id') }}" hidden>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button id="submit-form-btn" class="btn btn-primary"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
-					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+					<button form="clone-form" type="submit" class="btn btn-primary">Αποθήκευση</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+			</div>
+		</div>
+	</div>
 
 	<div class="container table-cnt" style="max-width:1370px">
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
 				<div class="text-sm-right">
-					<a href="courses/create" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal"><i class="mdi mdi-plus-circle mr-2"></i>
+					<a href="courses/create" class="btn btn-primary mb-2"{{--  data-toggle="modal" data-target="#new-course-modal --}}"><i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
 					<div class="btn-group mb-2">
@@ -180,7 +116,7 @@
 
 @if ( count($errors) > 0 )
 	<script>
-		$('#new-course-modal').modal('show')
+		$('#clone-course-modal').modal('show')
 	</script>
 @endif
 

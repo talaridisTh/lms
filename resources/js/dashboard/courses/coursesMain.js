@@ -7,6 +7,19 @@ import utilities from '../main';
 //! 			EventListeners				#
 //!##########################################
 
+$("#clone-course-modal").on( 'show.bs.modal', function() {
+
+	if ( !event ) {
+		return;
+	}
+
+	let button = event.target;
+	let courseId = button.dataset.courseId;
+
+	document.getElementById("cloning-course-id").value = courseId;
+
+});
+
 $("#select-all-courses").change( function() {
 	let minorCheckboxes = $(".js-course-checkbox");
 	let bulkBtn = $("#course-bulk-action-btn")[0];
@@ -106,12 +119,24 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 
 		toggleStatus();
 		checkeBoxesEventListener();
+		cloneEventListener();
 	}
 })
 
 //! #################################################
 //!		Datatable event initialazion functions		#
 //! #################################################
+
+function cloneEventListener() {
+
+	let cloneBtns = $(".js-course-clone-btn");
+
+	cloneBtns.click( function() {
+
+		$('#clone-course-modal').modal('show')
+
+	});
+}
 
 function checkeBoxesEventListener() {
 

@@ -104,7 +104,7 @@ eval("//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\laragon\www\lmsdemo\resources\js\dashboard\courses\coursesCreate.js */"./resources/js/dashboard/courses/coursesCreate.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\courses\coursesCreate.js */"./resources/js/dashboard/courses/coursesCreate.js");
 
 
 /***/ })

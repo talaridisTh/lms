@@ -26,7 +26,7 @@ class Course extends Model
 
     public function materials() {
 
-		return $this->belongsToMany(Material::class)->withPivot('status', 'priority')->orderBy('priority');
+		return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'publish_at');
 
 	}
 
