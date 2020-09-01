@@ -2,171 +2,74 @@
 @extends("layouts.app")
 
 @section("style")
+    <style>
+        .left-side-menu {
+            display: none;
+        }
+        .box-material-down{
+            background:#E0A228;
+            border-bottom-right-radius: 15px;
+            border-bottom-left-radius: 15px;
+
+        }
+        .box-material-up{
+            background:#E0A228;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+            background: linear-gradient(0deg, #f19a1a, #ffc73c)
+        }
+
+
+    </style>
 @endsection
 
 @section("content")
 
 <div class="content-page">
-	<div class="content">
+    <div class="container-xl my-3" style="width: 1450px">
+        <div class="row box-material-up px-5 pt-4 pb-2">
+            <div class="col-md-12">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <img  height="250" src="https://laracasts.s3.amazonaws.com/series/thumbnails/svg/html5-video-and-videojs.svg" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="display-4 text-light">{{$course->title}}</h2>
+                        <p class="my-4">{{$course->subtitle}}</p>
+                        <div class="button-course-fav">
+                            <button class=" mr-2 px-4  btn-begin btn bghover btn"style="background:white">begin</button>
+                            <button class="px-4 box-title btn bghover btn-secontary font-weight-bold">add watch</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3" >
+                        <div class="box-last-material p-4">
+                            <p class="box-num-material display-4" >{{$course->materials->where("status",1)->count()}}</p>
+                            <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
+                                <span>Η τελευταία προσθήκη</span>
+                                <span>{{\Carbon\Carbon::parse($lastMaterial->created_at)->diffForHumans()}}</span>
+                            </div>
+                            <div class="box-button-subtitle text-light text-center">
+                                <p class="font-16">{{$lastMaterial->title}}</p>
+                                <p class="font-12">{{$lastMaterial->subtitle}}</p>
+                                <button class="bghover border font-weight-bold btn btn-secontary">Δες το μαθημα</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-2 box-material-down">
+            <div class="col-md-4  d-flex justify-content-between" >
+                <span>metrio</span>
+                <span><i class="mdi mdi-book-open-page-variant"></i> {{$course->materials->where("status",1)->count()}} Μαθήματα  </span>
+                @foreach($topics as $topic)
+                <span class="bghover font-weight-bold border px-2">{{$topic}}</span>
+                @endforeach
+            </div>
 
+        </div>
 
-	<!-- start page title -->
-	<div class="row">
-		<div class="col-12">
-			<div class="page-title-box">
-				<div class="page-title-right">
-					<ol class="breadcrumb m-0">
-						<li class="breadcrumb-item"><a href="javascript: void(0);">Hyper</a></li>
-						<li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-						<li class="breadcrumb-item active">Profile</li>
-					</ol>
-				</div>
-				<h4 class="page-title">Profile</h4>
-			</div>
-		</div>
-	</div>
-	<!-- end page title -->
-
-
-
-
-
-	<div class="row">
-		<div class="col-sm-12">
-			<!-- Profile -->
-			<div class="card bg-primary">
-				<div class="card-body profile-user-box">
-
-					<div class="row">
-						<div class="col-sm-8">
-							<div class="media">
-								{{-- <span class="float-left m-2 mr-4"><img src='{{ asset("storage/courses/$course->id/cover/$course->cover" )}}' style="height: 100px;" alt="" class="rounded-circle img-thumbnail"></span> --}}
-								<span class="float-left m-2 mr-4"><img src='https://placehold.co/400x400' style="height: 100px;" alt="" class="rounded-circle img-thumbnail"></span>
-								<div class="media-body">
-
-									<h4 class="mt-1 mb-1 text-white">{{ $course->name }}</h4>
-									<p class="font-13 text-white-50">{{ $course->description }}</p>
-
-									<ul class="mb-0 list-inline text-light">
-										<li class="list-inline-item mr-3">
-											<h5 class="mb-1">{{ $course->materials->where("type", "Lesson")->count() }}</h5>
-											<p class="mb-0 font-13 text-white-50">Σύνολο Μαθημάτων</p>
-										</li>
-										<li class="list-inline-item">
-											<h5 class="mb-1">{{ $course->materials->where("type", "!=", "Lesson")->count() }}</h5>
-											<p class="mb-0 font-13 text-white-50">Extra Υλικό</p>
-										</li>
-									</ul>
-								</div> <!-- end media-body-->
-							</div>
-						</div> <!-- end col-->
-
-						<div class="col-sm-4">
-							<div class="text-center mt-sm-0 mt-3 text-sm-right">
-								<button type="button" class="btn btn-light">
-									<i class="mdi mdi-account-edit mr-1"></i> Edit Profile
-								</button>
-							</div>
-						</div> <!-- end col-->
-					</div> <!-- end row -->
-
-				</div> <!-- end card-body/ profile-user-box-->
-			</div><!--end profile/ card -->
-		</div> <!-- end col-->
-	</div>
-	<!-- end row -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	<div class="row">
-		<div class="col-lg-4">
-			<!-- Personal-Information -->
-			<div class="card">
-				<div class="card-body">
-					<h4 class="header-title mt-0 mb-3">Εισηγητές</h4>
-
-					<ul>
-						@foreach ( $authors as $author )
-							<li class="js-authors">{{ $author->first_name }} {{ $author->last_name }}</li>
-                            @endforeach
-
-						<li id="more-authors"
-							data-shown="false"
-							class="d-none mt-1 list-unstyled font-weight-bold cursor-pointer text-hover-underline">
-							Περισσότερα...
-						</li>
-					</ul>
-				</div>
-			</div>
-			<!-- Personal-Information -->
-
-		</div> <!-- end col-->
-
-		<div class="col-lg-8">
-
-			<!-- Chart-->
-			<div class="card">
-				<div class="card-body">
-					<h4 class="header-title">Μαθήματα</h4>
-					<div class="card-body">
-						<table class="table table-centered mb-0">
-							<tbody>
-								@foreach ($materials as $material)
-									<tr>
-										<td><a href="{{route('index.material.show',[$course->id,$material->slug])}}">{{ $material->title}}</a></td>
-										<td>{!! $material->subtitle !!} </td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-
-					</div>
-				</div>
-			</div>
-			<!-- End Chart-->
-
-
-
-		</div>
-		<!-- end col -->
-
-	</div>
-	<!-- end row -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	</div>
+    </div>
 </div>
 
 @endsection
@@ -176,32 +79,6 @@
 
 <script>
 
-	const authors = $('.js-authors');
-
-	if ( authors.length > 3 ) {
-		for ( let i = 3; i < authors.length; i++ ) {
-			authors[i].classList.add('d-none');
-		}
-		const moreAuthors = $('#more-authors')[0];
-		moreAuthors.classList.remove("d-none");
-	}
-
-	$('#more-authors').click( function() {
-		if ( this.dataset.shown == "true") {
-			this.dataset.shown = "false";
-			for ( let i = 3; i < authors.length; i++ ) {
-				authors[i].classList.add('d-none');
-			}
-			this.textContent = "Περισσότερα ..."
-		}
-		else {
-			this.textContent = "Λιγότερα ..."
-			this.dataset.shown = "true";
-			for ( let i = 3; i < authors.length; i++ ) {
-				authors[i].classList.remove('d-none');
-			}
-		}
-	});
 
 </script>
 @endsection

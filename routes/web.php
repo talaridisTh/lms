@@ -162,8 +162,8 @@ Auth::routes();
 Route::get('/home', 'Index\HomeController@index')->name('home');
 
 //! User routes
-Route::get('/courses/{user}', 'UserController@userCourses');
-Route::get('/courses/course/{course}', 'CourseController@userCourse')->name("index.userCourse");
+Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses");
+Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
 
 
 //! partner routes link

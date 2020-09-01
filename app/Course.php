@@ -105,5 +105,19 @@ class Course extends Model
             ->first();
 
     }
+    public static function countActiveCourse()
+    {
+        return  Course::where("status",1)->where('type',"lesson")->get();
+
+    }
+
+    public  static function topicInCourse(Course $course)
+    {
+
+        return Course::with('topics')->find($course->id)->topics()->get();
+
+    }
+
+
 
 }

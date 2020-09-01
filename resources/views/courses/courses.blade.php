@@ -1,220 +1,72 @@
 @extends("layouts.app")
 
 @section("style")
+    <style>
+        .left-side-menu {
+            display: none;
+        }
+
+
+
+    </style>
 @endsection
 
 @section("content")
 
-	<div class="content-page pt-3 mt-1">
-		<div class="content">
+    <div class="content-page pt-3 mt-1" style="background:#F7F8FC;">
+        <div class="content">
+            <div class="container-xl " style="width: 1450px">
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <div id="topic-filter" class="p-2 rounded text-light"
+                             style="background-image: linear-gradient(to right, rgb(91, 121, 162) 0%, rgb(46, 68, 105) 100%);">
+                            <div class="container">
+                                <ul class="d-flex topic-link justify-content-around">
+                                    <li><a href="#">Ολα</a></li>
+                                    @foreach($arrayTopics as $topic)
+                                    <li><a href="#">{{$topic}}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-			<div class="row">
-
-				@foreach ($user->courses as $key => $course)
-
-				@if ( $key % 4 == 0 )
-					</div><div class="row">
-				@endif
-
-				<div class="col-md-6 col-xl-3">
-					<!-- project card -->
-					<div class="card d-block">
-						<!-- project-thumbnail -->
-						<img class="card-img-top" src='https://placehold.co/600x400' alt="project image cap">
-						{{-- <div class="card-img-overlay">
-							<div class="badge badge-secondary p-1">Ongoing</div>
-						</div> --}}
-
-						<div class="card-body position-relative">
-							<!-- project title-->
-							<h4 class="mt-0">
-								<a href="/courses/course/{{ $course->id }}" class="text-title">{{ $course->title }}</a>
-							</h4>
-
-							<!-- project detail-->
-							<p class="mb-3">
-								<span class="pr-2 text-nowrap">
-									<i class="mdi mdi-format-list-bulleted-type"></i>
-									<b>{{ $course->materials->where('type', 'Lesson')->count() }}</b> Μαθήματα
-								</span>
-								<span class="text-nowrap">
-									<i class="mdi mdi-comment-multiple-outline"></i>
-									<b>{{ $course->materials->where('type', '!=', 'Lesson')->count() }}</b> Extras
-								</span>
-							</p>
-							<div class="mb-3">
-								{{ $course->description }}
-							</div>
-
-							<!-- project progress-->
-							{{-- <p class="mb-2 font-weight-bold">Progress <span class="float-right">45%</span></p>
-							<div class="progress progress-sm">
-								<div class="progress-bar" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%;">
-								</div><!-- /.progress-bar -->
-							</div><!-- /.progress --> --}}
-						</div> <!-- end card-body-->
-					</div> <!-- end card-->
-				</div> <!-- end col -->
-
-				@endforeach
-
-				{{-- <div class="col-md-6 col-xl-3">
-					<!-- project card -->
-					<div class="card d-block">
-						<!-- project-thumbnail -->
-						<img class="card-img-top" src="assets/images/projects/project-2.jpg" alt="project image cap">
-						<div class="card-img-overlay">
-							<div class="badge badge-success p-1">Finished</div>
-						</div>
-
-						<div class="card-body position-relative">
-							<!-- project title-->
-							<h4 class="mt-0">
-								<a href="apps-projects-details.html" class="text-title">Landing page design - Home</a>
-							</h4>
-
-							<!-- project detail-->
-							<p class="mb-3">
-								<span class="pr-2 text-nowrap">
-									<i class="mdi mdi-format-list-bulleted-type"></i>
-									<b>11</b> Tasks
-								</span>
-								<span class="text-nowrap">
-									<i class="mdi mdi-comment-multiple-outline"></i>
-									<b>254</b> Comments
-								</span>
-							</p>
-							<div class="mb-3">
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mat Helme" class="d-inline-block">
-									<img src="assets/images/users/avatar-10.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Michael Zenaty" class="d-inline-block">
-									<img src="assets/images/users/avatar-5.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="James Anderson" class="d-inline-block">
-									<img src="assets/images/users/avatar-7.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-								<a href="javascript:void(0);" class="d-inline-block text-muted font-weight-bold ml-2">
-									+2 more
-								</a>
-							</div>
-
-							<!-- project progress-->
-							<p class="mb-2 font-weight-bold">Progress <span class="float-right">100%</span></p>
-							<div class="progress progress-sm">
-								<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-								</div><!-- /.progress-bar -->
-							</div><!-- /.progress -->
-						</div> <!-- end card-body-->
-					</div> <!-- end card-->
-				</div> <!-- end col -->
-
-				<div class="col-md-6 col-xl-3">
-					<!-- project card -->
-					<div class="card d-block">
-						<!-- project-thumbnail -->
-						<img class="card-img-top" src="assets/images/projects/project-3.jpg" alt="project image cap">
-						<div class="card-img-overlay">
-							<div class="badge badge-secondary p-1">Ongoing</div>
-						</div>
-
-						<div class="card-body position-relative">
-							<!-- project title-->
-							<h4 class="mt-0">
-								<a href="apps-projects-details.html" class="text-title">Product page redesign</a>
-							</h4>
-
-							<!-- project detail-->
-							<p class="mb-3">
-								<span class="pr-2 text-nowrap">
-									<i class="mdi mdi-format-list-bulleted-type"></i>
-									<b>21</b> Tasks
-								</span>
-								<span class="text-nowrap">
-									<i class="mdi mdi-comment-multiple-outline"></i>
-									<b>668</b> Comments
-								</span>
-							</p>
-							<div class="mb-3">
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mat Helme" class="d-inline-block">
-									<img src="assets/images/users/avatar-6.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Michael Zenaty" class="d-inline-block">
-									<img src="assets/images/users/avatar-7.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="James Anderson" class="d-inline-block">
-									<img src="assets/images/users/avatar-8.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-								<a href="javascript:void(0);" class="d-inline-block text-muted font-weight-bold ml-2">
-									+5 more
-								</a>
-							</div>
-
-							<!-- project progress-->
-							<p class="mb-2 font-weight-bold">Progress <span class="float-right">71%</span></p>
-							<div class="progress progress-sm">
-								<div class="progress-bar" role="progressbar" aria-valuenow="71" aria-valuemin="0" aria-valuemax="100" style="width: 71%;">
-								</div><!-- /.progress-bar -->
-							</div><!-- /.progress -->
-						</div> <!-- end card-body-->
-					</div> <!-- end card-->
-				</div> <!-- end col -->
-
-				<div class="col-md-6 col-xl-3">
-					<!-- project card -->
-					<div class="card d-block">
-						<!-- project-thumbnail -->
-						<img class="card-img-top" src="assets/images/projects/project-4.jpg" alt="project image cap">
-						<div class="card-img-overlay">
-							<div class="badge badge-secondary p-1">Ongoing</div>
-						</div>
-
-						<div class="card-body position-relative">
-							<!-- project title-->
-							<h4 class="mt-0">
-								<a href="apps-projects-details.html" class="text-title">Coffee detail page - Main Page</a>
-							</h4>
-
-							<!-- project detail-->
-							<p class="mb-3">
-								<span class="pr-2 text-nowrap">
-									<i class="mdi mdi-format-list-bulleted-type"></i>
-									<b>18</b> Tasks
-								</span>
-								<span class="text-nowrap">
-									<i class="mdi mdi-comment-multiple-outline"></i>
-									<b>259</b> Comments
-								</span>
-							</p>
-							<div class="mb-3">
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mat Helme" class="d-inline-block">
-									<img src="assets/images/users/avatar-2.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-
-								<a href="javascript:void(0);" data-toggle="tooltip" data-placement="top" title="" data-original-title="Michael Zenaty" class="d-inline-block">
-									<img src="assets/images/users/avatar-3.jpg" class="rounded-circle avatar-xs" alt="friend">
-								</a>
-							</div>
-
-							<!-- project progress-->
-							<p class="mb-2 font-weight-bold">Progress <span class="float-right">52%</span></p>
-							<div class="progress progress-sm">
-								<div class="progress-bar" role="progressbar" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100" style="width: 52%;">
-								</div><!-- /.progress-bar -->
-							</div><!-- /.progress -->
-						</div> <!-- end card-body-->
-					</div> <!-- end card-->
-				</div> <!-- end col --> --}}
-			</div>
-			<!-- end row-->
+                <div class="row my-5 d-flex justify-content-center">
+                    @foreach(auth()->user()->courses as $course)
+                        <div class="col-md-3">
+                            <div class="row" style="background: white;">
+                                <div class="col-md-5">
+                                    <div
+                                        class="course-box p-1 d-flex flex-column justify-content-between align-items-center"
+                                        style="background: linear-gradient(0deg,#f19a1a,#ffc73c);">
+                                        @foreach($course->topics as $topic)
+                                        <h4 class="bghover font-12 box-title">{{$topic->title}}</h4>
+                                        @endforeach
+                                            <a href="{{route('index.userCourse',$course->id)}}">
+                                                <img height="100"
+                                                     class="my-2"
+                                                     src="https://laracasts.s3.amazonaws.com/series/thumbnails/javascript-techniques-for-server-side-developers.png?v=8"
+                                                     alt="courses">
+                                            </a>
+                                        <p>metrio</p></div>
+                                </div>
+                                <div class="col-md-7 d-flex flex-column justify-content-between align-items-center p-2">
+                                    <h3 class="font-16 font-weight-bold"><a href="{{route('index.userCourse',$course->id)}}">{{$course->title}}</a></h3>
+                                    <p class="font-12 text-center">{{$course->description}}</p>
+                                    <div class="material-box d-flex justify-content-between font-10">
+                                        <span class="mr-3">Lessons : {{$course->materials->where("status",1)->where('type',"Lesson")->count()}}</span>
+                                        <span>Extrass :{{$course->materials->where("status",1)->where('type','!=',"Lesson")->count()}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
 
 
-		</div>
-	</div>
+            </div>
+        </div>
 
 
 

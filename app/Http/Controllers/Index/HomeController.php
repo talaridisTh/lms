@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Index;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Material;
+use App\Topic;
 use App\User;
 use Carbon\Carbon;
 use DateTime;
@@ -114,13 +115,12 @@ class HomeController extends Controller
     {
 
 
-         $test = DB::table("materials")
-            ->join("course_material","course_material.material_id","=","materials.id")
-            ->where("course_id",6)
-            ->where("priority",'>',100)
-             ->orderBy("priority",'asc')
-             ->limit(1)
-            ->get();
+
+        dd(Course::with('topics')->find(1)->topics->whereIn("id",7));
+
+
+        dd(Topic::with("courses")->where("id",1)->first()->courses);
+
 
         dd($test);
 

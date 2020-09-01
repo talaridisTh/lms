@@ -207,3 +207,4 @@ const tableLocale = {
         toastAlertDelete
 
     }
+

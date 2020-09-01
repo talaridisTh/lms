@@ -7,77 +7,9 @@
             display: none;
         }
 
-        .moretext {
-            display: none;
-        }
-
-        .box-material {
-            background: linear-gradient(0deg, #f19a1a, #ffc73c)
-        }
-
-        .now-play {
-            color: #F29D1C;
-        }
-
-        .hover-yellow:hover {
-            background: linear-gradient(0deg, #f19a1a, #ffc73c);
-            border-radius: 18px;
-
-        }
 
 
-        .bghover:hover {
-            background: white !important;
-            color: #328af1 !important;
-        }
 
-        .material-title:hover {
-            background: #E9EAEB;
-        }
-
-        .material-title-hover {
-            background: #E9EAEB;
-        }
-
-        .course-title {
-            background: white !important;
-            color: black !important;
-            padding: 8px;
-            border-radius: 16px;
-            margin-left: 13px;
-        }
-
-        .course-title:hover {
-            color: #328af1 !important;
-
-        }
-
-        .bghover {
-            transition: background .3s, border-color .2s;
-            border-radius: 18px;
-        }
-
-        .arrow {
-            border-radius: 18px;
-            opacity: 0.7;
-            background-color: #e3e3e3;
-        }
-
-        .background-material {
-            border-radius: 18px;
-
-            background-color: #e3e3e3;
-        }
-
-        .text-black {
-            color: black;
-        }
-
-        .arrow:hover {
-            border-radius: 18px;
-            opacity: 1;
-
-        }
 
 
         hr.style-two {
@@ -213,7 +145,7 @@
                             <div class="col-md-10 ">
                                 <a class="d-flex justify-content-center flex-column" href="{{route('index.userCourse',$course->id)}}">
                                 <span
-                                    class="font-16 text-center text-black font-weight-bold">{{$course->title}}</span>
+                                    class="font-16  text-center text-black font-weight-bold">{{$course->title}}</span>
                                 <div class="d-flex justify-content-around">
                                     <span class="font-12 text-primary">Μέτριο</span>
                                     <span class="font-12">2 lessons</span>
