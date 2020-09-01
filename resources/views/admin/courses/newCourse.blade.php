@@ -20,78 +20,299 @@
 @endsection
 
 @section('content')
+
+	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h4 class="modal-title" id="add-materials-modalLabel">Προσθήκη Υλικού</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body table-cnt">
+					<table id="all-materials-table" class="js-table table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+						<thead>
+							<tr>
+								<th class="text-center">
+									<div class='icheck-primary d-inline'>
+										<input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
+										<label for='all-remainings-checkbox'></label>
+									</div>
+								</th>
+								<th class="text-center">Τίτλος</th>
+								<th class="text-center">Topic</th>
+								<th class="text-center">Τύπος</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody class="tables-hover-effect"></tbody>
+						<tfoot>
+							<tr>
+								<th class="text-center">Επιλογή</th>
+								<th class="text-center">Τίτλος</th>
+								<th class="text-center">Topic</th>
+								<th class="text-center">Τύπος</th>
+								<th class="text-center"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button id="add-remaingings-btn" 
+						data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary" 
+						data-disabled-color="btn-secondary" class="btn btn-secondary" disabled>
+						Προσθήκη Επιλογών (0)
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-xl">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h4 class="modal-title" id="add-user-modalLabel">Προσθήκη Χρηστών</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body table-cnt">
+					<table id="add-users-table" class="js-table table w-100 nowrap modal-table js-remove-table-classes">
+						<thead>
+							<tr>
+								<th class="text-center">
+									<div class='icheck-primary d-inline'>
+										<input id='add-user-checkbox' type='checkbox' autocomplete='off'>
+										<label for='add-user-checkbox'></label>
+									</div>
+								</th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Επώνυμο</th>
+								<th class="text-center">Ιδιότητα</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody class="tables-hover-effect table-text-center table-vertical-align-middle"></tbody>
+						<tfoot>
+							<tr>
+								<th class="text-center"></th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Επώνυμο</th>
+								<th class="text-center">Ιδιότητα</th>
+								<th class="text-center"></th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button id="add-multiple-users-btn" type="button"
+						class="btn btn-primary" data-text="Προσθήκη Επιλογών"
+						data-enabled-color="btn-primary" data-disabled-color="btn-secondary">
+						Προσθήκη Επιλογών (0)
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<div class="wrapper">
 		<div class="content">
 
 			<div class="row">
 				<div class="col-xl-9 col-lg-7 col-md-12">
 
-					<form id="new-course-form" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
-						
-						@csrf
-						@method('PATCH')
+					<ul class="nav nav-tabs nav-bordered mb-3">
+						<li class="nav-item">
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
+								Περιεχόμενο
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#materials" data-toggle="tab" aria-expanded="true" class="nav-link active">
+								Υλικό
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link">
+								Χρήστες
+							</a>
+						</li>
+					</ul> <!-- end nav-->
 
-						<div class="form-group">
-							<label for="title">Τίτλος</label>
-							<input id="title" type="text" 
-								class="form-control @error('title') is-invalid @enderror" 
-								id="title" name="title" 
-								value="{{ old('title') }}" 
-								placeholder="Εισάγετε τίτλο...">
-							@error('title')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
+					<div class="tab-content">
+
+						<div id="settings" class="tab-pane">
+							<form id="new-course-form" action="store" method="POST" enctype="multipart/form-data" autocomplete="off">
+								@csrf
+							
+								<div class="form-group">
+									<label for="title">Τίτλος</label>
+									<input id="title" type="text" 
+										class="form-control @error('title') is-invalid @enderror" 
+										id="title" name="title" 
+										value="{{ old('title') }}" 
+										placeholder="Εισάγετε τίτλο...">
+									@error('title')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							
+								<div class="form-group">
+									<label for="subtitle">Υπότιτλος</label>
+									<input id="subtitle" type="text" 
+										class="form-control @error('subtitle') is-invalid @enderror" 
+										name="subtitle" 
+										value="{{ old('subtitle') }}" 
+										placeholder="Εισάγετε υπότιτλο...">
+									@error('subtitle')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							
+								<div class="form-group">
+									<label for="summary">Σύνοψη</label>
+									<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Εισάγετε σύνοψη...">{{ old('summary') }}</textarea>
+									@error('summary')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							
+								<div class="form-group">
+									<label for="description">Περιγραφή</label>
+									<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') }}</textarea>
+									@error('description')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+							</form>
 						</div>
 
-						<div class="form-group">
-							<label for="subtitle">Υπότιτλος</label>
-							<input id="subtitle" type="text" 
-								class="form-control @error('subtitle') is-invalid @enderror" 
-								name="subtitle" 
-								value="{{ old('subtitle') }}" 
-								placeholder="Εισάγετε υπότιτλο...">
-							@error('subtitle')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
+						<div id="materials" class="tab-pane table-cnt mb-3 show active">
+							<table id="selected-materials-table" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
+								<thead>
+									<tr>
+										<th class="text-center">
+											<div class='icheck-primary d-inline'>
+												<input type='checkbox' id='selected-materials-checkbox' autocomplete='off'>
+												<label for='selected-materials-checkbox'></label>
+											</div>
+										</th>
+										<th class="text-center">Τίτλος</th>
+										<th class="text-center">Ενεργό</th>
+										<th class="text-center">Κατάταξη</th>
+										<th class="text-center">Τύπος</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center"></th>
+										<th class="text-center">Τίτλος</th>
+										<th class="text-center">Ενεργό</th>
+										<th class="text-center">Κατάταξη</th>
+										<th class="text-center">Τύπος</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
+									</tr>
+								</tfoot>
+							</table>
+
+							<div class="row mt-3">
+								<div class="col-sm-1">
+								</div>
+								<div class="col-sm-11 d-flex justify-content-end">
+									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">
+										<i class="mdi mdi-plus-circle mr-2"></i>
+										Προσθήκη Υλικού
+									</button>
+									<div class="dropdown ml-2">
+										<button id="active-material-bulk" class="btn btn-secondary dropdown-toggle"
+											type="button" data-toggle="dropdown" data-text="Επιλογές"
+											aria-haspopup="true" aria-expanded="false" disabled>
+											Επιλογές (0)
+										</button>
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+											<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
 						</div>
 
-						<div class="form-group">
-							<label for="summary">Σύνοψη</label>
-							<textarea class="form-control @error('summary') is-invalid @enderror" id="summary" name="summary" rows="4" placeholder="Εισάγετε σύνοψη...">{{ old('summary') }}</textarea>
-							@error('summary')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
-						</div>
+						<div id="users" class="tab-pane table-cnt">
+							<table id="selected-users-table" class="js-table table w-100 nowrap js-remove-table-classes">
+								<thead>
+									<tr>
+										<th class="text-center">
+											<div class='icheck-primary d-inline'>
+												<input type='checkbox' id='select-all-active-users' autocomplete='off'>
+												<label for='select-all-active-users'></label>
+											</div>
+										</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Ιδιότητα</th>
+										<th class="text-center"></th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center"></th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Ιδιότητα</th>
+										<th class="text-center"></th>
+									</tr>
+								</tfoot>
+							</table>
 
-						<div class="form-group">
-							<label for="description">Περιγραφή</label>
-							<textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4" placeholder="Εισάγετε περιγραφή...">{{ old('description') }}</textarea>
-							@error('description')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
+							<div class="row mt-3">
+								<div class="col-sm-1">
+								</div>
+								<div class="col-sm-11 d-flex justify-content-end">
+									<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user-modal">
+										<i class="mdi mdi-account-multiple-plus mr-2"></i>
+										Προσθήκη Χρηστών
+									</button>
+									<div class="dropdown ml-2">
+										<button class="btn btn-secondary dropdown-toggle"
+											type="button" id="active-users-bulk" data-toggle="dropdown" 
+											aria-haspopup="true" aria-expanded="false" disabled>
+											Επιλογές (0)
+										</button>
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+											<a id="remove-selected-users-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+										</div>
+									</div>
+								</div>
+							</div>
 						</div>
-					</form>
-
+					</div>
 				</div>
 				<div class="col-xl-3 col-lg-5 col-md-12">
 
-					<div class="sticky pb-3 px-2">
-						<button form="edit-course-form" type="submit" id="update-btn" class="btn btn-primary btn-block">Αποθήκευση</button>
+					<div class="sticky py-2 px-2">
+						<button form="new-course-form" type="submit" id="update-btn" class="btn btn-primary" name="save">Αποθήκευση</button>
+						{{-- <button form="new-course-form" type="submit" id="publish-btn" class="btn btn-warning" name="publish">Δημοσίευση</button> --}}
 					</div>
 
 					<div class="card">
 						<div class="card-body">
 							<div class="form-group">
 								<label for="topic">Topic</label>
-								<select form="edit-course-form" class="select2 form-control select2-multiple" name="topics[]" data-toggle="select2" multiple="multiple" data-placeholder="Επιλέξτε Topics...">
+								<select form="new-course-form" class="select2 form-control select2-multiple" name="topics[]" data-toggle="select2" multiple="multiple" data-placeholder="Επιλέξτε Topics...">
 										
 									@foreach ($topics as $topic)
 										<option value="{{ $topic->id }}">{{ $topic->title }}</option>
@@ -101,7 +322,7 @@
 							</div>
 							<hr>
 							<label for="curator">Κύριος Εισηγητής</label>
-							<select id="curator" form="edit-course-form" class="select2 form-control" name="curator" data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή...">
+							<select id="curator" form="new-course-form" class="select2 form-control" name="curator" data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή...">
 										
 								@foreach ($instructors as $instructor)
 									<option value="{{ $instructor->id }}">{{ $instructor->first_name }} {{ $instructor->last_name }}</option>
@@ -110,16 +331,8 @@
 							</select>
 							<hr>
 							<div class="form-group">
-								<div class="row">
-									<div class="col-8">
-										<p><strong>Δημοσίευση απο:</strong></p>
-									</div>
-									<div class="col-4 text-right">
-										<input id="enable-publish-select" type="checkbox" data-switch="bool" checked autocomplete="off"/>
-										<label class="mb-0" for="enable-publish-select" data-on-label="On" data-off-label="Off"></label>
-									</div>
-								</div>
-								<input form="edit-course-form" type="text" class="form-control" id="publish-date-select" name="publishDate" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
+								<label for="publish-date-select">Δημοσίευση απο</label>
+								<input form="new-course-form" type="text" class="form-control" id="publish-date-select" name="publishDate" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
 							</div>
 							<hr>
 						</div>

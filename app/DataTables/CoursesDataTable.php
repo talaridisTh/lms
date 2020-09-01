@@ -68,6 +68,8 @@ class CoursesDataTable extends DataTable
 				<p class='mb-1'>$data->slug</p>
 				<a href='/dashboard/course/$data->id' class='custom-link-primary'>Edit</a>
 				<span class='mx-2'>|</span>
+				<a href='#' class='js-course-clone-btn custom-link-primary' data-course-id='$data->id'>Clone</a>
+				<span class='mx-2'>|</span>
 				<a href='#' class='custom-link-primary'>View</a>";
 
 			})

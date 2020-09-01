@@ -54,31 +54,31 @@
 
 						<li class="side-nav-item">
 							<a href="/dashboard" class="side-nav-link">
-								<i class="uil-calender"></i>
+								<i class="mdi mdi-speedometer"></i>
 								<span>Overview</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
 							<a href="{{route('user.index')}}" class="side-nav-link">
-								<i class="uil-comments-alt"></i>
+								<i class="mdi mdi-account-multiple"></i>
 								<span>Χρήστες</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
 							<a href="/dashboard/materials" class="side-nav-link">
-								<i class="uil-comments-alt"></i>
+								<i class="mdi mdi-book-open-page-variant"></i>
 								<span>Μαθήματα</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
 							<a href="/dashboard/courses" class="side-nav-link">
-								<i class="uil-comments-alt"></i>
+								<i class="mdi mdi-label-multiple"></i>
 								<span>Courses</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
 							<a href="/dashboard/bundles" class="side-nav-link">
-								<i class="uil-comments-alt"></i>
+								<i class="mdi mdi-package-variant"></i>
 								<span>Bundles</span>
 							</a>
 						</li>

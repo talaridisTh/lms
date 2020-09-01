@@ -45,21 +45,26 @@ class CourseController extends Controller
 		// 	$fileName = md5( $request->name ).$ext;
 		// }
 
-		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
-
+		// dd($request->all());
 		$course = new Course;
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
-		$course->status = $request->status;
+		$course->status = 1 /* $request->status */;
 		$course->slug = Str::slug($request->title, "-");
-		$course->publish_at = Carbon::now()->format("Y-m-d H:i:s");
+		$course->publish_at = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		$course->user_id = $request->curator;
+		// $course->publish_at = $request->publishDate;
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		$course->cover = "https://placehold.co/600x400";
 		
 		$course->save();
+
+		foreach ( $request->topics as $id ) {
+			$course->topics()->attach( $id );
+		}
 		
 		// if ( isset($fileName) ) {
 		// 	$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
@@ -190,5 +195,48 @@ class CourseController extends Controller
 		];
 
 		return view('courses/courseProfile')->with( $data );
+	}
+
+	public function clone(Request $request) {
+
+		$validate = $request->validate([
+			'title' => 'required|unique:courses'
+		]);
+
+		$course = Course::find( $request->id );
+		$course->load( "materials", "topics" );
+		$newCourse = $course->replicate();
+		$newCourse->title = $request->title;
+		$newCourse->slug = Str::slug($request->title, "-");
+
+		$newCourse->push();
+
+		$relations = $course->getRelations();
+
+		foreach ( $relations as $key => $relation ) {
+			if ( $key === "materials" ) {
+
+				foreach ( $relation as $material ) {
+	
+					// $status = $material->pivot->status;
+					$priority = $material->pivot->priority;
+					$publish_at = $material->pivot->publish_at;
+	
+					$newCourse->materials()->attach($material->id, [
+						'status' => 0,
+						'priority' => $priority,
+						'publish_at' => $publish_at
+					]);
+				}
+			}
+			else {
+				foreach ($relation as $topic ) {
+
+					$newCourse->topics()->attach( $topic->id );
+				}
+			}
+		}
+
+		return redirect("/dashboard/courses");
 	}
 }

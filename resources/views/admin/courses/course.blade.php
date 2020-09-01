@@ -109,8 +109,8 @@
 				</div>
 				<div class="modal-footer">
 					<button id="add-multiple-users-btn" type="button"
-						class="btn btn-primary" data-text="Προσθήκη Επιλογών"
-						data-enabled-color="btn-primary" data-disabled-color="btn-secondary">
+						class="btn btn-secondary" data-text="Προσθήκη Επιλογών"
+						data-enabled-color="btn-primary" data-disabled-color="btn-secondary" disabled>
 						Προσθήκη Επιλογών (0)
 					</button>
 					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
@@ -437,7 +437,7 @@
 									<input name="file" type="file" multiple />
 								</div>
 
-								<div class="dz-message needsclick">
+								<div class="dz-message needsclick text-center">
 									<i class="h1 text-muted dripicons-cloud-upload"></i>
 									<h3>Drop files here or click to upload.</h3>
 									<span class="text-muted font-13">(This is just a demo dropzone. Selected files are
