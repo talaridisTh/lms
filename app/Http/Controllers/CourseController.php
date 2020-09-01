@@ -45,21 +45,26 @@ class CourseController extends Controller
 		// 	$fileName = md5( $request->name ).$ext;
 		// }
 
-		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
 
-
+		// dd($request->all());
 		$course = new Course;
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
-		$course->status = $request->status;
+		$course->status = 1 /* $request->status */;
 		$course->slug = Str::slug($request->title, "-");
-		$course->publish_at = Carbon::now()->format("Y-m-d H:i:s");
+		$course->publish_at = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		$course->user_id = $request->curator;
+		// $course->publish_at = $request->publishDate;
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		$course->cover = "https://placehold.co/600x400";
 		
 		$course->save();
+
+		foreach ( $request->topics as $id ) {
+			$course->topics()->attach( $id );
+		}
 		
 		// if ( isset($fileName) ) {
 		// 	$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
