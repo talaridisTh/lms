@@ -156,7 +156,6 @@
                     </div>
 
                     @foreach($MaterialsOrderByPriority as $material)
-
                         <div
                             class="row my-2 material-title @if($material->title==$materials->title) material-title-hover   @endif">
                             <div class="col-md-12 material-title cursor-pointer  border d-flex justify-content-between"

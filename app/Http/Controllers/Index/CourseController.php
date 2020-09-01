@@ -37,8 +37,16 @@ class CourseController extends Controller
 
         $lastMaterial = Course::MaterialsOrderByPriority($course->id)->first();
 
+        $allMaterial = $course->materials()->orderBy("priority")->get();
 
-        return view("courses.courseProfile",compact('course',"lastMaterial","topics"));
+
+//        dd($course->materials()->orderBy("priority")->get());
+//       $test =  $course->materials->where("status",1);
+//
+
+
+
+        return view("courses.courseProfile",compact('course',"lastMaterial","topics","allMaterial"));
 
     }
 }
