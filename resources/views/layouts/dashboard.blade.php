@@ -83,6 +83,13 @@
 							</a>
 						</li>
 
+						<li class="side-nav-item">
+							<a href="/dashboard/topics" class="side-nav-link">
+								<i class="mdi mdi-chart-bubble"></i>
+								<span>Topics</span>
+							</a>
+						</li>
+
 					</ul>
 					<!-- End Sidebar -->
 

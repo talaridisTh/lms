@@ -65,11 +65,14 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
     Route::patch('/dashboard/courses/update/{course}', 'CourseController@update')->name('course.update');
     Route::delete('/dashboard/course/{course}', 'CourseController@destroy')->name('course.destroy');
 
-	//!Bundle Routes
+	//! Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
     Route::get('/dashboard/bundle/{bundle}', 'BundleController@show')->name('bundle.show');
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
+
+	//! Topic Routes
+	Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
 
 });
 
@@ -138,10 +141,10 @@ Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@tog
 
 
 //! Dashboard Ajax Materials CRUD
-
-
 Route::patch( 'materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus' );
 
+//! Dashboard Topics Datatables
+Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
