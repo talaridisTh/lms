@@ -14,7 +14,7 @@ class TopicController extends Controller
      */
     public function index()
     {
-        //
+        return view("admin/topics/topicsMain");
     }
 
     /**

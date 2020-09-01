@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\DataTables\TopicsDataTable;
 use App\Http\Controllers\Controller;
 use App\Topic;
 use Illuminate\Http\Request;
@@ -13,9 +14,9 @@ class TopicController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(TopicsDataTable $dataTable)
     {
-        //
+        return $dataTable->render('topics.index');
     }
 
     /**
