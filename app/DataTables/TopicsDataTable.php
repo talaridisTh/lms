@@ -32,7 +32,7 @@ class TopicsDataTable extends DataTable
 			})
 			->editColumn('title', function($data) {
 
-				return "<span class='h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
+				return "<span class='js-quick-edit h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
 					<input type='text' class='js-edit form-control d-none' data-topic-id='$data->id' value='$data->title' placeholder='Εισάγετε Τίτλο...'>
 					<div class='invalid-feedback'>
       					Το πεδίο είναι υποχρεωτικό.
