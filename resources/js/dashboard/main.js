@@ -94,116 +94,127 @@ const tableLocale = {
 
 //!GLOBAL FUNCTION
 //!============================================================
-    function mainCheckboxSwitcher(main, minor, bulkBtn = false) {
-        let status = true;
-        let counter = 0;
-        main.checked = true;
+function mainCheckboxSwitcher(main, minor, bulkBtn = false) {
+    let status = true;
+    let counter = 0;
+    main.checked = true;
+
+    for (var i = 0; i < minor.length; i++) {
+        if (!minor[i].checked) {
+            minor[i].findParent(3).classList.remove("bg-selected");
+            main.checked = false;
+        } else {
+            minor[i].findParent(3).classList.add("bg-selected");
+            counter++
+            status = false;
+        }
+    }
+
+    if (bulkBtn) {
+        bulkModifier(bulkBtn, status, counter);
+    }
+}
+
+function minorCheckboxSwitcher(main, minor, bulkBtn = false) {
+    let counter = 0;
+    let status = true;
+
+    if (main.checked && minor.length > 0) {
+
+        counter = minor.length;
+        status = false;
 
         for (var i = 0; i < minor.length; i++) {
-            if (!minor[i].checked) {
-                minor[i].findParent(3).classList.remove("bg-selected");
-                main.checked = false;
-            } else {
-                minor[i].findParent(3).classList.add("bg-selected");
-                counter++
-                status = false;
-            }
+            minor[i].checked = true;
+            minor[i].findParent(3).classList.add("bg-selected");
         }
-
-        if (bulkBtn) {
-            bulkModifier(bulkBtn, status, counter);
+    } else {
+        for (var i = 0; i < minor.length; i++) {
+            minor[i].checked = false;
+            minor[i].findParent(3).classList.remove("bg-selected");
         }
     }
 
-    function minorCheckboxSwitcher(main, minor, bulkBtn = false) {
-        let counter = 0;
-        let status = true;
+    if (bulkBtn) {
+        bulkModifier(bulkBtn, status, counter);
+    }
+}
 
-        if (main.checked && minor.length > 0) {
+function bulkModifier(bulkBtn, status, sum) {
 
-            counter = minor.length;
-            status = false;
+    let text = bulkBtn.dataset.text ? bulkBtn.dataset.text : "Επιλογές";
+    let enabledColor = bulkBtn.dataset.enabledColor ? bulkBtn.dataset.enabledColor : "btn-warning";
+    let disabledColor = bulkBtn.dataset.disabledColor ? bulkBtn.dataset.disabledColor : "btn-secondary";
 
-            for (var i = 0; i < minor.length; i++) {
-                minor[i].checked = true;
-                minor[i].findParent(3).classList.add("bg-selected");
-            }
-        } else {
-            for (var i = 0; i < minor.length; i++) {
-                minor[i].checked = false;
-                minor[i].findParent(3).classList.remove("bg-selected");
-            }
+    if (status) {
+        bulkBtn.classList.add(disabledColor)
+        bulkBtn.classList.remove(enabledColor)
+        bulkBtn.textContent = `${text} (0)  `
+        bulkBtn.disabled = true;
+    } else {
+        bulkBtn.classList.add(enabledColor);
+        bulkBtn.classList.remove(disabledColor);
+        bulkBtn.textContent = `${text}  (${sum})  `
+        bulkBtn.disabled = false;
+    }
+}
+
+function filterStyle( input, value ) {
+
+	if ( value == "" ) {
+		input.classList.remove("select2-selected");
+	}
+	else {
+		input.classList.add("select2-selected");
+	}
+
+}
+
+const filterButton = function (attr, column, table) {
+    $(attr).detach().appendTo('.dataTables_length label')
+    $(attr).on('change', function () {
+        table.columns(column).search(this.value).draw();
+    });
+}
+
+const changeInputHidden = (attr, hiddenAttr) => {
+
+    $(attr).change(function () {
+        if (attr == "#activeMaterial") {
+            this.value = $(this).prop('checked') == true ? 1 : 0;
         }
 
-        if (bulkBtn) {
-            bulkModifier(bulkBtn, status, counter);
-        }
-    }
+        let hiddenValue = $(hiddenAttr)[0].value = this.value
 
-    function bulkModifier(bulkBtn, status, sum) {
+    })
+}
 
-        let text = bulkBtn.dataset.text ? bulkBtn.dataset.text : "Επιλογές";
-        let enabledColor = bulkBtn.dataset.enabledColor ? bulkBtn.dataset.enabledColor : "btn-warning";
-        let disabledColor = bulkBtn.dataset.disabledColor ? bulkBtn.dataset.disabledColor : "btn-secondary";
+function createStateSelect( id = "" ) {
+    const selectElm = document.createElement("select");
+    selectElm.classList.add("ml-1", "select2");
+	selectElm.id = id;
 
-        if (status) {
-            bulkBtn.classList.add(disabledColor)
-            bulkBtn.classList.remove(enabledColor)
-            bulkBtn.textContent = `${text} (0)  `
-            bulkBtn.disabled = true;
-        } else {
-            bulkBtn.classList.add(enabledColor);
-            bulkBtn.classList.remove(disabledColor);
-            bulkBtn.textContent = `${text}  (${sum})  `
-            bulkBtn.disabled = false;
-        }
-    }
-
-    const filterButton = function (attr, column, table) {
-        $(attr).detach().appendTo('.dataTables_length label')
-        $(attr).on('change', function () {
-            table.columns(column).search(this.value).draw();
-        });
-    }
-
-    const changeInputHidden = (attr, hiddenAttr) => {
-
-        $(attr).change(function () {
-            if (attr == "#activeMaterial") {
-                this.value = $(this).prop('checked') == true ? 1 : 0;
-            }
-
-            let hiddenValue = $(hiddenAttr)[0].value = this.value
-
-        })
-    }
-
-    function createStateSelect( id = "" ) {
-        const selectElm = document.createElement("select");
-        selectElm.classList.add("ml-1", "select2");
-		selectElm.id = id;
-
-        selectElm.innerHTML = `
+    selectElm.innerHTML = `
 		<option value="">Όλες οι Καταστάσεις</option>
 		<option value="1">Ενεργά</option>
 		<option value="0">Ανενεργά</option>
 	`;
 
-        return selectElm;
-    }
+    return selectElm;
+}
 
 
-    export default {
-        toastAlert,
-        mainCheckboxSwitcher,
-        minorCheckboxSwitcher,
-        filterButton,
-        tableLocale,
-        changeInputHidden,
-        redactorConfig,
-        createStateSelect,
-        datePickerConfig,
-        toastAlertDelete
-
-    }
+export default {
+    toastAlert,
+    mainCheckboxSwitcher,
+    minorCheckboxSwitcher,
+    filterButton,
+    tableLocale,
+    changeInputHidden,
+    redactorConfig,
+    createStateSelect,
+    datePickerConfig,
+	toastAlertDelete,
+	filterStyle
+}
 

@@ -235,6 +235,10 @@ $("#course-state-select").select2({
 
 $("#course-state-select").change( function () {
 
+	let label = $("#select2-course-state-select-container")[0];
+
+	utilities.filterStyle( label, this.value );
+
 	coursesDatatable.columns(2).search( this.value ).draw();
 
 });
@@ -247,6 +251,9 @@ $("#topic-filter").select2({
 
 $("#topic-filter").change( function() {
 
+	let label = $("#select2-topic-filter-container")[0];
+
+	utilities.filterStyle( label, this.value );
 	coursesDatatable.ajax.reload();
 
 });
