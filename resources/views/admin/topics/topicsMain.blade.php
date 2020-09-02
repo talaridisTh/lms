@@ -53,7 +53,7 @@
 						Νέο Topic
 					</a>
 					<div class="btn-group mb-2">
-						<button id="course-bulk-action-btn" disabled type="button" 
+						<button id="topic-bulk-action-btn" disabled type="button" 
 							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">
 							Επιλογές (0)

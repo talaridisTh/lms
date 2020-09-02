@@ -4,6 +4,65 @@
 import utilities from '../main';
 
 //!##########################################
+//!				EventListeners				#
+//!##########################################
+
+$("#select-all-topics").change( function() {
+
+	let checkbox = $(".js-topic-checkbox");
+	let bulk = $("#topic-bulk-action-btn")[0];
+
+	utilities.minorCheckboxSwitcher( this, checkbox, bulk );
+
+});
+
+$("#delete-topics-btn").click( function() {
+	
+	let checkedBoxes = $(".js-topic-checkbox:checked");
+	let ids = [];
+
+	if ( checkedBoxes.length == 0 ) {
+		Swal.fire('Δεν έχετε επιλέξει τίποτα');
+		return;
+	}
+
+	for ( let i = 0; i < checkedBoxes.length; i++ ) {
+		ids.push( checkedBoxes[i].dataset.topicId );
+	}
+
+	Swal.fire({
+		title: 'Είστε σίγουρος;',
+		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? "αρχείο θα διαγραφεί" : " αρχεία θα διαγραφούν"}`,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, διαγραφή!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+			// console.log("yes");
+			axios.delete(`/topics/destroy/${ids}`)
+			.then(function (response) {
+
+				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
+
+				utilities.toastAlert( "success", message );
+
+				topicsDatatable.ajax.reload();
+				resetBulk( $("#topic-bulk-action-btn"), $("#select-all-topics") );
+			})
+			.catch(function (error) {
+				
+				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+
+			});
+			
+		}
+	})
+
+})
+
+//!##########################################
 //! 				Datatables				#
 //!##########################################
 const topicsDatatable = $("#topics-datatable").DataTable({
@@ -35,13 +94,26 @@ const topicsDatatable = $("#topics-datatable").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-updated-at");
 
 		showEditInit();
-		editInputInit()
+		editInputInit();
+		topicCheckboxesInit();
 	}
 })
 
 //!##############################################
 //!				EventListeners Init				#
 //!##############################################
+
+function topicCheckboxesInit() {
+
+	let primaryCheckbox = $("#select-all-topics")[0];
+	let topicCheckbox = $(".js-topic-checkbox");
+	let bulk = $("#topic-bulk-action-btn")[0];
+	
+	topicCheckbox.change( function() {
+		utilities.mainCheckboxSwitcher(primaryCheckbox, topicCheckbox, bulk );
+	});
+
+}
 
 function showEditInit() {
 	let editBtns = $(".js-quick-edit");
@@ -116,4 +188,17 @@ function updateTopic( input ) {
 			}
 		})
 
+}
+
+//!##########################################
+//!					Functions				#
+//!##########################################
+
+function resetBulk( bulkBtn, checkbox ) {
+
+	bulkBtn.text("Επιλογές  (0)");
+	bulkBtn.addClass("btn-secondary");
+	bulkBtn.removeClass("btn-warning");
+	bulkBtn.prop("disabled", true);
+	checkbox.prop("checked", false);
 }

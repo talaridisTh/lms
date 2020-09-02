@@ -149,6 +149,7 @@ Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 
 //! Dashboard Ajax Topic CRUD
 Route::patch( 'topics/update/{topic}', 'Ajax\TopicController@update' );
+Route::delete( 'topics/destroy/{ids}', 'Ajax\TopicController@destroy' );
 
 
 //! Ajax Upload Files

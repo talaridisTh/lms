@@ -88,8 +88,15 @@ class TopicController extends Controller
      * @param  \App\Topic  $topic
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Topic $topic)
+    public function destroy( $ids )
     {
-        //
+		$ids = explode(",", $ids);
+
+		foreach ( $ids as $id ) {
+			
+			Topic::find( $id )->delete();
+
+		}
+
     }
 }
