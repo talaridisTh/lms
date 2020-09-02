@@ -162,21 +162,16 @@ function atLinkEventListener() {
 //!============================================================
 $("#courseFilterMaterial").select2({
     text: '',
-    placeholder: "Ολα τα Courses",
-    allowClear: true,
     // minimumInputLength: 2,
 });
 
 $("#typeFilterMaterial").select2({
-    placeholder: "Ολοι οι Τύποι",
     minimumResultsForSearch: -1,
-    allowClear: true,
 });
 
 $("#activeFilterMaterial").select2({
     minimumResultsForSearch: -1,
-    placeholder: "Kατάσταση ",
-    allowClear: true,
+
 });
 
 

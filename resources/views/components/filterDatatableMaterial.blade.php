@@ -4,20 +4,20 @@
 </div>
 
 <select id="activeFilterMaterial">
-    <option value="">Καθαρισμός</option>
+    <option value="">Όλοι οι ρόλοι</option>
     <option value="1">Ενεργοί</option>
     <option value="0">Μη Ενεργοί</option>
 </select>
 
 <select id="typeFilterMaterial">
-    <option value="">Καθαρισμός</option>
+    <option value="">Όλα τα Type</option>
     @foreach(App\Material::all()->unique('type') as $course)
     <option value="{{$course->type}}">{{$course->type}}</option>
     @endforeach
 </select>
 
 <select id="courseFilterMaterial">
-    <option value="">Καθαρισμός</option>
+    <option value="">Όλα τα Courses</option>
     @foreach(App\Course::all() as $course)
     <option value="{{$course->title}}">{{$course->title}}</option>
     @endforeach

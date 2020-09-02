@@ -30,19 +30,18 @@ utilities.changeInputHidden('#topicMaterial','#topicMaterialHidden')
 $("#typeMaterial").select2({
     minimumResultsForSearch: -1,
     allowClear: true,
-    placeholder: 'Ολοι οι Τύποι'
 });
 
 $("#instructorMaterial").select2({
     allowClear: true,
-    placeholder: 'Ολοι οι Εισηγητής'
 });
 
 $("#topicMaterial").select2({
     allowClear: true,
-    placeholder: 'Ολα τα Τοpic',
     tags: true
 });
+
+
 
 //sortable
 

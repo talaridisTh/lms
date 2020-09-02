@@ -7,7 +7,7 @@ const userId = $(".course-materials-list")[0].dataset.id
 //! DATATABLES INIT
 //!============================================================
 const courses = $(".course-materials-list").DataTable({
-    scrollX: !0,
+
     processing: true,
     serverSide: true,
     ajax: {

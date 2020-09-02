@@ -8,14 +8,14 @@
 </select>
 
 <select id="fullNameFilter">
-    <option value="">Καθαρισμός</option>
+    <option value="">Όλα τα Courses </option>
     @foreach(App\Course::all() as $course)
         <option value="{{$course->title}}">{{$course->title}}</option>
     @endforeach
 </select>
 
 <select id="rolesFilter">
-    <option value=""></option>
+    <option value="">Όλοι οι ρόλοι</option>
     @foreach(App\Role::all() as $role)
         <option value="{{$role->name}}">{{$role->name}}</option>
     @endforeach

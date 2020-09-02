@@ -80,22 +80,26 @@
     <script>
         $(document).ready(function () {
             $("#fullNameFilter").select2({
-                text: '',
-                placeholder: "Όλα τα Courses ",
-                allowClear: true,
+                // placeholder: "Όλα τα Courses ",
+
                 // minimumInputLength: 2,
             });
 
             $("#rolesFilter").select2({
-                placeholder: "Όλοι οι ρόλοι",
+                // placeholder: "Όλοι οι ρόλοι",
                 minimumResultsForSearch: -1,
-                allowClear: true,
+
             });
 
             $("#activeFilter").select2({
                 minimumResultsForSearch: -1,
-                placeholder: "Κατάσταση",
-                allowClear: true,
+                // placeholder: "Κατάσταση",
+
+            });
+            $(".custom-select").select2({
+                minimumResultsForSearch: -1,
+
+
             });
         })
 

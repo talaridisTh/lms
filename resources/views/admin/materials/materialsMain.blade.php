@@ -76,6 +76,11 @@
 
 
     <script>
+        $(".custom-select").select2({
+            minimumResultsForSearch: -1,
+
+
+        });
 
 
         $(".ragneButton").detach().appendTo('.dataTables_length label')

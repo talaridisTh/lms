@@ -21,10 +21,11 @@
                         <div id="topic-filter" class="p-2 rounded text-light"
                              style="background-image: linear-gradient(to right, rgb(91, 121, 162) 0%, rgb(46, 68, 105) 100%);">
                             <div class="container">
-                                <ul class="d-flex topic-link justify-content-around">
-                                    <li><a href="#">Ολα</a></li>
+                                <ul data-user-slug="{{auth()->user()->slug}}" class="d-flex topic-link justify-content-around">
+                                    <li ><a href="#">Ολα</a></li>
+
                                     @foreach($arrayTopics as $key => $topic)
-                                    <li data-topic-id="{{$key}}"><a href="#">{{$topic}}</a></li>
+                                    <li class="filter-topic"  data-topic-id="{{$key}}"><a href="#">{{$topic}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -32,8 +33,8 @@
                     </div>
                 </div>
 
-                <div class="row my-5 d-flex justify-content-center">
-                    @foreach(auth()->user()->courses as $course)
+                <div class="row my-5 d-flex justify-content-center content-filter">
+                        @foreach($allCourses as $course)
                         @php($allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get())
                     @if($allMaterial->where("type","Lesson")->count()  && $allMaterial->where("type","Lesson")->count())
                         <div class="col-md-3">
@@ -75,6 +76,9 @@
 
 
 @section("script")
+            <x-routes></x-routes>
+            <script src="{{ asset('js/index/courses/indexCourses.js') }}"></script>
+
 @endsection
 
 
