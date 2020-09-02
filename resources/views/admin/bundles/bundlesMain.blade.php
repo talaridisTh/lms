@@ -85,14 +85,14 @@
 		<div class="col-sm-4"></div>
 		<div class="col-sm-8">
 			<div class="text-sm-right">
-				<a href="courses/create" class="btn btn-secondary mb-2" data-toggle="modal" data-target="#new-bundle-modal">
+				<a href="courses/create" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-bundle-modal">
 					<i class="mdi mdi-plus-circle mr-2"></i>
 					Νέο Bundle
 				</a>
 				<div class="btn-group mb-2">
-					<button type="button" class="btn btn-primary dropdown-toggle" 
-						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Επιλογές
+					<button type="button" class="btn btn-secondary dropdown-toggle" 
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+						Επιλογές (0)
 					</button>
 					<div class="dropdown-menu">
 						<a id="delete-bundles-btn" class="dropdown-item" href="#">Διαγραφή</a>

@@ -75,6 +75,14 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='bundle-courses-list_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -116,6 +124,14 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 		{data: 'addBtn', name: 'addBtn', orderable: false, searchable: false, className: "text-center"}
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='remaining-courses-table_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
