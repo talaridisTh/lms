@@ -182,9 +182,10 @@ const tableLocale = {
         })
     }
 
-    function createStateSelect() {
+    function createStateSelect( id = "" ) {
         const selectElm = document.createElement("select");
         selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+		selectElm.id = id;
 
         selectElm.innerHTML = `
 		<option value="">Όλες οι Καταστάσεις</option>

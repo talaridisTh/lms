@@ -29,7 +29,7 @@ $("#select-all-courses").change( function() {
 })
 
 $("#submit-form-btn").click( function() {
-
+	
 	$("#new-course-form").submit()
 
 });
@@ -75,11 +75,11 @@ $('#delete-courses-btn').click( function() {
 				resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses") );
 			})
 			.catch(function (error) {
-
+				
 				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 			});
-
+			
 		}
 	})
 });
@@ -113,6 +113,14 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='courses-datatable_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-updated-at");
@@ -200,7 +208,7 @@ let dateRange = $("#course-date-range");
 dateRange.daterangepicker( utilities.datePickerConfig );
 
 dateRange.on( "apply.daterangepicker", function(event, picker) {
-
+		
 	let startDate = picker.startDate.format('DD/MM/YYYY');
 	let endDate = picker.endDate.format('DD/MM/YYYY');
 	this.value = `${ startDate } - ${ endDate }`;
@@ -210,19 +218,22 @@ dateRange.on( "apply.daterangepicker", function(event, picker) {
 })
 
 dateRange.on( 'cancel.daterangepicker', function(event, picker) {
-
-    dateInput.value = "";
-    coursesDatatable.ajax.reload();
+	dateInput.value = "";
+	coursesDatatable.ajax.reload();
 })
 
 let tablesLengthLabel = $("#courses-datatable_length > label")[0];
 let topicFIlter = $("#topic-filter")[0];
 
 
-let activeCoursesFilter = utilities.createStateSelect();
+let activeCoursesFilter = utilities.createStateSelect("course-state-select");
 tablesLengthLabel.append( activeCoursesFilter );
 
-activeCoursesFilter.addEventListener('change', function () {
+$("#course-state-select").select2({
+	minimumResultsForSearch: -1,
+})
+
+$("#course-state-select").change( function () {
 
 	coursesDatatable.columns(2).search( this.value ).draw();
 
@@ -230,7 +241,11 @@ activeCoursesFilter.addEventListener('change', function () {
 
 tablesLengthLabel.append(topicFIlter);
 
-topicFIlter.addEventListener('change', function() {
+$("#topic-filter").select2({
+
+});
+
+$("#topic-filter").change( function() {
 
 	coursesDatatable.ajax.reload();
 
@@ -274,7 +289,6 @@ function startDate( input ) {
 
 	let dateInputValue = dateInput.value.split(" - ");
 	let firstDate = dateInputValue[0].split("/").reverse().join("-");
-    console.log(firstDate)
 
 	return firstDate;
 }
@@ -286,10 +300,10 @@ function endDate( input ) {
 	if ( !dateInput || dateInput.value == "" ) {
 		return "";
 	}
-
+	
 	let dateInputValue = dateInput.value.split(" - ");
 	let secondDate = dateInputValue[1].split("/").reverse().join("-");
-
+	
 	return secondDate;
 }
 

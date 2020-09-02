@@ -23,7 +23,7 @@ class CreateCoursesTable extends Migration
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->nullable();
             $table->string('slug');
 			$table->unsignedTinyInteger('status');
-			$table->timestamp('publish_at');
+			$table->timestamp('publish_at')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
         });
