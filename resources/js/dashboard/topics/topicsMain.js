@@ -69,10 +69,16 @@ function editInputInit() {
 
 		title.classList.remove("d-none");
 		this.classList.add("d-none");
+		this.classList.remove("is-invalid");
+		this.value = this.defaultValue;
 	});
 
 	editInputs.on( "keyup", function() {
 		if ( event.keyCode == 13 ) {
+			if ( this.value == "" ) {
+				this.classList.add("is-invalid");
+				return
+			}
 			let row = this.findParent(2);
 			let title = row.getElementsByClassName("js-title")[0];
 
@@ -80,8 +86,10 @@ function editInputInit() {
 			this.classList.add("d-none");
 
 			updateTopic(this)
-			
 		}
+		
+		this.classList.remove("is-invalid");
+
 	})
 }
 
@@ -97,8 +105,15 @@ function updateTopic( input ) {
 			utilities.toastAlert("success", "Το topic ενημερώθηκε.");
 		})
 		.catch( err => {
-			console.log(err);
-			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			if ( err.response.status == 422 ) {
+				utilities.toastAlert( "info", "Πρέπει να δώσετε τίτλο..." );
+				input.value = input.defaultValue;
+			}
+			else {
+
+				console.log(err.response.status);
+				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+			}
 		})
 
 }

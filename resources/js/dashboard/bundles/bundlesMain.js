@@ -66,6 +66,14 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 		type: "post"
 	},
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='bundle-table_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
