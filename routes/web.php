@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
 	//! Topic Routes
 	Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
+	Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');
 
 });
 
