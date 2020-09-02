@@ -236,6 +236,14 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='course-materials-list_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -273,6 +281,14 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='remaining-materials-table_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -306,6 +322,14 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='active-users-list_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -340,6 +364,14 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='add-users-list_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -359,11 +391,16 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 //!######################################
 
 //* active users table filters
-let activeUserslistLength = $('#active-users-list_length > label');
-let activeUsersFilter = createRoleSelect();
+let activeUserslistLength = $('#active-users-list_length > label')[0];
+let activeUsersFilter = createRoleSelect("active-user-roles");
 
 activeUserslistLength.append( activeUsersFilter );
-activeUsersFilter.addEventListener('change', function () {
+
+$("#active-user-roles").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#active-user-roles").change( function () {
 
 	courseUsersDatatable.columns(3).search( this.value ).draw();
 
@@ -371,25 +408,31 @@ activeUsersFilter.addEventListener('change', function () {
 
 //* add new users table filters
 let addUsersListLength = $('#add-users-list_length > label');
-let addUsersFilter = createRoleSelect();
+let addUsersFilter = createRoleSelect("add-users-roles");
 
 addUsersListLength.append(addUsersFilter);
 
-addUsersFilter.addEventListener('change', function () {
+$("#add-users-roles").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#add-users-roles").change( function () {
 
 	addCourseUsersDatatable.columns(3).search( this.value ).draw();
 
 });
 
 //* Active Materials filters
-const courseMaterialListLength = $("#course-materials-list_length");
-let courseMaterialState = createStateSelect();
-
+const courseMaterialListLength = $("#course-materials-list_length > label")[0];
+let courseMaterialState = utilities.createStateSelect("active-course-status");
 courseMaterialListLength.append( courseMaterialState );
-courseMaterialState.addEventListener( "change", function() {
 
+$("#active-course-status").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#active-course-status").change( function() {
 	courseMaterialsTable.columns( 2 ).search( this.value ).draw();
-
 });
 
 //* Append Course Materials Date Picker Filter
@@ -699,9 +742,10 @@ function removeMaterials( materialIds ) {
 	})
 }
 
-function createRoleSelect() {
+function createRoleSelect( id = "" ) {
 	const selectElm = document.createElement("select");
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+	selectElm.classList.add( "ml-1", "select2" );
+	selectElm.id = id
 
 	selectElm.innerHTML = `
 		<option value="">Όλες οι ιδιότητες</option>
@@ -712,7 +756,7 @@ function createRoleSelect() {
 	return selectElm;
 }
 
-function createStateSelect() {
+/* function createStateSelect() {
 	const selectElm = document.createElement("select");
 	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
 
@@ -723,7 +767,7 @@ function createStateSelect() {
 	`;
 
 	return selectElm;
-}
+} */
 
 axios.post("/materials/material-types")
 	.then( (res) => {
@@ -738,7 +782,8 @@ function createTopicSelect( res ) {
 	let data = res.data;
 	let options = "<option value=''>Όλοι οι τύποι</option>";
 
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+	selectElm.classList.add("ml-1", "select2");
+	selectElm.id = "selected-materials-types"
 
 	for ( let i = 0; i < data.length; i++ ) {
 		options += `<option value="${data[i].type}">${data[i].type}</option>`;
@@ -748,7 +793,11 @@ function createTopicSelect( res ) {
 
 	courseMaterialListLength.append( selectElm );
 
-	selectElm.addEventListener('change', function() {
+	$("#selected-materials-types").select2({
+		minimumResultsForSearch: -1,
+	});
+
+	$("#selected-materials-types").change( function() {
 
 		courseMaterialsTable.columns( 4 ).search( this.value ).draw();
 
