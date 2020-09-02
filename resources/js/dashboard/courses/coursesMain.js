@@ -88,7 +88,7 @@ $('#delete-courses-btn').click( function() {
 //! 				Datatables				#
 //!##########################################
 const coursesDatatable = $("#courses-datatable").DataTable({
-	order: [1, "asc"],
+	order: [6, "desc"],
 	processing: true,
 	serverSide: true,
 	ajax: {

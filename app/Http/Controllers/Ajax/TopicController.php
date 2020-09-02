@@ -6,6 +6,7 @@ use App\DataTables\TopicsDataTable;
 use App\Http\Controllers\Controller;
 use App\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TopicController extends Controller
 {
@@ -71,9 +72,14 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
+		$request->validate([
+			'title' => 'required|unique:topics'
+		]);
+
 		$topic->title = $request->title;
+		$topic->slug = Str::slug($request->title, "-");
 		$topic->save();
-        // return $request->all();
+		
     }
 
     /**
