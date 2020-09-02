@@ -146,6 +146,10 @@ Route::patch( 'materials/toggle-status/{material}', 'Ajax\MaterialController@tog
 //! Dashboard Topics Datatables
 Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 
+//! Dashboard Ajax Topic CRUD
+Route::patch( 'topics/update/{topic}', 'Ajax\TopicController@update' );
+
+
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
 Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadContentImages' );

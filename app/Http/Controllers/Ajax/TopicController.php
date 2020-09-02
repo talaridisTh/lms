@@ -71,7 +71,9 @@ class TopicController extends Controller
      */
     public function update(Request $request, Topic $topic)
     {
-        //
+		$topic->title = $request->title;
+		$topic->save();
+        // return $request->all();
     }
 
     /**

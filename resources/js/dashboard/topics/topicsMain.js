@@ -7,7 +7,7 @@ import utilities from '../main';
 //! 				Datatables				#
 //!##########################################
 const topicsDatatable = $("#topics-datatable").DataTable({
-	order: [1, "asc"],
+	order: [3, "desc"],
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -22,9 +22,83 @@ const topicsDatatable = $("#topics-datatable").DataTable({
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='topics-datatable_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-updated-at");
 
+		showEditInit();
+		editInputInit()
 	}
 })
+
+//!##############################################
+//!				EventListeners Init				#
+//!##############################################
+
+function showEditInit() {
+	let editBtns = $(".js-quick-edit");
+
+	editBtns.click( function() {
+		let row = this.findParent(2);
+		let title = row.getElementsByClassName("js-title")[0];
+		let input = row.getElementsByClassName("js-edit")[0];
+		let valueLen = input.value.length;
+
+		title.classList.add("d-none");
+		input.classList.remove("d-none");
+		input.focus();
+		input.setSelectionRange(valueLen, valueLen);
+	});
+}
+
+function editInputInit() {
+
+	let editInputs = $(".js-edit");
+	
+	editInputs.on( 'blur', function() {
+		let row = this.findParent(2);
+		let title = row.getElementsByClassName("js-title")[0];
+
+		title.classList.remove("d-none");
+		this.classList.add("d-none");
+	});
+
+	editInputs.on( "keyup", function() {
+		if ( event.keyCode == 13 ) {
+			let row = this.findParent(2);
+			let title = row.getElementsByClassName("js-title")[0];
+
+			title.classList.remove("d-none");
+			this.classList.add("d-none");
+
+			updateTopic(this)
+			
+		}
+	})
+}
+
+function updateTopic( input ) {
+	let id = input.dataset.topicId;
+	let title = input.value;
+
+	axios.patch( `/topics/update/${id}`, {
+		title
+	})
+		.then( res => {
+			topicsDatatable.ajax.reload();
+			utilities.toastAlert("success", "Το topic ενημερώθηκε.");
+		})
+		.catch( err => {
+			console.log(err);
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		})
+
+}
