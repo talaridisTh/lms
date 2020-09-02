@@ -40,7 +40,7 @@ $("#delete-topics-btn").click( function() {
 	}).then( (result) => {
 
 		if (result.value) {
-			// console.log("yes");
+			
 			axios.delete(`/topics/destroy/${ids}`)
 			.then(function (response) {
 
