@@ -1070,10 +1070,10 @@ function resetAddButton( addBtn, checkbox ) {
 $R("#summary", utilities.redactorConfig);
 
 ArticleEditor('#description', {
-	// css: "/css/",
+	css: "/css/",
 	custom: {
 		css: [
-			// "/css/app.css"
+			"/css/arx-content.min.css"
 		]
 	},
 	editor: {
