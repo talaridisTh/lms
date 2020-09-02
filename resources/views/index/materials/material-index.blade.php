@@ -53,7 +53,7 @@
                                     <span class="font-weight-bold font-12 ">
                                         Μάθημα {{$priority}} - {{$materials->created_at->format("d-m-y")}}
                                     </span>
-                                    <p class="mt-3  font-weight-bold">Topic
+                                    <p class="mt-3  font-weight-bold">Μάθημα
                                         <a class="" href="{{route('index.userCourse',$course->id)}}">
                                             <span class="course-title">{{$course->title}}</span>
                                         </a>
@@ -107,8 +107,7 @@
                                                            alt=""></div>
                                 <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
                                     <h4>Πληροφορίες </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque consectetur
-                                        dolorum molestias quas reprehenderit, sint?
+                                    <p>{{$course->curator->profil}}
                                     </p>
                                 </div>
                             </div>
@@ -122,10 +121,7 @@
                         <div class="col-md-12  px-3 py-1">
                             <div class="row">
                                 <div class="col-md-12 d-flex align-items-center pl-4 text-black">
-                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut autem libero
-                                    magnam molestiae, optio qui saepe. Culpa id laudantium magni, neque officia
-                                    perspiciatis ratione reprehenderit voluptate! Cum earum eos hic, illo numquam quae
-                                    reiciendis repellat soluta! Aliquam, nulla, repudiandae.
+                                    {{$materials->description}}
                                 </div>
                                 <p class="d-flex align-items-center pl-4 mt-2 ">
                                     Δημοσιεύθηκε {{$materials->created_at->format("d-m-y")}}.</p>
@@ -148,7 +144,7 @@
                                     class="font-16  text-center text-black font-weight-bold">{{$course->title}}</span>
                                 <div class="d-flex justify-content-around">
                                     <span class="font-12 text-primary">Μέτριο</span>
-                                    <span class="font-12">2 lessons</span>
+                                    <span class="font-12">{{$MaterialsOrderByPriority->count()}} Μάθηματα</span>
                                 </div>
                                 </a>
                             </div>

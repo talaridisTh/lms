@@ -13,8 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
-class HomeController extends Controller
-{
+class HomeController extends Controller {
 
     public function __construct()
     {
@@ -24,8 +23,7 @@ class HomeController extends Controller
     public function index(Material $material)
     {
 
-
-        return view('home',compact($material));
+        return view('home', compact($material));
     }
 
     public function createLink()
@@ -52,7 +50,6 @@ class HomeController extends Controller
 
     public function showLinks()
     {
-
 
         $userCurent = auth()->user()->guest;
         $usersOnlyAdmin = User::all()->map(function ($user) {
@@ -114,15 +111,14 @@ class HomeController extends Controller
     public function test()
     {
 
+        $test = DB::table("topics")
+            ->join("topicables", "topic_id", "=", "topicable_id")
+            ->join("course_material", "course_id", "=", "topicable_id")
+            ->where("course_id", 2)
+            ->where("status", 1)
+            ->get();
 
-
-        dd(Course::with('topics')->find(1)->topics->whereIn("id",7));
-
-
-        dd(Topic::with("courses")->where("id",1)->first()->courses);
-
-
-        dd($test);
-
+        return $test;
     }
+
 }

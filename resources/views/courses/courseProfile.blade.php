@@ -106,8 +106,7 @@
                                                    alt=""></div>
                         <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
                             <h4>Πληροφορίες </h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque consectetur
-                                dolorum molestias quas reprehenderit, sint?
+                            <p> {{$course->curator->profil}}
                             </p>
                         </div>
                     </div>

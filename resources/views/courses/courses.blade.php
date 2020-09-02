@@ -23,8 +23,8 @@
                             <div class="container">
                                 <ul class="d-flex topic-link justify-content-around">
                                     <li><a href="#">Ολα</a></li>
-                                    @foreach($arrayTopics as $topic)
-                                    <li><a href="#">{{$topic}}</a></li>
+                                    @foreach($arrayTopics as $key => $topic)
+                                    <li data-topic-id="{{$key}}"><a href="#">{{$topic}}</a></li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -66,8 +66,6 @@
                         @endif
                     @endforeach
                 </div>
-
-
             </div>
         </div>
 
