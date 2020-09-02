@@ -80,7 +80,8 @@
 
                             <input type="hidden" class="form-control" id="topicMaterialHidden">
                             <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
-                            <input name="status" value="{{$material->status == "0" ? "" : 1}}" type="hidden" class="form-control" id="activeMaterialHidden">
+                            <input name="status" value="{{$material->status == "0" ? "" : 1}}" type="hidden"
+                                   class="form-control" id="activeMaterialHidden">
                             <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
                             <input name="cover" hidden type="file" class="form-control" id="coverMaterialHidden">
                             <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
@@ -120,7 +121,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="urlMaterial">URL video</label>
-                        <input  type="text" class="form-control" id="urlMaterial"
+                        <input type="text" class="form-control" id="urlMaterial"
                                value="{{old('material', $material->video_link)}}" placeholder="Εισάγετε URL video...">
                     </div>
 
@@ -128,8 +129,11 @@
                         <label for="topicMaterial">Topic <span class="text-danger"> *</span></label>
                         <select name="topic[]" multiple="multiple" id="topicMaterial" class="form-control">
                             @foreach ($topics as $topic)>
-                            <option value="{{$topic->id}}" @foreach($material->topics as $top
-                            ){{$top->id == $topic->id? "selected":""}} @endforeach>{{$topic->title}}
+                            <option value="{{$topic->id}}"
+                                @foreach($material->topics as $top)
+                                    {{$top->id == $topic->id? "selected":""}}
+                                 @endforeach>
+                                {{$topic->title}}
                             </option>
                             @endforeach
                         </select>
@@ -146,8 +150,7 @@
                         </select>
                     </div>
 
-{{--                    {{dd($material->users)}}--}}
-
+                    {{--                    {{dd($material->users)}}--}}
 
 
                     <div class="form-group">
@@ -163,7 +166,8 @@
                             <option></option>
 
                             @foreach($instructors as $instructor)
-                                <option value="{{$instructor->id}}" {{$top->id == $topic->id? "selected":""}} >{{$instructor->fullName}}</option>
+                                <option
+                                    value="{{$instructor->id}}" {{$top->id == $topic->id? "selected":""}} >{{$instructor->fullName}}</option>
                             @endforeach
                         </select>
                     </div>

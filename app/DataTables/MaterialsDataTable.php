@@ -25,16 +25,17 @@ class MaterialsDataTable extends DataTable {
 
 
 
-        if (!empty(request()->from_date))
-        {
-            $data = Material:: whereBetween('created_at', [request()->from_date, request()->to_date])->get();
-        } else
+        if (!request()->from_date && !request()->to_date)
         {
             $data = Material::all();
+
+        } else
+        {
+            $data = Material:: whereBetween('created_at', [request()->from_date."  00:00:00", request()->to_date." 23:59:59"])->get();
+
         }
 
 
-//        dd($data);
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
 

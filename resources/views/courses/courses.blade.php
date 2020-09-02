@@ -34,6 +34,8 @@
 
                 <div class="row my-5 d-flex justify-content-center">
                     @foreach(auth()->user()->courses as $course)
+                        @php($allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get())
+                    @if($allMaterial->where("type","Lesson")->count()  && $allMaterial->where("type","Lesson")->count())
                         <div class="col-md-3">
                             <div class="row" style="background: white;">
                                 <div class="col-md-5">
@@ -55,12 +57,13 @@
                                     <h3 class="font-16 font-weight-bold"><a href="{{route('index.userCourse',$course->id)}}">{{$course->title}}</a></h3>
                                     <p class="font-12 text-center">{{$course->description}}</p>
                                     <div class="material-box d-flex justify-content-between font-10">
-                                        <span class="mr-3">Lessons : {{$course->materials->where("status",1)->where('type',"Lesson")->count()}}</span>
-                                        <span>Extrass :{{$course->materials->where("status",1)->where('type','!=',"Lesson")->count()}}</span>
+                                        <span class="mr-3">Lessons : {{$allMaterial->where("type","Lesson")->count()}}</span>
+                                        <span>Extrass :{{$allMaterial->where("type","!=","Lesson")->count()}}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @endif
                     @endforeach
                 </div>
 

@@ -9,49 +9,61 @@
         <div class="row">
             <div class="col-md-4 border-material">
                 <h4>Πληροφορίες</h4>
+
                 <div class="form-group my-3">
                     <label for="first_name">Όνομα</label>
-                    <input name="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" id="first_name"
-                           placeholder="Εισάγετε όνομα">
+                    <input name="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror"
+                           id="first_name"
+                           placeholder="Εισάγετε όνομα"
+                           value="{{old("first_name")}}">
                     @error('first_name')
                     <span class="text-danger h6" role="alert"><strong>{{ $message }}</strong>	</span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="last_name">Επίθετο</label>
-                    <input name="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" id="last_name"
-                           placeholder="Εισάγετε επίθετο">
+                    <input name="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror"
+                           id="last_name"
+                           placeholder="Εισάγετε επίθετο"
+                           value="{{old("last_name")}}">
                     @error('last_name')
-                    <span class="text-danger h6" role="alert"><strong>{{ $message }}</strong>	</span>
+                        <span class=" text-danger h6" role="alert"><strong>{{ $message }}</strong>    </span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="email">E-mail</label>
                     <div class="input-group ">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroupPrepend">@</span>
                         </div>
-                        <input name="email" type="text" class="form-control @error('email') is-invalid @enderror" id="email"
-                               placeholder="Εισάγετε e-mail" aria-describedby="inputGroupPrepend"
-                        >
-
+                        <input name="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                               id="email"
+                               placeholder="Εισάγετε e-mail"
+                               value="{{old("email")}}" >
                     </div>
                     @error('email')
                     <span class="text-danger h6" role="alert"><strong>{{ $message }}</strong>	</span>
                     @enderror
                 </div>
+
                 <div class="form-group mb-3">
                     <label for="phone">Τηλέφωνο</label>
                     <input name="phone" type="text" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                           placeholder="Εισάγετε τηλέφωνο">
+                           placeholder="Εισάγετε τηλέφωνο"
+                           value="{{old("phone")}}">
                     @error('phone')
                     <span class="text-danger h6" role="alert"><strong>{{ $message }}</strong>	</span>
                     @enderror
                 </div>
+
                 <div class="form-group">
                     <label for="profil">Προφίλ</label>
-                    <textarea name="profil" class="form-control @error('profil') is-invalid @enderror" id="profil" placeholder="Εισάγετε πληροφορίες"
-                              rows="5"></textarea>
+                    <textarea name="profil" class="form-control @error('profil') is-invalid @enderror" id="profil"
+                              placeholder="Εισάγετε πληροφορίες"
+                              rows="5"
+                              >{{old("profil")}}</textarea>
                     @error('profil')
                     <span class="text-danger h6 h6" role="alert"><strong>{{ $message }}</strong>	</span>
                     @enderror
@@ -79,7 +91,8 @@
                     <div class="form-group">
                         <label for="password">Κωδικός</label>
                         <div class="input-group input-group-merge">
-                            <input type="password" id="password" class="form-control @error('password') is-invalid @enderror" name="password"
+                            <input type="password" id="password"
+                                   class="form-control @error('password') is-invalid @enderror" name="password"
                                    placeholder="Εισάγετε κωδικό ">
 
                             <div class="input-group-append" data-password="false">
@@ -130,7 +143,8 @@
                                     </div>
                                     <div class="col-5 text-right">
                                         <input name="status" type="checkbox" id="activeMaterial" checked
-                                               data-switch="bool"/>
+                                               data-switch="bool"
+                                               value="{{old("status")}}"/>
                                         <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                                     </div>
                                 </div>
@@ -153,7 +167,8 @@
                             <div class="form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" name="sendMail" class="custom-control-input" id="sendMail">
-                                    <label class="custom-control-label" for="sendMail">Ενημέρωση χρήστη με e-mail</label>
+                                    <label class="custom-control-label" for="sendMail">Ενημέρωση χρήστη με
+                                        e-mail</label>
                                 </div>
                             </div>
                         </div>
@@ -173,7 +188,7 @@
                                         class=" mdi mdi-twitter"></i></span>
                             </div>
                             <input name="facebook_link" type="text" class="form-control" id="facebookLink"
-                                   placeholder="facebook address" aria-describedby="inputGroupPrepend">
+                                   placeholder="facebook address"  value="{{old("facebook_link")}}" aria-describedby="inputGroupPrepend">
                         </div>
                     </div>
                     <div class="form-group ">
@@ -182,7 +197,7 @@
                                 <span class="input-group-text" id="instagramAddress"><i class=" mdi mdi-instagram"></i></span>
                             </div>
                             <input name="instagram_link" type="text" class="form-control" id="instagramLink"
-                                   placeholder="instagram address" aria-describedby="inputGroupPrepend">
+                                   placeholder="instagram address" value="{{old("instagram_link")}}" aria-describedby="inputGroupPrepend">
                         </div>
                     </div>
                     <div class="form-group ">
@@ -191,7 +206,7 @@
                                 <span class="input-group-text" id="linkedinAddress"><i
                                         class=" mdi mdi-linkedin"></i></span>
                             </div>
-                            <input name="linkedin_link" type="text" class="form-control" id="linkedinLink"
+                            <input name="linkedin_link"  value="{{old("linkedin_link")}}" type="text" class="form-control" id="linkedinLink"
                                    placeholder="linkedin address" aria-describedby="inputGroupPrepend">
                         </div>
                     </div>
@@ -201,7 +216,7 @@
                                 <span class="input-group-text" id="youtubeAddress"><i
                                         class=" mdi mdi-youtube"></i></span>
                             </div>
-                            <input name="youtube_link" type="text" class="form-control" id="youtubeLink"
+                            <input name="youtube_link" value="{{old("youtube_link")}}" type="text" class="form-control" id="youtubeLink"
                                    placeholder="youtube address" aria-describedby="inputGroupPrepend">
                         </div>
                     </div>

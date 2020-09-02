@@ -1,5 +1,5 @@
 <div class=" select2-container form-group ragneButton" style="width: 179px!important;" >
-    <input type="text" class="form-control  date"  value=""  autocomplete="off"  placeholder="Επιλέξτε ημερομηνίες..."  id="daterange" name="daterange" data-toggle="date-picker" data-cancel-class="btn-warning" />
+    <input type="text" class="form-control  date" placeholder="Επιλέξτε ημερομηνίες..."   autocomplete="off"   id="daterange"   />
 </div>
 <select id="activeFilter">
     <option value="">Καθαρισμός</option>
@@ -15,7 +15,7 @@
 </select>
 
 <select id="rolesFilter">
-    <option value="">v</option>
+    <option value=""></option>
     @foreach(App\Role::all() as $role)
         <option value="{{$role->name}}">{{$role->name}}</option>
     @endforeach

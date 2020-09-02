@@ -15,7 +15,7 @@
                 <div class="text-sm-right">
 					<a href="{{route('material.create')}}" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-2"></i>
-						Δημιουργία
+						Νέο μάθημα
 					</a>
 					@include("components.bulkActionMaterial")
 				</div>

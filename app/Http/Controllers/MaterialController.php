@@ -85,7 +85,7 @@ class MaterialController extends Controller {
     {
 
         $material->update($request->except("instructor", "topic", "type", "status"));
-        $data = collect($request)->except("instructor", "topic", "type", "status")->all();
+        $data = collect($request)->except("instructor", "topic", "status")->all();
         if ($request->instructor)
         {
             $material->users()->update(['user_id' => $request->instructor]);
@@ -98,10 +98,11 @@ class MaterialController extends Controller {
                 $material->topics()->sync($request->topic);
             }
         }
+
         if ($request->type)
         {
 
-            $data["type"] = $request->type;
+            $material->update(['type' => $request->type]);
         }
         if ($request->status)
         {

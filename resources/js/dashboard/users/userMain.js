@@ -1,14 +1,14 @@
 import utilities from '../main';
 //! GLOBAL VARIABLES
 //!============================================================
-
+let dataRange = $("#daterange")
 
 
 //! 			Datatables Initialization
 //!##################################################
 const tables = $("#scroll-horizontal-datatable").DataTable({
     // caseInsensitive: false,
-    order: [3, "asc"],
+    order: [[ 8, "desc" ]],
     processing: true,
     serverSide: true,
     ajax: {
@@ -17,8 +17,8 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         type: "post",
         data: function (d) {
             return $.extend({}, d, {
-                from_date: fromDay,
-                to_date: toDay
+                from_date: fromDay($(".date")[0]),
+                to_date: toDay($(".date")[0])
             })
         }
     },
@@ -37,7 +37,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         {data: "action", name: "action", className: "js-link cursor-pointer"},
         {data: "email", name: "email", className: "js-link cursor-pointer"},
         {data: 'status', name: 'status', orderable: false},
-        {data: 'created_at', name: 'created_at', className: "js-link cursor-pointer", visible: false},
+        {data: 'created_at', name: 'created_at',visible: false},
         {data: 'activeNum', name: 'activeNum', visible: false},
         {data: 'dateChange', name: 'dateChange'},
         {data: 'allcourse', name: 'allcourse', visible: false},
@@ -68,6 +68,8 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
 
 
 })
+
+
 
 const sub_DataTable = (vtask_id, table_id, attr) => {
 
@@ -129,61 +131,39 @@ utilities.filterButton('#fullNameFilter', 11, tables)
 
 //! DATAPICKER METHOD
 //!============================================================
-let dataRange = $("#daterange")
 
-dataRange[0].value = ""
+function fromDay(input) {
+    let dateInput = input;
 
-const fromDay = () => {
-    let date = $('.drp-selected').text();
 
-    let dateSepareted = date.split("-")
-    let from_date = dateSepareted[0]
-    if (dataRange[0].value == "cancel") {
-        dataRange[0].value = ""
-        return
+    if ( !dateInput || dateInput.value == "" ) {
+        return "";
     }
-    if (from_date) {
 
-        console.log(from_date)
-        return from_date.replace(/\//g, "-").trim();
-    }
+    let dateInputValue = dateInput.value.split(" - ");
+    let firstDate = dateInputValue[0].split("/").reverse().join("-");
+
+
+    return firstDate;
 
 
 }
 
-const toDay = () => {
-    let date = $('.drp-selected').text();
-    let dateSepareted = date.split("-")
-    let to_date = dateSepareted[1]
-    if (dataRange[0].value == "cancel") {
-        dataRange[0].value = ""
-        return
+function toDay(input) {
+    let dateInput = input;
+
+    if ( !dateInput || dateInput.value == "" ) {
+        return "";
     }
-    if (to_date) {
-        return to_date.replace(/\//g, "-").trim()
-    }
+
+    let dateInputValue = dateInput.value.split(" - ");
+    let secondDate = dateInputValue[1].split("/").reverse().join("-");
+
+    return secondDate.trim();
 
 }
 
-dataRange.daterangepicker({
-    locale: {
-        format: 'YY/MM/DD '
-    },
-    startDate: moment().startOf('hour'),
-    // ranges: {
-    //     'Today': [moment(), moment()],
-    //     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-    //     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-    //     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-    //     'This Month': [moment().startOf('month'), moment().endOf('month')],
-    //     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    // },
-    alwaysShowCalendars: true,
-    showCustomRangeLabel: false,
-    drops: "auto",
-    autoUpdateInput: false,
-    opens: "center",
-});
+dataRange.daterangepicker( utilities.datePickerConfig );
 
 $(".ragneButton").detach().appendTo('.dataTables_length label')
 
@@ -191,17 +171,17 @@ dataRange.on("apply.daterangepicker", function (event, picker) {
 
     let startDate = picker.startDate.format('DD/MM/YYYY');
     let endDate = picker.endDate.format('DD/MM/YYYY');
-    this.value = `${startDate} - ${endDate}`;
+    this.value = `${ startDate } - ${ endDate }`;
+
 
     tables.ajax.reload();
 
 })
 
-$(".cancelBtn ").click(function (event, picker) {
-    dataRange[0].value = "cancel"
+dataRange.on( 'cancel.daterangepicker', function(event, picker) {
+    $(".date")[0].value = "";
     tables.ajax.reload();
 })
-
 
 
 

@@ -1,10 +1,11 @@
 import utilities from '../main';
 
+let dataRange = $("#daterange")
 
 //! INIT DATATABLE
 //!============================================================
 const materialsDatatable = $("#materials-datatable").DataTable({
-    order: [1, "asc"],
+    order: [[ 5, "desc" ]],
     processing: true,
     serverSide: true,
     ajax: {
@@ -13,8 +14,8 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         type: "post",
         data: function (d) {
             return $.extend({}, d, {
-                from_date: fromDay,
-                to_date: toDay
+                from_date: fromDay($(".date")[0]),
+                to_date: toDay($(".date")[0])
             })
         }
     },
@@ -60,84 +61,64 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 });
 
 
-
 //! FILTER DATATABLE
 //!============================================================
 utilities.filterButton('#activeFilterMaterial', 8, materialsDatatable);
 utilities.filterButton('#typeFilterMaterial', 3, materialsDatatable);
 utilities.filterButton('#courseFilterMaterial', 7, materialsDatatable);
 
-const fromDay = () => {
-    let date = $('.drp-selected').text();
-    let dateSepareted = date.split("-")
-    let from_date = dateSepareted[0]
-    if (dataRange[0].value == "cancel") {
-        dataRange[0].value = ""
-        return
-    }
-    if (from_date) {
+function fromDay(input) {
+    let dateInput = input;
 
-        return from_date.replace(/\//g, "-").trim();
+
+    if (!dateInput || dateInput.value == "") {
+        return "";
     }
+
+    let dateInputValue = dateInput.value.split(" - ");
+    let firstDate = dateInputValue[0].split("/").reverse().join("-");
+
+
+    return firstDate;
 
 
 }
 
-const toDay = () => {
-    let date = $('.drp-selected').text();
-    let dateSepareted = date.split("-")
-    let to_date = dateSepareted[1]
-    if (dataRange[0].value == "cancel") {
-        dataRange[0].value = ""
-        return
-    }
-    if (to_date) {
-        return to_date.replace(/\//g, "-").trim()
+function toDay(input) {
+    let dateInput = input;
+
+    if (!dateInput || dateInput.value == "") {
+        return "";
     }
 
+    let dateInputValue = dateInput.value.split(" - ");
+    let secondDate = dateInputValue[1].split("/").reverse().join("-");
+
+    return secondDate.trim();
 
 }
 
 
 //! DATAPICKER FUNCTION
 //!============================================================
-let dataRange = $("#daterange")
+dataRange.daterangepicker( utilities.datePickerConfig );
 
-dataRange[0].value = ""
-
-dataRange.daterangepicker({
-    locale: {
-        format: 'YY/MM/DD '
-    },
-    startDate: moment().startOf('hour'),
-    // ranges: {
-    //     'Today': [moment(), moment()],
-    //     'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-    //     'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-    //     'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-    //     'This Month': [moment().startOf('month'), moment().endOf('month')],
-    //     'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-    // },
-    alwaysShowCalendars: true,
-    showCustomRangeLabel: false,
-    drops: "auto",
-    autoUpdateInput: false,
-    opens: "center",
-});
 
 dataRange.on("apply.daterangepicker", function (event, picker) {
 
     let startDate = picker.startDate.format('DD/MM/YYYY');
     let endDate = picker.endDate.format('DD/MM/YYYY');
-    this.value = `${startDate} - ${endDate}`;
+    this.value = `${ startDate } - ${ endDate }`;
 
 
     materialsDatatable.ajax.reload();
 
 })
 
-$(".cancelBtn ").click(function (event, picker) {
-    dataRange[0].value = "cancel"
+
+
+dataRange.on( 'cancel.daterangepicker', function(event, picker) {
+    $(".date")[0].value = "";
     materialsDatatable.ajax.reload();
 })
 
@@ -320,17 +301,17 @@ function checkeBoxesEventListener() {
 
     minorCheckboxes.unbind();
 
-    minorCheckboxes.change( function() {
-        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
+    minorCheckboxes.change(function () {
+        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
     })
 
 }
 
-$("#select-all-courses").change( function() {
+$("#select-all-courses").change(function () {
     let minorCheckboxes = $(".js-user-checkbox");
     let bulkBtn = $("#course-bulk-action-btn")[0];
 
-    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 
 })
 

@@ -25,12 +25,15 @@ class UsersDataTable extends DataTable {
 
 
 
-        if (!empty(request()->from_date))
-        {
-            $data = User:: whereBetween('created_at', [request()->from_date, request()->to_date])->get();
-        } else
+
+        if (!request()->from_date && !request()->to_date)
         {
             $data = User::all();
+
+        } else
+        {
+            $data = User:: whereBetween('created_at', [request()->from_date."  00:00:00", request()->to_date." 23:59:59"])->get();
+
         }
 
         return DataTables::of($data)

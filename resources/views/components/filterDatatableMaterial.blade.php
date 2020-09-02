@@ -1,6 +1,6 @@
 <div class=" select2-container form-group ragneButton" style="width: 179px!important;">
-    <input type="text" class="form-control  date" value="" placeholder="Επιλέξτε ημερομηνίες..." id="daterange" name="daterange"
-       autocomplete="off" data-toggle="date-picker" data-cancel-class="btn-warning" />
+    <input type="text" class="form-control date" v placeholder="Επιλέξτε ημερομηνίες..." id="daterange"
+       autocomplete="off" />
 </div>
 
 <select id="activeFilterMaterial">

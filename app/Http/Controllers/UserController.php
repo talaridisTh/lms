@@ -76,7 +76,7 @@ class UserController extends Controller {
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         //
         $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));

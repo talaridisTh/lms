@@ -10,11 +10,6 @@
     </style>
 @endsection
 
-@php
-    $isActive = count( $errors )>0? "" : "active";
-    $isnotActive = count( $errors )>0? "active" : "";
-
-@endphp
 
 
 @section('content')
@@ -27,23 +22,26 @@
                         <div class="card-body">
 
                             <ul class="nav nav-tabs mb-3 d-flex">
+                                <li class="nav-item">
+                                    <a href="#settings" data-toggle="tab" aria-expanded="false"
+                                       class="nav-link rounded-0 active">
+                                        Επεξεργασία χρήστη
+                                    </a>
+                                </li>
+
+
                                     <li class="nav-item">
                                         <a href="#courses" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0   {{$isnotActive}}">
+                                           class="nav-link rounded-0   ">
                                             Courses
                                         </a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a href="#settings" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0 {{$isActive}} ">
-                                            Επεξεργασία χρήστη
-                                        </a>
-                                    </li>
+
 
                                     <li class="nav-item">
                                         <a href="#timeline" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0 {{$isnotActive}} ">
+                                           class="nav-link rounded-0  ">
                                             Timeline
                                         </a>
                                     </li>
@@ -51,13 +49,13 @@
                             </ul>
 
                             <div class="tab-content">
-                                <div class="tab-pane {{$isnotActive}} "  id="courses">
-                                    @include("components.findUserMaterial")
-                                </div>
-                                <div class="tab-pane  {{$isActive}}" id="settings">
+                                <div class="tab-pane  active" id="settings">
                                     @include("components.tabsEdit")
                                 </div>
-                                <div class="tab-pane {{$isnotActive}} " id="timeline">
+                                <div class="tab-pane  "  id="courses">
+                                    @include("components.findUserMaterial")
+                                </div>
+                                <div class="tab-pane  " id="timeline">
                                     @include("components.timelineUser")
                                 </div>
                             </div>

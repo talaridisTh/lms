@@ -58,16 +58,16 @@
                         </div>
                         <div class="col-md-3">
                             <div class="box-last-material p-4">
-                                <p class="box-num-material display-4">{{$allMaterial->where("status",1)->count()}}</p>
+                                <p class="box-num-material display-4">{{$allMaterial->count()}}</p>
                                 <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
                                     <span>Η τελευταία προσθήκη</span>
-                                    <span>{{\Carbon\Carbon::parse($lastMaterial->created_at)->diffForHumans()}}</span>
+                                    <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>
                                 </div>
                                 <div class="box-button-subtitle text-light text-center">
-                                    <p class="font-16">{{$lastMaterial->title}}</p>
-                                    <p class="font-12">{{$lastMaterial->subtitle}}</p>
+                                    <p class="font-16">{{$lastMaterial->last()->title}}</p>
+                                    <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
                                     <button class="bghover border font-weight-bold btn btn-secontary">
-                                        <a href="{{route('index.material.show',[$course->id,$lastMaterial->slug])}}">Δες το μαθημα</a>
+                                        <a href="{{route('index.material.show',[$course->id,$lastMaterial->last()->slug])}}">Δες το μαθημα</a>
                                     </button>
                                 </div>
                             </div>
@@ -76,9 +76,10 @@
                 </div>
             </div>
             <div class="row p-2 box-material-down">
-                <div class="col-md-4  d-flex justify-content-between text-light">
+                <div class="col-md-5  d-flex justify-content-between text-light">
                     <span>metrio</span>
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("status",1)->count()}} Μαθήματα  </span>
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","Lesson")->count()}} Μαθήματα  </span>
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","Lesson")->count()}} Extra  </span>
                     @foreach($topics as $topic)
                         <span class="bghover font-weight-bold border px-2">{{$topic}}</span>
                     @endforeach
@@ -118,7 +119,7 @@
             <div class="row ">
                 <div class="col-md-12 px-5">
                     <ul>
-                    @foreach($allMaterial->whereIn("status",1)  as $materials)
+                    @foreach($allMaterial as $materials)
                         <li class="list-group-item list-material border py-4 ">
                             <a class="d-flex" href="{{route('index.material.show',[$course->id,$materials->slug])}}">
                             <div class="col-md-2">
@@ -127,6 +128,7 @@
                             <div class="col-md-10 d-flex flex-column">
                                 <span class="mb-2 font-18 text-dark font-weight-bold">   {{$materials->title}}</span>
                                 <span class="mb-2 font-14 text-dark">   {{$materials->subtitle}}</span>
+                                <span class="mb-2 font-14 text-dark">   {{$materials->type}}</span>
                             </div>
                             </a>
                         </li>

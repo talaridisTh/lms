@@ -29,7 +29,7 @@ $("#select-all-courses").change( function() {
 })
 
 $("#submit-form-btn").click( function() {
-	
+
 	$("#new-course-form").submit()
 
 });
@@ -75,11 +75,11 @@ $('#delete-courses-btn').click( function() {
 				resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses") );
 			})
 			.catch(function (error) {
-				
+
 				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 			});
-			
+
 		}
 	})
 });
@@ -200,7 +200,7 @@ let dateRange = $("#course-date-range");
 dateRange.daterangepicker( utilities.datePickerConfig );
 
 dateRange.on( "apply.daterangepicker", function(event, picker) {
-		
+
 	let startDate = picker.startDate.format('DD/MM/YYYY');
 	let endDate = picker.endDate.format('DD/MM/YYYY');
 	this.value = `${ startDate } - ${ endDate }`;
@@ -210,8 +210,9 @@ dateRange.on( "apply.daterangepicker", function(event, picker) {
 })
 
 dateRange.on( 'cancel.daterangepicker', function(event, picker) {
-	dateInput.value = "";
-	coursesDatatable.ajax.reload();
+
+    dateInput.value = "";
+    coursesDatatable.ajax.reload();
 })
 
 let tablesLengthLabel = $("#courses-datatable_length > label")[0];
@@ -273,6 +274,7 @@ function startDate( input ) {
 
 	let dateInputValue = dateInput.value.split(" - ");
 	let firstDate = dateInputValue[0].split("/").reverse().join("-");
+    console.log(firstDate)
 
 	return firstDate;
 }
@@ -284,10 +286,10 @@ function endDate( input ) {
 	if ( !dateInput || dateInput.value == "" ) {
 		return "";
 	}
-	
+
 	let dateInputValue = dateInput.value.split(" - ");
 	let secondDate = dateInputValue[1].split("/").reverse().join("-");
-	
+
 	return secondDate;
 }
 
