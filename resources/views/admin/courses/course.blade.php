@@ -373,13 +373,14 @@
 								<select form="edit-course-form" class="select2 form-control select2-multiple" name="topics[]" data-toggle="select2" multiple="multiple" data-placeholder="Επιλέξτε Topics...">
 										
 									@foreach ($topics as $topic)
+										<option value="{{ $topic->id }}"
 										@foreach ( $course->topics as $courseTopic )
 											@if ( $courseTopic->id == $topic->id )
-												<option value="{{ $courseTopic->id }}" selected>{{ $courseTopic->title }}</option>
+												selected
 												@break
 											@endif
 										@endforeach
-										<option value="{{ $topic->id }}">{{ $topic->title }}</option>
+										>{{ $topic->title }}</option>
 									@endforeach
 
 								</select>

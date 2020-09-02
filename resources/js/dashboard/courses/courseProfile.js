@@ -236,6 +236,14 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='course-materials-list_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -273,6 +281,14 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='remaining-materials-table_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -306,6 +322,14 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='active-users-list_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -340,6 +364,14 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='add-users-list_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
@@ -359,11 +391,16 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 //!######################################
 
 //* active users table filters
-let activeUserslistLength = $('#active-users-list_length > label');
-let activeUsersFilter = createRoleSelect();
+let activeUserslistLength = $('#active-users-list_length > label')[0];
+let activeUsersFilter = createRoleSelect("active-user-roles");
 
 activeUserslistLength.append( activeUsersFilter );
-activeUsersFilter.addEventListener('change', function () {
+
+$("#active-user-roles").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#active-user-roles").change( function () {
 
 	courseUsersDatatable.columns(3).search( this.value ).draw();
 
@@ -371,25 +408,31 @@ activeUsersFilter.addEventListener('change', function () {
 
 //* add new users table filters
 let addUsersListLength = $('#add-users-list_length > label');
-let addUsersFilter = createRoleSelect();
+let addUsersFilter = createRoleSelect("add-users-roles");
 
 addUsersListLength.append(addUsersFilter);
 
-addUsersFilter.addEventListener('change', function () {
+$("#add-users-roles").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#add-users-roles").change( function () {
 
 	addCourseUsersDatatable.columns(3).search( this.value ).draw();
 
 });
 
 //* Active Materials filters
-const courseMaterialListLength = $("#course-materials-list_length");
-let courseMaterialState = createStateSelect();
-
+const courseMaterialListLength = $("#course-materials-list_length > label")[0];
+let courseMaterialState = utilities.createStateSelect("active-course-status");
 courseMaterialListLength.append( courseMaterialState );
-courseMaterialState.addEventListener( "change", function() {
 
+$("#active-course-status").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#active-course-status").change( function() {
 	courseMaterialsTable.columns( 2 ).search( this.value ).draw();
-
 });
 
 //* Append Course Materials Date Picker Filter
@@ -699,9 +742,10 @@ function removeMaterials( materialIds ) {
 	})
 }
 
-function createRoleSelect() {
+function createRoleSelect( id = "" ) {
 	const selectElm = document.createElement("select");
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+	selectElm.classList.add( "ml-1", "select2" );
+	selectElm.id = id
 
 	selectElm.innerHTML = `
 		<option value="">Όλες οι ιδιότητες</option>
@@ -712,33 +756,42 @@ function createRoleSelect() {
 	return selectElm;
 }
 
-function createStateSelect() {
-	const selectElm = document.createElement("select");
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
-
-	selectElm.innerHTML = `
-		<option value="">Όλες οι Καταστάσεις</option>
-		<option value="1">Ενεργά</option>
-		<option value="0">Ανενεργά</option>
-	`;
-
-	return selectElm;
-}
-
 axios.post("/materials/material-types")
 	.then( (res) => {
-		createTopicSelect( res );
+		let activeMaterials = createTopicSelect( res, "selected-materials-types" );
+		let remainingMaterials = createTopicSelect( res, "remaining-materials-types" );
+
+		courseMaterialListLength.append( activeMaterials );
+		$("#remaining-materials-table_length > label")[0].append( remainingMaterials );
+
+		$("#selected-materials-types").select2({
+			minimumResultsForSearch: -1,
+		});
+	
+		$("#selected-materials-types").change( function() {
+			courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+		})
+
+		$("#remaining-materials-types").select2({
+			minimumResultsForSearch: -1,
+		});
+
+		$("#remaining-materials-types").change( function() {
+			remainingMaterialsTables.columns( 3 ).search( this.value ).draw();
+		})
+
 	})
 	.catch( (err) => {
 		console.log(err);
 	})
 
-function createTopicSelect( res ) {
+function createTopicSelect( res, id = "" ) {
 	const selectElm = document.createElement("select");
 	let data = res.data;
 	let options = "<option value=''>Όλοι οι τύποι</option>";
 
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+	selectElm.classList.add("ml-1", "select2");
+	selectElm.id = id
 
 	for ( let i = 0; i < data.length; i++ ) {
 		options += `<option value="${data[i].type}">${data[i].type}</option>`;
@@ -746,13 +799,19 @@ function createTopicSelect( res ) {
 
 	selectElm.innerHTML = options;
 
-	courseMaterialListLength.append( selectElm );
+	return selectElm
 
-	selectElm.addEventListener('change', function() {
+	// courseMaterialListLength.append( selectElm );
 
-		courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+	// $("#selected-materials-types").select2({
+	// 	minimumResultsForSearch: -1,
+	// });
 
-	})
+	// $("#selected-materials-types").change( function() {
+
+	// 	courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+
+	// })
 }
 
 $("#add-additions-modal").on("show.bs.modal", function(event) {
@@ -1021,10 +1080,10 @@ function resetAddButton( addBtn, checkbox ) {
 $R("#summary", utilities.redactorConfig);
 
 ArticleEditor('#description', {
-	// css: "/css/",
+	css: "/css/",
 	custom: {
 		css: [
-			// "/css/app.css"
+			"/css/arx-content.min.css"
 		]
 	},
 	editor: {

@@ -32,9 +32,10 @@ class TopicsDataTable extends DataTable
 			})
 			->editColumn('title', function($data) {
 
-				return "<a href='#' class='h5 custom-link-primary'>$data->title</a>
+				return "<span class='h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
+					<input type='text' class='js-edit form-control d-none' data-topic-id='$data->id' value='$data->title' placeholder='Εισάγετε Τίτλο...'>
 					<p class='mb-1'>$data->slug</p>
-					<a href='#' class='custom-link-primary'>Edit</a>";
+					<a href='#' class='js-quick-edit custom-link-primary'>Quick Edit</a>";
 
 			})
 			->editColumn('updated_at', function($data) {

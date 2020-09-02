@@ -92,9 +92,6 @@ const tableLocale = {
     }
 }
 
-
-
-
 //!GLOBAL FUNCTION
 //!============================================================
     function mainCheckboxSwitcher(main, minor, bulkBtn = false) {
@@ -171,7 +168,6 @@ const tableLocale = {
 
     const changeInputHidden = (attr, hiddenAttr) => {
 
-
         $(attr).change(function () {
             if (attr == "#activeMaterial") {
                 this.value = $(this).prop('checked') == true ? 1 : 0;
@@ -184,7 +180,7 @@ const tableLocale = {
 
     function createStateSelect( id = "" ) {
         const selectElm = document.createElement("select");
-        selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
+        selectElm.classList.add("ml-1", "select2");
 		selectElm.id = id;
 
         selectElm.innerHTML = `
