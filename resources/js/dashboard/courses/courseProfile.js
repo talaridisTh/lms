@@ -756,34 +756,42 @@ function createRoleSelect( id = "" ) {
 	return selectElm;
 }
 
-/* function createStateSelect() {
-	const selectElm = document.createElement("select");
-	selectElm.classList.add("ml-1", "custom-select", "custom-select-sm", "form-control", "form-control-sm");
-
-	selectElm.innerHTML = `
-		<option value="">Όλες οι Καταστάσεις</option>
-		<option value="1">Ενεργά</option>
-		<option value="0">Ανενεργά</option>
-	`;
-
-	return selectElm;
-} */
-
 axios.post("/materials/material-types")
 	.then( (res) => {
-		createTopicSelect( res );
+		let activeMaterials = createTopicSelect( res, "selected-materials-types" );
+		let remainingMaterials = createTopicSelect( res, "remaining-materials-types" );
+
+		courseMaterialListLength.append( activeMaterials );
+		$("#remaining-materials-table_length > label")[0].append( remainingMaterials );
+
+		$("#selected-materials-types").select2({
+			minimumResultsForSearch: -1,
+		});
+	
+		$("#selected-materials-types").change( function() {
+			courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+		})
+
+		$("#remaining-materials-types").select2({
+			minimumResultsForSearch: -1,
+		});
+
+		$("#remaining-materials-types").change( function() {
+			remainingMaterialsTables.columns( 3 ).search( this.value ).draw();
+		})
+
 	})
 	.catch( (err) => {
 		console.log(err);
 	})
 
-function createTopicSelect( res ) {
+function createTopicSelect( res, id = "" ) {
 	const selectElm = document.createElement("select");
 	let data = res.data;
 	let options = "<option value=''>Όλοι οι τύποι</option>";
 
 	selectElm.classList.add("ml-1", "select2");
-	selectElm.id = "selected-materials-types"
+	selectElm.id = id
 
 	for ( let i = 0; i < data.length; i++ ) {
 		options += `<option value="${data[i].type}">${data[i].type}</option>`;
@@ -791,17 +799,19 @@ function createTopicSelect( res ) {
 
 	selectElm.innerHTML = options;
 
-	courseMaterialListLength.append( selectElm );
+	return selectElm
 
-	$("#selected-materials-types").select2({
-		minimumResultsForSearch: -1,
-	});
+	// courseMaterialListLength.append( selectElm );
 
-	$("#selected-materials-types").change( function() {
+	// $("#selected-materials-types").select2({
+	// 	minimumResultsForSearch: -1,
+	// });
 
-		courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+	// $("#selected-materials-types").change( function() {
 
-	})
+	// 	courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+
+	// })
 }
 
 $("#add-additions-modal").on("show.bs.modal", function(event) {
