@@ -211,6 +211,8 @@ dateRange.on( "apply.daterangepicker", function(event, picker) {
 		
 	let startDate = picker.startDate.format('DD/MM/YYYY');
 	let endDate = picker.endDate.format('DD/MM/YYYY');
+
+	this.classList.add("select2-selected");
 	this.value = `${ startDate } - ${ endDate }`;
 
 	coursesDatatable.ajax.reload();
@@ -218,6 +220,8 @@ dateRange.on( "apply.daterangepicker", function(event, picker) {
 })
 
 dateRange.on( 'cancel.daterangepicker', function(event, picker) {
+
+	this.classList.remove("select2-selected");
 	dateInput.value = "";
 	coursesDatatable.ajax.reload();
 })
