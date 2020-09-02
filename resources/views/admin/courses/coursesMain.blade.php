@@ -6,11 +6,45 @@
 
 @section('content')
 
+<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header modal-colored-header bg-primary">
+				<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			</div>
+			<div class="modal-body table-cnt">
+				<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
+
+					@csrf
+					<div class="form-group">
+						<label for="title">Τίτλος</label>
+						<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+						@error('title')
+							<span class="invalid-feedback" role="alert">
+								<strong>{{ $message }}</strong>
+							</span>
+						@enderror
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button id="submit-form-btn" class="btn btn-primary">
+					<i class="mdi mdi-content-save mr-1"></i>
+					Δημιουργία
+				</button>
+				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 	<!-- Modal -->
 	<div class="modal fade" id="clone-course-modal" tabindex="-1" role="dialog" aria-labelledby="clone-course-modalLabel" aria-hidden="true">
-		<div class="modal-dialog  modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header modal-colored-header bg-primary">
 					<h5 class="modal-title" id="clone-course-modalLabel">Αντιγραφή Course</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -23,8 +57,8 @@
 
 						<div class="form-group">
 							<label for="clone-title">Τίτλος</label>
-							<input type="text" class="form-control @error('title') is-invalid @enderror" id="clone-title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
-							@error('title')
+							<input type="text" class="form-control @error('cloneTitle') is-invalid @enderror" id="clone-title" name="cloneTitle" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+							@error('cloneTitle')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
@@ -34,8 +68,11 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button form="clone-form" type="submit" class="btn btn-primary">Αποθήκευση</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button form="clone-form" type="submit" class="btn btn-primary">
+						<i class="mdi mdi-content-save mr-1"></i>
+						Δημιουργία
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -46,7 +83,8 @@
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
 				<div class="text-sm-right">
-					<a href="courses/create" class="btn btn-primary mb-2"{{--  data-toggle="modal" data-target="#new-course-modal --}}"><i class="mdi mdi-plus-circle mr-2"></i>
+					<a href="#" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal">
+						<i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
 					<div class="btn-group mb-2">
@@ -99,7 +137,7 @@
 		</table>
 	</div>
 
-	<select id="topic-filter" class="ml-1 custom-select custom-select-sm form-control form-control-sm">
+	<select id="topic-filter" class="ml-1 select2 form-control">
 		<option value="" selected>Όλα τα Topic</option>
 		@foreach ($topics as $topic)
 			<option value="{{ $topic->id }}">{{ $topic->title }}</option>
@@ -114,10 +152,15 @@
 
 <script src="{{ mix('js/dashboard/courses/coursesMain.js') }}"></script>
 
-@if ( count($errors) > 0 )
+@error('cloneTitle')
 	<script>
 		$('#clone-course-modal').modal('show')
 	</script>
-@endif
+@enderror
+@error('title')
+	<script>
+		$('#new-course-modal').modal('show')
+	</script>
+@enderror
 
 @endsection

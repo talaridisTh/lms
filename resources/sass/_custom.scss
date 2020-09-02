@@ -158,12 +158,14 @@ select.is-invalid {
 }
 
 
-.dataTables_length .select2-container {
+.dataTables_length > label > .select2-container:nth-child(2) {
+	width: 70px !important;
+	margin-right: 6px;
+}
+
+.dataTables_length > label > .select2-container:not(:nth-child(2)) {
     width: 170px !important;
-    margin-right: 3px;
-    margin-left: 3px;
-
-
+	margin-right: 6px;
 }
 
 
@@ -173,6 +175,13 @@ select.is-invalid {
 
 }
 
+.select2-selection__rendered {
+	line-height: 33px !important;
+}
+
+.select2-selection__arrow {
+	top: 0px !important;
+}
 
 .select2-selection {
     background-color: #404954 !important;

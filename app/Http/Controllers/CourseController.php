@@ -44,9 +44,17 @@ class CourseController extends Controller
 		// 	$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
 		// 	$fileName = md5( $request->name ).$ext;
 		// }
+		$request->validate([
+			'title' => 'required|unique:courses'
+		]);
 
+		if ( isset($request->publishDate) ) {
+			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		}
+		else {
+			$publishDate = null;
+		}
 
-		// dd($request->all());
 		$course = new Course;
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
@@ -54,7 +62,7 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->status = 1 /* $request->status */;
 		$course->slug = Str::slug($request->title, "-");
-		$course->publish_at = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;
 		// $course->publish_at = $request->publishDate;
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
@@ -62,8 +70,10 @@ class CourseController extends Controller
 		
 		$course->save();
 
-		foreach ( $request->topics as $id ) {
-			$course->topics()->attach( $id );
+		if ( $request->topics ) {
+			foreach ( $request->topics as $id ) {
+				$course->topics()->attach( $id );
+			}
 		}
 		
 		// if ( isset($fileName) ) {
@@ -199,15 +209,15 @@ class CourseController extends Controller
 
 	public function clone(Request $request) {
 
-		$validate = $request->validate([
-			'title' => 'required|unique:courses'
+		$request->validate([
+			'cloneTitle' => 'required|unique:courses'
 		]);
 
 		$course = Course::find( $request->id );
 		$course->load( "materials", "topics" );
 		$newCourse = $course->replicate();
-		$newCourse->title = $request->title;
-		$newCourse->slug = Str::slug($request->title, "-");
+		$newCourse->title = $request->cloneTitle;
+		$newCourse->slug = Str::slug($request->cloneTitle, "-");
 
 		$newCourse->push();
 
