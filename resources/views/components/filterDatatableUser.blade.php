@@ -2,7 +2,7 @@
     <input type="text" class="form-control  date" placeholder="Επιλέξτε ημερομηνίες..."   autocomplete="off"   id="daterange"   />
 </div>
 <select id="activeFilter">
-    <option value="">Καθαρισμός</option>
+    <option value="">Όλες οι Καταστάσεις</option>
     <option value="1">Ενεργοί</option>
     <option value="0">Μη Ενεργοί</option>
 </select>
