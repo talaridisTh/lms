@@ -34,7 +34,7 @@ class BundleController extends Controller
 
 
 		$bundle = new Bundle;
-		$bundle->name = $request->name;
+		$bundle->title = $request->title;
 		$bundle->description = $request->description;
 		$bundle->status = $request->status;
 		$bundle->slug = Str::slug($request->title, "-");

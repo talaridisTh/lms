@@ -9,6 +9,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TopicsDataTable extends DataTable
 {
@@ -18,10 +19,18 @@ class TopicsDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query, Request $request)
     {
-        return datatables()
-            ->eloquent($query)
+
+		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
+			$query = Topic::query()
+				->where(function($subquery) use ($request) {
+					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				});
+		}
+
+        return datatables()::of($query)
             ->addColumn('action', function($data) {
 				
 				return "<div class='icheck-primary d-inline'>
