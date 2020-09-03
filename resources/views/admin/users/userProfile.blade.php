@@ -15,6 +15,24 @@
 @section('content')
     <x-alertMsg :msg="'update'"></x-alertMsg>
     <div class="container-fruid">
+
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<ol class="breadcrumb m-0">
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard/users" class="custom-link-primary">Χρήστες</a></li>
+							<li class="breadcrumb-item active">Προφίλ χρήστη</li>
+						</ol>
+					</div>
+					<h4 class="page-title">{{ $user->last_name }} {{ $user->first_name }}</h4>
+				</div>
+			</div>
+		</div> 
+
+
         <div class="content">
             <div class="row">
                 <div class="col-md-12">

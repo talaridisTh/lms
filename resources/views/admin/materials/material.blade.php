@@ -9,6 +9,23 @@
 
 @section('content')
     <section class="container-fruid">
+
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<ol class="breadcrumb m-0">
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard/materials" class="custom-link-primary">Υλικό</a></li>
+							<li class="breadcrumb-item active">{{ $material->title }}</li>
+						</ol>
+					</div>
+					<h4 class="page-title">{{ $material->title }}</h4>
+				</div>
+			</div>
+		</div> 
+		
         <div class="row">
             <div class="col-xl-9 col-lg-12 col-md-12" id="material-form">
                 <ul class="nav nav-tabs mb-3">

@@ -2,43 +2,79 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
+	<style>
+
+		.content-page {
+			overflow: initial;
+		}
+		.wrapper {
+			overflow: initial;
+		}
+		.sticky-btns {
+			position: sticky;
+			bottom: 0px;
+			z-index: 100;
+			background-color: #343a40 !important;
+		}
+
+	</style>
 @endsection
 
 @section('content')
 
-<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header modal-colored-header bg-primary">
-				<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			</div>
-			<div class="modal-body table-cnt">
-				<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
-
-					@csrf
-					<div class="form-group">
-						<label for="title">Τίτλος</label>
-						<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
-						@error('title')
-							<span class="invalid-feedback" role="alert">
-								<strong>{{ $message }}</strong>
-							</span>
-						@enderror
+<!-- start page title -->
+	<div class="container content-width my-3">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<ol class="breadcrumb m-0">
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item active">Courses</li>
+						</ol>
 					</div>
+					<h4 class="page-title">Courses</h4>
+				</div>
+			</div>
+		</div>     
+	</div>     
+	<!-- end page title -->
 
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button id="submit-form-btn" class="btn btn-primary">
-					<i class="mdi mdi-content-save mr-1"></i>
-					Δημιουργία
-				</button>
-				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+	<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body table-cnt">
+					<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
+
+						@csrf
+						<div class="form-group">
+							<label for="title">Τίτλος</label>
+							<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+							@error('title')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="submit-form-btn" class="btn btn-primary">
+						<i class="mdi mdi-content-save mr-1"></i>
+						Δημιουργία
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<!-- Modal -->
 	<div class="modal fade" id="clone-course-modal" tabindex="-1" role="dialog" aria-labelledby="clone-course-modalLabel" aria-hidden="true">
@@ -78,32 +114,8 @@
 		</div>
 	</div>
 
-	<div class="container table-cnt" style="max-width:1370px">
-		<div class="row mb-2">
-			<div class="col-sm-4"></div>
-			<div class="col-sm-8">
-				<div class="text-sm-right">
-					<a href="#" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal">
-						<i class="mdi mdi-plus-circle mr-2"></i>
-						Νέο Course
-					</a>
-					<div class="btn-group mb-2">
-						<button id="course-bulk-action-btn" disabled type="button" 
-							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">
-							Επιλογές (0)
-						</button>
-						<div class="dropdown-menu">
-							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Export</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+	<div class="container table-cnt content-width">
+		
 
 		<table id="courses-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
@@ -135,7 +147,35 @@
 				</tr>
 			</tfoot>
 		</table>
+
+		{{-- <div class="row mb-2 sticky-btns"> --}}
+			{{-- <div class="col-sm-4"></div> --}}
+			{{-- <div class="col-sm-8"> --}}
+				<div class="text-sm-right pt-2 sticky-btns">
+					<a href="#" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal">
+						<i class="mdi mdi-plus-circle mr-2"></i>
+						Νέο Course
+					</a>
+					<div class="btn-group mb-2">
+						<button id="course-bulk-action-btn" disabled type="button" 
+							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Επιλογές (0)
+						</button>
+						<div class="dropdown-menu">
+							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Export</a>
+						</div>
+					</div>
+				</div>
+			{{-- </div> --}}
+		{{-- </div> --}}
+
 	</div>
+
 
 	<select id="topic-filter" class="ml-1 select2 form-control">
 		<option value="" selected>Όλα τα Topic</option>

@@ -20,6 +20,24 @@
 @endsection
 
 @section('content')
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box">
+				<div class="page-title-right">
+					<ol class="breadcrumb m-0">
+						<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+						<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="/dashboard/courses" class="custom-link-primary">Courses</a></li>
+						<li class="breadcrumb-item active">{{ $course->title }}</li>
+					</ol>
+				</div>
+				<h4 class="page-title">{{ $course->title }}</h4>
+			</div>
+		</div>
+	</div>     
+	<!-- end page title -->
+
 	<div class="modal fade" id="add-additions-modal" tabindex="-1" aria-labelledby="add-additions-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			  <div class="modal-content">
@@ -362,7 +380,7 @@
 
 					<div class="sticky pb-3 px-2">
 						<button form="edit-course-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-						<button id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i> </button>
+						<a id="preview-btn" href="/courses/course/{{ $course->id }}" class="btn btn-warning"><i class="mdi mdi-eye"></i></a>
 						<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
 					</div>
 

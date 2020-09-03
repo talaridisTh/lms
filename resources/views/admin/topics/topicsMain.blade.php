@@ -6,6 +6,25 @@
 
 @section('content')
 
+	<!-- start page title -->
+	<div class="container content-width">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<ol class="breadcrumb m-0">
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item active">Topics</li>
+						</ol>
+					</div>
+					<h4 class="page-title">Topics</h4>
+				</div>
+			</div>
+		</div>     
+	</div>     
+	<!-- end page title -->
+
 	<!-- Modal -->
 	<div class="modal fade" id="add-topic-modal" tabindex="-1" role="dialog" aria-labelledby="add-topic-modalLabel" aria-hidden="true">
 		<div class="modal-dialog  modal-dialog-centered" role="document">
@@ -44,7 +63,7 @@
 		</div>
 	</div>
 
-	<div class="container table-cnt" style="max-width:1370px">
+	<div class="container table-cnt content-width">
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
