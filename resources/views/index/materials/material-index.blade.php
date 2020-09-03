@@ -27,8 +27,8 @@
             </a>
         </div>
         @endrole
-        <div class="mb-3">
-            <img class="img-thumbnail" src="{{asset("images/video.png")}}" alt="">
+        <div class=" container text-center ">
+            <iframe src="https://player.vimeo.com/video/{{$materials->video_link}}" width="1024" height="768" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
         </div>
 
         <div class="container" style="max-width: 1277px">

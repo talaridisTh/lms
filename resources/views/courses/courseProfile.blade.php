@@ -57,8 +57,8 @@
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
                             <p class="my-4">{{$course->subtitle}}</p>
                             <div class="button-course-fav">
-                                <button class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">begin
-                                </button>
+                                <a href="{{route('index.material.show',[$course->id,$allMaterial->first()->slug])}}"  class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
+                                </a>
                                 <button class="px-4 box-title btn bghover btn-secontary font-weight-bold">add watch
                                 </button>
                             </div>
