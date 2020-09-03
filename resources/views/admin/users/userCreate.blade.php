@@ -80,7 +80,11 @@
                         <select name="roles" id="roles" class="form-control  select2" data-toggle="select2">
                             <option></option>
                             @foreach($rolesName as $role)
-                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                @if (old('roles') == $role->id)
+                                    <option value="{{ $role->id }}" selected="selected">{{$role->name}}</option>
+                                @else
+                                    <option  value="{{$role->id}}">{{$role->name}}</option>
+                                @endif
                             @endforeach
                         </select>
                         @error('roles')

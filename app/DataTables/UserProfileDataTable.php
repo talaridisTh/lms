@@ -36,7 +36,7 @@ class UserProfileDataTable extends DataTable {
             ->addColumn('chexbox', function ($data) {
 
                 return "<div class='icheck-primary d-inline'>
-							<input class='js-checkbox' data-course-id='$data->id' id='$data->slug' type='checkbox'autocomplete='off'>
+							<input class='js-user-checkbox' data-course-id='$data->id' id='$data->slug' type='checkbox'autocomplete='off'>
 							<label for='$data->slug' ></label>
 						</div>";
             })

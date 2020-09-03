@@ -29,13 +29,19 @@ class AddCoursesDataTable extends DataTable {
         $query = User::courseWhereNotExist($request->userId);
 
         return DataTables::of($query)
+            ->addColumn('chexbox', function ($data) {
+
+                return "<div class='icheck-primary d-inline'>
+							<input class='js-user-profile-checkbox' data-course-id='$data->id' id='$data->slug' type='checkbox'autocomplete='off'>
+							<label for='$data->slug' ></label>
+						</div>";
+            })
             ->addColumn('action', function ($data) {
 
-                return "<td><input class='btn btn-primary js-button btn-sm my-1' value='Επιλογη' data-course-title='{$data->title}' data-course-id='{$data->id}'/></td>";
+                return "<button class='js-add-courses m-2 btn btn-primary'>Προσθήκη</button>";
             })
-//            ->editColumn('name', function ($data) {
-//
-//            })
+
+            ->rawColumns([ 'chexbox',"action"])
             ->setRowAttr(['data-course-id' => function ($data) {
                 return [$data->id];
             }, 'data-user-id' => function ($data) use($user) {

@@ -52,6 +52,12 @@
                     @role("admin")
                     <div>
                         <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true" aria-expanded="false">
+                            Edit this page
+                        </a>
+                    </div>
+
+                    <div>
+                        <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true" aria-expanded="false">
                             Dashboard
                         </a>
                     </div>

@@ -20,7 +20,7 @@ const courses = $(".course-materials-list").DataTable({
 
     },
     columns: [
-        {data: 'chexbox', name: 'chexbox'},
+        {data: 'chexbox', name: 'chexbox' ,orderable:false},
         {data: 'title', name: 'title',className: "js-link cursor-pointer"},
         {data: 'students', name: 'students',className: "js-link cursor-pointer"},
         {data: 'action', name: 'action'},
@@ -34,6 +34,7 @@ const courses = $(".course-materials-list").DataTable({
         deleteCourse()
         deleteMultipleCourse()
         routeLink()
+        // checkeBoxesEventListener()
     },
 
 });
@@ -52,23 +53,22 @@ const addCourse = $("#datatableAddCourse").DataTable({
         }
     },
     columns: [
-        {data: 'title', name: 'title'},
-        {data: 'action', name: 'action'},
+        {data: 'chexbox' ,orderable: false ,width: '35%', name: 'chexbox'},
+        {data: 'title' ,width: '50%', name: 'title'},
+        {data: 'action',width: '35%', name: 'action'},
 
     ],
-    columnDefs: [
-        {"width": "5%", "targets": 1},
 
-    ],
     language: config.datatable.language,
 
     drawCallback: () => {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
         $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-        addCourseToUser()
-        modalDismiss()
-        modalCloseX()
+        addCourses()
+        checkeBoxesEventListenerSecont()
+        updateMultipleCourse()
+
 
 
     }
@@ -111,15 +111,43 @@ $('#alertSumbit').submit(async (e) => {
 
 
 });
+function resetBulk( bulkBtn, checkbox ) {
 
-console.log($("#buttonUser"));
+    bulkBtn.text("Επιλογές  (0)");
+    bulkBtn.addClass("btn-secondary");
+    bulkBtn.removeClass("btn-warning");
+    bulkBtn.prop("disabled", true);
+    checkbox.prop("checked", false);
+}
 
 
 
+const addCourses = ()=>{
+    $(".js-add-courses").click( async function (){
 
+        const id = this.findParent(2).dataset.courseId
+        const userId = this.findParent(2).dataset.userId
+        try {
+            const {status} = await axios.patch(config.routes.addcoursesDatatable, {
+                "course_id": id,
+                "user_id": userId,
+            })
+            if (status==200){
 
-//! METHOD COURS DATATABLE
+                courses.ajax.reload();
+                addCourse.ajax.reload();
+
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    })
+}
+
+//! BULK ACRTION FIRST TABLE
 //!============================================================
+//first datatable
 const deleteCourse = () => {
     $('.js-button-delete').unbind();
     $(".js-button-delete").click(async function() {
@@ -147,40 +175,13 @@ const deleteCourse = () => {
     })
 }
 
-const addCourseToUser = () => {
-    $('.js-button').unbind();
-    let ids = [];
-    let jsButton = $(".js-button").click(function () {
-        const parent = this.parentElement.parentElement
-        if (parent.dataset.exist) {
-            utilities.toastAlert('warning', `${this.dataset.courseTitle}  αφαιρεθηκε`)
-            ids = ids.filter(val => val !== this.dataset.courseId);
-            this.value = 'Επιλογη'
-            this.classList.remove("btn-danger")
-            this.classList.add("btn-primary")
-            delete parent.dataset.exist
-        } else {
-            if (!ids.includes(this.dataset.courseId)) {
-                ids.push(this.dataset.courseId)
-            }
-            utilities.toastAlert('success', `${this.dataset.courseTitle} Επιλέχθηκε`)
-            this.classList.remove("btn-primary")
-            this.classList.add("btn-danger")
-            this.value = 'Αφαιρεση'
-            parent.dataset.exist = true
-        }
-
-
-    })
-    clickModal(ids)
-}
-
 const deleteMultipleCourse = () => {
     $('.js-chexbox-delete').unbind();
     $('.js-chexbox-delete').click(async () => {
 
-        let checkedBoxes = $('.js-checkbox:checked');
+        let checkedBoxes = $('.js-user-checkbox:checked');
 
+        console.log(checkedBoxes)
 
         let ids = [];
 
@@ -203,6 +204,9 @@ const deleteMultipleCourse = () => {
                     utilities.toastAlert('error', `${ids.length}  Διεγραφηκαν`)
                     courses.ajax.reload();
                     addCourse.ajax.reload();
+                    resetBulk( $("#user-profil-bulk-action-btn"), $("#select-all-courses") );
+
+
                 }
             }
 
@@ -218,50 +222,105 @@ const deleteMultipleCourse = () => {
     })
 }
 
+function checkeBoxesEventListener() {
 
-//! METHOD ADDCOURSE DATATABLE
+    let minorCheckboxes = $(".js-user-checkbox");
+    let mainCheckbox = $("#select-all-courses")[0];
+    let bulkBtn = $("#user-profil-bulk-action-btn")[0];
+
+    minorCheckboxes.unbind();
+
+    minorCheckboxes.change( function() {
+        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
+    })
+
+}
+
+$("#select-all-courses").change( function() {
+    let minorCheckboxes = $(".js-user-checkbox");
+    let bulkBtn = $("#user-profil-bulk-action-btn")[0];
+
+
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+
+})
+
+
+//! BULK ACRTION SECOND TABLE
 //!============================================================
-const clickModal = (ids) => {
-    $(".modal-save").click(async function () {
-        $('.modal-save').unbind();
-        await utilities.toastAlert('success', `${ids.length} COURSES Προσθεθηκαν`)
-        const parent = this.parentElement.parentElement
-        let id = [];
 
-        const courseTitle = [...ids];
+
+const  updateMultipleCourse = () => {
+    $('.js-chexbox-update').unbind();
+    $('.js-chexbox-update').click(async () => {
+
+        let checkedBoxes = $('.js-user-profile-checkbox:checked');
+
+        console.log(checkedBoxes)
+
+        let ids = [];
+
+        for (let i = 0; i < checkedBoxes.length; i++) {
+            ids.push(checkedBoxes[i].dataset.courseId);
+        }
 
 
         try {
-            const res = await axios.patch(config.routes.addcoursesDatatable, {
-                "course_id": ids,
-                "user_id": userId,
-            })
+                let {status} = await axios.patch(config.routes.addCoursesMultipleUsersDatatable, {
+                        'course_id': ids,
+                        'user_id': checkedBoxes[0].findParent(3).dataset.userId
 
-            console.log(res)
-            courses.ajax.reload();
+                })
+                if (status == 200) {
+                    utilities.toastAlert('success', `${ids.length}  Προστέθηκαν `)
+                    courses.ajax.reload();
+                    addCourse.ajax.reload();
+                    $("#select-all-courses-profile")[0].checked = false
+                    resetBulk( $("#user-addCourses-bulk-action-btn"), $("#select-all-courses-profile") );
+                }
+
 
         } catch (e) {
             console.log(e)
+            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
         }
 
+
+
+
+
+    })
+}
+
+
+
+function checkeBoxesEventListenerSecont() {
+
+    let minorCheckboxes = $(".js-user-profile-checkbox");
+    let mainCheckbox = $("#select-all-courses-profile")[0];
+    let bulkBtn = $("#user-addCourses-bulk-action-btn")[0];
+
+
+    minorCheckboxes.unbind();
+
+    minorCheckboxes.change( function() {
+        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
     })
 
 }
 
 
-const modalDismiss = () => {
-    $('.modal-dismiss').unbind();
-    $(".modal-dismiss").click(() => {
-        addCourse.ajax.reload();
-    })
-}
+$("#select-all-courses-profile").change( function() {
+    let minorCheckboxes = $(".js-user-profile-checkbox");
+    let bulkBtn = $("#user-addCourses-bulk-action-btn")[0];
+    console.log(this)
 
-const modalCloseX = () => {
-    $('.close').unbind();
-    $(".close").click(() => {
-        addCourse.ajax.reload();
-    })
-}
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+
+})
+
+
+
 
 $('#material-modal-shown-btn').click(() => {
     setTimeout(() => {

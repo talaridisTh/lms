@@ -6,24 +6,27 @@
         .left-side-menu-detached {
             display: none;
         }
-
-
-
-
-
-
         hr.style-two {
             border: 0;
             height: 1px;
             background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
         }
 
+
     </style>
 @endsection
 
 @section("content")
 
-    <section class="d-flex flex-column">
+
+    <section class="d-flex wrapper flex-column">
+        @role("admin")
+        <div class="">
+            <a class=" btn btn-outline-secondary nav-link" href="{{route('material.index')}}" role="button" aria-haspopup="true" aria-expanded="false">
+                Edit this page
+            </a>
+        </div>
+        @endrole
         <div class="mb-3">
             <img class="img-thumbnail" src="{{asset("images/video.png")}}" alt="">
         </div>

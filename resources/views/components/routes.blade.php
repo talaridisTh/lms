@@ -18,7 +18,7 @@
             destroyMultipleUsersDatatable: "{{ route("destroyMultipleUsers.datatable") }}",
             courseModaDatatable: "{{ route("courseModal.datatable") }}",
             addCoursesMultipleUsersDatatable: "{{ route("addCoursesMultipleUsers.datatable") }}",
-            //ajax user routes
+            //ajax material routes
             destroyMultipleMaterialDatatable : "{{ route("destroyMultipleMaterials.datatable") }}",
             addMaterialMultipleDatatable : "{{ route("addMaterialMultiple.datatable") }}",
 

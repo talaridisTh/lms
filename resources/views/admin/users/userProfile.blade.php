@@ -78,15 +78,7 @@
                             <div class="modal-body">
                                 @include("components.addCourses")
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-light modal-dismiss"
-                                        data-dismiss="modal">
-                                    Κλείσιμο
-                                </button>
-                                <button type="button" onClick="window.location.reload();"
-                                        class="btn btn-primary modal-save">Προσθήκη
-                                </button>
-                            </div>
+                     @include("components.admin.users.bulkActionUserAddCourses")
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->

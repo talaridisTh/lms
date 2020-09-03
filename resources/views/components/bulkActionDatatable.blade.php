@@ -11,7 +11,6 @@
     </button>
 
     <div class="dropdown-menu dropdown-menu-animated" style="left: -80px!important;">
-        <div class="dropdown-divider"></div>
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
             <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"

@@ -31,12 +31,19 @@
         }
 
 
+
     </style>
 @endsection
 @php($count=0)
 @section("content")
-
     <div class="content-page">
+        @role("admin")
+        <div class="sticky-top">
+            <a class=" btn btn-outline-secondary nav-link" href="{{route('course.show',$course->id)}}" role="button" aria-haspopup="true" aria-expanded="false">
+                Edit this page
+            </a>
+        </div>
+        @endrole
         <div class="container-xl my-3" style="width: 1450px">
             <div class="row box-material-up px-5 pt-4 pb-2">
                 <div class="col-md-12">
