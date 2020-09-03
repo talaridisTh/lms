@@ -63,7 +63,7 @@
 		</div>
 	</div>
 
-	<div class="container table-cnt" style="max-width:1370px">
+	<div class="container table-cnt content-width">
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">

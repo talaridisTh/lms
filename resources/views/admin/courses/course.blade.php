@@ -380,7 +380,7 @@
 
 					<div class="sticky pb-3 px-2">
 						<button form="edit-course-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-						<button id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i> </button>
+						<a id="preview-btn" href="/courses/course/{{ $course->id }}" class="btn btn-warning"><i class="mdi mdi-eye"></i></a>
 						<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
 					</div>
 
