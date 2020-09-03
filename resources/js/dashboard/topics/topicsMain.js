@@ -72,7 +72,13 @@ const topicsDatatable = $("#topics-datatable").DataTable({
 	ajax: {
 		url: "/topics/topics-datatable",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		type: "post"
+		type: "post",
+		data: function( d ) {
+			return $.extend( {}, d, {
+				startDate: utilities.startDate( $("#topic-date-range")[0] ),
+				endDate: utilities.endDate( $("#topic-date-range")[0] ),
+			})
+		}
 	},
 	columns: [
 		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
@@ -97,7 +103,47 @@ const topicsDatatable = $("#topics-datatable").DataTable({
 		editInputInit();
 		topicCheckboxesInit();
 	}
-})
+});
+
+//!##############################################
+//!				Datatable Filters				#
+//!##############################################
+
+let searchFieldLabel = $("#topics-datatable_filter > label > input")[0];
+let dateInput = utilities.createDateElm( "topic-date-range" );
+
+dateInput.appendBefore( searchFieldLabel );
+dateInput.addEventListener("input", function() {
+
+	this.value = this.value.replace( /[^0-9]/g, "" )
+		.replace(/^(\d{2})?(\d{2})?(\d{4})?(\d{2})?(\d{2})?(\d{4})?/g, '$1/$2/$3 - $4/$5/$6')
+		.substr(0, 23)
+
+});
+
+let dateRange = $("#topic-date-range");
+
+dateRange.daterangepicker( utilities.datePickerConfig );
+
+dateRange.on( "apply.daterangepicker", function(event, picker) {
+		
+	let startDate = picker.startDate.format('DD/MM/YYYY');
+	let endDate = picker.endDate.format('DD/MM/YYYY');
+
+	this.classList.add("select2-selected");
+	this.value = `${ startDate } - ${ endDate }`;
+
+	topicsDatatable.ajax.reload();
+
+});
+
+dateRange.on( 'cancel.daterangepicker', function(event, picker) {
+
+	this.classList.remove("select2-selected");
+	dateInput.value = "";
+	topicsDatatable.ajax.reload();
+
+});
 
 //!##############################################
 //!				EventListeners Init				#
