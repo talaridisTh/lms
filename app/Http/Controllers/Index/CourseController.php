@@ -8,6 +8,7 @@ use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 
 class CourseController extends Controller {
 
@@ -16,7 +17,6 @@ class CourseController extends Controller {
     {
 
         $topics = [];
-
         foreach (auth()->user()->courses as $course)
         {
 //           $topics =Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
@@ -27,9 +27,18 @@ class CourseController extends Controller {
             return $q;
         });
 
-
-        if (request()->ajax())
+        if (request()->idsTopic == "reset" || !request()->ajax())
         {
+            $allCourses = auth()->user()->courses;
+
+            return view("courses.courses", [
+                'arrayTopics' => $arrayTopics,
+                'allCourses' => $allCourses->flatten(1)])->render();
+        }
+
+        else
+        {
+
             $queryAllCourse = DB::table('courses')
                 ->select("courses.*")
                 ->join("course_user", "course_user.course_id", "=", "courses.id")
@@ -43,14 +52,11 @@ class CourseController extends Controller {
             $allCourses = $queryAllCourse->map(function ($test) {
                 return Course::whereIn('id', [$test->id])->get();
             });
-        } else
-        {
-            $allCourses = auth()->user()->courses;
-        }
 
-        return view("courses.courses", [
-            'arrayTopics' => $arrayTopics,
-            'allCourses' => $allCourses->flatten(1)]);
+            return view("courses.courses", [
+                'arrayTopics' => $arrayTopics,
+                'allCourses' => $allCourses->flatten(1)])->render();
+        }
     }
 
     public function userCourse(Course $course)
