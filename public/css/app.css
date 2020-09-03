@@ -3336,6 +3336,13 @@ select.is-invalid {
   left: -15px;
 }
 
+.select2-selected {
+  color: white !important;
+  height: 31px;
+  background-color: #536de6;
+  border-radius: 4px;
+}
+
 .sub-table {
   background-color: rgba(59, 63, 69, 0.79);
 }
@@ -3564,6 +3571,10 @@ select.is-invalid {
 
 .btn-begin :hover {
   color: #328af1;
+}
+
+b[role=presentation] {
+  border-color: white transparent !important;
 }
 
 /*!

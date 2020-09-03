@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Topic;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TopicController extends Controller
 {
@@ -35,7 +36,15 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$request->validate([
+			'title' => 'required|unique:topics'
+		]);
+		$topic = new Topic;
+		$topic->title = $request->title;
+		$topic->slug = Str::slug($request->title, "-");
+		$topic->save();
+
+		return redirect("/dashboard/topics");
     }
 
     /**

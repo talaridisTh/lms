@@ -402,6 +402,9 @@ $("#active-user-roles").select2({
 
 $("#active-user-roles").change( function () {
 
+	let label = $("#select2-active-user-roles-container")[0];
+	utilities.filterStyle( label, this.value )
+
 	courseUsersDatatable.columns(3).search( this.value ).draw();
 
 });
@@ -418,6 +421,9 @@ $("#add-users-roles").select2({
 
 $("#add-users-roles").change( function () {
 
+	let label = $('#select2-add-users-roles-container')[0];
+
+	utilities.filterStyle( label, this.value )
 	addCourseUsersDatatable.columns(3).search( this.value ).draw();
 
 });
@@ -432,6 +438,10 @@ $("#active-course-status").select2({
 });
 
 $("#active-course-status").change( function() {
+
+	let label = $('#select2-active-course-status-container')[0];
+
+	utilities.filterStyle( label, this.value )
 	courseMaterialsTable.columns( 2 ).search( this.value ).draw();
 });
 
@@ -459,6 +469,7 @@ dateRange.on( "apply.daterangepicker", function(event, picker) {
 	let endDate = picker.endDate.format('DD/MM/YYYY');
 	this.value = `${ startDate } - ${ endDate }`;
 
+	this.classList.add("select2-selected");
 	let tableId = $(this).closest(".table-cnt").find(".js-table").attr("id");
 	$(`#${tableId}`).DataTable().ajax.reload();
 
@@ -467,6 +478,7 @@ dateRange.on( "apply.daterangepicker", function(event, picker) {
 dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 
 	this.value = "";
+	this.classList.remove("select2-selected");
 	let tableId = $(this).closest(".table-cnt").find(".js-table").attr("id");
 	$(`#${tableId}`).DataTable().ajax.reload();
 
@@ -769,6 +781,11 @@ axios.post("/materials/material-types")
 		});
 	
 		$("#selected-materials-types").change( function() {
+
+			let label = $('#select2-selected-materials-types-container')[0];
+
+			utilities.filterStyle( label, this.value )
+
 			courseMaterialsTable.columns( 4 ).search( this.value ).draw();
 		})
 
@@ -777,6 +794,10 @@ axios.post("/materials/material-types")
 		});
 
 		$("#remaining-materials-types").change( function() {
+
+			let label = $('#select2-remaining-materials-types-container')[0];
+
+			utilities.filterStyle( label, this.value )
 			remainingMaterialsTables.columns( 3 ).search( this.value ).draw();
 		})
 
@@ -801,17 +822,6 @@ function createTopicSelect( res, id = "" ) {
 
 	return selectElm
 
-	// courseMaterialListLength.append( selectElm );
-
-	// $("#selected-materials-types").select2({
-	// 	minimumResultsForSearch: -1,
-	// });
-
-	// $("#selected-materials-types").change( function() {
-
-	// 	courseMaterialsTable.columns( 4 ).search( this.value ).draw();
-
-	// })
 }
 
 $("#add-additions-modal").on("show.bs.modal", function(event) {

@@ -73,6 +73,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
 	//! Topic Routes
 	Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
+	Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');
 
 });
 
@@ -148,6 +149,7 @@ Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 
 //! Dashboard Ajax Topic CRUD
 Route::patch( 'topics/update/{topic}', 'Ajax\TopicController@update' );
+Route::delete( 'topics/destroy/{ids}', 'Ajax\TopicController@destroy' );
 
 
 //! Ajax Upload Files

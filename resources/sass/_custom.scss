@@ -188,9 +188,14 @@ select.is-invalid {
 
 }
 
-
 .select2-selection__clear {
     left: -15px
+}
+.select2-selected {
+	color: white !important;
+	height: 31px;
+	background-color: #536de6;
+	border-radius: 4px;
 }
 
 
@@ -467,4 +472,6 @@ select.is-invalid {
     }
 }
 
-
+b[role="presentation"] {
+	border-color: white transparent !important;
+}

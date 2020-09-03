@@ -7,23 +7,23 @@
 @section('content')
 
 	<!-- Modal -->
-	{{-- <div class="modal fade" id="clone-course-modal" tabindex="-1" role="dialog" aria-labelledby="clone-course-modalLabel" aria-hidden="true">
+	<div class="modal fade" id="add-topic-modal" tabindex="-1" role="dialog" aria-labelledby="add-topic-modalLabel" aria-hidden="true">
 		<div class="modal-dialog  modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="clone-course-modalLabel">Αντιγραφή Course</h5>
+				<div class="modal-header modal-colored-header bg-primary">
+					<h5 class="modal-title" id="add-topic-modalLabel">Προσθήκη Topic</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="clone-form" action="courses/clone" method="POST">
+					<form id="add-topic-form" action="topics/store" method="POST">
 						
 						@csrf
 
 						<div class="form-group">
-							<label for="clone-title">Τίτλος</label>
-							<input type="text" class="form-control @error('title') is-invalid @enderror" id="clone-title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+							<label for="new-title">Τίτλος</label>
+							<input type="text" class="form-control @error('title') is-invalid @enderror" id="new-title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
 							@error('title')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
@@ -34,23 +34,26 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button form="clone-form" type="submit" class="btn btn-primary">Αποθήκευση</button>
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button form="add-topic-form" type="submit" class="btn btn-primary">
+						<i class="mdi mdi-content-save mr-1"></i>
+						Αποθήκευση
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
-	</div> --}}
+	</div>
 
 	<div class="container table-cnt" style="max-width:1370px">
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
 				<div class="text-sm-right">
-					<a href="#" class="btn btn-primary mb-2"{{--  data-toggle="modal" data-target="#new-course-modal --}}"><i class="mdi mdi-plus-circle mr-2"></i>
+					<a href="#" class="btn btn-primary mb-2" data-toggle="modal" data-target="#add-topic-modal"><i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Topic
 					</a>
 					<div class="btn-group mb-2">
-						<button id="course-bulk-action-btn" disabled type="button" 
+						<button id="topic-bulk-action-btn" disabled type="button" 
 							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">
 							Επιλογές (0)
@@ -97,6 +100,10 @@
 
 <script src="{{ mix('js/dashboard/topics/topicsMain.js') }}"></script>
 
-
+@error('title')
+	<script>
+		$('#add-topic-modal').modal('show')
+	</script>
+@enderror
 
 @endsection
