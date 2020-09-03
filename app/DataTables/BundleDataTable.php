@@ -8,6 +8,8 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class BundleDataTable extends DataTable
 {
@@ -17,12 +19,18 @@ class BundleDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query, Request $request)
     {
-		$query = Bundle::query()->select( 'id', 'name', 'status', 'slug', 'updated_at', 'created_at' );
 
-        return datatables()
-            ->eloquent($query)
+		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
+			$query = Bundle::query()
+				->where(function($subquery) use ($request) {
+					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				});
+		}
+
+        return datatables()::of($query)
             ->addColumn('action', function($data) {
 				
 				return "<div class='icheck-primary d-inline'>
@@ -37,6 +45,16 @@ class BundleDataTable extends DataTable
 
 				return "<input class='js-toggle' data-bundle-id='$data->id' type='checkbox' id='". $data->slug ."-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+
+			})
+			->editColumn('updated_at', function($data) {
+
+				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
+
+			})
+			->editColumn('created_at', function($data) {
+
+				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
 
 			})
 			->rawColumns(['action', 'status'])
