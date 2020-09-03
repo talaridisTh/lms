@@ -70,7 +70,7 @@ class CoursesDataTable extends DataTable
 				<span class='mx-2'>|</span>
 				<a href='#' class='js-course-clone-btn custom-link-primary' data-course-id='$data->id'>Clone</a>
 				<span class='mx-2'>|</span>
-				<a href='#' class='custom-link-primary'>View</a>";
+				<a href='/courses/course/$data->id' class='custom-link-primary'>View</a>";
 
 			})
 			->editColumn('status', function($data) {
