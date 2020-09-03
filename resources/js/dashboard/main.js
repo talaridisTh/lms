@@ -203,6 +203,47 @@ function createStateSelect( id = "" ) {
     return selectElm;
 }
 
+function createDateElm( id ) {
+	let input = document.createElement("input");
+
+	input.classList.add("form-control", "date", "d-inline-block", "ml-1");
+	input.id = id;
+	input.dataset.toggle = "date-picker";
+	input.dataset.cancelClass = "btn-secondary";
+	input.style.height = "31.96px";
+	input.style.width = "195px";
+	input.placeholder = "Επιλέξτε ημερομηνίες...";
+
+	return input;
+}
+
+function startDate( input ) {
+
+	let dateInput = input;
+
+	if ( !dateInput || dateInput.value == "" ) {
+		return "";
+	}
+
+	let dateInputValue = dateInput.value.split(" - ");
+	let firstDate = dateInputValue[0].split("/").reverse().join("-");
+
+	return firstDate;
+}
+
+function endDate( input ) {
+
+	let dateInput = input;
+
+	if ( !dateInput || dateInput.value == "" ) {
+		return "";
+	}
+	
+	let dateInputValue = dateInput.value.split(" - ");
+	let secondDate = dateInputValue[1].split("/").reverse().join("-");
+	
+	return secondDate;
+}
 
 export default {
     toastAlert,
@@ -215,6 +256,9 @@ export default {
     createStateSelect,
     datePickerConfig,
 	toastAlertDelete,
-	filterStyle
+	filterStyle,
+	createDateElm,
+	startDate,
+	endDate
 }
 

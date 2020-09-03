@@ -25,7 +25,7 @@ $("#delete-bundles-btn").click( function() {
 		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? " Bundle θα διαγραφεί" : " Bundles θα διαγραφούν"}`,
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonText: 'Ναί, διαγραφή!',
+		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
 
@@ -51,6 +51,7 @@ $("#delete-bundles-btn").click( function() {
 });
 
 const bundlesDatatable = $("#bundle-table").DataTable({
+	order: [ 4, "desc" ],
 	columns: [
 		{ data: "action", name: "action", width: "5%", orderable: false, searchable: false },
 		{ data: "name", name: "name", className: "js-link cursor-pointer"},
@@ -63,7 +64,13 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 	ajax: {
 		url: "/bundles/bundles-datatable",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-		type: "post"
+		type: "post",
+		data: function( d ) {
+			return $.extend( {}, d, {
+				startDate: utilities.startDate( $("#bundle-date-range")[0] ),
+				endDate: utilities.endDate( $("#bundle-date-range")[0] ),
+			})
+		}
 	},
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -112,3 +119,43 @@ function jsLinkInit() {
 	});
 
 }
+
+//!##############################################
+//!				Datatable Filters				#
+//!##############################################
+
+let searchFieldLabel = $("#bundle-table_filter > label > input")[0];
+let dateInput = utilities.createDateElm( "bundle-date-range" );
+
+dateInput.appendBefore( searchFieldLabel );
+dateInput.addEventListener("input", function() {
+
+	this.value = this.value.replace( /[^0-9]/g, "" )
+		.replace(/^(\d{2})?(\d{2})?(\d{4})?(\d{2})?(\d{2})?(\d{4})?/g, '$1/$2/$3 - $4/$5/$6')
+		.substr(0, 23)
+
+});
+
+let dateRange = $("#bundle-date-range");
+
+dateRange.daterangepicker( utilities.datePickerConfig );
+
+dateRange.on( "apply.daterangepicker", function(event, picker) {
+		
+	let startDate = picker.startDate.format('DD/MM/YYYY');
+	let endDate = picker.endDate.format('DD/MM/YYYY');
+
+	this.classList.add("select2-selected");
+	this.value = `${ startDate } - ${ endDate }`;
+
+	bundlesDatatable.ajax.reload();
+
+});
+
+dateRange.on( 'cancel.daterangepicker', function(event, picker) {
+
+	this.classList.remove("select2-selected");
+	dateInput.value = "";
+	bundlesDatatable.ajax.reload();
+
+});
