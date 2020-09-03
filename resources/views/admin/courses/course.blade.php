@@ -213,7 +213,7 @@
 						<div id="settings" class="tab-pane show active">
 
 
-							<form id="edit-course-form" action="{{ route('course.update', $course->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+							<form id="edit-course-form" action="{{ route('course.update', $course->slug) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
 								
 								@csrf
 								@method('PATCH')
@@ -380,7 +380,7 @@
 
 					<div class="sticky py-3 px-2">
 						<button form="edit-course-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-						<a id="preview-btn" href="/courses/course/{{ $course->id }}" class="btn btn-warning"><i class="mdi mdi-eye"></i></a>
+						<a id="preview-btn" href="/courses/course/{{ $course->slug }}" class="btn btn-warning"><i class="mdi mdi-eye"></i></a>
 						<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
 					</div>
 
@@ -498,7 +498,7 @@
 		</div>
 	</div>
 	{{-- <form id="delete-course-form" action="{{ route("course.destroy", $course->id ) }}" method="POST"> --}}
-	<form id="delete-course-form" action="{{ $course->id }}" method="POST">
+	<form id="delete-course-form" action="{{ $course->slug }}" method="POST">
 		
 		@csrf
 		@method('DELETE')

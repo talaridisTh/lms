@@ -64,13 +64,13 @@ class CoursesDataTable extends DataTable
 			})
 			->editColumn('title', function($data) {
 
-				return "<a href='/dashboard/course/$data->id' class='h5 custom-link-primary'>$data->title</a>
+				return "<a href='/dashboard/course/$data->slug' class='h5 custom-link-primary'>$data->title</a>
 				<p class='mb-1'>$data->slug</p>
-				<a href='/dashboard/course/$data->id' class='custom-link-primary'>Edit</a>
+				<a href='/dashboard/course/$data->slug' class='custom-link-primary'>Edit</a>
 				<span class='mx-2'>|</span>
 				<a href='#' class='js-course-clone-btn custom-link-primary' data-course-id='$data->id'>Clone</a>
 				<span class='mx-2'>|</span>
-				<a href='/courses/course/$data->id' class='custom-link-primary'>View</a>";
+				<a href='/courses/course/$data->slug' class='custom-link-primary'>View</a>";
 
 			})
 			->editColumn('status', function($data) {

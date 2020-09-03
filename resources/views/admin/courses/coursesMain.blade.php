@@ -23,8 +23,8 @@
 
 @section('content')
 
-<!-- start page title -->
-	<div class="container content-width my-3">
+	<!-- start page title -->
+	<div class="container content-width">
 		<div class="row">
 			<div class="col-12">
 				<div class="page-title-box">
@@ -115,8 +115,35 @@
 	</div>
 
 	<div class="container table-cnt content-width">
-		
 
+		<div class="row mb-2">
+			<div class="col-sm-4"></div>
+			<div class="col-sm-8">
+
+				<div class="text-sm-right sticky-btns">
+					<a href="#" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal">
+						<i class="mdi mdi-plus-circle mr-2"></i>
+						Νέο Course
+					</a>
+					<div class="btn-group mb-2">
+						<button id="course-bulk-action-btn" disabled type="button" 
+							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">
+							Επιλογές (0)
+						</button>
+						<div class="dropdown-menu">
+							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Export</a>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		
 		<table id="courses-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
@@ -147,32 +174,6 @@
 				</tr>
 			</tfoot>
 		</table>
-
-		{{-- <div class="row mb-2 sticky-btns"> --}}
-			{{-- <div class="col-sm-4"></div> --}}
-			{{-- <div class="col-sm-8"> --}}
-				<div class="text-sm-right pt-2 sticky-btns">
-					<a href="#" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal">
-						<i class="mdi mdi-plus-circle mr-2"></i>
-						Νέο Course
-					</a>
-					<div class="btn-group mb-2">
-						<button id="course-bulk-action-btn" disabled type="button" 
-							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false">
-							Επιλογές (0)
-						</button>
-						<div class="dropdown-menu">
-							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Export</a>
-						</div>
-					</div>
-				</div>
-			{{-- </div> --}}
-		{{-- </div> --}}
 
 	</div>
 

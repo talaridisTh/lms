@@ -83,7 +83,7 @@ class CourseController extends Controller
 		// 	Storage::copy("public/no_image_600x400.png", "public/courses/$course->id/cover/no_image_600x400.png");
 		// }
 		
-		return redirect( "/dashboard/course/$course->id" );
+		return redirect( "/dashboard/course/$course->slug" );
 
     }
     /**
@@ -170,7 +170,7 @@ class CourseController extends Controller
 		$course->topics()->sync( $request->topics );
 
 
-        return redirect( "/dashboard/course/$course->id" );
+        return redirect( "/dashboard/course/$course->slug" );
     }
 
     /**

@@ -116,9 +116,9 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 	},
 	columns: [
 		{ data: 'action', name: 'action', orderable: false, width: "5%" },
-		{ data: 'title', name: 'title', className: "js-link cursor-pointer" },
-		{ data: 'updated_at', name: 'updated_at',  className: "js-link cursor-pointer" },
-		{ data: 'created_at', name: 'created_at', className: "js-link cursor-pointer" },
+		{ data: 'title', name: 'title', className: "cursor-default" },
+		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default" },
+		{ data: 'created_at', name: 'created_at', className: "cursor-default" },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -133,9 +133,8 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
-		jsLinkEventListener();
 		activeCoursesCheckboxToggle();
 		utilities.resetBulk(  $("#courses-bulk"), $("#main-active-courses-checkbox") );
 	},
@@ -215,19 +214,6 @@ function remainingsCheckboxes() {
 	minorCheckbox.unbind();
 	minorCheckbox.change( function() {
 		utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckbox, bulkBtn);
-	});
-}
-
-function jsLinkEventListener() {
-
-	let links = $(".js-link");
-
-	links.unbind();
-	links.click( function() {
-				
-		let id = this.parentElement.dataset.courseId;
-
-		window.location = `/dashboard/course/${id}`;
 	});
 }
 

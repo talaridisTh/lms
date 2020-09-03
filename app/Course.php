@@ -42,6 +42,12 @@ class Course extends Model
 
 	}
 
+	public function getRouteKeyName()
+    {
+        return "slug";
+
+    }
+
 
 
 	public static function notInCourseMaterials( Course $course ) {
