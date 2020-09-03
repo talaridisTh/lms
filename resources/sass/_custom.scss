@@ -479,3 +479,11 @@ b[role="presentation"] {
 .content-width {
 	max-width: 1370px;
 }
+
+.ranges{
+    border-right: 1px solid #ddd;
+
+}
+.daterangepicker.show-ranges.ltr .drp-calendar.left{
+    border:none;
+}
