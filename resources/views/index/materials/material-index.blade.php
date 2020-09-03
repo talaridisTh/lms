@@ -18,7 +18,6 @@
 
 @section("content")
 
-
     <section class="d-flex wrapper flex-column">
         @role("admin")
         <div class="">
@@ -27,10 +26,15 @@
             </a>
         </div>
         @endrole
+        @if($materials->video_link)
         <div class=" container text-center ">
+            @if(strlen($materials->video_link)<12 )
             <iframe src="https://player.vimeo.com/video/{{$materials->video_link}}" width="1024" height="768" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            @else
+                <iframe src="{{$materials->video_link}}" width="1024" height="768" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            @endif
         </div>
-
+        @endif
         <div class="container" style="max-width: 1277px">
             <div class="row justify-content-center">
                 @if(!empty($prevMaterial->slug))

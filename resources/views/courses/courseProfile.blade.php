@@ -145,6 +145,16 @@
             </div>
 
         </div>
+
+        <div class="container">
+            <div class="row background-material">
+                <div class="col-md-12">
+                    {!! $course->description !!}
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
 @endsection

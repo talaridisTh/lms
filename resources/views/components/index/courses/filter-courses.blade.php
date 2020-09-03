@@ -1,4 +1,4 @@
-<div class="d-flex filter-data flex-wrap">
+<div class="d-flex filter-data flex-wrap w-100">
     @foreach($allCourses as $course)
         @php($allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get())
         @if($allMaterial->where("type","Lesson")->count()  && $allMaterial->where("type","Lesson")->count())
@@ -22,7 +22,7 @@
                     <div class="col-md-7 d-flex flex-column justify-content-between align-items-center p-2">
                         <h3 class="font-16 font-weight-bold"><a
                                 href="{{route('index.userCourse',$course->id)}}">{{$course->title}}</a></h3>
-                        <p class="font-12 text-center">{{$course->description}}</p>
+                        <p class="font-12 text-center">{{$course->subtitle}}</p>
                         <div class="material-box d-flex justify-content-between font-10">
                             <span class="mr-3">Lessons : {{$allMaterial->where("type","Lesson")->count()}}</span>
                             <span>Extrass :{{$allMaterial->where("type","!=","Lesson")->count()}}</span>
