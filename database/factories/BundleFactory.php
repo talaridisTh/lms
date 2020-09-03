@@ -20,7 +20,8 @@ $factory->define(Bundle::class, function (Faker $faker) {
 	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
     return [
-        'name' => "Name of Bundle ".$counter,
+        'title' => "Name of Bundle ".$counter,
+		'summary' => "Summary of Bundle ".$counter++,
 		'description' => "Description of Bundle ".$counter++,
 		'cover' => $faker->md5 .".jpg",
 		'slug' => $faker->slug,

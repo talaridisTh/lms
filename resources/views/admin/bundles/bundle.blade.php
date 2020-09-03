@@ -19,10 +19,10 @@
 						<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
 						<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
 						<li class="breadcrumb-item"><a href="/dashboard/bundles" class="custom-link-primary">Bundles</a></li>
-						<li class="breadcrumb-item active">{{ $bundle->name }}</li>
+						<li class="breadcrumb-item active">{{ $bundle->title }}</li>
 					</ol>
 				</div>
-				<h4 class="page-title">{{ $bundle->name }}</h4>
+				<h4 class="page-title">{{ $bundle->title }}</h4>
 			</div>
 		</div>
 	</div>     
@@ -72,10 +72,10 @@
 			<div class="card text-center">
 				<div class="card-body">
 					{{-- <img src="{{ asset('storage/bundles/'.$bundle->id.'/cover/'.$bundle->cover) }}" class="img-fluid" --}}
-					<img src="{{ $bundle->cover }}" class="img-fluid"
+					<img src="https://placehold.co/600x400" class="img-fluid"
 					alt="{{ $bundle->title }}">
 
-					<h4 class="mb-0 mt-2">{{ $bundle['name'] }}</h4>
+					<h4 class="mb-0 mt-2">{{ $bundle['title'] }}</h4>
 					<p class="text-muted font-14">Bundle</p>
 
 					<div class="text-left mt-3">
@@ -195,11 +195,11 @@
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="name">Όνομα Bundle</label>
-											<input type="text" class="form-control @error('name') is-invalid @enderror" 
-												id="name" name="name" 
-												value="{{ old('name') != "" ? old('name') : $bundle['name'] }}"
+											<input type="text" class="form-control @error('title') is-invalid @enderror" 
+												id="name" name="title" 
+												value="{{ old('title') != "" ? old('title') : $bundle['title'] }}"
 												placeholder="Δώστε όνομα...">
-											@error('name')
+											@error('title')
 												<span class="invalid-feedback" role="alert">
 												    <strong>{{ $message }}</strong>
 												</span>

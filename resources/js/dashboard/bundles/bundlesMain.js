@@ -54,10 +54,10 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 	order: [ 4, "desc" ],
 	columns: [
 		{ data: "action", name: "action", width: "5%", orderable: false, searchable: false },
-		{ data: "name", name: "name", className: "js-link cursor-pointer"},
+		{ data: "title", name: "title", className: "cursor-default"},
 		{ data: "status", name: "status", width: "5%", searchable: false },
-		{ data: "updated_at", name: "updated_at", className: "js-link cursor-pointer"},
-		{ data: "created_at", name: "created_at", className: "js-link cursor-pointer"},
+		{ data: "updated_at", name: "updated_at", className: "cursor-default"},
+		{ data: "created_at", name: "created_at", className: "cursor-default"},
 	],
 	processing: true,
 	serverSide: true,
@@ -83,9 +83,8 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
-		jsLinkInit();
 		activeToggleInit();
 	}
 })
@@ -108,16 +107,6 @@ function activeToggleInit() {
 			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 		})
 	});
-}
-
-function jsLinkInit() {
-
-	$('.js-link').click( function() {
-		let bundleId = this.parentElement.dataset.bundleId;
-
-		window.location = `bundle/${bundleId}`;
-	});
-
 }
 
 //!##############################################
