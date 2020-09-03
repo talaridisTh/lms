@@ -72,7 +72,7 @@ $('#delete-courses-btn').click( function() {
 				utilities.toastAlert( "success", message );
 
 				coursesDatatable.ajax.reload();
-				resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses") );
+				utilities.resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses") );
 			})
 			.catch(function (error) {
 				
@@ -128,6 +128,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		toggleStatus();
 		checkeBoxesEventListener();
 		cloneEventListener();
+		utilities.resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses"));
 	}
 })
 
@@ -265,15 +266,6 @@ $("#topic-filter").change( function() {
 //!##########################################
 //!				script functions			#
 //!##########################################
-
-function resetBulk( bulkBtn, checkbox ) {
-
-	bulkBtn.text("Επιλογές  (0)");
-	bulkBtn.addClass("btn-secondary");
-	bulkBtn.removeClass("btn-warning");
-	bulkBtn.prop("disabled", true);
-	checkbox.prop("checked", false);
-}
 
 function createDateElm() {
 

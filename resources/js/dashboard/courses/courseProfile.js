@@ -239,8 +239,9 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
 		activeMaterialsCheckboxToggle();
-		toggleCourseMaterial()
+		toggleCourseMaterial();
 		sortInputsInit();
+		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
 });
@@ -286,6 +287,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 
 		addMaterialsEventListerner();
 		remainingsCheckboxes();
+		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
 	},
 
 });
@@ -327,7 +329,8 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 
 		removeUserBtnInit();
 		userLinkInit();
-		activeUsersCheckboxInit()
+		activeUsersCheckboxInit();
+		utilities.resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
 	},
 
 });
@@ -370,6 +373,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		adduserBtnInit();
 		userLinkInit();
 		newUserCheckboxInit();
+		utilities.resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
 	},
 
 });
@@ -663,8 +667,8 @@ function addUsers( userIds ) {
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
 
-		resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
-		resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
+		utilities.resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
+		utilities.resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
 
 	})
 	.catch( (err) => {
@@ -686,8 +690,8 @@ function removeUsers( userIds, caller ) {
 		courseUsersDatatable.ajax.reload();
 		addCourseUsersDatatable.ajax.reload();
 
-		resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
-		resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
+		utilities.resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
+		utilities.resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
 
 	})
 	.catch( (err) => {
@@ -709,8 +713,8 @@ function postMaterialIds( materialId ) {
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 
-		resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
-		resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
+		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
+		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
 
 	})
 	.catch( (err) => {
@@ -733,8 +737,8 @@ function removeMaterials( materialIds ) {
 		courseMaterialsTable.ajax.reload();
 		remainingMaterialsTables.ajax.reload();
 
-		resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
-		resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
+		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
+		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	})
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
@@ -1054,22 +1058,6 @@ function endDate( input ) {
 	return secondDate;
 }
 
-function resetBulk( bulkBtn, checkbox ) {
-
-	bulkBtn.text("Επιλογές  (0)");
-	bulkBtn.addClass("btn-secondary");
-	bulkBtn.removeClass("btn-warning");
-	bulkBtn.prop("disabled", true);
-	checkbox.prop("checked", false);
-}
-
-function resetAddButton( addBtn, checkbox ) {
-	addBtn.text("Προσθήκη Επιλογών (0)");
-	addBtn.addClass("btn-secondary");
-	addBtn.removeClass("btn-primary");
-	addBtn.prop("disabled", true);
-	checkbox.prop("checked", false);
-}
 //!##########################################
 //!				Initializations				#
 //!##########################################
