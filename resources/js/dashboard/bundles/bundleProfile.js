@@ -7,10 +7,38 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
 //! GLOBAL VARIABLES
 const bundleId = $("#bundle-courses-list")[0].dataset.bundleId
-const totalCourses = $('#total-courses-cnt')[0];
-const updatedAt = $("#last-update-cnt")[0];
 
 //! EventListerners
+
+$(".under-development").click( function() {
+	Swal.fire({
+        toast: 'true',
+        position: 'top-end',
+        icon: "info",
+        title: "Under Development...",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+});
+
+$("#bundle-delete-btn").click( function() {
+	Swal.fire({
+		title: 'Είστε σίγουρος;',
+		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, διαγραφή!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			$("#delete-bundle-form").submit();
+			
+		}
+	})
+})
 
 $("#publish-date-select").daterangepicker({
 	singleDatePicker: true,
@@ -26,12 +54,16 @@ $("#publish-date-select").daterangepicker({
 
 $('#main-active-courses-checkbox').click( function() {
 	let checkboxes = $('.js-course-checkbox');
-	utilities.minorCheckboxSwitcher( this, checkboxes );
+	let bulkBtn = $("#courses-bulk")[0];
+
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
 });
 
 $('#all-courses-checkbox').change( function() {
 	let checkboxes = $('.js-remainings-checkbox');
-	utilities.minorCheckboxSwitcher( this, checkboxes );
+	let bulkBtn = $("#add-courses-btn")[0];
+
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
 });
 
 $('#add-courses-btn').click( function() {
@@ -105,6 +137,7 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 
 		jsLinkEventListener();
 		activeCoursesCheckboxToggle();
+		utilities.resetBulk(  $("#courses-bulk"), $("#main-active-courses-checkbox") );
 	},
 	
 });
@@ -113,10 +146,11 @@ function activeCoursesCheckboxToggle() {
 
 	let mainCheckbox = $('#main-active-courses-checkbox')[0];
 	let minorCheckbox = $('.js-course-checkbox');
+	let bulkBtn = $("#courses-bulk")[0];
 
 	minorCheckbox.unbind();
 	minorCheckbox.change( function() {
-		utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckbox);
+		utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckbox, bulkBtn);
 	});
 }
 
@@ -155,6 +189,7 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 
 		addcourse();
 		remainingsCheckboxes();
+		utilities.resetAddButton(  $("#add-courses-btn"), $("#all-courses-checkbox") );
 	},
 	
 });
@@ -175,10 +210,11 @@ function remainingsCheckboxes() {
 
 	let mainCheckbox = $('#all-courses-checkbox')[0];
 	let minorCheckbox = $('.js-remainings-checkbox');
+	let bulkBtn = $("#add-courses-btn")[0];
 
 	minorCheckbox.unbind();
 	minorCheckbox.change( function() {
-		utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckbox);
+		utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckbox, bulkBtn);
 	});
 }
 
@@ -203,15 +239,14 @@ function postCourseIds( courseIds ) {
 		courseIds
 	})
 	.then( (res) => {
-		let message = courseIds.length == 1 ? "1 προστέθηκε" : `${courseIds.length} προστέθηκαν`;
+		let message = courseIds.length == 1 ? "1 Course προστέθηκε" : `${courseIds.length} Course προστέθηκαν`;
 		utilities.toastAlert( 'success', message );
 		
 		bundleCoursesTable.ajax.reload();
 		remainingCoursesTable.ajax.reload();
-		totalCourses.textContent = parseInt(totalCourses.textContent) + courseIds.length;
-		updatedAt.textContent = "Μόλις τώρα";
 	})
 	.catch( (err) => {
+		console.log(err);
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
@@ -224,18 +259,22 @@ function removeCourses( courseIds ) {
 	})
 	.then( (res) => {
 
-		let message = courseIds.length == 1 ? "1 course Αφαιρέθηκε" : `${courseIds.length} courses αφαιρέθηκαν`;
+		let message = courseIds.length == 1 ? "1 Course Αφαιρέθηκε" : `${courseIds.length} Course αφαιρέθηκαν`;
+		
 		utilities.toastAlert( 'success', message );
 
 		bundleCoursesTable.ajax.reload();
 		remainingCoursesTable.ajax.reload();
-		totalCourses.textContent = parseInt(totalCourses.textContent) - courseIds.length;
-		updatedAt.textContent = "Μόλις τώρα";
+
+		utilities.resetBulk(  $("#courses-bulk"), $("#main-active-courses-checkbox") );
 	})
 	.catch( (err) => {
+		console.log(err);
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
+
+
 
 //!##########################################
 //!				Initializations				#

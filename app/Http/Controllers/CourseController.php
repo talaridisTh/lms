@@ -181,6 +181,11 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
+		//
+	}
+
+	public function softDelete(Course $course)
+    {
 		$course->delete();
 
         return redirect("/dashboard/courses");

@@ -9,6 +9,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Carbon\Carbon;
 
 class BundleCoursesDataTable extends DataTable
 {
@@ -38,6 +39,16 @@ class BundleCoursesDataTable extends DataTable
 							<input class='js-course-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
+
+			})
+			->editColumn('updated_at', function($data) {
+
+				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
+
+			})
+			->editColumn('created_at', function($data) {
+
+				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
 
 			})
 			->rawColumns(['action'])

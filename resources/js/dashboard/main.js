@@ -245,6 +245,23 @@ function endDate( input ) {
 	return secondDate;
 }
 
+function resetBulk( bulkBtn, checkbox ) {
+
+	bulkBtn.text("Επιλογές  (0)");
+	bulkBtn.addClass("btn-secondary");
+	bulkBtn.removeClass("btn-warning");
+	bulkBtn.prop("disabled", true);
+	checkbox.prop("checked", false);
+}
+
+function resetAddButton( addBtn, checkbox ) {
+	addBtn.text("Προσθήκη Επιλογών (0)");
+	addBtn.addClass("btn-secondary");
+	addBtn.removeClass("btn-primary");
+	addBtn.prop("disabled", true);
+	checkbox.prop("checked", false);
+}
+
 export default {
     toastAlert,
     mainCheckboxSwitcher,
@@ -259,6 +276,8 @@ export default {
 	filterStyle,
 	createDateElm,
 	startDate,
-	endDate
+	endDate,
+	resetBulk,
+	resetAddButton
 }
 

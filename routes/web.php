@@ -63,14 +63,15 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 	Route::post('/dashboard/courses/store', 'CourseController@store')->name('course.store');
 	Route::post('/dashboard/courses/clone', 'CourseController@clone')->name('course.clone');
     Route::patch('/dashboard/courses/update/{course}', 'CourseController@update')->name('course.update');
-    Route::delete('/dashboard/course/{course}', 'CourseController@destroy')->name('course.destroy');
-
+    Route::delete('/dashboard/course/{course}', 'CourseController@softDelete')->name('course.softDelete');
+	
 	//! Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
     Route::get('/dashboard/bundle/{bundle}', 'BundleController@show')->name('bundle.show');
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
-
+    Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
+	
 	//! Topic Routes
 	Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
 	Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');

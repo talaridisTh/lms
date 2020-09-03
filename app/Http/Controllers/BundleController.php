@@ -108,5 +108,13 @@ class BundleController extends Controller
     public function destroy(Bundle $bundle)
     {
         //
+	}
+	
+	public function softDelete(Bundle $bundle)
+    {
+		$bundle->delete();
+
+		return redirect("/dashboard/bundles");
+
     }
 }

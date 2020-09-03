@@ -94,18 +94,6 @@ $("#active-switch").change( function() {
 	});
 });
 
-$(".under-development").click( function() {
-	Swal.fire({
-        toast: 'true',
-        position: 'top-end',
-        icon: "info",
-        title: "Under Development...",
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-    });
-})
-
 $("#add-multiple-users-btn").click( function() {
 	let newUsers = $(".js-new-user-checkbox:checked");
 	let userIds = [];
@@ -559,8 +547,7 @@ function addMaterialsEventListerner() {
 	addMaterialBtn.unbind();
 	addMaterialBtn.click( function() {
 		const materialId = [this.dataset.materialId];
-		const lessonsCount = this.dataset.materialType == "Lesson" ? 1 : 0;
-		const additionsCount = this.dataset.materialType != "Lesson" ? 1 : 0;
+
 		postMaterialIds( materialId );
 	});
 }

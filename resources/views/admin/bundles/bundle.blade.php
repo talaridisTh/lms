@@ -70,7 +70,7 @@
 					</table>
 	            </div>
 	            <div class="modal-footer">
-	                <button id="add-courses-btn" type="button" class="btn btn-primary">Προσθήκη Επιλογών</button>
+	                <button id="add-courses-btn" type="button" data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary" class="btn btn-secondary" disabled>Προσθήκη Επιλογών (0)</button>
 	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 	            </div>
 	        </div><!-- /.modal-content -->
@@ -219,7 +219,7 @@
 										Προσθήκη Course
 									</button>
 									<div class="dropdown ml-2">
-										<button id="courses-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<button id="courses-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
 											Επιλογές (0)
 										</button>
 										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="courses-bulk">
@@ -238,7 +238,7 @@
 
 					<div class="sticky py-3 px-2">
 						<button form="bundle-edit-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-						<a id="preview-btn" href="#" class="btn btn-warning"><i class="mdi mdi-eye"></i></a>
+						<a id="preview-btn" href="#" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i></a>
 						<button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
 					</div>
 
@@ -312,6 +312,13 @@
 			</div><!-- ./row -->
 		</div><!-- ./content -->
 	</div><!-- wrapper -->
+
+	<form id="delete-bundle-form" action="{{ $bundle->id }}" method="POST">
+		
+		@csrf
+		@method('DELETE')
+
+	</form>
 
 @endsection
 
