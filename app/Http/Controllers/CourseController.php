@@ -100,6 +100,8 @@ class CourseController extends Controller
 		$instructors = Role::find( 2 )->users;
 		$lessonIds = [];
 
+		$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
+		
 		foreach ($materials as $lesson) {
 			array_push( $lessonIds, $lesson['id'] );
 		};
@@ -109,7 +111,7 @@ class CourseController extends Controller
 			'materials' => $materials,
 			'topics' => $topics,
 			'instructors' => $instructors,
-			'publish' => Carbon::parse( $course->publish_at )->format("d-m-Y H:i"),
+			'publish' => $publish,
 			'allRemainingMaterials' => json_decode($allRemainingMaterials, true),
 		];
 
@@ -141,7 +143,7 @@ class CourseController extends Controller
 			$dateTime = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
 		}
 		else {
-			$dateTime = Carbon::now()->format("Y-m-d H:i:s");
+			$dateTime = null;
 		}
 
 		$course->title = $request->title;

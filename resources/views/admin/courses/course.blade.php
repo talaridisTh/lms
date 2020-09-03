@@ -418,15 +418,7 @@
 							</select>
 							<hr>
 							<div class="form-group">
-								<div class="row">
-									<div class="col-8">
-										<p><strong>Δημοσίευση απο:</strong></p>
-									</div>
-									<div class="col-4 text-right">
-										<input id="enable-publish-select" type="checkbox" data-switch="bool" checked autocomplete="off"/>
-										<label class="mb-0" for="enable-publish-select" data-on-label="On" data-off-label="Off"></label>
-									</div>
-								</div>
+								<label for="publish-date-select">Δημοσίευση απο:</label>
 								<input form="edit-course-form" type="text" class="form-control" id="publish-date-select" name="publishDate" value="{{ $publish }}" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
 							</div>
 							<hr>
