@@ -3577,6 +3577,10 @@ b[role=presentation] {
   border-color: white transparent !important;
 }
 
+.content-width {
+  max-width: 1370px;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

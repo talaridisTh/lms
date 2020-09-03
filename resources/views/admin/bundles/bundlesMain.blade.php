@@ -80,6 +80,25 @@
 	</div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+	<!-- start page title -->
+	<div class="container content-width">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<ol class="breadcrumb m-0">
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item active">Bundles</li>
+						</ol>
+					</div>
+					<h4 class="page-title">Bundles</h4>
+				</div>
+			</div>
+		</div>     
+	</div>     
+	<!-- end page title -->
+
 <div class="container table-cnt" style="max-width:1370px">
 	<div class="row mb-2">
 		<div class="col-sm-4"></div>

@@ -379,7 +379,7 @@
 					<!-- end Topbar -->
 
 					<!-- Start Content-->
-					<div class="container-fluid my-5">
+					<div class="container-fluid">
 
 						@yield('content')
 

@@ -6,39 +6,58 @@
 
 @section('content')
 
-<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered">
-		<div class="modal-content">
-			<div class="modal-header modal-colored-header bg-primary">
-				<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			</div>
-			<div class="modal-body table-cnt">
-				<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
-
-					@csrf
-					<div class="form-group">
-						<label for="title">Τίτλος</label>
-						<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
-						@error('title')
-							<span class="invalid-feedback" role="alert">
-								<strong>{{ $message }}</strong>
-							</span>
-						@enderror
+<!-- start page title -->
+	<div class="container content-width">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right">
+						<ol class="breadcrumb m-0">
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item active">Courses</li>
+						</ol>
 					</div>
+					<h4 class="page-title">Courses</h4>
+				</div>
+			</div>
+		</div>     
+	</div>     
+	<!-- end page title -->
 
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button id="submit-form-btn" class="btn btn-primary">
-					<i class="mdi mdi-content-save mr-1"></i>
-					Δημιουργία
-				</button>
-				<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+	<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				</div>
+				<div class="modal-body table-cnt">
+					<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
+
+						@csrf
+						<div class="form-group">
+							<label for="title">Τίτλος</label>
+							<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+							@error('title')
+								<span class="invalid-feedback" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button id="submit-form-btn" class="btn btn-primary">
+						<i class="mdi mdi-content-save mr-1"></i>
+						Δημιουργία
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	<!-- Modal -->
 	<div class="modal fade" id="clone-course-modal" tabindex="-1" role="dialog" aria-labelledby="clone-course-modalLabel" aria-hidden="true">
