@@ -11,7 +11,7 @@
 		overflow: initial;
 	}
 	.sticky {
-		background-color: #333a3f;
+		background-color: #343a40;
 		position: sticky;
 		top: 70px;
 		z-index: 1010;
@@ -378,7 +378,7 @@
 				</div>
 				<div class="col-xl-3 col-lg-5 col-md-12">
 
-					<div class="sticky pb-3 px-2">
+					<div class="sticky py-3 px-2">
 						<button form="edit-course-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
 						<a id="preview-btn" href="/courses/course/{{ $course->id }}" class="btn btn-warning"><i class="mdi mdi-eye"></i></a>
 						<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>

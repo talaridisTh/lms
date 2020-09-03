@@ -1118,7 +1118,7 @@ ArticleEditor('#description', {
 
 let dropzone = new Dropzone("#cover-dropzone", {
 	previewTemplate: $("#uploadPreviewTemplate").html(),
-	// url: "/target-url",
+	url: "/target-url",
   	thumbnailWidth: 80,
   	thumbnailHeight: 80,
 })

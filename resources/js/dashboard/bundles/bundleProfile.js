@@ -2,6 +2,8 @@
 //! 				Imports				#
 //!######################################
 import utilities from '../main';
+import Dropzone from "../../../plugins/dropzone/js/dropzone";
+import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
 //! GLOBAL VARIABLES
 const bundleId = $("#bundle-courses-list")[0].dataset.bundleId
@@ -9,6 +11,18 @@ const totalCourses = $('#total-courses-cnt')[0];
 const updatedAt = $("#last-update-cnt")[0];
 
 //! EventListerners
+
+$("#publish-date-select").daterangepicker({
+	singleDatePicker: true,
+	drops: "auto",
+    opens: "center",
+	timePicker: true,
+	timePicker24Hour: true,
+
+	locale: {
+        format: "DD-MM-YYYY H:mm",
+    },
+});
 
 $('#main-active-courses-checkbox').click( function() {
 	let checkboxes = $('.js-course-checkbox');
@@ -57,7 +71,7 @@ $('#remove-selected-courses-btn').click( function() {
 
 //! Datatables
 const bundleCoursesTable = $("#bundle-courses-list").DataTable({
-	order: [1, "asc"],
+	order: [3, "desc"],
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -222,3 +236,43 @@ function removeCourses( courseIds ) {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
+
+//!##########################################
+//!				Initializations				#
+//!##########################################
+
+$R("#summary", utilities.redactorConfig);
+
+ArticleEditor('#description', {
+	css: "/css/",
+	custom: {
+		css: [
+			"/css/arx-content.min.css"
+		]
+	},
+	editor: {
+		minHeight: "300px"
+	},
+	// classes: {
+	// 	'p': 'text-muted',
+	// 	'h1': 'text-muted',
+	// 	'h2': 'text-muted',
+	// 	'h3': 'text-muted',
+	// 	'h4': 'text-muted',
+	// 	'h5': 'text-muted',
+	// }
+	/* image: {
+		upload: "/materials/upload-content-images",
+		data: {
+			"_token": $('meta[name="csrf-token"]').attr('content')
+		}
+	} */
+});
+
+
+let dropzone = new Dropzone("#cover-dropzone", {
+	previewTemplate: $("#uploadPreviewTemplate").html(),
+	url: "/target-url",
+  	thumbnailWidth: 80,
+  	thumbnailHeight: 80,
+})

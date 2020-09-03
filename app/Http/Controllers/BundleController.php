@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\BundleCourseRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 
 
@@ -55,7 +56,12 @@ class BundleController extends Controller
 
     public function show(Bundle $bundle)
     {
-        return view("admin/bundles/bundle")->withBundle($bundle);
+		$data = [
+			'bundle' => $bundle,
+			'publish' => Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i"),
+		];
+
+        return view("admin/bundles/bundle")->with($data);
     }
 
 
@@ -67,12 +73,20 @@ class BundleController extends Controller
 
     public function update(BundleCourseRequest $request, Bundle $bundle)
     {
-        $pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+		if ( isset($request->publishDate) ) {
+			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		}
+		else {
+			$publishDate = null;
+		}
 
-		$bundle->name = $request->name;
+		$bundle->title = $request->title;
+		$bundle->subtitle = $request->subtitle;
+		$bundle->summary = $request->summary;
 		$bundle->description = $request->description;
-		$bundle->status = $request->status;
-		$bundle->slug = preg_replace($pattern, "-", mb_strtolower($request->name) );
+		$bundle->publish_at = $publishDate;
+		$bundle->status = /* $request->status */ 1 ;
+		$bundle->slug = Str::slug($request->title, "-");
 
 		if ( !empty($_FILES['cover']['name']) ) {
 			

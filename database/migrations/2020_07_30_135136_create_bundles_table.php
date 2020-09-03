@@ -15,14 +15,16 @@ class CreateBundlesTable extends Migration
     {
         Schema::create('bundles', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 80);
+            $table->string('title');
+            $table->string('subtitle');
             $table->text('summary')->nullable();
             $table->string('cover', 50);
             $table->text('description')->nullable();
             $table->string('slug', 100);
 			$table->unsignedTinyInteger('status');
 			$table->timestamp('publish_at');
-            $table->timestamps();
+			$table->timestamps();
+			$table->softDeletes();
         });
     }
 

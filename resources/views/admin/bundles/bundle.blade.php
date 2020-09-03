@@ -2,12 +2,22 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-@endsection
 
-@php
-	$coursesActive = count( $errors ) > 0 ? "" : "active";
-	$settingsActive = count( $errors ) > 0 ? "active" : "";
-@endphp
+	<style>
+		.content-page {
+			overflow: initial;
+		}
+		.wrapper {
+			overflow: initial;
+		}
+		.sticky {
+			background-color: #343a40;
+			position: sticky;
+			top: 70px;
+			z-index: 1010;
+		}
+	</style>
+@endsection
 
 @section('content')
 	<!-- start page title -->
@@ -67,76 +77,113 @@
 	    </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
-	<div class="row">
-		<div class="col-xl-3 col-lg-5">
-			<div class="card text-center">
-				<div class="card-body">
-					{{-- <img src="{{ asset('storage/bundles/'.$bundle->id.'/cover/'.$bundle->cover) }}" class="img-fluid" --}}
-					<img src="https://placehold.co/600x400" class="img-fluid"
-					alt="{{ $bundle->title }}">
 
-					<h4 class="mb-0 mt-2">{{ $bundle['title'] }}</h4>
-					<p class="text-muted font-14">Bundle</p>
+	<div class="wrapper">
+		<div class="content">
 
-					<div class="text-left mt-3">
-						<h4 class="font-13 text-uppercase">About Bundle :</h4>
-						<p class="text-muted font-13 mb-3">
-							{{ $bundle['description'] }}
-						</p>
-						<p class="text-muted mb-2 font-13">
-							<strong>
-								Σύνολο περιεχομένων :
-							</strong>
-							<span id="total-courses-cnt" class="ml-2">
-								{{ $bundle->courses->count() }}
-							</span>
-						</p>
-
-						<p class="text-muted mb-2 font-13 mt-4">
-							<strong>
-								Τελευταία Ανανέωση :
-							</strong>
-							<span id="last-update-cnt" class="ml-2">
-								{{ $bundle['updated_at'] }}
-							</span>
-						</p>
-
-						<p class="text-muted mb-1 font-13">
-							<strong>
-								Ημ. Δημιουργίας :
-							</strong>
-							<span class="ml-2">
-								{{ $bundle['created_at'] }}
-							</span>
-						</p>
-					</div>
-
-				</div> <!-- end card-body -->
-			</div> <!-- end bundle info card -->
-
-		</div> <!-- end col-->
-
-		<div class="col-xl-9 col-lg-7">
-			<div class="card">
-				<div class="card-body">
-
-					<!-- Tab Buttons -->
-					<ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+			<div class="row">
+				<div class="col-xl-9 col-lg-7 col-md-12">
+					
+					<ul class="nav nav-tabs nav-bordered mb-3">
 						<li class="nav-item">
-						<a href="#courses" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $coursesActive }}">
+							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
+								Ρυθμίσεις
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#courses" data-toggle="tab" aria-expanded="true" class="nav-link">
 								Courses
 							</a>
 						</li>
-						<li class="nav-item">
-						<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0 {{ $settingsActive }}">
-								Επεξεργασία
+						{{-- <li class="nav-item">
+							<a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link">
+								Χρήστες
 							</a>
-						</li>
-					</ul><!-- /.End Tab Buttons -->
+						</li> --}}
+					</ul> <!-- end nav-->
 
 					<div class="tab-content">
+
+						<div id="settings" class="tab-pane show active">
+
+							<form id="bundle-edit-form" action="{{ route('bundle.update', $bundle->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+								
+								@csrf
+								@method('PATCH')
+								
+								<div class="row">
+							        <div class="col-xl-6">
+							            <div class="form-group">
+							                <label for="name">Τίτλος</label>
+											<input type="text" class="form-control @error('title') is-invalid @enderror" 
+												id="name" name="title" 
+												value="{{ old('title') != "" ? old('title') : $bundle['title'] }}"
+												placeholder="Δώστε όνομα...">
+											@error('title')
+												<span class="invalid-feedback" role="alert">
+												    <strong>{{ $message }}</strong>
+												</span>
+											@enderror
+							            </div>
+							        </div>
+							        <div class="col-xl-6">
+							            <div class="form-group">
+							                <label for="subtitle-input">Υπότιτλος</label>
+											<div class="input-group">
+											    <div class="custom-file">
+													<input type="text"
+														class="form-control @error('subtitle') is-invalid @enderror"
+														name="subtitle" value="{{ $bundle['subtitle'] }}"
+														id="subtitle-input">
+												</div>
+												@error('subtitle')
+													<span class="invalid-feedback d-block" role="alert">
+														<strong>{{ $message }}</strong>
+													</span>
+												@enderror
+											</div>
+							            </div>
+							        </div> <!-- end col -->
+							    </div> <!-- end row -->
+
+								<div class="row">
+							        <div class="col-12">
+							            <div class="form-group">
+							                <label for="summary">Σύνοψη</label>
+											<textarea class="form-control @error('summary') is-invalid @enderror"
+												id="summary" name="summary" rows="4"
+												placeholder="Περιγραφή Bundle...">{{ old('summary') != "" ? old('summary') : $bundle['summary'] }}</textarea>
+											@error('summary')
+                            				    <span class="invalid-feedback" role="alert">
+                            				        <strong>{{ $message }}</strong>
+                            				    </span>
+                            				@enderror
+										</div>
+							        </div> <!-- end col -->
+							    </div> <!-- end row -->
+
+							    <div class="row">
+							        <div class="col-12">
+							            <div class="form-group">
+							                <label for="description">Περιγραφή</label>
+											<textarea class="form-control @error('description') is-invalid @enderror"
+												id="description" name="description" rows="4"
+												placeholder="Περιγραφή Bundle...">{{ old('description') != "" ? old('description') : $bundle['description'] }}</textarea>
+											@error('description')
+                            				    <span class="invalid-feedback" role="alert">
+                            				        <strong>{{ $message }}</strong>
+                            				    </span>
+                            				@enderror
+										</div>
+							        </div> <!-- end col -->
+							    </div> <!-- end row -->
+
+							</form>
+
+						</div><!-- settings tab-pane -->
+
 						<!-- Courses table tab-->
-						<div class="tab-pane {{ $coursesActive }} table-cnt" id="courses">
+						<div class="tab-pane table-cnt" id="courses">
 
 							<table id="bundle-courses-list" data-bundle-id="{{ $bundle['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
@@ -172,108 +219,100 @@
 										Προσθήκη Course
 									</button>
 									<div class="dropdown ml-2">
-										<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-											Επιλογές
+										<button id="courses-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Επιλογές (0)
 										</button>
-										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="courses-bulk">
 											<a id="remove-selected-courses-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div><!-- end material tab-pane -->
-						<!-- end about me section content -->
+						</div><!-- end Courses tab-pane -->
 
-						<!-- Bundle edit form tab-pane -->
-						<div class="tab-pane {{ $settingsActive }}" id="settings">
-							<form action="{{ route('bundle.update', $bundle->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
-								
-								@csrf
-								@method('PATCH')
-								
-								<div class="row">
-							        <div class="col-xl-6">
-							            <div class="form-group">
-							                <label for="name">Όνομα Bundle</label>
-											<input type="text" class="form-control @error('title') is-invalid @enderror" 
-												id="name" name="title" 
-												value="{{ old('title') != "" ? old('title') : $bundle['title'] }}"
-												placeholder="Δώστε όνομα...">
-											@error('title')
-												<span class="invalid-feedback" role="alert">
-												    <strong>{{ $message }}</strong>
-												</span>
-											@enderror
-							            </div>
-							        </div>
-							        <div class="col-xl-6">
-							            <div class="form-group">
-							                <label for="cover-input">Cover Εικόνα</label>
-											<div class="input-group">
-											    <div class="custom-file">
-													<input type="file"
-														class="custom-file-input @error('cover') is-invalid @enderror"
-														name="cover" value="{{ $bundle['cover'] }}"
-														id="cover-input">
-											        <label class="custom-file-label  file-search-label-primary" for="cover-input">"{{ $bundle['cover'] }}"</label>
-												</div>
-												@error('cover')
-													<span class="invalid-feedback d-block" role="alert">
-														<strong>{{ $message }}</strong>
-													</span>
-												@enderror
-											</div>
-							            </div>
-							        </div> <!-- end col -->
-							    </div> <!-- end row -->
-
-							    <div class="row">
-							        <div class="col-12">
-							            <div class="form-group">
-							                <label for="description">Περιγραφή</label>
-											<textarea class="form-control @error('description') is-invalid @enderror"
-												id="description" name="description" rows="4"
-												placeholder="Περιγραφή Bundle...">{{ old('description') != "" ? old('description') : $bundle['description'] }}</textarea>
-											@error('description')
-                            				    <span class="invalid-feedback" role="alert">
-                            				        <strong>{{ $message }}</strong>
-                            				    </span>
-                            				@enderror
-										</div>
-							        </div> <!-- end col -->
-							    </div> <!-- end row -->
-
-							    <div class="row">
-							        <div class="col-xl-6">
-							            <div class="form-group">
-							                <label for="example-select">Κατάσταση</label>
-											<select id="active" class="form-control @error('status') is-invalid @enderror" name="status">
-											    <option value="1" {{ $bundle['status'] == 1 ? "selected" : "" }}>Ενεργό</option>
-											    <option value="0" {{ $bundle['status'] == 0 ? "selected" : "" }}>Ανενεργό</option>
-											</select>
-											@error('status')
-											    <span class="invalid-feedback" role="alert">
-											        <strong>{{ $message }}</strong>
-											    </span>
-											@enderror
-							            </div>
-							        </div>
-							        <div class="col-xl-6">
-									</div> <!-- end col -->
-							    </div> <!-- end row -->
-
-							    <div class="text-right">
-							        <button type="submit" class="btn btn-primary mt-2 w-100"><i class="mdi mdi-content-save mr-1"></i>Αποθήκευση</button>
-							    </div>
-							</form>
-						</div><!-- end tab-pane -->
-						<!-- end settings content-->
-					</div> <!-- end tab-content -->
+					</div>
 					
-				</div> <!-- end card body -->
-			</div> <!-- end card -->
-		</div> <!-- end col -->
-	</div>
+				</div>
+				
+				<div class="col-xl-3 col-lg-5 col-md-12">
+
+					<div class="sticky py-3 px-2">
+						<button form="bundle-edit-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
+						<a id="preview-btn" href="#" class="btn btn-warning"><i class="mdi mdi-eye"></i></a>
+						<button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+					</div>
+
+					<div class="card">
+						<div class="card-body">
+							<hr>
+							<div class="form-group">
+								<label for="publish-date-select">Δημοσίευση απο:</label>
+								<input form="bundle-edit-form" type="text" class="form-control" id="publish-date-select" name="publishDate" value="{{ $publish }}" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
+							</div>
+							<hr>
+						</div>
+					</div>
+
+					<!-- Cover Preview -->
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title mb-0">Cover</h4>
+
+						</div>
+						<div class="card-body">
+							<img src="https://placehold.co/600x400" class="img-fluid" alt="{{ $bundle->title }}">
+						</div> <!-- end card-body -->
+					</div> <!-- end course info card -->
+
+					<!-- Dropzone -->
+					<div class="card">
+						<div class="card-body">
+
+							<form id="cover-dropzone" method="post" class="image-dropzone" enctype="multipart/form-data">
+								<div class="fallback">
+									<input name="file" type="file" multiple />
+								</div>
+
+								<div class="dz-message needsclick text-center">
+									<i class="h1 text-muted dripicons-cloud-upload"></i>
+									<h3>Drop files here or click to upload.</h3>
+									<span class="text-muted font-13">(This is just a demo dropzone. Selected files are
+										<strong>not</strong> actually uploaded.)</span>
+								</div>
+							</form>
+
+							<!-- Preview -->
+							<div class="dropzone-previews mt-3" id="file-previews"></div>  
+						
+							<div class="d-none" id="uploadPreviewTemplate">
+								<div class="card mt-1 mb-0 shadow-none border">
+									<div class="p-2">
+										<div class="row align-items-center">
+											<div class="col-auto">
+												<img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+											</div>
+											<div class="col pl-0">
+												<a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
+												<p class="mb-0" data-dz-size></p>
+											</div>
+											<div class="col-auto">
+												<!-- Button -->
+												<a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+													<i class="dripicons-cross"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> <!-- end card-body -->
+					</div> <!-- ./Dropzone -->
+				</div><!-- ./col -->
+
+			</div><!-- ./row -->
+		</div><!-- ./content -->
+	</div><!-- wrapper -->
+
 @endsection
 
 @section('scripts')
