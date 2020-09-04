@@ -40,15 +40,15 @@ class CourseInsideMaterialsDataTable extends DataTable
             })
             ->addColumn('topic', function ($data) {
 
-                $test = [];
-//                dump($data->topics);
-                foreach ($data->topics as $d){
-
-                    return $d;
-                    array_push($test , $d->title);
-                }
-
-                return $test;
+//                $test = [];
+////                dump($data->topics);
+//                foreach ($data->topics as $d){
+//
+//                    return $d;
+//                    array_push($test , $d->title);
+//                }
+//
+//                return $test;
 
             })
             ->editColumn('curator', function ($data) {
