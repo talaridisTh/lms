@@ -1,5 +1,6 @@
 import utilities from '../main';
 
+
 let dataRange = $("#daterange")
 
 //! INIT DATATABLE
@@ -102,22 +103,20 @@ function toDay(input) {
 //! DATAPICKER FUNCTION
 //!============================================================
 dataRange.daterangepicker( utilities.datePickerConfig );
-
-
 dataRange.on("apply.daterangepicker", function (event, picker) {
 
     let startDate = picker.startDate.format('DD/MM/YYYY');
     let endDate = picker.endDate.format('DD/MM/YYYY');
     this.value = `${ startDate } - ${ endDate }`;
+    this.classList.add("select2-selected");
 
 
     materialsDatatable.ajax.reload();
 
 })
-
-
-
 dataRange.on( 'cancel.daterangepicker', function(event, picker) {
+    this.classList.remove("select2-selected");
+
     $(".date")[0].value = "";
     materialsDatatable.ajax.reload();
 })
@@ -156,6 +155,31 @@ function atLinkEventListener() {
         window.location = `material/${materialSlug}`;
     });
 }
+
+$("#courseFilterMaterial").change( function () {
+
+    let label = $("#select2-courseFilterMaterial-container")[0];
+
+    utilities.filterStyle( label, this.value );
+
+});
+$("#typeFilterMaterial").change( function () {
+
+    let label = $("#select2-typeFilterMaterial-container")[0];
+
+    utilities.filterStyle( label, this.value );
+
+});
+$("#activeFilterMaterial").change( function () {
+
+    let label = $("#select2-activeFilterMaterial-container")[0];
+
+    utilities.filterStyle( label, this.value );
+
+});
+
+
+
 
 
 //! SELECT

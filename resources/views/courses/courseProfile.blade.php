@@ -39,7 +39,7 @@
     <div class="content-page">
         @role("admin")
         <div class="sticky-top">
-            <a class=" btn btn-outline-secondary nav-link" href="{{route('course.show',$course->id)}}" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class=" btn btn-outline-secondary nav-link" href="{{route('course.show',$course->slug)}}" role="button" aria-haspopup="true" aria-expanded="false">
                 Edit this page
             </a>
         </div>
@@ -57,7 +57,7 @@
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
                             <p class="my-4">{{$course->subtitle}}</p>
                             <div class="button-course-fav">
-                                <a href="{{route('index.material.show',[$course->id,$allMaterial->first()->slug])}}"  class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
+                                <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"  class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
                                 </a>
                                 <button class="px-4 box-title btn bghover btn-secontary font-weight-bold">add watch
                                 </button>
@@ -74,7 +74,7 @@
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
                                     <button class="bghover border font-weight-bold btn btn-secontary">
-                                        <a href="{{route('index.material.show',[$course->id,$lastMaterial->last()->slug])}}">Δες το μαθημα</a>
+                                        <a href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">Δες το μαθημα</a>
                                     </button>
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
                     <ul>
                     @foreach($allMaterial as $materials)
                         <li class="list-group-item list-material border py-4 ">
-                            <a class="d-flex" href="{{route('index.material.show',[$course->id,$materials->slug])}}">
+                            <a class="d-flex" href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
                             <div class="col-md-2">
                                 <span class="material-count">{{++$count}}</span>
                             </div>

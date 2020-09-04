@@ -1,5 +1,6 @@
 <?php
 
+use App\Course;
 use App\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -76,6 +77,10 @@ class UserSeeder extends Seeder {
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("student");
+
+
+
+
 
 
 //

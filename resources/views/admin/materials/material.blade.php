@@ -1,15 +1,13 @@
 @extends('layouts.dashboard')
 
 @section('css')
-    <style>
+    <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 
-
-    </style>
 @endsection
 
 @section('content')
     <section class="container-fruid">
-
+        <x-alertMsg :msg="'update'"></x-alertMsg>
 		<div class="row">
 			<div class="col-12">
 				<div class="page-title-box">
@@ -24,21 +22,21 @@
 					<h4 class="page-title">{{ $material->title }}</h4>
 				</div>
 			</div>
-		</div> 
-		
+		</div>
+
         <div class="row">
             <div class="col-xl-9 col-lg-12 col-md-12" id="material-form">
                 <ul class="nav nav-tabs mb-3">
                     <li class="nav-item">
                         <a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
                             <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                            <span class="d-none d-md-block">Content</span>
+                            <span class="d-none d-md-block">Materials</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#profile" data-toggle="tab" aria-expanded="true" class="nav-link ">
+                        <a href="#courses-tabs" data-toggle="tab" aria-expanded="true" class="nav-link ">
                             <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                            <span class="d-none d-md-block">Profile</span>
+                            <span class="d-none d-md-block">Courses</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -51,62 +49,10 @@
                 </ul>
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
-                        <form class="needs-validation formPrevent" method="post"
-                              action="{{route('material.update',$material->slug)}}" enctype="multipart/form-data">
-                            @method('PATCH')
-                            @csrf
-
-                            <div class="form-group mb-3">
-                                <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                <input name="title" type="text" class="form-control" id="titleMaterial"
-                                       value="{{old('material', $material->title)}}" placeholder="Εισάγετε τίτλο...">
-                                @error("title")
-                                <div class="invalid-feedback d-block">{{$message}}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="subtitleMaterial">Υποτίτλο<span class="text-danger"> *</span></label>
-                                <input name="subtitle" type="text" class="form-control" id="subtitleMaterial"
-                                       value="{{old('material', $material->subtitle)}}"
-                                       placeholder="Εισάγετε υποτίτλο...">
-                                @error("subtitle")
-                                <div class="invalid-feedback d-block">{{$message}}</div>
-                                @enderror
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="summaryMaterial">Περίληψη</label>
-                                <textarea name="summary" class="form-control" placeholder="Εισάγετε περίληψη..."
-                                          id="summaryMaterial" rows="5">{{$material->summary}}</textarea>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="descriptionMaterial">Περιγραφή<span class="text-danger"> *</span></label>
-                                <textarea name="description" class="form-control" placeholder="Εισάγετε περιγραφή..."
-                                          id="descriptionMaterial" rows="5">{{$material->description}}</textarea>
-                            </div>
-
-                            <div class="form-group mb-3">
-                                <label for="contentMaterial">Περιεχόμενο μαθήματος <span class="text-danger">
-                                    *</span></label>
-                                <textarea name="content" class="form-control"
-                                          value="{{old('material', $material->content)}}" id="contentMaterial"
-                                          rows="5">{{$material->content}}</textarea>
-                            </div>
-
-                            <input type="hidden" class="form-control" id="topicMaterialHidden">
-                            <input name="type" type="hidden" class="form-control" id="typeMaterialHidden">
-                            <input name="status" value="{{$material->status == "0" ? "" : 1}}" type="hidden"
-                                   class="form-control" id="activeMaterialHidden">
-                            <input name="video_link" type="hidden" class="form-control" id="urlMaterialHiden">
-                            <input name="cover" hidden type="file" class="form-control" id="coverMaterialHidden">
-                            <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
-
-                        </form>
+                      @include("components.admin.materials.tabsMaterials")
                     </div>
-                    <div class="tab-pane " id="profile">
-                        <p>...</p>
+                    <div class="tab-pane " id="courses-tabs">
+                        @include("components.admin.materials.tabsCourses")
                     </div>
                     <div class="tab-pane" id="settings">
                         <p>...</p>
@@ -115,13 +61,13 @@
 
 
             </div>
-
+        @php($courseName=$material->courses()->first()->slug)
             <aside class="col-xl-3 col-lg-5 col-md-12">
 
                 <div class="sticky pb-3 px-2">
                     <button id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-                    <button id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i>
-                    </button>
+                    <a href="{{route('index.material.show',[$courseName,$material->slug])}}" id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i>
+                    </a>
                     <button id="delete-btn" class="under-development btn btn-danger float-right">Διαγραφή</button>
                 </div>
                 <div class="border-material">
@@ -221,6 +167,10 @@
 
 @section('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
+    <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+    <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+    <x-routes></x-routes>
 
     <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 

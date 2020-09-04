@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Course;
 use App\CourseMaterial;
+use App\DataTables\CourseInsideMaterialsDataTable;
 use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
@@ -17,6 +18,12 @@ class MaterialController extends Controller {
     {
 
         return $dataTable->render('materials.index');
+    }
+
+    public function indexCourse(CourseInsideMaterialsDataTable $dataTable)
+    {
+
+        return $dataTable->render('materials-course.index');
     }
 
     public function create()
@@ -148,8 +155,18 @@ class MaterialController extends Controller {
     public function addMaterialMultiple(Request $request)
     {
 
-        $course = Course::findOrFail($request->course_id);
-        $course->materials()->syncWithoutDetaching($request->material_id);
+        $materials = Material::findOrFail($request->material_id);
+
+        foreach ($materials as $key => $material){
+                if ($key<1){
+                    $lastpriority =  $material->courses()->count() >0? $material->courses()->orderBy("priority",'desc')->first()->getOriginal("pivot_priority"):0;
+                }
+
+            $material->courses()->detach($request->course_id);
+            $material->courses()->attach($request->course_id,["priority"=>$lastpriority+$key,"publish_at"=>now()]);
+
+        }
+
     }
 
     public function changeStatusMultiple(Request $request)
@@ -160,11 +177,11 @@ class MaterialController extends Controller {
             $material = Material::findOrFail($material_id);
             if ($request->status == "on")
             {
-                $material->active = true;
+                $material->status = true;
                 $material->save();
             } else
             {
-                $material->active = false;
+                $material->status = false;
                 $material->save();
             }
         }

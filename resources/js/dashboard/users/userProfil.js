@@ -20,9 +20,9 @@ const courses = $(".course-materials-list").DataTable({
 
     },
     columns: [
-        {data: 'chexbox', name: 'chexbox' ,orderable:false},
-        {data: 'title', name: 'title',className: "js-link cursor-pointer"},
-        {data: 'students', name: 'students',className: "js-link cursor-pointer"},
+        {data: 'chexbox', name: 'chexbox', orderable: false},
+        {data: 'title', name: 'title', className: "js-link cursor-pointer"},
+        {data: 'students', name: 'students', className: "js-link cursor-pointer"},
         {data: 'action', name: 'action'},
     ],
     language: config.datatable.language,
@@ -31,10 +31,13 @@ const courses = $(".course-materials-list").DataTable({
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
         $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+        utilities.resetBulk($("#user-profil-bulk-action-btn"), $("#select-all-courses"));
+        utilities.resetBulk($("#user-profil-bulk-action-btn"), $(".js-user-checkbox"));
+
         deleteCourse()
         deleteMultipleCourse()
         routeLink()
-        // checkeBoxesEventListener()
+        checkeBoxesEventListener()
     },
 
 });
@@ -53,9 +56,9 @@ const addCourse = $("#datatableAddCourse").DataTable({
         }
     },
     columns: [
-        {data: 'chexbox' ,orderable: false ,width: '35%', name: 'chexbox'},
-        {data: 'title' ,width: '50%', name: 'title'},
-        {data: 'action',width: '35%', name: 'action'},
+        {data: 'chexbox', orderable: false, width: '35%', name: 'chexbox'},
+        {data: 'title', width: '50%', name: 'title'},
+        {data: 'action', width: '35%', name: 'action'},
 
     ],
 
@@ -65,10 +68,11 @@ const addCourse = $("#datatableAddCourse").DataTable({
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
         $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+        utilities.resetBulk($("#user-addCourses-bulk-action-btn"), $("#select-all-courses-profile"));
+        utilities.resetBulk($("#user-addCourses-bulk-action-btn"), $(".js-user-profile-checkbox"));
         addCourses()
         checkeBoxesEventListenerSecont()
         updateMultipleCourse()
-
 
 
     }
@@ -80,7 +84,7 @@ const addCourse = $("#datatableAddCourse").DataTable({
 //! GLOBAL METHID
 //!============================================================
 
-const routeLink = () =>{
+const routeLink = () => {
     $('.js-link').click(function () {
         $('.js-link').unbind();
 
@@ -111,19 +115,15 @@ $('#alertSumbit').submit(async (e) => {
 
 
 });
-function resetBulk( bulkBtn, checkbox ) {
-
-    bulkBtn.text("Επιλογές  (0)");
-    bulkBtn.addClass("btn-secondary");
-    bulkBtn.removeClass("btn-warning");
-    bulkBtn.prop("disabled", true);
-    checkbox.prop("checked", false);
-}
 
 
 
-const addCourses = ()=>{
-    $(".js-add-courses").click( async function (){
+//! BULK ACRTION FIRST TABLE
+//!============================================================
+//first datatable
+
+const addCourses = () => {
+    $(".js-add-courses").click(async function () {
 
         const id = this.findParent(2).dataset.courseId
         const userId = this.findParent(2).dataset.userId
@@ -132,8 +132,9 @@ const addCourses = ()=>{
                 "course_id": id,
                 "user_id": userId,
             })
-            if (status==200){
-
+            if (status == 200) {
+                utilities.toastAlert('success',`Προσθέσατε το ένα μάθημα  στον χρήστη `)
+                utilities.resetBulk($("#user-addCourses-bulk-action-btn"), $(".js-user-profile-checkbox"));
                 courses.ajax.reload();
                 addCourse.ajax.reload();
 
@@ -141,16 +142,14 @@ const addCourses = ()=>{
 
         } catch (e) {
             console.log(e)
+            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
         }
     })
 }
 
-//! BULK ACRTION FIRST TABLE
-//!============================================================
-//first datatable
 const deleteCourse = () => {
     $('.js-button-delete').unbind();
-    $(".js-button-delete").click(async function() {
+    $(".js-button-delete").click(async function () {
         try {
             const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${this.dataset.courseTitle} απο τον χρήστη `)
             if (value) {
@@ -204,7 +203,6 @@ const deleteMultipleCourse = () => {
                     utilities.toastAlert('error', `${ids.length}  Διεγραφηκαν`)
                     courses.ajax.reload();
                     addCourse.ajax.reload();
-                    resetBulk( $("#user-profil-bulk-action-btn"), $("#select-all-courses") );
 
 
                 }
@@ -230,18 +228,18 @@ function checkeBoxesEventListener() {
 
     minorCheckboxes.unbind();
 
-    minorCheckboxes.change( function() {
-        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
+    minorCheckboxes.change(function () {
+        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
     })
 
 }
 
-$("#select-all-courses").change( function() {
+$("#select-all-courses").change(function () {
     let minorCheckboxes = $(".js-user-checkbox");
     let bulkBtn = $("#user-profil-bulk-action-btn")[0];
 
 
-    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 
 })
 
@@ -250,7 +248,7 @@ $("#select-all-courses").change( function() {
 //!============================================================
 
 
-const  updateMultipleCourse = () => {
+const updateMultipleCourse = () => {
     $('.js-chexbox-update').unbind();
     $('.js-chexbox-update').click(async () => {
 
@@ -266,18 +264,17 @@ const  updateMultipleCourse = () => {
 
 
         try {
-                let {status} = await axios.patch(config.routes.addCoursesMultipleUsersDatatable, {
-                        'course_id': ids,
-                        'user_id': checkedBoxes[0].findParent(3).dataset.userId
+            let {status} = await axios.patch(config.routes.addCoursesMultipleUsersDatatable, {
+                'course_id': ids,
+                'user_id': checkedBoxes[0].findParent(3).dataset.userId
 
-                })
-                if (status == 200) {
-                    utilities.toastAlert('success', `${ids.length}  Προστέθηκαν `)
-                    courses.ajax.reload();
-                    addCourse.ajax.reload();
-                    $("#select-all-courses-profile")[0].checked = false
-                    resetBulk( $("#user-addCourses-bulk-action-btn"), $("#select-all-courses-profile") );
-                }
+            })
+            if (status == 200) {
+                utilities.toastAlert('success', `${ids.length}  Προστέθηκαν `)
+                courses.ajax.reload();
+                addCourse.ajax.reload();
+                $("#select-all-courses-profile")[0].checked = false
+            }
 
 
         } catch (e) {
@@ -286,12 +283,8 @@ const  updateMultipleCourse = () => {
         }
 
 
-
-
-
     })
 }
-
 
 
 function checkeBoxesEventListenerSecont() {
@@ -303,23 +296,21 @@ function checkeBoxesEventListenerSecont() {
 
     minorCheckboxes.unbind();
 
-    minorCheckboxes.change( function() {
-        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
+    minorCheckboxes.change(function () {
+        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
     })
 
 }
 
 
-$("#select-all-courses-profile").change( function() {
+$("#select-all-courses-profile").change(function () {
     let minorCheckboxes = $(".js-user-profile-checkbox");
     let bulkBtn = $("#user-addCourses-bulk-action-btn")[0];
     console.log(this)
 
-    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 
 })
-
-
 
 
 $('#material-modal-shown-btn').click(() => {

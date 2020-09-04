@@ -18,9 +18,11 @@
             destroyMultipleUsersDatatable: "{{ route("destroyMultipleUsers.datatable") }}",
             courseModaDatatable: "{{ route("courseModal.datatable") }}",
             addCoursesMultipleUsersDatatable: "{{ route("addCoursesMultipleUsers.datatable") }}",
+            AddMultipleUserCourseDatatable: "{{ route("AddMultipleUserCourse.datatable") }}",
             //ajax material routes
             destroyMultipleMaterialDatatable : "{{ route("destroyMultipleMaterials.datatable") }}",
             addMaterialMultipleDatatable : "{{ route("addMaterialMultiple.datatable") }}",
+            materialCoursesDatatable : "{{ route("material-courses-datatable") }}",
 
             //material
             changeStatusMultipleMaterialDatatable: "{{ route("changeStatusMultipleMaterial.datatable") }}",

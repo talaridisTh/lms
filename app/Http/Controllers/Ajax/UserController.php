@@ -88,6 +88,17 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
+    public function AddMultipleUserCourse(Request $request)
+    {
+
+
+        $courses = Course::findOrFail($request->course_id);
+        $courses->users()->syncWithoutDetaching($request->user_id);
+
+        return response()->json(['success' => 'Status change successfully.']);
+    }
+
+
     public function destroy(Request $request)
     {
 

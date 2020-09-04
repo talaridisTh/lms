@@ -1,4 +1,64 @@
 import utilities from '../main';
+
+
+ let materialId = $("#material-course-table")[0].dataset.materialId;
+
+
+const materialCourseDatatable = $("#material-course-table").DataTable({
+    // order: [[ 5, "desc" ]],
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: config.routes.materialCoursesDatatable,
+        headers: config.headers.csrf,
+        type: "post",
+        data: {
+            materialId
+        }
+        // data: function (d) {
+        //     return $.extend({}, d, {
+        //         from_date: fromDay($(".date")[0]),
+        //         to_date: toDay($(".date")[0])
+        //     })
+        // }
+    },
+    columns: [
+        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-left"},
+        {data: "title", name: "title"},
+        {data: "topic", name: "topic"},
+        {data: "curator", name: "curator"},
+        {data: "updated_at", name: "updated_at"},
+        {data: "created_at", name: "created_at"},
+        // {data: "humans", name: "humans", className: "js-link cursor-pointer text-left"},
+
+    ],
+    language: {
+        emptyTable: "Δεν υπάρχουν εγγραφές",
+        info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+        infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
+        lengthMenu: "_MENU_",
+        loadingRecords: "Φόρτωση ...",
+        processing: "Επεξεργασία ...",
+        search: "Αναζήτηση: ",
+        zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
+        paginate: {
+            previous: "<i class='mdi mdi-chevron-left'>",
+            next: "<i class='mdi mdi-chevron-right'>"
+        }
+    },
+    drawCallback: function () {
+        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+        $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+        $("#materials-datatable_wrapper > .row:first-child > div:first-child").removeClass(" col-md-6");
+        $("#materials-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
+        $("#materials-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
+        $("#materials-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
+
+    }
+});
+
+
+
 //! EDITOR INIT
 //!============================================================
 

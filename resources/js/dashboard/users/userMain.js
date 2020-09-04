@@ -8,7 +8,7 @@ let dataRange = $("#daterange")
 //!##################################################
 const tables = $("#scroll-horizontal-datatable").DataTable({
     // caseInsensitive: false,
-    order: [[ 8, "desc" ]],
+    order: [[8, "desc"]],
     processing: true,
     serverSide: true,
     ajax: {
@@ -37,7 +37,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         {data: "action", name: "action", className: "js-link cursor-pointer"},
         {data: "email", name: "email", className: "js-link cursor-pointer"},
         {data: 'status', name: 'status', orderable: false},
-        {data: 'created_at', name: 'created_at',visible: false},
+        {data: 'created_at', name: 'created_at', visible: false},
         {data: 'activeNum', name: 'activeNum', visible: false},
         {data: 'dateChange', name: 'dateChange'},
         {data: 'allcourse', name: 'allcourse', visible: false},
@@ -54,6 +54,9 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
+        utilities.resetBulk($("#course-bulk-action-btn"), $("#select-all-courses"));
+        utilities.resetBulk($("#course-bulk-action-btn"), $(".js-user-checkbox"));
+
         toogleInput();
         routeLink();
         selectMultipleCheckboxDelete();
@@ -68,7 +71,6 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
 
 
 })
-
 
 
 const sub_DataTable = (vtask_id, table_id, attr) => {
@@ -104,10 +106,11 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
             $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
             $("thead >tr> th").removeClass("js-link cursor-pointer");
             $("tfoot > tr > th").removeClass("js-link cursor-pointer");
+            utilities.resetBulk($("#course-bulk-action-btn"), $(".js-user-checkbox-sub"));
 
             selectDetachCourses();
             routeLinkCourse();
-            hoverOnSelectSub()
+            checkeBoxesEventListenerSub()
 
         },
 
@@ -117,16 +120,35 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
 }
 
 
-
-
 //! GLOBAL FUNCTION
 //!============================================================
 utilities.filterButton('#activeFilter', 9, tables)
 utilities.filterButton('#rolesFilter', 5, tables)
 utilities.filterButton('#fullNameFilter', 11, tables)
 
+//! EVENT LISTENER
+//!============================================================
+$("#fullNameFilter").change(function () {
 
+    let label = $("#select2-fullNameFilter-container")[0];
 
+    utilities.filterStyle(label, this.value);
+
+});
+$("#rolesFilter").change(function () {
+
+    let label = $("#select2-rolesFilter-container")[0];
+
+    utilities.filterStyle(label, this.value);
+
+});
+$("#activeFilter").change(function () {
+
+    let label = $("#select2-activeFilter-container")[0];
+
+    utilities.filterStyle(label, this.value);
+
+});
 
 
 //! DATAPICKER METHOD
@@ -136,7 +158,7 @@ function fromDay(input) {
     let dateInput = input;
 
 
-    if ( !dateInput || dateInput.value == "" ) {
+    if (!dateInput || dateInput.value == "") {
         return "";
     }
 
@@ -152,7 +174,7 @@ function fromDay(input) {
 function toDay(input) {
     let dateInput = input;
 
-    if ( !dateInput || dateInput.value == "" ) {
+    if (!dateInput || dateInput.value == "") {
         return "";
     }
 
@@ -163,7 +185,7 @@ function toDay(input) {
 
 }
 
-dataRange.daterangepicker( utilities.datePickerConfig );
+dataRange.daterangepicker(utilities.datePickerConfig);
 
 $(".ragneButton").detach().appendTo('.dataTables_length label')
 
@@ -171,18 +193,18 @@ dataRange.on("apply.daterangepicker", function (event, picker) {
 
     let startDate = picker.startDate.format('DD/MM/YYYY');
     let endDate = picker.endDate.format('DD/MM/YYYY');
-    this.value = `${ startDate } - ${ endDate }`;
-
+    this.value = `${startDate} - ${endDate}`;
+    this.classList.add("select2-selected");
 
     tables.ajax.reload();
 
 })
 
-dataRange.on( 'cancel.daterangepicker', function(event, picker) {
+dataRange.on('cancel.daterangepicker', function (event, picker) {
+    this.classList.remove("select2-selected");
     $(".date")[0].value = "";
     tables.ajax.reload();
 })
-
 
 
 //! BULK ACTION
@@ -225,6 +247,41 @@ const axiosMultipleDelete = async (ids) => {
     }
 }
 
+const selectStatusMultiple = () => {
+    $('.js-multiple-change').unbind();
+    $(".js-multiple-change").click(function () {
+        let checkboxes = $(".js-user-checkbox:checked")
+
+        let ids = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.userId);
+        }
+
+
+        changeStatusMultiple(ids, this.dataset.coursesChange)
+
+    })
+}
+
+const changeStatusMultiple = async (ids, stat) => {
+
+    try {
+        let {status} = await axios.patch(config.routes.changeStatusMultipleDatatable, {
+            "user_id": ids,
+            "status": stat,
+        })
+
+        if (status == 200) {
+            utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
+            tables.ajax.reload();
+        }
+    } catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+}
+
 const selectMultipleCheckboxUpdate = () => {
     $('.js-multiple-update').unbind();
     $(".js-multiple-update").click(function () {
@@ -244,12 +301,14 @@ const selectMultipleCheckboxUpdate = () => {
 const axiosMultipleUpdate = async (ids, courseId) => {
 
     try {
-        const {status} = await axios.patch(config.routes.addCoursesMultipleUsersDatatable, {
+        const {status} = await axios.patch(config.routes.AddMultipleUserCourseDatatable, {
             'user_id': ids,
             "course_id": courseId
         })
 
         if (status == 200) {
+            utilities.resetBulk($("#course-bulk-action-btn"), $("#select-all-courses"));
+            utilities.resetBulk($("#course-bulk-action-btn"), $(".js-user-checkbox"));
             utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
             console.log(status)
         }
@@ -294,17 +353,17 @@ function checkeBoxesEventListener() {
 
     minorCheckboxes.unbind();
 
-    minorCheckboxes.change( function() {
-        utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn)
+    minorCheckboxes.change(function () {
+        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
     })
 
 }
 
-$("#select-all-courses").change( function() {
+$("#select-all-courses").change(function () {
     let minorCheckboxes = $(".js-user-checkbox");
     let bulkBtn = $("#course-bulk-action-btn")[0];
 
-    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 
 })
 
@@ -324,42 +383,6 @@ const selectDetachCourses = () => {
 
     })
 }
-
-const selectStatusMultiple = () => {
-    $('.js-multiple-change').unbind();
-    $(".js-multiple-change").click(function () {
-        let checkboxes = $(".js-user-checkbox:checked")
-
-        let ids = [];
-
-        for (let i = 0; i < checkboxes.length; i++) {
-            ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.userId);
-        }
-
-
-        changeStatusMultiple(ids,this.dataset.coursesChange)
-
-    })
-}
-
-const changeStatusMultiple =async (ids,stat) => {
-
-    try{
-        let {status} = await axios.patch(config.routes.changeStatusMultipleDatatable,{
-            "user_id":ids,
-            "status":stat,
-        })
-
-        if (status == 200) {
-            utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
-            tables.ajax.reload();
-        }
-    } catch (e) {
-        console.log(e)
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-    }
-}
-
 
 
 //! EXPORT
@@ -517,29 +540,22 @@ const routeLinkCourse = () => {
     });
 }
 
-const hoverOnSelectSub = () => {
+function checkeBoxesEventListenerSub() {
 
-    $(".js-user-checkbox-sub").change(function () {
-        $(".bulk-action")[0].disabled = false
-        $(".bulk-action")[0].classList.add("bg-warning")
-        $(".bulk-action")[0].classList.remove("bg-secontary")
-        let checkboxes = $(".js-user-checkbox-sub:checked").length
+    let minorCheckboxes = $(".js-user-checkbox-sub");
+    let mainCheckbox = $("#select-all-courses")[0];
+    let bulkBtn = $("#course-bulk-action-btn")[0];
 
-        if (!checkboxes) {
-            $(".bulk-action")[0].disabled = true
-            $(".bulk-action")[0].classList.remove("bg-warning")
-            $(".bulk-action")[0].classList.add("bg-secontary")
-        }
 
-        $(".bulk-action")[0].innerText = ` Επιλογές ${checkboxes == 0 ? "" : `( ${checkboxes} ) `} `
-        if (this.checked) {
-            this.parentElement.parentElement.parentElement.classList.add("trHover")
-        } else {
-            this.parentElement.parentElement.parentElement.classList.remove("trHover")
-        }
+    minorCheckboxes.unbind();
+
+    minorCheckboxes.change(function () {
+        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
     })
 
 }
+
+
 
 
 

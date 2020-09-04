@@ -184,13 +184,11 @@
 @endsection
 
 @section('scripts')
+
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
 
     <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 
-    <script>
-
-
-    </script>
 
 @endsection

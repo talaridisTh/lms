@@ -1,12 +1,11 @@
 <style>
-    .dropdown-menu-animated.show{
-        left: -35px!important;
+    .dropdown-menu-animated.show {
+        left: -35px !important;
     }
 </style>
 <div class="btn-group mb-2 mr-3">
-    <button id="course-bulk-action-btn" disabled type="button"
-            class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
+    <button id="course-bulk-action-btn" disabled type="button" class="btn btn-secondary dropdown-toggle"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Επιλογές (0)
     </button>
 
@@ -14,13 +13,13 @@
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
             <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false">
                 Προσθήκη σε course
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($activeCourses as $courses)
-                    <a class="dropdown-item js-multiple-update cursor-pointer"
-                       data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
+                <a class="dropdown-item js-multiple-update cursor-pointer"
+                    data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
                 @endforeach
             </div>
         </div>
@@ -30,7 +29,7 @@
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
             <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false">
                 Αλλαγή κατάστασης
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -44,7 +43,7 @@
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
             <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
+                aria-haspopup="true" aria-expanded="false">
                 Export
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">

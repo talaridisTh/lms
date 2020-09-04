@@ -113,7 +113,7 @@ class MaterialController extends Controller {
             $material->update(['status' => $request->status == null ? 0 : $request->status]);
         }
 
-        return redirect(route("material.index"))->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
+        return redirect()->back()->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
     }
 
     public function destroy(Material $material)

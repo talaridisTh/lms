@@ -64,14 +64,14 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 	Route::post('/dashboard/courses/clone', 'CourseController@clone')->name('course.clone');
     Route::patch('/dashboard/courses/update/{course}', 'CourseController@update')->name('course.update');
     Route::delete('/dashboard/course/{course}', 'CourseController@softDelete')->name('course.softDelete');
-	
+
 	//! Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
     Route::get('/dashboard/bundle/{bundle}', 'BundleController@show')->name('bundle.show');
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
     Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
-	
+
 	//! Topic Routes
 	Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
 	Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');
@@ -98,6 +98,7 @@ Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcou
 Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
 Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple')->name("changeStatusMultiple.datatable");;
 Route::patch('/user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers')->name("addCoursesMultipleUsers.datatable");
+Route::patch('/user/multiple/add-user', 'Ajax\UserController@AddMultipleUserCourse')->name("AddMultipleUserCourse.datatable");
 Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
 Route::delete('/user/multiple/courses/delete', 'Ajax\UserController@destroyMultipleCourses')->name("destroyMultipleCourses.datatable");
 Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers')->name("destroyMultipleUsers.datatable");
@@ -131,8 +132,11 @@ Route::patch( 'bundles/bundles-toggle-status/{bundle}', 'Ajax\BundleController@u
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 
-//! Dashboard Ajax Materials
+//! Dashboard Ajax Materials Datatables
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
+Route::post( 'materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse' )->name("material-courses-datatable");
+
+//! Dashboard Ajax Bundles CRUD
 Route::post( 'materials/material-types', 'Ajax\MaterialController@materialTypes' );
 Route::post( 'materials/add-additionnal-content', 'Ajax\MaterialController@addContent' );
 Route::delete('/materials/multiple/delete', 'Ajax\MaterialController@destroyMultipleMaterials')->name("destroyMultipleMaterials.datatable");

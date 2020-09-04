@@ -111,14 +111,7 @@ class HomeController extends Controller {
     public function test()
     {
 
-        $test = DB::table("topics")
-            ->join("topicables", "topic_id", "=", "topicable_id")
-            ->join("course_material", "course_id", "=", "topicable_id")
-            ->where("course_id", 2)
-            ->where("status", 1)
-            ->get();
 
-        return $test;
     }
 
 }

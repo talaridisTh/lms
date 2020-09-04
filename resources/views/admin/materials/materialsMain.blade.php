@@ -20,11 +20,11 @@
 					<h4 class="page-title">Υλικό</h4>
 				</div>
 			</div>
-		</div>     
+		</div>
 	</div>
 	<!-- end page title -->
 
-    <x-alertMsg :msg="'update'"></x-alertMsg>
+
     <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container table-cnt content-width">
 
