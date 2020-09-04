@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Course;
 use App\CourseInsideMaterial;
 use App\Material;
+use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
@@ -24,15 +25,10 @@ class CourseInsideMaterialsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-        $query = Material::findOrFail($request->materialId)->courses()->get();
-
-
-
-
+        $query = Material::findOrFail($request->materialId)->courses()->with("topics")->get();
 
         return datatables()::of($query)
             ->addColumn('checkbox', function ($data) {
-
                 return "<div class='icheck-primary d-inline'>
 							<input class='js-user-checkbox' data-user-id='$data->id'  type='checkbox'  autocomplete='off'>
 							<label for=''></label>
@@ -40,24 +36,18 @@ class CourseInsideMaterialsDataTable extends DataTable
             })
             ->addColumn('topic', function ($data) {
 
-//                $test = [];
-////                dump($data->topics);
-//                foreach ($data->topics as $d){
-//
-//                    return $d;
-//                    array_push($test , $d->title);
-//                }
-//
-//                return $test;
+                $collection =  $data->topics->map(function($top){
+                    return $top->title ;
+                });
+
+                return $collection->implode(", ");
 
             })
             ->editColumn('curator', function ($data) {
 
-                    return  User::find($data->user_id)->first_name;
+                    return  User::find($data->user_id)->fullName;
 
             })
-
-
             ->rawColumns(["checkbox","topic"]);
 
     }
@@ -70,7 +60,7 @@ class CourseInsideMaterialsDataTable extends DataTable
      */
     public function query(Course $model)
     {
-        return $model->newQuery();
+         return $model->newQuery();
     }
 
     /**

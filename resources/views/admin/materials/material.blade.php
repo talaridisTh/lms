@@ -61,13 +61,13 @@
 
 
             </div>
-        @php($courseName=$material->courses()->first()->slug)
+{{--        @php($courseName=$material->courses()->first()->slug)--}}
             <aside class="col-xl-3 col-lg-5 col-md-12">
 
                 <div class="sticky pb-3 px-2">
                     <button id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-                    <a href="{{route('index.material.show',[$courseName,$material->slug])}}" id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i>
-                    </a>
+{{--                    <a href="{{route('index.material.show',[$courseName,$material->slug])}}" id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i>--}}
+{{--                    </a>--}}
                     <button id="delete-btn" class="under-development btn btn-danger float-right">Διαγραφή</button>
                 </div>
                 <div class="border-material">
