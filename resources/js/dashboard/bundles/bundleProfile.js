@@ -40,17 +40,39 @@ $("#bundle-delete-btn").click( function() {
 	})
 })
 
-$("#publish-date-select").daterangepicker({
+let publishDate = $("#publish-date-select").daterangepicker({
 	singleDatePicker: true,
 	drops: "auto",
     opens: "center",
 	timePicker: true,
+	autoUpdateInput: false,
 	timePicker24Hour: true,
 
 	locale: {
         format: "DD-MM-YYYY H:mm",
     },
 });
+
+publishDate.on( "apply.daterangepicker", function(event, picker) {
+		
+	let startDate = picker.startDate.format('DD-MM-YYYY H:mm');
+	this.value = startDate;
+
+});
+
+publishDate.on( 'cancel.daterangepicker', function(event, picker) {
+	this.value = "";
+});
+
+$("#publish-date-select").on("input", function() {
+
+	this.value = this.value.replace( /[^0-9]/g, "" )
+		.replace(/^(\d{2})?(\d{2})?(\d{4})?(\d{2})?(\d{2})?(\d{4})?/g, '$1-$2-$3 $4:$5')
+		.substr(0, 16);
+
+})
+
+
 
 $('#main-active-courses-checkbox').click( function() {
 	let checkboxes = $('.js-course-checkbox');
