@@ -30,30 +30,37 @@ $("#course-delete-btn").click( function() {
 	})
 })
 
-$("#publish-date-select").daterangepicker({
+let publishDate = $("#publish-date-select").daterangepicker({
 	singleDatePicker: true,
 	drops: "auto",
     opens: "center",
 	timePicker: true,
+	autoUpdateInput: false,
 	timePicker24Hour: true,
-
+	cancelButtonClasses: "btn-secondary",
 	locale: {
-        format: "DD-MM-YYYY H:mm",
+		format: "DD-MM-YYYY H:mm",
+		cancelLabel: "Clear"
     },
 });
 
-$("#enable-publish-select").change( function() {
-	let input = $("#publish-date-select");
-	if ( !this.checked ) {
-		input.attr("placeholder", "Άμεσα...");
-		input.prop("disabled", true);
-		input.val("");
-	}
-	else {
-		input.attr("placeholder", "Εισάγετε ημμερομηνία...");
-		input.prop("disabled", false);
-		input[0].value = input[0].defaultValue;
-	}
+publishDate.on( "apply.daterangepicker", function(event, picker) {
+		
+	let startDate = picker.startDate.format('DD-MM-YYYY H:mm');
+	this.value = startDate;
+
+});
+
+publishDate.on( 'cancel.daterangepicker', function(event, picker) {
+	this.value = "";
+});
+
+$("#publish-date-select").on("input", function() {
+
+	this.value = this.value.replace( /[^0-9]/g, "" )
+		.replace(/^(\d{2})?(\d{2})?(\d{4})?(\d{2})?(\d{2})?(\d{4})?/g, '$1-$2-$3 $4:$5')
+		.substr(0, 16);
+
 })
 
 $("#add-user-checkbox").change( function() {

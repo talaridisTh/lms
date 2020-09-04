@@ -56,9 +56,17 @@ class BundleController extends Controller
 
     public function show(Bundle $bundle)
     {
+
+		if ( !is_null($bundle->publish_at) ) {
+			$publishDate = Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
+		}
+		else {
+			$publishDate = null;
+		}
+
 		$data = [
 			'bundle' => $bundle,
-			'publish' => Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i"),
+			'publish' => $publishDate,
 		];
 
         return view("admin/bundles/bundle")->with($data);

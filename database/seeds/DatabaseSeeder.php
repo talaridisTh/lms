@@ -17,15 +17,15 @@ class DatabaseSeeder extends Seeder {
 
 
 
-		factory(App\Bundle::class, 3)->create()
+		factory(App\Bundle::class, 5)->create()
 		->each(function ($bundle) {
 
-			$bundle->courses()->saveMany(factory(App\Course::class, 5)->create()
+			$bundle->courses()->saveMany(factory(App\Course::class, 15)->create()
 			->each(function($course) {
 
 				$course->topics()->attach(App\Topic::all()->random()->id);
 				$course->topics()->attach(App\Topic::all()->random()->id);
-				$course->users()->saveMany(factory(App\User::class, 5)->create())
+				$course->users()->saveMany(factory(App\User::class, 1)->create())
 				->each(function($user) {
 
 					$rand = rand( 0 ,2);
@@ -36,11 +36,11 @@ class DatabaseSeeder extends Seeder {
 			}));
         });
 
-		factory(App\Material::class, 10)->create()
+		factory(App\Material::class, 700)->create()
 		->each(function ($materials) {
 
 			$materials->topics()->attach(App\Topic::all()->random()->id);
-            $materials->users()->saveMany(factory(App\User::class, 2)->create())
+            $materials->users()->saveMany(factory(App\User::class, 1)->create())
             ->each(function ($user) {
 
                 $user->assignRole('instructor');

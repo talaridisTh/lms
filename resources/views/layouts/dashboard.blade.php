@@ -271,7 +271,7 @@
 								<a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 									aria-expanded="false">
 									<span class="account-user-avatar">
-										<img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set4" alt="user-image" class="rounded-circle">
+										<img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set5" alt="user-image" class="rounded-circle">
 									</span>
 									<span>
 										<span class="account-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
