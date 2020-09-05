@@ -12,6 +12,16 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! EventListerners
 //!============================================================
 
+$(".tab-link").on("show.bs.tab", function(event) {
+
+		event.preventDefault();
+		Swal.fire(
+			'Προσοχή',
+			'<p>Θα πρέπει να αποθηκεύσετε το Course</p>για να συνεχίσετε!',
+			'info'
+		);
+}) 
+
 $("#course-delete-btn").click( function() {
 	Swal.fire({
 		title: 'Είστε σίγουρος;',
