@@ -6,9 +6,19 @@ import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
 //! GLOBAL VARIABLES
-const bundleId = $("#bundle-courses-list")[0].dataset.bundleId
+const bundleId = $("#bundle-title")[0].dataset.bundleId
 
 //! EventListerners
+
+$(".tab-link").on("show.bs.tab", function(event) {
+
+	event.preventDefault();
+	Swal.fire(
+		'Προσοχή',
+		'<p>Θα πρέπει να αποθηκεύσετε το Bundle</p>για να συνεχίσετε!',
+		'info'
+	);
+}) 
 
 $(".under-development").click( function() {
 	Swal.fire({

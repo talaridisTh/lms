@@ -29,10 +29,10 @@
 						<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
 						<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
 						<li class="breadcrumb-item"><a href="/dashboard/bundles" class="custom-link-primary">Bundles</a></li>
-						<li class="breadcrumb-item active">{{ $bundle->title }}</li>
+						<li class="breadcrumb-item active">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</li>
 					</ol>
 				</div>
-				<h4 class="page-title">{{ $bundle->title }}</h4>
+				<h4 id="bundle-title" class="page-title" data-bundle-id="{{ isset($bundle) ? $bundle['id'] : "" }}">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</h4>
 			</div>
 		</div>
 	</div>     
@@ -86,17 +86,22 @@
 					
 					<ul class="nav nav-tabs nav-bordered mb-3">
 						<li class="nav-item">
-							<a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link active">
+							<a href="#settings" data-toggle="tab" aria-expanded="false"
+								 class="nav-link active">
 								Ρυθμίσεις
 							</a>
 						</li>
 						<li class="nav-item">
-							<a href="#courses" data-toggle="tab" aria-expanded="true" class="nav-link">
+							<a href="#courses" data-toggle="tab"
+								aria-expanded="true" class="nav-link {{ isset($bundle) ? "" : "tab-link text-muted" }}"
+							>
 								Courses
 							</a>
 						</li>
 						{{-- <li class="nav-item">
-							<a href="#users" data-toggle="tab" aria-expanded="true" class="nav-link">
+							<a href="#users" data-toggle="tab" 
+								aria-expanded="true" class="nav-link {{ isset($bundle) ? "" : "text-muted" }}"
+							>
 								Χρήστες
 							</a>
 						</li> --}}
@@ -105,11 +110,15 @@
 					<div class="tab-content">
 
 						<div id="settings" class="tab-pane show active">
-
-							<form id="bundle-edit-form" action="{{ route('bundle.update', $bundle->id) }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+							<form id="bundle-edit-form"
+								action="{{ isset($bundle) ? route('bundle.update', $bundle->slug) : "/dashboard/bundle/store" }}"
+								method="POST" enctype="multipart/form-data" autocomplete="off">
 								
 								@csrf
-								@method('PATCH')
+
+								@if ( isset($bundle) )
+									@method('PATCH')
+								@endif
 								
 								<div class="row">
 							        <div class="col-xl-6">
@@ -117,8 +126,8 @@
 							                <label for="name">Τίτλος</label>
 											<input type="text" class="form-control @error('title') is-invalid @enderror" 
 												id="name" name="title" 
-												value="{{ old('title') != "" ? old('title') : $bundle['title'] }}"
-												placeholder="Δώστε όνομα...">
+												value="{{ old('title') != "" ? old('title') : ( isset($bundle) ? $bundle['title'] : "" ) }}"
+												placeholder="Εισάγετε τίτλο...">
 											@error('title')
 												<span class="invalid-feedback" role="alert">
 												    <strong>{{ $message }}</strong>
@@ -131,10 +140,12 @@
 							                <label for="subtitle-input">Υπότιτλος</label>
 											<div class="input-group">
 											    <div class="custom-file">
-													<input type="text"
-														class="form-control @error('subtitle') is-invalid @enderror"
-														name="subtitle" value="{{ $bundle['subtitle'] }}"
-														id="subtitle-input">
+													<input class="form-control @error('subtitle') is-invalid @enderror"
+														name="subtitle" id="subtitle-input" type="text" placeholder="Εισάγετε υπότιτλο..."
+														value="{{ old('subtitle') != "" ? old('subtitle') 
+															: ( isset($bundle) ? $bundle['subtitle'] : "" )
+														}}"
+													>
 												</div>
 												@error('subtitle')
 													<span class="invalid-feedback d-block" role="alert">
@@ -151,8 +162,10 @@
 							            <div class="form-group">
 							                <label for="summary">Σύνοψη</label>
 											<textarea class="form-control @error('summary') is-invalid @enderror"
-												id="summary" name="summary" rows="4"
-												placeholder="Περιγραφή Bundle...">{{ old('summary') != "" ? old('summary') : $bundle['summary'] }}</textarea>
+												id="summary" name="summary" rows="4" placeholder="Σύνοψη Bundle..."
+											>{{ old('summary') != "" ? old('summary') 
+												: ( isset($bundle) ? $bundle['summary'] : "" )
+											}}</textarea>
 											@error('summary')
                             				    <span class="invalid-feedback" role="alert">
                             				        <strong>{{ $message }}</strong>
@@ -167,8 +180,10 @@
 							            <div class="form-group">
 							                <label for="description">Περιγραφή</label>
 											<textarea class="form-control @error('description') is-invalid @enderror"
-												id="description" name="description" rows="4"
-												placeholder="Περιγραφή Bundle...">{{ old('description') != "" ? old('description') : $bundle['description'] }}</textarea>
+												id="description" name="description" rows="4" placeholder="Περιγραφή Bundle..."
+											>{{ old('description') != "" ? old('description')
+												: ( isset($bundle) ? $bundle['description'] : "")
+											}}</textarea>
 											@error('description')
                             				    <span class="invalid-feedback" role="alert">
                             				        <strong>{{ $message }}</strong>
@@ -184,8 +199,7 @@
 
 						<!-- Courses table tab-->
 						<div class="tab-pane table-cnt" id="courses">
-
-							<table id="bundle-courses-list" data-bundle-id="{{ $bundle['id'] }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
+							<table id="{{ isset($bundle) ? 'bundle-courses-list' : '' }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
 								<thead>
 									<tr>
 										<th class="text-center">
@@ -237,9 +251,16 @@
 				<div class="col-xl-3 col-lg-5 col-md-12">
 
 					<div class="sticky py-3 px-2">
-						<button form="bundle-edit-form" type="submit" id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-						<a id="preview-btn" href="#" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i></a>
-						<button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+					<button form="bundle-edit-form" type="submit"
+						id="update-btn" class="btn btn-primary"
+					>
+						{{ isset($bunle) ? "Ενημέρωση" : "Αποθήκευση" }}
+					</button>
+						
+						@if ( isset($bundle) )	
+							<a id="preview-btn" href="#" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i></a>
+							<button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+						@endif
 					</div>
 
 					<div class="card">
@@ -253,16 +274,26 @@
 						</div>
 					</div>
 
-					<!-- Cover Preview -->
-					<div class="card">
-						<div class="card-header">
-							<h4 class="card-title mb-0">Cover</h4>
+					@if ( isset($bundle) )	
+						<!-- Cover Preview -->
+						<div class="card">
+							<div class="card-header">
+								<h4 class="card-title mb-0">Cover</h4>
 
-						</div>
-						<div class="card-body">
-							<img src="https://placehold.co/600x400" class="img-fluid" alt="{{ $bundle->title }}">
-						</div> <!-- end card-body -->
-					</div> <!-- end course info card -->
+							</div>
+							<div class="card-body">
+								<img src="https://placehold.co/600x400" class="img-fluid" alt="{{ $bundle->title }}">
+							</div> <!-- end card-body -->
+						</div> <!-- end course info card -->
+
+						<form id="delete-bundle-form" action="{{ $bundle->id }}" method="POST">
+		
+							@csrf
+							@method('DELETE')
+					
+						</form>
+
+					@endif
 
 					<!-- Dropzone -->
 					<div class="card">
@@ -313,12 +344,7 @@
 		</div><!-- ./content -->
 	</div><!-- wrapper -->
 
-	<form id="delete-bundle-form" action="{{ $bundle->id }}" method="POST">
-		
-		@csrf
-		@method('DELETE')
-
-	</form>
+	
 
 @endsection
 

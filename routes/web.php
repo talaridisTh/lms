@@ -67,7 +67,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
 	//! Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
-    Route::get('/dashboard/bundle/{bundle}', 'BundleController@show')->name('bundle.show');
+    Route::get('/dashboard/bundle/{bundle?}', 'BundleController@show')->name('bundle.show');
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
     Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');

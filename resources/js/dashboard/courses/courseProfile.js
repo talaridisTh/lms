@@ -1091,14 +1091,6 @@ ArticleEditor('#description', {
 	editor: {
 		minHeight: "300px"
 	},
-	// classes: {
-	// 	'p': 'text-muted',
-	// 	'h1': 'text-muted',
-	// 	'h2': 'text-muted',
-	// 	'h3': 'text-muted',
-	// 	'h4': 'text-muted',
-	// 	'h5': 'text-muted',
-	// }
 	/* image: {
 		upload: "/materials/upload-content-images",
 		data: {

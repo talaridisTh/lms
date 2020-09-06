@@ -106,7 +106,6 @@ class CourseController extends Controller
 
 		}
 		
-		
 		$data = [
 			'course' => $course,
 			'topics' => $topics,
@@ -114,12 +113,6 @@ class CourseController extends Controller
 			'publish' => $publish,
 		];
 		
-		if( is_null($course) ) {
-
-			return view('admin.courses.course')->with( $data );
-
-		}
-
         return view('admin.courses.course')->with($data);
     }
 

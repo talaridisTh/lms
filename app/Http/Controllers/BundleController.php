@@ -33,11 +33,20 @@ class BundleController extends Controller
 		// 	$fileName = md5( $request->name ).$ext;
 		// }
 
+		if ( isset($request->publishDate) ) {
+			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		}
+		else {
+			$publishDate = null;
+		}
 
 		$bundle = new Bundle;
 		$bundle->title = $request->title;
+		$bundle->subtitle = $request->subtitle;
+		$bundle->summary = $request->summary;
 		$bundle->description = $request->description;
-		$bundle->status = $request->status;
+		$bundle->publish_at = $publishDate;
+		$bundle->status = /* $request->status */ 1;
 		$bundle->slug = Str::slug($request->title, "-");
 		$bundle->cover = "https://placehold.co/600x400";
 		// $bundle->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
@@ -51,22 +60,22 @@ class BundleController extends Controller
 		// 	Storage::copy("public/no_image_600x400.png", "public/bundles/$bundle->id/cover/no_image_600x400.png");
 		// }
 		
-		return redirect( "/dashboard/bundle/$bundle->id" );
+		return redirect( "/dashboard/bundle/$bundle->slug" );
     }
 
-    public function show(Bundle $bundle)
+    public function show(Bundle $bundle = null)
     {
 
-		if ( !is_null($bundle->publish_at) ) {
-			$publishDate = Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
+		if ( is_null($bundle) ) {
+			$publish = "";
 		}
 		else {
-			$publishDate = null;
+			$publish = is_null($bundle->publish_at) ? null : Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
 		}
 
 		$data = [
 			'bundle' => $bundle,
-			'publish' => $publishDate,
+			'publish' => $publish,
 		];
 
         return view("admin/bundles/bundle")->with($data);
@@ -95,21 +104,22 @@ class BundleController extends Controller
 		$bundle->publish_at = $publishDate;
 		$bundle->status = /* $request->status */ 1 ;
 		$bundle->slug = Str::slug($request->title, "-");
+		$bundle->cover = "https://placehold.co/600x400";
 
-		if ( !empty($_FILES['cover']['name']) ) {
+		// if ( !empty($_FILES['cover']['name']) ) {
 			
-			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
-			$fileName = md5( $request->name ).$ext;
+		// 	$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
+		// 	$fileName = md5( $request->name ).$ext;
 			
-			Storage::delete( "public/bundles/$bundle->id/cover/$bundle->cover" );
-			$request->cover->storeAs("public/bundles/$bundle->id/cover", $fileName);
+		// 	Storage::delete( "public/bundles/$bundle->id/cover/$bundle->cover" );
+		// 	$request->cover->storeAs("public/bundles/$bundle->id/cover", $fileName);
 			
-			$bundle->cover = $fileName;
-		}
+		// 	$bundle->cover = $fileName;
+		// }
 
 		$bundle->save();
 
-		return redirect( "/dashboard/bundle/$bundle->id" );
+		return redirect( "/dashboard/bundle/$bundle->slug" );
     }
 
 
