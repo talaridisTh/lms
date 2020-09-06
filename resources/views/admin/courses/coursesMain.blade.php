@@ -147,7 +147,7 @@
 	<select id="topic-filter" class="ml-1 select2 form-control">
 		<option value="" selected>Όλα τα Topic</option>
 		@foreach ($topics as $topic)
-			<option value="{{ $topic->id }}">{{ $topic->title }}</option>
+			<option value="{{ $topic->title }}">{{ $topic->title }}</option>
 		@endforeach
 	</select>
 

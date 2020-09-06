@@ -27,33 +27,23 @@ class CoursesDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-		$query = Course::with("topics", "curator");
-
-		if ( !is_null($request->startDate) && !is_null($request->endDate) && is_null($request->topicId) ) {
-			$query = Course::with("topics", "curator")
-			->where( function($subquery) use ($request) {
-				$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
-				->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-			});
-		}
-		elseif ( is_null($request->startDate) && is_null($request->endDate) && !is_null($request->topicId) ) {
-			
-			$query = Topic::find( $request->topicId )->courses();
-			
-		}
-		elseif ( !is_null($request->startDate) && !is_null($request->endDate) && !is_null($request->topicId) ) {
-			
-			$query = Topic::find( $request->topicId )->courses()
-				->where( function($subquery) use ($request) {
+		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
+		
+			$query = Course::where( function($subquery) use ($request) {
 					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-				});
-				
+				}
+			)
+			->with("topics", "curator")->get();
+
+		}
+		else {
+
+			$query = Course::with("topics", "curator")->get();
 
 		}
 
-        return datatables()
-            ->eloquent($query)
+        return datatables()::of($query)
 			->addColumn('action', function($data) {
 				
 				return "<div class='icheck-primary d-inline'>
@@ -81,7 +71,7 @@ class CoursesDataTable extends DataTable
 					<label for='$data->slug-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
-			->editColumn('topic', function( $data ) {
+			->editColumn('topics', function( $data ) {
 
 				$topics = [];
 
@@ -106,11 +96,13 @@ class CoursesDataTable extends DataTable
 			})
 			->editColumn('updated_at', function($data) {
 
+				// return Carbon::parse( $data->updated_at)->diffForHumans();
 				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
 
 			})
 			->editColumn('created_at', function($data) {
 
+				// return Carbon::parse( $data->created_at)->diffForHumans();
 				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
 
 			})
