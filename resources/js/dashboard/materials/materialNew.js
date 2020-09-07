@@ -30,7 +30,7 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         {data: "updated_at", name: "updated_at"},
         {data: "humans", name: "humans"},
         {data: "created_at", name: "created_at"},
-        {data: "active", name: "active"},
+        {data: "active", name: "active" ,visible:false},
 
     ],
     language: {
@@ -54,7 +54,10 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         $("#materials-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
         $("#materials-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
         $("#materials-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
-
+        utilities.resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
+        utilities.resetBulk($("#course-indside-material-bulk"), $(".js-course-inside-material"));
+        checkeBoxesEventListener();
+        selectMultipleCheckboxDelete();
     }
 });
 
@@ -157,6 +160,77 @@ $("#update-btn").click( function() {
     $(".formPrevent").submit();
 });
 
+
+
+//! BULK ACTIOON
+//!============================================================
+
+
+function checkeBoxesEventListener() {
+
+    let minorCheckboxes = $(".js-course-inside-material");
+    let mainCheckbox = $("#select-all-courses")[0];
+    let bulkBtn = $("#course-indside-material-bulk")[0];
+
+
+    minorCheckboxes.unbind();
+
+    minorCheckboxes.change(function () {
+        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
+    })
+
+}
+
+$("#select-all-courses").change(function () {
+    let minorCheckboxes = $(".js-course-inside-material");
+    let bulkBtn = $("#course-indside-material-bulk")[0];
+
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
+
+})
+
+
+const selectMultipleCheckboxDelete = () => {
+    $('#js-multiple-delete').unbind();
+    $("#js-multiple-delete").click(() => {
+        let checkboxes = $(".js-course-inside-material:checked")
+        let materialId = $("#material-course-table")[0].dataset.materialId
+
+        let ids = [];
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            ids.push(checkboxes[i].findParent(3).dataset.courseId);
+        }
+
+
+
+        axiosMultipleDelete(ids,materialId)
+
+    })
+}
+
+const axiosMultipleDelete = async (courseId,materialId) => {
+
+    try {
+        const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${courseId.length} απο τα μαθήματα `)
+        if (value) {
+            const {status} = await axios.delete("/materials/multiple/course/delete", {
+                data: {
+                    courseId,
+                    materialId,
+                }
+
+            })
+            if (status == 200) {
+                utilities.toastAlert("success", `${courseId.length} αφερέθηκαν`)
+                materialCourseDatatable.ajax.reload()
+            }
+        }
+    } catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+}
 
 
 

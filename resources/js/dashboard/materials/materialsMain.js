@@ -23,13 +23,11 @@ const materialsDatatable = $("#materials-datatable").DataTable({
     columns: [
         {data: "action", name: "action", searchable: false, orderable: false, className: "text-left"},
         {data: "title", name: "title", className: "js-link cursor-pointer text-left"},
-        {data: "status", name: "status", className: "text-left"},
+        {data: "status", name: "status", className: "text-left",orderable: false,},
         {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
         {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
-        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left", visible: false},
-        {data: "humans", name: "humans", className: "js-link cursor-pointer text-left"},
-        {data: "courses", name: "courses", className: "js-link cursor-pointer text-left", visible: false},
-        {data: "activeHidden", name: "activeHidden", visible: false},
+        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left"},
+        {data: "courses", name: "courses.title", className: "js-link cursor-pointer text-left",orderable: false,visible:false},
     ],
     language: {
         emptyTable: "Δεν υπάρχουν εγγραφές",
@@ -64,9 +62,9 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 
 //! FILTER DATATABLE
 //!============================================================
-utilities.filterButton('#activeFilterMaterial', 8, materialsDatatable);
+utilities.filterButton('#activeFilterMaterial', 2, materialsDatatable);
 utilities.filterButton('#typeFilterMaterial', 3, materialsDatatable);
-utilities.filterButton('#courseFilterMaterial', 7, materialsDatatable);
+utilities.filterButton('#courseFilterMaterial', 6, materialsDatatable);
 
 function fromDay(input) {
     let dateInput = input;

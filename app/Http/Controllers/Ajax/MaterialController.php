@@ -26,35 +26,6 @@ class MaterialController extends Controller {
         return $dataTable->render('materials-course.index');
     }
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Material $material)
-    {
-        //
-    }
-
-    public function edit(Material $material)
-    {
-        //
-    }
-
-    public function update(Request $request, Material $material)
-    {
-        //
-    }
-
-    public function destroy(Material $material)
-    {
-        //
-    }
 
     public function toggleStatus(Material $material, Request $request)
     {
@@ -185,6 +156,18 @@ class MaterialController extends Controller {
                 $material->save();
             }
         }
+
+        return response()->json(['success' => 'Status change successfully.']);
+    }
+
+    public function destroyMultipleCourse(Request $request)
+    {
+
+
+        $material = Material::find($request->materialId);
+        $material->courses()->detach($request->courseId);
+
+
 
         return response()->json(['success' => 'Status change successfully.']);
     }

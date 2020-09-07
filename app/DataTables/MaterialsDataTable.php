@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Material;
 use App\User;
+use Carbon\Carbon;
 use http\Env\Request;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
@@ -27,14 +28,14 @@ class MaterialsDataTable extends DataTable {
 
         if (!request()->from_date && !request()->to_date)
         {
-            $data = Material::all();
+            $data = Material::with(["courses"])->select("materials.*");
+
 
         } else
         {
             $data = Material:: whereBetween('created_at', [request()->from_date."  00:00:00", request()->to_date." 23:59:59"])->get();
 
         }
-
 
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
@@ -44,22 +45,10 @@ class MaterialsDataTable extends DataTable {
 							<label for='$data->slug'></label>
 						</div>";
             })
-            ->addColumn('humans', function ($data) {
-
-                if($data->created_at){
-
-                    return $data->created_at->diffForHumans() ;
-                }
-            })
-            ->addColumn('courses', function ($data) {
-
-                  $material  = Material::findOrFail($data->id);
-
-                  return $material->courses->pluck("title");
-            })
-            ->addColumn('activeHidden', function ($data) {
-
-                return $data->status;
+            ->addColumn('courses', function (Material $material) {
+                return $material->courses->map(function($course) {
+                    return $course->title;
+                })->implode(', ');
             })
             ->editColumn('title', function($data) {
 
@@ -77,7 +66,17 @@ class MaterialsDataTable extends DataTable {
                 return "<input class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->slug . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
-            ->rawColumns(['action', 'status',"courses","humans","title","activeHidden"])
+            ->editColumn('created_at', function ($data) {
+
+                return  Carbon::parse($data->created_at)->diffForHumans();
+
+            })
+            ->editColumn('updated_at', function ($data) {
+
+                return  Carbon::parse($data->updated_at)->diffForHumans();
+
+            })
+            ->rawColumns(['action', 'status',"courses","title"])
             ->setRowAttr(['data-material-id' => function ($data) {
 
                 return $data->id;

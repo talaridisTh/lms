@@ -54,10 +54,8 @@
 					<th class="text-left">Ενεργό</th>
 					<th class="text-left">Τύπος</th>
 					<th class="text-left">Τελ. Ανανέωση</th>
-					<th class="text-left">Ημ. Δημιουργίαςhide</th>
 					<th class="text-left">Ημ. Δημιουργίας</th>
 					<th class="text-left">create</th>
-					<th class="text-left">activeHidden</th>
 				</tr>
 			</thead>
 			<tbody  class="tables-hover-effect"></tbody>
@@ -73,10 +71,8 @@
 					<th class="text-left">Ενεργό</th>
 					<th class="text-left">Τύπος</th>
 					<th class="text-left">Τελ. Ανανέωση</th>
-					<th class="text-left">Ημ. Δημιουργίαςhide</th>
                     <th class="text-left">Ημ. Δημιουργίας</th>
                     <th class="text-left">create</th>
-                    <th class="text-left">activeHidden</th>
 				</tr>
 			</tfoot>
 		</table>

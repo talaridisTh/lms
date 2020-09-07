@@ -4,7 +4,7 @@
     <tr>
         <th class="text-left ">
             <div class='icheck-primary d-inline'>
-                <input type='checkbox' id='select-all-courses' autocomplete='off'>
+                <input type='checkbox' id='select-all-courses' autoc    omplete='off'>
                 <label for='select-all-courses'></label>
             </div>
         </th>
@@ -32,3 +32,17 @@
     </tr>
     </tfoot>
 </table>
+
+<div class="row mt-3">
+    <div class="col-sm-1">
+    </div>
+    <div class="col-sm-11 d-flex justify-content-end">
+{{--        <button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">--}}
+{{--            <i class="mdi mdi-plus-circle mr-2"></i>--}}
+{{--            Προσθήκη Υλικού--}}
+{{--        </button>--}}
+        <div class="dropdown ml-2">
+                @include("components.admin.materials.bulkActionCouseInsideMaterial")
+        </div>
+    </div>
+</div>

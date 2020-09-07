@@ -148,6 +148,8 @@ Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@tog
 
 //! Dashboard Ajax Materials CRUD
 Route::patch( 'materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus' );
+Route::delete('/materials/multiple/course/delete', 'Ajax\MaterialController@destroyMultipleCourse')->name("destroyMultipleCourse.datatable");
+
 
 //! Dashboard Topics Datatables
 Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );

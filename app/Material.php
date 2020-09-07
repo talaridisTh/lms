@@ -47,13 +47,6 @@ class Material extends Model
 
 	}
 
-    public function getUpdatedAtAttribute($value)
-	{
-
-	    return  Carbon::parse($value)->diffForHumans();
-
-
-	}
 
     public function getRouteKeyName()
     {

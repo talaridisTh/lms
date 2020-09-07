@@ -30,8 +30,8 @@ class CourseInsideMaterialsDataTable extends DataTable
         return datatables()::of($query)
             ->addColumn('checkbox', function ($data) {
                 return "<div class='icheck-primary d-inline'>
-							<input class='js-user-checkbox' data-user-id='$data->id'  type='checkbox'  autocomplete='off'>
-							<label for=''></label>
+							<input class='js-course-inside-material'  id='$data->title' type='checkbox'  autocomplete='off'>
+							<label for='$data->title'></label>
 						</div>";
             })
             ->addColumn('topics', function ($data) {
@@ -63,7 +63,12 @@ class CourseInsideMaterialsDataTable extends DataTable
                 return $data->updated_at->diffForHumans();
 
             })
-            ->rawColumns(["checkbox","topics","humans","active"]);
+            ->rawColumns(["checkbox","topics","humans","active"])
+            ->setRowAttr([
+                'data-course-id' => function ($data) {
+                    return $data->id;
+                }
+            ]);
 
     }
 
