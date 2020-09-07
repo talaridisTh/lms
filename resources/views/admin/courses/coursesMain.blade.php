@@ -42,40 +42,6 @@
 	</div>     
 	<!-- end page title -->
 
-	<div id="new-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="new-course-modalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content">
-				<div class="modal-header modal-colored-header bg-primary">
-					<h4 class="modal-title" id="new-course-modalLabel">Νέο Course</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				</div>
-				<div class="modal-body table-cnt">
-					<form id="new-course-form" class="px-3" action="courses/store" method="POST" enctype="multipart/form-data" autocomplete="off">
-
-						@csrf
-						<div class="form-group">
-							<label for="title">Τίτλος</label>
-							<input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
-							@error('title')
-								<span class="invalid-feedback" role="alert">
-									<strong>{{ $message }}</strong>
-								</span>
-							@enderror
-						</div>
-
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button id="submit-form-btn" class="btn btn-primary">
-						<i class="mdi mdi-content-save mr-1"></i>
-						Δημιουργία
-					</button>
-					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
 	<!-- Modal -->
 	<div class="modal fade" id="clone-course-modal" tabindex="-1" role="dialog" aria-labelledby="clone-course-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" role="document">
@@ -121,7 +87,7 @@
 			<div class="col-sm-8">
 
 				<div class="text-sm-right sticky-btns">
-					<a href="#" class="btn btn-primary mb-2" data-toggle="modal" data-target="#new-course-modal">
+					<a href="/dashboard/course/" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
@@ -157,6 +123,7 @@
 					<th class="text-center">Ενεργό</th>
 					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
+					<th class="text-center">Έκδοση</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
 				</tr>
@@ -169,6 +136,7 @@
 					<th class="text-center">Ενεργό</th>
 					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
+					<th class="text-center">Έκδοση</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
 				</tr>
@@ -181,7 +149,7 @@
 	<select id="topic-filter" class="ml-1 select2 form-control">
 		<option value="" selected>Όλα τα Topic</option>
 		@foreach ($topics as $topic)
-			<option value="{{ $topic->id }}">{{ $topic->title }}</option>
+			<option value="{{ $topic->title }}">{{ $topic->title }}</option>
 		@endforeach
 	</select>
 

@@ -219,6 +219,22 @@ function createDateElm( id ) {
 	return input;
 }
 
+function createCourseTypeSelect( id = "" ) {
+
+	const selectElm = document.createElement("select");
+
+    selectElm.classList.add("ml-1", "select2");
+	selectElm.id = id;
+
+    selectElm.innerHTML = `
+		<option value="">Όλες οι Εκδόσεις</option>
+		<option value="Normal">Normal</option>
+		<option value="Trial">Trial</option>
+	`;
+
+    return selectElm;
+}
+
 function startDate( input ) {
 
 	let dateInput = input;
@@ -280,6 +296,7 @@ export default {
 	startDate,
 	endDate,
 	resetBulk,
-	resetAddButton
+	resetAddButton,
+	createCourseTypeSelect
 }
 

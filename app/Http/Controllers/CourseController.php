@@ -92,29 +92,27 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course)
+    public function show(Course $course = null)
     {
-		$allRemainingMaterials = Course::notInCourseMaterials( $course );
-		$materials = $course->materials()->orderBy('priority')->get();
+		
 		$topics = Topic::all();
 		$instructors = Role::find( 2 )->users;
-		$lessonIds = [];
-
-		$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
 		
-		foreach ($materials as $lesson) {
-			array_push( $lessonIds, $lesson['id'] );
-		};
+		if ( is_null($course) ) {
+			$publish = "";
+		}
+		else {
+			$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
 
+		}
+		
 		$data = [
 			'course' => $course,
-			'materials' => $materials,
 			'topics' => $topics,
 			'instructors' => $instructors,
 			'publish' => $publish,
-			'allRemainingMaterials' => json_decode($allRemainingMaterials, true),
 		];
-
+		
         return view('admin.courses.course')->with($data);
     }
 

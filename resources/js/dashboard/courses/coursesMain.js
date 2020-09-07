@@ -99,7 +99,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 			return $.extend( {}, d, {
 				startDate: startDate( $("#course-date-range")[0] ),
 				endDate: endDate( $("#course-date-range")[0] ),
-				topicId: $("#topic-filter").val()
+				// topicId: $("#topic-filter").val()
 			})
 		}
 	},
@@ -107,8 +107,9 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
 		{data: 'status', name: 'status', className: "align-middle"},
-		{data: 'curator', name: 'curator', className: "align-middle", searchable: false, orderable: false },
-		{data: 'topic', name: 'topic', className: "align-middle", searchable: false, orderable: false },
+		{data: 'curator', name: 'curator', className: "align-middle" },
+		{data: 'topics', name: 'topics', className: "align-middle" },
+		{data: 'type', name: 'type', className: "align-middle" },
 		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
@@ -244,7 +245,7 @@ $("#course-state-select").change( function () {
 
 	utilities.filterStyle( label, this.value );
 
-	coursesDatatable.columns(2).search( this.value ).draw();
+	coursesDatatable.column(2).search( this.value ).draw();
 
 });
 
@@ -259,9 +260,28 @@ $("#topic-filter").change( function() {
 	let label = $("#select2-topic-filter-container")[0];
 
 	utilities.filterStyle( label, this.value );
-	coursesDatatable.ajax.reload();
+	coursesDatatable.column(4).search( this.value ).draw();
 
 });
+
+let courseTypesSelect = utilities.createCourseTypeSelect("course-type-selection");
+tablesLengthLabel.append(courseTypesSelect);
+
+$("#course-type-selection").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#course-type-selection").change( function() {
+
+	let label = $("#select2-course-type-selection-container")[0];
+	utilities.filterStyle( label, this.value );
+
+	coursesDatatable.column(5).search( this.value ).draw();
+
+});
+
+
+
 
 //!##########################################
 //!				script functions			#

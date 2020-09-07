@@ -22,6 +22,7 @@ class CreateCoursesTable extends Migration
             $table->text('description')->nullable();
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->nullable();
             $table->string('slug');
+            $table->string('type');
 			$table->unsignedTinyInteger('status');
 			$table->timestamp('publish_at')->nullable();
 			$table->timestamps();

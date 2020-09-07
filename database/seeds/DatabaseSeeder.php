@@ -12,58 +12,6 @@ class DatabaseSeeder extends Seeder {
      * @return void
      */
 
-//    public function run()
-//    {
-//        $this->call(RoleSeeder::class);
-//        $this->call(UserSeeder::class);
-//        $this->call(TopicSeeder::class);
-//
-//
-//        factory(App\Bundle::class, 3)->create()
-//            ->each(function ($bundle) {
-//
-//                $bundle->courses()->saveMany(factory(App\Course::class, 5)->create()
-//                    ->each(function($course) {
-//
-//                        $course->topics()->attach(App\Topic::all()->random()->id);
-//                        $course->topics()->attach(App\Topic::all()->random()->id);
-//                        $course->users()->saveMany(factory(App\User::class, 5)->create())
-//                            ->each(function($user) {
-//
-//                                $rand = rand( 0 ,2);
-//                                $roles = [ 'instructor', 'student','partner' ];
-//                                $user->assignRole($roles[$rand]);
-//
-//                            });
-//                    }));
-//            });
-//
-//        factory(App\Material::class, 10)->create()
-//            ->each(function ($materials) {
-//
-//                $materials->topics()->attach(App\Topic::all()->random()->id);
-//                $materials->users()->saveMany(factory(App\User::class, 2)->create())
-//                    ->each(function ($user) {
-//
-//                        $user->assignRole('instructor');
-//
-//                    });
-//            });
-//
-//        // an mpei epano oi users den exoun dimiourgi8ei akomi kai petaei errors
-//        $this->call(CourseMaterialSeeder::class);
-//
-//
-//        $admin  = User::whereFirstName("admin")->first();
-//
-//        $admin->courses()->sync(Course::all());
-//
-//
-//
-//    }
-
-
-
     public function run()
     {
         $this->call(RoleSeeder::class);
@@ -71,16 +19,15 @@ class DatabaseSeeder extends Seeder {
         $this->call(TopicSeeder::class);
 
 
-
-        factory(App\Bundle::class, 5)->create()
+        factory(App\Bundle::class, 3)->create()
             ->each(function ($bundle) {
 
-                $bundle->courses()->saveMany(factory(App\Course::class, 40)->create()
+                $bundle->courses()->saveMany(factory(App\Course::class, 5)->create()
                     ->each(function($course) {
 
                         $course->topics()->attach(App\Topic::all()->random()->id);
                         $course->topics()->attach(App\Topic::all()->random()->id);
-                        $course->users()->saveMany(factory(App\User::class, 1)->create())
+                        $course->users()->saveMany(factory(App\User::class, 5)->create())
                             ->each(function($user) {
 
                                 $rand = rand( 0 ,2);
@@ -91,11 +38,11 @@ class DatabaseSeeder extends Seeder {
                     }));
             });
 
-        factory(App\Material::class, 250)->create()
+        factory(App\Material::class, 10)->create()
             ->each(function ($materials) {
 
                 $materials->topics()->attach(App\Topic::all()->random()->id);
-                $materials->users()->saveMany(factory(App\User::class, 1)->create())
+                $materials->users()->saveMany(factory(App\User::class, 2)->create())
                     ->each(function ($user) {
 
                         $user->assignRole('instructor');
@@ -105,6 +52,52 @@ class DatabaseSeeder extends Seeder {
 
         // an mpei epano oi users den exoun dimiourgi8ei akomi kai petaei errors
         $this->call(CourseMaterialSeeder::class);
+
     }
+
+
+//
+//    public function run()
+//    {
+//        $this->call(RoleSeeder::class);
+//        $this->call(UserSeeder::class);
+//        $this->call(TopicSeeder::class);
+//
+//
+//
+//        factory(App\Bundle::class, 5)->create()
+//            ->each(function ($bundle) {
+//
+//                $bundle->courses()->saveMany(factory(App\Course::class, 40)->create()
+//                    ->each(function($course) {
+//
+//                        $course->topics()->attach(App\Topic::all()->random()->id);
+//                        $course->topics()->attach(App\Topic::all()->random()->id);
+//                        $course->users()->saveMany(factory(App\User::class, 1)->create())
+//                            ->each(function($user) {
+//
+//                                $rand = rand( 0 ,2);
+//                                $roles = [ 'instructor', 'student','partner' ];
+//                                $user->assignRole($roles[$rand]);
+//
+//                            });
+//                    }));
+//            });
+//
+//        factory(App\Material::class, 250)->create()
+//            ->each(function ($materials) {
+//
+//                $materials->topics()->attach(App\Topic::all()->random()->id);
+//                $materials->users()->saveMany(factory(App\User::class, 1)->create())
+//                    ->each(function ($user) {
+//
+//                        $user->assignRole('instructor');
+//
+//                    });
+//            });
+//
+//        // an mpei epano oi users den exoun dimiourgi8ei akomi kai petaei errors
+//        $this->call(CourseMaterialSeeder::class);
+//    }
 
 }
