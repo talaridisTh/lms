@@ -1,3 +1,4 @@
+{{--
 @extends('layouts.dashboard')
 
 @section('css')
@@ -8,6 +9,7 @@
 @section('content')
     <section class="container-fruid">
         <x-alertMsg :msg="'update'"></x-alertMsg>
+
 		<div class="row">
 			<div class="col-12">
 				<div class="page-title-box">
@@ -61,13 +63,19 @@
 
 
             </div>
-{{--        @php($courseName=$material->courses()->first()->slug)--}}
+--}}
+{{--        @php($courseName=$material->courses()->first()->slug)--}}{{--
+
             <aside class="col-xl-3 col-lg-5 col-md-12">
 
                 <div class="sticky pb-3 px-2">
                     <button id="update-btn" class="btn btn-primary">Ενημέρωση</button>
-{{--                    <a href="{{route('index.material.show',[$courseName,$material->slug])}}" id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i>--}}
-{{--                    </a>--}}
+--}}
+{{--                    <a href="{{route('index.material.show',[$courseName,$material->slug])}}" id="preview-btn" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i>--}}{{--
+
+--}}
+{{--                    </a>--}}{{--
+
                     <button id="delete-btn" class="under-development btn btn-danger float-right">Διαγραφή</button>
                 </div>
                 <div class="border-material">
@@ -113,24 +121,22 @@
                         </select>
                     </div>
 
-                    {{--                    {{dd($material->users)}}--}}
-
-
                     <div class="form-group">
                         <label for="updateAtMaterial">Published</label>
                         <input type="text" class="form-control date" id="updateAtMaterial" data-toggle="date-picker"
                                data-single-date-picker="true">
                     </div>
                     <hR>
-
                     <div class="form-group mb-3">
                         <label for="instructorMaterial">Εισηγητής <span class="text-danger"> *</span></label>
-                        <select name="instructor" id="instructorMaterial" class="form-control " data-toggle="select2">
-                            <option></option>
-
-                            @foreach($instructors as $instructor)
-                                <option
-                                    value="{{$instructor->id}}" {{$top->id == $topic->id? "selected":""}} >{{$instructor->fullName}}</option>
+                        <select name="instructor[]" multiple="multiple" id="instructorMaterial" class="form-control ">
+                            @foreach ($instructors as $instructor)>
+                            <option value="{{$instructor->id}}"
+                            @foreach($material->users as $users)
+                                {{$users->id == $instructor->id? "selected":""}}
+                                @endforeach>
+                                {{$instructor->fullName}}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -138,7 +144,7 @@
                     <div class=" form-group ">
                         <h3>Creator</h3>
                         <input type="text" class="form-control" id="creatorMaterialHidden" disabled
-                               value="{{auth()->user()->fullName}}" placeholder="Εισάγετε URL video...">
+                               value="{{auth()->user()->fullName}}">
                     </div>
                     <hr>
                 </div>
@@ -180,3 +186,4 @@
     </script>
 
 @endsection
+--}}

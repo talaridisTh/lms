@@ -1,7 +1,9 @@
 import utilities from '../main';
 
-
  let materialId = $("#material-course-table")[0].dataset.materialId;
+
+
+console.log()
 //! DATATABLE INIT
 //!============================================================
 const materialCourseDatatable = $("#material-course-table").DataTable({
@@ -72,15 +74,11 @@ $R('#descriptionMaterial',{
 });
 $R('#contentMaterial',{
     minHeight: '150px'
-});
+}); ``
 
 //! METHOD FORM HIDEN
 //!============================================================
-utilities.changeInputHidden('#urlMaterial','#urlMaterialHiden')
-utilities.changeInputHidden('#activeMaterial','#activeMaterialHidden')
-utilities.changeInputHidden('#typeMaterial','#typeMaterialHidden')
-utilities.changeInputHidden('#instructorMaterial','#instructorMaterialHidden')
-utilities.changeInputHidden('#topicMaterial','#topicMaterialHidden')
+
 //! utilities.changeInputHidden('#coursesMaterial','#coursesMaterialHidden')
 
 //! GLOBAL FUNCTION Filter
@@ -89,22 +87,21 @@ utilities.filterButton('#topicFilterMaterialCourses', 2, materialCourseDatatable
 utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable)
 utilities.filterButton('#userFilterMaterialCourses', 3, materialCourseDatatable)
 
-
 //! SELECT2
 //!============================================================
 $("#typeMaterial").select2({
     minimumResultsForSearch: -1,
-    allowClear: true,
 });
 
 $("#instructorMaterial").select2({
-    allowClear: true,
+
+    tags: true
 });
 
 $("#topicMaterial").select2({
-    allowClear: true,
     tags: true
 });
+
 
 $("#topicFilterMaterialCourses").select2({});
 
@@ -146,21 +143,22 @@ dataRange.daterangepicker({
     opens: "center",
 });
 
-//! METHOD
-//!============================================================
-$(".buton-create-material").click(function(e){
-    $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
-
-})
 
 //! EVENT listener
 //!============================================================
 $("#update-btn").click( function() {
-    $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
     $(".formPrevent").submit();
 });
 
+$(".tab-link").on("show.bs.tab", function(event) {
 
+    event.preventDefault();
+    Swal.fire(
+        'Προσοχή',
+        '<p>Θα πρέπει να αποθηκεύσετε το Course</p>για να συνεχίσετε!',
+        'info'
+    );
+})
 
 //! BULK ACTIOON
 //!============================================================
