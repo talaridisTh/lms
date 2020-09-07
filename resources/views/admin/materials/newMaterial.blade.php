@@ -7,6 +7,7 @@
 
 @section('content')
     <x-alertMsg :msg="'create'"></x-alertMsg>
+    <x-alertMsg :msg="'update'"></x-alertMsg>
     <section class="container-fruid position-relative">
         <div class="row">
             <div class="col-12">
@@ -50,16 +51,23 @@
                 </ul>
 
                 <div class="col-md-4 offset-md-8 sticky pb-3 px-2  text-center mr-5">
-                    <button id="button-createMaterial-form" type="submit" form="material-create"
-                            class="btn btn-primary">{{isset($material)? "Ενημέρωση":"Δημιουργια"}}
+                    <button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
+                            form="material-create"
+                            class="btn btn-primary ">
+                        {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
                     </button>
-{{--                    <button id="preview-btn" class="under-development btn btn-warning"><i--}}
-{{--                            class="mdi mdi-eye"></i>--}}
-{{--                    </button>--}}
+                    {{--                    <button id="preview-btn" class="under-development btn btn-warning"><i--}}
+                    {{--                            class="mdi mdi-eye"></i>--}}
+                    {{--                    </button>--}}
                 </div>
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
-                        <form id="material-create" method="post" action="{{route('material.store')}}"
+                        <form id="material-create" method="post"
+                              @if(isset($material))
+                              action="{{route('material.update',$material->slug)}}"
+                              @else
+                              action="{{route('material.store')}}"
+                              @endif
                               enctype="multipart/form-data">
                             @csrf
                             @if(isset($material))
@@ -127,7 +135,7 @@
                                         <hr>
                                         <div class="d-flex justify-content-between">
                                             <span><strong>Κατάσταση</strong></span>
-                                            <input   name="status" type="checkbox"
+                                            <input name="status" type="checkbox"
                                                    id="activeMaterial" data-switch="bool"/>
                                             <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                                         </div>
@@ -145,10 +153,10 @@
 
                                     <div class="form-group mb-3">
                                         <label for="typeMaterial">Τύπος <span class="text-danger"> *</span></label>
-                                        <select  data-placeholder="Επιλέξτε Topics..." id="typeMaterial"
+                                        <select data-placeholder="Επιλέξτε Topics..." id="typeMaterial"
                                                 class="select2-multiple form-control"
                                                 name="type" data-toggle="select2"
-                                                 form="material-create">
+                                                form="material-create">
                                             <option value=""></option>
                                             @foreach ($types as $type)
                                                 <option value="{{$type->type}}"
@@ -174,7 +182,7 @@
                                                         {{$top->id == $topic->id? "selected":""}}
                                                         @endforeach
                                                     @endif
-                                                    >{{$topic->title}}
+                                                >{{$topic->title}}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -231,7 +239,7 @@
                     </div>
                     <div class="tab-pane " id="courses-tabs">
                         @if(isset($material))
-                        @include("components.admin.materials.tabsCourses")
+                            @include("components.admin.materials.tabsCourses")
                         @endif
                     </div>
                 </div>
@@ -253,7 +261,7 @@
     <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
 
     <x-routes></x-routes>
-{{--    <script src="{{ asset('js/dashboard/materials/material.js') }}"></script>--}}
+    {{--    <script src="{{ asset('js/dashboard/materials/material.js') }}"></script>--}}
     <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
 
 
