@@ -1,16 +1,16 @@
 {
     "/js/app.js": "/js/app.js?id=2f09a9d5c8e57b2f3123",
     "/css/app.css": "/css/app.css?id=9ef28b5d82f408202eb9",
-    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=3e773b92345721abb11b",
-    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=47dc0ad7fd3a8c89feec",
-    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=ce43a51119c909e1acf4",
-    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=4356eb0a71a578563dfd",
-    "/js/dashboard/main.js": "/js/dashboard/main.js?id=4526f497fdf798d58808",
+    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=e92c18366498ae1f8d70",
+    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=3c4953b08eb8686d83d0",
+    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=9d4c587599315c41631e",
+    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=3533eef85c312b2b78c2",
+    "/js/dashboard/main.js": "/js/dashboard/main.js?id=5aff7f1a44e2127e9fa7",
     "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=eaca11b6cb79092fa257",
-    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=fbd44875c76eaa0a0256",
-    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=5aadaa01eb06e6b27e8a",
-    "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=608213a1b72e7f7b17a5",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=7069a565c2985ff9fe95",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=0831d0bc706240843cfd",
-    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=81606cb36bd0860cade7"
+    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=42b62f3df974b4f5ee27",
+    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=a4c302d55293627bf188",
+    "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=9ba2f2cc32b4036da814",
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=5e85cad0f8d165653513",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=d03fdc7f8b28f7f777f6",
+    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=b941fbce183c859cdaa7"
 }

@@ -51,13 +51,6 @@ class DatabaseSeeder extends Seeder {
         // an mpei epano oi users den exoun dimiourgi8ei akomi kai petaei errors
         $this->call(CourseMaterialSeeder::class);
 
-
-        $admin  = User::whereFirstName("admin")->first();
-
-        $admin->courses()->sync(Course::all());
-
-
-
     }
 
 

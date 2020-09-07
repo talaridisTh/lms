@@ -109,6 +109,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'status', name: 'status', className: "align-middle"},
 		{data: 'curator', name: 'curator', className: "align-middle" },
 		{data: 'topics', name: 'topics', className: "align-middle" },
+		{data: 'type', name: 'type', className: "align-middle" },
 		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
 		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
 	],
@@ -260,9 +261,27 @@ $("#topic-filter").change( function() {
 
 	utilities.filterStyle( label, this.value );
 	coursesDatatable.column(4).search( this.value ).draw();
-	// coursesDatatable.ajax.reload();
 
 });
+
+let courseTypesSelect = utilities.createCourseTypeSelect("course-type-selection");
+tablesLengthLabel.append(courseTypesSelect);
+
+$("#course-type-selection").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#course-type-selection").change( function() {
+
+	let label = $("#select2-course-type-selection-container")[0];
+	utilities.filterStyle( label, this.value );
+
+	coursesDatatable.column(5).search( this.value ).draw();
+
+});
+
+
+
 
 //!##########################################
 //!				script functions			#
