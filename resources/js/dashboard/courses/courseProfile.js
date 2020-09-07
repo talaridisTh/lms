@@ -12,6 +12,64 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! EventListerners
 //!============================================================
 
+$("#activate-selection").click( function() {
+	let selection = $(".js-course-material-checkbox:checked");
+	let data = [];
+	
+	for ( var i = 0; i < selection.length; i++ ) {
+		data.push({
+			id: selection[i].dataset.materialId, 
+			status: 1
+		});
+	}
+
+	Swal.fire({
+		title: 'Ενεργοποίηση;',
+		html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
+		icon: 'info',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, ενεργοποίηση!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			toggleState( data );
+
+		}
+	})
+
+});
+
+$("#deactivate-selection").click( function() {
+	let selection = $(".js-course-material-checkbox:checked");
+	let data = [];
+	
+	for ( var i = 0; i < selection.length; i++ ) {
+		data.push({
+			id: selection[i].dataset.materialId, 
+			status: 0
+		});
+	}
+
+	Swal.fire({
+		title: 'Απενεργοποίηση;',
+		html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, απενεργοποίηση!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			toggleState( data );
+
+		}
+	})
+
+});
+
 $(".tab-link").on("show.bs.tab", function(event) {
 
 		event.preventDefault();
@@ -253,10 +311,10 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 
 	},
 	columns: [
-		{ data: 'action', name: 'action', className: "position-relative align-middle", orderable: false },
+		{ data: 'action', className: "position-relative align-middle", orderable: false },
 		{ data: 'title', name: 'title' },
-		{ data: 'status', name: 'course_material.status', className: "align-middle", },
-		{ data: 'priority', name: 'course_material.priority', className: "align-middle",  width: "5%", searchable: false },
+		{ data: 'status', name: 'pivot.status', className: "align-middle", },
+		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "cursor-default align-middle" },
 		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default align-middle", searchable: false },
 		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
@@ -611,8 +669,6 @@ function removeUserBtnInit() {
 			}
 		})
 
-
-		
 	})
 }
 
@@ -680,10 +736,14 @@ function toggleCourseMaterial() {
 
 	$('.js-toggle').on('change', function() {
 
+		//& an empene to function (toggleState)
+		//& 8a ginotan ena PERITO reload tou table
 		axios.patch('/courses/toggle-materials', {
 			courseId: this.dataset.courseId,
-			materialId: this.dataset.materialId,
-			state: this.checked
+			data: [{
+				id: this.dataset.materialId,
+				status: this.checked ? 1 : 0
+			}],
 		})
 		.then( (res) => {
 			let icon = this.checked ? "success" : "info";
@@ -1113,6 +1173,34 @@ function createDateElm( id ) {
 	input.placeholder = "Επιλέξτε ημερομηνίες...";
 
 	return input;
+}
+
+function toggleState(data) {
+	axios.patch('/courses/toggle-materials', {
+		courseId,
+		data
+	})
+	.then( (res) => {
+		let materialCount = data.length;
+		let status = data[0].status;
+		let message = "";
+		let icon = status == 1 ? "success" : "info";
+
+		if ( materialCount == 1 ) {
+			message = status == 1 ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+		}
+		else {
+			message = status == 1 ? "Ενεργοποιήθηκαν" : "Απενεργοποιήθηκαν";
+		}
+
+		utilities.toastAlert( icon, message );
+		courseMaterialsTable.ajax.reload( null, false);
+
+	})
+	.catch( (err) => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
 }
 
 function startDate( input ) {

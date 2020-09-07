@@ -304,6 +304,15 @@
 										</button>
 										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 											<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+											<div class="btn-group dropleft w-100">
+												<a class="dropdown-toggle dropdown-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+													Αλλαγή κατάστασης
+												</a>
+												<div class="dropdown-menu">
+													<a id="activate-selection" class="dropdown-item" href="#">Ενεργοποιήση</a>
+													<a id="deactivate-selection" class="dropdown-item" href="#">Απενεργοποίηση</a>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
