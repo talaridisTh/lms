@@ -77,7 +77,7 @@
                             <input name="cover" type="file" hidden class="form-control" id="coverMaterialHidden">
                             <input name="instructor" type="hidden" class="form-control" id="instructorMaterialHidden">
                             <input   multiple="multiple" type="hidden" class="form-control" id="topicMaterialHidden">
-                            {{--                            <input name="courses"  type="hidden"class="form-control" id="coursesMaterialHidden">--}}
+                            {{-- <input name="courses"  type="hidden"class="form-control" id="coursesMaterialHidden">--}}
                         </form>
                     </div>
                     <div class="tab-pane " id="profile">

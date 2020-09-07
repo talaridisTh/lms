@@ -111,6 +111,7 @@ class HomeController extends Controller {
     public function test()
     {
 
+        return $query = Material::findOrFail(1);
 
     }
 

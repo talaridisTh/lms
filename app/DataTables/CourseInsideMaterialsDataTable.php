@@ -34,7 +34,7 @@ class CourseInsideMaterialsDataTable extends DataTable
 							<label for=''></label>
 						</div>";
             })
-            ->addColumn('topic', function ($data) {
+            ->addColumn('topics', function ($data) {
 
                 $collection =  $data->topics->map(function($top){
                     return $top->title ;
@@ -43,12 +43,27 @@ class CourseInsideMaterialsDataTable extends DataTable
                 return $collection->implode(", ");
 
             })
-            ->editColumn('curator', function ($data) {
+            ->addColumn('humans', function ($data) {
 
-                    return  User::find($data->user_id)->fullName;
+                return $data->created_at->diffForHumans();
 
             })
-            ->rawColumns(["checkbox","topic"]);
+            ->addColumn('active', function ($data) {
+
+                return $data->status;
+
+            })
+            ->editColumn('curator', function ($data) {
+
+                return  User::find($data->user_id)->fullName;
+
+            })
+            ->editColumn('updated_at', function ($data) {
+
+                return $data->updated_at->diffForHumans();
+
+            })
+            ->rawColumns(["checkbox","topics","humans","active"]);
 
     }
 
@@ -60,7 +75,7 @@ class CourseInsideMaterialsDataTable extends DataTable
      */
     public function query(Course $model)
     {
-         return $model->newQuery();
+        return $model->newQuery();
     }
 
     /**
@@ -71,18 +86,18 @@ class CourseInsideMaterialsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('courseinsidematerials-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('courseinsidematerials-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -94,10 +109,10 @@ class CourseInsideMaterialsDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('id'),
             Column::make('add your columns'),
             Column::make('created_at'),

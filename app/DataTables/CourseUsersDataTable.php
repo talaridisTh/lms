@@ -34,7 +34,7 @@ class CourseUsersDataTable extends DataTable
 				'users.last_name',
 				'users.email',
 				'users.slug',
-				'model_has_roles.role_id',
+				'model_has_roles.role_id'
 			)
 			->get();
 
@@ -54,7 +54,7 @@ class CourseUsersDataTable extends DataTable
 			->addColumn('btn', function($data) {
 
 				return "<i class='js-remove-user h3 pt-1 uil uil-trash-alt cursor-pointer' data-user-id='$data->id'></i>";
-				
+
 			})
 			->addColumn('role', function($data) {
 

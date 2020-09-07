@@ -35,7 +35,7 @@ $factory->define(User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'phone' => 69 . $faker->numberBetween( 3, 9 ). $faker->randomNumber( 7 , false),
         'profil' => $faker->sentence,
-        'avatar' => "https://robohash.org/$faker->firstName.png?set=set5",
+        'avatar' => $faker->md5 .".jpg",
         "slug"=> Str::slug($faker->firstName,"-"),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         'status' => $faker->numberBetween( 0, 1 ),

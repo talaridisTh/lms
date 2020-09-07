@@ -1,6 +1,10 @@
 @extends("layouts.app")
 
 @section("style")
+
+
+
+
     <style>
         .left-side-menu {
             display: none;
@@ -32,6 +36,7 @@
 
 
 
+
     </style>
 @endsection
 @php($count=0)
@@ -53,6 +58,7 @@
                                  src="https://laracasts.s3.amazonaws.com/series/thumbnails/svg/html5-video-and-videojs.svg"
                                  alt="">
                         </div>
+
                         <div class="col-md-6">
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
                             <p class="my-4">{{$course->subtitle}}</p>
@@ -147,8 +153,9 @@
         </div>
 
         <div class="container">
-            <div class="row background-material">
+            <div class="row background-material article-div">
                 <div class="col-md-12">
+
                     {!! $course->description !!}
                 </div>
 

@@ -8,7 +8,7 @@ let dataRange = $("#daterange")
 //!##################################################
 const tables = $("#scroll-horizontal-datatable").DataTable({
     // caseInsensitive: false,
-    order: [[8, "desc"]],
+    // order: [6, "desc"],
     processing: true,
     serverSide: true,
     ajax: {
@@ -25,22 +25,20 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
     columns: [
         {
             data: null,
+            searchable : false,
             name: "extra",
             orderable: false,
             className: 'details-control cursor-pointer',
             defaultContent: `<i class="mdi h4 mdi-plus-circle-outline text-success"></i>`
         },
         {data: "chexbox", name: "chexbox", orderable: false,},
-        {data: "avatar", name: "avatar", orderable: false, visible: false, className: " "},
-        {data: "first_name", name: "first_name", className: ""},
-        {data: "last_name", name: "last_name", className: "js-link cursor-pointer"},
-        {data: "action", name: "action", className: "js-link cursor-pointer"},
-        {data: "email", name: "email", className: "js-link cursor-pointer"},
-        {data: 'status', name: 'status', orderable: false},
-        {data: 'created_at', name: 'created_at', visible: false},
-        {data: 'activeNum', name: 'activeNum', visible: false},
-        {data: 'dateChange', name: 'dateChange'},
-        {data: 'allcourse', name: 'allcourse', visible: false},
+        {data: "first_name", name: "users.first_name"},
+        {data: "last_name", name: "users.last_name", className: "js-link cursor-pointer"},
+        {data: "roles", name: "roles.name", className: "js-link cursor-pointer"},
+        {data: "email", name: "users.email", className: "js-link cursor-pointer"},
+        {data: 'status', name: 'users.status', orderable: false},
+        {data: 'created_at', name: 'users.created_at'},
+        {data: 'courses', name: 'courses.title',orderable: false},
     ],
     language: config.datatable.language,
 
@@ -120,11 +118,11 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
 }
 
 
-//! GLOBAL FUNCTION
+//! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#activeFilter', 9, tables)
-utilities.filterButton('#rolesFilter', 5, tables)
-utilities.filterButton('#fullNameFilter', 11, tables)
+utilities.filterButton('#activeFilter', 6, tables)
+utilities.filterButton('#rolesFilter', 4, tables)
+utilities.filterButton('#fullNameFilter', 8, tables)
 
 //! EVENT LISTENER
 //!============================================================

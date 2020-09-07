@@ -29,7 +29,7 @@ $("#select-all-courses").change( function() {
 })
 
 $("#submit-form-btn").click( function() {
-	
+
 	$("#new-course-form").submit()
 
 });
@@ -75,11 +75,11 @@ $('#delete-courses-btn').click( function() {
 				utilities.resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses") );
 			})
 			.catch(function (error) {
-				
+
 				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 			});
-			
+
 		}
 	})
 });
@@ -209,7 +209,7 @@ let dateRange = $("#course-date-range");
 dateRange.daterangepicker( utilities.datePickerConfig );
 
 dateRange.on( "apply.daterangepicker", function(event, picker) {
-		
+
 	let startDate = picker.startDate.format('DD/MM/YYYY');
 	let endDate = picker.endDate.format('DD/MM/YYYY');
 
@@ -303,10 +303,10 @@ function endDate( input ) {
 	if ( !dateInput || dateInput.value == "" ) {
 		return "";
 	}
-	
+
 	let dateInputValue = dateInput.value.split(" - ");
 	let secondDate = dateInputValue[1].split("/").reverse().join("-");
-	
+
 	return secondDate;
 }
 

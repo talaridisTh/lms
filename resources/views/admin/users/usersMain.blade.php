@@ -22,7 +22,7 @@
 					<h4 class="page-title">Χρήστες</h4>
 				</div>
 			</div>
-		</div>     
+		</div>
 	</div>
 	<!-- end page title -->
 
@@ -50,14 +50,11 @@
                         <label for='select-all-courses'></label>
                     </div>
                 </th>
-                <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
                 <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
-                <th class="text-left">Ημ. Εγγραφής</th>
-                <th class="text-left">test</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
                 <th class="text-left">courses</th>
             </tr>
@@ -73,14 +70,11 @@
                         <label for='select-all-courses'></label>
                     </div>
                 </th>
-                <th class="text-left">Avatar</th>
                 <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
                 <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
-                <th class="text-left">Ημ. Εγγραφής</th>
-                <th class="text-left">test</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
                 <th class="text-left">courses</th>
             </tr>

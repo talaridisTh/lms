@@ -80,14 +80,14 @@ class User extends Authenticatable {
 //    CUSTOM METHOD
     public static function getInstructor()
     {
-        $users = User::whereHas("courses")->get();
+//        $users = User::whereHas("courses")->get();
+        $users = User::all();
         $instructor = [];
         foreach ($users as $user)
         {
             if ($user->getRoleNames()[0] == "instructor")
                 array_push($instructor, $user);
         }
-
 
         return $instructor;
     }
@@ -205,11 +205,11 @@ class User extends Authenticatable {
 
     }
 
-//    public function getCreatedAtAttribute($value)
-//    {
-//        $carbonDate = new Carbon($value);
-//        return $carbonDate->format('m-d-yy');
-//    }
+    public function getCreatedAtAttribute($value)
+    {
+        $carbonDate = new Carbon($value);
+        return $carbonDate->diffForHumans();
+    }
 
 
 }

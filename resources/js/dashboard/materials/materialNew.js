@@ -2,8 +2,8 @@ import utilities from '../main';
 
 
  let materialId = $("#material-course-table")[0].dataset.materialId;
-
-
+//! DATATABLE INIT
+//!============================================================
 const materialCourseDatatable = $("#material-course-table").DataTable({
     // order: [[ 5, "desc" ]],
     processing: true,
@@ -25,11 +25,12 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
     columns: [
         {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-left"},
         {data: "title", name: "title"},
-        {data: "topic", name: "topic"},
+        {data: "topics", name: "topics.title"},
         {data: "curator", name: "curator"},
         {data: "updated_at", name: "updated_at"},
+        {data: "humans", name: "humans"},
         {data: "created_at", name: "created_at"},
-        // {data: "humans", name: "humans", className: "js-link cursor-pointer text-left"},
+        {data: "active", name: "active"},
 
     ],
     language: {
@@ -57,8 +58,6 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
     }
 });
 
-
-
 //! EDITOR INIT
 //!============================================================
 
@@ -72,17 +71,20 @@ $R('#contentMaterial',{
     minHeight: '150px'
 });
 
-
-//! METHOD INIT
+//! METHOD FORM HIDEN
 //!============================================================
-
 utilities.changeInputHidden('#urlMaterial','#urlMaterialHiden')
 utilities.changeInputHidden('#activeMaterial','#activeMaterialHidden')
 utilities.changeInputHidden('#typeMaterial','#typeMaterialHidden')
 utilities.changeInputHidden('#instructorMaterial','#instructorMaterialHidden')
 utilities.changeInputHidden('#topicMaterial','#topicMaterialHidden')
-// utilities.changeInputHidden('#coursesMaterial','#coursesMaterialHidden')
+//! utilities.changeInputHidden('#coursesMaterial','#coursesMaterialHidden')
 
+//! GLOBAL FUNCTION Filter
+//!============================================================
+utilities.filterButton('#topicFilterMaterialCourses', 2, materialCourseDatatable)
+utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable)
+utilities.filterButton('#userFilterMaterialCourses', 3, materialCourseDatatable)
 
 
 //! SELECT2
@@ -101,10 +103,16 @@ $("#topicMaterial").select2({
     tags: true
 });
 
+$("#topicFilterMaterialCourses").select2({});
+
+$(".custom-select").select2({   minimumResultsForSearch: -1,});
+
+$("#activeFilterMaterialCourses").select2({   minimumResultsForSearch: -1,});
+
+$("#userFilterMaterialCourses").select2({   minimumResultsForSearch: -1,});
 
 
 //sortable
-
 $("ul.select2-selection__rendered").sortable({
     containment: 'parent'
 });
@@ -135,19 +143,12 @@ dataRange.daterangepicker({
     opens: "center",
 });
 
-
-
-
-
 //! METHOD
 //!============================================================
 $(".buton-create-material").click(function(e){
     $( "#topicMaterialHidden" ).replaceWith( $( "#topicMaterial" ) );
 
 })
-
-
-
 
 //! EVENT listener
 //!============================================================

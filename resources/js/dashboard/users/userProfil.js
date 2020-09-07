@@ -4,6 +4,41 @@ import utilities from '../main';
 //!============================================================
 const userId = $(".course-materials-list")[0].dataset.id
 
+//! GLOBAL METHOD
+//!============================================================
+const routeLink = () => {
+    $('.js-link').click(function () {
+        $('.js-link').unbind();
+
+        let course = this.parentElement.dataset.courseId;
+
+
+        window.location = `/dashboard/course/${course}`;
+    });
+}
+
+$('#alertSumbit').submit(async (e) => {
+    e.preventDefault()
+    let buttonDelete = $('.js-delete');
+    const slug = buttonDelete[0].dataset.slug;
+
+    try {
+        const {value} = await utilities.toastAlertDelete("Θέλετε να διαγράψετε αυτόν τον χρήστη ")
+        if (value) {
+            // const res = await axios.post(`/dashboard/users/${slug}`, {_method: 'DELETE'})
+            utilities.toastAlert('success', "Διεγράφη")
+            window.location = `http://127.0.0.1:8000/dashboard/users`;
+        }
+
+    } catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+
+
+});
+
+
 //! DATATABLES INIT
 //!============================================================
 const courses = $(".course-materials-list").DataTable({
@@ -81,44 +116,7 @@ const addCourse = $("#datatableAddCourse").DataTable({
 });
 
 
-//! GLOBAL METHID
-//!============================================================
-
-const routeLink = () => {
-    $('.js-link').click(function () {
-        $('.js-link').unbind();
-
-        let course = this.parentElement.dataset.courseId;
-
-
-        window.location = `/dashboard/course/${course}`;
-    });
-}
-
-$('#alertSumbit').submit(async (e) => {
-    e.preventDefault()
-    let buttonDelete = $('.js-delete');
-    const slug = buttonDelete[0].dataset.slug;
-
-    try {
-        const {value} = await utilities.toastAlertDelete("Θέλετε να διαγράψετε αυτόν τον χρήστη ")
-        if (value) {
-            // const res = await axios.post(`/dashboard/users/${slug}`, {_method: 'DELETE'})
-            utilities.toastAlert('success', "Διεγράφη")
-            window.location = `http://127.0.0.1:8000/dashboard/users`;
-        }
-
-    } catch (e) {
-        console.log(e)
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-    }
-
-
-});
-
-
-
-//! BULK ACRTION FIRST TABLE
+//! BULK ACRTION courses TABLE
 //!============================================================
 //first datatable
 
@@ -244,10 +242,8 @@ $("#select-all-courses").change(function () {
 })
 
 
-//! BULK ACRTION SECOND TABLE
+//! BULK ACRTION addCourse TABLE
 //!============================================================
-
-
 const updateMultipleCourse = () => {
     $('.js-chexbox-update').unbind();
     $('.js-chexbox-update').click(async () => {
@@ -286,7 +282,6 @@ const updateMultipleCourse = () => {
     })
 }
 
-
 function checkeBoxesEventListenerSecont() {
 
     let minorCheckboxes = $(".js-user-profile-checkbox");
@@ -302,7 +297,6 @@ function checkeBoxesEventListenerSecont() {
 
 }
 
-
 $("#select-all-courses-profile").change(function () {
     let minorCheckboxes = $(".js-user-profile-checkbox");
     let bulkBtn = $("#user-addCourses-bulk-action-btn")[0];
@@ -311,7 +305,6 @@ $("#select-all-courses-profile").change(function () {
     utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 
 })
-
 
 $('#material-modal-shown-btn').click(() => {
     setTimeout(() => {

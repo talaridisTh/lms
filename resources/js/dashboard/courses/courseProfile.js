@@ -25,7 +25,7 @@ $("#course-delete-btn").click( function() {
 		if (result.value) {
 
 			$("#delete-course-form").submit();
-			
+
 		}
 	})
 })
@@ -45,7 +45,7 @@ let publishDate = $("#publish-date-select").daterangepicker({
 });
 
 publishDate.on( "apply.daterangepicker", function(event, picker) {
-		
+
 	let startDate = picker.startDate.format('DD-MM-YYYY H:mm');
 	this.value = startDate;
 
@@ -777,7 +777,7 @@ axios.post("/materials/material-types")
 		$("#selected-materials-types").select2({
 			minimumResultsForSearch: -1,
 		});
-	
+
 		$("#selected-materials-types").change( function() {
 
 			let label = $('#select2-selected-materials-types-container')[0];

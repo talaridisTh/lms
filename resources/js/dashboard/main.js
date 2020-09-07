@@ -170,10 +170,12 @@ function filterStyle( input, value ) {
 
 }
 
-const filterButton = function (attr, column, table) {
+    const filterButton = function (attr, column, table) {
     $(attr).detach().appendTo('.dataTables_length label')
+
     $(attr).on('change', function () {
         table.columns(column).search(this.value).draw();
+        console.log(column)
     });
 }
 
@@ -238,10 +240,10 @@ function endDate( input ) {
 	if ( !dateInput || dateInput.value == "" ) {
 		return "";
 	}
-	
+
 	let dateInputValue = dateInput.value.split(" - ");
 	let secondDate = dateInputValue[1].split("/").reverse().join("-");
-	
+
 	return secondDate;
 }
 

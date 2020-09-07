@@ -2,9 +2,11 @@
 
 namespace App\DataTables;
 
+use App\Role;
 use App\User;
 use http\Env\Request;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Stmt\DeclareDeclare;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Column;
@@ -23,28 +25,22 @@ class UsersDataTable extends DataTable {
     public function dataTable($query)
     {
 
-
-
-
         if (!request()->from_date && !request()->to_date)
         {
-            $data = User::all();
+
+            $data = User::with(["roles","courses"])->select("users.*");
 
         } else
         {
-            $data = User:: whereBetween('created_at', [request()->from_date."  00:00:00", request()->to_date." 23:59:59"])->get();
-
+            $data = User::whereBetween('users.created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
+                ->with(["roles","courses"])->select("users.*");
         }
 
         return DataTables::of($data)
-            ->addColumn('action', function ($data) {
-
-
-                return "{$data->getRoleNames()[0]}";
-            })
-            ->addColumn('activeNum', function ($data) {
-
-                return $data->status;
+            ->addColumn('roles', function (User $user) {
+                return $user->roles->map(function($role) {
+                    return $role->name;
+                })->implode(', ');
             })
             ->addColumn('chexbox', function ($data) {
 
@@ -53,46 +49,31 @@ class UsersDataTable extends DataTable {
 							<label for='$data->first_name'></label>
 						</div>";
             })
-            ->addColumn('dateChange', function ($data) {
-
-                return $data->created_at->diffForHumans();
-            })
-            ->addColumn('allcourse', function ($data) {
-
-                $user = User::findOrFail($data->id);
-                $query = $user->courses()->get();
-
-                return $query;
+            ->addColumn('courses', function (User $user) {
+                return $user->courses->map(function($course) {
+                    return $course->title;
+                })->implode(', ');
             })
             ->editColumn('status', function ($data) {
+                $status = $data->status == 0 ? "": "checked";
 
-                $status = $data->status == 0 ? "" : "checked";
-
+//                dump($data->status);
                 return "<input  class='toggle-class' data-user-checked='$status' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
-            ->editColumn('first_name', function($data) {
+            ->editColumn('first_name', function ($data) {
 
                 return "<a href='/dashboard/users/$data->slug' class='h5 custom-link-primary'><p>$data->first_name</p></a>
 						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
 						<a href='#' class='custom-link-primary'>View</a>";
-
             })
-            ->editColumn('avatar', function ($data) {
-                return "<div>
-                            <img src='$data->avatar' class='avatar-sm rounded' alt='$data->avatar' >
-                            <div class=' mt-2  extraContentEdit'>
-                                <span class='hover cursor-pointer  edit'> Edit</span> | <span class='hover cursor-pointer '> Delete</span>
-                            </div>
-                       </div> ";
-            })
-            ->rawColumns(['action', 'status', "avatar", "activeNum", "chexbox",'dateChange',"allcourse","first_name"])
+            ->rawColumns(['roles', 'status', "activeNum", "chexbox", "courses", "first_name"])
             ->setRowAttr([
-                'data-user-id' => function($data) {
+                'data-user-id' => function ($data) {
                     return $data->id;
                 },
-                'data-user-slug' => function($data) {
+                'data-user-slug' => function ($data) {
                     return $data->slug;
                 }
             ]);
@@ -107,7 +88,7 @@ class UsersDataTable extends DataTable {
     public function query(User $model)
     {
 
-        return $model->newQuery();
+        return $model->all();
     }
 
     /**
