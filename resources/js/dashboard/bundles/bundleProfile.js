@@ -18,7 +18,7 @@ $(".tab-link").on("show.bs.tab", function(event) {
 		'<p>Θα πρέπει να αποθηκεύσετε το Bundle</p>για να συνεχίσετε!',
 		'info'
 	);
-}) 
+})
 
 $(".under-development").click( function() {
 	Swal.fire({
@@ -45,7 +45,7 @@ $("#bundle-delete-btn").click( function() {
 		if (result.value) {
 
 			$("#delete-bundle-form").submit();
-			
+
 		}
 	})
 })
@@ -64,7 +64,7 @@ let publishDate = $("#publish-date-select").daterangepicker({
 });
 
 publishDate.on( "apply.daterangepicker", function(event, picker) {
-		
+
 	let startDate = picker.startDate.format('DD-MM-YYYY H:mm');
 	this.value = startDate;
 
@@ -119,7 +119,7 @@ $('#remove-selected-courses-btn').click( function() {
 	let ids = [];
 
 	if ( checkboxes.length == 0 ) {
-		
+
 		utilities.toastAlert( 'info', "Δεν υπάρχουν επιλεγμένα μαθήματα..." );
 		return;
 	}
@@ -170,7 +170,7 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		activeCoursesCheckboxToggle();
 		utilities.resetBulk(  $("#courses-bulk"), $("#main-active-courses-checkbox") );
 	},
-	
+
 });
 
 function activeCoursesCheckboxToggle() {
@@ -222,7 +222,7 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 		remainingsCheckboxes();
 		utilities.resetAddButton(  $("#add-courses-btn"), $("#all-courses-checkbox") );
 	},
-	
+
 });
 //! DataTables /end
 
@@ -259,7 +259,7 @@ function postCourseIds( courseIds ) {
 	.then( (res) => {
 		let message = courseIds.length == 1 ? "1 Course προστέθηκε" : `${courseIds.length} Course προστέθηκαν`;
 		utilities.toastAlert( 'success', message );
-		
+
 		bundleCoursesTable.ajax.reload();
 		remainingCoursesTable.ajax.reload();
 	})
@@ -270,7 +270,7 @@ function postCourseIds( courseIds ) {
 }
 
 function removeCourses( courseIds ) {
-			
+
 	axios.patch( "/bundles/remove-courses", {
 		bundleId,
 		courseIds
@@ -278,7 +278,7 @@ function removeCourses( courseIds ) {
 	.then( (res) => {
 
 		let message = courseIds.length == 1 ? "1 Course Αφαιρέθηκε" : `${courseIds.length} Course αφαιρέθηκαν`;
-		
+
 		utilities.toastAlert( 'success', message );
 
 		bundleCoursesTable.ajax.reload();

@@ -1,10 +1,10 @@
 @include("components.admin.materials.filterTabCourses")
-<table id="material-course-table" data-material-id="{{$material->id}}"  class="table w-100 nowrap center-not-second ">
+<table id="material-course-table" data-material-id="{{isset($material)? $material->id:null}}"  class="table w-100 nowrap center-not-second ">
     <thead>
     <tr>
         <th class="text-left ">
             <div class='icheck-primary d-inline'>
-                <input type='checkbox' id='select-all-courses' autoc    omplete='off'>
+                <input type='checkbox' id='select-all-courses' autocomplete='off'>
                 <label for='select-all-courses'></label>
             </div>
         </th>

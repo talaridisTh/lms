@@ -1,9 +1,8 @@
 import utilities from '../main';
 
- let materialId = $("#material-course-table")[0].dataset.materialId;
+    let materialId = $("#material-course-table")[0].dataset.materialId;
 
 
-console.log()
 //! DATATABLE INIT
 //!============================================================
 const materialCourseDatatable = $("#material-course-table").DataTable({
@@ -150,19 +149,20 @@ $("#update-btn").click( function() {
     $(".formPrevent").submit();
 });
 
+
 $(".tab-link").on("show.bs.tab", function(event) {
 
     event.preventDefault();
     Swal.fire(
         'Προσοχή',
-        '<p>Θα πρέπει να αποθηκεύσετε το Course</p>για να συνεχίσετε!',
+        '<p>Θα πρέπει να αποθηκεύσετε </p>για να συνεχίσετε!',
         'info'
     );
+
 })
 
 //! BULK ACTIOON
 //!============================================================
-
 
 function checkeBoxesEventListener() {
 

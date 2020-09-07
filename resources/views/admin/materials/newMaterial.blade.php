@@ -37,6 +37,7 @@
                     </li>
                     <li class="nav-item">
                         <a href="#courses-tabs" data-toggle="tab" aria-expanded="true"
+
                            class="nav-link {{ !isset($material) ? 'tab-link text-muted' : '' }}">
                             <i class="mdi mdi-account-circle d-md-none d-block"></i>
                             <span class="d-none d-md-block">Courses</span>
@@ -50,18 +51,19 @@
                     </li>
                 </ul>
 
-                <div class="col-md-4 offset-md-8 sticky pb-3 px-2  text-center mr-5">
-                    <button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
-                            form="material-create"
-                            class="btn btn-primary ">
-                        {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
-                    </button>
-                    {{--                    <button id="preview-btn" class="under-development btn btn-warning"><i--}}
-                    {{--                            class="mdi mdi-eye"></i>--}}
-                    {{--                    </button>--}}
-                </div>
+
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
+                        <div class="col-md-4 offset-md-8 sticky pb-3 px-2  text-center mr-5">
+                            <button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
+                                    form="material-create"
+                                    class="btn btn-primary ">
+                                {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
+                            </button>
+                            {{--                    <button id="preview-btn" class="under-development btn btn-warning"><i--}}
+                            {{--                            class="mdi mdi-eye"></i>--}}
+                            {{--                    </button>--}}
+                        </div>
                         <form id="material-create" method="post"
                               @if(isset($material))
                               action="{{route('material.update',$material->slug)}}"
@@ -238,9 +240,9 @@
                         </div>
                     </div>
                     <div class="tab-pane " id="courses-tabs">
-                        @if(isset($material))
+
                             @include("components.admin.materials.tabsCourses")
-                        @endif
+
                     </div>
                 </div>
             </div>

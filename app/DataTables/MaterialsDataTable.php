@@ -24,10 +24,9 @@ class MaterialsDataTable extends DataTable {
     public function dataTable($query)
     {
 
-
-
         if (!request()->from_date && !request()->to_date)
         {
+
             $data = Material::with(["courses"])->select("materials.*");
 
 

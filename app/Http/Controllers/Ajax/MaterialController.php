@@ -17,6 +17,7 @@ class MaterialController extends Controller {
     public function index(MaterialsDataTable $dataTable)
     {
 
+
         return $dataTable->render('materials.index');
     }
 

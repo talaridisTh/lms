@@ -25,7 +25,10 @@ class CourseInsideMaterialsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-        $query = Material::findOrFail($request->materialId)->courses()->with("topics")->get();
+        if( $request->materialId){
+
+            $query = Material::find($request->materialId)->courses()->with("topics")->get();
+        }
 
         return datatables()::of($query)
             ->addColumn('checkbox', function ($data) {

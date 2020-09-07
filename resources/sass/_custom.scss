@@ -487,3 +487,15 @@ b[role="presentation"] {
 .daterangepicker.show-ranges.ltr .drp-calendar.left{
     border:none;
 }
+
+.select2-results__option[aria-selected="true"]:after{
+    text-align: right;
+    padding-right: 5px;
+    float:right;
+    font-size: 15px;
+    color: #FFF;
+    content: "\00d7";
+}
+.select2-results__option[aria-selected="true"]:after:hover{
+     transform: translateY(-50%);
+}
