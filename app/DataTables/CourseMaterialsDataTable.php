@@ -111,7 +111,16 @@ class CourseMaterialsDataTable extends DataTable
 			->editColumn('type', function($data) {
 				return "<p class='mb-1'>$data->type</p>";
 			})
-			->rawColumns(['action', 'title', 'status', 'priority', 'type', 'updated_at', 'created_at'])
+			->addColumn("btns", function($data) {
+
+				return "<i class='js-remove-material h3 pt-1 uil uil-trash-alt cursor-pointer' data-material-id='$data->materialId'></i>";
+			})
+			->rawColumns(
+				[
+					'action', 'title', 'status', 'priority',
+					'type', 'updated_at', 'created_at', 'btns'
+				]
+			)
 			->setRowAttr(
 				[ 'data-material-id' => function($data) {
 

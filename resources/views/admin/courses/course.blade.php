@@ -287,38 +287,8 @@
 						</div><!-- settings tab-pane -->
 
 						<div id="materials" class="tab-pane table-cnt mb-3">
-							<table id="course-materials-list" data-course-id="{{  isset($course) ? $course['id'] : "" }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
-								<thead>
-									<tr>
-										<th class="text-center">
-											<div class='icheck-primary d-inline'>
-												<input type='checkbox' id='all-active-materials-checkbox' autocomplete='off'>
-												<label for='all-active-materials-checkbox'></label>
-											</div>
-										</th>
-										<th class="text-center">Τίτλος</th>
-										<th class="text-center">Ενεργό</th>
-										<th class="text-center">Κατάταξη</th>
-										<th class="text-center">Τύπος</th>
-										<th class="text-center">Τελ. Ανανέωση</th>
-										<th class="text-center">Ημ. Δημιουργίας</th>
-									</tr>
-								</thead>
-								<tbody class="tables-hover-effect"></tbody>
-								<tfoot>
-									<tr>
-										<th class="text-center"></th>
-										<th class="text-center">Τίτλος</th>
-										<th class="text-center">Ενεργό</th>
-										<th class="text-center">Κατάταξη</th>
-										<th class="text-center">Τύπος</th>
-										<th class="text-center">Τελ. Ανανέωση</th>
-										<th class="text-center">Ημ. Δημιουργίας</th>
-									</tr>
-								</tfoot>
-							</table>
 
-							<div class="row mt-3">
+							<div class="row my-3">
 								<div class="col-sm-1">
 								</div>
 								<div class="col-sm-11 d-flex justify-content-end">
@@ -338,21 +308,22 @@
 									</div>
 								</div>
 							</div>
-						</div><!-- materials tab-pane -->
-
-						<div id="users" class="tab-pane table-cnt">
-							<table id="active-users-list" class="js-table table w-100 nowrap js-remove-table-classes">
+							
+							<table id="course-materials-list" data-course-id="{{  isset($course) ? $course['id'] : "" }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">
 											<div class='icheck-primary d-inline'>
-												<input type='checkbox' id='select-all-active-users' autocomplete='off'>
-												<label for='select-all-active-users'></label>
+												<input type='checkbox' id='all-active-materials-checkbox' autocomplete='off'>
+												<label for='all-active-materials-checkbox'></label>
 											</div>
 										</th>
-										<th class="text-center">Όνομα</th>
-										<th class="text-center">Επώνυμο</th>
-										<th class="text-center">Ιδιότητα</th>
+										<th class="text-center">Τίτλος</th>
+										<th class="text-center">Ενεργό</th>
+										<th class="text-center">Κατάταξη</th>
+										<th class="text-center">Τύπος</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
 										<th class="text-center"></th>
 									</tr>
 								</thead>
@@ -360,17 +331,23 @@
 								<tfoot>
 									<tr>
 										<th class="text-center"></th>
-										<th class="text-center">Όνομα</th>
-										<th class="text-center">Επώνυμο</th>
-										<th class="text-center">Ιδιότητα</th>
+										<th class="text-center">Τίτλος</th>
+										<th class="text-center">Ενεργό</th>
+										<th class="text-center">Κατάταξη</th>
+										<th class="text-center">Τύπος</th>
+										<th class="text-center">Τελ. Ανανέωση</th>
+										<th class="text-center">Ημ. Δημιουργίας</th>
 										<th class="text-center"></th>
 									</tr>
 								</tfoot>
 							</table>
 
+							
+						</div><!-- materials tab-pane -->
 
+						<div id="users" class="tab-pane table-cnt">
 
-							<div class="row mt-3">
+							<div class="row my-3">
 								<div class="col-sm-1">
 								</div>
 								<div class="col-sm-11 d-flex justify-content-end">
@@ -390,6 +367,37 @@
 									</div>
 								</div>
 							</div>
+
+							<table id="active-users-list" class="js-table table w-100 nowrap js-remove-table-classes">
+								<thead>
+									<tr>
+										<th class="text-center">
+											<div class='icheck-primary d-inline'>
+												<input type='checkbox' id='select-all-active-users' autocomplete='off'>
+												<label for='select-all-active-users'></label>
+											</div>
+										</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Ιδιότητα</th>
+										<th class="text-center"></th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect table-text-center"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center"></th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Ιδιότητα</th>
+										<th class="text-center"></th>
+									</tr>
+								</tfoot>
+							</table>
+
+
+
+							
 						</div><!-- users tab-pane -->
 					
 					</div><!-- tab-content -->
