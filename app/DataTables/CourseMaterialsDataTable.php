@@ -113,7 +113,7 @@ class CourseMaterialsDataTable extends DataTable
 			})
 			->addColumn("btns", function($data) {
 
-				return "<i class='js-remove-material h3 pt-1 uil uil-trash-alt cursor-pointer' data-material-id='$data->materialId'></i>";
+				return "<i class='js-remove-material h3 pt-1 mx-2 uil uil-trash-alt cursor-pointer' data-material-id='$data->materialId'></i>";
 			})
 			->rawColumns(
 				[

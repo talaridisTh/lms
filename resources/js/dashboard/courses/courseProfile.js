@@ -134,7 +134,7 @@ $("#remove-selected-users-btn").click( function() {
 
 	Swal.fire({
 		title: 'Είστε σίγουρος/η;',
-		text: `Η ενέργεια θα αφαιρέσει ${i} απο τους χρήστες`,
+		text: `Η ενέργεια θα αφαιρέσει ${ i > 1 ? i : "έναν" } απο τους χρήστες.`,
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonText: 'Ναι, αφαίρεση!',
@@ -207,7 +207,7 @@ $('#remove-selection-btn').click( function() {
 
 		Swal.fire({
 			title: 'Είστε σίγουρος/η;',
-			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${i} απο</p>τα περιεχόμενα του Course!`,
+			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${i} απο</p>τα περιεχόμενα του Course.`,
 			icon: 'warning',
 			showCancelButton: true,
 			confirmButtonText: 'Ναι, αφαίρεση!',
@@ -595,7 +595,24 @@ function removeUserBtnInit() {
 
 		let id = [ this.dataset.userId ];
 
-		removeUsers( id );
+		Swal.fire({
+			title: 'Είστε σίγουρος/η;',
+			html: "<p class='mb-0'>Η ενέργεια θα αφαιρέσει έναν</p>απο τους χρήστες του Course.",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+	
+			if (result.value) {
+	
+				removeUsers( id );
+	
+			}
+		})
+
+
+		
 	})
 }
 
