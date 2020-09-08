@@ -120,7 +120,6 @@ class CourseController extends Controller
 			->materials()->orderBy("priority", "desc")->first();
 
 		$lastInOrder = $lastMaterial->pivot->priority;
-		// dd($lastInOrder);
 
 		if ( $data['priority']['new'] == 0 ) {
 			$data['priority']['new'] = 1;
