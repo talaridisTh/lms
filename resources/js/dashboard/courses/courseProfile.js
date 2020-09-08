@@ -12,6 +12,64 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! EventListerners
 //!============================================================
 
+$("#activate-selection").click( function() {
+	let selection = $(".js-course-material-checkbox:checked");
+	let data = [];
+	
+	for ( var i = 0; i < selection.length; i++ ) {
+		data.push({
+			id: selection[i].dataset.materialId, 
+			status: 1
+		});
+	}
+
+	Swal.fire({
+		title: 'Ενεργοποίηση;',
+		html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
+		icon: 'info',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, ενεργοποίηση!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			toggleState( data );
+
+		}
+	})
+
+});
+
+$("#deactivate-selection").click( function() {
+	let selection = $(".js-course-material-checkbox:checked");
+	let data = [];
+	
+	for ( var i = 0; i < selection.length; i++ ) {
+		data.push({
+			id: selection[i].dataset.materialId, 
+			status: 0
+		});
+	}
+
+	Swal.fire({
+		title: 'Απενεργοποίηση;',
+		html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, απενεργοποίηση!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			toggleState( data );
+
+		}
+	})
+
+});
+
 $(".tab-link").on("show.bs.tab", function(event) {
 
 		event.preventDefault();
@@ -128,11 +186,26 @@ $("#remove-selected-users-btn").click( function() {
 	let usersCheckbox = $(".js-active-user-checkbox:checked");
 	let userIds = [];
 
-	for ( let i = 0; i < usersCheckbox.length; i++ ) {
+	for ( var i = 0; i < usersCheckbox.length; i++ ) {
 		userIds.push( usersCheckbox[i].dataset.userId );
 	}
 
-	removeUsers(userIds, this);
+	Swal.fire({
+		title: 'Είστε σίγουρος/η;',
+		text: `Η ενέργεια θα αφαιρέσει ${ i > 1 ? i : "έναν" } απο τους χρήστες.`,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, αφαίρεση!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			removeUsers(userIds, this);
+
+		}
+	})
+
 })
 
 $("#course-cover-input").change( function() {
@@ -178,9 +251,7 @@ $('#add-remaingings-btn').click( function() {
 
 $('#remove-selection-btn').click( function() {
 	let checkboxes = $('.js-course-material-checkbox:checked');
-	let lessonsCount = 0;
-	let additionsCount = 0;
-	let ids = []
+	let ids = [];
 
 	if ( checkboxes.length == 0 ) {
 
@@ -188,17 +259,25 @@ $('#remove-selection-btn').click( function() {
 		return;
 	}
 	else {
-		for ( let i = 0; i < checkboxes.length; i++ ) {
+		for ( var i = 0; i < checkboxes.length; i++ ) {
 			ids.push( checkboxes[i].dataset.materialId );
-
-			if ( checkboxes[i].dataset.materialType == "Lesson" ) {
-				lessonsCount++
-			}
-			else {
-				additionsCount++
-			}
 		}
-		removeMaterials( ids );
+
+		Swal.fire({
+			title: 'Είστε σίγουρος/η;',
+			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${i} απο</p>τα περιεχόμενα του Course.`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+			if (result.value) {
+	
+				removeMaterials( ids );
+	
+			}
+		})
+		
 	}
 });
 
@@ -232,13 +311,14 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 
 	},
 	columns: [
-		{ data: 'action', name: 'action', className: "position-relative align-middle", orderable: false },
+		{ data: 'action', className: "position-relative align-middle", orderable: false },
 		{ data: 'title', name: 'title' },
-		{ data: 'status', name: 'course_material.status', className: "align-middle", },
-		{ data: 'priority', name: 'course_material.priority', className: "align-middle",  width: "5%", searchable: false },
+		{ data: 'status', name: 'pivot.status', className: "align-middle", },
+		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "cursor-default align-middle" },
 		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default align-middle", searchable: false },
 		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
+		{ data: 'btns', className: "cursor-default align-middle", searchable: false, orderable: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -258,6 +338,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		activeMaterialsCheckboxToggle();
 		toggleCourseMaterial();
 		sortInputsInit();
+		removeMaterialInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -495,6 +576,34 @@ dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 
 //! DataTables function / EventListener
 
+function removeMaterialInit() {
+
+	let binBtn = $(".js-remove-material")
+
+	binBtn.unbind();
+
+	binBtn.click( function() {
+
+		let id = [ this.dataset.materialId ];
+
+		Swal.fire({
+			title: "Είστε σίγουρος/η;",
+			text: 'Το υλικό θα αφαιρεθεί απο το Course.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+	
+			if (result.value) {
+	
+				removeMaterials( id );
+	
+			}
+		})
+	});
+}
+
 function newUserCheckboxInit() {
 
 	let mainCheckbox = $("#add-user-checkbox")[0];
@@ -544,7 +653,22 @@ function removeUserBtnInit() {
 
 		let id = [ this.dataset.userId ];
 
-		removeUsers( id );
+		Swal.fire({
+			title: 'Είστε σίγουρος/η;',
+			html: "<p class='mb-0'>Η ενέργεια θα αφαιρέσει έναν</p>απο τους χρήστες του Course.",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+	
+			if (result.value) {
+	
+				removeUsers( id );
+	
+			}
+		})
+
 	})
 }
 
@@ -612,10 +736,14 @@ function toggleCourseMaterial() {
 
 	$('.js-toggle').on('change', function() {
 
+		//& an empene to function (toggleState)
+		//& 8a ginotan ena PERITO reload tou table
 		axios.patch('/courses/toggle-materials', {
 			courseId: this.dataset.courseId,
-			materialId: this.dataset.materialId,
-			state: this.checked
+			data: [{
+				id: this.dataset.materialId,
+				status: this.checked ? 1 : 0
+			}],
 		})
 		.then( (res) => {
 			let icon = this.checked ? "success" : "info";
@@ -1045,6 +1173,34 @@ function createDateElm( id ) {
 	input.placeholder = "Επιλέξτε ημερομηνίες...";
 
 	return input;
+}
+
+function toggleState(data) {
+	axios.patch('/courses/toggle-materials', {
+		courseId,
+		data
+	})
+	.then( (res) => {
+		let materialCount = data.length;
+		let status = data[0].status;
+		let message = "";
+		let icon = status == 1 ? "success" : "info";
+
+		if ( materialCount == 1 ) {
+			message = status == 1 ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+		}
+		else {
+			message = status == 1 ? "Ενεργοποιήθηκαν" : "Απενεργοποιήθηκαν";
+		}
+
+		utilities.toastAlert( icon, message );
+		courseMaterialsTable.ajax.reload( null, false);
+
+	})
+	.catch( (err) => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
 }
 
 function startDate( input ) {
