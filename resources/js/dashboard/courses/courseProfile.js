@@ -1235,15 +1235,19 @@ function endDate( input ) {
 //!				Initializations				#
 //!##########################################
 
+$("#version-select").select2({
+	minimumResultsForSearch: -1
+})
+
 $R("#summary", utilities.redactorConfig);
 
 ArticleEditor('#description', {
 	css: "/css/",
-	custom: {
+	/* custom: {
 		css: [
 			"/css/arx-content.min.css"
 		]
-	},
+	}, */
 	editor: {
 		minHeight: "300px"
 	},

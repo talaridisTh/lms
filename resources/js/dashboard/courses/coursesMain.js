@@ -104,6 +104,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		}
 	},
 	columns: [
+<<<<<<< HEAD
 		{data: 'action', name: 'courses.action', className: "align-middle", width: "5%", orderable: false },
 		{data: 'title', name: 'courses.title' },
 		{data: 'status', name: 'courses.status', className: "align-middle"},
@@ -112,6 +113,16 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{data: 'type', name: 'courses.type', className: "align-middle" },
 		{data: 'updated_at', name: 'courses.updated_at', className: "align-middle cursor-default js-updated-at" },
 		{data: 'created_at', name: 'courses.created_at',  className: "align-middle cursor-default"},
+=======
+		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
+		{data: 'title', name: 'title' },
+		{data: 'status', name: 'status', className: "align-middle"},
+		{data: 'curator', name: 'curator', className: "align-middle" },
+		{data: 'topics', name: 'topics', className: "align-middle" },
+		{data: 'version', name: 'version', className: "align-middle" },
+		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
+		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
+>>>>>>> 870257b55892b99369e2a5ec23d219317c8347bc
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
