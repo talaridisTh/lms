@@ -39,7 +39,7 @@ class CoursesDataTable extends DataTable
 		}
 		else {
 
-			$query = Course::with("topics", "curator")->select("courses.*");
+			$query = Course::with("topics", "curator")->get();
 
 		}
 
@@ -63,7 +63,7 @@ class CoursesDataTable extends DataTable
 				<a href='/courses/course/$data->slug' class='custom-link-primary'>View</a>";
 
 			})
-			->editColumn('status', function($data) {
+			->editColumn('toggle', function($data) {
 
 				$status = $data->status == 0 ? "" : "checked";
 
@@ -106,7 +106,7 @@ class CoursesDataTable extends DataTable
 				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
 
 			})
-			->rawColumns(['action', 'title', 'status'])
+			->rawColumns(['action', 'title', 'toggle'])
 			->setRowAttr([ 'data-course-id' => function($data) {
 
 				return  $data->id;
