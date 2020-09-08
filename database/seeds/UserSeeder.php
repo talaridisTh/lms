@@ -65,6 +65,7 @@ class UserSeeder extends Seeder {
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("partner");
+
         User::create([
             'first_name' => "student",
             'last_name' => "student",
@@ -77,6 +78,18 @@ class UserSeeder extends Seeder {
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("student");
+        User::create([
+            'first_name' => "trial user",
+            'last_name' => "trial user",
+            'email' => "trial-user@gmail.com",
+            "phone"=>"6928523498",
+            "profil"=>"trial user",
+            'avatar' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
+            'slug' => "trial-user",
+            'password' => Hash::make('password'),
+            'status' => 1,
+            'remember_token' => Str::random(10),
+        ])->assignRole("trial user");
 
 
 
