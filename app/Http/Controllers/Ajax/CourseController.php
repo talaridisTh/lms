@@ -152,28 +152,14 @@ class CourseController extends Controller
 
 	public function toggleCourseMaterials( Request $request ) {
 
-		// $courseId = $request->courseId;
 		$course = Course::find( $request->courseId );
 		$data = $request->data;
-		
-		
-		// dd($data);
 
 		foreach ($data as $material) {
-			// $state = $data['state'] == 1 ? 1 : 0;
-			// dump($material['id'], $material['status']);
-			$course->materials()->updateExistingPivot( $material['id'], [ 'status' => $material['status']]);
+			$course->materials()
+				->updateExistingPivot( $material['id'], [ 'status' => $material['status']]);
 		}
 
-		// $course = Course::find( $data['courseId'] );
-
-		// $state = $data['state'] == 1 ? 1 : 0;
-
-		// $course->materials()->updateExistingPivot( $data['materialId'], [ 'status' => $state ]);
-
-		// $course->updated_at = Carbon::now();
-		// $course->save();
-		
 	}
 
 	public function addMaterials( Request $request ) {

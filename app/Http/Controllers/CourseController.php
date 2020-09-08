@@ -45,7 +45,8 @@ class CourseController extends Controller
 		// 	$fileName = md5( $request->name ).$ext;
 		// }
 		$request->validate([
-			'title' => 'required|unique:courses'
+			'title' => 'required|unique:courses',
+			'version' => 'required'
 		]);
 
 		if ( isset($request->publishDate) ) {
@@ -64,7 +65,7 @@ class CourseController extends Controller
 		$course->slug = Str::slug($request->title, "-");
 		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;
-		$course->type = "Normal";
+		$course->version = $request->version;
 		// $course->publish_at = $request->publishDate;
 		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		$course->cover = "https://placehold.co/600x400";
@@ -153,7 +154,7 @@ class CourseController extends Controller
 		$course->user_id = $request->curator;
 		// $course->status = $request->status;
 		$course->slug = Str::slug($request->title, "-");
-		$course->type = "Normal";
+		$course->version = $request->version;
 
 		/* if ( !empty($_FILES['cover']['name']) ) {
 			

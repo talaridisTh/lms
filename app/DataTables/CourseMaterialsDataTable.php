@@ -26,41 +26,23 @@ class CourseMaterialsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-		$query = Course::find( $request->courseId )->materials()->get();
-
-		// if ( is_null($request->startDate) && is_null($request->endDate) ) {
-		// 	$query = DB::table('materials')
-		// 	->join('course_material', 'materials.id', '=', 'course_material.material_id')
-		// 	->select('materials.id as materialId', 'materials.title', 
-		// 		'materials.status as materialActive', 'course_material.status as status', 
-		// 		'course_material.priority', 'materials.type', 'materials.slug', 
-		// 		'materials.updated_at as updatedAt', 'materials.created_at as createdAt', 
-		// 		'course_material.id')
-		// 	->where('course_id', $request->courseId);
-
-		// }
-		// else {
-
-		// 	$query = DB::table('materials')
-		// 	->join('course_material', 'materials.id', '=', 'course_material.material_id')
-		// 	->select('materials.id as materialId', 'materials.title', 
-		// 		'materials.status as materialActive', 'course_material.status as status', 
-		// 		'course_material.priority', 'materials.type', 'materials.slug', 
-		// 		'materials.updated_at as updatedAt', 'materials.created_at as createdAt', 
-		// 		'course_material.id')
-		// 	->where('course_id', $request->courseId)
-		// 	->where( function( $subquery ) use ($request) {
-		// 		$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
-		// 			->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-		// 	});
-		// }
-		
+		if ( is_null($request->startDate) && is_null($request->endDate) ) {
+			$query = Course::find( $request->courseId )->materials()->get();
+		}
+		else {
+			$query = Course::find( $request->courseId )
+				->materials()
+				->where(
+					function( $subquery ) use ($request) {
+						$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+							->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				})
+				
+				->get();
+		}
 
         return Datatables::of($query)
 			->addColumn('action', function($data) use ($request) {
-
-				// dd($data->id);
-				// dd($data->pivot->priority);
 
 				return "
 							<div class='icheck-primary'>

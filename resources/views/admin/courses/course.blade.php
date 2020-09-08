@@ -318,7 +318,7 @@
 								</div>
 							</div>
 							
-							<table id="course-materials-list" data-course-id="{{  isset($course) ? $course['id'] : "" }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
+							<table id="course-materials-list" data-course-id="{{  isset($course) ? $course['id'] : 1 }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">
@@ -432,6 +432,42 @@
 
 					<div class="card">
 						<div class="card-body">
+							<div class="form-group">
+
+
+								@if ( old('verison') != "" )
+									$normalSelected = old('verison') == "Normal" ? "selected" : ""
+									$trialSelected = old('verison') == "Trial" ? "selected" : ""
+								@endif
+
+								<label for="version-select">Έκδοση</label>
+								<select form="edit-course-form" id="version-select" name="version"
+									class="select2 form-control @error('version') is-invalid @enderror"
+								>
+									@if ( !isset($course) )
+										<option value="" selected>Επιλέξτε έκδοση</option>
+									@endif
+
+									<option value="Normal" {{
+										isset($normalSelected) ? $normalSelected
+											: ( isset($course) && $course->version == "Normal" ? "selected" : "" )
+										}}
+									>Normal</option>
+									<option value="Trial" {{
+										isset($trialSelected) ? $trialSelected
+											: ( isset($course) && $course->version == "Trial" ? "selected" : "" )
+										}}
+									>Trial</option>
+								</select>
+								@error('version')
+									<span class="invalid-feedback" role="alert">
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
+							</div>
+
+							<hr>
+
 							<div class="form-group">
 								<label for="topic">Topic</label>
 								<select form="edit-course-form" 

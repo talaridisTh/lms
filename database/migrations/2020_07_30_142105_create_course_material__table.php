@@ -19,7 +19,7 @@ class CreateCourseMaterialTable extends Migration
 			$table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
 			$table->unsignedSmallInteger('status')->default(0);
 			$table->unsignedSmallInteger('priority');
-			$table->timestamp('publish_at');
+			$table->timestamp('publish_at')->nullable();
         });
     }
 
