@@ -99,7 +99,6 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 			return $.extend( {}, d, {
 				startDate: startDate( $("#course-date-range")[0] ),
 				endDate: endDate( $("#course-date-range")[0] ),
-				// topicId: $("#topic-filter").val()
 			})
 		}
 	},

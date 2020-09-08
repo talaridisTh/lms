@@ -404,9 +404,9 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", className: "text-center", orderable: false, searchable: false},
-		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-user-link" },
-		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-user-link" },
-		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
+		{data: 'first_name', name: 'first_name', className: "cursor-default" },
+		{data: 'last_name', name: 'last_name', className: "cursor-default" },
+		{data: 'role', name: 'role', className: "cursor-default" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
@@ -422,8 +422,8 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-user-link");
-		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer js-user-link");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
+		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-default");
 
 		removeUserBtnInit();
 		userLinkInit();

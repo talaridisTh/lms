@@ -116,6 +116,18 @@ class CourseController extends Controller
 		$data = $request->all();
 
 		$course = Course::find($data['courseId']);
+		$lastMaterial = Course::find($data['courseId'])
+			->materials()->orderBy("priority", "desc")->first();
+
+		$lastInOrder = $lastMaterial->pivot->priority;
+		// dd($lastInOrder);
+
+		if ( $data['priority']['new'] == 0 ) {
+			$data['priority']['new'] = 1;
+		}
+		elseif ( $data['priority']['new'] > $lastInOrder ) {
+			$data['priority']['new'] = $lastInOrder;
+		}
 
 		$priorityRange = [ $data['priority']['new'], $data['priority']['old'] ];
 		sort( $priorityRange );
