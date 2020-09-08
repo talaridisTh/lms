@@ -3607,6 +3607,22 @@ b[role=presentation] {
   content: "\D7";
 }
 
+.custom-primary {
+  color: #b2bcc5;
+}
+
+.custom-primary:hover {
+  color: #519dff;
+}
+
+.custom-danger {
+  color: #b2bcc5;
+}
+
+.custom-danger:hover {
+  color: #ff5b5b;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);

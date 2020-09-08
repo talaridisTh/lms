@@ -121,6 +121,7 @@
 					</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Ενεργό</th>
+					<th class="text-center">Ενεργό</th>
 					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
 					<th class="text-center">Έκδοση</th>
@@ -133,6 +134,7 @@
 				<tr>
 					<th class="text-center">Επιλογή</th>
 					<th class="text-center">Τίτλος</th>
+					<th class="text-center">Ενεργό</th>
 					<th class="text-center">Ενεργό</th>
 					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>

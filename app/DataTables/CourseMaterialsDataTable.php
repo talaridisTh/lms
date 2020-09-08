@@ -49,7 +49,7 @@ class CourseMaterialsDataTable extends DataTable
 								<input class='js-course-material-checkbox' data-material-id='$data->id' data-material-type='$data->type' type='checkbox' id='$data->slug' autocomplete='off'>
 								<label for='$data->slug'></label>
 							</div>
-							<a class='text-secondary add-material' href='#' data-material-id='$data->id' data-priority='$data->pivot->priority' data-toggle='modal' data-target='#add-additions-modal'>
+							<a class='custom-primary add-material' href='#' data-material-id='$data->id' data-priority='$data->pivot->priority' data-toggle='modal' data-target='#add-additions-modal'>
 								<i class='mdi mdi-plus-circle-outline mr-1'></i>
 							</a>
 						";
@@ -100,7 +100,7 @@ class CourseMaterialsDataTable extends DataTable
 			})
 			->addColumn("btns", function($data) {
 
-				return "<i class='js-remove-material h3 pt-1 mx-2 uil uil-trash-alt cursor-pointer' data-material-id='$data->id'></i>";
+				return "<i class='js-remove-material h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer' data-material-id='$data->id'></i>";
 			})
 			->rawColumns(
 				[
