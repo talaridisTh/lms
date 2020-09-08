@@ -102,6 +102,7 @@ Route::patch('/user/multiple/add-user', 'Ajax\UserController@AddMultipleUserCour
 Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
 Route::delete('/user/multiple/courses/delete', 'Ajax\UserController@destroyMultipleCourses')->name("destroyMultipleCourses.datatable");
 Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers')->name("destroyMultipleUsers.datatable");
+Route::post("/user/show-password","Ajax\UserController@showPassword")->name("showPassword");
 
 
 //! Dashboard Ajax Courses Datatables

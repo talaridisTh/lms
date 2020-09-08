@@ -10,6 +10,7 @@ use App\DataTables\UsersDataTable;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController {
 
@@ -121,6 +122,18 @@ class UserController {
     {
 
         User::whereIn('id', $request->user_id)->delete();
+    }
+
+    public function showPassword(Request $request)
+    {
+
+
+        if (Hash::check($request->password, auth()->user()->password)) {
+            return response()->json(['success' => 'successfully.']);
+        }
+
+
+
     }
 
 }

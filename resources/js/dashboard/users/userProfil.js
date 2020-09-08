@@ -17,6 +17,39 @@ const routeLink = () => {
     });
 }
 
+$(".js-link-passwordShow").click(async function () {
+    const {value: password} = await Swal.fire({
+        title: 'Εισάγετε  password',
+        input: 'password',
+        inputPlaceholder: 'Εισάγετε password',
+        inputAttributes: {
+            maxlength: 50,
+            autocapitalize: 'off',
+            autocorrect: 'off'
+        }
+    })
+    if (password) {
+        try {
+            const res = await axios.post("/user/show-password", {
+                password
+            })
+            if (res.data.success){
+                console.log("AS")
+                $(".passwordShow")[0].classList.remove("d-none")
+                $(".js-link-passwordShow")[0].classList.add("d-none")
+
+            }else {
+                utilities.toastAlert('error', "Λαθος password")
+            }
+        } catch (e) {
+            utilities.toastAlert('error', "Λαθος password")
+            console.log(e)
+        }
+
+
+    }
+})
+
 $('#alertSumbit').submit(async (e) => {
     e.preventDefault()
     let buttonDelete = $('.js-delete');
@@ -131,7 +164,7 @@ const addCourses = () => {
                 "user_id": userId,
             })
             if (status == 200) {
-                utilities.toastAlert('success',`Προσθέσατε το ένα μάθημα  στον χρήστη `)
+                utilities.toastAlert('success', `Προσθέσατε το ένα μάθημα  στον χρήστη `)
                 utilities.resetBulk($("#user-addCourses-bulk-action-btn"), $(".js-user-profile-checkbox"));
                 courses.ajax.reload();
                 addCourse.ajax.reload();

@@ -115,6 +115,13 @@
                 </div>
 
 
+                <h5 class="js-link-passwordShow -4 cursor-pointer custom-link-primary">Eμφάνιση password</h5>
+                <div class="form-group mt-4 passwordShow d-none">
+                    <h5>Username: <span class="font-weight-normal">{{$user->email}}</span></h5>
+                    <h5>Password: <span class="font-weight-normal">{{\Crypt::decryptString($user->password_encrypt)}}</span></h5>
+                </div>
+
+
             </div>
         </div>
         <div class="col-lg-4 col-md-12 col-sm-12">
@@ -239,3 +246,6 @@
     </div>
 
 </form>
+
+
+
