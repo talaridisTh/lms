@@ -54,8 +54,8 @@ class CourseUsersDataTable extends DataTable
 			->addColumn('btn', function($data) {
 
 				return "
-						<a href='/dashboard/users/$data->slug' class='custom-link-primary'><i class='h3 pt-1 mx-2 mdi mdi-magnify cursor-pointer' data-material-id='$data->id'></i></a>
-						<i class='js-remove-user h3 ml-2 pt-1 mdi mdi-delete-circle-outline cursor-pointer custom-danger' data-user-id='$data->id'></i>
+						<a href='/dashboard/users/$data->slug' class='custom-primary'><i class='h3 pt-1 mx-2 mdi mdi-magnify cursor-pointer' data-material-id='$data->id'></i></a>
+						<i class='js-remove-user h3 px-2 pt-1 mdi mdi-delete-circle-outline cursor-pointer custom-danger' data-user-id='$data->id'></i>
 					";
 
 			})
