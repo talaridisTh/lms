@@ -49,6 +49,9 @@ class MaterialsDataTable extends DataTable {
                     return $course->title;
                 })->implode(', ');
             })
+            ->addColumn('id', function (Material $material) {
+                return $material->id;
+            })
             ->editColumn('title', function($data) {
 
                 return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>

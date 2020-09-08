@@ -19,6 +19,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($activeCourses as $courses)
                 <a class="dropdown-item js-multiple-update cursor-pointer"
+                   data-courses-type="{{$courses->type}}"
                     data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
                 @endforeach
             </div>

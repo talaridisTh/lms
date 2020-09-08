@@ -8,7 +8,7 @@ let dataRange = $("#daterange")
 //!##################################################
 const tables = $("#scroll-horizontal-datatable").DataTable({
     // caseInsensitive: false,
-    // order: [6, "desc"],
+    order: [9, "desc"],
     processing: true,
     serverSide: true,
     ajax: {
@@ -34,11 +34,12 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         {data: "chexbox", name: "chexbox", orderable: false,},
         {data: "first_name", name: "users.first_name"},
         {data: "last_name", name: "users.last_name", className: "js-link cursor-pointer"},
-        {data: "roles", name: "roles.name", className: "js-link cursor-pointer"},
+        {data: "roles", name: "roles.name", className: "js-link cursor-pointer role-user"},
         {data: "email", name: "users.email", className: "js-link cursor-pointer"},
         {data: 'status', name: 'users.status', orderable: false},
         {data: 'created_at', name: 'users.created_at'},
-        {data: 'courses', name: 'courses.title',orderable: false},
+        {data: 'courses', name: 'courses.title',orderable: false,visible:false},
+        {data: 'id', name: 'users.id'},
     ],
     language: config.datatable.language,
 
@@ -46,7 +47,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
     drawCallback: () => {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded")
         $(".dataTables_scrollHeadInner table > thead > tr > th").removeClass("js-link cursor-pointer");
-        $("thead >tr> th").removeClass("js-link cursor-pointer  text-primary");
+        $("thead >tr> th").removeClass("js-link cursor-pointer role-user  text-primary");
         $("tfoot > tr > th").removeClass("js-link cursor-pointer");
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:first-child").removeClass(" col-md-6");
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
@@ -348,10 +349,11 @@ function checkeBoxesEventListener() {
     let mainCheckbox = $("#select-all-courses")[0];
     let bulkBtn = $("#course-bulk-action-btn")[0];
 
-
+    console.log("s")
     minorCheckboxes.unbind();
 
     minorCheckboxes.change(function () {
+
         utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
     })
 
@@ -381,6 +383,20 @@ const selectDetachCourses = () => {
 
     })
 }
+
+$("#course-bulk-action-btn").click(function(){
+    const elements = document.querySelectorAll('.role-user');
+    let trialUser = ""
+
+    elements.forEach(function el(){
+
+            console.log(this)
+
+
+
+   })
+    // console.log($(".role-user")[0].textContent))
+})
 
 
 //! EXPORT

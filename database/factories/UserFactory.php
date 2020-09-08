@@ -4,6 +4,7 @@
 
 use App\User;
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 
@@ -38,6 +39,7 @@ $factory->define(User::class, function (Faker $faker) {
         'avatar' => $faker->md5 .".jpg",
         "slug"=> Str::slug($faker->firstName,"-"),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        'password_encrypt' =>  Crypt::encryptString('password'), // password
         'status' => $faker->numberBetween( 0, 1 ),
         'remember_token' => Str::random(10),
         'created_at' => $date->format('Y-m-d H:i:s'),

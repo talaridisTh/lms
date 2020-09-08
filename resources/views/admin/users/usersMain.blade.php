@@ -57,6 +57,7 @@
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
                 <th class="text-left">courses</th>
+                <th class="text-left">id</th>
             </tr>
             </thead>
             <tbody class="">
@@ -77,6 +78,7 @@
                 <th class="text-left">Ενεργός</th>
                 <th class="text-left">Ημ. Εγγραφής</th>
                 <th class="text-left">courses</th>
+                <th class="text-left">id</th>
             </tr>
             </tfoot>
         </table>

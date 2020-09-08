@@ -8,6 +8,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Mail\NewUserNotification;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -43,7 +44,7 @@ class UserController extends Controller {
     {
         //
         $user = new User();
-        $data = collect($request)->except('password', "avatar", "sendMail", "roles","password_confirmation")->all();
+        $data = collect($request)->except( "sendMail", "roles","password_confirmation")->all();
         $data['password'] = Hash::make("password");
         $data["slug"] = Str::slug($request->first_name, "-");
         if ($files = $request->file('avatar'))
@@ -63,16 +64,19 @@ class UserController extends Controller {
         {
             $data["status"] = 0;
         }
-        $user->create($data)->assignRole($request->roles);
+
         if ($request->sendMail)
         {
             Mail::to(auth()->user()->email)->send(new NewUserNotification($user->fullName));
         }
         if ($request->password)
         {
-            $data["password"] = bcrypt(request("password"));
-        }
 
+            $data["password_encrypt"] =  Crypt::encryptString($request->password);
+            $data["password"] =  Hash::make(request("password"));
+
+        }
+        $user->create($data)->assignRole($request->roles);
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
 
@@ -98,7 +102,14 @@ class UserController extends Controller {
         }
         if ($request->password)
         {
-            $data["password"] = bcrypt(request("password"));
+
+
+
+            $user->update(['password_encrypt' =>  Crypt::encryptString($request->password)]);
+            $user->update(['password' =>  Hash::make(request("password"))]);
+
+
+
         }
 
         return redirect()->back()->with('update', 'Ο ' . $user->fullName . ' ενημερώθηκε');

@@ -25,8 +25,14 @@ class AddCoursesDataTable extends DataTable {
     {
 
         $user = User::findOrFail($request->userId);
+        if($user->getRoleNames()[0]=="trial user"){
 
-        $query = User::courseWhereNotExist($request->userId);
+            $query = User::trialCourseWhereNotExist($request->userId);
+
+        }else{
+            $query = User::courseWhereNotExist($request->userId);
+        }
+
 
         return DataTables::of($query)
             ->addColumn('chexbox', function ($data) {

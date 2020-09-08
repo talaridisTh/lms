@@ -159,6 +159,23 @@ class User extends Authenticatable {
             ->get();
        return $test;
     }
+    public static function trialCourseWhereNotExist($user)
+    {
+       $test = DB::table('courses')
+           ->where('status', 1)
+           ->where("type","Trial")
+            ->whereNotIn('id',
+                function ($query) use ($user) {
+
+                    $query->select('course_id')
+                        ->from('course_user')
+                        ->where('user_id', $user)
+                        ->get();
+                }
+            )
+            ->get();
+       return $test;
+    }
 
     public static function courseWhereActive()
     {

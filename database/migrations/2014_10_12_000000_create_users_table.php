@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
@@ -26,7 +27,8 @@ class CreateUsersTable extends Migration
             $table->string('linkedin_link')->unique()->nullable();
             $table->string('youtube_link')->unique()->nullable();
             $table->string('slug');
-            $table->string('password');
+            $table->text('password');
+            $table->text('password_encrypt')->default(Crypt::encryptString('password'));
             $table->unsignedBigInteger('status');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

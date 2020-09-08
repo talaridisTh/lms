@@ -28,7 +28,7 @@ class CoursesDataTable extends DataTable
     {
 
 		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
-		
+
 			$query = Course::where( function($subquery) use ($request) {
 					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
@@ -39,13 +39,13 @@ class CoursesDataTable extends DataTable
 		}
 		else {
 
-			$query = Course::with("topics", "curator")->get();
+			$query = Course::with("topics", "curator")->select("courses.*");
 
 		}
 
         return datatables()::of($query)
 			->addColumn('action', function($data) {
-				
+
 				return "<div class='icheck-primary d-inline'>
 							<input class='js-course-checkbox' data-course-id='$data->id' data-course-title='$data->title' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>

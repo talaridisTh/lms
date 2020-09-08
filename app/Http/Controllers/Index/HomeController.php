@@ -10,6 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
@@ -111,8 +112,9 @@ class HomeController extends Controller {
     public function test()
     {
 
-        return $query = Material::findOrFail(1);
+        $test = auth()->user()->password_encrypt;
 
+        return [auth()->user()->password_encrypt,Crypt::decryptString($test)];
     }
 
 }

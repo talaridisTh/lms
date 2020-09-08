@@ -56,6 +56,7 @@
 					<th class="text-left">Τελ. Ανανέωση</th>
 					<th class="text-left">Ημ. Δημιουργίας</th>
 					<th class="text-left">create</th>
+					<th class="text-left">id</th>
 				</tr>
 			</thead>
 			<tbody  class="tables-hover-effect"></tbody>
@@ -73,8 +74,9 @@
 					<th class="text-left">Τελ. Ανανέωση</th>
                     <th class="text-left">Ημ. Δημιουργίας</th>
                     <th class="text-left">create</th>
-				</tr>
-			</tfoot>
+                    <th class="text-left">id</th>
+
+            </tfoot>
 		</table>
     </div>
 
