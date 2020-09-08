@@ -22,23 +22,38 @@ class BundleCoursesDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 		$query = Bundle::find( $request->bundleId )
-			->courses()
-			->select(
-				'courses.id', 
-				'courses.title', 
-				'courses.slug', 
-				'courses.updated_at', 
-				'courses.created_at'
-			);
+			->courses()->with("topics", "curator")->get();
 
-        return datatables()
-            ->eloquent($query)
+        return datatables()::of($query)
 			->addColumn('action', function($data) {
 
 				return "<div class='icheck-primary d-inline'>
 							<input class='js-course-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
+
+			})
+			->editColumn('curator', function($data) {
+
+				if ( $data->curator ) {
+					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
+				}
+				else {
+					$fullName = "";
+				}
+
+				return $fullName;
+
+			})
+			->editColumn('topics', function( $data ) {
+
+				$topics = [];
+
+				foreach ( $data->topics as $topic ) {
+					array_push($topics, $topic['title']);
+				}
+
+				return implode(", ", $topics);
 
 			})
 			->editColumn('updated_at', function($data) {

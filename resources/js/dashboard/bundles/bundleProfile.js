@@ -149,6 +149,9 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', orderable: false, width: "5%" },
 		{ data: 'title', name: 'title', className: "cursor-default" },
+		{ data: 'curator', name: 'curator', className: "cursor-default" },
+		{ data: 'topics', name: 'topics.title', className: "cursor-default" },
+		{ data: 'version', name: 'version', className: "cursor-default" },
 		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default" },
 		{ data: 'created_at', name: 'created_at', className: "cursor-default" },
 	],
