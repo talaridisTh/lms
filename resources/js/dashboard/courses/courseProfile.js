@@ -1274,6 +1274,11 @@ ArticleEditor('#description', {
 			'12': 'col-12'
 		}
 	},
+	align: {
+		left: "text-left",
+		center: "text-center",
+		right: "text-right",
+	},
 	editor: {
 		minHeight: "300px"
 	},
