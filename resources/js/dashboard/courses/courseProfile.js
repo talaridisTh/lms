@@ -1243,11 +1243,37 @@ $R("#summary", utilities.redactorConfig);
 
 ArticleEditor('#description', {
 	css: "/css/",
-	/* custom: {
+	custom: {
 		css: [
-			"/css/arx-content.min.css"
+			"/css/bootstrap.min.css"
 		]
-	}, */
+	},
+	grid: {
+		classname: 'row',
+		columns: 12,
+		gutter: '1px',
+		offset: {
+			left: '15px',
+			right: '15px'
+		},
+		patterns: {
+			'6|6': 'col-6|col-6',
+			'4|4|4': 'col-4|col-4|col-4',
+			'3|3|3|3': 'col-3|col-3|col-3|col-3',
+			'2|2|2|2|2|2': 'col-2|col-2|col-2|col-2|col-2|col-2',
+			'3|6|3': 'col-3|col-6|col-3',
+			'2|8|2': 'col-2|col-8|col-2',
+			'5|7': 'col-5|col-7',
+			'7|5': 'col-7|col-5',
+			'4|8': 'col-4|col-8',
+			'8|4': 'col-8|col-4',
+			'3|9': 'col-3|col-9',
+			'9|3': 'col-9|col-3',
+			'2|10': 'col-2|col-10',
+			'10|2': 'col-10|col-2',
+			'12': 'col-12'
+		}
+	},
 	editor: {
 		minHeight: "300px"
 	},
