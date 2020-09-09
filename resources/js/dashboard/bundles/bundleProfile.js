@@ -190,6 +190,7 @@ let bundleCourseDateInput = utilities.createDateElm( "bundle-course-date-range" 
 
 bundleCourseDateInput.appendBefore( bundleCourseSearchInput );
 
+//* Topic Filter
 let courseLengthElm = $("#bundle-courses-list_length > label")[0];
 let topicFIlter = $("#topic-filter")[0];
 
@@ -208,6 +209,26 @@ $("#topic-filter").change( function() {
 	bundleCoursesTable.column(3).search( this.value ).draw();
 
 });
+
+//* Course type filter
+
+let activeCoursesType = utilities.createCourseTypeSelect("active-course-type-slt");
+courseLengthElm.append(activeCoursesType);
+
+$("#active-course-type-slt").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#active-course-type-slt").change( function() {
+
+	let label = $("#select2-active-course-type-slt-container")[0];
+	utilities.filterStyle( label, this.value );
+
+	bundleCoursesTable.column(4).search( this.value ).draw();
+
+});
+
+
 
 //! Event Initializers!
 function activeCoursesCheckboxToggle() {
