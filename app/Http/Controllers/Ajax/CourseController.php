@@ -283,6 +283,8 @@ class CourseController extends Controller
 						// "url" => $path->getPath(),
 						// D:\Coding\DarkProjects\Demo LMS\storage\app/public\17/Untitled.png
 						
+
+						
 						$path = $course->addMedia( $image )
 						// ->withResponsiveImages()
 							->toMediaCollection("courses")->getPath();

@@ -1244,7 +1244,22 @@ $("#version-select").select2({
 	minimumResultsForSearch: -1
 })
 
-$R("#summary", utilities.redactorConfig);
+$R("#summary", {
+    style: false,
+	minHeight: '150px',
+	imageUpload: "/courses/upload-images",
+	imageData: {
+		id: courseId
+	},
+	callbacks: {
+        upload: {
+            beforeSend: function(xhr)
+            {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            }
+        }
+    }
+});
 
 ArticleEditor('#description', {
 	css: "/css/",
