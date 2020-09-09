@@ -46,7 +46,7 @@
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 	            </div>
 	            <div class="modal-body table-cnt">
-	                <table id="remaining-courses-table" class="table w-100 nowrap modal-table px-3 custom-center-table js-remove-table-classes">
+	                <table id="remaining-courses-table" class="table w-100 nowrap modal-table px-3 js-remove-table-classes">
 						<thead>
 							<tr>
 								<th class="select-all w-5">
@@ -199,7 +199,29 @@
 
 						<!-- Courses table tab-->
 						<div class="tab-pane table-cnt" id="courses">
-							<table id="{{ isset($bundle) ? 'bundle-courses-list' : '' }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes js-table">
+
+
+							<div class="row my-3">
+								<div class="col-sm-1">
+								</div>
+								<div class="col-sm-11 d-flex justify-content-end">
+									<button id="course-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#remaining-courses-modal">
+										<i class="mdi mdi-plus-circle mr-2"></i>
+										Προσθήκη Course
+									</button>
+									<div class="dropdown ml-2">
+										<button id="courses-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+											Επιλογές (0)
+										</button>
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="courses-bulk">
+											<a id="remove-selected-courses-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<table id="{{ isset($bundle) ? 'bundle-courses-list' : '' }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">
@@ -230,24 +252,7 @@
 								</tfoot>
 							</table>
 
-							<div class="row mt-3">
-								<div class="col-sm-1">
-								</div>
-								<div class="col-sm-11 d-flex justify-content-end">
-									<button id="course-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#remaining-courses-modal">
-										<i class="mdi mdi-plus-circle mr-2"></i>
-										Προσθήκη Course
-									</button>
-									<div class="dropdown ml-2">
-										<button id="courses-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
-											Επιλογές (0)
-										</button>
-										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="courses-bulk">
-											<a id="remove-selected-courses-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
-										</div>
-									</div>
-								</div>
-							</div>
+							
 						</div><!-- end Courses tab-pane -->
 
 					</div>

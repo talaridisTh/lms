@@ -151,13 +151,13 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		}
 	},
 	columns: [
-		{ data: 'action', name: 'action', orderable: false, width: "5%" },
-		{ data: 'title', name: 'title', className: "cursor-default" },
-		{ data: 'curator', name: 'curator', className: "text-center cursor-default" },
-		{ data: 'topics', name: 'topics', className: "cursor-default" },
-		{ data: 'version', name: 'version', className: "text-center cursor-default" },
-		{ data: 'updated_at', name: 'updated_at',  className: "text-center cursor-default" },
-		{ data: 'created_at', name: 'created_at', className: "text-center cursor-default" },
+		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false, width: "5%" },
+		{ data: 'title', name: 'title', className: "align-middle cursor-default" },
+		{ data: 'curator', name: 'curator', className: "align-middle text-center cursor-default" },
+		{ data: 'topics', name: 'topics', className: "align-middle cursor-default" },
+		{ data: 'version', name: 'version', className: "align-middle text-center cursor-default" },
+		{ data: 'updated_at', name: 'updated_at',  className: "align-middle text-center cursor-default" },
+		{ data: 'created_at', name: 'created_at', className: "align-middle text-center cursor-default" },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -256,9 +256,9 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', name:'action', orderable: false, searchable: false, className: "text-center"},
+		{data: 'action', name:'action', orderable: false, searchable: false, className: "align-middle text-center"},
 		{data: 'title', name: 'title', className: "cursor-default"},
-		{data: 'addBtn', name: 'addBtn', orderable: false, searchable: false, className: "text-center"}
+		{data: 'addBtn', name: 'addBtn', orderable: false, searchable: false, className: "align-middle text-center"}
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {

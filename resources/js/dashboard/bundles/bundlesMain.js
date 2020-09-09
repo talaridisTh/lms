@@ -53,11 +53,11 @@ $("#delete-bundles-btn").click( function() {
 const bundlesDatatable = $("#bundle-table").DataTable({
 	order: [ 4, "desc" ],
 	columns: [
-		{ data: "action", name: "action", className: "text-center", width: "5%", orderable: false, searchable: false },
+		{ data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
 		{ data: "title", name: "title", className: "cursor-default"},
-		{ data: "status", name: "status", width: "5%", searchable: false },
-		{ data: "updated_at", name: "updated_at", className: "text-center cursor-default"},
-		{ data: "created_at", name: "created_at", className: "text-center cursor-default"},
+		{ data: "status", name: "status", className: "align-middle", width: "5%", searchable: false },
+		{ data: "updated_at", name: "updated_at", className: "align-middle text-center cursor-default"},
+		{ data: "created_at", name: "created_at", className: "align-middle text-center cursor-default"},
 	],
 	processing: true,
 	serverSide: true,

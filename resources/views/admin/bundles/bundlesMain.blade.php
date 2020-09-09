@@ -123,7 +123,7 @@
 		</div>
 	</div>
 
-	<table id="bundle-table" class="table w-100 nowrap js-remove-table-classes custom-center-table center-not-second">
+	<table id="bundle-table" class="table w-100 nowrap js-remove-table-classes center-not-second">
 		<thead>
 			<tr>
 				<th class="text-center option-column">Επιλογή</th>
