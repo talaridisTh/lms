@@ -977,11 +977,6 @@ $(".js-material").click( function() {
 	let newRow = "";
 	let rowId = "";
 
-	console.log(id);
-	console.log(priority);
-	console.log(rows);
-	console.log(type);
-
 	for ( let i = 0; i < rows.length; i++ ) {
 		rowId = rows[i].dataset.materialId;
 
@@ -1002,7 +997,7 @@ $(".js-material").click( function() {
 
 function linkForm( type, priority) {
 
-	return `<td class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="7">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη ${ type }</h3>
 					<div class="form-row">
@@ -1048,7 +1043,7 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="7">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη Ανακοίνωσης</h3>
 					<div class="form-row">
@@ -1085,6 +1080,14 @@ function annoucementForm( priority ) {
 function createTableRow( type, priority ) {
 	let rowElm = document.createElement("tr");
 	rowElm.classList.add("extra-content-row")
+
+	let addContentRow = $("#add-content-row")[0];
+
+	if ( addContentRow ) {
+
+		addContentRow.remove();
+		
+	}
 
 	rowElm.innerHTML = type == "Announcement" ? annoucementForm( priority ) : linkForm( type, priority)
 
