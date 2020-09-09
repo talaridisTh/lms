@@ -39,7 +39,7 @@
 	<!-- end page title -->
 
 	<div id="remaining-courses-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remaining-courses-modalLabel" aria-hidden="true">
-	    <div class="modal-dialog modal-lg">
+	    <div class="modal-dialog modal-xl">
 	        <div class="modal-content">
 	            <div class="modal-header modal-colored-header bg-primary">
 	                <h4 class="modal-title" id="remaining-courses-modalLabel">Προσθήκη Course</h4>
@@ -55,7 +55,10 @@
 										<label for='all-courses-checkbox'></label>
 									</div>
 								</th>
-								<th>Όνομα</th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Εισηγητής</th>
+								<th class="text-center">Topics</th>
+								<th class="text-center">Έκδοση</th>
 								<th class="text-center w-5"></th>
 							</tr>
 						</thead>
@@ -63,7 +66,10 @@
 						<tfoot>
 							<tr>
 								<th class="text-center"></th>
-								<th>Όνομα</th>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Εισηγητής</th>
+								<th class="text-center">Topics</th>
+								<th class="text-center">Έκδοση</th>
 								<th class="text-center"></th>
 							</tr>
 						</tfoot>
@@ -355,6 +361,12 @@
 		</div><!-- ./content -->
 	</div><!-- wrapper -->
 
+	<select id="add-course-topic-filter" class="ml-1 select2 form-control">
+		<option value="" selected>Όλα τα Topic</option>
+		@foreach ($topics as $topic)
+			<option value="{{ $topic->title }}">{{ $topic->title }}</option>
+		@endforeach
+	</select>
 
 	<select id="topic-filter" class="ml-1 select2 form-control">
 		<option value="" selected>Όλα τα Topic</option>

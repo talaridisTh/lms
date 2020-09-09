@@ -2,6 +2,7 @@
 
 namespace App\DataTables;
 
+use App\Bundle;
 use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,19 +22,35 @@ class RemainingCoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-		$query = DB::table('courses')
-			->whereStatus( 1 )
-			->where("deleted_at", null)
-			->whereNotIn( 'id', 
+		// $query = DB::table('courses')
+		// 	->whereStatus( 1 )
+		// 	->where("deleted_at", null)
+		// 	->whereNotIn( 'id', 
 
-				function($subquery) use ( $request ){
-					$subquery->select('course_id')
-						->from('bundle_course')
-						->where('bundle_id', $request->bundleId)
-						->get();
-				}
+		// 		function($subquery) use ( $request ){
+		// 			$subquery->select('course_id')
+		// 				->from('bundle_course')
+		// 				->where('bundle_id', $request->bundleId)
+		// 				->get();
+		// 		}
 
-			);
+		// 	);
+
+
+			$query = Course::whereNotIn( 'id', 
+					function($subquery) use ( $request ){
+						$subquery->select('course_id')
+							->from('bundle_course')
+							->where('bundle_id', $request->bundleId)
+							->get();
+					}
+				)->get();
+
+
+
+
+
+
 
         return datatables()::of($query)
 			->addColumn('action', function($data) {
@@ -42,6 +59,30 @@ class RemainingCoursesDataTable extends DataTable
 							<input class='js-remainings-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
+
+			})
+			->editColumn('curator', function($data) {
+
+				if ( $data->curator ) {
+					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
+				}
+				else {
+					$fullName = "";
+				}
+
+				return $fullName;
+
+			})
+			
+			->editColumn('topics', function( $data ) {
+
+				$topics = [];
+
+				foreach ( $data->topics as $topic ) {
+					array_push($topics, $topic['title']);
+				}
+
+				return implode(", ", $topics);
 
 			})
 			->addColumn('addBtn', function($data) {

@@ -228,8 +228,6 @@ $("#active-course-type-slt").change( function() {
 
 });
 
-
-
 //! Event Initializers!
 function activeCoursesCheckboxToggle() {
 
@@ -258,6 +256,9 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 	columns: [
 		{data: 'action', name:'action', orderable: false, searchable: false, className: "align-middle text-center"},
 		{data: 'title', name: 'title', className: "cursor-default"},
+		{data: 'curator', name: 'curator', className: "align-middle text-center cursor-default"},
+		{data: 'topics', name: 'topics', className: "align-middle cursor-default"},
+		{data: 'version', name: 'version', className: "align-middle text-center cursor-default"},
 		{data: 'addBtn', name: 'addBtn', orderable: false, searchable: false, className: "align-middle text-center"}
 	],
 	language: utilities.tableLocale,
@@ -308,6 +309,49 @@ function remainingsCheckboxes() {
 }
 
 // DataTables function / EventListener End
+
+//!##################################################
+//!					Add Courses Filters				#
+//!##################################################
+
+//* Topic Filter
+let remainingCoursesLength = $("#remaining-courses-table_length > label")[0];
+let addCourseTopicFilter = $("#add-course-topic-filter")[0];
+
+remainingCoursesLength.append(addCourseTopicFilter);
+$("#add-course-topic-filter").select2({
+
+});
+
+$("#add-course-topic-filter").change( function() {
+
+	let label = $("#select2-add-course-topic-filter-container")[0];
+
+	utilities.filterStyle( label, this.value );
+
+	remainingCoursesTable.column(3).search( this.value ).draw();
+
+});
+
+//* Course type filter
+
+let addCoursesTypesFilter = utilities.createCourseTypeSelect("add-courses-type-filter");
+
+remainingCoursesLength.append(addCoursesTypesFilter),
+
+$("#add-courses-type-filter").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#add-courses-type-filter").change( function() {
+
+	let label = $("#select2-add-courses-type-filter-container")[0];
+	utilities.filterStyle( label, this.value );
+
+	remainingCoursesTable.column(4).search( this.value ).draw();
+
+});
+
 
 function postCourseIds( courseIds ) {
 	axios.patch( "/bundles/add-courses", {
