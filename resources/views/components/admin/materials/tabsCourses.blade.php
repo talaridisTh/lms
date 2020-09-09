@@ -37,6 +37,54 @@
     </tfoot>
 </table>
 
+<div id="add-course-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-course-modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-primary">
+                <h4 class="modal-title" id="add-course-modalLabel">Προσθήκη Υλικού</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body table-cnt">
+                <table id="remaining-course-material-table" class=" table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+                    <thead>
+                    <tr>
+                        <th class="text-left">
+                            <div class='icheck-primary d-inline'>
+                                <input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
+                                <label for='all-remainings-checkbox'></label>
+                            </div>
+                        </th>
+                        <th class="text-left">Τίτλος</th>
+                        <th class="text-left">Εἰσηγητής</th>
+                        <th class="text-left">Τύπος</th>
+                        <th class="text-left"></th>
+                    </tr>
+                    </thead>
+                    <tbody class="tables-hover-effect"></tbody>
+                    <tfoot>
+                    <tr>
+                        <th class="text-left">Επιλογή</th>
+                        <th class="text-left">Τίτλος</th>
+                        <th class="text-left">Εἰσηγητής</th>
+                        <th class="text-left">Τύπος</th>
+                        <th class="text-left"></th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="add-remaingings-btn"
+                        data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary"
+                        data-disabled-color="btn-secondary" class="btn btn-secondary" disabled>
+                    Προσθήκη Επιλογών (0)
+                </button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 <div class="row mt-3">
     <div class="col-sm-1">
     </div>

@@ -40,7 +40,7 @@
             </div>
         </div>
        @include("components.filterDatatableUser")
-        <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes">
+        <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes ">
             <thead>
             <tr>
                 <th class="text-left"></th>

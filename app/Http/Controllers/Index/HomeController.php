@@ -113,10 +113,22 @@ class HomeController extends Controller {
     public function test()
     {
 
-//        return Role::find(6)->users()->get()->map(function($user){
-//            return $user->courses()->detach();
-//        });
-//        return Role::find(6)->users()->first()->courses()->detach();
+
+        $materials =  DB::table('courses')
+            ->where('status', 1)
+            ->whereNotIn( 'id',
+                function($query) {
+
+                    $query->select('material_id')
+                        ->from('course_material')
+                        ->where('material_id', 4)
+                        ->get();
+
+                }
+            )
+            ->get();
+
+        return $materials;
     }
 
 }

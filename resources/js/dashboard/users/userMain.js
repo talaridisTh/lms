@@ -53,6 +53,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
         $("#scroll-horizontal-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
+        $("#scroll-horizontal-datatable_filter").addClass("d-flex justify-content-around");
         utilities.resetBulk($("#course-bulk-action-btn"), $("#select-all-courses"));
         utilities.resetBulk($("#course-bulk-action-btn"), $(".js-user-checkbox"));
 
@@ -186,7 +187,7 @@ function toDay(input) {
 
 dataRange.daterangepicker(utilities.datePickerConfig);
 
-$(".ragneButton").detach().appendTo('.dataTables_length label')
+$(".ragneButton").detach().insertBefore ('#scroll-horizontal-datatable_filter > label ')
 
 dataRange.on("apply.daterangepicker", function (event, picker) {
 

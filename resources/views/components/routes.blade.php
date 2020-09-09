@@ -39,7 +39,7 @@
                 lengthMenu: "_MENU_",
                 loadingRecords: "Φόρτωση ...",
                 processing: "Επεξεργασία ...",
-                search: "Αναζήτηση: ",
+                search: "",
                 zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
                 paginate: {
                     previous: "<i class='mdi mdi-chevron-left'>",

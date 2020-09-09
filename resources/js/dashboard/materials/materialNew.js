@@ -59,6 +59,59 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
     }
 });
 
+const addCouseModal = $("#remaining-course-material-table").DataTable({
+    // order: [[ 5, "desc" ]],
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: '/materials/add-course-inside-material',
+        headers: config.headers.csrf,
+        type: "post",
+        data: {
+            materialId
+        }
+        // data: function (d) {
+        //     return $.extend({}, d, {
+        //         from_date: fromDay($(".date")[0]),
+        //         to_date: toDay($(".date")[0])
+        //     })
+        // }
+    },
+    columns: [
+        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-left"},
+        {data: "title", name: "title"},
+        {data: "curator", name: "curator"},
+        {data: "version", name: "version"},
+        {data: "action", name: "action"},
+
+    ],
+    language: {
+        emptyTable: "Δεν υπάρχουν εγγραφές",
+        info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
+        infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
+        lengthMenu: "_MENU_",
+        loadingRecords: "Φόρτωση ...",
+        processing: "Επεξεργασία ...",
+        search: "Αναζήτηση: ",
+        zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
+        paginate: {
+            previous: "<i class='mdi mdi-chevron-left'>",
+            next: "<i class='mdi mdi-chevron-right'>"
+        }
+    },
+    drawCallback: function () {
+        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+        $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+
+        utilities.resetBulk($("#add-remaingings-btn"), $("#all-remainings-checkbox"));
+        utilities.resetBulk($("#add-remaingings-btn"), $(".remainings-checkbox"));
+        checkeBoxesEventListenerModal();
+        addCourse();
+        selectMultipleCheckboxUpdate();
+
+    }
+})
+
 //! EDITOR INIT
 //!============================================================
 
@@ -79,9 +132,9 @@ $R('#contentMaterial',{
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable)
-utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable)
-utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable)
+utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable,"#material-course-table_length label")
+utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable,"#material-course-table_length label")
+utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable,"#material-course-table_length label")
 
 //! SELECT2
 //!============================================================
@@ -174,8 +227,6 @@ $("#update-btn").click( function() {
 });
 
 
-
-
 $(".tab-link").on("show.bs.tab", function(event) {
 
     event.preventDefault();
@@ -187,7 +238,7 @@ $(".tab-link").on("show.bs.tab", function(event) {
 
 })
 
-//! BULK ACTIOON
+//! BULK ACTIOON  materialCourseDatatable
 //!============================================================
 
 function checkeBoxesEventListener() {
@@ -212,7 +263,6 @@ $("#select-all-courses").change(function () {
     utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 
 })
-
 
 const selectMultipleCheckboxDelete = () => {
     $('#js-multiple-delete').unbind();
@@ -247,7 +297,9 @@ const axiosMultipleDelete = async (courseId,materialId) => {
             })
             if (status == 200) {
                 utilities.toastAlert("success", `${courseId.length} αφερέθηκαν`)
+                addCouseModal.ajax.reload()
                 materialCourseDatatable.ajax.reload()
+
             }
         }
     } catch (e) {
@@ -256,5 +308,95 @@ const axiosMultipleDelete = async (courseId,materialId) => {
     }
 }
 
+
+//! BULK ACTIOON  addCouseModal
+//!============================================================
+function checkeBoxesEventListenerModal() {
+
+    let minorCheckboxes = $(".remainings-checkbox");
+    let mainCheckbox = $("#all-remainings-checkbox")[0];
+    let bulkBtn = $("#add-remaingings-btn")[0];
+
+
+    minorCheckboxes.unbind();
+
+    minorCheckboxes.change(function () {
+        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
+    })
+
+}
+
+$("#all-remainings-checkbox").change(function () {
+    let minorCheckboxes = $(".remainings-checkbox");
+    let bulkBtn = $("#add-remaingings-btn")[0];
+
+    utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
+
+})
+
+const addCourse = ()=>{
+    $(".js-add-courses").click(function(){
+        addCourseAxios(this.findParent(2).dataset.courseId,materialId)
+    })
+}
+
+const addCourseAxios = async(courseId,materialId)=>{
+    try {
+        const {status} = await axios.post("/materials/add-course/", {
+            courseId,
+            materialId
+
+        })
+        if (status == 200) {
+            utilities.toastAlert("success", `1 course προστέθηκε`)
+            addCouseModal.ajax.reload()
+            materialCourseDatatable.ajax.reload()
+
+        }
+    }
+    catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+}
+
+const selectMultipleCheckboxUpdate = () => {
+    $('#add-remaingings-btn').unbind();
+    $("#add-remaingings-btn").click(function () {
+        let checkboxes = $(".remainings-checkbox:checked")
+
+        let ids = [];
+
+
+        for (let i = 0; i < checkboxes.length; i++) {
+            ids.push(checkboxes[i].dataset.courseId);
+        }
+
+
+        axiosMultipleUpdate(ids, materialId)
+
+    })
+}
+
+const axiosMultipleUpdate = async (courseIds, materialId) => {
+
+
+    try {
+        const {status} = await axios.post('/materials/add-course/multiple', {
+            courseIds,
+            materialId
+        })
+
+        if (status == 200) {
+            utilities.toastAlert("success", `${courseIds.length} courses προστέθηκαν`)
+            addCouseModal.ajax.reload()
+            materialCourseDatatable.ajax.reload()
+
+        }
+    } catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+}
 
 

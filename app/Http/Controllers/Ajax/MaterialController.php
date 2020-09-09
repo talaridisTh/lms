@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Course;
 use App\CourseMaterial;
+use App\DataTables\AddCourseInsideMaterialsDataTable;
 use App\DataTables\CourseInsideMaterialsDataTable;
 use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
@@ -25,6 +26,11 @@ class MaterialController extends Controller {
     {
 
         return $dataTable->render('materials-course.index');
+    }
+
+    public function addCourseMaterial(AddCourseInsideMaterialsDataTable $dataTable)
+    {
+        return $dataTable->render('add-course-material');
     }
 
 
@@ -171,6 +177,53 @@ class MaterialController extends Controller {
 
 
         return response()->json(['success' => 'Status change successfully.']);
+    }
+
+    public function addCourse(Request $request)
+    {
+
+        $material = Material::findOrFail($request->materialId);
+
+
+                $lastpriority =  $material->courses()->count() >0? $material->courses()->orderBy("priority",'desc')->first()->getOriginal("pivot_priority"):0;
+
+
+            $material->courses()->detach($request->courseId);
+            $material->courses()->attach($request->courseId,["priority"=>$lastpriority+1,"publish_at"=>now()]);
+
+
+
+
+
+
+    }
+
+    public function addCourseMultiple(Request $request)
+    {
+
+
+        $material = Material::findOrFail($request->materialId);
+
+        $courses = Course::findOrFail($request->courseIds);
+
+
+
+        foreach ($courses as $key => $course){
+
+            if ($key<1){
+                $lastpriority =  $material->courses()->count() >0? $material->courses()->orderBy("priority",'desc')->first()->getOriginal("pivot_priority"):0;
+            }
+
+            $material->courses()->detach($course);
+            $material->courses()->attach($course,["priority"=>$lastpriority+$key,"publish_at"=>now()]);
+
+        }
+
+
+
+
+
+
     }
 
 }

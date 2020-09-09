@@ -136,6 +136,7 @@ Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 //! Dashboard Ajax Materials Datatables
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
 Route::post( 'materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse' )->name("material-courses-datatable");
+Route::post( 'materials/add-course-inside-material', 'Ajax\MaterialController@addCourseMaterial' )->name("add-course-material-datatable");
 
 //! Dashboard Ajax Bundles CRUD
 Route::post( 'materials/material-types', 'Ajax\MaterialController@materialTypes' );
@@ -150,6 +151,8 @@ Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@tog
 //! Dashboard Ajax Materials CRUD
 Route::patch( 'materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus' );
 Route::delete('/materials/multiple/course/delete', 'Ajax\MaterialController@destroyMultipleCourse')->name("destroyMultipleCourse.datatable");
+Route::post('/materials/add-course/', 'Ajax\MaterialController@addCourse');
+Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourseMultiple');
 
 
 //! Dashboard Topics Datatables

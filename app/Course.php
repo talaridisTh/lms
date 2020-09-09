@@ -68,6 +68,27 @@ class Course extends Model
 
 		return $materials;
 	}
+	public static function notInMaterialsCourse( $material ) {
+
+
+        $materials =  DB::table('courses')
+            ->where('status', 1)
+            ->whereNotIn( 'id',
+                function($query) use($material) {
+
+                    $query->select('course_id')
+                        ->from('course_material')
+                        ->where('material_id', $material)
+                        ->get();
+
+                }
+            )
+            ->get();
+
+        return $materials;
+	}
+
+
 
 	public static function courseAuthors( $lessonIds ) {
 
