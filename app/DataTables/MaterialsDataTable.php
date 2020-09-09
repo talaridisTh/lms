@@ -27,7 +27,8 @@ class MaterialsDataTable extends DataTable {
         if (!request()->from_date && !request()->to_date)
         {
 
-            $data = Material::with(["courses"])->select("materials.*");
+//            $data = Material::with(["courses"])->select("materials.*");
+            $data = Material::with("courses")->get();
 
 
         } else
@@ -65,8 +66,8 @@ class MaterialsDataTable extends DataTable {
 
                 $status = $data->status == 0 ? "" : "checked";
 
-                return "<input class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
-					<label for='" . $data->slug . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+                return "<input data-status='$data->status'  class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
+					<label for='" . $data->slug . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>"  ;
             })
             ->editColumn('created_at', function ($data) {
 

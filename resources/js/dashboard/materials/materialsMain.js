@@ -21,14 +21,14 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         }
     },
     columns: [
-        {data: "action", name: "materials.action", searchable: false, orderable: false, className: "text-left"},
-        {data: "title", name: "materials.title", className: "js-link cursor-pointer text-left"},
-        {data: "status", name: "materials.status", className: "text-left",orderable: false,},
-        {data: "type", name: "materials.type", className: "js-link cursor-pointer text-left"},
-        {data: "updated_at", name: "materials.updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
-        {data: "created_at", name: "materials.created_at", className: "js-link cursor-pointer text-left"},
-        {data: "courses", name: "courses.title", className: "js-link cursor-pointer text-left",orderable: false},
-        {data: "id", name: "materials.id",visible: false},
+        {data: "action", name: "action", searchable: false, orderable: false, className: "text-left"},
+        {data: "title", name: "title", className: "js-link cursor-pointer text-left"},
+        {data: "status", name: "status", className: "text-left",orderable: false,},
+        {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
+        {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
+        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left"},
+        {data: "courses", name: "title", className: "js-link cursor-pointer text-left",orderable: false},
+        {data: "id", name: "id",visible: false},
     ],
     language: {
         emptyTable: "Δεν υπάρχουν εγγραφές",

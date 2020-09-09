@@ -79,6 +79,9 @@ class MaterialController extends Controller {
         {
             $material->users()->sync($request->instructor);
         }
+        else{
+            $material->users()->detach();
+        }
         if ($request->topic)
         {
 

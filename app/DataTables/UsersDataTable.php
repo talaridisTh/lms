@@ -49,10 +49,6 @@ class UsersDataTable extends DataTable {
 							<label for='$data->first_name'></label>
 						</div>";
             })
-            ->addColumn('id', function ($data) {
-
-                return "$data->id";
-            })
             ->addColumn('courses', function (User $user) {
                 return $user->courses->map(function($course) {
                     return $course->title;

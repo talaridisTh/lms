@@ -46,6 +46,22 @@ class CourseInsideMaterialsDataTable extends DataTable
                 return $collection->implode(", ");
 
             })
+            ->editColumn('title', function($data) {
+
+
+                $collection =  $data->topics->map(function($top){
+                    return $top->title ;
+                });
+
+                $colec= $collection->implode(", ");
+
+                return "<a href='/dashboard/course/$data->slug' data-topic='$colec' class='h5 custom-link-primary'>$data->title</a>
+						<p class='mb-1'>$data->slug</p>
+						<a href='/dashboard/course/$data->slug' class='custom-link-primary'>Edit</a>
+						<span class='mx-2'>|</span>
+						<a href='#' class='custom-link-primary'>View</a>";
+
+            })
             ->addColumn('humans', function ($data) {
 
                 return $data->created_at->diffForHumans();
@@ -66,7 +82,7 @@ class CourseInsideMaterialsDataTable extends DataTable
                 return $data->updated_at->diffForHumans();
 
             })
-            ->rawColumns(["checkbox","topics","humans","active"])
+            ->rawColumns(["checkbox","topics","title","active"])
             ->setRowAttr([
                 'data-course-id' => function ($data) {
                     return $data->id;

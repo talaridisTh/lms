@@ -18,6 +18,7 @@ class CreateCourseUserTable extends Migration
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->json('material_status')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -16,7 +16,7 @@ class CreateMaterialUserTable extends Migration
         Schema::create('material_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
+            $table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade')->nullable();;
         });
     }
 

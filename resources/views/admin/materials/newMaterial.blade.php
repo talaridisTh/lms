@@ -197,6 +197,7 @@
                                                 class="text-danger"> *</span></label>
                                         <select form="material-create" name="instructor[]" multiple
                                                 id="instructorMaterial"
+                                                value="ss"
                                                 class="form-control " data-toggle="select2"
                                                 data-placeholder="Επιλέξτε instructor...">
                                             @foreach ($instructors as $instructor)

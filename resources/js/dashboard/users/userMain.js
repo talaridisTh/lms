@@ -39,7 +39,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         {data: 'status', name: 'users.status', orderable: false},
         {data: 'created_at', name: 'users.created_at'},
         {data: 'courses', name: 'courses.title',orderable: false,visible:false},
-        {data: 'id', name: 'users.id'},
+        {data: 'id', name: 'users.id',visible:false},
     ],
     language: config.datatable.language,
 

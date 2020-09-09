@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Index;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Material;
+use App\Role;
 use App\Topic;
 use App\User;
 use Carbon\Carbon;
@@ -112,9 +113,10 @@ class HomeController extends Controller {
     public function test()
     {
 
-        $test = auth()->user()->password_encrypt;
-
-        return [auth()->user()->password_encrypt,Crypt::decryptString($test)];
+//        return Role::find(6)->users()->get()->map(function($user){
+//            return $user->courses()->detach();
+//        });
+//        return Role::find(6)->users()->first()->courses()->detach();
     }
 
 }

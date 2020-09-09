@@ -26,12 +26,9 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
     columns: [
         {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-left"},
         {data: "title", name: "title"},
-        {data: "topics", name: "topics.title"},
         {data: "curator", name: "curator"},
         {data: "updated_at", name: "updated_at"},
-        {data: "humans", name: "humans"},
         {data: "created_at", name: "created_at"},
-        {data: "active", name: "active" ,visible:false},
 
     ],
     language: {
@@ -82,12 +79,14 @@ $R('#contentMaterial',{
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#topicFilterMaterialCourses', 2, materialCourseDatatable)
+utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable)
 utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable)
-utilities.filterButton('#userFilterMaterialCourses', 3, materialCourseDatatable)
+utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable)
 
 //! SELECT2
 //!============================================================
+//contant
+
 $("#typeMaterial").select2({
     minimumResultsForSearch: -1,
 });
@@ -101,14 +100,39 @@ $("#topicMaterial").select2({
     tags: true
 });
 
-
+//datatable
 $("#topicFilterMaterialCourses").select2({});
 
 $(".custom-select").select2({   minimumResultsForSearch: -1,});
 
 $("#activeFilterMaterialCourses").select2({   minimumResultsForSearch: -1,});
 
-$("#userFilterMaterialCourses").select2({   minimumResultsForSearch: -1,});
+$("#userFilterMaterialCourses").select2({   });
+
+$("#topicFilterMaterialCourses").change(function () {
+
+    let label = $("#select2-topicFilterMaterialCourses-container")[0];
+
+    utilities.filterStyle(label, this.value);
+
+});
+
+$("#userFilterMaterialCourses").change(function () {
+
+    let label = $("#select2-userFilterMaterialCourses-container")[0];
+
+    utilities.filterStyle(label, this.value);
+
+});
+
+$("#activeFilterMaterialCourses").change(function () {
+
+    let label = $("#select2-activeFilterMaterialCourses-container")[0];
+
+    utilities.filterStyle(label, this.value);
+
+});
+
 
 
 //sortable
@@ -148,6 +172,8 @@ dataRange.daterangepicker({
 $("#update-btn").click( function() {
     $(".formPrevent").submit();
 });
+
+
 
 
 $(".tab-link").on("show.bs.tab", function(event) {
