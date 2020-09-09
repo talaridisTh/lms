@@ -122,9 +122,9 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#activeFilter', 6, tables)
-utilities.filterButton('#rolesFilter', 4, tables)
-utilities.filterButton('#fullNameFilter', 8, tables)
+utilities.filterButton('#activeFilter', 6, tables,"#scroll-horizontal-datatable_length label")
+utilities.filterButton('#rolesFilter', 4, tables,"#scroll-horizontal-datatable_length label")
+utilities.filterButton('#fullNameFilter', 8, tables,"#scroll-horizontal-datatable_length label")
 
 //! EVENT LISTENER
 //!============================================================

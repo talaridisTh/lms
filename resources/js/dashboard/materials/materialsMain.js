@@ -63,9 +63,9 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 
 //! FILTER DATATABLE
 //!============================================================
-utilities.filterButton('#activeFilterMaterial', 2, materialsDatatable);
-utilities.filterButton('#typeFilterMaterial', 3, materialsDatatable);
-utilities.filterButton('#courseFilterMaterial', 6, materialsDatatable);
+utilities.filterButton('#activeFilterMaterial', 2, materialsDatatable,"#materials-datatable_length label");
+utilities.filterButton('#typeFilterMaterial', 3, materialsDatatable,"#materials-datatable_length label");
+utilities.filterButton('#courseFilterMaterial', 6, materialsDatatable,"#materials-datatable_length label");
 
 function fromDay(input) {
     let dateInput = input;
