@@ -311,14 +311,14 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 
 	},
 	columns: [
-		{ data: 'action', className: "position-relative align-middle", orderable: false },
+		{ data: 'action', className: "position-relative text-center align-middle", orderable: false },
 		{ data: 'title', name: 'title' },
-		{ data: 'status', name: 'pivot.status', className: "align-middle", },
+		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
-		{ data: 'type', name: 'type', className: "cursor-default align-middle" },
-		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default align-middle", searchable: false },
-		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
-		{ data: 'btns', className: "cursor-default align-middle", searchable: false, orderable: false },
+		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
+		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default text-center align-middle", searchable: false },
+		{ data: 'created_at', name: 'created_at', className: "cursor-default text-center align-middle", searchable: false },
+		{ data: 'btns', className: "cursor-default text-center align-middle", searchable: false, orderable: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -361,11 +361,11 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', width: "5%", orderable: false},
+		{data: 'action', width: "5%", className: "text-center", orderable: false},
 		{data: 'title', name: 'materials.title', className: "cursor-default"},
-		{data: 'topics', name: 'topics.title', className: "cursor-default"},
-		{data: 'type', name: 'materials.type', className: "cursor-default"},
-		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
+		{data: 'topics', name: 'topics.title', className: "text-center cursor-default"},
+		{data: 'type', name: 'materials.type', className: "text-center cursor-default"},
+		{data: 'addBtn', width: "12%", class: "text-center", searchable: false, orderable: false},
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
