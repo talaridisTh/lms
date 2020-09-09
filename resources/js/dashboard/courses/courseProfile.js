@@ -1247,6 +1247,14 @@ $("#version-select").select2({
 $R("#summary", {
     style: false,
 	minHeight: '150px',
+	imageResizable: true,
+	imagePosition: true,
+	imagePosition : {
+        "left": "text-left",
+        "right": "text-right",
+        "center": "text-center"
+	},
+	imageFloatMargin: '20px',
 	imageUpload: "/courses/upload-images",
 	imageData: {
 		id: courseId
