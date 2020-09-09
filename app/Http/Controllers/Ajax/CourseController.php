@@ -252,4 +252,62 @@ class CourseController extends Controller
 		}
 		
 	}
+
+	public function editorImages ( Request $request ) {
+
+		$allowedTypes = ["image/png", "image/jpeg"];
+		$date = date('m.Y');
+		$course = Course::find( $request->id );
+		$files = [];
+
+		
+		foreach ( $request->file as $key => $image ) {
+			if ( $image->isValid() ) {
+				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
+					if ( $image->getSize() <= 512000 ) {
+						
+						$name = $image->getClientOriginalName();
+						
+						$image->storeAs("public/images/$date", $name);
+
+						
+						// dd($path->getUrl());
+						
+						// $path = public_path("storage/images/$date/$name");
+						
+						$files["file-". $key] =[
+							"url" => url("storage/images/$date/$name"),
+							"id" => $key
+						];
+
+
+						// $path = $course->addMedia( $image )
+						// ->withResponsiveImages()
+						// ->toMediaCollection();
+
+						// "url" => $path->getFullUrl(),
+						// http://localhost/storage/15/Untitled.png
+						// "url" => $path->getUrl(),
+						// http://localhost/storage/16/Untitled.png
+						// "url" => $path->getPath(),
+						// D:\Coding\DarkProjects\Demo LMS\storage\app/public\17/Untitled.png
+						
+						// return pathinfo($path, PATHINFO_DIRNAME );
+
+						// dd($path->getFullUrl());
+
+
+						// $files["file-". $key] =[
+						// 	"url" => $path->getPath(),
+						// 	"id" => $key
+						// ];
+						
+					}
+				}
+			}
+		}
+
+		echo json_encode($files);
+
+	}
 }

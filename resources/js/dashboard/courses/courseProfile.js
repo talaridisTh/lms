@@ -1253,6 +1253,9 @@ ArticleEditor('#description', {
 			"/css/bootstrap.min.css"
 		]
 	},
+	classes: {
+		img: 'img-fluid'
+	},
 	grid: {
 		classname: 'row',
 		columns: 12,
@@ -1287,12 +1290,13 @@ ArticleEditor('#description', {
 	editor: {
 		minHeight: "300px"
 	},
-	/* image: {
-		upload: "/materials/upload-content-images",
+	image: {
+		upload: "/courses/upload-images",
 		data: {
-			"_token": $('meta[name="csrf-token"]').attr('content')
+			"_token": $('meta[name="csrf-token"]').attr('content'),
+			"id": courseId
 		}
-	} */
+	}
 });
 
 
@@ -1315,14 +1319,14 @@ let dropzone = new Dropzone("#cover-dropzone", {
 	}   */
 });
 
-$("#cover-input").change( function() {
-	console.log(this);
-})
+// $("#cover-input").change( function() {
+// 	console.log(this);
+// })
 
 dropzone.on("addedfile", function(file) {
 	
 	// let coverInput = $("#cover-input")[0];
 
 	// coverInput.value = file;
-	console.log(event);
+	console.log(file);
 })

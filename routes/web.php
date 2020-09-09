@@ -121,6 +121,7 @@ Route::post( 'courses/add-materials', 'Ajax\CourseController@addMaterials' );
 Route::patch( 'courses/remove-materials', 'Ajax\CourseController@removeMaterials' );
 Route::patch( 'courses/add-students', 'Ajax\CourseController@addStudents' );
 Route::patch( 'courses/remove-students', 'Ajax\CourseController@removeStudents' );
+Route::post( 'courses/upload-images', 'Ajax\CourseController@editorImages' );
 
 //! Dashboard Ajax Bundles Datatables
 Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );
