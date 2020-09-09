@@ -977,6 +977,11 @@ $(".js-material").click( function() {
 	let newRow = "";
 	let rowId = "";
 
+	console.log(id);
+	console.log(priority);
+	console.log(rows);
+	console.log(type);
+
 	for ( let i = 0; i < rows.length; i++ ) {
 		rowId = rows[i].dataset.materialId;
 
@@ -1293,7 +1298,31 @@ ArticleEditor('#description', {
 
 let dropzone = new Dropzone("#cover-dropzone", {
 	previewTemplate: $("#uploadPreviewTemplate").html(),
+	autoProcessQueue: false,
 	url: "/target-url",
   	thumbnailWidth: 80,
-  	thumbnailHeight: 80,
+	thumbnailHeight: 80,
+	/* init: function() {
+
+		this.on("drop", function(event) {
+	
+			// let coverInput = $("#cover-input")[0];
+		
+			// coverInput.value = file;
+			console.log(event);
+		})
+
+	}   */
+});
+
+$("#cover-input").change( function() {
+	console.log(this);
+})
+
+dropzone.on("addedfile", function(file) {
+	
+	// let coverInput = $("#cover-input")[0];
+
+	// coverInput.value = file;
+	console.log(event);
 })
