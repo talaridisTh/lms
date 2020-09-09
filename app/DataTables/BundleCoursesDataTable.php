@@ -21,24 +21,57 @@ class BundleCoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-		$query = Bundle::find( $request->bundleId )
-			->courses()
-			->select(
-				'courses.id', 
-				'courses.title', 
-				'courses.slug', 
-				'courses.updated_at', 
-				'courses.created_at'
-			);
 
-        return datatables()
-            ->eloquent($query)
+
+		// dd($request->all());
+
+		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
+			$query = Bundle::find( $request->bundleId )->courses()
+				->where(function($subquery) use ($request) {
+					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				}
+			)->with("topics", "curator")->get();
+		}
+		else {
+			$query = Bundle::find( $request->bundleId )
+				->courses()->with("topics", "curator")->get();
+		}
+
+
+
+
+
+        return datatables()::of($query)
 			->addColumn('action', function($data) {
 
 				return "<div class='icheck-primary d-inline'>
 							<input class='js-course-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
+
+			})
+			->editColumn('curator', function($data) {
+
+				if ( $data->curator ) {
+					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
+				}
+				else {
+					$fullName = "";
+				}
+
+				return $fullName;
+
+			})
+			->editColumn('topics', function( $data ) {
+
+				$topics = [];
+
+				foreach ( $data->topics as $topic ) {
+					array_push($topics, $topic['title']);
+				}
+
+				return implode(", ", $topics);
 
 			})
 			->editColumn('updated_at', function($data) {

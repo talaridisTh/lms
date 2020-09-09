@@ -199,7 +199,7 @@
 
 						<!-- Courses table tab-->
 						<div class="tab-pane table-cnt" id="courses">
-							<table id="{{ isset($bundle) ? 'bundle-courses-list' : '' }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
+							<table id="{{ isset($bundle) ? 'bundle-courses-list' : '' }}" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">
@@ -209,6 +209,9 @@
 											</div>
 										</th>
 										<th class="text-center">Όνομα</th>
+										<th class="text-center">Εισηγητής</th>
+										<th class="text-center">Topics</th>
+										<th class="text-center">Έκδοση</th>
 										<th class="text-center">Τελ. Ανανέωση</th>
 										<th class="text-center">Ημ. Δημιουργίας</th>
 									</tr>
@@ -218,6 +221,9 @@
 									<tr>
 										<th class="text-center"></th>
 										<th class="text-center">Όνομα</th>
+										<th class="text-center">Εισηγητής</th>
+										<th class="text-center">Topics</th>
+										<th class="text-center">Έκδοση</th>
 										<th class="text-center">Τελ. Ανανέωση</th>
 										<th class="text-center">Ημ. Δημιουργίας</th>
 									</tr>
