@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Bundle;
 use Illuminate\Http\Request;
 use App\Http\Requests\BundleCourseRequest;
+use App\Topic;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -72,9 +73,11 @@ class BundleController extends Controller
 		else {
 			$publish = is_null($bundle->publish_at) ? null : Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
 		}
+		$topics = Topic::all("title");
 
 		$data = [
 			'bundle' => $bundle,
+			'topics' => $topics,
 			'publish' => $publish,
 		];
 

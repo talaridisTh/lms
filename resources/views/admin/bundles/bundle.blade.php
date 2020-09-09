@@ -350,6 +350,13 @@
 		</div><!-- ./content -->
 	</div><!-- wrapper -->
 
+
+	<select id="topic-filter" class="ml-1 select2 form-control">
+		<option value="" selected>Όλα τα Topic</option>
+		@foreach ($topics as $topic)
+			<option value="{{ $topic->title }}">{{ $topic->title }}</option>
+		@endforeach
+	</select>
 	
 
 @endsection

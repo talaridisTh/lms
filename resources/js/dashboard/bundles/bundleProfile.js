@@ -154,7 +154,7 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		{ data: 'action', name: 'action', orderable: false, width: "5%" },
 		{ data: 'title', name: 'title', className: "cursor-default" },
 		{ data: 'curator', name: 'curator', className: "cursor-default" },
-		{ data: 'topics', name: 'topics.title', className: "cursor-default" },
+		{ data: 'topics', name: 'topics', className: "cursor-default" },
 		{ data: 'version', name: 'version', className: "cursor-default" },
 		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default" },
 		{ data: 'created_at', name: 'created_at', className: "cursor-default" },
@@ -189,6 +189,45 @@ let bundleCourseSearchInput = $("#bundle-courses-list_filter > label > input")[0
 let bundleCourseDateInput = utilities.createDateElm( "bundle-course-date-range" );
 
 bundleCourseDateInput.appendBefore( bundleCourseSearchInput );
+
+//* Topic Filter
+let courseLengthElm = $("#bundle-courses-list_length > label")[0];
+let topicFIlter = $("#topic-filter")[0];
+
+courseLengthElm.append(topicFIlter);
+
+$("#topic-filter").select2({
+
+});
+
+$("#topic-filter").change( function() {
+
+	let label = $("#select2-topic-filter-container")[0];
+
+	utilities.filterStyle( label, this.value );
+
+	bundleCoursesTable.column(3).search( this.value ).draw();
+
+});
+
+//* Course type filter
+
+let activeCoursesType = utilities.createCourseTypeSelect("active-course-type-slt");
+courseLengthElm.append(activeCoursesType);
+
+$("#active-course-type-slt").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#active-course-type-slt").change( function() {
+
+	let label = $("#select2-active-course-type-slt-container")[0];
+	utilities.filterStyle( label, this.value );
+
+	bundleCoursesTable.column(4).search( this.value ).draw();
+
+});
+
 
 
 //! Event Initializers!
