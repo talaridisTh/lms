@@ -142,8 +142,12 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		url: "/bundles/bundle-courses-datatable",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
-		data: {
-			bundleId: bundleId
+		data: function( d ) {
+			return $.extend( {}, d, {
+				bundleId: bundleId,
+				startDate: utilities.startDate( $("#bundle-course-date-range")[0] ),
+				endDate: utilities.endDate( $("#bundle-course-date-range")[0] )
+			})
 		}
 	},
 	columns: [
@@ -176,6 +180,18 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 
 });
 
+//!##########################################
+//!				Datatable filters			#
+//!##########################################
+
+//* Append Course Materials Date Picker Filter
+let bundleCourseSearchInput = $("#bundle-courses-list_filter > label > input")[0];
+let bundleCourseDateInput = utilities.createDateElm( "bundle-course-date-range" );
+
+bundleCourseDateInput.appendBefore( bundleCourseSearchInput );
+
+
+//! Event Initializers!
 function activeCoursesCheckboxToggle() {
 
 	let mainCheckbox = $('#main-active-courses-checkbox')[0];
@@ -300,6 +316,40 @@ function removeCourses( courseIds ) {
 //!##########################################
 //!				Initializations				#
 //!##########################################
+
+//* Date Search
+let dateRange = $(".js-date-search");
+
+dateRange.daterangepicker( utilities.datePickerConfig );
+
+dateRange.on( "apply.daterangepicker", function(event, picker) {
+
+	let startDate = picker.startDate.format('DD/MM/YYYY');
+	let endDate = picker.endDate.format('DD/MM/YYYY');
+	this.value = `${ startDate } - ${ endDate }`;
+
+	this.classList.add("select2-selected");
+	let tableId = $(this).closest(".table-cnt").find(".js-table").attr("id");
+	$(`#${tableId}`).DataTable().ajax.reload();
+
+});
+
+dateRange.on( 'cancel.daterangepicker', function(event, picker) {
+
+	this.value = "";
+	this.classList.remove("select2-selected");
+	let tableId = $(this).closest(".table-cnt").find(".js-table").attr("id");
+	$(`#${tableId}`).DataTable().ajax.reload();
+
+});
+
+dateRange.on( "input", function() {
+
+	this.value = this.value.replace( /[^0-9]/g, "" )
+		.replace(/^(\d{2})?(\d{2})?(\d{4})?(\d{2})?(\d{2})?(\d{4})?/g, '$1/$2/$3 - $4/$5/$6')
+		.substr(0, 23)
+
+});
 
 $R("#summary", utilities.redactorConfig);
 

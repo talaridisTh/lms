@@ -208,7 +208,7 @@ function createStateSelect( id = "" ) {
 function createDateElm( id ) {
 	let input = document.createElement("input");
 
-	input.classList.add("form-control", "date", "d-inline-block", "ml-1");
+	input.classList.add("form-control", "date", "d-inline-block", "ml-1", "js-date-search");
 	input.id = id;
 	input.dataset.toggle = "date-picker";
 	input.dataset.cancelClass = "btn-secondary";

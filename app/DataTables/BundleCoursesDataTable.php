@@ -21,8 +21,26 @@ class BundleCoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-		$query = Bundle::find( $request->bundleId )
-			->courses()->with("topics", "curator")->get();
+
+
+		// dd($request->all());
+
+		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
+			$query = Bundle::find( $request->bundleId )->courses()
+				->where(function($subquery) use ($request) {
+					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
+						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				}
+			)->with("topics", "curator")->get();
+		}
+		else {
+			$query = Bundle::find( $request->bundleId )
+				->courses()->with("topics", "curator")->get();
+		}
+
+
+
+
 
         return datatables()::of($query)
 			->addColumn('action', function($data) {

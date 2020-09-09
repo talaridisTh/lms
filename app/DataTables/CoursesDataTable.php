@@ -97,13 +97,13 @@ class CoursesDataTable extends DataTable
 			->editColumn('updated_at', function($data) {
 
 				// return Carbon::parse( $data->updated_at)->diffForHumans();
-				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
+				return $data->updated_at->format( "d / m / Y" );
 
 			})
 			->editColumn('created_at', function($data) {
 
 				// return Carbon::parse( $data->created_at)->diffForHumans();
-				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
+				return $data->created_at->format( "d / m / Y" );
 
 			})
 			->rawColumns(['action', 'title', 'toggle'])
