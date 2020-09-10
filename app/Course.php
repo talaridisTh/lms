@@ -15,7 +15,7 @@ class Course extends Model implements HasMedia
 	use InteractsWithMedia;
 	use SoftDeletes;
 
-	public function curator() {
+	git public function curator() {
 
 		return $this->belongsTo('App\User', "user_id");
 
