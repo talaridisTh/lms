@@ -404,9 +404,6 @@
 								</tfoot>
 							</table>
 
-
-
-							
 						</div><!-- users tab-pane -->
 					
 					</div><!-- tab-content -->

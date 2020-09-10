@@ -8,6 +8,7 @@ const courseId = $("#course-materials-list")[0].dataset.courseId
 import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
+// import Alignment from	"../../../plugins/redactor/_plugins/alignment/alignment";
 
 //! EventListerners
 //!============================================================
@@ -1253,14 +1254,14 @@ $R("#summary", {
 		'bold', 'underline', 'italic', 'deleted',
 		'sup', 'sub', 'lists', 'image', 'file', 'link'
 	],
-    style: false,
+	style: false,
+	plugins: ['alignment'],
 	minHeight: '150px',
 	imageResizable: true,
-	imagePosition: true,
 	imagePosition : {
-        "left": "text-left",
-        "right": "text-right",
-        "center": "text-center"
+        "left": "image-left",
+        "right": "image-right",
+        "center": "image-center text-center"
 	},
 	imageFloatMargin: '20px',
 	imageUpload: "/courses/upload-images",
@@ -1285,7 +1286,8 @@ ArticleEditor('#description', {
 		]
 	},
 	classes: {
-		img: 'img-fluid'
+		img: 'img-fluid',
+		p: 'text-wrap'
 	},
 	grid: {
 		classname: 'row',

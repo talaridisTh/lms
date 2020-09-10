@@ -518,3 +518,16 @@ b[role="presentation"] {
 .custom-danger:hover {
 	color: #ff5b5b;
 }
+
+//! Redactor Classes for Images
+figure.image-left {
+	float: left;
+}
+
+figure.image-right {
+	float: right;
+}
+
+figure.image-center {
+	margin: auto;
+}
