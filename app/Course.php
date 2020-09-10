@@ -2,17 +2,14 @@
 
 namespace App;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Course extends Model implements HasMedia
+
+class Course extends Model
 {
 
-	use InteractsWithMedia;
 	use SoftDeletes;
 
 	git public function curator() {
