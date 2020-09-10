@@ -10,6 +10,12 @@ class Bundle extends Model
 {
 	use SoftDeletes;
 
+	public function media() {
+
+		return $this->morphToMany('App\media', 'mediable');
+
+	}
+	
 	public function courses() {
 
 		return $this->belongsToMany(Course::class);

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTopicablesTable extends Migration
+class CreateMediablesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateTopicablesTable extends Migration
      */
     public function up()
     {
-        Schema::create('topicables', function (Blueprint $table) {
-            $table->unsignedBigInteger('topic_id');
-            $table->unsignedBigInteger('topicable_id');
-            $table->string('topicable_type', 50);
+        Schema::create('mediables', function (Blueprint $table) {
+            $table->unsignedBigInteger('media_id');
+			$table->unsignedBigInteger('mediable_id');
+			$table->string('topicable_type', 50);
         });
     }
 
@@ -27,6 +27,6 @@ class CreateTopicablesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topicables');
+        Schema::dropIfExists('mediables');
     }
 }

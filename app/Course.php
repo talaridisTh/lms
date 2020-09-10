@@ -12,6 +12,12 @@ class Course extends Model
 
 	use SoftDeletes;
 
+	public function media() {
+
+		return $this->morphToMany('App\media', 'mediable');
+
+	}
+
 	public function curator() {
 
 		return $this->belongsTo('App\User', "user_id");

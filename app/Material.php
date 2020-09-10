@@ -41,6 +41,12 @@ class Material extends Model
             ->first()->priority;
     }
 
+	public function media() {
+
+		return $this->morphToMany('App\media', 'mediable');
+
+	}
+	
 	public function users() {
 
 
