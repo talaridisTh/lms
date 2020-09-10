@@ -3619,6 +3619,18 @@ b[role=presentation] {
   color: #ff5b5b;
 }
 
+figure.image-left {
+  float: left;
+}
+
+figure.image-right {
+  float: right;
+}
+
+figure.image-center {
+  margin: auto;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
