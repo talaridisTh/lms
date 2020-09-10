@@ -51,6 +51,11 @@ function toastAlertDelete(text,icon="warning"){
 //!CONFIG
 //!============================================================
 const redactorConfig = {
+	buttons: [
+		'html', 'undo', 'redo', 'format', 
+		'bold', 'underline', 'italic', 'deleted',
+		'sup', 'sub', 'lists', 'image', 'file', 'link'
+	],
     style: false,
     minHeight: '150px',
 }

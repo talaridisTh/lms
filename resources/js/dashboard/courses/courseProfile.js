@@ -311,14 +311,14 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 
 	},
 	columns: [
-		{ data: 'action', className: "position-relative align-middle", orderable: false },
+		{ data: 'action', className: "position-relative text-center align-middle", orderable: false },
 		{ data: 'title', name: 'title' },
-		{ data: 'status', name: 'pivot.status', className: "align-middle", },
+		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
-		{ data: 'type', name: 'type', className: "cursor-default align-middle" },
-		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default align-middle", searchable: false },
-		{ data: 'created_at', name: 'created_at', className: "cursor-default align-middle", searchable: false },
-		{ data: 'btns', className: "cursor-default align-middle", searchable: false, orderable: false },
+		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
+		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default text-center align-middle", searchable: false },
+		{ data: 'created_at', name: 'created_at', className: "cursor-default text-center align-middle", searchable: false },
+		{ data: 'btns', className: "cursor-default text-center align-middle", searchable: false, orderable: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -361,11 +361,11 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', width: "5%", orderable: false},
+		{data: 'action', width: "5%", className: "text-center", orderable: false},
 		{data: 'title', name: 'materials.title', className: "cursor-default"},
-		{data: 'topics', name: 'topics.title', className: "cursor-default"},
-		{data: 'type', name: 'materials.type', className: "cursor-default"},
-		{data: 'addBtn', width: "12%", searchable: false, orderable: false},
+		{data: 'topics', name: 'topics.title', className: "text-center cursor-default"},
+		{data: 'type', name: 'materials.type', className: "text-center cursor-default"},
+		{data: 'addBtn', width: "12%", class: "text-center", searchable: false, orderable: false},
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -997,7 +997,7 @@ $(".js-material").click( function() {
 
 function linkForm( type, priority) {
 
-	return `<td class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="7">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη ${ type }</h3>
 					<div class="form-row">
@@ -1043,7 +1043,7 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="7">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη Ανακοίνωσης</h3>
 					<div class="form-row">
@@ -1080,6 +1080,14 @@ function annoucementForm( priority ) {
 function createTableRow( type, priority ) {
 	let rowElm = document.createElement("tr");
 	rowElm.classList.add("extra-content-row")
+
+	let addContentRow = $("#add-content-row")[0];
+
+	if ( addContentRow ) {
+
+		addContentRow.remove();
+		
+	}
 
 	rowElm.innerHTML = type == "Announcement" ? annoucementForm( priority ) : linkForm( type, priority)
 
@@ -1239,7 +1247,35 @@ $("#version-select").select2({
 	minimumResultsForSearch: -1
 })
 
-$R("#summary", utilities.redactorConfig);
+$R("#summary", {
+	buttons: [
+		'html', 'undo', 'redo', 'format', 
+		'bold', 'underline', 'italic', 'deleted',
+		'sup', 'sub', 'lists', 'image', 'file', 'link'
+	],
+    style: false,
+	minHeight: '150px',
+	imageResizable: true,
+	imagePosition: true,
+	imagePosition : {
+        "left": "text-left",
+        "right": "text-right",
+        "center": "text-center"
+	},
+	imageFloatMargin: '20px',
+	imageUpload: "/courses/upload-images",
+	imageData: {
+		id: courseId
+	},
+	callbacks: {
+        upload: {
+            beforeSend: function(xhr)
+            {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            }
+        }
+    }
+});
 
 ArticleEditor('#description', {
 	css: "/css/",
@@ -1247,6 +1283,9 @@ ArticleEditor('#description', {
 		css: [
 			"/css/bootstrap.min.css"
 		]
+	},
+	classes: {
+		img: 'img-fluid'
 	},
 	grid: {
 		classname: 'row',
@@ -1282,18 +1321,43 @@ ArticleEditor('#description', {
 	editor: {
 		minHeight: "300px"
 	},
-	/* image: {
-		upload: "/materials/upload-content-images",
+	image: {
+		upload: "/courses/upload-images",
 		data: {
-			"_token": $('meta[name="csrf-token"]').attr('content')
+			"_token": $('meta[name="csrf-token"]').attr('content'),
+			"id": courseId
 		}
-	} */
+	}
 });
 
 
 let dropzone = new Dropzone("#cover-dropzone", {
 	previewTemplate: $("#uploadPreviewTemplate").html(),
+	autoProcessQueue: false,
 	url: "/target-url",
   	thumbnailWidth: 80,
-  	thumbnailHeight: 80,
+	thumbnailHeight: 80,
+	/* init: function() {
+
+		this.on("drop", function(event) {
+	
+			// let coverInput = $("#cover-input")[0];
+		
+			// coverInput.value = file;
+			console.log(event);
+		})
+
+	}   */
+});
+
+// $("#cover-input").change( function() {
+// 	console.log(this);
+// })
+
+dropzone.on("addedfile", function(file) {
+	
+	// let coverInput = $("#cover-input")[0];
+
+	// coverInput.value = file;
+	console.log(file);
 })

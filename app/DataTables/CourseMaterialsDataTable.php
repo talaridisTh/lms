@@ -49,7 +49,7 @@ class CourseMaterialsDataTable extends DataTable
 								<input class='js-course-material-checkbox' data-material-id='$data->id' data-material-type='$data->type' type='checkbox' id='$data->slug' autocomplete='off'>
 								<label for='$data->slug'></label>
 							</div>
-							<a class='custom-primary add-material' href='#' data-material-id='$data->id' data-priority='$data->pivot->priority' data-toggle='modal' data-target='#add-additions-modal'>
+							<a class='custom-primary add-material' href='#' data-material-id='$data->id' data-priority='".$data->pivot->priority."' data-toggle='modal' data-target='#add-additions-modal'>
 								<i class='mdi mdi-plus-circle-outline mr-1'></i>
 							</a>
 						";
@@ -111,7 +111,7 @@ class CourseMaterialsDataTable extends DataTable
 			->setRowAttr(
 				[ 'data-material-id' => function($data) {
 
-						return  $data->materialId;
+						return  $data->id;
 
 					},
 					'data-material-slug' => function($data) {

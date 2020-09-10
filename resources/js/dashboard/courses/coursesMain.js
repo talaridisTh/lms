@@ -103,15 +103,15 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
+		{data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
 		{data: 'status', name: 'status', visible: false},
-		{data: 'toggle', name: 'status', className: "align-middle"},
-		{data: 'curator', name: 'curator', className: "align-middle" },
+		{data: 'toggle', name: 'status', className: "align-middle text-center"},
+		{data: 'curator', name: 'curator', className: "align-middle text-center" },
 		{data: 'topics', name: 'topics', className: "align-middle" },
-		{data: 'version', name: 'version', className: "align-middle" },
-		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
-		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
+		{data: 'version', name: 'version', className: "align-middle text-center" },
+		{data: 'updated_at', name: 'updated_at', className: "align-middle text-center cursor-default js-updated-at" },
+		{data: 'created_at', name: 'created_at',  className: "align-middle text-center cursor-default"},
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {

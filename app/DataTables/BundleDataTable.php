@@ -53,20 +53,20 @@ class BundleDataTable extends DataTable
 				$status = $data->status == 0 ? "" : "checked";
 
 				return "<input class='js-toggle' data-bundle-id='$data->id' type='checkbox' id='". $data->slug ."-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
-					<label for='". $data->slug ."-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
 			->editColumn('updated_at', function($data) {
 
-				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
+				return "<p class='mb-1'>".$data->updated_at->format( "d / m / Y" )."</p>";
 
 			})
 			->editColumn('created_at', function($data) {
 
-				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
+				return "<p class='mb-1'>".$data->created_at->format( "d / m / Y" )."</p>";
 
 			})
-			->rawColumns(['title', 'action', 'status'])
+			->rawColumns(['title', 'action', 'status', 'updated_at', 'created_at'])
 			->setRowAttr([ 'data-bundle-id' => function($data) {
 
 				return  $data->id;

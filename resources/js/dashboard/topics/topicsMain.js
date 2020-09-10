@@ -81,10 +81,10 @@ const topicsDatatable = $("#topics-datatable").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', name: 'action', className: "align-middle", width: "5%", orderable: false },
+		{data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false },
 		{data: 'title', name: 'title' },
-		{data: 'updated_at', name: 'updated_at', className: "align-middle cursor-default js-updated-at" },
-		{data: 'created_at', name: 'created_at',  className: "align-middle cursor-default"},
+		{data: 'updated_at', name: 'updated_at', className: "align-middle text-center cursor-default js-updated-at" },
+		{data: 'created_at', name: 'created_at',  className: "align-middle text-center cursor-default"},
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
