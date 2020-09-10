@@ -106,7 +106,7 @@ class UserController {
             'file' => 'required|file|image|max:2048',
         ]);
         //Save the uploaded file from the request to the uploads storage.  Media Library will read them from here when the post is saved
-        $path = $request->file('file')->store('uploads');
+        $path = $request->file('file')->store('uploads/user');
         $file = $request->file('file');
         //Return the name of the file after upload, and the original name
         //These will be appended as hidden inputs to the posts form so that they can be processed after the post is saved
