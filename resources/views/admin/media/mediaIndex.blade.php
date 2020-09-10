@@ -7,7 +7,8 @@
 
 @section('content')
 
-    <div class="row">
+	<h1>Content</h1>
+    {{-- <div class="row">
         <div class="col-md-12">
 
             <div id="mdb-lightbox-ui"></div>
@@ -25,17 +26,17 @@
             </div>
 
         </div>
-    </div>
+    </div> --}}
 
 @endsection
 
 @section('scripts')
-    <script>
+    {{-- <script>
         // MDB Lightbox Init
         $(function () {
             $("#mdb-lightbox-ui").load("mdb-addons/mdb-lightbox-ui.html");
         });
-    </script>
+    </script> --}}
 
 @endsection
 

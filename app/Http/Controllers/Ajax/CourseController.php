@@ -285,9 +285,9 @@ class CourseController extends Controller
 						
 
 						
-						$path = $course->addMedia( $image )
-						// ->withResponsiveImages()
-							->toMediaCollection("courses")->getUrl();
+						// $path = $course->addMedia( $image )
+						// // ->withResponsiveImages()
+						// 	->toMediaCollection("courses")->getUrl();
 
 						// dd($path);
 
@@ -296,18 +296,18 @@ class CourseController extends Controller
 
 							// dd(end($temp));
 
-						$files["file-". $key] =[
-							// "url" => url("storage/$partPath"),
-							"url" => $path,
-							"id" => $key
-						];
+						// $files["file-". $key] =[
+						// 	// "url" => url("storage/$partPath"),
+						// 	"url" => $path,
+						// 	"id" => $key
+						// ];
 						
 					}
 				}
 			}
 		}
 
-		echo json_encode($files);
+		// echo json_encode($files);
 
 	}
 }

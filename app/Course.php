@@ -12,7 +12,7 @@ class Course extends Model
 
 	use SoftDeletes;
 
-	git public function curator() {
+	public function curator() {
 
 		return $this->belongsTo('App\User', "user_id");
 

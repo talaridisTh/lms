@@ -12,13 +12,13 @@ class MediaController extends Controller
     public function index()
     {
 
-        $allMedia = Media::all();
+        // $allMedia = Media::all();
 //        $allMedia = User::find(100)->getMedia();
-        dd($allMedia);
+        // dd($allMedia);
 
 
 
-        return view("admin.media.mediaIndex",compact("allMedia"));
+        return view("admin.media.mediaIndex");
 
     }
     public function customStore(Request $request)
