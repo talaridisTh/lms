@@ -95,6 +95,8 @@ Route::post('/user/courses-inside-users', 'Ajax\UserController@coursesInsideUser
 
 //! Dashboard Ajax Users CRUD
 Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
+Route::post('/users/media/upload', 'Ajax\UserController@store')->name('api.user.store');
+Route::get('/users/media/{mediaItem}/{size?}', 'Ajax\UserController@showMedia')->name('api.media.show');
 Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
 Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple')->name("changeStatusMultiple.datatable");;
 Route::patch('/user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers')->name("addCoursesMultipleUsers.datatable");

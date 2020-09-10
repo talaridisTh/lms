@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "spatie/laravel-activitylog": "^3.14",
+        "spatie/laravel-directory-cleanup": "^1.6",
         "spatie/laravel-medialibrary": "^8.0.0",
         "spatie/laravel-permission": "^3.13",
         "spatie/url-signer": "^1.1",

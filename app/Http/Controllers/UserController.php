@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use PhpParser\Node\Stmt\DeclareDeclare;
 use Spatie\Activitylog\Models\Activity;
 
 class UserController extends Controller {
@@ -45,9 +46,10 @@ class UserController extends Controller {
     {
         //
 
-        dd($request->all());
+
+
         $user = new User();
-        $data = collect($request)->except( "sendMail", "roles","password_confirmation")->all();
+        $data = collect($request)->except( "sendMail", "roles","password_confirmation","media","media_original_name")->all();
         $data['password'] = Hash::make("password");
         $data["slug"] = Str::slug($request->first_name, "-");
         if ($files = $request->file('avatar'))
@@ -79,14 +81,23 @@ class UserController extends Controller {
             $data["password"] =  Hash::make(request("password"));
 
         }
-        $user->create($data)->assignRole($request->roles);
+      $currentUser =   $user->create($data)->assignRole($request->roles);
+
+        foreach ($request->input('media', []) as $index => $file) {
+            //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
+            $currentUser->addMedia(storage_path("app/" . $file))
+                ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
+                ->toMediaCollection();
+        }
+
+
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
 
     public function update(UserUpdateRequest $request, User $user)
     {
         //
-        dd($request->all());
+
         $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));
         $data = collect($request)->except( "sendMail")->all();
         $user->syncRoles($request->roles);

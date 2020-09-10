@@ -10,11 +10,17 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable {
+class User extends Authenticatable implements HasMedia {
 
-    use Notifiable, HasRoles;
+    use Notifiable, HasRoles ;
+
+    use InteractsWithMedia;
+
 
     /**
      * The attributes that are mass assignable.
@@ -54,6 +60,16 @@ class User extends Authenticatable {
 
 
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(512)//Define thumbnail size in pixels
+            ->height(512);
+
+        $this->addMediaConversion('large')
+            ->width(1536)//Define large image size in pixels
+            ->height(1536);
+    }
 
 
 

@@ -119,6 +119,49 @@
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <x-routes></x-routes>
     <script src="{{ asset('js/dashboard/users/userProfil.js') }}"></script>
+    <script>
 
+
+{{--        initDropzone();--}}
+
+{{--        function initDropzone(){--}}
+{{--            console.log('Initializing Dropzone...');--}}
+{{--            $("#cover-dropzone").dropzone({--}}
+{{--                url: '{{ route('api.user.store') }}',--}}
+{{--                maxFilesize: 2, // MB--}}
+{{--                maxFiles: 10,--}}
+{{--                acceptedFiles: 'image/*',--}}
+{{--                addRemoveLinks: true,--}}
+{{--                headers: {--}}
+{{--                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),--}}
+{{--                },--}}
+{{--                success: function (file, response) {--}}
+{{--                    console.log(response.name)--}}
+{{--                    console.log(response.original_name)--}}
+{{--                    //On successful upload, add the file to the form - a hidden input for the filename after upload, and a corresponding hidden input with the original file name--}}
+{{--                    //This passes the uploaded files details along with the post when it is saved--}}
+{{--                    $('#buttonUser').append(--}}
+{{--                        '<div id="' + response.name + '">' +--}}
+{{--                        '<input type="hidden" name="media[]" value="' + response.name + '">' +--}}
+{{--                        '<input type="hidden" name="media_original_name[]" value="' + response.original_name + '">' +--}}
+{{--                        '</div>'--}}
+{{--                    );--}}
+{{--                    file.file_name = response.name;//set this so that removedFile function can find the element--}}
+{{--                },--}}
+{{--                thumbnail: function(file, thumb){--}}
+{{--                    //Thumbnail callback will prevent thumbnail from being applied automatically--}}
+{{--                    //Instead we set the background of the element to the thumbnail image so we can resize it properly to fill the preview area--}}
+{{--                    $(file.previewElement).find('.dz-image:first').css({--}}
+{{--                        "background-size": "cover",--}}
+{{--                        'background-image': 'url(' + thumb + ')',--}}
+{{--                    });--}}
+{{--                },--}}
+
+
+
+{{--            });--}}
+{{--        }--}}
+
+    </script>
 
 @endsection

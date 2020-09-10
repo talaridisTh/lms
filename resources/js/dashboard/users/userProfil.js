@@ -35,12 +35,12 @@ $(".js-link-passwordShow").click(async function () {
             const res = await axios.post("/user/show-password", {
                 password
             })
-            if (res.data.success){
+            if (res.data.success) {
                 console.log("AS")
                 $(".passwordShow")[0].classList.remove("d-none")
                 $(".js-link-passwordShow")[0].classList.add("d-none")
 
-            }else {
+            } else {
                 utilities.toastAlert('error', "Λαθος password")
             }
         } catch (e) {
@@ -73,7 +73,7 @@ $('#alertSumbit').submit(async (e) => {
 
 });
 
-$(".tab-link").on("show.bs.tab", function(event) {
+$(".tab-link").on("show.bs.tab", function (event) {
 
     event.preventDefault();
     Swal.fire(
@@ -360,12 +360,38 @@ $('#material-modal-shown-btn').click(() => {
 
 //! DROPOZONE
 //!============================================================
+Dropzone.autoDiscover = false;
 
 
+let dropzone = new Dropzone("#cover-dropzone", {
+    thumbnailWidth: 80,
+    thumbnailHeight: 80,
+    previewTemplate: $("#uploadPreviewTemplate").html(),
+    url: '/users/media/upload',
+    maxFilesize: 2, // MB
+    maxFiles: 10,
+    acceptedFiles: 'image/*',
+    addRemoveLinks: true,
+    headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+    },
+    success: function (file, response) {
+        $('#buttonUser').append(
+            '<div id="' + response.name + '">' +
+            '<input type="hidden" name="media[]" value="' + response.name + '">' +
+            '<input type="hidden" name="media_original_name[]" value="' + response.original_name + '">' +
+            '</div>'
+        );
+        file.file_name = response.name;
+    },
+    // thumbnail: function(file, thumb){
+    //     $(file.previewElement).find('.dz-image:first').css({
+    //         "background-size": "cover",
+    //         'background-image': `url(${thumb})`,
+    //     });
+    // },
 
-var myDropzone = new Dropzone("#my-dropzone", { url: "/dashboard/users/create"});
 
-$('.buton-create-material').on('click', function() {
-    var files = $('#my-dropzone').get(0).dropzone.getAcceptedFiles();
-    // Do something with the files.
 });
+
+

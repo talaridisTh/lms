@@ -31,6 +31,9 @@ class Kernel extends ConsoleKernel
                 return $user->courses()->detach();
             });
         })->everyMinute();
+
+
+        $schedule->command('clean:directories')->daily();
     }
 
     /**

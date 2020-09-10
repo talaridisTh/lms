@@ -99,6 +99,25 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
+    public function store(Request $request)
+    {
+        //
+        $request->validate([
+            'file' => 'required|file|image|max:2048',
+        ]);
+        //Save the uploaded file from the request to the uploads storage.  Media Library will read them from here when the post is saved
+        $path = $request->file('file')->store('uploads');
+        $file = $request->file('file');
+        //Return the name of the file after upload, and the original name
+        //These will be appended as hidden inputs to the posts form so that they can be processed after the post is saved
+        return response()->json([
+            'name' => $path,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+
+
+    }
+
 
     public function destroy(Request $request)
     {

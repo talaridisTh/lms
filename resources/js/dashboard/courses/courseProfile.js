@@ -15,10 +15,10 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 $("#activate-selection").click( function() {
 	let selection = $(".js-course-material-checkbox:checked");
 	let data = [];
-	
+
 	for ( var i = 0; i < selection.length; i++ ) {
 		data.push({
-			id: selection[i].dataset.materialId, 
+			id: selection[i].dataset.materialId,
 			status: 1
 		});
 	}
@@ -44,10 +44,10 @@ $("#activate-selection").click( function() {
 $("#deactivate-selection").click( function() {
 	let selection = $(".js-course-material-checkbox:checked");
 	let data = [];
-	
+
 	for ( var i = 0; i < selection.length; i++ ) {
 		data.push({
-			id: selection[i].dataset.materialId, 
+			id: selection[i].dataset.materialId,
 			status: 0
 		});
 	}
@@ -78,7 +78,7 @@ $(".tab-link").on("show.bs.tab", function(event) {
 			'<p>Θα πρέπει να αποθηκεύσετε το Course</p>για να συνεχίσετε!',
 			'info'
 		);
-}) 
+})
 
 $("#course-delete-btn").click( function() {
 	Swal.fire({
@@ -272,12 +272,12 @@ $('#remove-selection-btn').click( function() {
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
 			if (result.value) {
-	
+
 				removeMaterials( ids );
-	
+
 			}
 		})
-		
+
 	}
 });
 
@@ -594,11 +594,11 @@ function removeMaterialInit() {
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
-	
+
 			if (result.value) {
-	
+
 				removeMaterials( id );
-	
+
 			}
 		})
 	});
@@ -661,11 +661,11 @@ function removeUserBtnInit() {
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
-	
+
 			if (result.value) {
-	
+
 				removeUsers( id );
-	
+
 			}
 		})
 
@@ -1086,7 +1086,7 @@ function createTableRow( type, priority ) {
 	if ( addContentRow ) {
 
 		addContentRow.remove();
-		
+
 	}
 
 	rowElm.innerHTML = type == "Announcement" ? annoucementForm( priority ) : linkForm( type, priority)
@@ -1249,7 +1249,7 @@ $("#version-select").select2({
 
 $R("#summary", {
 	buttons: [
-		'html', 'undo', 'redo', 'format', 
+		'html', 'undo', 'redo', 'format',
 		'bold', 'underline', 'italic', 'deleted',
 		'sup', 'sub', 'lists', 'image', 'file', 'link'
 	],
@@ -1340,9 +1340,9 @@ let dropzone = new Dropzone("#cover-dropzone", {
 	/* init: function() {
 
 		this.on("drop", function(event) {
-	
+
 			// let coverInput = $("#cover-input")[0];
-		
+
 			// coverInput.value = file;
 			console.log(event);
 		})
@@ -1355,7 +1355,7 @@ let dropzone = new Dropzone("#cover-dropzone", {
 // })
 
 dropzone.on("addedfile", function(file) {
-	
+
 	// let coverInput = $("#cover-input")[0];
 
 	// coverInput.value = file;
