@@ -13,9 +13,9 @@ use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
 use App\DataTables\CourseUsersDataTable;
 use App\DataTables\RemainingMaterialsDataTable;
-use App\Material;
-use Illuminate\Support\Facades\File;
+use App\Media;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
@@ -260,54 +260,37 @@ class CourseController extends Controller
 		$course = Course::find( $request->id );
 		$files = [];
 
-		
 		foreach ( $request->file as $key => $image ) {
 			if ( $image->isValid() ) {
 				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
 					if ( $image->getSize() <= 512000 ) {
+
+						$name = $image->getClientOriginalName();
+
+						$media = new Media;
+						$media->name = $name;
+						$media->slug = Str::slug( $name ."-". rand(1, 100), "-" );
+						$media->rel_path = "storage/courses/images/$date/". $image->getClientOriginalName();
+						$media->ext = $image->getClientOriginalExtension();
+						$media->file_info = $image->getClientMimeType();
+						$media->size = $image->getSize();
+						$media->save();
+
+						$course->media()->attach( $media->id, [ "usage" => 1 ] );
+
+						$image->storeAs("public/courses/images/$date", $name);
 						
-						// $name = $image->getClientOriginalName();
-						// $image->storeAs("public/images/$date", $name);
-						
-						// $files["file-". $key] =[
-						// 	"url" => url("storage/images/$date/$name"),
-						// 	"id" => $key
-						// ];
-
-
-						
-						// "url" => $path->getFullUrl(),
-						// http://localhost/storage/15/Untitled.png
-						// "url" => $path->getUrl(),
-						// http://localhost/storage/16/Untitled.png
-						// "url" => $path->getPath(),
-						// D:\Coding\DarkProjects\Demo LMS\storage\app/public\17/Untitled.png
-						
-
-						
-						// $path = $course->addMedia( $image )
-						// // ->withResponsiveImages()
-						// 	->toMediaCollection("courses")->getUrl();
-
-						// dd($path);
-
-						// $temp = explode("public\\", $path);
-						/* $partPath = end($temp); */		//	"29/Untitled.png" example path
-
-							// dd(end($temp));
-
-						// $files["file-". $key] =[
-						// 	// "url" => url("storage/$partPath"),
-						// 	"url" => $path,
-						// 	"id" => $key
-						// ];
+						$files["file-". $key] =[
+							"url" => url("storage/courses/images/$date/$name"),
+							"id" => $name
+						];
 						
 					}
 				}
 			}
 		}
 
-		// echo json_encode($files);
+		echo json_encode($files);
 
 	}
 }

@@ -16,7 +16,8 @@ class CreateMediablesTable extends Migration
         Schema::create('mediables', function (Blueprint $table) {
             $table->unsignedBigInteger('media_id');
 			$table->unsignedBigInteger('mediable_id');
-			$table->string('topicable_type', 50);
+			$table->string('mediable_type', 50);
+			$table->unsignedTinyInteger('usage'); //! 0 Cover, 1 Gallery
         });
     }
 

@@ -15,8 +15,8 @@ class CreateMediaTable extends Migration
     {
         Schema::create('media', function (Blueprint $table) {
 			$table->bigIncrements('id')->unsigned();
-            $table->string('original_name', 255)->nullable()->index();
-            $table->string('name')->nullable()->index(); // slug clean name, with possible increments if duplicate exists
+            $table->string('name', 255)->nullable()->index();
+            $table->string('slug')->nullable()->index(); // slug clean name, with possible increments if duplicate exists
             $table->tinyInteger('type')->default(0); // image, file, video etc, 9 => ad
             $table->tinyInteger('usability')->default(0); // 0 : all, 1 : admins
 
@@ -25,11 +25,11 @@ class CreateMediaTable extends Migration
 
             $table->string('ext', 10)->nullable(); // the extensions of the media
             $table->string('file_info', 40)->nullable(); // the mime / file info, think about cases of videos
-            $table->decimal('size', 12, 4)->nullable();
+            $table->unsignedMediumInteger('size')->nullable();
 
-            $table->integer('height')->nullable();
-            $table->integer('width')->nullable();
-            $table->integer('dpi')->nullable(); // get this using imagemagick: Imagick::getImageResolution
+            // $table->integer('height')->nullable();
+            // $table->integer('width')->nullable();
+            // $table->integer('dpi')->nullable(); // get this using imagemagick: Imagick::getImageResolution
 
             $table->string('video_id', 80)->nullable();
             $table->string('video_url', 255)->nullable();
@@ -37,7 +37,7 @@ class CreateMediaTable extends Migration
 
             $table->text('details')->nullable(); // a json object with misc. details about this media. usable on videos and oembed results
 
-            $table->nullableTimestamps(); // created_at, updated_at
+            // $table->nullableTimestamps(); // created_at, updated_at
         });
     }
 
