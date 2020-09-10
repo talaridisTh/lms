@@ -35,7 +35,7 @@ class UserController extends Controller {
     public function show(User $user)
     {
 
-        $user->load("media");
+
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
         $allMaterials = User::findMaterials($user->id);
@@ -69,13 +69,15 @@ class UserController extends Controller {
             $data["password"] = Hash::make(request("password"));
         }
         $currentUser = $user->create($data)->assignRole($request->roles);
-        foreach ($request->input('media', []) as $index => $file)
-        {
-            //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
-            $currentUser->addMedia(storage_path("app/" . $file))
-                ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
-                ->toMediaCollection("users");
-        }
+
+
+//        foreach ($request->input('media', []) as $index => $file)
+//        {
+//            //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
+//            $currentUser->addMedia(storage_path("app/" . $file))
+//                ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
+//                ->toMediaCollection("users");
+//        }
 
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
@@ -101,13 +103,13 @@ class UserController extends Controller {
             $user->update(['password_encrypt' => Crypt::encryptString($request->password)]);
             $user->update(['password' => Hash::make(request("password"))]);
         }
-        foreach ($request->input('media', []) as $index => $file)
-        {
-            //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
-            $user->addMedia(storage_path("app/" . $file))
-                ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
-                ->toMediaCollection();
-        }
+//        foreach ($request->input('media', []) as $index => $file)
+//        {
+//            //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
+//            $user->addMedia(storage_path("app/" . $file))
+//                ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
+//                ->toMediaCollection();
+//        }
 
         return redirect()->back()->with('update', 'Ο ' . $user->fullName . ' ενημερώθηκε');
     }

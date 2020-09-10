@@ -23,6 +23,9 @@ class AddCoursesDataTable extends DataTable {
      */
     public function dataTable($query, Request $request)
     {
+
+
+
         if ($request->userId)
         {
             $user = User::findOrFail($request->userId);

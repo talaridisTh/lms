@@ -166,7 +166,7 @@ class User extends Authenticatable {
     {
        $test = DB::table('courses')
            ->where('status', 1)
-           ->where("type","Trial")
+           ->where("version","Trial")
             ->whereNotIn('id',
                 function ($query) use ($user) {
 
