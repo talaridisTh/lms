@@ -1,10 +1,12 @@
 import utilities from '../main';
+import Dropzone from "../../../plugins/dropzone/js/dropzone";
 
 //! GLOBAL VAR
 //!============================================================
 const userId = $(".course-materials-list")[0].dataset.id
 
-//! GLOBAL METHOD
+
+//! GLOBAL METHOD AND EVENT LISTENER
 //!============================================================
 const routeLink = () => {
     $('.js-link').click(function () {
@@ -70,6 +72,17 @@ $('#alertSumbit').submit(async (e) => {
 
 
 });
+
+$(".tab-link").on("show.bs.tab", function(event) {
+
+    event.preventDefault();
+    Swal.fire(
+        'Προσοχή',
+        '<p>Θα πρέπει να αποθηκεύσετε </p>για να συνεχίσετε!',
+        'info'
+    );
+
+})
 
 
 //! DATATABLES INIT
@@ -345,5 +358,14 @@ $('#material-modal-shown-btn').click(() => {
     }, 200)
 });
 
+//! DROPOZONE
+//!============================================================
 
 
+
+var myDropzone = new Dropzone("#my-dropzone", { url: "/dashboard/users/create"});
+
+$('.buton-create-material').on('click', function() {
+    var files = $('#my-dropzone').get(0).dropzone.getAcceptedFiles();
+    // Do something with the files.
+});

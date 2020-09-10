@@ -3,11 +3,7 @@
 @section('css')
     <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 
-    <style>
-        .border-material{
-            background:#343A3F ;
-        }
-    </style>
+
 @endsection
 
 
@@ -27,10 +23,12 @@
 							<li class="breadcrumb-item active">Προφίλ χρήστη</li>
 						</ol>
 					</div>
+                    @if(isset($user))
 					<h4 class="page-title">{{ $user->last_name }} {{ $user->first_name }}</h4>
+                    @endif
 				</div>
 			</div>
-		</div> 
+		</div>
 
 
         <div class="content">
@@ -50,7 +48,7 @@
 
                                     <li class="nav-item">
                                         <a href="#courses" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0   ">
+                                           class="nav-link rounded-0  {{ !isset($user) ? 'tab-link text-muted' : '' }}  ">
                                             Courses
                                         </a>
                                     </li>
@@ -59,7 +57,7 @@
 
                                     <li class="nav-item">
                                         <a href="#timeline" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0  ">
+                                           class="nav-link rounded-0  {{ !isset($user) ? 'tab-link text-muted' : '' }} ">
                                             Timeline
                                         </a>
                                     </li>
@@ -70,12 +68,14 @@
                                 <div class="tab-pane  active" id="settings">
                                     @include("components.tabsEdit")
                                 </div>
+
                                 <div class="tab-pane  "  id="courses">
                                     @include("components.findUserMaterial")
                                 </div>
                                 <div class="tab-pane  " id="timeline">
                                     @include("components.timelineUser")
                                 </div>
+
                             </div>
                         </div>
 
@@ -119,5 +119,6 @@
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <x-routes></x-routes>
     <script src="{{ asset('js/dashboard/users/userProfil.js') }}"></script>
+
 
 @endsection

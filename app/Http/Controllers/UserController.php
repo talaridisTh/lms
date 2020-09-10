@@ -26,7 +26,8 @@ class UserController extends Controller {
     public function create()
     {
 
-        return view("admin.users.userCreate");
+        $userCourses = [];
+        return view('admin.users.userProfile',compact("userCourses"));
     }
 
     public function show(User $user)
@@ -40,9 +41,11 @@ class UserController extends Controller {
         return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs", "activities"));
     }
 
-    public function store(UserCreateRequest $request)
+    public function store(Request $request)
     {
         //
+
+        dd($request->all());
         $user = new User();
         $data = collect($request)->except( "sendMail", "roles","password_confirmation")->all();
         $data['password'] = Hash::make("password");
@@ -83,6 +86,7 @@ class UserController extends Controller {
     public function update(UserUpdateRequest $request, User $user)
     {
         //
+        dd($request->all());
         $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));
         $data = collect($request)->except( "sendMail")->all();
         $user->syncRoles($request->roles);

@@ -1,7 +1,9 @@
-@if($userCourses)
+
+
+
     <div class="table-responsive">
  @include("components.admin.users.bulkActionUserProfil")
-            <table data-id="{{ $user['id'] }}" class="course-materials-list table w-100 nowrap custom-center-table ">
+            <table data-id="{{isset($user)? $user['id']:""}} " class="course-materials-list table w-100 nowrap custom-center-table ">
                 <thead>
                 <tr>
                     <th id='all-user-checkbox' class="text-left ">
@@ -27,6 +29,4 @@
                 </tfoot>
             </table>
     </div>
-
-@endif
 

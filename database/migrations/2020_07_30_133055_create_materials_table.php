@@ -28,6 +28,8 @@ class CreateMaterialsTable extends Migration
             $table->unsignedTinyInteger('status');
             $table->string('type', 20)->nullable();
             $table->timestamps();
+//            soft-delete
+//            $table->softDeletes();
         });
     }
 
@@ -39,5 +41,6 @@ class CreateMaterialsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('materials');
+
     }
 }

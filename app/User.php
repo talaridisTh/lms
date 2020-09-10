@@ -48,6 +48,15 @@ class User extends Authenticatable {
         // your other new column
     ];
 
+
+
+
+
+
+
+
+
+
     public function courses()
     {
 

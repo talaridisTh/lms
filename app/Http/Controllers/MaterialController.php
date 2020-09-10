@@ -18,8 +18,11 @@ class MaterialController extends Controller {
 
     public function index()
     {
+        $materials = Material::all();
         $activeCourses = User::courseWhereActive();
-        $materials = Material::all(['title', 'description', 'status', 'type']);
+           //    soft-delete
+//        $trashMaterial = Material::onlyTrashed()->get();
+//        return view('admin.materials.materialsMain', compact("materials", "activeCourses","trashMaterial"));
 
         return view('admin.materials.materialsMain', compact("materials", "activeCourses"));
     }

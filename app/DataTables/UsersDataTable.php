@@ -28,6 +28,7 @@ class UsersDataTable extends DataTable {
         if (!request()->from_date && !request()->to_date)
         {
 
+
             $data = User::with(["roles","courses"])->select("users.*");
 
         } else

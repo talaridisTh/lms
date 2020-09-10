@@ -22,13 +22,23 @@ class UserProfileDataTable extends DataTable {
      */
     public function dataTable($query, Request $request)
     {
-        $user = User::findOrFail($request->userId);
-        $query = $user->courses()->get();
+
+        if ($request->userId){
+
+            $user = User::findOrFail($request->userId);
+            $query = $user->courses()->get();
+
+
+        }else {$user = "";}
 
         return DataTables::of($query)
             ->addColumn('students', function ($data) use ($user) {
 
-                return "<td>{$user->getCountStudent($data->id)}</td>";
+                if ($user){
+
+                    return "<td>{$user->getCountStudent($data->id)}</td>";
+                }
+
             })
             ->addColumn('action', function ($data) {
                 return "<td><h3><i data-course-id='{$data->id}' data-course-title='{$data->title}' class=' js-button-delete h3 pt-1 uil uil-trash-alt cursor-pointer'></i></h3></td>";

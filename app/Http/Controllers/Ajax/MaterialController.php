@@ -18,7 +18,6 @@ class MaterialController extends Controller {
     public function index(MaterialsDataTable $dataTable)
     {
 
-
         return $dataTable->render('materials.index');
     }
 
@@ -32,7 +31,6 @@ class MaterialController extends Controller {
     {
         return $dataTable->render('add-course-material');
     }
-
 
     public function toggleStatus(Material $material, Request $request)
     {
@@ -102,9 +100,8 @@ class MaterialController extends Controller {
     public function addContent(Request $request)
     {
 
-		$pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
-		$publish = Carbon::now()->format("Y-m-d H:i:s");
-
+        $pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
+        $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
@@ -127,24 +124,28 @@ class MaterialController extends Controller {
     public function destroyMultipleMaterials(Request $request)
     {
 
+        $data = [
+            'all' => Material::all()->count() - count($request->material_id),
+            'trashMaterial' => Material::onlyTrashed()->get()->count() + count($request->material_id)
+        ];
         Material::whereIn('id', $request->material_id)->delete();
+
+        return response()->json(['success' => $data]);
     }
 
     public function addMaterialMultiple(Request $request)
     {
 
         $materials = Material::findOrFail($request->material_id);
-
-        foreach ($materials as $key => $material){
-                if ($key<1){
-                    $lastpriority =  $material->courses()->count() >0? $material->courses()->orderBy("priority",'desc')->first()->getOriginal("pivot_priority"):0;
-                }
-
+        foreach ($materials as $key => $material)
+        {
+            if ($key < 1)
+            {
+                $lastpriority = $material->courses()->count() > 0 ? $material->courses()->orderBy("priority", 'desc')->first()->getOriginal("pivot_priority") : 0;
+            }
             $material->courses()->detach($request->course_id);
-            $material->courses()->attach($request->course_id,["priority"=>$lastpriority+$key,"publish_at"=>now()]);
-
+            $material->courses()->attach($request->course_id, ["priority" => $lastpriority + $key, "publish_at" => now()]);
         }
-
     }
 
     public function changeStatusMultiple(Request $request)
@@ -170,11 +171,8 @@ class MaterialController extends Controller {
     public function destroyMultipleCourse(Request $request)
     {
 
-
         $material = Material::find($request->materialId);
         $material->courses()->detach($request->courseId);
-
-
 
         return response()->json(['success' => 'Status change successfully.']);
     }
@@ -183,47 +181,26 @@ class MaterialController extends Controller {
     {
 
         $material = Material::findOrFail($request->materialId);
-
-
-                $lastpriority =  $material->courses()->count() >0? $material->courses()->orderBy("priority",'desc')->first()->getOriginal("pivot_priority"):0;
-
-
-            $material->courses()->detach($request->courseId);
-            $material->courses()->attach($request->courseId,["priority"=>$lastpriority+1,"publish_at"=>now()]);
-
-
-
-
-
-
+        $lastpriority = $material->courses()->count() > 0 ? $material->courses()->orderBy("priority", 'desc')->first()->getOriginal("pivot_priority") : 0;
+        $material->courses()->detach($request->courseId);
+        $material->courses()->attach($request->courseId, ["priority" => $lastpriority + 1, "publish_at" => now()]);
     }
 
     public function addCourseMultiple(Request $request)
     {
 
-
         $material = Material::findOrFail($request->materialId);
-
         $courses = Course::findOrFail($request->courseIds);
+        foreach ($courses as $key => $course)
+        {
 
-
-
-        foreach ($courses as $key => $course){
-
-            if ($key<1){
-                $lastpriority =  $material->courses()->count() >0? $material->courses()->orderBy("priority",'desc')->first()->getOriginal("pivot_priority"):0;
+            if ($key < 1)
+            {
+                $lastpriority = $material->courses()->count() > 0 ? $material->courses()->orderBy("priority", 'desc')->first()->getOriginal("pivot_priority") : 0;
             }
-
             $material->courses()->detach($course);
-            $material->courses()->attach($course,["priority"=>$lastpriority+$key,"publish_at"=>now()]);
-
+            $material->courses()->attach($course, ["priority" => $lastpriority + $key, "publish_at" => now()]);
         }
-
-
-
-
-
-
     }
 
 }

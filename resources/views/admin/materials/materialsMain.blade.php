@@ -29,7 +29,13 @@
     <div class="container table-cnt content-width">
 
 		<div class="row mb-2">
-            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+{{--                //soft-delete--}}
+{{--                <ul class=" d-flex list-unstyled">--}}
+{{--                    <li class="nav-item mr-2"><button  class="btn custom-link-primary all-model" href="#">Ολα ({{$materials->count()}})</button></li>--}}
+{{--                    <li class="nav-item" ><button class=" btn custom-link-primary trash-model" href="#">Διεγραμενα ({{$trashMaterial->count()}})</button></li>--}}
+{{--                </ul>--}}
+            </div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
 					<a href="{{route('material.create')}}" class="btn btn-primary mb-2">

@@ -24,17 +24,20 @@ class MaterialsDataTable extends DataTable {
     public function dataTable($query)
     {
 
-        if (!request()->from_date && !request()->to_date)
+        if (request()->trash == 1)
         {
 
-//            $data = Material::with(["courses"])->select("materials.*");
-            $data = Material::with("courses")->get();
-
-
+            $data = Material::onlyTrashed()->get();
         } else
         {
-            $data = Material:: whereBetween('created_at', [request()->from_date."  00:00:00", request()->to_date." 23:59:59"])->get();
+            if (!request()->from_date && !request()->to_date)
+            {
 
+                $data = Material::with("courses")->get();
+            } else
+            {
+                $data = Material:: whereBetween('created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])->get();
+            }
         }
 
         return DataTables::of($data)
@@ -46,40 +49,37 @@ class MaterialsDataTable extends DataTable {
 						</div>";
             })
             ->addColumn('courses', function (Material $material) {
-                return $material->courses->map(function($course) {
+                return $material->courses->map(function ($course) {
                     return $course->title;
                 })->implode(', ');
             })
             ->addColumn('id', function (Material $material) {
                 return $material->id;
             })
-            ->editColumn('title', function($data) {
+            ->editColumn('title', function ($data) {
 
                 return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>
 						<p class='mb-1'>$data->slug</p>
 						<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
 						<a href='#' class='custom-link-primary'>View</a>";
-
             })
             ->editColumn('status', function ($data) {
 
                 $status = $data->status == 0 ? "" : "checked";
 
                 return "<input data-status='$data->status'  class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
-					<label for='" . $data->slug . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>"  ;
+					<label for='" . $data->slug . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
             ->editColumn('created_at', function ($data) {
 
-                return  Carbon::parse($data->created_at)->diffForHumans();
-
+                return Carbon::parse($data->created_at)->diffForHumans();
             })
             ->editColumn('updated_at', function ($data) {
 
-                return  Carbon::parse($data->updated_at)->diffForHumans();
-
+                return Carbon::parse($data->updated_at)->diffForHumans();
             })
-            ->rawColumns(['action', 'status',"courses","title"])
+            ->rawColumns(['action', 'status', "courses", "title"])
             ->setRowAttr(['data-material-id' => function ($data) {
 
                 return $data->id;

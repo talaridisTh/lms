@@ -574,5 +574,3 @@ function checkeBoxesEventListenerSub() {
 
 
 
-
-

@@ -1,4 +1,4 @@
-
+@isset($user)
 @forelse($activities as $activity)
 <div class="timeline-alt pb-0">
     <div class="timeline-item">
@@ -13,3 +13,4 @@
 @empty
     <h3>Δεν υπάρχει η δραστηριότητα </h3>
 @endforelse
+@endisset

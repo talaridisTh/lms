@@ -1,6 +1,6 @@
 import utilities from '../main';
 
-
+let trash = 0;
 let dataRange = $("#daterange")
 
 //! INIT DATATABLE
@@ -16,7 +16,8 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         data: function (d) {
             return $.extend({}, d, {
                 from_date: fromDay($(".date")[0]),
-                to_date: toDay($(".date")[0])
+                to_date: toDay($(".date")[0]),
+                trash
             })
         }
     },
@@ -51,6 +52,8 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         $("#materials-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
         $("#materials-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
         $("#materials-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
+        utilities.resetBulk($("#course-bulk-action-btn"), $("#select-all-courses"));
+        utilities.resetBulk($("#course-bulk-action-btn"), $(".js-material-checkbox"));
         atLinkEventListener();
         toggleInit();
         selectMultipleCheckboxDelete()
@@ -97,6 +100,25 @@ function toDay(input) {
     return secondDate.trim();
 
 }
+
+
+$(".trash-model").click( function () {
+
+
+    trash = 1
+    materialsDatatable.draw();
+
+
+});
+
+
+$(".all-model").click( function () {
+    console.log("s")
+    trash = 0
+    materialsDatatable.draw();
+
+});
+
 
 
 //! DATAPICKER FUNCTION
@@ -197,7 +219,6 @@ $("#activeFilterMaterial").select2({
 
 });
 
-
 //! BULK ACTION
 //!============================================================
 
@@ -223,13 +244,15 @@ const axiosMultipleDelete = async (ids) => {
     try {
         const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${ids.length} απο τον χρήστη `)
         if (value) {
-            const {status} = await axios.delete(config.routes.destroyMultipleMaterialDatatable, {
+            const res = await axios.delete(config.routes.destroyMultipleMaterialDatatable, {
                 data: {
                     'material_id': ids,
                 }
 
             })
-            if (status == 200) {
+            if (res.status == 200) {
+                $(".all-model")[0].textContent = `Ολα (${res.data.success.all})`
+                $(".trash-model")[0].textContent = `Διεγραμενα (${res.data.success.trashMaterial})`
                 utilities.toastAlert("success", `${ids.length} Διαγράφικαν`)
                 materialsDatatable.ajax.reload()
             }
@@ -332,6 +355,11 @@ $("#select-all-courses").change(function () {
     utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 
 })
+
+
+
+
+
 
 
 

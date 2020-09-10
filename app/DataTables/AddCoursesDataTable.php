@@ -23,15 +23,18 @@ class AddCoursesDataTable extends DataTable {
      */
     public function dataTable($query, Request $request)
     {
+        if ($request->userId)
+        {
+            $user = User::findOrFail($request->userId);
+            if ($user->getRoleNames()[0] == "trial user")
+            {
 
-        $user = User::findOrFail($request->userId);
-        if($user->getRoleNames()[0]=="trial user"){
-
-            $query = User::trialCourseWhereNotExist($request->userId);
-
-        }else{
-            $query = User::courseWhereNotExist($request->userId);
-        }
+                $query = User::trialCourseWhereNotExist($request->userId);
+            } else
+            {
+                $query = User::courseWhereNotExist($request->userId);
+            }
+        }else {$user = "";}
 
 
         return DataTables::of($query)
@@ -51,7 +54,11 @@ class AddCoursesDataTable extends DataTable {
             ->setRowAttr(['data-course-id' => function ($data) {
                 return [$data->id];
             }, 'data-user-id' => function ($data) use($user) {
-                return $user->id;
+                if($user){
+
+                    return $user->id;
+                }
+
             }]);
 
 
