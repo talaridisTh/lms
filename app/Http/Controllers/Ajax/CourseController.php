@@ -287,15 +287,18 @@ class CourseController extends Controller
 						
 						$path = $course->addMedia( $image )
 						// ->withResponsiveImages()
-							->toMediaCollection("courses")->getPath();
+							->toMediaCollection("courses")->getUrl();
 
-						$temp = explode("public\\", $path);
-						$partPath = end($temp);		//	"29/Untitled.png" example path
+						// dd($path);
+
+						// $temp = explode("public\\", $path);
+						/* $partPath = end($temp); */		//	"29/Untitled.png" example path
 
 							// dd(end($temp));
 
 						$files["file-". $key] =[
-							"url" => url("storage/$partPath"),
+							// "url" => url("storage/$partPath"),
+							"url" => $path,
 							"id" => $key
 						];
 						
