@@ -72,6 +72,10 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
     Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
 
+
+    //! media Routes
+    Route::get("/media", "MediaController@index")->name("media.index");
+
 	//! Topic Routes
 	Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
 	Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');
@@ -95,8 +99,6 @@ Route::post('/user/courses-inside-users', 'Ajax\UserController@coursesInsideUser
 
 //! Dashboard Ajax Users CRUD
 Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
-Route::post('/users/media/upload', 'Ajax\UserController@store')->name('api.user.store');
-Route::get('/users/media/{mediaItem}/{size?}', 'Ajax\UserController@showMedia')->name('api.media.show');
 Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
 Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple')->name("changeStatusMultiple.datatable");;
 Route::patch('/user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers')->name("addCoursesMultipleUsers.datatable");
@@ -105,6 +107,10 @@ Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.data
 Route::delete('/user/multiple/courses/delete', 'Ajax\UserController@destroyMultipleCourses')->name("destroyMultipleCourses.datatable");
 Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers')->name("destroyMultipleUsers.datatable");
 Route::post("/user/show-password","Ajax\UserController@showPassword")->name("showPassword");
+
+//! Dashboard Ajax Media
+Route::post('/users/media/upload', 'MediaController@customStore')->name('api.user.store');
+Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');
 
 
 //! Dashboard Ajax Courses Datatables

@@ -90,6 +90,13 @@
 							</a>
 						</li>
 
+                        <li class="side-nav-item">
+                            <a href="{{route('media.index')}}" class="side-nav-link">
+                                <i class="mdi mdi-chart-bubble"></i>
+                                <span>Content</span>
+                            </a>
+                        </li>
+
 					</ul>
 					<!-- End Sidebar -->
 

@@ -363,15 +363,16 @@ $('#material-modal-shown-btn').click(() => {
 Dropzone.autoDiscover = false;
 
 
+
+
 let dropzone = new Dropzone("#cover-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,
     previewTemplate: $("#uploadPreviewTemplate").html(),
     url: '/users/media/upload',
-    maxFilesize: 2, // MB
+    maxFilesize: 2,
     maxFiles: 10,
     acceptedFiles: 'image/*',
-    addRemoveLinks: true,
     headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
     },
@@ -384,6 +385,14 @@ let dropzone = new Dropzone("#cover-dropzone", {
         );
         file.file_name = response.name;
     },
+    // init: function () {
+    //     console.log('Dropzone Initialized...');
+    //
+    //     if(editingPost !== null){
+    //         //  If editing, load existing media
+    //         repopulateMedia(editingPost);
+    //     }
+    // }
     // thumbnail: function(file, thumb){
     //     $(file.previewElement).find('.dz-image:first').css({
     //         "background-size": "cover",

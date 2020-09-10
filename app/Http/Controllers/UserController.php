@@ -28,12 +28,14 @@ class UserController extends Controller {
     {
 
         $userCourses = [];
-        return view('admin.users.userProfile',compact("userCourses"));
+
+        return view('admin.users.userProfile', compact("userCourses"));
     }
 
     public function show(User $user)
     {
 
+        $user->load("media");
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
         $allMaterials = User::findMaterials($user->id);
@@ -45,23 +47,10 @@ class UserController extends Controller {
     public function store(Request $request)
     {
         //
-
-
-
         $user = new User();
-        $data = collect($request)->except( "sendMail", "roles","password_confirmation","media","media_original_name")->all();
+        $data = collect($request)->except("sendMail", "roles", "password_confirmation", "media", "media_original_name")->all();
         $data['password'] = Hash::make("password");
         $data["slug"] = Str::slug($request->first_name, "-");
-        if ($files = $request->file('avatar'))
-        {
-            $destinationPath = public_path("images") . '/student';
-            $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $profileImage);
-            $data['avatar'] = $profileImage;
-        } else
-        {
-            $data["avatar"] = "https://robohash.org/default.png?set=set4";
-        }
         if ($request->status)
         {
             $data["status"] = 1;
@@ -69,7 +58,6 @@ class UserController extends Controller {
         {
             $data["status"] = 0;
         }
-
         if ($request->sendMail)
         {
             Mail::to(auth()->user()->email)->send(new NewUserNotification($user->fullName));
@@ -77,19 +65,17 @@ class UserController extends Controller {
         if ($request->password)
         {
 
-            $data["password_encrypt"] =  Crypt::encryptString($request->password);
-            $data["password"] =  Hash::make(request("password"));
-
+            $data["password_encrypt"] = Crypt::encryptString($request->password);
+            $data["password"] = Hash::make(request("password"));
         }
-      $currentUser =   $user->create($data)->assignRole($request->roles);
-
-        foreach ($request->input('media', []) as $index => $file) {
+        $currentUser = $user->create($data)->assignRole($request->roles);
+        foreach ($request->input('media', []) as $index => $file)
+        {
             //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
             $currentUser->addMedia(storage_path("app/" . $file))
                 ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
-                ->toMediaCollection();
+                ->toMediaCollection("users");
         }
-
 
         return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
@@ -98,18 +84,12 @@ class UserController extends Controller {
     {
         //
 
-        $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail","media","media_original_name"));
-        $data = collect($request)->except( "sendMail","media","media_original_name")->all();
-        $user->syncRoles($request->roles);
-        if ($files = $request->file('avatar'))
-        {
-            $destinationPath = 'public/image/users';
-            $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-            $files->move($destinationPath, $profileImage);
-            $data['avatar'] = $profileImage;
-        }
-            $user->update(['status' => isset($request->status)  ? 1 : 0]);
 
+
+        $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail", "media", "media_original_name"));
+        $data = collect($request)->except("sendMail", "media", "media_original_name")->all();
+        $user->syncRoles($request->roles);
+        $user->update(['status' => isset($request->status) ? 1 : 0]);
         if ($request->sendMail)
         {
 
@@ -118,20 +98,15 @@ class UserController extends Controller {
         if ($request->password)
         {
 
-
-
-            $user->update(['password_encrypt' =>  Crypt::encryptString($request->password)]);
-            $user->update(['password' =>  Hash::make(request("password"))]);
-
-
-
+            $user->update(['password_encrypt' => Crypt::encryptString($request->password)]);
+            $user->update(['password' => Hash::make(request("password"))]);
         }
-
-        foreach ($request->input('media', []) as $index => $file) {
+        foreach ($request->input('media', []) as $index => $file)
+        {
             //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
             $user->addMedia(storage_path("app/" . $file))
                 ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
-                ->toMediaCollection("downloads', 'local'");
+                ->toMediaCollection();
         }
 
         return redirect()->back()->with('update', 'Ο ' . $user->fullName . ' ενημερώθηκε');
