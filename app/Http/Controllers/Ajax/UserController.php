@@ -139,7 +139,7 @@ class UserController {
 
         $user = User::find($request->userId);
 
-
+        $files = [];
         $date = date('m.Y');
         $image=  $request->file;
 
@@ -157,6 +157,13 @@ class UserController {
             $user->media()->attach($media->id, ["usage" => 0]);
             $image->storeAs("public/users/images/$date", $name);
 
+
+        $files["file-". $name] =[
+            "url" => url("storage/courses/images/$date/$name"),
+            "id" => $name
+        ];
+
+        echo json_encode($files);
     }
 
 }
