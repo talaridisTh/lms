@@ -6,6 +6,7 @@ use App\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\BundleCourseRequest;
+use App\Media;
 use App\Role;
 use App\Topic;
 use Illuminate\Support\Facades\Storage;
@@ -94,11 +95,18 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course = null)
+    public function show(Course $course = null, Request $request)
     {
 		
+		// dump($request);
+
 		$topics = Topic::all();
 		$instructors = Role::find( 2 )->users;
+		// $media = Media::where("type", 0)->limit(18)->get();
+		$media = Media::where("type", 0)->paginate(18);
+		// $mediaCount = Media::where("type", 0)->count();
+
+		// dd($mediaCount);
 		
 		if ( is_null($course) ) {
 			$publish = "";
@@ -107,9 +115,11 @@ class CourseController extends Controller
 			$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
 
 		}
-		
+
 		$data = [
 			'course' => $course,
+			'media' => $media,
+			// 'pages' => intval( ceil( $mediaCount / 18 ) ),
 			'topics' => $topics,
 			'instructors' => $instructors,
 			'publish' => $publish,

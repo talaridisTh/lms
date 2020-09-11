@@ -1,6 +1,8 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
+const baseUrl = window.location.origin;
+var timer = 0;
 
 //!######################################
 //! 				Imports				#
@@ -10,10 +12,15 @@ import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 // import Alignment from	"../../../plugins/redactor/_plugins/alignment/alignment";
 
-//! EventListerners
-//!============================================================
+//!##########################################
+//! 			EventListerners				#
+//!##########################################
 
-$("#activate-selection").click( function() {
+$("#image-search").on("input", searchHandler)
+
+$(".js-gallery-page-btn").on( 'click', paginationHandler)
+
+$("#activate-selection").on( 'click', function() {
 	let selection = $(".js-course-material-checkbox:checked");
 	let data = [];
 
@@ -891,6 +898,52 @@ function removeMaterials( materialIds ) {
 	})
 }
 
+function paginationHandler(event) {
+
+	event.preventDefault();
+
+	let activePage = this.href.split("page=")[1];
+	let search = $("#image-search").val();
+
+	paginationRequest( activePage, search );
+
+}
+
+function searchHandler() {
+
+	clearTimeout(timer);
+
+	if ( this.value.length < 3 || this.value == "" ) {
+		timer = setTimeout(paginationRequest, 800, 1, "");
+	}
+	else {
+		timer = setTimeout(paginationRequest, 800, 1, this.value);
+	}
+
+}
+
+function paginationRequest( activePage, search) {
+
+	axios.get( `/media/images`, {
+		params: {
+			page: activePage,
+			search
+		}
+	})
+	.then( (res) => {
+		let gallery = $("#gallery-content")[0]
+		gallery.innerHTML = res.data;
+		
+		let btns = gallery.getElementsByClassName("js-gallery-page-btn");
+
+		for (let i = 0; i < btns.length; i++) {
+			btns[i].removeEventListener("click", paginationHandler);
+			btns[i].addEventListener("click", paginationHandler);
+		}
+	})
+
+}
+
 function createRoleSelect( id = "" ) {
 	const selectElm = document.createElement("select");
 	selectElm.classList.add( "ml-1", "select2" );
@@ -1278,6 +1331,22 @@ $R("#summary", {
     }
 });
 
+// Create a plugin
+ArticleEditor.add('plugin', 'mediaLibrary', {
+    start: function() {
+        this.app.addbar.add('mediaButton', {
+            title: 'Media Library',
+            icon: '<i class="mdi mdi-book-open-page-variant"></i>',
+            command: 'mediaLibrary.modal'
+        });
+    },
+    modal: function(params, button) {
+		this.app.popup.close();
+		// console.log("test");
+        $('#gallery-modal').modal('show')
+    }
+});
+
 ArticleEditor('#description', {
 	css: "/css/",
 	custom: {
@@ -1285,6 +1354,7 @@ ArticleEditor('#description', {
 			"/css/bootstrap.min.css"
 		]
 	},
+	plugins: ['mediaLibrary'],
 	classes: {
 		img: 'img-fluid',
 		p: 'text-wrap'
