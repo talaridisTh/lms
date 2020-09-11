@@ -8,17 +8,16 @@
 @section('content')
 
 	<h1>Content</h1>
-    {{-- <div class="row">
+    <div class="row">
         <div class="col-md-12">
 
             <div id="mdb-lightbox-ui"></div>
 
             <div class="mdb-lightbox d-flex flex-wrap" >
                @foreach($allMedia as $media)
-                   {{dd($media->getUrl())}}
                 <figure class="col-md-4">
                     <a href="https://mdbootstrap.com/img/Photos/Lightbox/Original/img%20(149).jpg" data-size="1600x1067">
-                        <img alt="picture" src="https://mdbootstrap.com/img/Photos/Lightbox/Thumbnail/img%20(149).jpg" class="img-fluid" />
+                        <img alt="picture" src="{{$media->rel_path}}" class="img-fluid" />
                     </a>
                 </figure>
                 @endforeach
@@ -26,7 +25,7 @@
             </div>
 
         </div>
-    </div> --}}
+    </div>
 
 @endsection
 

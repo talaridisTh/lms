@@ -15,7 +15,6 @@ class Material extends Model
 //    use SoftDeletes;
 
 
-
     protected $guarded = [];
 
     public function courses() {
@@ -46,7 +45,7 @@ class Material extends Model
 		return $this->morphToMany('App\media', 'mediable');
 
 	}
-	
+
 	public function users() {
 
 

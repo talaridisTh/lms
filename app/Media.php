@@ -12,12 +12,12 @@ class Media extends Model
     {
         return $this->morphedByMany('App\Course', 'mediable');
 	}
-	
+
 	public function materials()
     {
         return $this->morphedByMany('App\Material', 'mediable');
 	}
-	
+
 	public function bundles()
     {
         return $this->morphedByMany('App\Bundle', 'mediable');
@@ -26,5 +26,9 @@ class Media extends Model
     public function details()
     {
         return $this->belongsTo('App\MediaDetails');
+    }
+    public function users()
+    {
+        return $this->morphedByMany('App\User', 'mediable');
     }
 }

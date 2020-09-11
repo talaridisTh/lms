@@ -107,9 +107,9 @@ Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.data
 Route::delete('/user/multiple/courses/delete', 'Ajax\UserController@destroyMultipleCourses')->name("destroyMultipleCourses.datatable");
 Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers')->name("destroyMultipleUsers.datatable");
 Route::post("/user/show-password","Ajax\UserController@showPassword")->name("showPassword");
+Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('user.avatar.upload');
 
 //! Dashboard Ajax Media
-Route::post('/users/media/upload', 'MediaController@customStore')->name('api.user.store');
 Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');
 
 

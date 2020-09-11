@@ -47,6 +47,7 @@ class UserController extends Controller {
     public function store(Request $request)
     {
         //
+        dd($request->all());
         $user = new User();
         $data = collect($request)->except("sendMail", "roles", "password_confirmation", "media", "media_original_name")->all();
         $data['password'] = Hash::make("password");
@@ -86,8 +87,6 @@ class UserController extends Controller {
     {
         //
 
-
-
         $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail", "media", "media_original_name"));
         $data = collect($request)->except("sendMail", "media", "media_original_name")->all();
         $user->syncRoles($request->roles);
@@ -103,13 +102,7 @@ class UserController extends Controller {
             $user->update(['password_encrypt' => Crypt::encryptString($request->password)]);
             $user->update(['password' => Hash::make(request("password"))]);
         }
-//        foreach ($request->input('media', []) as $index => $file)
-//        {
-//            //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
-//            $user->addMedia(storage_path("app/" . $file))
-//                ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
-//                ->toMediaCollection();
-//        }
+
 
         return redirect()->back()->with('update', 'Ο ' . $user->fullName . ' ενημερώθηκε');
     }

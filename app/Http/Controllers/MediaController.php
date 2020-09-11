@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Media;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class MediaController extends Controller
 {
@@ -12,31 +13,16 @@ class MediaController extends Controller
     public function index()
     {
 
-        // $allMedia = Media::all();
-//        $allMedia = User::find(100)->getMedia();
-        // dd($allMedia);
+         $allMedia = Media::all();
 
 
 
-        return view("admin.media.mediaIndex");
-
-    }
-    public function customStore(Request $request)
-    {
-        //
 
 
-
-        $path = $request->file('file')->store('uploads');
-        $file = $request->file('file');
-
-        return response()->json([
-            'name' => $path,
-            'original_name' => $file->getClientOriginalName(),
-        ]);
-
+        return view("admin.media.mediaIndex",compact('allMedia'));
 
     }
+
 
 
 }

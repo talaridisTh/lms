@@ -4,6 +4,7 @@ import Dropzone from "../../../plugins/dropzone/js/dropzone";
 //! GLOBAL VAR
 //!============================================================
 const userId = $(".course-materials-list")[0].dataset.id
+const userSlug = $(".course-materials-list")[0].dataset.slug
 
 
 //! GLOBAL METHOD AND EVENT LISTENER
@@ -369,38 +370,28 @@ let dropzone = new Dropzone("#cover-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,
     previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: '/users/media/upload',
+    url: `/users/avatar/upload/`,
+    params: {userId},
     maxFilesize: 2,
     maxFiles: 10,
     acceptedFiles: 'image/*',
     headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
     },
-    success: function (file, response) {
-        $('#buttonUser').append(
-            '<div id="' + response.name + '">' +
-            '<input type="hidden" name="media[]" value="' + response.name + '">' +
-            '<input type="hidden" name="media_original_name[]" value="' + response.original_name + '">' +
-            '</div>'
-        );
-        file.file_name = response.name;
-    },
-    // init: function () {
-    //     console.log('Dropzone Initialized...');
+    //success: function (file, response) {
     //
-    //     if(editingPost !== null){
-    //         //  If editing, load existing media
-    //         repopulateMedia(editingPost);
-    //     }
-    // }
-    // thumbnail: function(file, thumb){
-    //     $(file.previewElement).find('.dz-image:first').css({
-    //         "background-size": "cover",
-    //         'background-image': `url(${thumb})`,
-    //     });
+    //     $('#buttonUser').append(
+    //         '<div id="' + response.name + '">' +
+    //         `<input type="hidden" name="media[name]"  multiple value=${response.name}>` +
+    //         `<input type="hidden" name="media[slug]"  multiple value=${response.slug}>` +
+    //         // '<input type="hidden" name="media[]" value="' + response.name + '">' +
+    //         // '<input type="hidden" name="media_original_name[]" value="' + response.original_name + '">' +
+    //         '</div>'
+    //     );
+    //     file.file_name = response.name;
     // },
 
 
-});
 
+});
 

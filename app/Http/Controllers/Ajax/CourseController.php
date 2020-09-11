@@ -95,12 +95,12 @@ class CourseController extends Controller
         $idList = explode(',', $ids);
 
 		foreach( $idList as $id ) {
-			
+
 			Course::find( $id )->delete();
 			// Storage::deleteDirectory("public/courses/$id");
 		}
 	}
-	
+
 	public function toggleStatus(Request $request) {
 
 		$data = $request->all();
@@ -179,7 +179,7 @@ class CourseController extends Controller
 		$materialIds = $request->materialId;
 
 		$publish = Carbon::now()->format("Y-m-d H:i:s");
-		
+
 		if ( $course->materials()->count() > 0 ) {
 			$lastMaterialId = $course->materials()->orderBy('priority', 'desc')->first()->pivot->priority;
 		}
@@ -222,7 +222,7 @@ class CourseController extends Controller
 	public function courseStudents( CourseUsersDataTable $dataTable ) {
 
 		return $dataTable->render('courses.users');
-		
+
 	}
 
 	public function addCourseStudents(AddCourseUsersDataTable $dataTable) {
@@ -243,14 +243,14 @@ class CourseController extends Controller
 	}
 
 	public function removeStudents( Request $request ) {
-		
+
 		$course = Course::find( $request->courseId );
 		$userIds = $request->userIds;
 
 		foreach ( $userIds as $id ) {
 			$course->users()->detach( $id );
 		}
-		
+
 	}
 
 	public function editorImages ( Request $request ) {
@@ -279,12 +279,12 @@ class CourseController extends Controller
 						$course->media()->attach( $media->id, [ "usage" => 1 ] );
 
 						$image->storeAs("public/courses/images/$date", $name);
-						
+
 						$files["file-". $key] =[
 							"url" => url("storage/courses/images/$date/$name"),
 							"id" => $name
 						];
-						
+
 					}
 				}
 			}
