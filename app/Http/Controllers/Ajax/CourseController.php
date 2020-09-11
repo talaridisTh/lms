@@ -265,11 +265,15 @@ class CourseController extends Controller
 				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
 					if ( $image->getSize() <= 512000 ) {
 
-						$name = $image->getClientOriginalName();
+						$temp = explode(".", $image->getClientOriginalName());
+
+						$name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
+						$name =  Str::slug( $name, "-" );
+						$name .= ".". $image->getClientOriginalExtension();
 
 						$media = new Media;
+						$media->original_name = $image->getClientOriginalName();
 						$media->name = $name;
-						$media->slug = Str::slug( $name ."-". rand(1, 100), "-" );
 						$media->rel_path = "storage/courses/images/$date/". $image->getClientOriginalName();
 						$media->ext = $image->getClientOriginalExtension();
 						$media->file_info = $image->getClientMimeType();
@@ -278,10 +282,10 @@ class CourseController extends Controller
 
 						$course->media()->attach( $media->id, [ "usage" => 1 ] );
 
-						$image->storeAs("public/courses/images/$date", $name);
-
+						$image->storeAs("public/$date/images", $name);
+						
 						$files["file-". $key] =[
-							"url" => url("storage/courses/images/$date/$name"),
+							"url" => url("storage/$date/images/$name"),
 							"id" => $name
 						];
 

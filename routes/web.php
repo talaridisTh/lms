@@ -155,14 +155,11 @@ Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMat
 Route::patch('/materials/multiple/changeStatus', 'Ajax\MaterialController@changeStatusMultiple')->name("changeStatusMultipleMaterial.datatable");;
 Route::patch( 'materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive' );
 
-
-
 //! Dashboard Ajax Materials CRUD
 Route::patch( 'materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus' );
 Route::delete('/materials/multiple/course/delete', 'Ajax\MaterialController@destroyMultipleCourse')->name("destroyMultipleCourse.datatable");
 Route::post('/materials/add-course/', 'Ajax\MaterialController@addCourse');
 Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourseMultiple');
-
 
 //! Dashboard Topics Datatables
 Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
@@ -171,6 +168,8 @@ Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 Route::patch( 'topics/update/{topic}', 'Ajax\TopicController@update' );
 Route::delete( 'topics/destroy/{ids}', 'Ajax\TopicController@destroy' );
 
+//! Dashboard Media
+Route::get( 'media/images', 'Ajax\MediaController@index' );
 
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
