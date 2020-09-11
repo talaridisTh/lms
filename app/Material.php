@@ -42,7 +42,7 @@ class Material extends Model
 
 	public function media() {
 
-		return $this->morphToMany('App\media', 'mediable');
+		return $this->morphToMany('App\Media', 'mediable')->withPivot('usage');
 
 	}
 

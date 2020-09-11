@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
 
-        <div id="{{$dropzone}}">
+        <div id="{{$dropzone}}" class="{{$dropzone}}">
             <div class="fallback">
                 {{--                                        <input name="file" type="file" multiple/>--}}
             </div>
@@ -12,16 +12,24 @@
             </div>
         </div>
 
-        <!-- Preview -->
         <div class="dropzone-previews mt-3" id="file-previews"></div>
-        {{--                                && isset($user)--}}
 
+        @if(isset($model)  )
+            @foreach($model->media as $media)
 
-        @if(isset($user) )
+                @if($type =="Cover" &&$media->getOriginal('pivot_usage')==0 )
+                        <img height="80" width="80" class="{{!$media ? "d-none":"rounded-circle"}} "
+                             src="{{url(!$media  ? "":$media->rel_path)}}" alt="">
+                @endif
 
-            <img height="80" width="80" class="{{!count($model->media) ? "d-none":"rounded-circle"}} "
-                 src="{{url(!count($model->media) ? "":$model->media->first()->rel_path)}}" alt="">
+                @if($type =="Galery" && $media->getOriginal('pivot_usage')==1)
+
+                        <img height="80" width="80" class="{{!$media ? "d-none":"rounded-circle"}} "
+                             src="{{url(!$media  ? "":$media->rel_path)}}" alt="">
+                @endif
+            @endforeach
         @endif
+
         <div class="d-none" id="uploadPreviewTemplate">
             <div class="card mt-1 mb-0 shadow-none border">
                 <div class="p-2">

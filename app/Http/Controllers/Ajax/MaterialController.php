@@ -9,9 +9,12 @@ use App\DataTables\CourseInsideMaterialsDataTable;
 use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
+use App\Media;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class MaterialController extends Controller {
 
@@ -201,6 +204,69 @@ class MaterialController extends Controller {
             $material->courses()->detach($course);
             $material->courses()->attach($course, ["priority" => $lastpriority + $key, "publish_at" => now()]);
         }
+    }
+
+
+    public function coverUpload (Request $request)
+    {
+
+
+        $user = Material::findorFail($request->materialId);
+
+        $date = date('m.Y');
+        $image=  $request->file;
+
+
+
+
+
+        if ( $image->isValid() )
+        {
+            $name = $image->getClientOriginalName();
+            $media = new Media();
+            $media->name = $name;
+            $media->slug = Str::slug($name . "-" . rand(1, 100), "-");
+            $media->rel_path = "storage/images/$date/" . $image->getClientOriginalName();
+            $media->ext = $image->getClientOriginalExtension();
+            $media->file_info = $image->getClientMimeType();
+            $media->size = $image->getSize();
+            $media->save();
+            $user->media()->wherePivot("usage",0)->detach();
+            $user->media()->attach($media->id, ["usage" => 0]);
+            $image->storeAs("public/images/$date", $name);
+        }
+
+
+    }
+
+
+    public function galleryUpload(Request $request)
+    {
+
+
+        $user = Material::findorFail($request->materialId);
+
+        $date = date('m.Y');
+        $image=  $request->file;
+
+
+
+        if ( $image->isValid() )
+        {
+            $name = $image->getClientOriginalName();
+            $media = new Media();
+            $media->name = $name;
+            $media->slug = Str::slug($name . "-" . rand(1, 100), "-");
+            $media->rel_path = "storage/images/$date/" . $image->getClientOriginalName();
+            $media->ext = $image->getClientOriginalExtension();
+            $media->file_info = $image->getClientMimeType();
+            $media->size = $image->getSize();
+            $media->save();
+            $user->media()->attach($media->id, ["usage" => 1]);
+            $image->storeAs("public/images/$date", $name);
+        }
+
+
     }
 
 }

@@ -162,6 +162,9 @@ Route::patch( 'materials/toggle-status/{material}', 'Ajax\MaterialController@tog
 Route::delete('/materials/multiple/course/delete', 'Ajax\MaterialController@destroyMultipleCourse')->name("destroyMultipleCourse.datatable");
 Route::post('/materials/add-course/', 'Ajax\MaterialController@addCourse');
 Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourseMultiple');
+Route::post('/materials/cover/upload', 'Ajax\MaterialController@coverUpload')->name('user.cover.upload');
+Route::post('/materials/gallery/upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
+
 
 
 //! Dashboard Topics Datatables

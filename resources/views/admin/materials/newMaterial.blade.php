@@ -226,9 +226,9 @@
                                     </div>
                                     <hr>
                                 </div>
-                                @include("components.dropzone",["model"=>$material ,"type"=>"Cover","dropzone"=>"cover-material-dropzone"] )
+                                @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Cover","dropzone"=>"cover-material-dropzone"] )
                                 <hr>
-                                @include("components.dropzone",["model"=>$material ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )
+                                @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )
                                 <div class="border-material">
                                     <h3>Tags</h3>
                                 </div>
@@ -237,7 +237,7 @@
                     </div>
                     <div class="tab-pane " id="courses-tabs">
 
-                            @include("components.admin.materials.tabsCourses")
+                        @include("components.admin.materials.tabsCourses")
 
                     </div>
                 </div>

@@ -413,8 +413,8 @@ let dropzoneCover = new Dropzone("#cover-material-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,
     previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: `/users/avatar/upload`,
-    maxFilesize: 2,
+    url: `/materials/cover/upload`,
+    params: {materialId},
     maxFiles:1,
     acceptedFiles: 'image/*',
     headers: {
@@ -427,9 +427,9 @@ let dropzoneGalery = new Dropzone("#galery-material-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,
     previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: `/users/avatar/upload`,
-    maxFilesize: 2,
-    maxFiles:1,
+    url: `/materials/gallery/upload`,
+    params: {materialId},
+    maxFiles:10,
     acceptedFiles: 'image/*',
     headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),

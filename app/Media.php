@@ -15,7 +15,7 @@ class Media extends Model
 
 	public function materials()
     {
-        return $this->morphedByMany('App\Material', 'mediable');
+        return $this->morphedByMany('App\Material', 'mediable')->withPivot('usage');
 	}
 
 	public function bundles()

@@ -150,14 +150,14 @@ class UserController {
             $media = new Media();
             $media->name = $name;
             $media->slug = Str::slug($name . "-" . rand(1, 100), "-");
-            $media->rel_path = "storage/users/images/$date/" . $image->getClientOriginalName();
+            $media->rel_path = "storage/images/$date/" . $image->getClientOriginalName();
             $media->ext = $image->getClientOriginalExtension();
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
             $user->media()->detach();
             $user->media()->attach($media->id, ["usage" => 0]);
-            $image->storeAs("public/users/images/$date", $name);
+            $image->storeAs("public/images/$date", $name);
         }
 
 
