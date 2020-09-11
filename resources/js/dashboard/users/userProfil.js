@@ -370,7 +370,7 @@ let dropzone = new Dropzone("#cover-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,
     previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: `/users/avatar/upload/`,
+    url: `/users/avatar/upload`,
     params: {userId},
     maxFilesize: 2,
     maxFiles:1,

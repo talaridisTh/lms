@@ -137,13 +137,13 @@ class UserController {
     {
 
 
-        $user = User::find($request->userId);
+        $user = User::findorFail($request->userId);
 
-        $files = [];
         $date = date('m.Y');
         $image=  $request->file;
 
-
+        if ( $image->isValid() )
+        {
             $name = $image->getClientOriginalName();
             $media = new Media();
             $media->name = $name;
@@ -153,17 +153,12 @@ class UserController {
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
-             $user->media()->detach();
+            $user->media()->detach();
             $user->media()->attach($media->id, ["usage" => 0]);
             $image->storeAs("public/users/images/$date", $name);
+        }
 
 
-        $files["file-". $name] =[
-            "url" => url("storage/courses/images/$date/$name"),
-            "id" => $name
-        ];
-
-        echo json_encode($files);
     }
 
 }
