@@ -168,7 +168,7 @@
                     <div class="col-md-12">
 
 
-              @include("components.dropzone",["model"=>$user,"type"=>"Cover"] )
+              @include("components.dropzone",["model"=>$user,"type"=>"Cover","dropzone"=>"cover-dropzone"] )
 
                         <hr>
 
