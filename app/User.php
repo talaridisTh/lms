@@ -74,7 +74,7 @@ class User extends Authenticatable {
 
     public function media() {
 
-        return $this->morphToMany('App\media', 'mediable');
+        return $this->morphToMany('App\Media', 'mediable');
 
     }
 
