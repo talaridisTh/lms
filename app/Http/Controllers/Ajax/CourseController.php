@@ -274,7 +274,7 @@ class CourseController extends Controller
 						$media = new Media;
 						$media->original_name = $image->getClientOriginalName();
 						$media->name = $name;
-						$media->rel_path = "storage/courses/images/$date/". $image->getClientOriginalName();
+						$media->rel_path = "storage/$date/images/". $name;
 						$media->ext = $image->getClientOriginalExtension();
 						$media->file_info = $image->getClientMimeType();
 						$media->size = $image->getSize();
