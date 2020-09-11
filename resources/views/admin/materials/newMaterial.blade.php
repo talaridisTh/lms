@@ -137,8 +137,13 @@
                                         <hr>
                                         <div class="d-flex justify-content-between">
                                             <span><strong>Κατάσταση</strong></span>
-                                            <input name="status" type="checkbox"
-                                                   id="activeMaterial" data-switch="bool"/>
+                                            <input form="material-create" name="status" type="checkbox"
+                                                   id="activeMaterial" data-switch="bool"
+                                            @if(isset($material))
+                                                {{$material->status==1? 'checked':""}}
+                                                @endif
+                                            />
+
                                             <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
                                         </div>
                                         <hr>

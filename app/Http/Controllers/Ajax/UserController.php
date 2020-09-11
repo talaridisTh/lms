@@ -153,6 +153,7 @@ class UserController {
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
+             $user->media()->detach();
             $user->media()->attach($media->id, ["usage" => 0]);
             $image->storeAs("public/users/images/$date", $name);
 

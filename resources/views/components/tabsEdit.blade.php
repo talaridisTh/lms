@@ -71,9 +71,6 @@
         </div>
         <div class="col-md-4">
             <div class="col-md-12 border-material">
-                <h4>Photo</h4>
-            </div>
-            <div class="col-md-12 border-material">
                 <h4>Security</h4>
                 <div class="form-group">
                     <select name="roles" id="roles" class="form-control  select2" data-toggle="select2">
@@ -126,6 +123,14 @@
                     </div>
                 </div>
 
+                @isset($user)
+                <h5 class="js-link-passwordShow -4 cursor-pointer custom-link-primary">Eμφάνιση password</h5>
+                <div class="form-group mt-4 passwordShow d-none">
+                    <h5>Username: <span class="font-weight-normal">{{$user->email}}</span></h5>
+                    <h5>Password: <span class="font-weight-normal">{{\Crypt::decryptString($user->password_encrypt)}}</span></h5>
+                </div>
+                @endisset
+
 
             </div>
         </div>
@@ -136,6 +141,7 @@
             </div>
             <div class="col-md-12 border-material d-d">
                 <h4>Προσωπικές πληροφορίες</h4>
+
                 <div class="row">
 
                     <div class="col-md-12">
@@ -148,7 +154,7 @@
                                 <div class="col-5 text-right">
                                     <input name="status" type="checkbox" id="activeMaterial"
                                            data-switch="bool"
-                                    @if(isset($userr))
+                                    @if(isset($user))
                                         {{$user->status==1? 'checked':""}}
                                         @endif
                                     />
@@ -158,6 +164,7 @@
                         </div>
                         <hr>
                     </div>
+
                     <div class="col-md-12">
 
 
@@ -166,7 +173,7 @@
 
                                 <div id="cover-dropzone">
                                     <div class="fallback">
-                                        <input name="file" type="file" multiple/>
+{{--                                        <input name="file" type="file" multiple/>--}}
                                     </div>
 
                                     <div class="dz-message needsclick text-center">
@@ -179,7 +186,14 @@
 
                                 <!-- Preview -->
                                 <div class="dropzone-previews mt-3" id="file-previews"></div>
+{{--                                && isset($user)--}}
 
+
+                                @if(isset($user) )
+
+                                <img height="80" width="80" class="{{!count($user->media) ? "d-none":"rounded-circle"}} "
+                                     src="{{url(!count($user->media) ? "":$user->media->first()->rel_path)}}" alt="">
+                                @endif
                                 <div class="d-none" id="uploadPreviewTemplate">
                                     <div class="card mt-1 mb-0 shadow-none border">
                                         <div class="p-2">

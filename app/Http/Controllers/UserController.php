@@ -86,11 +86,12 @@ class UserController extends Controller {
     public function update(UserUpdateRequest $request, User $user)
     {
         //
-
-        $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail", "media", "media_original_name"));
-        $data = collect($request)->except("sendMail", "media", "media_original_name")->all();
+        $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));
+        $data = collect($request)->except("sendMail")->all();
         $user->syncRoles($request->roles);
-        $user->update(['status' => isset($request->status) ? 1 : 0]);
+
+        $user->status = isset($request->status) ? 1 : 0;
+        $user->save();
         if ($request->sendMail)
         {
 

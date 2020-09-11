@@ -373,17 +373,25 @@ let dropzone = new Dropzone("#cover-dropzone", {
     url: `/users/avatar/upload/`,
     params: {userId},
     maxFilesize: 2,
-    maxFiles: 10,
+    maxFiles:1,
     acceptedFiles: 'image/*',
     headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
     },
-    //success: function (file, response) {
     //
+    // success: function (file, response) {
+    //     console.log(file)
+    //     console.log(response)
+    //     $('#buttonUser').append(
+    //     `<input type="file" form="buttonUser"  class="fileInput" name="media[]"  multiple value=${JSON.stringify(file)}>`
+    //
+    //
+    // );
+    // }
+})
     //     $('#buttonUser').append(
     //         '<div id="' + response.name + '">' +
-    //         `<input type="hidden" name="media[name]"  multiple value=${response.name}>` +
-    //         `<input type="hidden" name="media[slug]"  multiple value=${response.slug}>` +
+    //
     //         // '<input type="hidden" name="media[]" value="' + response.name + '">' +
     //         // '<input type="hidden" name="media_original_name[]" value="' + response.original_name + '">' +
     //         '</div>'
@@ -393,5 +401,4 @@ let dropzone = new Dropzone("#cover-dropzone", {
 
 
 
-});
 

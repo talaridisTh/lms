@@ -78,6 +78,8 @@ class MaterialController extends Controller {
     {
         $material->update($request->except("instructor", "topic", "type", "status"));
         $data = collect($request)->except("instructor", "topic", "status")->all();
+        $material->status = isset($request->status) ? 1 : 0;
+        $material->save();
         if ($request->instructor)
         {
             $material->users()->sync($request->instructor);
@@ -98,14 +100,8 @@ class MaterialController extends Controller {
 
             $material->update(['type' => $request->type]);
         }
-        if ($request->status)
-        {
-            $material->update(['status' => $request->status]);
-        } else
-        {
 
-            $material->update(['status' => $request->status == null ? 0 : $request->status]);
-        }
+
 
         return redirect()->back()->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
     }
