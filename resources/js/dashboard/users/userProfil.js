@@ -378,26 +378,8 @@ let dropzone = new Dropzone("#cover-dropzone", {
     headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
     },
-    //
-    // success: function (file, response) {
-    //     console.log(file)
-    //     console.log(response)
-    //     $('#buttonUser').append(
-    //     `<input type="file" form="buttonUser"  class="fileInput" name="media[]"  multiple value=${JSON.stringify(file)}>`
-    //
-    //
-    // );
-    // }
+
 })
-    //     $('#buttonUser').append(
-    //         '<div id="' + response.name + '">' +
-    //
-    //         // '<input type="hidden" name="media[]" value="' + response.name + '">' +
-    //         // '<input type="hidden" name="media_original_name[]" value="' + response.original_name + '">' +
-    //         '</div>'
-    //     );
-    //     file.file_name = response.name;
-    // },
 
 
 

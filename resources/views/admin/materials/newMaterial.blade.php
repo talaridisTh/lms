@@ -226,19 +226,9 @@
                                     </div>
                                     <hr>
                                 </div>
-                                <div class="border-material">
-                                    <option></option>
-                                    <div class="form-group">
-                                        <label>Cover<span class="text-danger"> *</span></label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <label class="custom-file-label" id="cover-material"
-                                                       for="coverMaterialHidden">Choose
-                                                    file</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @include("components.dropzone",["model"=>$material ,"type"=>"Cover","dropzone"=>"cover-material-dropzone"] )
+                                <hr>
+                                @include("components.dropzone",["model"=>$material ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )
                                 <div class="border-material">
                                     <h3>Tags</h3>
                                 </div>

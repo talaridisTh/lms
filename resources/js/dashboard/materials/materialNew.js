@@ -1,4 +1,5 @@
 import utilities from '../main';
+import Dropzone from "../../../plugins/dropzone/js/dropzone";
 
     let materialId = $("#material-course-table")[0].dataset.materialId;
 
@@ -400,3 +401,40 @@ const axiosMultipleUpdate = async (courseIds, materialId) => {
 }
 
 
+
+//! DROPOZONE
+//!============================================================
+
+
+
+
+
+let dropzoneCover = new Dropzone("#cover-material-dropzone", {
+    thumbnailWidth: 80,
+    thumbnailHeight: 80,
+    previewTemplate: $("#uploadPreviewTemplate").html(),
+    url: `/users/avatar/upload`,
+    maxFilesize: 2,
+    maxFiles:1,
+    acceptedFiles: 'image/*',
+    headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+    },
+
+})
+
+let dropzoneGalery = new Dropzone("#galery-material-dropzone", {
+    thumbnailWidth: 80,
+    thumbnailHeight: 80,
+    previewTemplate: $("#uploadPreviewTemplate").html(),
+    url: `/users/avatar/upload`,
+    maxFilesize: 2,
+    maxFiles:1,
+    acceptedFiles: 'image/*',
+    headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+    },
+
+})
+dropzoneCover.autoDiscover = false;
+dropzoneGalery.autoDiscover = false;

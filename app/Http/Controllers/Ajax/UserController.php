@@ -142,6 +142,8 @@ class UserController {
         $date = date('m.Y');
         $image=  $request->file;
 
+
+
         if ( $image->isValid() )
         {
             $name = $image->getClientOriginalName();
