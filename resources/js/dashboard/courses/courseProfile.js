@@ -925,11 +925,14 @@ function searchHandler() {
 
 function addArticleContentHandler () {
 
-	let figure = document.createElement("figure");
-	figure.innerHTML = `<img src="${ this.dataset.imageSource}" data-image="${this.dataset.imageName}" alt="${this.dataset.imageName}" />`;
+	let image = {
+		'img': {
+			url: this.dataset.imageSource,
+		}
+	}
 
-	ArticleEditor('#description').insertion.insertNode( figure, 'after' );
-
+	ArticleEditor('#description').image.insert( image );
+	
 }
 
 function paginationRequest( activePage, search) {
@@ -1358,7 +1361,7 @@ ArticleEditor.add('plugin', 'mediaLibrary', {
     },
     modal: function(params, button) {
 		this.app.popup.close();
-
+		// console.log("test");
         $('#gallery-modal').modal('show')
     }
 });
