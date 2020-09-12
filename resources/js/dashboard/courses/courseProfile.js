@@ -1358,7 +1358,7 @@ ArticleEditor.add('plugin', 'mediaLibrary', {
     },
     modal: function(params, button) {
 		this.app.popup.close();
-		// console.log("test");
+
         $('#gallery-modal').modal('show')
     }
 });
