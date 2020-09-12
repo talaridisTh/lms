@@ -1,8 +1,6 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
-const baseUrl = window.location.origin;
-var timer = 0;
 
 //!######################################
 //! 				Imports				#
@@ -15,16 +13,11 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! 			EventListerners				#
 //!##########################################
 
-// $("#gallery-modal").on("show.bs.modal", function(event) {
-// 	// const button = $(event.relatedTarget)
-// 	// console.log(event);
-// })
+$("#image-search").on("input", utilities.searchHandler);
 
-$("#image-search").on("input", searchHandler)
+$(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
 
-$(".js-gallery-page-btn").on( 'click', paginationHandler)
-
-$(".js-add-image").on( "click", addArticleContentHandler);
+$(".js-add-image").on( "click", utilities.addEditorImageHandler);
 
 $("#activate-selection").on( 'click', function() {
 	let selection = $(".js-course-material-checkbox:checked");
@@ -904,82 +897,6 @@ function removeMaterials( materialIds ) {
 	})
 }
 
-function paginationHandler(event) {
-
-	event.preventDefault();
-
-	let activePage = this.href.split("page=")[1];
-	let search = $("#image-search").val();
-
-	paginationRequest( activePage, search );
-
-}
-
-function searchHandler() {
-
-	clearTimeout(timer);
-
-	if ( this.value.length < 3 || this.value == "" ) {
-		timer = setTimeout(paginationRequest, 800, 1, "");
-	}
-	else {
-		timer = setTimeout(paginationRequest, 800, 1, this.value);
-	}
-
-}
-
-function addArticleContentHandler () {
-
-	let editor = $("#gallery-content")[0].dataset.editor;
-
-	let image = {
-		'img': {
-			url: this.dataset.imageSource,
-		}
-	}
-
-	if ( editor == "description" ) {
-		ArticleEditor('#description').image.insert( image );
-	}
-	else {
-		$R('#summary',
-			'insertion.insertHtml',
-			`<img src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
-		);
-	}
-
-	$("#gallery-modal").modal('hide');
-	
-}
-
-function paginationRequest( activePage, search) {
-
-	axios.get( `/media/images`, {
-		params: {
-			page: activePage,
-			search
-		}
-	})
-	.then( (res) => {
-		let gallery = $("#gallery-content")[0]
-		gallery.innerHTML = res.data;
-		
-		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
-		let addBtns = gallery.getElementsByClassName("js-add-image");
-
-		for ( let i = 0; i < addBtns.length; i++ ) {
-			addBtns[i].removeEventListener("click", addArticleContentHandler);
-			addBtns[i].addEventListener("click", addArticleContentHandler);
-		}
-
-		for (let i = 0; i < pagination.length; i++) {
-			pagination[i].removeEventListener("click", paginationHandler);
-			pagination[i].addEventListener("click", paginationHandler);
-		}
-	})
-
-}
-
 function createRoleSelect( id = "" ) {
 	const selectElm = document.createElement("select");
 	selectElm.classList.add( "ml-1", "select2" );
@@ -1087,7 +1004,7 @@ $(".js-material").click( function() {
 
 function linkForm( type, priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="8">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη ${ type }</h3>
 					<div class="form-row">
@@ -1133,7 +1050,7 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td id="add-content-row" class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="8">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη Ανακοίνωσης</h3>
 					<div class="form-row">
@@ -1380,10 +1297,11 @@ $R("#summary", {
         "center": "image-center text-center"
 	},
 	imageFloatMargin: '20px',
-	imageUpload: "/courses/upload-images",
-	imageData: {
-		id: courseId
-	},
+	imageUpload: "/media/editors/upload-images",
+	// imageData: {
+	// 	// id: courseId,
+	// 	// namespace: "App\\Course"
+	// },
 	callbacks: {
         upload: {
             beforeSend: function(xhr)
@@ -1457,10 +1375,11 @@ ArticleEditor('#description', {
 		minHeight: "300px"
 	},
 	image: {
-		upload: "/courses/upload-images",
+		upload: "/media/editors/upload-images",
 		data: {
 			"_token": $('meta[name="csrf-token"]').attr('content'),
-			"id": courseId
+			// "id": courseId,
+			// namespace: "App\\Course"
 		}
 	}
 });

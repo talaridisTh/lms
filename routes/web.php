@@ -129,7 +129,6 @@ Route::post( 'courses/add-materials', 'Ajax\CourseController@addMaterials' );
 Route::patch( 'courses/remove-materials', 'Ajax\CourseController@removeMaterials' );
 Route::patch( 'courses/add-students', 'Ajax\CourseController@addStudents' );
 Route::patch( 'courses/remove-students', 'Ajax\CourseController@removeStudents' );
-Route::post( 'courses/upload-images', 'Ajax\CourseController@editorImages' );
 
 //! Dashboard Ajax Bundles Datatables
 Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );
@@ -177,6 +176,8 @@ Route::get( 'media/images', 'Ajax\MediaController@index' );
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
 Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadContentImages' );
+
+Route::post( 'media/editors/upload-images', 'Ajax\MediaController@editorImages' );
 
 //!======================================================
 //! 			End ajax Routes					|

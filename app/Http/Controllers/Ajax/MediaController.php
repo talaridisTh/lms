@@ -7,6 +7,7 @@ use App\Media;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class MediaController extends Controller
 {
@@ -27,7 +28,9 @@ class MediaController extends Controller
 		}
 
 		return View('components.admin.imageGallery', ['media' => $media]);
-    }
+	}
+	
+	
 
     /**
      * Show the form for creating a new resource.
@@ -93,5 +96,56 @@ class MediaController extends Controller
     public function destroy(Media $media)
     {
         //
-    }
+	}
+	
+	public function editorImages ( Request $request ) {
+
+		//! model Sended with request	etc. App\Course - App\Bundle
+		//! an telika den xrisimopoih8ei o pivot na afere8i kai apo
+		//! ta js arxeia
+		// $namespace = $request->namespace;
+
+		// $model = $namespace::find($request->id);
+
+		$allowedTypes = ["image/png", "image/jpeg"];
+		$date = date('m.Y');
+		$files = [];
+
+		foreach ( $request->file as $key => $image ) {
+			if ( $image->isValid() ) {
+				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
+					if ( $image->getSize() <= 512000 ) {
+
+						$temp = explode(".", $image->getClientOriginalName());
+
+						$name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
+						$name =  Str::slug( $name, "-" );
+						$name .= ".". $image->getClientOriginalExtension();
+
+						$media = new Media;
+						$media->original_name = $image->getClientOriginalName();
+						$media->name = $name;
+						$media->rel_path = "storage/$date/images/". $name;
+						$media->ext = $image->getClientOriginalExtension();
+						$media->file_info = $image->getClientMimeType();
+						$media->size = $image->getSize();
+						$media->save();
+
+						// $model->media()->attach( $media->id, [ "usage" => 1 ] );
+
+						$image->storeAs("public/$date/images", $name);
+						
+						$files["file-". $key] =[
+							"url" => url("storage/$date/images/$name"),
+							"id" => $name
+						];
+
+					}
+				}
+			}
+		}
+
+		echo json_encode($files);
+
+	}
 }

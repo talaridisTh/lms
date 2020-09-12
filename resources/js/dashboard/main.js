@@ -19,6 +19,12 @@ Element.prototype.appendAfter = function (element) {
 },false;
 
 //!##########################################
+//!				Global Variables			#
+//!##########################################
+
+var timer = 0;
+
+//!##########################################
 //!				Configurations				#
 //!##########################################
 
@@ -285,6 +291,91 @@ function resetAddButton( addBtn, checkbox ) {
 	checkbox.prop("checked", false);
 }
 
+
+//!##############################################
+//!				Media Library Functions			#
+//!##############################################
+
+function paginationHandler(event) {
+
+	event.preventDefault();
+
+	let activePage = this.href.split("page=")[1];
+	let search = $("#image-search").val();
+
+	paginationRequest( activePage, search );
+
+}
+
+function searchHandler() {
+
+	clearTimeout(timer);
+
+	if ( this.value.length < 3 || this.value == "" ) {
+		timer = setTimeout(paginationRequest, 800, 1, "");
+	}
+	else {
+		timer = setTimeout(paginationRequest, 800, 1, this.value);
+	}
+
+}
+
+function addEditorImageHandler () {
+
+	let editor = $("#gallery-content")[0].dataset.editor;
+
+	let image = {
+		'img': {
+			url: this.dataset.imageSource,
+		}
+	}
+
+	if ( editor == "description" ) {
+		ArticleEditor('#description').image.insert( image );
+	}
+	else {
+		$R('#summary',
+			'insertion.insertHtml',
+			`<img src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+		);
+	}
+
+	$("#gallery-modal").modal('hide');
+	
+}
+
+function paginationRequest( activePage, search) {
+
+	axios.get( `/media/images`, {
+		params: {
+			page: activePage,
+			search
+		}
+	})
+	.then( (res) => {
+		let gallery = $("#gallery-content")[0]
+		gallery.innerHTML = res.data;
+		
+		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
+		let addBtns = gallery.getElementsByClassName("js-add-image");
+
+		for ( let i = 0; i < addBtns.length; i++ ) {
+			addBtns[i].removeEventListener("click", addEditorImageHandler);
+			addBtns[i].addEventListener("click", addEditorImageHandler);
+		}
+
+		for (let i = 0; i < pagination.length; i++) {
+			pagination[i].removeEventListener("click", paginationHandler);
+			pagination[i].addEventListener("click", paginationHandler);
+		}
+	})
+
+}
+
+//!######################################################
+//!				Media Library Functions End				#
+//!######################################################
+
 export default {
     toastAlert,
     mainCheckboxSwitcher,
@@ -302,6 +393,9 @@ export default {
 	endDate,
 	resetBulk,
 	resetAddButton,
-	createCourseTypeSelect
+	createCourseTypeSelect,
+	paginationHandler,
+	searchHandler,
+	addEditorImageHandler
 }
 

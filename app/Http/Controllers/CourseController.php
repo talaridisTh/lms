@@ -98,15 +98,9 @@ class CourseController extends Controller
     public function show(Course $course = null, Request $request)
     {
 		
-		// dump($request);
-
 		$topics = Topic::all();
 		$instructors = Role::find( 2 )->users;
-		// $media = Media::where("type", 0)->limit(18)->get();
 		$media = Media::where("type", 0)->paginate(18);
-		// $mediaCount = Media::where("type", 0)->count();
-
-		// dd($mediaCount);
 		
 		if ( is_null($course) ) {
 			$publish = "";
@@ -119,7 +113,6 @@ class CourseController extends Controller
 		$data = [
 			'course' => $course,
 			'media' => $media,
-			// 'pages' => intval( ceil( $mediaCount / 18 ) ),
 			'topics' => $topics,
 			'instructors' => $instructors,
 			'publish' => $publish,

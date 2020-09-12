@@ -38,6 +38,37 @@
 	</div>     
 	<!-- end page title -->
 
+	<!-- Modal -->
+	<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<!-- Search -->
+					<div class="row">
+						<div class="mx-auto col-4">
+							<div class="form-group">
+								<input id="image-search" class="form-control text-center" type="text" placeholder="Αναζήτηση..." />
+							</div>
+						</div>
+					</div>
+					<div id="gallery-content">	
+						@include('components.admin.imageGallery', ['media' => $media])
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="remaining-courses-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remaining-courses-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-xl">
 	        <div class="modal-content">
