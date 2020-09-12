@@ -10,7 +10,6 @@ var timer = 0;
 import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
-// import Alignment from	"../../../plugins/redactor/_plugins/alignment/alignment";
 
 //!##########################################
 //! 			EventListerners				#
@@ -19,6 +18,8 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 $("#image-search").on("input", searchHandler)
 
 $(".js-gallery-page-btn").on( 'click', paginationHandler)
+
+$(".js-add-image").on( "click", addArticleContentHandler);
 
 $("#activate-selection").on( 'click', function() {
 	let selection = $(".js-course-material-checkbox:checked");
@@ -922,6 +923,15 @@ function searchHandler() {
 
 }
 
+function addArticleContentHandler () {
+
+	let figure = document.createElement("figure");
+	figure.innerHTML = `<img src="${ this.dataset.imageSource}" data-image="${this.dataset.imageName}" alt="${this.dataset.imageName}" />`;
+
+	ArticleEditor('#description').insertion.insertNode( figure, 'after' );
+
+}
+
 function paginationRequest( activePage, search) {
 
 	axios.get( `/media/images`, {
@@ -934,11 +944,17 @@ function paginationRequest( activePage, search) {
 		let gallery = $("#gallery-content")[0]
 		gallery.innerHTML = res.data;
 		
-		let btns = gallery.getElementsByClassName("js-gallery-page-btn");
+		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
+		let addBtns = gallery.getElementsByClassName("js-add-image");
 
-		for (let i = 0; i < btns.length; i++) {
-			btns[i].removeEventListener("click", paginationHandler);
-			btns[i].addEventListener("click", paginationHandler);
+		for ( let i = 0; i < addBtns.length; i++ ) {
+			addBtns[i].removeEventListener("click", addArticleContentHandler);
+			addBtns[i].addEventListener("click", addArticleContentHandler);
+		}
+
+		for (let i = 0; i < pagination.length; i++) {
+			pagination[i].removeEventListener("click", paginationHandler);
+			pagination[i].addEventListener("click", paginationHandler);
 		}
 	})
 
