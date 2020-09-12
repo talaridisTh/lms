@@ -104,7 +104,7 @@ eval("//!######################################\n//!\t\t\tGlobal Variables\t\t\t
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Υδρόγειος\Demo LMS\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
 
 
 /***/ })

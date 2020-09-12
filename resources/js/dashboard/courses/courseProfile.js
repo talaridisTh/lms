@@ -15,6 +15,11 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! 			EventListerners				#
 //!##########################################
 
+// $("#gallery-modal").on("show.bs.modal", function(event) {
+// 	// const button = $(event.relatedTarget)
+// 	// console.log(event);
+// })
+
 $("#image-search").on("input", searchHandler)
 
 $(".js-gallery-page-btn").on( 'click', paginationHandler)
@@ -925,13 +930,25 @@ function searchHandler() {
 
 function addArticleContentHandler () {
 
+	let editor = $("#gallery-content")[0].dataset.editor;
+
 	let image = {
 		'img': {
 			url: this.dataset.imageSource,
 		}
 	}
 
-	ArticleEditor('#description').image.insert( image );
+	if ( editor == "description" ) {
+		ArticleEditor('#description').image.insert( image );
+	}
+	else {
+		$R('#summary',
+			'insertion.insertHtml',
+			`<img src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+		);
+	}
+
+	$("#gallery-modal").modal('hide');
 	
 }
 
@@ -1320,14 +1337,41 @@ $("#version-select").select2({
 	minimumResultsForSearch: -1
 })
 
+$R.add('plugin', 'mediaLibrary', {
+	translations: {
+		en: {
+			"mediaLibrary": "Media Library"
+		}
+	},
+	init: function(app) {
+		this.app = app;
+		this.lang = app.lang;
+		this.toolbar = app.toolbar;
+	},
+	start: function() {
+		var buttonData = {
+			title: this.lang.get("mediaLibrary"),
+			icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+			api: "plugin.mediaLibrary.toggle"
+		};
+
+		var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+	},
+	toggle: function() {
+		$('#gallery-content')[0].dataset.editor = "summary"
+		$('#gallery-modal').modal('show')
+	}
+});
+
 $R("#summary", {
 	buttons: [
 		'html', 'undo', 'redo', 'format',
 		'bold', 'underline', 'italic', 'deleted',
-		'sup', 'sub', 'lists', 'image', 'file', 'link'
+		'sup', 'sub', 'lists', 'file', 'link', 'image'
 	],
+	buttonsAddBefore: { before: 'image', buttons: ['mediaLibrary'] },
 	style: false,
-	plugins: ['alignment'],
+	plugins: ["mediaLibrary", 'alignment'],
 	minHeight: '150px',
 	imageResizable: true,
 	imagePosition : {
@@ -1355,13 +1399,13 @@ ArticleEditor.add('plugin', 'mediaLibrary', {
     start: function() {
         this.app.addbar.add('mediaButton', {
             title: 'Media Library',
-            icon: '<i class="mdi mdi-book-open-page-variant"></i>',
+            icon: "<i class='mdi mdi-book-open-page-variant'></i>'",
             command: 'mediaLibrary.modal'
         });
     },
     modal: function(params, button) {
 		this.app.popup.close();
-		// console.log("test");
+		$('#gallery-content')[0].dataset.editor = "description"
         $('#gallery-modal').modal('show')
     }
 });

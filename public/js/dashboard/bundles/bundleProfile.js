@@ -151,7 +151,7 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {\n\nfunction _typeof(obj) {\
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Demo LMS\resources\js\dashboard\bundles\bundleProfile.js */"./resources/js/dashboard/bundles/bundleProfile.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Υδρόγειος\Demo LMS\resources\js\dashboard\bundles\bundleProfile.js */"./resources/js/dashboard/bundles/bundleProfile.js");
 
 
 /***/ })
