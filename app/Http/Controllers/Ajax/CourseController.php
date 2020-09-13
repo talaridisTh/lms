@@ -253,48 +253,4 @@ class CourseController extends Controller
 
 	}
 
-	public function editorImages ( Request $request ) {
-
-		$allowedTypes = ["image/png", "image/jpeg"];
-		$date = date('m.Y');
-		$course = Course::find( $request->id );
-		$files = [];
-
-		foreach ( $request->file as $key => $image ) {
-			if ( $image->isValid() ) {
-				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
-					if ( $image->getSize() <= 512000 ) {
-
-						$temp = explode(".", $image->getClientOriginalName());
-
-						$name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
-						$name =  Str::slug( $name, "-" );
-						$name .= ".". $image->getClientOriginalExtension();
-
-						$media = new Media;
-						$media->original_name = $image->getClientOriginalName();
-						$media->name = $name;
-						$media->rel_path = "storage/$date/images/". $name;
-						$media->ext = $image->getClientOriginalExtension();
-						$media->file_info = $image->getClientMimeType();
-						$media->size = $image->getSize();
-						$media->save();
-
-						$course->media()->attach( $media->id, [ "usage" => 1 ] );
-
-						$image->storeAs("public/$date/images", $name);
-						
-						$files["file-". $key] =[
-							"url" => url("storage/$date/images/$name"),
-							"id" => $name
-						];
-
-					}
-				}
-			}
-		}
-
-		echo json_encode($files);
-
-	}
 }

@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Bundle;
-use Illuminate\Http\Request;
-use App\Http\Requests\BundleCourseRequest;
 use App\Topic;
-use Illuminate\Support\Facades\Storage;
+use App\Media;
+use App\Http\Requests\BundleCourseRequest;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
-
-
 
 class BundleController extends Controller
 {
@@ -74,9 +71,11 @@ class BundleController extends Controller
 			$publish = is_null($bundle->publish_at) ? null : Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
 		}
 		$topics = Topic::all("title");
+		$media = Media::where("type", 0)->paginate(18);
 
 		$data = [
 			'bundle' => $bundle,
+			'media' => $media,
 			'topics' => $topics,
 			'publish' => $publish,
 		];

@@ -8,7 +8,22 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! GLOBAL VARIABLES
 const bundleId = $("#bundle-title")[0].dataset.bundleId
 
-//! EventListerners
+//!##########################################
+//! 			EventListerners				#
+//!##########################################
+
+$("#change-cover-btn").on("click", function() {
+
+	$("#gallery-content")[0].dataset.action = "cover";
+
+	$("#gallery-modal").modal('show');
+})
+
+$("#image-search").on("input", utilities.searchHandler);
+
+$(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
+
+$(".js-add-image").on( "click", utilities.imageHandler);
 
 $(".tab-link").on("show.bs.tab", function(event) {
 
@@ -20,7 +35,7 @@ $(".tab-link").on("show.bs.tab", function(event) {
 	);
 })
 
-$(".under-development").click( function() {
+$(".under-development").on( 'click', function() {
 	Swal.fire({
         toast: 'true',
         position: 'top-end',
@@ -394,8 +409,6 @@ function removeCourses( courseIds ) {
 	})
 }
 
-
-
 //!##########################################
 //!				Initializations				#
 //!##########################################
@@ -434,32 +447,133 @@ dateRange.on( "input", function() {
 
 });
 
-$R("#summary", utilities.redactorConfig);
+$R.add('plugin', 'mediaLibrary', {
+	translations: {
+		en: {
+			"mediaLibrary": "Media Library"
+		}
+	},
+	init: function(app) {
+		this.app = app;
+		this.lang = app.lang;
+		this.toolbar = app.toolbar;
+	},
+	start: function() {
+		var buttonData = {
+			title: this.lang.get("mediaLibrary"),
+			icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+			api: "plugin.mediaLibrary.toggle"
+		};
+
+		var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+	},
+	toggle: function() {
+		$('#gallery-content')[0].dataset.action = "summary"
+		$('#gallery-modal').modal('show')
+	}
+});
+
+$R("#summary", {
+	buttons: [
+		'html', 'undo', 'redo', 'format',
+		'bold', 'underline', 'italic', 'deleted',
+		'sup', 'sub', 'lists', 'file', 'link', 'image'
+	],
+	buttonsAddBefore: { before: 'image', buttons: ['mediaLibrary'] },
+	style: false,
+	plugins: ["mediaLibrary", 'alignment'],
+	minHeight: '150px',
+	imageResizable: true,
+	imagePosition : {
+        "left": "image-left",
+        "right": "image-right",
+        "center": "image-center text-center"
+	},
+	imageFloatMargin: '20px',
+	imageUpload: "/media/editors/upload-images",
+	// imageData: {
+	// 	id: bundleId,
+	// 	namespace: "App\\Bundle"
+	// },
+	callbacks: {
+        upload: {
+            beforeSend: function(xhr)
+            {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            }
+        }
+    }
+});
+
+ArticleEditor.add('plugin', 'mediaLibrary', {
+    start: function() {
+        this.app.addbar.add('mediaButton', {
+            title: 'Media Library',
+            icon: "<i class='mdi mdi-book-open-page-variant'></i>'",
+            command: 'mediaLibrary.modal'
+        });
+    },
+    modal: function(params, button) {
+		this.app.popup.close();
+		$('#gallery-content')[0].dataset.action = "description"
+        $('#gallery-modal').modal('show')
+    }
+});
 
 ArticleEditor('#description', {
 	css: "/css/",
 	custom: {
 		css: [
-			"/css/arx-content.min.css"
+			"/css/bootstrap.min.css"
 		]
+	},
+	plugins: ['mediaLibrary'],
+	classes: {
+		img: 'img-fluid',
+		p: 'text-wrap'
+	},
+	grid: {
+		classname: 'row',
+		columns: 12,
+		gutter: '1px',
+		offset: {
+			left: '15px',
+			right: '15px'
+		},
+		patterns: {
+			'6|6': 'col-6|col-6',
+			'4|4|4': 'col-4|col-4|col-4',
+			'3|3|3|3': 'col-3|col-3|col-3|col-3',
+			'2|2|2|2|2|2': 'col-2|col-2|col-2|col-2|col-2|col-2',
+			'3|6|3': 'col-3|col-6|col-3',
+			'2|8|2': 'col-2|col-8|col-2',
+			'5|7': 'col-5|col-7',
+			'7|5': 'col-7|col-5',
+			'4|8': 'col-4|col-8',
+			'8|4': 'col-8|col-4',
+			'3|9': 'col-3|col-9',
+			'9|3': 'col-9|col-3',
+			'2|10': 'col-2|col-10',
+			'10|2': 'col-10|col-2',
+			'12': 'col-12'
+		}
+	},
+	align: {
+		left: "text-left",
+		center: "text-center",
+		right: "text-right",
 	},
 	editor: {
 		minHeight: "300px"
 	},
-	// classes: {
-	// 	'p': 'text-muted',
-	// 	'h1': 'text-muted',
-	// 	'h2': 'text-muted',
-	// 	'h3': 'text-muted',
-	// 	'h4': 'text-muted',
-	// 	'h5': 'text-muted',
-	// }
-	/* image: {
-		upload: "/materials/upload-content-images",
+	image: {
+		upload: "/media/editors/upload-images",
 		data: {
-			"_token": $('meta[name="csrf-token"]').attr('content')
+			"_token": $('meta[name="csrf-token"]').attr('content'),
+			// "id": bundleId,
+			// namespace: "App\\Bundle"
 		}
-	} */
+	}
 });
 
 

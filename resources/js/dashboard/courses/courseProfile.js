@@ -1,8 +1,6 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
-const baseUrl = window.location.origin;
-var timer = 0;
 
 //!######################################
 //! 				Imports				#
@@ -10,15 +8,23 @@ var timer = 0;
 import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
-// import Alignment from	"../../../plugins/redactor/_plugins/alignment/alignment";
 
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
 
-$("#image-search").on("input", searchHandler)
+$("#change-cover-btn").on("click", function() {
 
-$(".js-gallery-page-btn").on( 'click', paginationHandler)
+	$("#gallery-content")[0].dataset.action = "cover";
+
+	$("#gallery-modal").modal('show');
+})
+
+$("#image-search").on("input", utilities.searchHandler);
+
+$(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
+
+$(".js-add-image").on( "click", utilities.imageHandler);
 
 $("#activate-selection").on( 'click', function() {
 	let selection = $(".js-course-material-checkbox:checked");
@@ -898,52 +904,6 @@ function removeMaterials( materialIds ) {
 	})
 }
 
-function paginationHandler(event) {
-
-	event.preventDefault();
-
-	let activePage = this.href.split("page=")[1];
-	let search = $("#image-search").val();
-
-	paginationRequest( activePage, search );
-
-}
-
-function searchHandler() {
-
-	clearTimeout(timer);
-
-	if ( this.value.length < 3 || this.value == "" ) {
-		timer = setTimeout(paginationRequest, 800, 1, "");
-	}
-	else {
-		timer = setTimeout(paginationRequest, 800, 1, this.value);
-	}
-
-}
-
-function paginationRequest( activePage, search) {
-
-	axios.get( `/media/images`, {
-		params: {
-			page: activePage,
-			search
-		}
-	})
-	.then( (res) => {
-		let gallery = $("#gallery-content")[0]
-		gallery.innerHTML = res.data;
-		
-		let btns = gallery.getElementsByClassName("js-gallery-page-btn");
-
-		for (let i = 0; i < btns.length; i++) {
-			btns[i].removeEventListener("click", paginationHandler);
-			btns[i].addEventListener("click", paginationHandler);
-		}
-	})
-
-}
-
 function createRoleSelect( id = "" ) {
 	const selectElm = document.createElement("select");
 	selectElm.classList.add( "ml-1", "select2" );
@@ -1051,7 +1011,7 @@ $(".js-material").click( function() {
 
 function linkForm( type, priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="8">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη ${ type }</h3>
 					<div class="form-row">
@@ -1097,7 +1057,7 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td id="add-content-row" class="text-left" colspan="7">
+	return `<td id="add-content-row" class="text-left" colspan="8">
 				<div id="additional-content-form">
 					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη Ανακοίνωσης</h3>
 					<div class="form-row">
@@ -1301,14 +1261,41 @@ $("#version-select").select2({
 	minimumResultsForSearch: -1
 })
 
+$R.add('plugin', 'mediaLibrary', {
+	translations: {
+		en: {
+			"mediaLibrary": "Media Library"
+		}
+	},
+	init: function(app) {
+		this.app = app;
+		this.lang = app.lang;
+		this.toolbar = app.toolbar;
+	},
+	start: function() {
+		var buttonData = {
+			title: this.lang.get("mediaLibrary"),
+			icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+			api: "plugin.mediaLibrary.toggle"
+		};
+
+		var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+	},
+	toggle: function() {
+		$('#gallery-content')[0].dataset.action = "summary"
+		$('#gallery-modal').modal('show')
+	}
+});
+
 $R("#summary", {
 	buttons: [
 		'html', 'undo', 'redo', 'format',
 		'bold', 'underline', 'italic', 'deleted',
-		'sup', 'sub', 'lists', 'image', 'file', 'link'
+		'sup', 'sub', 'lists', 'file', 'link', 'image'
 	],
+	buttonsAddBefore: { before: 'image', buttons: ['mediaLibrary'] },
 	style: false,
-	plugins: ['alignment'],
+	plugins: ["mediaLibrary", 'alignment'],
 	minHeight: '150px',
 	imageResizable: true,
 	imagePosition : {
@@ -1317,10 +1304,11 @@ $R("#summary", {
         "center": "image-center text-center"
 	},
 	imageFloatMargin: '20px',
-	imageUpload: "/courses/upload-images",
-	imageData: {
-		id: courseId
-	},
+	imageUpload: "/media/editors/upload-images",
+	// imageData: {
+	// 	// id: courseId,
+	// 	// namespace: "App\\Course"
+	// },
 	callbacks: {
         upload: {
             beforeSend: function(xhr)
@@ -1336,13 +1324,13 @@ ArticleEditor.add('plugin', 'mediaLibrary', {
     start: function() {
         this.app.addbar.add('mediaButton', {
             title: 'Media Library',
-            icon: '<i class="mdi mdi-book-open-page-variant"></i>',
+            icon: "<i class='mdi mdi-book-open-page-variant'></i>'",
             command: 'mediaLibrary.modal'
         });
     },
     modal: function(params, button) {
 		this.app.popup.close();
-		// console.log("test");
+		$('#gallery-content')[0].dataset.action = "description"
         $('#gallery-modal').modal('show')
     }
 });
@@ -1394,10 +1382,11 @@ ArticleEditor('#description', {
 		minHeight: "300px"
 	},
 	image: {
-		upload: "/courses/upload-images",
+		upload: "/media/editors/upload-images",
 		data: {
 			"_token": $('meta[name="csrf-token"]').attr('content'),
-			"id": courseId
+			// "id": courseId,
+			// namespace: "App\\Course"
 		}
 	}
 });

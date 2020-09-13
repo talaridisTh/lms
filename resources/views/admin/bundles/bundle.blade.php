@@ -38,6 +38,101 @@
 	</div>     
 	<!-- end page title -->
 
+	<!-- Modal -->
+	<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<ul class="nav nav-tabs nav-bordered mb-3">
+						<li class="nav-item">
+							<a href="#media-library" id="media-library-tab-btn"
+								data-toggle="tab" aria-expanded="false"
+								class="nav-link active"
+							>
+								Media Library
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#upload" id="upload-tab-btn"
+								data-toggle="tab" aria-expanded="true"
+								class="nav-link"
+							>
+								Upload
+							</a>
+						</li>
+					</ul> <!-- end nav-->
+
+					<div class="tab-content">
+
+						<div id="media-library" class="tab-pane show active">
+							<!-- Search -->
+							<div class="row">
+								<div class="mx-auto col-4">
+									<div class="form-group">
+										<input id="image-search" class="form-control text-center" type="text" placeholder="Αναζήτηση..." />
+									</div>
+								</div>
+							</div>
+							<div id="gallery-content" data-model="App\Bundle" data-id={{ $bundle->id }}>	
+								@include('components.admin.imageGallery', ['media' => $media])
+							</div>
+						</div>
+
+						<div id="upload" class="tab-pane">
+							<form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
+								<div class="fallback">
+									<input name="file" type="file" multiple />
+								</div>
+
+								<div class="dz-message needsclick text-center">
+									<i class="h1 text-muted dripicons-cloud-upload"></i>
+									<h3>Drop files here or click to upload.</h3>
+									<span class="text-muted font-13">(This is just a demo dropzone. Selected files are
+										<strong>not</strong> actually uploaded.)</span>
+								</div>
+							</form>
+
+							<!-- Preview -->
+							<div class="dropzone-previews mt-3" id="file-previews"></div>  
+						
+							<div class="d-none" id="uploadPreviewTemplate">
+								<div class="card mt-1 mb-0 shadow-none border">
+									<div class="p-2">
+										<div class="row align-items-center">
+											<div class="col-auto">
+												<img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+											</div>
+											<div class="col pl-0">
+												<a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
+												<p class="mb-0" data-dz-size></p>
+											</div>
+											<div class="col-auto">
+												<!-- Button -->
+												<a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+													<i class="dripicons-cross"></i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>			
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div id="remaining-courses-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remaining-courses-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-xl">
 	        <div class="modal-content">
@@ -299,8 +394,12 @@
 
 							</div>
 							<div class="card-body">
-								<img src="https://placehold.co/600x400" class="img-fluid" alt="{{ $bundle->title }}">
+								<img id="cover-image" src="{{ url($bundle->cover) }}" class="img-fluid" alt="{{ $bundle->title }}">
+							
+								<button id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</button>
 							</div> <!-- end card-body -->
+
+
 						</div> <!-- end course info card -->
 
 						<form id="delete-bundle-form" action="{{ $bundle->id }}" method="POST">
@@ -312,49 +411,6 @@
 
 					@endif
 
-					<!-- Dropzone -->
-					<div class="card">
-						<div class="card-body">
-
-							<form id="cover-dropzone" method="post" class="image-dropzone" enctype="multipart/form-data">
-								<div class="fallback">
-									<input name="file" type="file" multiple />
-								</div>
-
-								<div class="dz-message needsclick text-center">
-									<i class="h1 text-muted dripicons-cloud-upload"></i>
-									<h3>Drop files here or click to upload.</h3>
-									<span class="text-muted font-13">(This is just a demo dropzone. Selected files are
-										<strong>not</strong> actually uploaded.)</span>
-								</div>
-							</form>
-
-							<!-- Preview -->
-							<div class="dropzone-previews mt-3" id="file-previews"></div>  
-						
-							<div class="d-none" id="uploadPreviewTemplate">
-								<div class="card mt-1 mb-0 shadow-none border">
-									<div class="p-2">
-										<div class="row align-items-center">
-											<div class="col-auto">
-												<img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-											</div>
-											<div class="col pl-0">
-												<a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
-												<p class="mb-0" data-dz-size></p>
-											</div>
-											<div class="col-auto">
-												<!-- Button -->
-												<a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-													<i class="dripicons-cross"></i>
-												</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> <!-- end card-body -->
-					</div> <!-- ./Dropzone -->
 				</div><!-- ./col -->
 
 			</div><!-- ./row -->

@@ -19,6 +19,13 @@ Element.prototype.appendAfter = function (element) {
 },false;
 
 //!##########################################
+//!				Global Variables			#
+//!##########################################
+
+const baseUrl = window.location.origin;
+var timer = 0;
+
+//!##########################################
 //!				Configurations				#
 //!##########################################
 
@@ -285,6 +292,116 @@ function resetAddButton( addBtn, checkbox ) {
 	checkbox.prop("checked", false);
 }
 
+
+//!##############################################
+//!				Media Library Functions			#
+//!##############################################
+
+function paginationHandler(event) {
+
+	event.preventDefault();
+
+	let activePage = this.href.split("page=")[1];
+	let search = $("#image-search").val();
+
+	paginationRequest( activePage, search );
+
+}
+
+function searchHandler() {
+
+	clearTimeout(timer);
+
+	if ( this.value.length < 3 || this.value == "" ) {
+		timer = setTimeout(paginationRequest, 800, 1, "");
+	}
+	else {
+		timer = setTimeout(paginationRequest, 800, 1, this.value);
+	}
+
+}
+
+function imageHandler () {
+
+	let modal = $("#gallery-content")[0];
+	let action = modal.dataset.action;
+	let model = modal.dataset.model;
+	let id = modal.dataset.id;
+
+	// console.log(baseUrl);
+	// return
+
+	let image = {
+		'img': {
+			url: `${baseUrl}/${this.dataset.imageSource}`,
+		}
+	}
+
+	if ( action == "description" ) {
+		ArticleEditor('#description').image.insert( image );
+	}
+	else if ( action == "summary" ){
+		$R('#summary',
+			'insertion.insertHtml',
+			`<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+		);
+	}
+	else {
+
+		changeCoverRequest( model, id, this.dataset.imageSource );
+
+	}
+
+	$("#gallery-modal").modal('hide');
+	
+}
+
+function paginationRequest( activePage, search) {
+
+	axios.get( `/media/images`, {
+		params: {
+			page: activePage,
+			search
+		}
+	})
+	.then( (res) => {
+		let gallery = $("#gallery-content")[0]
+		gallery.innerHTML = res.data;
+		
+		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
+		let addBtns = gallery.getElementsByClassName("js-add-image");
+
+		for ( let i = 0; i < addBtns.length; i++ ) {
+			addBtns[i].removeEventListener("click", imageHandler);
+			addBtns[i].addEventListener("click", imageHandler);
+		}
+
+		for (let i = 0; i < pagination.length; i++) {
+			pagination[i].removeEventListener("click", paginationHandler);
+			pagination[i].addEventListener("click", paginationHandler);
+		}
+	})
+}
+
+function changeCoverRequest( namespace, id, url ) {
+
+	axios.patch( "/media/cover/replace", {
+		namespace, id, url
+	})
+		.then( res => {
+			$("#cover-image")[0].src = `${baseUrl}/${url}`;
+			toastAlert("success", "Το Cover άλλαξε!")
+		})
+		.catch( err => {
+			console.log(err);
+			toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		})
+}
+
+//!######################################################
+//!				Media Library Functions End				#
+//!######################################################
+
 export default {
     toastAlert,
     mainCheckboxSwitcher,
@@ -302,6 +419,9 @@ export default {
 	endDate,
 	resetBulk,
 	resetAddButton,
-	createCourseTypeSelect
+	createCourseTypeSelect,
+	paginationHandler,
+	searchHandler,
+	imageHandler
 }
 
