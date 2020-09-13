@@ -226,6 +226,7 @@
                                     </div>
                                     <hr>
                                 </div>
+
                                 @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Cover","dropzone"=>"cover-material-dropzone"] )
                                 <hr>
                                 @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )

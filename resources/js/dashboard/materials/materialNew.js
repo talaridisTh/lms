@@ -405,10 +405,6 @@ const axiosMultipleUpdate = async (courseIds, materialId) => {
 //! DROPOZONE
 //!============================================================
 
-
-
-
-
 let dropzoneCover = new Dropzone("#cover-material-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,
@@ -422,7 +418,7 @@ let dropzoneCover = new Dropzone("#cover-material-dropzone", {
     },
 
 })
-
+console.log('dropzoneCover')
 let dropzoneGalery = new Dropzone("#galery-material-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,

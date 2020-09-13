@@ -206,67 +206,67 @@ class MaterialController extends Controller {
         }
     }
 
-
-    public function coverUpload (Request $request)
+    public function coverUpload(Request $request)
     {
 
-
         $user = Material::findorFail($request->materialId);
-
         $date = date('m.Y');
-        $image=  $request->file;
+
+        $image = $request->file;
+
+
+        $temp = explode(".", $image->getClientOriginalName());
+
+        $name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
+        $nameWithExte =  Str::slug( $name, "-" );
+        $name =  Str::slug( $name, "-" );
+        $name .= ".". $image->getClientOriginalExtension();
 
 
 
 
-
-        if ( $image->isValid() )
+        if ($image->isValid())
         {
-            $name = $image->getClientOriginalName();
-            $media = new Media();
-            $media->name = $name;
-            $media->slug = Str::slug($name . "-" . rand(1, 100), "-");
-            $media->rel_path = "storage/images/$date/" . $image->getClientOriginalName();
+
+            $media = new Media;
+            $media->original_name = $image->getClientOriginalName();
+            $media->name = $nameWithExte;
+            $media->rel_path = "storage/$date/images/". $name;
             $media->ext = $image->getClientOriginalExtension();
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
-            $user->media()->wherePivot("usage",0)->detach();
-            $user->media()->attach($media->id, ["usage" => 0]);
-            $image->storeAs("public/images/$date", $name);
+            $user->media()->wherePivot("usage", 0)->detach();
+            $user->media()->attach( $media->id, [ "usage" => 0 ] );
+
+            $image->storeAs("public/$date/images", $name);
+
+
         }
-
-
     }
-
 
     public function galleryUpload(Request $request)
     {
 
-
         $user = Material::findorFail($request->materialId);
-
         $date = date('m.Y');
-        $image=  $request->file;
-
-
-
-        if ( $image->isValid() )
+        $image = $request->file;
+        $temp = explode(".", $image->getClientOriginalName());
+        $name = Str::slug($temp[0], "-");
+        if ($image->isValid())
         {
-            $name = $image->getClientOriginalName();
-            $media = new Media();
+
+            $media = new Media;
+            $media->original_name = $image->getClientOriginalName();
             $media->name = $name;
-            $media->slug = Str::slug($name . "-" . rand(1, 100), "-");
-            $media->rel_path = "storage/images/$date/" . $image->getClientOriginalName();
+            $media->rel_path = "storage/$date/images/" . $image->getClientOriginalName();
             $media->ext = $image->getClientOriginalExtension();
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
             $user->media()->attach($media->id, ["usage" => 1]);
-            $image->storeAs("public/images/$date", $name);
+            $image->storeAs("public/$date/images", $image->getClientOriginalName());
         }
-
-
     }
 
 }

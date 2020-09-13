@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-body">
 
-        <div id="{{$dropzone}}" class="{{$dropzone}}">
+        <div id="{{$dropzone}}">
             <div class="fallback">
                 {{--                                        <input name="file" type="file" multiple/>--}}
             </div>
@@ -13,9 +13,9 @@
         </div>
 
         <div class="dropzone-previews mt-3" id="file-previews"></div>
-
         @if(isset($model)  )
             @foreach($model->media as $media)
+
 
                 @if($type =="Cover" &&$media->getOriginal('pivot_usage')==0 )
                         <img height="80" width="80" class="{{!$media ? "d-none":"rounded-circle"}} "
