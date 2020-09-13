@@ -178,6 +178,7 @@ Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@upl
 Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadContentImages' );
 
 Route::post( 'media/editors/upload-images', 'Ajax\MediaController@editorImages' );
+Route::patch( 'media/cover/replace', 'Ajax\MediaController@coverChange');
 
 //!======================================================
 //! 			End ajax Routes					|

@@ -144,8 +144,17 @@ class MediaController extends Controller
 				}
 			}
 		}
-
 		echo json_encode($files);
+	}
+
+	public function coverChange(Request $request) {
+
+		$namespace = $request->namespace;
+		$id = $request->id;
+		$model = $namespace::find( $id );
+
+		$model->cover = $request->url;
+		$model->save();
 
 	}
 }

@@ -22,6 +22,7 @@ Element.prototype.appendAfter = function (element) {
 //!				Global Variables			#
 //!##########################################
 
+const baseUrl = window.location.origin;
 var timer = 0;
 
 //!##########################################
@@ -320,24 +321,35 @@ function searchHandler() {
 
 }
 
-function addEditorImageHandler () {
+function imageHandler () {
 
-	let editor = $("#gallery-content")[0].dataset.editor;
+	let modal = $("#gallery-content")[0];
+	let action = modal.dataset.action;
+	let model = modal.dataset.model;
+	let id = modal.dataset.id;
+
+	// console.log(baseUrl);
+	// return
 
 	let image = {
 		'img': {
-			url: this.dataset.imageSource,
+			url: `${baseUrl}/${this.dataset.imageSource}`,
 		}
 	}
 
-	if ( editor == "description" ) {
+	if ( action == "description" ) {
 		ArticleEditor('#description').image.insert( image );
 	}
-	else {
+	else if ( action == "summary" ){
 		$R('#summary',
 			'insertion.insertHtml',
-			`<img src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+			`<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
 		);
+	}
+	else {
+
+		changeCoverRequest( model, id, this.dataset.imageSource );
+
 	}
 
 	$("#gallery-modal").modal('hide');
@@ -360,8 +372,8 @@ function paginationRequest( activePage, search) {
 		let addBtns = gallery.getElementsByClassName("js-add-image");
 
 		for ( let i = 0; i < addBtns.length; i++ ) {
-			addBtns[i].removeEventListener("click", addEditorImageHandler);
-			addBtns[i].addEventListener("click", addEditorImageHandler);
+			addBtns[i].removeEventListener("click", imageHandler);
+			addBtns[i].addEventListener("click", imageHandler);
 		}
 
 		for (let i = 0; i < pagination.length; i++) {
@@ -369,7 +381,21 @@ function paginationRequest( activePage, search) {
 			pagination[i].addEventListener("click", paginationHandler);
 		}
 	})
+}
 
+function changeCoverRequest( namespace, id, url ) {
+
+	axios.patch( "/media/cover/replace", {
+		namespace, id, url
+	})
+		.then( res => {
+			$("#cover-image")[0].src = `${baseUrl}/${url}`;
+			toastAlert("success", "Το Cover άλλαξε!")
+		})
+		.catch( err => {
+			console.log(err);
+			toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		})
 }
 
 //!######################################################
@@ -396,6 +422,6 @@ export default {
 	createCourseTypeSelect,
 	paginationHandler,
 	searchHandler,
-	addEditorImageHandler
+	imageHandler
 }
 

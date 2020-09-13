@@ -13,11 +13,18 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 //! 			EventListerners				#
 //!##########################################
 
+$("#change-cover-btn").on("click", function() {
+
+	$("#gallery-content")[0].dataset.action = "cover";
+
+	$("#gallery-modal").modal('show');
+})
+
 $("#image-search").on("input", utilities.searchHandler);
 
 $(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
 
-$(".js-add-image").on( "click", utilities.addEditorImageHandler);
+$(".js-add-image").on( "click", utilities.imageHandler);
 
 $("#activate-selection").on( 'click', function() {
 	let selection = $(".js-course-material-checkbox:checked");
@@ -1275,7 +1282,7 @@ $R.add('plugin', 'mediaLibrary', {
 		var $button = this.toolbar.addButton("mediaLibrary", buttonData);
 	},
 	toggle: function() {
-		$('#gallery-content')[0].dataset.editor = "summary"
+		$('#gallery-content')[0].dataset.action = "summary"
 		$('#gallery-modal').modal('show')
 	}
 });
@@ -1323,7 +1330,7 @@ ArticleEditor.add('plugin', 'mediaLibrary', {
     },
     modal: function(params, button) {
 		this.app.popup.close();
-		$('#gallery-content')[0].dataset.editor = "description"
+		$('#gallery-content')[0].dataset.action = "description"
         $('#gallery-modal').modal('show')
     }
 });

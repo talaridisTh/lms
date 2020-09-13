@@ -4,7 +4,7 @@
 			<img class="fade-image img-fluid" src="{{ url($image->rel_path) }}" alt="{{ $image->name }}">
 			<i class="js-add-image image-overlay mdi mdi-plus-circle-outline mr-1 h1"
 				data-image-name="{{ $image->name }}"	
-				data-image-source="{{ url($image->rel_path) }}"	
+				data-image-source="{{ $image->rel_path }}"	
 			></i>
 		</div>
 	@empty
