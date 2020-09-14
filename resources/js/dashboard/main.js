@@ -367,7 +367,7 @@ function paginationRequest( activePage, search) {
 	.then( (res) => {
 		let gallery = $("#gallery-content")[0]
 		gallery.innerHTML = res.data;
-        change-cover-btn
+
 		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
 		let addBtns = gallery.getElementsByClassName("js-add-image");
 
