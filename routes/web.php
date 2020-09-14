@@ -193,9 +193,16 @@ Auth::routes();
 //!					Index  Routes					#
 //!######################################################
 
+//home routes
 Route::get('/home', 'Index\HomeController@index')->name('home');
 
-//! User routes
+
+//user-profile routes
+Route::get('/{user}/profile', 'Index\UserController@index')->name('index.profile');
+Route::patch('/{user}/profile/update', 'Index\UserController@update')->name('index.profile.update');
+Route::get('/{user}/profile/announcements', 'Index\UserController@ShowAnnouncements')->name('index.profile.announcements');
+
+//! Course routes
 Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses");
 Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
 
@@ -212,7 +219,6 @@ Route::get('/partner-links', function (Request $request) {
 
 
 //! Material routes link
-//Route::get("/material/{materials}", "Index\MaterialController@globalShow")->name("index.material.global");
 Route::get("/material/{course}/{materials}", "Index\MaterialController@show")->name("index.material.show");
 
 

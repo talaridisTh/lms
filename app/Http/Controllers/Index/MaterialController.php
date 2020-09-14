@@ -29,6 +29,8 @@ class MaterialController extends Controller
 
 
 
+
+
         return view("index.materials.material-index",compact("priority","materials","course","MaterialsOrderByPriority","nextMaterial","prevMaterial"));
     }
 

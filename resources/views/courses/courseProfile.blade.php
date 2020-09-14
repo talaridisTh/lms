@@ -23,18 +23,18 @@
             border-top-left-radius: 15px;
             background: linear-gradient(0deg, #f19a1a, #ffc73c)
         }
-        .material-count{
+
+        .material-count {
             padding: 8px 14px;
             background: #e7e7e7;
             border-radius: 100%;
         }
-        .list-material:hover{
+
+        .list-material:hover {
 
             cursor: pointer;
-            background:#E7E7E7;
+            background: #E7E7E7;
         }
-
-
 
 
     </style>
@@ -44,7 +44,8 @@
     <div class="content-page">
         @role("admin")
         <div class="sticky-top">
-            <a class=" btn btn-outline-secondary nav-link" href="{{route('course.show',$course->slug)}}" role="button" aria-haspopup="true" aria-expanded="false">
+            <a class=" btn btn-outline-secondary nav-link" href="{{route('course.show',$course->slug)}}" role="button"
+               aria-haspopup="true" aria-expanded="false">
                 Edit this page
             </a>
         </div>
@@ -63,7 +64,8 @@
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
                             <p class="my-4">{{$course->subtitle}}</p>
                             <div class="button-course-fav">
-                                <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"  class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
+                                <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
+                                   class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
                                 </a>
                                 <button class="px-4 box-title btn bghover btn-secontary font-weight-bold">add watch
                                 </button>
@@ -80,7 +82,8 @@
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
                                     <button class="bghover border font-weight-bold btn btn-secontary">
-                                        <a href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">Δες το μαθημα</a>
+                                        <a href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">Δες
+                                            το μαθημα</a>
                                     </button>
                                 </div>
                             </div>
@@ -99,7 +102,7 @@
                 </div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" style="max-width: 1400px">
             <div class="row background-material">
                 <div class="col-md-12">
                     <div class="row justify-content-between p-3">
@@ -127,24 +130,61 @@
             </div>
 
         </div>
-        <div class="container my-3">
+        <div class="container my-3" style="max-width: 1350px">
             <div class="row ">
-                <div class="col-md-12 px-5">
+                <div class="col-md-8">
+                    {!! $course->description !!}
+                </div>
+                <div class="col-md-4 ">
+{{--                    <ul>--}}
+{{--                        @foreach($allMaterial as $materials)--}}
+{{--                            <li class="list-group-item list-material border py-4 ">--}}
+{{--                                <a class="d-flex"--}}
+{{--                                   href="{{route('index.material.show',[$course->slug,$materials->slug])}}">--}}
+{{--                                    <div class="col-md-2">--}}
+{{--                                        <span class="material-count">{{++$count}}</span>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col-md-10 d-flex flex-column">--}}
+{{--                                        <span--}}
+{{--                                            class="mb-2 font-18 text-dark font-weight-bold">   {{$materials->title}}</span>--}}
+{{--                                        <span class="mb-2 font-14 text-dark">   {{$materials->subtitle}}</span>--}}
+{{--                                        <span class="mb-2 font-14 text-dark">   {{$materials->type}}</span>--}}
+{{--                                    </div>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
                     <ul>
-                    @foreach($allMaterial as $materials)
-                        <li class="list-group-item list-material border py-4 ">
-                            <a class="d-flex" href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
-                            <div class="col-md-2">
-                                <span class="material-count">{{++$count}}</span>
-                            </div>
-                            <div class="col-md-10 d-flex flex-column">
-                                <span class="mb-2 font-18 text-dark font-weight-bold">   {{$materials->title}}</span>
-                                <span class="mb-2 font-14 text-dark">   {{$materials->subtitle}}</span>
-                                <span class="mb-2 font-14 text-dark">   {{$materials->type}}</span>
-                            </div>
-                            </a>
-                        </li>
-                    @endforeach
+                        @foreach($allMaterial as $key=> $materials)
+                            <li class="list-group-item ">
+                                <div id="accordion">
+                                    <button class="btn btn-link" data-toggle="collapse"
+                                            data-target="#{{$materials->slug}}" aria-expanded=""
+                                            aria-controls="{{$materials->slug}}">
+                                                        <span
+                                                            class="mb-2 font-18 text-dark font-weight-bold">
+                                                            <span class="material-count mr-3">{{++$count}}</span>
+                                                            {{$materials->title}}</span>
+                                    </button>
+                                    <a class="d-flex"
+                                       href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
+                                        <div id="{{$materials->slug}}"
+                                             class="w-100 collapse list-material {{$loop->first? "show":""}} "
+                                             aria-labelledby="{{$materials->slug}}{{$key}}"
+                                             data-parent="#accordion">
+                                            <div class="card-body d-flex flex-column ">
+                                                <span class="mb-2 font-14 text-dark">   {{$materials->subtitle}}</span>
+                                                <span class="mb-2 font-14 text-dark">   {{$materials->type}}</span>
+
+                                            </div>
+                                        </div>
+                                    </a>
+
+                                </div>
+
+
+                            </li>
+                        @endforeach
                     </ul>
 
                 </div>
@@ -152,16 +192,6 @@
 
         </div>
 
-        <div class="container">
-            <div class="row background-material article-div">
-                <div class="col-md-12">
-
-                    {!! $course->description !!}
-                </div>
-
-            </div>
-
-        </div>
     </div>
 
 @endsection

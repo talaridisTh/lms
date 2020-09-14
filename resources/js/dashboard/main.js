@@ -59,7 +59,7 @@ function toastAlertDelete(text,icon="warning"){
 //!============================================================
 const redactorConfig = {
 	buttons: [
-		'html', 'undo', 'redo', 'format', 
+		'html', 'undo', 'redo', 'format',
 		'bold', 'underline', 'italic', 'deleted',
 		'sup', 'sub', 'lists', 'image', 'file', 'link'
 	],
@@ -353,7 +353,7 @@ function imageHandler () {
 	}
 
 	$("#gallery-modal").modal('hide');
-	
+
 }
 
 function paginationRequest( activePage, search) {
@@ -367,7 +367,7 @@ function paginationRequest( activePage, search) {
 	.then( (res) => {
 		let gallery = $("#gallery-content")[0]
 		gallery.innerHTML = res.data;
-		
+        change-cover-btn
 		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
 		let addBtns = gallery.getElementsByClassName("js-add-image");
 
