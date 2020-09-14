@@ -30,7 +30,7 @@ class UserUpdateRequest extends FormRequest {
             'phone' => ['required'],
             'profil' => 'required|min:3|max:1000',
             'password' => ['confirmed'],
-            'avatar' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'cover' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
             'roles' => 'required'
         ];
     }

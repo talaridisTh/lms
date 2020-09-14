@@ -1,3 +1,98 @@
+<!-- Modal -->
+<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-colored-header bg-primary">
+                <h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="nav nav-tabs nav-bordered mb-3">
+                    <li class="nav-item">
+                        <a href="#media-library" id="media-library-tab-btn"
+                           data-toggle="tab" aria-expanded="false"
+                           class="nav-link active"
+                        >
+                            Media Library
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#upload" id="upload-tab-btn"
+                           data-toggle="tab" aria-expanded="true"
+                           class="nav-link"
+                        >
+                            Upload
+                        </a>
+                    </li>
+                </ul> <!-- end nav-->
+
+                <div class="tab-content">
+
+                    <div id="media-library" class="tab-pane show active">
+                        <!-- Search -->
+                        <div class="row">
+                            <div class="mx-auto col-4">
+                                <div class="form-group">
+                                    <input id="image-search" class="form-control text-center" type="text" placeholder="Αναζήτηση..." />
+                                </div>
+                            </div>
+                        </div>
+                        <div id="gallery-content" data-model="App\User" data-id={{ $user->id }}>
+                            @include('components.admin.imageGallery', ['media' => $media])
+                        </div>
+                    </div>
+
+                    <div id="upload" class="tab-pane">
+                        <form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
+                            <div class="fallback">
+                                <input name="file" type="file" multiple />
+                            </div>
+
+                            <div class="dz-message needsclick text-center">
+                                <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                <h3>Drop files here or click to upload.</h3>
+                                <span class="text-muted font-13">(This is just a demo dropzone. Selected files are
+										<strong>not</strong> actually uploaded.)</span>
+                            </div>
+                        </form>
+
+                        <!-- Preview -->
+                        <div class="dropzone-previews mt-3" id="file-previews"></div>
+
+                        <div class="d-none" id="uploadPreviewTemplate">
+                            <div class="card mt-1 mb-0 shadow-none border">
+                                <div class="p-2">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+                                        </div>
+                                        <div class="col pl-0">
+                                            <a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
+                                            <p class="mb-0" data-dz-size></p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <!-- Button -->
+                                            <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+                                                <i class="dripicons-cross"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <form id="buttonUser" class="px-4"
           action="{{ request()->route()->getName() == 'user.create'  ? route('user.store') : route('user.update',$user->slug) }}"
       method="POST"
@@ -128,7 +223,7 @@
                 <h5 class="js-link-passwordShow -4 cursor-pointer custom-link-primary">Eμφάνιση password</h5>
                 <div class="form-group mt-4 passwordShow d-none">
                     <h5>Username: <span class="font-weight-normal">{{$user->email}}</span></h5>
-                    <h5>Password: <span class="font-weight-normal">{{decrypt($user->password_encrypt)}}</span></h5>
+                    <h5>Password: <span class="font-weight-normal">{{\Crypt::decryptString($user->password_encrypt)}}</span></h5>
                 </div>
                 @endisset
 
@@ -167,9 +262,25 @@
                     </div>
 
                     <div class="col-md-12">
+                    @isset($user)
+                        <!-- Cover Preview -->
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Cover</h4>
+
+                                </div>
+                                <div class="card-body">
+                                    <img id="cover-image" src="{{ url($user->cover) }}" class="img-fluid"
+                                         alt="Cover Image">
+
+                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
+
+                                </div> <!-- end card-body -->
+                            </div> <!-- end course info card -->
+                        @endisset
 
 
-              @include("components.dropzone",["model"=>$user,"type"=>"Cover","dropzone"=>"cover-dropzone"] )
+{{--              @include("components.dropzone",["model"=>$user,"type"=>"Cover","dropzone"=>"cover-dropzone"] )--}}
 
                         <hr>
 

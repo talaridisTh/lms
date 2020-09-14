@@ -22,17 +22,17 @@
 
     <div class="left-side-menu left-side-menu-detached">
 
-        @auth
-            <div class="leftbar-user">
-                <a href="{{route('index.profile',Auth::user()->slug)}}">
-                    <img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set5" alt="user-image"
-                         height="42" class="rounded-circle shadow-sm">
-                    <span
-                        class="leftbar-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
-                </a>
-            </div>\
+{{--        @auth--}}
+{{--            <div class="leftbar-user">--}}
+{{--                <a href="{{route('index.profile',Auth::user()->slug)}}">--}}
+{{--                    <img src="https://robohash.org/{{ Auth::user()->first_name }}.png?set=set5" alt="user-image"--}}
+{{--                         height="42" class="rounded-circle shadow-sm">--}}
+{{--                    <span--}}
+{{--                        class="leftbar-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>--}}
+{{--                </a>--}}
+{{--            </div>\--}}
 
-        @endauth
+{{--        @endauth--}}
 
 
     <!--- Sidemenu -->

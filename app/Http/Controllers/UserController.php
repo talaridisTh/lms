@@ -6,6 +6,7 @@ use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Mail\NewUserNotification;
+use App\Media;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -36,12 +37,13 @@ class UserController extends Controller {
     {
 
 
+        $media = Media::where("type", 0)->paginate(18);
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
         $allMaterials = User::findMaterials($user->id);
         $activities = Activity::where("causer_id", $user->id)->get();
 
-        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs", "activities"));
+        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs", "activities","media"));
     }
 
     public function store(Request $request)
@@ -86,7 +88,7 @@ class UserController extends Controller {
     public function update(UserUpdateRequest $request, User $user)
     {
         //
-        $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));
+        $user->update($request->except('roles', 'password', 'cover', 'password_confirmation', "status", "sendMail"));
         $data = collect($request)->except("sendMail")->all();
         $user->syncRoles($request->roles);
 

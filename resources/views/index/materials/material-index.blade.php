@@ -110,7 +110,7 @@
                     <div class="col-md-12  p-2">
                         <div class="row">
                             <div class="col-md-2"><img height="80" width="80" class="rounded-circle"
-                                    src="  {{$course->curator->avatar}}" alt=""></div>
+                                    src="  {{$course->curator->cover}}" alt=""></div>
                             <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
                                 <h4>Πληροφορίες </h4>
                                 <p>{{$course->curator->profil}}

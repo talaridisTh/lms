@@ -361,26 +361,36 @@ $('#material-modal-shown-btn').click(() => {
 
 //! DROPOZONE
 //!============================================================
-Dropzone.autoDiscover = false;
+
+$(".js-add-image").on( "click", utilities.imageHandler);
+$("#change-cover-btn").on("click", function() {
 
 
+    $("#gallery-content")[0].dataset.action = "cover";
 
-
-let dropzone = new Dropzone("#cover-dropzone", {
-    thumbnailWidth: 80,
-    thumbnailHeight: 80,
-    previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: `/users/avatar/upload`,
-    params: {userId},
-    maxFilesize: 2,
-    maxFiles:1,
-    acceptedFiles: 'image/*',
-    headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
-    },
-
+    $("#gallery-modal").modal('show');
 })
-
+//
+// Dropzone.autoDiscover = false;
+//
+//
+//
+//
+// let dropzone = new Dropzone("#cover-dropzone", {
+//     thumbnailWidth: 80,
+//     thumbnailHeight: 80,
+//     previewTemplate: $("#uploadPreviewTemplate").html(),
+//     url: `/users/avatar/upload`,
+//     params: {userId},
+//     maxFilesize: 2,
+//     maxFiles:1,
+//     acceptedFiles: 'image/*',
+//     headers: {
+//         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+//     },
+//
+// })
+//
 
 
 
