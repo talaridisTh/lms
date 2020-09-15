@@ -3672,6 +3672,10 @@ figure.image-center {
   background-color: #404954 !important;
 }
 
+.modal {
+  z-index: 1060 !important;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);

@@ -2,11 +2,15 @@
 //! 				Imports				#
 //!######################################
 import utilities from '../main';
-import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
+import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import 'filepond/dist/filepond.min.css';
+
 //! GLOBAL VARIABLES
-const bundleId = $("#bundle-title")[0].dataset.bundleId
+const bundleId = $("#bundle-title")[0].dataset.bundleId;
+const baseUrl = window.location.origin;
 
 //!##########################################
 //! 			EventListerners				#
@@ -576,10 +580,30 @@ ArticleEditor('#description', {
 	}
 });
 
+let dropzone = document.getElementById("file-pond");
 
-let dropzone = new Dropzone("#cover-dropzone", {
-	previewTemplate: $("#uploadPreviewTemplate").html(),
-	url: "/target-url",
-  	thumbnailWidth: 80,
-  	thumbnailHeight: 80,
-})
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+const pond = FilePond.create( dropzone );
+
+FilePond.setOptions({
+	name: 'file[]',
+	server: {
+		url: baseUrl,
+		process: {
+			url: '/media/upload-images',
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			}
+		},
+	},
+	onprocessfiles: function(){
+		
+		utilities.paginationRequest( 1, "" );
+
+	},
+	allowMultiple: true,
+	allowRemove: true,
+	allowRevert: false,
+	acceptedFileTypes: ['image/png', 'image/jpeg'],
+
+});
