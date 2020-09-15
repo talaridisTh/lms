@@ -1,12 +1,12 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
+const baseUrl = window.location.origin;
 
 //!######################################
 //! 				Imports				#
 //!######################################
 import utilities from '../main';
-import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
 import * as FilePond from 'filepond';
@@ -1397,27 +1397,29 @@ ArticleEditor('#description', {
 	}
 });
 
-let test = document.getElementById("test");
+let dropzone = document.getElementById("file-pond");
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
-const pond = FilePond.create( test );
+const pond = FilePond.create( dropzone );
 
 FilePond.setOptions({
+	name: 'file[]',
 	server: {
-		url: '/media/upload-images',
-		headers: {
-			"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+		url: baseUrl,
+		process: {
+			url: '/media/upload-images',
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			},
+			onload: function(data) {
+				utilities.paginationRequest( 1, "" );
+			}
 		}
+		
 	},
 	allowMultiple: true,
-	// allowFileTypeValidation: true,
+	allowRemove: false,
+	allowRevert: false,
 	acceptedFileTypes: ['image/png', 'image/jpeg'],
-	// fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
-		
-	// 	console.log(resolve);
-	// 	console.log(reject);
-    //     // Do custom type detection here and return with promise
 
-    //     resolve(type);
-    // })
-})
+});

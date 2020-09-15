@@ -55,7 +55,7 @@
 
 					<div class="tab-content">
 
-						<div id="media-library" class="tab-pane show">
+						<div id="media-library" class="tab-pane show active">
 							<!-- Search -->
 							<div class="row">
 								<div class="mx-auto col-4">
@@ -69,62 +69,14 @@
 							</div>
 						</div>
 
-						<div id="upload" class="tab-pane active">
+						<div id="upload" class="tab-pane">
 
-
-
-							<input id="test" type="file"/>
-
-
-
-							{{-- <form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
-								<div class="fallback">
-									<input name="file" type="file" multiple />
-								</div>
-
-								<div class="dz-message needsclick text-center">
-									<i class="h1 text-muted dripicons-cloud-upload"></i>
-									<h3>Drop files here or click to upload.</h3>
-									<span class="text-muted font-13">(This is just a demo dropzone. Selected files are
-										<strong>not</strong> actually uploaded.)</span>
-								</div>
-							</form> --}}
-
-							<!-- Preview -->
-							{{-- <div class="dropzone-previews mt-3" id="file-previews"></div>   --}}
-						
-							{{-- <div class="d-none" id="uploadPreviewTemplate">
-								<div class="card mt-1 mb-0 shadow-none border">
-									<div class="p-2">
-										<div class="row align-items-center">
-											<div class="col-auto">
-												<img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
-											</div>
-											<div class="col pl-0">
-												<a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
-												<p class="mb-0" data-dz-size></p>
-											</div>
-											<div class="col-auto">
-												<!-- Button -->
-												<a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
-													<i class="dripicons-cross"></i>
-												</a>
-												
-											</div>
-										</div>
-														<div class="mt-2 progress">
-															<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
-														</div>
-									</div>
-								</div>
-							</div> --}}
-
+							<input id="file-pond" type="file[]"/>
 							
 						</div>			
 					</div>
 					
 				</div>
-
 
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>

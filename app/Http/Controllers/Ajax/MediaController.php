@@ -101,8 +101,12 @@ class MediaController extends Controller
 	public function editorImages ( Request $request ) {
 
 
+<<<<<<< HEAD
 //		 dd($request->all());
 
+=======
+		// dd($request->all());
+>>>>>>> 9eac7c4dab779e0515e88422f7b50cc98500da9a
 
 		//! model Sended with request	etc. App\Course - App\Bundle
 		//! an telika den xrisimopoih8ei o pivot na afere8i kai apo
