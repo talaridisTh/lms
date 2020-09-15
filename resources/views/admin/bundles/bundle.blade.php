@@ -32,74 +32,76 @@
 						<li class="breadcrumb-item active">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</li>
 					</ol>
 				</div>
-				<h4 id="bundle-title" class="page-title" data-bundle-id="{{ isset($bundle) ? $bundle['id'] : "" }}">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</h4>
+				<h4 id="bundle-title" class="page-title" data-bundle-id="{{ isset($bundle) ? $bundle['id'] : 1 }}">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</h4>
 			</div>
 		</div>
 	</div>     
 	<!-- end page title -->
 
-	<!-- Modal -->
-	<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
-			<div class="modal-content">
-				<div class="modal-header modal-colored-header bg-primary">
-					<h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<ul class="nav nav-tabs nav-bordered mb-3">
-						<li class="nav-item">
-							<a href="#media-library" id="media-library-tab-btn"
-								data-toggle="tab" aria-expanded="false"
-								class="nav-link active"
-							>
-								Media Library
-							</a>
-						</li>
-						<li class="nav-item">
-							<a href="#upload" id="upload-tab-btn"
-								data-toggle="tab" aria-expanded="true"
-								class="nav-link"
-							>
-								Upload
-							</a>
-						</li>
-					</ul> <!-- end nav-->
+	@isset($bundle)
+		<!-- Modal -->
+		<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
+				<div class="modal-content">
+					<div class="modal-header modal-colored-header bg-primary">
+						<h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<ul class="nav nav-tabs nav-bordered mb-3">
+							<li class="nav-item">
+								<a href="#media-library" id="media-library-tab-btn"
+									data-toggle="tab" aria-expanded="false"
+									class="nav-link active"
+								>
+									Media Library
+								</a>
+							</li>
+							<li class="nav-item">
+								<a href="#upload" id="upload-tab-btn"
+									data-toggle="tab" aria-expanded="true"
+									class="nav-link"
+								>
+									Upload
+								</a>
+							</li>
+						</ul> <!-- end nav-->
 
-					<div class="tab-content">
+						<div class="tab-content">
 
-						<div id="media-library" class="tab-pane show active">
-							<!-- Search -->
-							<div class="row">
-								<div class="mx-auto col-4">
-									<div class="form-group">
-										<input id="image-search" class="form-control text-center" type="text" placeholder="Αναζήτηση..." />
+							<div id="media-library" class="tab-pane show active">
+								<!-- Search -->
+								<div class="row">
+									<div class="mx-auto col-4">
+										<div class="form-group">
+											<input id="image-search" class="form-control text-center" type="text" placeholder="Αναζήτηση..." />
+										</div>
 									</div>
 								</div>
+								<div id="gallery-content" data-model="App\Bundle" data-id={{ $bundle->id }}>	
+									@include('components.admin.imageGallery', ['media' => $media])
+								</div>
 							</div>
-							<div id="gallery-content" data-model="App\Bundle" data-id={{ $bundle->id }}>	
-								@include('components.admin.imageGallery', ['media' => $media])
-							</div>
+
+							<div id="upload" class="tab-pane">
+
+
+								<input id="file-pond" type="file[]"/>
+							
+
+							</div>			
 						</div>
 
-						<div id="upload" class="tab-pane">
-
-
-							<input id="file-pond" type="file[]"/>
-						
-
-						</div>			
 					</div>
-
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	@endisset
 
 	<div id="remaining-courses-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="remaining-courses-modalLabel" aria-hidden="true">
 	    <div class="modal-dialog modal-xl">
@@ -226,41 +228,44 @@
 							        </div> <!-- end col -->
 							    </div> <!-- end row -->
 
-								<div class="row">
-							        <div class="col-12">
-							            <div class="form-group">
-							                <label for="summary">Σύνοψη</label>
-											<textarea class="form-control @error('summary') is-invalid @enderror"
-												id="summary" name="summary" rows="4" placeholder="Σύνοψη Bundle..."
-											>{{ old('summary') != "" ? old('summary') 
-												: ( isset($bundle) ? $bundle['summary'] : "" )
-											}}</textarea>
-											@error('summary')
-                            				    <span class="invalid-feedback" role="alert">
-                            				        <strong>{{ $message }}</strong>
-                            				    </span>
-                            				@enderror
-										</div>
-							        </div> <!-- end col -->
-							    </div> <!-- end row -->
+								@isset($bundle)
+									<div class="row">
+							    	    <div class="col-12">
+							    	        <div class="form-group">
+							    	            <label for="summary">Σύνοψη</label>
+												<textarea class="form-control @error('summary') is-invalid @enderror"
+													id="summary" name="summary" rows="4" placeholder="Σύνοψη Bundle..."
+												>{{ old('summary') != "" ? old('summary') 
+													: ( isset($bundle) ? $bundle['summary'] : "" )
+												}}</textarea>
+												@error('summary')
+                            					    <span class="invalid-feedback" role="alert">
+                            					        <strong>{{ $message }}</strong>
+                            					    </span>
+                            					@enderror
+											</div>
+							    	    </div> <!-- end col -->
+							    	</div> <!-- end row -->
 
-							    <div class="row">
-							        <div class="col-12">
-							            <div class="form-group">
-							                <label for="description">Περιγραφή</label>
-											<textarea class="form-control @error('description') is-invalid @enderror"
-												id="description" name="description" rows="4" placeholder="Περιγραφή Bundle..."
-											>{{ old('description') != "" ? old('description')
-												: ( isset($bundle) ? $bundle['description'] : "")
-											}}</textarea>
-											@error('description')
-                            				    <span class="invalid-feedback" role="alert">
-                            				        <strong>{{ $message }}</strong>
-                            				    </span>
-                            				@enderror
-										</div>
-							        </div> <!-- end col -->
-							    </div> <!-- end row -->
+							    	<div class="row">
+							    	    <div class="col-12">
+							    	        <div class="form-group">
+							    	            <label for="description">Περιγραφή</label>
+												<textarea class="form-control @error('description') is-invalid @enderror"
+													id="description" name="description" rows="4" placeholder="Περιγραφή Bundle..."
+												>{{ old('description') != "" ? old('description')
+													: ( isset($bundle) ? $bundle['description'] : "")
+												}}</textarea>
+												@error('description')
+                            					    <span class="invalid-feedback" role="alert">
+                            					        <strong>{{ $message }}</strong>
+                            					    </span>
+                            					@enderror
+											</div>
+							    	    </div> <!-- end col -->
+									</div> <!-- end row -->
+								@endisset
+
 
 							</form>
 
@@ -290,7 +295,7 @@
 							</div>
 
 
-							<table id="{{ isset($bundle) ? 'bundle-courses-list' : '' }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
+							<table id="bundle-courses-list" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">
@@ -385,19 +390,21 @@
 		</div><!-- ./content -->
 	</div><!-- wrapper -->
 
-	<select id="add-course-topic-filter" class="ml-1 select2 form-control">
-		<option value="" selected>Όλα τα Topic</option>
-		@foreach ($topics as $topic)
-			<option value="{{ $topic->title }}">{{ $topic->title }}</option>
-		@endforeach
-	</select>
+	{{-- @isset($bundle) --}}
+		<select id="add-course-topic-filter" class="ml-1 select2 form-control">
+			<option value="" selected>Όλα τα Topic</option>
+			@foreach ($topics as $topic)
+				<option value="{{ $topic->title }}">{{ $topic->title }}</option>
+			@endforeach
+		</select>
 
-	<select id="topic-filter" class="ml-1 select2 form-control">
-		<option value="" selected>Όλα τα Topic</option>
-		@foreach ($topics as $topic)
-			<option value="{{ $topic->title }}">{{ $topic->title }}</option>
-		@endforeach
-	</select>
+		<select id="topic-filter" class="ml-1 select2 form-control">
+			<option value="" selected>Όλα τα Topic</option>
+			@foreach ($topics as $topic)
+				<option value="{{ $topic->title }}">{{ $topic->title }}</option>
+			@endforeach
+		</select>
+	{{-- @endisset --}}
 	
 
 @endsection

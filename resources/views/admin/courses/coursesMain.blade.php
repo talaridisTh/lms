@@ -59,7 +59,7 @@
 
 						<div class="form-group">
 							<label for="clone-title">Τίτλος</label>
-							<input type="text" class="form-control @error('cloneTitle') is-invalid @enderror" id="clone-title" name="cloneTitle" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+							<input type="text" class="form-control @error('cloneTitle') is-invalid @enderror" id="clone-title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
 							@error('cloneTitle')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>

@@ -989,7 +989,7 @@ $("#add-additions-modal").on("show.bs.modal", function(event) {
 	$(this).find("#store-material-priority").val( priority );
 })
 
-$(".js-material").click( function() {
+$(".js-material").on( "click", function() {
 	let id = $("#store-material-id").val();
 	let priority = $("#store-material-priority").val();
 	let rows = $("#course-materials-list > tbody > tr");
@@ -1031,19 +1031,12 @@ function linkForm( type, priority) {
 						<div class="form-group col-6">
 							<label for="new-subtitle">Υπότιτλος</label>
 							<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..."/>
-							<div class="invalid-feedback">
-        						Παρακαλώ εισάγετε υπότιτλο.
-							</div>
 						</div>
-
 					</div>
 					<div class="form-row">
 						<div class="form-group col-6">
 							<label for="link-input">${ type }</label>
 							<input type="text" id="link-input" class="js-empty js-link form-control" placeholder="Εισάγετε link..."/>
-							<div class="invalid-feedback">
-        						Παρακαλώ εισάγετε link.
-							</div>
 						</div>
 						<div class="form-group col-3">
 							<label for="state-select">Κατάσταση</label>
@@ -1070,9 +1063,6 @@ function annoucementForm( priority ) {
 						<div class="form-group col-9">
 							<label for="new-title">Τίτλος</label>
 							<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
-							<div class="invalid-feedback">
-        						Παρακαλώ εισάγετε τίτλο.
-							</div>
 						</div>
 
 						<div class="form-group col-3">
@@ -1083,7 +1073,6 @@ function annoucementForm( priority ) {
 							</select>
 						</div>
 					</div>
-
 						<div class="form-group">
 							<label for="new-announcement">Ανακοίνωση</label>
 							<textarea id="new-announcement" class="js-empty js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."></textarea>
@@ -1141,6 +1130,15 @@ function addContent() {
 	let valid = checkEmpty( container, "js-empty" );
 
 	if ( !valid ) {
+
+
+		Swal.fire(
+			'Προσοχή!',
+			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
+			'info'
+		)
+
+
 		return
 	}
 
@@ -1179,7 +1177,6 @@ function checkEmpty( container, elmClass) {
 	for ( let i = 0; i < elements.length; i++ ) {
 
 		if ( !elements[i].value ) {
-			elements[i].classList.add("is-invalid");
 			valid = false;
 		}
 
@@ -1411,15 +1408,14 @@ FilePond.setOptions({
 			headers: {
 				"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
 			},
+			onload: function(data) {
+				utilities.paginationRequest( 1, "" );
+			}
 		}
-	},
-	onprocessfiles: function(){
 		
-		utilities.paginationRequest( 1, "" );
-
 	},
 	allowMultiple: true,
-	allowRemove: true,
+	allowRemove: false,
 	allowRevert: false,
 	acceptedFileTypes: ['image/png', 'image/jpeg'],
 

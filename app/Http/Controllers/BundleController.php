@@ -71,7 +71,7 @@ class BundleController extends Controller
 			$publish = is_null($bundle->publish_at) ? null : Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
 		}
 		$topics = Topic::all("title");
-		$media = Media::where("type", 0)->paginate(18);
+		$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
 
 		$data = [
 			'bundle' => $bundle,

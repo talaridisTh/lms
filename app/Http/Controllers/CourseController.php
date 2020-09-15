@@ -220,15 +220,16 @@ class CourseController extends Controller
 
 	public function clone(Request $request) {
 
+		// dd($request->all());
 		$request->validate([
-			'cloneTitle' => 'required|unique:courses'
+			'title' => 'required|unique:courses'
 		]);
 
 		$course = Course::find( $request->id );
 		$course->load( "materials", "topics" );
 		$newCourse = $course->replicate();
-		$newCourse->title = $request->cloneTitle;
-		$newCourse->slug = Str::slug($request->cloneTitle, "-");
+		$newCourse->title = $request->title;
+		$newCourse->slug = Str::slug($request->title, "-");
 
 		$newCourse->push();
 
@@ -258,6 +259,6 @@ class CourseController extends Controller
 			}
 		}
 
-		return redirect("/dashboard/courses");
+		return redirect("/dashboard/course/$newCourse->slug");
 	}
 }
