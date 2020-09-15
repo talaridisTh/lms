@@ -1,8 +1,11 @@
 import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
+import * as FilePond from "filepond";
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import 'filepond/dist/filepond.min.css';
 
-    let materialId = $("#material-course-table")[0].dataset.materialId;
-
+let materialId = $("#material-course-table")[0].dataset.materialId;
+const baseUrl = window.location.origin;
 
 //! DATATABLE INIT
 //!============================================================
@@ -440,48 +443,44 @@ $("#change-cover-btn").on("click", function () {
 
 
 
+let dropzone = document.getElementById("file-pond");
 
-let dropzoneGalery = new Dropzone("#cover-dropzone", {
-    thumbnailWidth: 80,
-    thumbnailHeight: 80,
-    previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: `/materials/cover/upload`,
-    params: {materialId},
-    maxFiles:10,
-    acceptedFiles: 'image/*',
-    headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+const pond = FilePond.create( dropzone );
+
+FilePond.setOptions({
+    name: 'file[]',
+    server: {
+        url: baseUrl,
+        process: {
+            url: '/media/upload-images',
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+            },
+            onload: function(data) {
+
+            },
+
+        },
+
     },
-    success: function (file, response) {
+    onprocessfiles: function(data) {
 
-
-        axios.get(`/media/images`, {})
-            .then((res) => {
-                // console.log(res.data)
-                let gallery = $("#gallery-content")[0]
-                gallery.innerHTML = res.data;
-
-
-                let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
-                let addBtns = gallery.getElementsByClassName("js-add-image");
-
-                for ( let i = 0; i < addBtns.length; i++ ) {
-                    addBtns[i].removeEventListener("click", utilities.imageHandler);
-                    addBtns[i].addEventListener("click", utilities.imageHandler);
-                }
-
-            })
-        this.removeAllFiles();
+        utilities.paginationRequest( 1, "" );
         $("#upload-tab-btn").removeClass("active")
         $("#upload").removeClass("active")
         $("#media-library-tab-btn").addClass("active")
         $("#media-library").addClass("show active")
 
-
-
-
     },
 
+    onupdatefiles : function( file){
+        utilities.toastAlert("success", `${file.length} εικόνα ανέβηκαν`)
 
-})
-dropzoneGalery.autoDiscover = false;
+    },
+    allowMultiple: true,
+    allowRemove: false,
+    allowRevert: false,
+    acceptedFileTypes: ['image/png', 'image/jpeg'],
+
+});

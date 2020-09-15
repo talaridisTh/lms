@@ -95,10 +95,10 @@
         <div class="row">
             <div class="col-md-12  col-lg-3 p-4">
                 <div class="row">
-                    <div class="col-md-12 mb-5">
-                        <img height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
-                             alt="">
-                    </div>
+{{--                    <div class="col-md-12 mb-5">--}}
+{{--                        <img height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"--}}
+{{--                             alt="">--}}
+{{--                    </div>--}}
                     <div class="col-md-12 my-5">
                         <h4>Sign In</h4>
                         <p class="text-muted">Enter your email address and password to access account.</p>

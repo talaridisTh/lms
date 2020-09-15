@@ -21,17 +21,17 @@
       data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
 <!-- Topbar Start -->
-<div class="navbar-custom topnav-navbar topnav-navbar-dark">
+<div class="navbar-custom topnav-navbar topnav-navbar-white">
     <div class="container-fluid">
 
         <div class="row">
             <div class="col-3">
                 <a href="{{route('home')}}" class="topnav-logo">
-                		    <span class="topnav-logo-lg">
-                		        <img src="/assets/images/preview-lightbox-logo.png" alt="">
+                		    <span class=" stopnav-logo-lg">
+                		        <img class="m-2" height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="">
                 		    </span>
                     <span class="topnav-logo-sm">
-                		        <img src="/assets/images/preview-lightbox-logo.png" alt="" height="33">
+{{--                		        <img class="m-2" height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="" height="33">--}}
                 		    </span>
                 </a>
             </div>

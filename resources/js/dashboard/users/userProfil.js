@@ -1,13 +1,14 @@
 import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
-import * as FilePond from "filepond";
-import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import 'filepond/dist/filepond.min.css';
 
 //! GLOBAL VAR
 //!============================================================
 const userId = $(".course-materials-list")[0].dataset.id
 const userSlug = $(".course-materials-list")[0].dataset.slug
-
+const baseUrl = window.location.origin;
 
 //! GLOBAL METHOD AND EVENT LISTENER
 //!============================================================
@@ -420,31 +421,54 @@ $("#change-cover-btn").on("click", function () {
 // })
 
 
-
-let test = document.getElementById("test");
+let dropzone = document.getElementById("file-pond");
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
-const pond = FilePond.create( test );
+const pond = FilePond.create( dropzone );
 
 FilePond.setOptions({
-    server: {
-        url: '/users/avatar/upload',
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
-        }
+    name: 'file[]',
+    data:{
+        param: 'test'
     },
+    server: {
+        url: baseUrl,
+        process: {
+            url: '/media/upload-images',
+
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+            },
+            onload: function(data) {
+
+            },
+
+
+        },
+
+    },
+    onprocessfiles: function(data) {
+
+        utilities.paginationRequest( 1, "" );
+        $("#upload-tab-btn").removeClass("active")
+        $("#upload").removeClass("active")
+        $("#media-library-tab-btn").addClass("active")
+        $("#media-library").addClass("show active")
+
+    },
+
+    onupdatefiles : function( file){
+        utilities.toastAlert("success", `${file.length} εικόνα ανέβηκαν`)
+
+    },
+
+
+
     allowMultiple: true,
-    // allowFileTypeValidation: true,
+    allowRemove: false,
+    allowRevert: false,
     acceptedFileTypes: ['image/png', 'image/jpeg'],
-    // fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
 
-    // 	console.log(resolve);
-    // 	console.log(reject);
-    //     // Do custom type detection here and return with promise
-
-    //     resolve(type);
-    // })
-})
-
+});
 
 

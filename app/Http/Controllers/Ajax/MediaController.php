@@ -102,7 +102,7 @@ class MediaController extends Controller
 
 
 
-//    	 dd($request->all());
+    	 dd($request->all());
 
 
 		//! model Sended with request	etc. App\Course - App\Bundle
@@ -115,6 +115,7 @@ class MediaController extends Controller
 		$allowedTypes = ["image/png", "image/jpeg"];
 		$date = date('m.Y');
 		$files = [];
+
 
 		foreach ( $request->file as $key => $image ) {
 			if ( $image->isValid() ) {
