@@ -27,8 +27,8 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         {data: "status", name: "status", className: "text-left",orderable: false,},
         {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
         {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
-        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left"},
-        {data: "courses", name: "courses", className: "js-link cursor-pointer text-left",orderable: false},
+        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left",visible: false},
+        {data: "courses", name: "courses", className: "js-link cursor-pointer text-left",orderable: false,visible:false},
         {data: "id", name: "id",visible: false},
     ],
     language: {

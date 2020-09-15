@@ -6,6 +6,7 @@ use App\Course;
 use App\Http\Requests\CreateMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Material;
+use App\Media;
 use App\Topic;
 use Carbon\Carbon;
 use DateTime;
@@ -66,12 +67,13 @@ class MaterialController extends Controller {
     public function show(Material $material)
     {
 
+        $media = Media::where("type", 0)->paginate(18);
         $topics = Topic::all();
         $instructors = User::getInstructor();
         $courses = Course::with("materials")->get();
         $types = Material::all()->unique('type');
 
-        return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "material", "types"));
+        return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "material", "types","media"));
     }
 
     public function update(Request $request, Material $material)

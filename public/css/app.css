@@ -3441,6 +3441,7 @@ select.is-invalid {
 }
 
 .sticky {
+  background-color: #343a40;
   position: -webkit-sticky;
   position: sticky;
   top: 70px;
@@ -3449,6 +3450,10 @@ select.is-invalid {
 
 .box-material {
   background: linear-gradient(0deg, #f19a1a, #ffc73c);
+}
+
+.borderBlue {
+  border: solid 4px blue;
 }
 
 .now-play {

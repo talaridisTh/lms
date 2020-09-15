@@ -323,6 +323,7 @@ function searchHandler() {
 
 function imageHandler () {
 
+
 	let modal = $("#gallery-content")[0];
 	let action = modal.dataset.action;
 	let model = modal.dataset.model;
@@ -367,7 +368,6 @@ function paginationRequest( activePage, search) {
 	.then( (res) => {
 		let gallery = $("#gallery-content")[0]
 		gallery.innerHTML = res.data;
-        change-cover-btn
 		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
 		let addBtns = gallery.getElementsByClassName("js-add-image");
 

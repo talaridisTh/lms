@@ -137,6 +137,7 @@ class UserController {
     {
 
 
+
         $user = User::findorFail($request->userId);
 
         $date = date('m.Y');
@@ -146,19 +147,25 @@ class UserController {
 
         if ( $image->isValid() )
         {
-            $name = $image->getClientOriginalName();
-            $media = new Media();
+            $temp = explode(".", $image->getClientOriginalName());
+
+            $name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
+            $name =  Str::slug( $name, "-" );
+            $name .= ".". $image->getClientOriginalExtension();
+
+            $media = new Media;
+            $media->original_name = $image->getClientOriginalName();
             $media->name = $name;
-            $media->slug = Str::slug($name . "-" . rand(1, 100), "-");
-            $media->rel_path = "storage/images/$date/" . $image->getClientOriginalName();
+            $media->rel_path = "storage/$date/images/". $name;
             $media->ext = $image->getClientOriginalExtension();
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
-            $user->media()->detach();
-            $user->media()->attach($media->id, ["usage" => 0]);
-            $image->storeAs("public/images/$date", $name);
+
+            $image->storeAs("public/$date/images", $name);
         }
+
+        return response()->json($request->file);
 
 
     }

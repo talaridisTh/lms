@@ -6,6 +6,103 @@
 @endsection
 
 @section('content')
+    <div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs nav-bordered mb-3">
+                        <li class="nav-item">
+                            <a href="#media-library" id="media-library-tab-btn"
+                               data-toggle="tab" aria-expanded="false"
+                               class="nav-link active"
+                            >
+                                Media Library
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#upload" id="upload-tab-btn"
+                               data-toggle="tab" aria-expanded="true"
+                               class="nav-link"
+                            >
+                                Upload
+                            </a>
+                        </li>
+                    </ul> <!-- end nav-->
+
+                    <div class="tab-content">
+
+                        <div id="media-library" class="tab-pane show active">
+                            <!-- Search -->
+                            <div class="row">
+                                <div class="mx-auto col-4">
+                                    <div class="form-group">
+                                        <input id="image-search" class="form-control text-center" type="text" placeholder="Αναζήτηση..." />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="gallery-content" data-model="App\Material" data-id={{ $material->id }}>
+                                @include('components.admin.imageGallery', ['media' => $media])
+                            </div>
+                 
+                        </div>
+
+                        <div id="upload" class="tab-pane">
+                            <form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
+                                <div class="fallback">
+                                    <input name="file" type="file" multiple />
+                                </div>
+
+                                <div class="dz-message needsclick text-center">
+                                    <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                    <h3>Drop files here or click to upload.</h3>
+                                    <span class="text-muted font-13">(This is just a demo dropzone. Selected files are
+										<strong>not</strong> actually uploaded.)</span>
+                                </div>
+                            </form>
+
+                            <!-- Preview -->
+                            <div class="dropzone-previews mt-3" id="file-previews"></div>
+
+                            <div class="d-none" id="uploadPreviewTemplate">
+                                <div class="card mt-1 mb-0 shadow-none border">
+                                    <div class="p-2">
+                                        <div class="row align-items-center">
+                                            <div class="col-auto">
+                                                <img data-dz-thumbnail src="#" class="avatar-sm rounded bg-light" alt="">
+                                            </div>
+                                            <div class="col pl-0">
+                                                <a href="javascript:void(0);" class="text-muted font-weight-bold" data-dz-name></a>
+                                                <p class="mb-0" data-dz-size></p>
+                                            </div>
+                                            <div class="col-auto">
+                                                <!-- Button -->
+                                                <a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
+                                                    <i class="dripicons-cross"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <x-alertMsg :msg="'create'"></x-alertMsg>
     <x-alertMsg :msg="'update'"></x-alertMsg>
     <section class="container-fruid position-relative">
@@ -54,15 +151,17 @@
 
                 <div class="tab-content ">
                     <div class="tab-pane show active" id="content">
-                        <div class="col-md-4 offset-md-8 sticky pb-3 px-2  text-center mr-5">
+                        <div class="col-md-3 offset-md-9 sticky  py-3 px-2 pl-3    mr-5">
                             <button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
                                     form="material-create"
                                     class="btn btn-primary ">
                                 {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
                             </button>
-                            {{--                    <button id="preview-btn" class="under-development btn btn-warning"><i--}}
-                            {{--                            class="mdi mdi-eye"></i>--}}
-                            {{--                    </button>--}}
+                            <button id="preview-btn" class="under-development btn btn-warning"><i
+                                    class="mdi mdi-eye"></i>
+                            </button>
+                            <button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+
                         </div>
                         <form id="material-create" method="post"
                               @if(isset($material))
@@ -217,7 +316,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-
                                     <div class=" form-group ">
                                         <p class="font-weight-bold">Creator</p>
                                         <input type="text" class="form-control" id="creatorMaterialHidden" disabled
@@ -227,9 +325,25 @@
                                     <hr>
                                 </div>
 
-                                @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Cover","dropzone"=>"cover-material-dropzone"] )
+                            @isset($material)
+                                <!-- Cover Preview -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title mb-0">Cover</h4>
+
+                                        </div>
+                                        <div class="card-body">
+                                            <img id="cover-image" src="{{ url($material->cover) }}" class="img-fluid"
+
+                                                 alt="Cover Image">
+
+                                            <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
+
+                                        </div> <!-- end card-body -->
+                                    </div> <!-- end course info card -->
+                                @endisset
                                 <hr>
-                                @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )
+{{--                                @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )--}}
                                 <div class="border-material">
                                     <h3>Tags</h3>
                                 </div>

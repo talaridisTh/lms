@@ -39,9 +39,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="gallery-content" data-model="App\User" data-id={{ $user->id }}>
+
+                        <div id="gallery-content" data-model="App\User" data-id={{ isset($user)? $user->id:"" }}>
                             @include('components.admin.imageGallery', ['media' => $media])
                         </div>
+
                     </div>
 
                     <div id="upload" class="tab-pane">
@@ -231,9 +233,17 @@
             </div>
         </div>
         <div class="col-md-4">
-            <div class="sticky" style=" margin-top: -32px;">
-                <button class="buton-create-material btn btn-sm btn-primary mr-2"
-                        type="submit"> {{isset($user)? "Ενημέρωση":"Δημιουργια"}}</button>
+            <div class="col-md-12 sticky  py-3 px-2 pl-3    mr-5" style="margin-top: -85px;">
+                <button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
+                        form="material-create"
+                        class="btn btn-primary ">
+                    {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
+                </button>
+                <a href="{{route('index.profile',$user->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
+                        class="mdi mdi-eye"></i>
+                </a>
+                <button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+
             </div>
             <div class="col-md-12 border-material d-d">
                 <h4>Προσωπικές πληροφορίες</h4>
@@ -262,15 +272,16 @@
                     </div>
 
                     <div class="col-md-12">
-                    @isset($user)
+
                         <!-- Cover Preview -->
+                        @isset($user)
                             <div class="card">
                                 <div class="card-header">
                                     <h4 class="card-title mb-0">Cover</h4>
 
                                 </div>
                                 <div class="card-body">
-                                    <img id="cover-image" src="{{ url($user->cover) }}" class="img-fluid"
+                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" class="img-fluid"
                                          alt="Cover Image">
 
                                     <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
@@ -355,3 +366,4 @@
     </div>
 
 </form>
+

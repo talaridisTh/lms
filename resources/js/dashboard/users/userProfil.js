@@ -362,35 +362,60 @@ $('#material-modal-shown-btn').click(() => {
 //! DROPOZONE
 //!============================================================
 
-$(".js-add-image").on( "click", utilities.imageHandler);
-$("#change-cover-btn").on("click", function() {
+$(".js-add-image").on("click", utilities.imageHandler);
 
+$("#change-cover-btn").on("click", function () {
 
     $("#gallery-content")[0].dataset.action = "cover";
 
     $("#gallery-modal").modal('show');
 })
-//
-// Dropzone.autoDiscover = false;
-//
-//
-//
-//
-// let dropzone = new Dropzone("#cover-dropzone", {
-//     thumbnailWidth: 80,
-//     thumbnailHeight: 80,
-//     previewTemplate: $("#uploadPreviewTemplate").html(),
-//     url: `/users/avatar/upload`,
-//     params: {userId},
-//     maxFilesize: 2,
-//     maxFiles:1,
-//     acceptedFiles: 'image/*',
-//     headers: {
-//         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
-//     },
-//
-// })
-//
+
+Dropzone.autoDiscover = false;
+
+let dropzone = new Dropzone("#cover-dropzone", {
+    thumbnailWidth: 80,
+    thumbnailHeight: 80,
+    previewTemplate: $("#uploadPreviewTemplate").html(),
+    url: `/users/avatar/upload`,
+    params: {userId},
+    maxFilesize: 2,
+    maxFiles: 1,
+    acceptedFiles: 'image/*',
+    headers: {
+        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+    },
+    success: function (file, response) {
+        console.log(file)
+        axios.get(`/media/images`, {})
+            .then((res) => {
+                // console.log(res.data)
+                let gallery = $("#gallery-content")[0]
+                gallery.innerHTML = res.data;
+
+
+                let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
+                let addBtns = gallery.getElementsByClassName("js-add-image");
+
+                for ( let i = 0; i < addBtns.length; i++ ) {
+                    addBtns[i].removeEventListener("click", utilities.imageHandler);
+                    addBtns[i].addEventListener("click", utilities.imageHandler);
+                }
+
+            })
+        this.removeAllFiles();
+        $("#upload-tab-btn").removeClass("active")
+        $("#upload").removeClass("active")
+        $("#media-library-tab-btn").addClass("active")
+        $("#media-library").addClass("show active")
+
+
+
+
+
+    }
+
+})
 
 
 

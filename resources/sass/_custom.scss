@@ -317,6 +317,7 @@ select.is-invalid {
 
 
 .sticky {
+    background-color: #343a40;
     position: sticky;
     top: 70px;
     z-index: 999;
@@ -327,6 +328,9 @@ select.is-invalid {
     background: linear-gradient(0deg, #f19a1a, #ffc73c)
 }
 
+.borderBlue {
+    border: solid 4px blue;
+}
 
 .now-play {
     color: #F29D1C;

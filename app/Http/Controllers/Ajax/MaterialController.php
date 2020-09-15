@@ -251,22 +251,23 @@ class MaterialController extends Controller {
         $user = Material::findorFail($request->materialId);
         $date = date('m.Y');
         $image = $request->file;
-        $temp = explode(".", $image->getClientOriginalName());
-        $name = Str::slug($temp[0], "-");
-        if ($image->isValid())
-        {
 
-            $media = new Media;
-            $media->original_name = $image->getClientOriginalName();
-            $media->name = $name;
-            $media->rel_path = "storage/$date/images/" . $image->getClientOriginalName();
-            $media->ext = $image->getClientOriginalExtension();
-            $media->file_info = $image->getClientMimeType();
-            $media->size = $image->getSize();
-            $media->save();
-            $user->media()->attach($media->id, ["usage" => 1]);
-            $image->storeAs("public/$date/images", $image->getClientOriginalName());
-        }
+        $temp = explode(".", $image->getClientOriginalName());
+
+        $name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
+        $name =  Str::slug( $name, "-" );
+        $name .= ".". $image->getClientOriginalExtension();
+
+        $media = new Media;
+        $media->original_name = $image->getClientOriginalName();
+        $media->name = $name;
+        $media->rel_path = "storage/$date/images/". $name;
+        $media->ext = $image->getClientOriginalExtension();
+        $media->file_info = $image->getClientMimeType();
+        $media->size = $image->getSize();
+        $media->save();
+
+        $image->storeAs("public/$date/images", $name);
     }
 
 }

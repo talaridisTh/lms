@@ -55,7 +55,7 @@ class CoursesInsideUsersDataTable extends DataTable
 			->rawColumns(['action', 'status',"title"])
 			->setRowAttr([ 'data-course-id' => function($data) {
 
-				return  $data->id;
+				return  $data->slug;
 
 			}]);
     }

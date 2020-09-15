@@ -3,6 +3,7 @@
 use App\Course;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder {
             'cover' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
             'slug' => "admin",
             'password' => Hash::make('password'),
+            "password_encrypt"=>Crypt::encryptString('password'),
             'status' => 1,
             'remember_token' => Str::random(10),
 		])->assignRole("admin");
@@ -38,6 +40,7 @@ class UserSeeder extends Seeder {
             "profil"=>"Idrogios profil",
             'slug' => "Idrogios",
             'password' => Hash::make('password'),
+            "password_encrypt"=>Crypt::encryptString('password'),
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("instructor");
@@ -50,6 +53,7 @@ class UserSeeder extends Seeder {
             'cover' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
             'slug' => "instructor",
             'password' => Hash::make('password'),
+            "password_encrypt"=>Crypt::encryptString('password'),
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("instructor");
@@ -62,6 +66,7 @@ class UserSeeder extends Seeder {
             'cover' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
             'slug' => "partner profil",
             'password' => Hash::make('password'),
+            "password_encrypt"=>Crypt::encryptString('password'),
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("partner");
@@ -75,6 +80,7 @@ class UserSeeder extends Seeder {
             'cover' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
             'slug' => "student",
             'password' => Hash::make('password'),
+            "password_encrypt"=>Crypt::encryptString('password'),
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("student");
@@ -87,6 +93,7 @@ class UserSeeder extends Seeder {
             'cover' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
             'slug' => "trial-user",
             'password' => Hash::make('password'),
+            "password_encrypt"=>Crypt::encryptString('password'),
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("trial user");

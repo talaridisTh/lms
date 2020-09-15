@@ -27,10 +27,10 @@ class UserController extends Controller {
 
     public function create()
     {
-
+        $media = Media::where("type", 0)->paginate(18);
         $userCourses = [];
 
-        return view('admin.users.userProfile', compact("userCourses"));
+        return view('admin.users.userProfile', compact("userCourses","media"));
     }
 
     public function show(User $user)
