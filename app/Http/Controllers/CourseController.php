@@ -100,7 +100,7 @@ class CourseController extends Controller
 		
 		$topics = Topic::all();
 		$instructors = Role::find( 2 )->users;
-		$media = Media::where("type", 0)->paginate(18);
+		$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
 		
 		if ( is_null($course) ) {
 			$publish = "";

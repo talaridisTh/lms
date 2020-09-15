@@ -23,10 +23,11 @@ class MediaController extends Controller
 		if ( $request->search ) {
 			$media = Media::where("type", 0)
 				->where("name", "like", "%$request->search%")
+				->orderBy("id", "desc")
 				->paginate(18);
 		}
 		else {
-			$media = Media::where("type", 0)->paginate(18);
+			$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
 		}
 
 		return View('components.admin.imageGallery', ['media' => $media]);
@@ -102,6 +103,7 @@ class MediaController extends Controller
 
 	public function editorImages ( Request $request ) {
 
+		// dd();
 		//! model Sended with request	etc. App\Course - App\Bundle
 		//! an telika den xrisimopoih8ei o pivot na afere8i kai apo
 		//! ta js arxeia
@@ -113,31 +115,40 @@ class MediaController extends Controller
 		$date = date('Y.m');
 		$files = [];
 
-
 		foreach ( $request->file as $key => $image ) {
 			if ( $image->isValid() ) {
 				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
 					if ( $image->getSize() <= 512000 ) {
 
 						$temp = explode(".", $image->getClientOriginalName());
+						$arrayName = (array_diff( $temp, [$image->getClientOriginalExtension()] ));
+						$originalName = implode( ".", $arrayName );
+						$name =  Str::slug( implode("-", $arrayName ), "-" );
+						
+						$count = Media::where( "original_name", $originalName)->count();
 
-						$name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
-						$name =  Str::slug( $name, "-" );
-						$name .= ".". $image->getClientOriginalExtension();
+						if ( $count > 0 ) {
+							$fullname = $name.( $count + 1 ).".".$image->getClientOriginalExtension();
+						}
+						else {
+							$fullname = "$name.".$image->getClientOriginalExtension();
+						}
 
 						$media = new Media;
-						$media->original_name = $image->getClientOriginalName();
+						$media->original_name = $originalName;
 						$media->name = $name;
-						$media->rel_path = "storage/images/$date/$name";
-						$media->thumbnail_path = "storage/thumbnails/$date/$name";
+						$media->rel_path = "storage/images/$date/$fullname";
+						$media->thumbnail_path = "storage/thumbnails/$date/$fullname";
 						$media->ext = $image->getClientOriginalExtension();
 						$media->file_info = $image->getClientMimeType();
 						$media->size = $image->getSize();
+						$media->width = Image::make( $image )->width();
+						$media->height = Image::make( $image )->height();
 						$media->save();
 
-						// $model->media()->attach( $media->id, [ "usage" => 1 ] );
+						// // $model->media()->attach( $media->id, [ "usage" => 1 ] );
 						
-						$image->storeAs("public/images/$date", $name);
+						$image->storeAs("public/images/$date", $fullname);
 
 						if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
 							Storage::disk("local")->makeDirectory("public/thumbnails/$date");
@@ -145,13 +156,12 @@ class MediaController extends Controller
 						}
 						
 						Image::make( $image )->fit( 215, 215)
-							->save( storage_path("/app/public/thumbnails/$date/$name") );
+							->save( storage_path("/app/public/thumbnails/$date/$fullname") );
 
-						$files["file-". $key] =[
+						$files["file-". $key] = [
 							"url" => url("storage/$date/images/$name"),
-							"id" => $name
+							"id" => $media->id
 						];
-
 					}
 				}
 			}
