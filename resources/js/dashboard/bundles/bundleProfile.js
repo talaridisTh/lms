@@ -490,7 +490,7 @@ $R("#summary", {
         "center": "image-center text-center"
 	},
 	imageFloatMargin: '20px',
-	imageUpload: "/media/editors/upload-images",
+	imageUpload: "/media/upload-images",
 	// imageData: {
 	// 	id: bundleId,
 	// 	namespace: "App\\Bundle"
@@ -567,7 +567,7 @@ ArticleEditor('#description', {
 		minHeight: "300px"
 	},
 	image: {
-		upload: "/media/editors/upload-images",
+		upload: "/media/upload-images",
 		data: {
 			"_token": $('meta[name="csrf-token"]').attr('content'),
 			// "id": bundleId,

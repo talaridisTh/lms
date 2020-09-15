@@ -100,6 +100,9 @@ class MediaController extends Controller
 	
 	public function editorImages ( Request $request ) {
 
+
+		// dd($request);
+
 		//! model Sended with request	etc. App\Course - App\Bundle
 		//! an telika den xrisimopoih8ei o pivot na afere8i kai apo
 		//! ta js arxeia

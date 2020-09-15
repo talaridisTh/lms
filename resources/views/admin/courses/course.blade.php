@@ -2,6 +2,7 @@
 
 @section('css')
 <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
 
 <style>
 	.content-page {
@@ -54,7 +55,7 @@
 
 					<div class="tab-content">
 
-						<div id="media-library" class="tab-pane show active">
+						<div id="media-library" class="tab-pane show">
 							<!-- Search -->
 							<div class="row">
 								<div class="mx-auto col-4">
@@ -68,8 +69,15 @@
 							</div>
 						</div>
 
-						<div id="upload" class="tab-pane">
-							<form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
+						<div id="upload" class="tab-pane active">
+
+
+
+							<input id="test" type="file"/>
+
+
+
+							{{-- <form id="cover-dropzone" action="/" method="post" class="image-dropzone" enctype="multipart/form-data">
 								<div class="fallback">
 									<input name="file" type="file" multiple />
 								</div>
@@ -80,12 +88,12 @@
 									<span class="text-muted font-13">(This is just a demo dropzone. Selected files are
 										<strong>not</strong> actually uploaded.)</span>
 								</div>
-							</form>
+							</form> --}}
 
 							<!-- Preview -->
-							<div class="dropzone-previews mt-3" id="file-previews"></div>  
+							{{-- <div class="dropzone-previews mt-3" id="file-previews"></div>   --}}
 						
-							<div class="d-none" id="uploadPreviewTemplate">
+							{{-- <div class="d-none" id="uploadPreviewTemplate">
 								<div class="card mt-1 mb-0 shadow-none border">
 									<div class="p-2">
 										<div class="row align-items-center">
@@ -101,11 +109,17 @@
 												<a href="" class="btn btn-link btn-lg text-muted" data-dz-remove>
 													<i class="dripicons-cross"></i>
 												</a>
+												
 											</div>
 										</div>
+														<div class="mt-2 progress">
+															<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+														</div>
 									</div>
 								</div>
-							</div>
+							</div> --}}
+
+							
 						</div>			
 					</div>
 					
@@ -653,7 +667,6 @@
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
-
 
 <script src="{{ mix('js/dashboard/courses/courseProfile.js') }}"></script>
 

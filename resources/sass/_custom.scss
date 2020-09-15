@@ -560,3 +560,14 @@ figure.image-center {
 .css-img-cnt:hover .image-overlay {
 	opacity: 1;
 }
+
+.filepond--drop-label {
+    color: white !important;
+	background-color: #404954;
+	border-radius: 0.5rem;
+}
+
+.filepond--panel-root {
+	background-color: #404954 !important;
+
+}
