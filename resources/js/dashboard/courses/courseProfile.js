@@ -1411,14 +1411,15 @@ FilePond.setOptions({
 			headers: {
 				"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
 			},
-			onload: function(data) {
-				utilities.paginationRequest( 1, "" );
-			}
 		}
+	},
+	onprocessfiles: function(){
 		
+		utilities.paginationRequest( 1, "" );
+
 	},
 	allowMultiple: true,
-	allowRemove: false,
+	allowRemove: true,
 	allowRevert: false,
 	acceptedFileTypes: ['image/png', 'image/jpeg'],
 
