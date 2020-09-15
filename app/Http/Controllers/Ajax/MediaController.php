@@ -29,8 +29,8 @@ class MediaController extends Controller
 
 		return View('components.admin.imageGallery', ['media' => $media]);
 	}
-	
-	
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -97,11 +97,12 @@ class MediaController extends Controller
     {
         //
 	}
-	
+
 	public function editorImages ( Request $request ) {
 
 
-		// dd($request);
+//		 dd($request->all());
+
 
 		//! model Sended with request	etc. App\Course - App\Bundle
 		//! an telika den xrisimopoih8ei o pivot na afere8i kai apo
@@ -137,7 +138,7 @@ class MediaController extends Controller
 						// $model->media()->attach( $media->id, [ "usage" => 1 ] );
 
 						$image->storeAs("public/$date/images", $name);
-						
+
 						$files["file-". $key] =[
 							"url" => url("storage/$date/images/$name"),
 							"id" => $name

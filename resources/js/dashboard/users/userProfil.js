@@ -1,5 +1,7 @@
 import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
+import * as FilePond from "filepond";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 
 //! GLOBAL VAR
 //!============================================================
@@ -371,50 +373,77 @@ $("#change-cover-btn").on("click", function () {
     $("#gallery-modal").modal('show');
 })
 
-Dropzone.autoDiscover = false;
+// Dropzone.autoDiscover = false;
+//
+// let dropzone = new Dropzone("#cover-dropzone", {
+//     thumbnailWidth: 80,
+//     thumbnailHeight: 80,
+//     previewTemplate: $("#uploadPreviewTemplate").html(),
+//     url: `/users/avatar/upload`,
+//     params: {userId},
+//     maxFilesize: 2,
+//     maxFiles: 1,
+//     acceptedFiles: 'image/*',
+//     headers: {
+//         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+//     },
+//     success: function (file, response) {
+//         console.log(file)
+//         axios.get(`/media/images`, {})
+//             .then((res) => {
+//                 // console.log(res.data)
+//                 let gallery = $("#gallery-content")[0]
+//                 gallery.innerHTML = res.data;
+//
+//
+//                 let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
+//                 let addBtns = gallery.getElementsByClassName("js-add-image");
+//
+//                 for ( let i = 0; i < addBtns.length; i++ ) {
+//                     addBtns[i].removeEventListener("click", utilities.imageHandler);
+//                     addBtns[i].addEventListener("click", utilities.imageHandler);
+//                 }
+//
+//             })
+//         this.removeAllFiles();
+//         $("#upload-tab-btn").removeClass("active")
+//         $("#upload").removeClass("active")
+//         $("#media-library-tab-btn").addClass("active")
+//         $("#media-library").addClass("show active")
+//
+//
+//
+//
+//
+//     }
+//
+// })
 
-let dropzone = new Dropzone("#cover-dropzone", {
-    thumbnailWidth: 80,
-    thumbnailHeight: 80,
-    previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: `/users/avatar/upload`,
-    params: {userId},
-    maxFilesize: 2,
-    maxFiles: 1,
-    acceptedFiles: 'image/*',
-    headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+
+
+let test = document.getElementById("test");
+
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+const pond = FilePond.create( test );
+
+FilePond.setOptions({
+    server: {
+        url: '/users/avatar/upload',
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+        }
     },
-    success: function (file, response) {
-        console.log(file)
-        axios.get(`/media/images`, {})
-            .then((res) => {
-                // console.log(res.data)
-                let gallery = $("#gallery-content")[0]
-                gallery.innerHTML = res.data;
+    allowMultiple: true,
+    // allowFileTypeValidation: true,
+    acceptedFileTypes: ['image/png', 'image/jpeg'],
+    // fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
 
+    // 	console.log(resolve);
+    // 	console.log(reject);
+    //     // Do custom type detection here and return with promise
 
-                let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
-                let addBtns = gallery.getElementsByClassName("js-add-image");
-
-                for ( let i = 0; i < addBtns.length; i++ ) {
-                    addBtns[i].removeEventListener("click", utilities.imageHandler);
-                    addBtns[i].addEventListener("click", utilities.imageHandler);
-                }
-
-            })
-        this.removeAllFiles();
-        $("#upload-tab-btn").removeClass("active")
-        $("#upload").removeClass("active")
-        $("#media-library-tab-btn").addClass("active")
-        $("#media-library").addClass("show active")
-
-
-
-
-
-    }
-
+    //     resolve(type);
+    // })
 })
 
 
