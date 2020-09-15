@@ -429,6 +429,7 @@ export default {
 	createCourseTypeSelect,
 	paginationHandler,
 	searchHandler,
-	imageHandler
+	imageHandler,
+	paginationRequest
 }
 
