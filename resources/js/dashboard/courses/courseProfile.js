@@ -10,6 +10,7 @@ import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
 import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
 
@@ -1396,5 +1397,27 @@ ArticleEditor('#description', {
 	}
 });
 
-const test = document.getElementById("test");
+let test = document.getElementById("test");
+
+FilePond.registerPlugin(FilePondPluginFileValidateType);
 const pond = FilePond.create( test );
+
+FilePond.setOptions({
+	server: {
+		url: '/media/upload-images',
+		headers: {
+			"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+		}
+	},
+	allowMultiple: true,
+	// allowFileTypeValidation: true,
+	acceptedFileTypes: ['image/png', 'image/jpeg'],
+	// fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
+		
+	// 	console.log(resolve);
+	// 	console.log(reject);
+    //     // Do custom type detection here and return with promise
+
+    //     resolve(type);
+    // })
+})
