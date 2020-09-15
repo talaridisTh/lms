@@ -9,6 +9,11 @@ import utilities from '../main';
 import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 
+import * as FilePond from 'filepond';
+import 'filepond/dist/filepond.min.css';
+
+
+
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
@@ -94,7 +99,7 @@ $(".tab-link").on("show.bs.tab", function(event) {
 		);
 })
 
-$("#course-delete-btn").click( function() {
+$("#courseDelete-btn").on( "click", function() {
 	Swal.fire({
 		title: 'Είστε σίγουρος;',
 		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
@@ -1304,7 +1309,7 @@ $R("#summary", {
         "center": "image-center text-center"
 	},
 	imageFloatMargin: '20px',
-	imageUpload: "/media/editors/upload-images",
+	imageUpload: "/media/upload-images",
 	// imageData: {
 	// 	// id: courseId,
 	// 	// namespace: "App\\Course"
@@ -1382,7 +1387,7 @@ ArticleEditor('#description', {
 		minHeight: "300px"
 	},
 	image: {
-		upload: "/media/editors/upload-images",
+		upload: "/media/upload-images",
 		data: {
 			"_token": $('meta[name="csrf-token"]').attr('content'),
 			// "id": courseId,
@@ -1391,34 +1396,5 @@ ArticleEditor('#description', {
 	}
 });
 
-
-let dropzone = new Dropzone("#cover-dropzone", {
-	previewTemplate: $("#uploadPreviewTemplate").html(),
-	autoProcessQueue: false,
-	url: "/target-url",
-  	thumbnailWidth: 80,
-	thumbnailHeight: 80,
-	/* init: function() {
-
-		this.on("drop", function(event) {
-
-			// let coverInput = $("#cover-input")[0];
-
-			// coverInput.value = file;
-			console.log(event);
-		})
-
-	}   */
-});
-
-// $("#cover-input").change( function() {
-// 	console.log(this);
-// })
-
-dropzone.on("addedfile", function(file) {
-
-	// let coverInput = $("#cover-input")[0];
-
-	// coverInput.value = file;
-	console.log(file);
-})
+const test = document.getElementById("test");
+const pond = FilePond.create( test );

@@ -27,7 +27,8 @@
     "dependencies": {
         "datatables.net-bs": "^1.10.21",
         "datatables.net-buttons-bs4": "^1.6.3",
-        "sweetalert2": "^9.17.1",
-        "select2": "~4.0"
+        "filepond": "^4.20.1",
+        "select2": "~4.0",
+        "sweetalert2": "^9.17.1"
     }
 }

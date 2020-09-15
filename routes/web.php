@@ -177,7 +177,7 @@ Route::get( 'media/images', 'Ajax\MediaController@index' );
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
 Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadContentImages' );
 
-Route::post( 'media/editors/upload-images', 'Ajax\MediaController@editorImages' );
+Route::post( 'media/upload-images', 'Ajax\MediaController@editorImages' );
 Route::patch( 'media/cover/replace', 'Ajax\MediaController@coverChange');
 
 //!======================================================
