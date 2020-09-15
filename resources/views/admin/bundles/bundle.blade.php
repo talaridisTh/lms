@@ -87,10 +87,8 @@
 
 							<div id="upload" class="tab-pane">
 
-
 								<input id="file-pond" type="file[]"/>
 							
-
 							</div>			
 						</div>
 
