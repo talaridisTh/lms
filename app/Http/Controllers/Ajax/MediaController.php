@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Ajax;
 use App\Http\Controllers\Controller;
 use App\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class MediaController extends Controller
 {
@@ -113,7 +115,7 @@ class MediaController extends Controller
 		// $model = $namespace::find($request->id);
 
 		$allowedTypes = ["image/png", "image/jpeg"];
-		$date = date('m.Y');
+		$date = date('Y.m');
 		$files = [];
 
 
@@ -131,15 +133,24 @@ class MediaController extends Controller
 						$media = new Media;
 						$media->original_name = $image->getClientOriginalName();
 						$media->name = $name;
-						$media->rel_path = "storage/$date/images/". $name;
+						$media->rel_path = "storage/images/$date/$name";
+						$media->thumbnail_path = "storage/thumbnails/$date/$name";
 						$media->ext = $image->getClientOriginalExtension();
 						$media->file_info = $image->getClientMimeType();
 						$media->size = $image->getSize();
 						$media->save();
 
 						// $model->media()->attach( $media->id, [ "usage" => 1 ] );
+						
+						$image->storeAs("public/images/$date", $name);
 
-						$image->storeAs("public/$date/images", $name);
+						if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
+							Storage::disk("local")->makeDirectory("public/thumbnails/$date");
+
+						}
+						
+						Image::make( $image )->fit( 215, 215)
+							->save( storage_path("/app/public/thumbnails/$date/$name") );
 
 						$files["file-". $key] =[
 							"url" => url("storage/$date/images/$name"),

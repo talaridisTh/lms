@@ -22,6 +22,8 @@ class CreateMediaTable extends Migration
 
             $table->integer('path')->nullable(); // depends if we want to keep emporium data structuring
             $table->text('rel_path')->nullable(); // the directories form the data root to the file. Could use to allow custom folder creation and uploads to them. this is a tree branch, needs more thought
+            $table->text('thumbnail_path')->nullable();
+
 
             $table->string('ext', 10)->nullable(); // the extensions of the media
             $table->string('file_info', 40)->nullable(); // the mime / file info, think about cases of videos
