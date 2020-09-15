@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class UserController {
 
@@ -163,6 +164,11 @@ class UserController {
             $media->save();
 
             $image->storeAs("public/$date/images", $name);
+
+//            $img = Image::make( "storage/$date/images/". $name)->resize(138, 138)->insert( "storage/$date/images/". $name);
+//            $img->save("storage/$date/images/watermark". $name);
+
+
         }
 
         return response()->json($request->file);

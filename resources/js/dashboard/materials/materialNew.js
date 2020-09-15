@@ -227,6 +227,28 @@ $("#update-btn").click( function() {
     $(".formPrevent").submit();
 });
 
+$('#material-destroy').submit(async (e) => {
+    e.preventDefault()
+    let buttonDelete = $('#material-delete-btn');
+    const material = buttonDelete[0].dataset.materialSlug;
+
+
+    try {
+        const {value} = await utilities.toastAlertDelete("Θέλετε να διαγράψετε αυτό το μάθημα ")
+        if (value) {
+            const res = await axios.post(`/dashboard/materials/delete/${material}`, {_method: 'DELETE'})
+            utilities.toastAlert('success', "Διεγράφη")
+            window.location = `http://127.0.0.1:8000/dashboard/materials`;
+        }
+
+    } catch (e) {
+        console.log(e)
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
+
+
+});
+
 
 $(".tab-link").on("show.bs.tab", function(event) {
 
@@ -418,11 +440,12 @@ $("#change-cover-btn").on("click", function () {
 
 
 
+
 let dropzoneGalery = new Dropzone("#cover-dropzone", {
     thumbnailWidth: 80,
     thumbnailHeight: 80,
     previewTemplate: $("#uploadPreviewTemplate").html(),
-    url: `/materials/gallery/upload`,
+    url: `/materials/cover/upload`,
     params: {materialId},
     maxFiles:10,
     acceptedFiles: 'image/*',
@@ -430,6 +453,8 @@ let dropzoneGalery = new Dropzone("#cover-dropzone", {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
     },
     success: function (file, response) {
+
+
         axios.get(`/media/images`, {})
             .then((res) => {
                 // console.log(res.data)
@@ -446,7 +471,7 @@ let dropzoneGalery = new Dropzone("#cover-dropzone", {
                 }
 
             })
-        // this.removeAllFiles();
+        this.removeAllFiles();
         $("#upload-tab-btn").removeClass("active")
         $("#upload").removeClass("active")
         $("#media-library-tab-btn").addClass("active")
@@ -455,7 +480,8 @@ let dropzoneGalery = new Dropzone("#cover-dropzone", {
 
 
 
-    }
+    },
+
 
 })
 dropzoneGalery.autoDiscover = false;

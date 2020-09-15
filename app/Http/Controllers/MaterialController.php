@@ -108,12 +108,13 @@ class MaterialController extends Controller {
         return redirect()->back()->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
     }
 
-    public function destroy(Material $material)
+    public function destroy(Request $request,Material $material)
     {
 
-        foreach ($material->topics as $mat)
-        {
-        }
+        $material->delete();
+
+        return redirect(route('material.index'));
+
     }
 
 }

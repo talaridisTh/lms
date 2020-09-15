@@ -236,8 +236,8 @@ class MaterialController extends Controller {
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
-            $user->media()->wherePivot("usage", 0)->detach();
-            $user->media()->attach( $media->id, [ "usage" => 0 ] );
+//            $user->media()->wherePivot("usage", 0)->detach();
+//            $user->media()->attach( $media->id, [ "usage" => 0 ] );
 
             $image->storeAs("public/$date/images", $name);
 
@@ -248,6 +248,7 @@ class MaterialController extends Controller {
     public function galleryUpload(Request $request)
     {
 
+        dd($request->all());;
         $user = Material::findorFail($request->materialId);
         $date = date('m.Y');
         $image = $request->file;

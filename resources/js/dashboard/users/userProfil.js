@@ -344,7 +344,7 @@ function checkeBoxesEventListenerSecont() {
 
 }
 
-$("#select-all-courses-profile").change(function () {
+$("#select-all-cours-es-profile").change(function () {
     let minorCheckboxes = $(".js-user-profile-checkbox");
     let bulkBtn = $("#user-addCourses-bulk-action-btn")[0];
     console.log(this)

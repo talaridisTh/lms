@@ -368,10 +368,7 @@ function paginationRequest( activePage, search) {
 	.then( (res) => {
 		let gallery = $("#gallery-content")[0]
 		gallery.innerHTML = res.data;
-<<<<<<< HEAD
-=======
 
->>>>>>> 755a94f56b9adfa8d732f578f63995a0be8810a5
 		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
 		let addBtns = gallery.getElementsByClassName("js-add-image");
 
@@ -389,6 +386,9 @@ function paginationRequest( activePage, search) {
 
 function changeCoverRequest( namespace, id, url ) {
 
+    console.log(namespace)
+    console.log(id)
+    console.log(url)
 	axios.patch( "/media/cover/replace", {
 		namespace, id, url
 	})

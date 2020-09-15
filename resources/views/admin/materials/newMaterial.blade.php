@@ -47,10 +47,12 @@
                                 </div>
                             </div>
 
-                            <div id="gallery-content" data-model="App\Material" data-id={{ $material->id }}>
+                            <div id="gallery-content" data-model="App\Material" data-action="cover" data-id={{ $material->id }}>
                                 @include('components.admin.imageGallery', ['media' => $media])
                             </div>
-                 
+
+
+
                         </div>
 
                         <div id="upload" class="tab-pane">
@@ -160,7 +162,7 @@
                             <button id="preview-btn" class="under-development btn btn-warning"><i
                                     class="mdi mdi-eye"></i>
                             </button>
-                            <button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+                            <button form="material-destroy" data-material-slug="{{$material->slug}}" id="material-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
 
                         </div>
                         <form id="material-create" method="post"
@@ -174,6 +176,14 @@
                             @if(isset($material))
                                 @method('PATCH')
                             @endif
+                        </form>
+
+
+                        <form  id="material-destroy"  method="POST" action="{{route('material.destroy',$material->slug)}}">
+                            @csrf
+
+                                @method('DELETE')
+
                         </form>
 
                         <div class="row">
@@ -342,6 +352,25 @@
                                         </div> <!-- end card-body -->
                                     </div> <!-- end course info card -->
                                 @endisset
+
+                            @isset($material)
+                                <!-- Cover Preview -->
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h4 class="card-title mb-0">Cover</h4>
+
+                                        </div>
+                                        <div class="card-body">
+                                            <img id="cover-image" src="{{ url($material->cover) }}" class="img-fluid"
+
+                                                 alt="Cover Image">
+
+                                            <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
+
+                                        </div> <!-- end card-body -->
+                                    </div> <!-- end course info card -->
+                                @endisset
+
                                 <hr>
 {{--                                @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )--}}
                                 <div class="border-material">
