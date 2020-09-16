@@ -211,7 +211,6 @@
 								<div class="card-body">
 
 									<hr class="mt-0">
-									{{-- <hr> --}}
 									<div class="form-group mb-1">
                                         <div class="d-flex justify-content-between">
                                             <label for="activeMaterial">Κατάσταση</label>
