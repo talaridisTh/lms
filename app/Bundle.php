@@ -15,6 +15,12 @@ class Bundle extends Model
 		return $this->morphToMany('App\media', 'mediable');
 
 	}
+
+	public function users() {
+
+		return $this->belongsToMany(User::class);
+
+	}
 	
 	public function courses() {
 

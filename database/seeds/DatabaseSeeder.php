@@ -16,88 +16,36 @@ class DatabaseSeeder extends Seeder {
     {
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(TopicSeeder::class);
+		$this->call(TopicSeeder::class);
+		
+		factory( App\User::class, 100)->create()
+			->each( function($user) {
+				$rand = rand( 0 ,2);
+        		$roles = [ 'instructor', 'student','partner' ];
+        		$user->assignRole($roles[$rand]);
+			});
 
+		factory( App\Material::class, 80)->create()
+			->each( function($material) {
+				$material->users()->attach(App\Role::find(2)->users()->select("id")->get()->random()->id);
+			});
 
-        factory(App\Bundle::class, 3)->create()
-            ->each(function ($bundle) {
+		factory( App\Course::class, 30)->create()
+			->each( function($course) {
+				for ( $i = 0; $i < 20; $i++) {
+					$course->users()->attach(App\User::all()->random()->id);
+					$course->materials()->attach(App\Material::all()->random()->id, ["priority" => rand( 1, 10000 )]);
+				}
+			});
 
-                $bundle->courses()->saveMany(factory(App\Course::class, 5)->create()
-                    ->each(function($course) {
-
-                        $course->topics()->attach(App\Topic::all()->random()->id);
-                        $course->topics()->attach(App\Topic::all()->random()->id);
-                        $course->users()->saveMany(factory(App\User::class, 5)->create())
-                            ->each(function($user) {
-
-                                $rand = rand( 0 ,2);
-                                $roles = [ 'instructor', 'student','partner' ];
-                                $user->assignRole($roles[$rand]);
-
-                            });
-                    }));
-            });
-
-        factory(App\Material::class, 10)->create()
-            ->each(function ($materials) {
-
-                $materials->topics()->attach(App\Topic::all()->random()->id);
-                $materials->users()->saveMany(factory(App\User::class, 2)->create())
-                    ->each(function ($user) {
-
-                        $user->assignRole('instructor');
-
-                    });
-            });
-
-        // an mpei epano oi users den exoun dimiourgi8ei akomi kai petaei errors
-        $this->call(CourseMaterialSeeder::class);
-
-    }
-
-
-//
-//    public function run()
-//    {
-//        $this->call(RoleSeeder::class);
-//        $this->call(UserSeeder::class);
-//        $this->call(TopicSeeder::class);
-//
-//
-//
-//        factory(App\Bundle::class, 5)->create()
-//            ->each(function ($bundle) {
-//
-//                $bundle->courses()->saveMany(factory(App\Course::class, 40)->create()
-//                    ->each(function($course) {
-//
-//                        $course->topics()->attach(App\Topic::all()->random()->id);
-//                        $course->topics()->attach(App\Topic::all()->random()->id);
-//                        $course->users()->saveMany(factory(App\User::class, 1)->create())
-//                            ->each(function($user) {
-//
-//                                $rand = rand( 0 ,2);
-//                                $roles = [ 'instructor', 'student','partner' ];
-//                                $user->assignRole($roles[$rand]);
-//
-//                            });
-//                    }));
-//            });
-//
-//        factory(App\Material::class, 250)->create()
-//            ->each(function ($materials) {
-//
-//                $materials->topics()->attach(App\Topic::all()->random()->id);
-//                $materials->users()->saveMany(factory(App\User::class, 1)->create())
-//                    ->each(function ($user) {
-//
-//                        $user->assignRole('instructor');
-//
-//                    });
-//            });
-//
-//        // an mpei epano oi users den exoun dimiourgi8ei akomi kai petaei errors
-//        $this->call(CourseMaterialSeeder::class);
-//    }
-
+		factory( App\Bundle::class, 15)->create()
+			->each( function($bundle) {
+				for( $i = 0; $i < 5; $i++ ) {
+					$bundle->courses()->attach(App\Course::all()->random()->id);
+				}
+				for ( $i = 0; $i < 20; $i++ ) {
+					$bundle->users()->attach(App\Role::find(4)->users()->select("id")->get()->random()->id);
+				}
+			});
+	}
 }

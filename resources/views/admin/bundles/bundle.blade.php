@@ -292,7 +292,6 @@
 								</div>
 							</div>
 
-
 							<table id="bundle-courses-list" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
@@ -324,7 +323,6 @@
 								</tfoot>
 							</table>
 
-							
 						</div><!-- end Courses tab-pane -->
 
 					</div>
@@ -333,7 +331,7 @@
 				
 				<div class="col-xl-3 col-lg-5 col-md-12">
 
-					<div class="sticky py-3 px-2">
+					<div class="sticky py-3">
 					<button form="bundle-edit-form" type="submit"
 						id="update-btn" class="btn btn-primary"
 					>

@@ -51,6 +51,12 @@ class User extends Authenticatable {
         // your other new column
     ];
 
+	public function bundles() {
+
+		return $this->belongsToMany(Bundle::class);
+
+	}
+
     public function courses()
     {
 

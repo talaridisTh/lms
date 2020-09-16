@@ -480,7 +480,7 @@
 				</div>
 				<div class="col-xl-3 col-lg-5 col-md-12">
 
-					<div class="sticky py-3 px-2">
+					<div class="sticky py-3">
 						<button form="edit-course-form" type="submit"
 							id="update-btn" class="btn btn-primary"
 						>

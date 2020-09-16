@@ -3676,6 +3676,10 @@ figure.image-center {
   z-index: 1060 !important;
 }
 
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
