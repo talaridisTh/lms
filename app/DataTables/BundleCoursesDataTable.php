@@ -11,8 +11,8 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Carbon\Carbon;
 
-class BundleCoursesDataTable extends DataTable
-{
+class BundleCoursesDataTable extends DataTable {
+
     /**
      * Build DataTable class.
      *
@@ -22,74 +22,65 @@ class BundleCoursesDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-
-		// dd($request->all());
-
-		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
-			$query = Bundle::find( $request->bundleId )->courses()
-				->where(function($subquery) use ($request) {
-					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
-						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-				}
-			)->with("topics", "curator")->get();
-		}
-		else {
-			$query = Bundle::find( $request->bundleId )
-				->courses()->with("topics", "curator")->get();
-		}
-
-
-
-
+        // dd($request->all());
+        if (!is_null($request->startDate) && !is_null($request->endDate))
+        {
+            $query = Bundle::find($request->bundleId)->courses()
+                ->where(function ($subquery) use ($request) {
+                    $subquery->whereBetween('updated_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
+                        ->orWhereBetween('created_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"]);
+                }
+                )->with("topics", "curator")->get();
+        } else
+        {
+            $query = Bundle::find($request->bundleId)
+                ->courses()->with("topics", "curator")->get();
+        }
 
         return datatables()::of($query)
-			->addColumn('action', function($data) {
+            ->addColumn('action', function ($data) {
 
-				return "<div class='icheck-primary d-inline'>
-							<input class='js-course-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
-							<label for='$data->slug'></label>
-						</div>";
+                return (
+                "<div class='icheck-primary d-inline'>
+					<input class='js-course-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
+                    <label for='$data->slug'></label>
+				</div>");
+            })
+            ->editColumn('curator', function ($data) {
 
-			})
-			->editColumn('curator', function($data) {
+                if ($data->curator)
+                {
+                    $fullName = $data->curator->first_name . " " . $data->curator->last_name;
+                } else
+                {
+                    $fullName = "";
+                }
 
-				if ( $data->curator ) {
-					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
-				}
-				else {
-					$fullName = "";
-				}
+                return $fullName;
+            })
+            ->editColumn('topics', function ($data) {
 
-				return $fullName;
+                $topics = [];
+                foreach ($data->topics as $topic)
+                {
+                    array_push($topics, $topic['title']);
+                }
 
-			})
-			->editColumn('topics', function( $data ) {
+                return implode(", ", $topics);
+            })
+            ->editColumn('updated_at', function ($data) {
 
-				$topics = [];
+                return Carbon::parse($data->updated_at)->format("d / m / Y");
+            })
+            ->editColumn('created_at', function ($data) {
 
-				foreach ( $data->topics as $topic ) {
-					array_push($topics, $topic['title']);
-				}
+                return Carbon::parse($data->created_at)->format("d / m / Y");
+            })
+            ->rawColumns(['action'])
+            ->setRowAttr(['data-course-id' => function ($data) {
 
-				return implode(", ", $topics);
-
-			})
-			->editColumn('updated_at', function($data) {
-
-				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
-
-			})
-			->editColumn('created_at', function($data) {
-
-				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
-
-			})
-			->rawColumns(['action'])
-			->setRowAttr(['data-course-id' => function($data) {
-
-				return $data->id;
-				
-			}]);
+                return $data->id;
+            }]);
     }
 
     /**
@@ -111,18 +102,18 @@ class BundleCoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('bundlecoursesdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('bundlecoursesdatatable-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -134,10 +125,10 @@ class BundleCoursesDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('id'),
             Column::make('add your columns'),
             Column::make('created_at'),
@@ -154,4 +145,5 @@ class BundleCoursesDataTable extends DataTable
     {
         return 'BundleCourses_' . date('YmdHis');
     }
+
 }

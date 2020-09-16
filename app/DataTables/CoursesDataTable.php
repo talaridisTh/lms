@@ -16,8 +16,8 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Support\Facades\DB;
 
-class CoursesDataTable extends DataTable
-{
+class CoursesDataTable extends DataTable {
+
     /**
      * Build DataTable class.
      *
@@ -27,91 +27,84 @@ class CoursesDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
+        if (!is_null($request->startDate) && !is_null($request->endDate))
+        {
 
-			$query = Course::where( function($subquery) use ($request) {
-					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
-						->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-				}
-			)
-			->with("topics", "curator")->get();
+            $query = Course::where(function ($subquery) use ($request) {
+                $subquery->whereBetween('updated_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
+                    ->orWhereBetween('created_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"]);
+            }
+            )
+                ->with("topics", "curator")->get();
+        } else
+        {
 
-		}
-		else {
-
-			$query = Course::with("topics", "curator")->get();
-
-		}
+            $query = Course::with("topics", "curator")->get();
+        }
 
         return datatables()::of($query)
-			->addColumn('action', function($data) {
+            ->addColumn('action', function ($data) {
 
-				return "<div class='icheck-primary d-inline'>
+                return "<div class='icheck-primary d-inline'>
 							<input class='js-course-checkbox' data-course-id='$data->id' data-course-title='$data->title' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
+            })
+            ->editColumn('title', function ($data) {
 
-			})
-			->editColumn('title', function($data) {
-
-				return "<a href='/dashboard/course/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+                return (
+                "<a href='/dashboard/course/$data->slug' class='h5 custom-link-primary'>$data->title</a>
 				<p class='mb-1'>$data->slug</p>
 				<a href='/dashboard/course/$data->slug' class='custom-link-primary'>Edit</a>
 				<span class='mx-2'>|</span>
 				<a href='#' class='js-course-clone-btn custom-link-primary' data-course-id='$data->id'>Clone</a>
 				<span class='mx-2'>|</span>
-				<a href='/courses/course/$data->slug' class='custom-link-primary'>View</a>";
+				<a href='/courses/course/$data->slug' class='custom-link-primary'>View</a>");
+            })
+            ->editColumn('toggle', function ($data) {
 
-			})
-			->editColumn('toggle', function($data) {
+                $status = $data->status == 0 ? "" : "checked";
 
-				$status = $data->status == 0 ? "" : "checked";
-
-				return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
+                return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='$data->slug-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
+            })
+            ->editColumn('topics', function ($data) {
 
-			})
-			->editColumn('topics', function( $data ) {
+                $topics = [];
+                foreach ($data->topics as $topic)
+                {
+                    array_push($topics, $topic['title']);
+                }
 
-				$topics = [];
+                return implode(", ", $topics);
+            })
+            ->editColumn('curator', function ($data) {
 
-				foreach ( $data->topics as $topic ) {
-					array_push($topics, $topic['title']);
-				}
+                if ($data->curator)
+                {
+                    $fullName = $data->curator->first_name . " " . $data->curator->last_name;
+                } else
+                {
+                    $fullName = "";
+                }
 
-				return implode(", ", $topics);
+                return $fullName;
+            })
+            ->editColumn('updated_at', function ($data) {
 
-			})
-			->editColumn('curator', function($data) {
+                // return Carbon::parse( $data->updated_at)->diffForHumans();
+                return $data->updated_at->format("d / m / Y");
+            })
+            ->editColumn('created_at', function ($data) {
 
-				if ( $data->curator ) {
-					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
-				}
-				else {
-					$fullName = "";
-				}
+                // return Carbon::parse( $data->created_at)->diffForHumans();
+                return $data->created_at->format("d / m / Y");
+            })
+            ->rawColumns(['action', 'title', 'toggle'])
+            ->setRowAttr(['data-course-id' => function ($data) {
 
-				return $fullName;
-
-			})
-			->editColumn('updated_at', function($data) {
-
-				// return Carbon::parse( $data->updated_at)->diffForHumans();
-				return $data->updated_at->format( "d / m / Y" );
-
-			})
-			->editColumn('created_at', function($data) {
-
-				// return Carbon::parse( $data->created_at)->diffForHumans();
-				return $data->created_at->format( "d / m / Y" );
-
-			})
-			->rawColumns(['action', 'title', 'toggle'])
-			->setRowAttr([ 'data-course-id' => function($data) {
-
-				return  $data->id;
-
-			}]);
+                return $data->id;
+            }]);
     }
 
     /**
@@ -133,18 +126,18 @@ class CoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('courses-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('courses-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -156,10 +149,10 @@ class CoursesDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('title'),
             Column::make('status'),
             Column::make('created_at'),
@@ -176,4 +169,5 @@ class CoursesDataTable extends DataTable
     {
         return 'Courses_' . date('YmdHis');
     }
+
 }
