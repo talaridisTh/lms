@@ -73,7 +73,9 @@
                             <button class="mb-2 btn btn-lg bghover text-white border btn-outline-secondary">
                                 <span class="font-weight-bold">Το έχω δει</span>
                             </button>
-                            <button class="mb-2 btn btn-lg bghover text-white border btn-outline-secondary">
+                            <button
+                                data-model="material" data-course-id="{{$materials->id}}" data-user-id="{{auth()->id()}}"
+                                class=" add-watchlist mb-2 btn btn-lg bghover text-white border btn-outline-secondary">
                                 <span class="font-weight-bold">Αγαπήμενα</span>
                             </button>
                         </div>
@@ -195,14 +197,8 @@
 
 @endsection
 
-<div>
-
-</div>
-<div>
-
-</div>
-<div class="col-md-6"></div>
 @section("script")
+    <script src="{{ mix('js/index/materials/indexMaterials.js') }}"></script>
 
 
 <script>

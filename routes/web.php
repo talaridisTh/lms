@@ -197,21 +197,23 @@ Auth::routes();
 //!					Index  Routes					#
 //!######################################################
 
-//home routes
+//home index
 Route::get('/home', 'Index\HomeController@index')->name('home');
 
 
-//user-profile routes
+//user-profile index
 Route::get('/{user}/profile', 'Index\UserController@index')->name('index.profile');
 Route::patch('/{user}/profile/update', 'Index\UserController@update')->name('index.profile.update');
 Route::get('/{user}/profile/announcements', 'Index\UserController@ShowAnnouncements')->name('index.profile.announcements');
 
-//! Course routes
+//! Course index
 Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses");
 Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
+//! Material index  ajax
+Route::patch('/add-watchlist/course', 'Index\CourseController@watchlistCourse')->name('index.watchlist.course');
 
 
-//! partner routes link
+//! partner indexN
 Route::get("/user/link", "Index\HomeController@createLink")->name("user.link");
 Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
 Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
@@ -222,9 +224,14 @@ Route::get('/partner-links', function (Request $request) {
 })->name('link');
 
 
-//! Material routes link
+//! Material index
 Route::get("/material/{course}/{materials}", "Index\MaterialController@show")->name("index.material.show");
 Route::get("/dummy-course/{materials}", "Index\MaterialController@dummyPage")->name("dummyPage.material.show");
+
+//! Material index  ajax
+
+Route::patch('/add-watchlist/material', 'Index\MaterialController@watchlistMaterial')->name('index.watchlist.material');
+
 
 
 //!######################################################

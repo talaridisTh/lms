@@ -62,7 +62,7 @@
 
 
                         <div class="col-md-6">
-                            <h2 class="display-4 text-light">{{$course->title}}</h2>
+                            <h2  class="display-4 text-light">{{$course->title}}</h2>
                             <p class="my-4">{{$course->subtitle}}</p>
                             <div class="button-course-fav">
                                 @if(count($allMaterial))
@@ -70,7 +70,9 @@
                                        class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
                                     </a>
                                 @endif
-                                <button class="add-watchlist px-4 box-title btn bghover btn-secontary font-weight-bold">Προσθήκη στα αγαπημένα
+                                <button
+                                    data-model="course" data-course-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
+                                    class="add-watchlist px-4 box-title btn bghover btn-secontary font-weight-bold">Προσθήκη στα αγαπημένα
                                 </button>
                             </div>
                         </div>
@@ -189,8 +191,9 @@
 
 @section("script")
 
-    <script>
+
+        <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
 
 
-    </script>
+
 @endsection

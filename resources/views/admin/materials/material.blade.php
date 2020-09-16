@@ -133,7 +133,7 @@
 								<a href="{{route('dummyPage.material.show',$material->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
 									class="mdi mdi-eye"></i>
 								</a>
-								<button form="material-destroy" data-material-slug="{{$material->slug}}" 
+								<button form="material-destroy" data-material-slug="{{$material->slug}}"
 									id="material-delete-btn" class="btn btn-danger float-right"
 								>
 									Διαγραφή

@@ -1,4 +1,7 @@
-import utilities from '../../dashboard/main';
+import utilities from '../../index/main';
+
+
+utilities.addWhatchlist()
 
 
 $(".filter-topic").click(function () {

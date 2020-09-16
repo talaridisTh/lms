@@ -72,4 +72,20 @@ class CourseController extends Controller {
         return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial"));
     }
 
+
+    public function watchlistCourse(Request $request)
+    {
+
+        $watchlist = User::findOrFail($request->userId)
+            ->watchlistCourse()->where('watchlistable_id', $request->modelId)->first();
+        if (isset($watchlist))
+        {
+
+            return response("exist");
+        }
+        User::findOrFail($request->userId)
+            ->watchlistCourse()
+            ->sync($request->modelId, false);
+    }
+
 }

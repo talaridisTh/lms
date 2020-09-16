@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 
 class MaterialController extends Controller {
 
+
     public function index(MaterialsDataTable $dataTable)
     {
 
@@ -270,5 +271,9 @@ class MaterialController extends Controller {
 
         $image->storeAs("public/$date/images", $name);
     }
+
+
+
+
 
 }
