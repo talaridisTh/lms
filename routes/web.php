@@ -52,11 +52,13 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
 	//! Material Routes
     Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
-    Route::get('/dashboard/material/{material:slug}', 'MaterialController@show')->name('material.show');
-    Route::get('/dashboard/materials/create', 'MaterialController@create')->name('material.create');
+    Route::get('/dashboard/material/{material?}', 'MaterialController@show')->name('material.show');
+    // Route::get('/dashboard/materials/create', 'MaterialController@create')->name('material.create');
     Route::post('/dashboard/materials/store', 'MaterialController@store')->name('material.store');
     Route::patch('/dashboard/materials/update/{material:slug}', 'MaterialController@update')->name('material.update');
     Route::delete('/dashboard/materials/delete/{material}', 'MaterialController@destroy')->name('material.destroy');
+    Route::get('/dashboard/materials/coursematerial/{course}/{priority}', 'MaterialController@courseMaterial')->name('material.courseMaterial');
+
 	//! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course?}', 'CourseController@show')->name('course.show');
@@ -222,6 +224,7 @@ Route::get('/partner-links', function (Request $request) {
 
 //! Material routes link
 Route::get("/material/{course}/{materials}", "Index\MaterialController@show")->name("index.material.show");
+Route::get("/dummy-course/{materials}", "Index\MaterialController@dummyPage")->name("dummyPage.material.show");
 
 
 //!######################################################

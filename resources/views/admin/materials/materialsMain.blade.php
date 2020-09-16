@@ -38,7 +38,7 @@
             </div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-					<a href="{{route('material.create')}}" class="btn btn-primary mb-2">
+					<a href="/dashboard/material/" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο μάθημα
 					</a>
