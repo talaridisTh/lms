@@ -70,184 +70,177 @@
     	    </div>
     	</div>
 	@endisset
-
-    <x-alertMsg :msg="'create'"></x-alertMsg>
-    <x-alertMsg :msg="'update'"></x-alertMsg>
-    <section class="container-fruid position-relative">
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <ol class="breadcrumb m-0">
-                            <li class="breadcrumb-item">
-								<a href="/" class="custom-link-primary">Home</a>
-							</li>
-                            <li class="breadcrumb-item">
-								<a href="/dashboard" class="custom-link-primary">Dashboard</a>
-                            </li>
-                            <li class="breadcrumb-item">
-								<a href="/dashboard/materials" class="custom-link-primary">Υλικό</a></li>
-                            <li class="breadcrumb-item active">
-								{{ isset($material) ? $material->title : "Νέο Υλικό" }}
-							</li>
-                        </ol>
-                    </div>
-                    <h4 class="page-title">{{ isset($material) ? $material->title : "Νέο Υλικό" }}</h4>
+	
+	<!-- Title - Breadcrumb -->
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <ol class="breadcrumb m-0">
+                        <li class="breadcrumb-item">
+							<a href="/" class="custom-link-primary">Home</a>
+						</li>
+                        <li class="breadcrumb-item">
+							<a href="/dashboard" class="custom-link-primary">Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item">
+							<a href="/dashboard/materials" class="custom-link-primary">Υλικό</a></li>
+                        <li class="breadcrumb-item active">
+							{{ isset($material) ? $material->title : "Νέο Υλικό" }}
+						</li>
+                    </ol>
                 </div>
+                <h4 class="page-title">{{ isset($material) ? $material->title : "Νέο Υλικό" }}</h4>
             </div>
         </div>
-        <div class="row">
-            <div class=" col-md-12" id="material-form">
-                <ul class="nav nav-tabs mb-3">
-                    <li class="nav-item">
-                        <a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
-                            <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                            <span class="d-none d-md-block">Content</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#courses-tabs" data-toggle="tab" aria-expanded="true"
+	</div><!-- ./Title - Breadcrumb -->
 
-                           class="nav-link {{ !isset($material) ? 'tab-link text-muted' : '' }}">
-                            <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                            <span class="d-none d-md-block">Courses</span>
-                        </a>
-                    </li>
-                    <li class="nav-item ">
-                        <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
-                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                            <span class="d-none d-md-block">Settings</span>
-                        </a>
-                    </li>
-                </ul>
+	<div class="wrapper">
+		<div class="content">
+			<!-- Tab Links -->
+			<ul class="nav nav-tabs nav-bordered mb-3">
+				<li class="nav-item">
+					<a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
+						<i class="mdi mdi-home-variant d-md-none d-block"></i>
+						<span class="d-none d-md-block">Ρυθμίσεις</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#courses-tabs" data-toggle="tab" aria-expanded="true"
 
-                <div class="tab-content ">
-                    <div class="tab-pane show active" id="content">
-                        <div class="col-md-3 offset-md-9 sticky  py-3 px-2 pl-3    mr-5">
-                            <button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
-                                    form="material-create"
-                                    class="btn btn-primary ">
-                                {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
-							</button>
-							@isset($material)
-								<a href="{{route('dummyPage.material.show',$material->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
-									class="mdi mdi-eye"></i>
-								</a>
-								<button form="material-destroy" data-material-slug="{{$material->slug}}"
-									id="material-delete-btn" class="btn btn-danger float-right"
-								>
-									Διαγραφή
-								</button>
+					   class="nav-link {{ !isset($material) ? 'tab-link text-muted' : '' }}">
+						<i class="mdi mdi-account-circle d-md-none d-block"></i>
+						<span class="d-none d-md-block">Courses</span>
+					</a>
+				</li>
+			</ul><!-- ./Tab Links -->
+
+			<div class="tab-content">
+				<div class="tab-pane show active" id="content">
+					<div class="row">
+
+						<!-- form inputs -->
+						<div class="col-xl-9 col-lg-7 col-md-12">
+
+							@isset($priority)
+							
+								<input form="material-create" type="text"
+									name="courseId" value="{{ $course->id }}"
+								/>
+								<input form="material-create" type="text"
+									name="priority" value="{{ $priority }}"
+								/>
+								
 							@endisset
 
-                        </div>
-						<form id="material-create" method="post"
-							{{-- action="{{}}" --}}
-							@if(isset($material))
-							action="{{route('material.update',$material->slug)}}"
-							@else
-							action="{{route('material.store')}}"
-							@endif
-							enctype="multipart/form-data">
-							@csrf
-							@if(isset($material))
-							    @method('PATCH')
-							@endif
-                        </form>
+							<div class="form-group mb-3">
+								<label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
+								<input form="material-create" name="title" type="text" class="form-control"
+									   id="titleMaterial"
+									   placeholder="Εισάγετε τίτλο..."
+									   value="{{ old('title') != "" ? old('title') : ( isset($material) ? $material['title'] : "" ) }}"
+								>
+								@error("title")
+								<div class="invalid-feedback d-block">{{$message}}</div>
+								@enderror
+							</div>
 
-						@isset($material)
-							<form  id="material-destroy"  method="POST" action="/delete/{{  $material->slug }}">
-                        	    @csrf
-								@method('DELETE')
-							</form>
-						@endisset
+							<div class="form-group mb-3">
+								<label for="subtitleMaterial">Υποτίτλος<span class="text-danger"> *</span></label>
+								<input form="material-create" name="subtitle" type="text" class="form-control"
+									   id="subtitleMaterial"
+									   placeholder="Εισάγετε υποτίτλο..."
+									   value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($material) ? $material['subtitle'] : "" ) }}"
+								>
+								@error("subtitle")
+								<div class="invalid-feedback d-block">{{$message}}</div>
+								@enderror
+							</div>
 
-                        <div class="row">
-                            <div class="content-form col-xl-9 col-lg-7 col-md-12">
-                                <div class="form-group mb-3">
-                                    <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                    <input form="material-create" name="title" type="text" class="form-control"
-                                           id="titleMaterial"
-                                           placeholder="Εισάγετε τίτλο..."
-                                           value="{{ old('title') != "" ? old('title') : ( isset($material) ? $material['title'] : "" ) }}"
-                                    >
-                                    @error("title")
-                                    <div class="invalid-feedback d-block">{{$message}}</div>
-                                    @enderror
-                                </div>
+							<div class="form-group mb-3">
+								<label for="summaryMaterial">Περίληψη</label>
+								<textarea form="material-create" name="summary" class="form-control"
+									placeholder="Εισάγετε περίληψη..." id="summaryMaterial"rows="5"
+								>{{isset($material) ? $material['summary'] : ""}}</textarea>
+							</div>
 
-                                <div class="form-group mb-3">
-                                    <label for="subtitleMaterial">Υποτίτλος<span class="text-danger"> *</span></label>
-                                    <input form="material-create" name="subtitle" type="text" class="form-control"
-                                           id="subtitleMaterial"
-                                           placeholder="Εισάγετε υποτίτλο..."
-                                           value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($material) ? $material['subtitle'] : "" ) }}"
-                                    >
-                                    @error("subtitle")
-                                    <div class="invalid-feedback d-block">{{$message}}</div>
-                                    @enderror
-                                </div>
+							<div class="form-group mb-3">
+								<label for="descriptionMaterial">
+									Περιγραφή
+									<span class="text-danger"> *</span>
+								</label>
+								<textarea form="material-create" name="description" class="form-control"
+									placeholder="Εισάγετε περιγραφή..." id="descriptionMaterial" rows="5"
+								>{{isset($material) ? $material['description'] : ""}}</textarea>
+							</div>
 
-                                <div class="form-group mb-3">
-                                    <label for="summaryMaterial">Περίληψη</label>
-                                    <textarea form="material-create" name="summary" class="form-control"
-                                              placeholder="Εισάγετε περίληψη..."
-                                              id="summaryMaterial"
-                                              rows="5">{{isset($material) ? $material['summary'] : ""}}</textarea>
-                                </div>
+							<div class="form-group mb-3">
+								<label for="contentMaterial">
+									Περιεχόμενο μαθήματος
+									<span class="text-danger"> *</span>
+								</label>
+								<textarea form="material-create" name="content" class="form-control"
+									placeholder="Εισάγετε περιεχόμενο μαθήματος..." id="contentMaterial"
+									rows="5"
+								>{{isset($material) ? $material['content'] : ""}}</textarea>
+							</div>
+						</div><!-- ./form inputs -->
 
-                                <div class="form-group mb-3">
-                                    <label for="descriptionMaterial">Περιγραφή<span
-                                            class="text-danger"> *</span></label>
-                                    <textarea form="material-create" name="description" class="form-control"
-                                              placeholder="Εισάγετε περιγραφή..."
-                                              id="descriptionMaterial"
-                                              rows="5">{{isset($material) ? $material['description'] : ""}}</textarea>
-                                </div>
+						<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
 
-                                <div class="form-group mb-3">
-                                    <label for="contentMaterial">Περιεχόμενο μαθήματος <span
-                                            class="text-danger"> *</span></label>
-                                    <textarea form="material-create" name="content" class="form-control"
-                                              placeholder="Εισάγετε περιεχόμενο μαθήματος..."
-                                              id="contentMaterial"
-                                              rows="5">{{isset($material) ? $material['content'] : ""}}</textarea>
-                                </div>
-                            </div>
-                            <aside class="col-xl-3 col-lg-5 col-md-12">
-                                <div class="border-material">
+							<!-- Βuttons -->
+							<div class="sticky py-3">
+								<button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
+										form="material-create"
+										class="btn btn-primary ">
+									{{isset($material)? "Ενημέρωση":"Δημιουργια"}}
+								</button>
+								@isset($material)
+									<a href="{{route('dummyPage.material.show',$material->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
+										class="mdi mdi-eye"></i>
+									</a>
+									<button form="material-destroy" data-material-slug="{{$material->slug}}" 
+										id="material-delete-btn" class="btn btn-danger float-right"
+									>
+										Διαγραφή
+									</button>
+								@endisset
+							</div><!-- ./Βuttons -->
 
-                                    <div class="form-group mb-3">
-                                        <hr>
+							<div class="card">
+								<div class="card-body">
+
+									{{-- <hr> --}}
+									<div class="form-group mb-1">
                                         <div class="d-flex justify-content-between">
-                                            <span><strong>Κατάσταση</strong></span>
+                                            <label for="activeMaterial">Κατάσταση</label>
                                             <input form="material-create" name="status" type="checkbox"
-                                                   id="activeMaterial" data-switch="bool"
-                                            @if(isset($material))
-                                                {{$material->status==1? 'checked':""}}
-                                                @endif
+                                                id="activeMaterial" data-switch="bool"
+                                            	@if(isset($material))
+                                            	    {{$material->status==1? 'checked':""}}
+                                            	@endif
                                             />
-
-                                            <label for="activeMaterial" data-on-label="On" data-off-label="Off"></label>
+											<label for="activeMaterial" data-on-label="On"
+												class="mb-0" data-off-label="Off"></label>
                                         </div>
-                                        <hr>
-                                    </div>
-
-                                    <div class="form-group mb-3">
+									</div>
+									<hr>
+									
+									<div class="form-group mb-3">
                                         <label for="urlMaterial">URL video</label>
                                         <input form="material-create" name="video_link" type="text" class="form-control"
-                                               id="urlMaterial"
-                                               placeholder="Εισάγετε URL video..."
-                                               value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($material) ? $material['video_link'] : "" ) }}">
-                                    </div>
+                                            id="urlMaterial" placeholder="Εισάγετε URL video..."
+											value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($material) ? $material['video_link'] : "" ) }}"
+										/>
+									</div>
+									<hr>
 
-
-                                    <div class="form-group mb-3">
+									<div class="form-group mb-3">
                                         <label for="typeMaterial">Τύπος <span class="text-danger"> *</span></label>
                                         <select data-placeholder="Επιλέξτε Topics..." id="typeMaterial"
-                                                class="select2-multiple form-control"
-                                                name="type" data-toggle="select2"
-                                                form="material-create">
+											class="select2-multiple form-control"name="type"
+											data-toggle="select2" form="material-create"
+										>
                                             <option value=""></option>
                                             @foreach ($types as $type)
                                                 <option value="{{$type->type}}"
@@ -258,14 +251,15 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
+									</div>
+									<hr>
 
-                                    <div class="form-group mb-3">
+									<div class="form-group mb-3">
                                         <label for="topicMaterial">Topic <span class="text-danger"> *</span></label>
                                         <select name="topic[]" multiple id="topicMaterial"
-                                                class="form-control select2-multiple" data-toggle="select2"
-                                                data-placeholder="Επιλέξτε Topics..."
-                                                form="material-create">
+                                            class="form-control select2-multiple" data-toggle="select2"
+											data-placeholder="Επιλέξτε Topics..." form="material-create"
+										>
                                             @foreach ($topics as $topic)
                                                 <option value="{{$topic->id}}"
                                                 @if(isset($material))
@@ -277,18 +271,18 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <hR>
+									</div>
+									<hr>
 
-
-                                    <div class="form-group mb-3">
-                                        <label for="instructorMaterial">Εισηγητής <span
-                                                class="text-danger"> *</span></label>
+									<div class="form-group mb-3">
+                                        <label for="instructorMaterial">
+											Εισηγητής
+											<span class="text-danger"> *</span>
+										</label>
                                         <select form="material-create" name="instructor[]" multiple
-                                                id="instructorMaterial"
-                                                value="ss"
-                                                class="form-control " data-toggle="select2"
-                                                data-placeholder="Επιλέξτε instructor...">
+											id="instructorMaterial" value="ss" class="form-control"
+											data-toggle="select2" data-placeholder="Επιλέξτε instructor..."
+										>
                                             @foreach ($instructors as $instructor)
                                                 <option value="{{$instructor->id}}"
                                                 @if(isset($material))
@@ -300,71 +294,76 @@
                                                 </option>
                                             @endforeach
                                         </select>
-                                    </div>
-                                    <div class=" form-group ">
-                                        <p class="font-weight-bold">Creator</p>
-                                        <input type="text" class="form-control" id="creatorMaterialHidden" disabled
-                                               value="{{auth()->user()->fullName}}"
+									</div>
+									<hr>
+
+									<div class="form-group">
+                                        <label for="creatorMaterialHidden">Creator</label>
+                                        <input type="text" class="form-control" id="creatorMaterialHidden"
+                                            value="{{auth()->user()->fullName}}" disabled
                                         >
                                     </div>
-                                    <hr>
-                                </div>
+									
+								</div>
+							</div>
 
-                            @isset($material)
+							@isset($material)
                                 <!-- Cover Preview -->
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title mb-0">Cover</h4>
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="card-title mb-0">Cover</h4>
+                                    </div>
+                                    <div class="card-body">
+										@empty(!$material->cover)
+											
+	
+										<img id="cover-image" src="{{ url($material->cover) }}"
+											class="img-fluid" alt="Cover Image"
+										/>
+										@endempty
+                                        <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">
+											Αλλαγή Cover
+										</a>
+                                    </div> <!-- end card-body -->
+                                </div> <!-- end course info card -->
+							@endisset
 
-                                        </div>
-                                        <div class="card-body">
-                                            <img id="cover-image" src="{{ url($material->cover) }}" class="img-fluid"
+						</div>
+					</div>
+				</div>
 
-                                                 alt="Cover Image">
+				
+				
+				<div class="tab-pane " id="courses-tabs">
+					@include("components.admin.materials.tabsCourses")
+				</div>
+			</div>
 
-                                            <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
+		</div>
+	</div>
 
-                                        </div> <!-- end card-body -->
-                                    </div> <!-- end course info card -->
-                                @endisset
+	<form id="material-create" method="post"
+		@if(isset($material))
+		action="{{route('material.update',$material->slug)}}"
+		@else
+		action="{{route('material.store')}}"
+		@endif
+		enctype="multipart/form-data">
+		@csrf
+		@if(isset($material))
+		    @method('PATCH')
+		@endif
+    </form>
+	
+	@isset($material)
+		<form  id="material-destroy"  method="POST" action="/delete/{{  $material->slug }}">
+    	    @csrf
+			@method('DELETE')
+		</form>
+	@endisset
 
-                            @isset($material)
-                                <!-- Cover Preview -->
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h4 class="card-title mb-0">Cover</h4>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <img id="cover-image" src="{{ url($material->cover) }}" class="img-fluid"
-
-                                                 alt="Cover Image">
-
-                                            <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
-
-                                        </div> <!-- end card-body -->
-                                    </div> <!-- end course info card -->
-                                @endisset
-
-                                <hr>
-{{--                                @include("components.dropzone",["model"=>isset($material)?$material:null ,"type"=>"Galery","dropzone"=>"galery-material-dropzone"] )--}}
-                                <div class="border-material">
-                                    <h3>Tags</h3>
-                                </div>
-                            </aside>
-                        </div>
-                    </div>
-                    <div class="tab-pane " id="courses-tabs">
-
-                        @include("components.admin.materials.tabsCourses")
-
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-    </section>
+    <x-alertMsg :msg="'create'"></x-alertMsg>
+    <x-alertMsg :msg="'update'"></x-alertMsg>
 
 
 @endsection

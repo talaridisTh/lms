@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\CourseMaterial;
 use App\Http\Requests\CreateMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Material;
@@ -40,28 +41,34 @@ class MaterialController extends Controller {
 
     public function store(Request $request)
     {
-        $material = new Material();
-        $data = collect($request)->except("instructor", "topic")->all();
-//        if ($files = $request->file('cover'))
-//        {
-//            $destinationPath = public_path("images") . '/lessson' . $request->title;
-//            $profileImage = date('YmdHis') . "." . $files->getClientOriginalExtension();
-//            $files->move($destinationPath, $profileImage);
-//            $data['cover'] = $profileImage;
-//        } else
-//        {
-//            $data["cover"] = "https://via.placeholder.com/600x400.png";
-//        }
-        $data["slug"] = Str::slug($request->title, '-');
-        isset($data["status"])?  $data["status"]=1: $data["status"]=0;
+		// dd($request->all());
 
+		$material = new Material();
+		$material->title = $request->title;
+		$material->subtitle = $request->subtitle;
+		$material->summary = $request->summary;
+		$material->description = $request->description;
+		$material->content = $request->content;
+		$material->video_link = $request->video_link;
+		$material->type = $request->type;
+		$material->slug = Str::slug($request->title, '-');
+		$material->status = isset($request->status) ? 1 : 0;
+		$material->save();
 
-        $newMaterial = $material->create($data);
-        $request->instructor ? $newMaterial->users()->sync($request->instructor) : "";
-        $request->topic ? $newMaterial->topics()->sync($request->topic) : "";
+        $request->instructor ? $material->users()->sync($request->instructor) : "";
+		$request->topic ? $material->topics()->sync($request->topic) : "";
+		
+		if ( isset($request->courseId) ) {
+			$course = Course::find( $request->courseId );
+			CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
 
-        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $data["title"] . ' δημιουργήθηκε');;
-//
+			$course->materials()->attach( $material->id, ["priority" => ($request->priority + 1)] );
+			
+			return redirect("/dashboard/course/$course->slug");
+		}
+
+        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $material->title . ' δημιουργήθηκε');;
+
     }
 
     public function show(Material $material = null)
@@ -122,12 +129,14 @@ class MaterialController extends Controller {
 		$types = Material::all()->unique('type');
 		
 		$data = [
+			"course" => $course,
+			"priority" => $priority,
 			"media" => $media,
 			"topics" => $topics,
 			"instructors" => $instructors,
 			"types" => $types
 		];
-
+		// dd("hit");
         return view('admin.materials.material')->with($data);
 	}
 
