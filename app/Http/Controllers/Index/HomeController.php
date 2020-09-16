@@ -114,21 +114,10 @@ class HomeController extends Controller {
     {
 
 
-        $materials =  DB::table('courses')
-            ->where('status', 1)
-            ->whereNotIn( 'id',
-                function($query) {
+        $user = User::find(4);
+        $material = Course::find(8);
 
-                    $query->select('material_id')
-                        ->from('course_material')
-                        ->where('material_id', 4)
-                        ->get();
-
-                }
-            )
-            ->get();
-
-        return $materials;
+        $user->watchlistCourse()->attach($material);
     }
 
 }

@@ -31,14 +31,7 @@ class Material extends Model
 
 	}
 
-    public function priority( $material , $course) {
 
-        return DB::table('course_material')
-            ->where("course_id",$course)
-            ->where("material_id",$material)
-            ->select("priority")
-            ->first()->priority;
-    }
 
 	public function media() {
 
@@ -59,11 +52,27 @@ class Material extends Model
 
 	}
 
+	public function watchlists() {
+
+		return $this->morphToMany('App\User', 'watchlistable');
+
+	}
+
 
     public function getRouteKeyName()
     {
         return "slug";
 
+    }
+
+
+    public function priority( $material , $course) {
+
+        return DB::table('course_material')
+            ->where("course_id",$course)
+            ->where("material_id",$material)
+            ->select("priority")
+            ->first()->priority;
     }
 
     public function getVideoLinkAttribute($value)

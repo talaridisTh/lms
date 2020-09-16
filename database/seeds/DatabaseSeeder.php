@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder {
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
 		$this->call(TopicSeeder::class);
-		
+
 		factory( App\User::class, 100)->create()
 			->each( function($user) {
 				$rand = rand( 0 ,2);

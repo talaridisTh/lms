@@ -57,6 +57,17 @@ class User extends Authenticatable {
 
 	}
 
+    public function watchlistMaterial() {
+
+        return $this->morphedByMany('App\Material', 'watchlistable');
+
+    }
+    public function watchlistCourse() {
+
+        return $this->morphedByMany('App\Course', 'watchlistable');
+
+    }
+
     public function courses()
     {
 
