@@ -118,7 +118,7 @@
 					<div class="row px-3">
 
 						<div class="col-6">
-							<div class="card cursor-pointer">
+							<div id="add-new-material-btn" class="card cursor-pointer">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-file-document-outline	display-3"></i>
 									<h5 class="card-title mt-2">Μάθημα</h5>
@@ -388,7 +388,10 @@
 								</div>
 							</div>
 							
-							<table id="course-materials-list" data-course-id="{{  isset($course) ? $course['id'] : 1 }}" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
+							<table id="course-materials-list" 
+								data-course-id="{{  isset($course) ? $course['id'] : 1 }}"
+								data-course-slug="{{  isset($course) ? $course['slug'] : "" }}"
+								class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
 								<thead>
 									<tr>
 										<th class="text-center">

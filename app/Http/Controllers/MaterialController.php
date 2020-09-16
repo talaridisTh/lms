@@ -64,16 +64,14 @@ class MaterialController extends Controller {
 //
     }
 
-    public function show(Material $material)
+    public function show(Material $material = null)
     {
-
-        $media = Media::where("type", 0)->paginate(18);
+        $media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
         $topics = Topic::all();
         $instructors = User::getInstructor();
-        $courses = Course::with("materials")->get();
         $types = Material::all()->unique('type');
 
-        return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "material", "types","media"));
+        return view('admin.materials.material', compact("topics", "instructors", "material", "types","media"));
     }
 
     public function update(Request $request, Material $material)
@@ -115,6 +113,22 @@ class MaterialController extends Controller {
 
         return redirect(route('material.index'));
 
-    }
+	}
+	
+	public function courseMaterial(Course $course, $priority) {
+		$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
+        $topics = Topic::all();
+        $instructors = User::getInstructor();
+		$types = Material::all()->unique('type');
+		
+		$data = [
+			"media" => $media,
+			"topics" => $topics,
+			"instructors" => $instructors,
+			"types" => $types
+		];
+
+        return view('admin.materials.material')->with($data);
+	}
 
 }

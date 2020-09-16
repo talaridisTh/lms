@@ -1,6 +1,7 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
+const courseSlug = $("#course-materials-list")[0].dataset.courseSlug
 const baseUrl = window.location.origin;
 
 //!######################################
@@ -18,6 +19,12 @@ import 'filepond/dist/filepond.min.css';
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
+
+$("#add-new-material-btn").on("click", function() {
+	let priority = $("#store-material-priority").val();
+
+	window.location = `/dashboard/materials/coursematerial/${courseSlug}/${priority}`;
+})
 
 $("#change-cover-btn").on("click", function() {
 
