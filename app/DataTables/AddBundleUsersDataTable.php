@@ -2,17 +2,16 @@
 
 namespace App\DataTables;
 
-use App\Bundle;
-use App\Course;
+use App\Role;
+use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class RemainingCoursesDataTable extends DataTable
+class AddBundleUsersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -22,63 +21,38 @@ class RemainingCoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-			$query = Course::whereNotIn( 'id', 
-					function($subquery) use ( $request ){
-						$subquery->select('course_id')
-							->from('bundle_course')
-							->where('bundle_id', $request->bundleId)
-							->get();
-					})->get();
+		$query = Role::find(4)->users()->whereNotIn("id",
+			function($subquery) use ($request) {
+
+				$subquery->select("user_id")->from("bundle_user")
+					->where("bundle_id", $request->bundleId)->get();
+
+		})->get();
 
         return datatables()::of($query)
 			->addColumn('action', function($data) {
 
 				return "<div class='icheck-primary d-inline ml-2'>
-							<input class='js-remainings-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-remaining-user-checkbox' data-user-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
 
 			})
-			->editColumn('curator', function($data) {
+			->addColumn('btn', function($data) {
 
-				if ( $data->curator ) {
-					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
-				}
-				else {
-					$fullName = "";
-				}
-
-				return $fullName;
+				return "<button type='button' class='btn btn-primary js-add-user-btn' data-user-id='$data->id'>Προσθήκη</button>";
 
 			})
-			
-			->editColumn('topics', function( $data ) {
-
-				$topics = [];
-
-				foreach ( $data->topics as $topic ) {
-					array_push($topics, $topic['title']);
-				}
-
-				return implode(", ", $topics);
-
-			})
-			->addColumn('addBtn', function($data) {
-
-				return "<button type='button' class='btn btn-primary js-add-course-btn' data-course-id='$data->id'>Προσθήκη</button>";
-
-			})
-			->setRowClass('last-column-p-10')
-			->rawColumns(['action', 'addBtn']);
+			->rawColumns(['action', 'btn']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Course $model
+     * @param \User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(User $model)
     {
         return $model->newQuery();
     }
@@ -91,7 +65,7 @@ class RemainingCoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('remainingcoursesdatatable-table')
+                    ->setTableId('addbundleusersdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -132,6 +106,6 @@ class RemainingCoursesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'RemainingCourses_' . date('YmdHis');
+        return 'AddBundleUsers_' . date('YmdHis');
     }
 }

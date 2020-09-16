@@ -138,12 +138,15 @@ Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );
 Route::post( 'bundles/bundle-courses-datatable', 'Ajax\BundleController@show' );
 Route::post( 'bundles/bundle-users-datatable', 'Ajax\BundleController@bundleUsers' );
 Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remainingCourses' );
+Route::post( 'bundles/remaining-users-datatable', 'Ajax\BundleController@remainingUsers' );
 
 //! Dashboard Ajax Bundles CRUD
 Route::delete( 'bundles/destroy/{ids}', 'Ajax\BundleController@destroy' );
 Route::patch( 'bundles/bundles-toggle-status/{bundle}', 'Ajax\BundleController@update' );
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
+Route::post( 'bundles/remove-users', 'Ajax\BundleController@removeUsers');
+Route::post( 'bundles/add-users', 'Ajax\BundleController@addUsers');
 
 //! Dashboard Ajax Materials Datatables
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );

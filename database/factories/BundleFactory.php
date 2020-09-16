@@ -22,7 +22,7 @@ $factory->define(Bundle::class, function (Faker $faker) {
     return [
         'title' => "Title of Bundle ".$counter,
         'subtitle' => "Subtitle of Bundle ".$counter,
-		'summary' => "Summary of Bundle ".$counter++,
+		'summary' => "Summary of Bundle ".$counter,
 		'description' => "Description of Bundle ".$counter++,
 		'cover' => $faker->md5 .".jpg",
 		'slug' => $faker->slug,
