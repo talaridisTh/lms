@@ -3,6 +3,7 @@
 use App\Course;
 use App\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder {
 
@@ -20,13 +21,13 @@ class DatabaseSeeder extends Seeder {
 
 		factory( App\User::class, 100)->create()
 			->each( function($user) {
-				$rand = rand( 0 ,2);
-        		$roles = [ 'instructor', 'student','partner' ];
-        		$user->assignRole($roles[$rand]);
+        		$user->assignRole(Arr::random([ 'instructor', 'student','partner' ]));
 			});
 
 		factory( App\Material::class, 80)->create()
 			->each( function($material) {
+
+			    $material->update(['type'=>Arr::random(['Announcement','Video','Link'])]);
 				$material->users()->attach(App\Role::find(2)->users()->select("id")->get()->random()->id);
 			});
 
