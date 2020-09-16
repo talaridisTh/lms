@@ -60,13 +60,16 @@
                                  alt="">
                         </div>
 
+
                         <div class="col-md-6">
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
                             <p class="my-4">{{$course->subtitle}}</p>
                             <div class="button-course-fav">
-                                <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
-                                   class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
-                                </a>
+                                @if(count($allMaterial))
+                                    <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
+                                       class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
+                                    </a>
+                                @endif
                                 <button class="px-4 box-title btn bghover btn-secontary font-weight-bold">add watch
                                 </button>
                             </div>
@@ -76,18 +79,23 @@
                                 <p class="box-num-material display-4">{{$allMaterial->count()}}</p>
                                 <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
                                     <span>Η τελευταία προσθήκη</span>
-                                    <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>
+                                    @if(count($allMaterial))
+                                        <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>
+
                                 </div>
                                 <div class="box-button-subtitle text-light text-center">
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
+
                                     <button class="bghover border font-weight-bold btn btn-secontary">
                                         <a href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">Δες
                                             το μαθημα</a>
                                     </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -136,24 +144,6 @@
                     {!! $course->description !!}
                 </div>
                 <div class="col-md-4 ">
-{{--                    <ul>--}}
-{{--                        @foreach($allMaterial as $materials)--}}
-{{--                            <li class="list-group-item list-material border py-4 ">--}}
-{{--                                <a class="d-flex"--}}
-{{--                                   href="{{route('index.material.show',[$course->slug,$materials->slug])}}">--}}
-{{--                                    <div class="col-md-2">--}}
-{{--                                        <span class="material-count">{{++$count}}</span>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="col-md-10 d-flex flex-column">--}}
-{{--                                        <span--}}
-{{--                                            class="mb-2 font-18 text-dark font-weight-bold">   {{$materials->title}}</span>--}}
-{{--                                        <span class="mb-2 font-14 text-dark">   {{$materials->subtitle}}</span>--}}
-{{--                                        <span class="mb-2 font-14 text-dark">   {{$materials->type}}</span>--}}
-{{--                                    </div>--}}
-{{--                                </a>--}}
-{{--                            </li>--}}
-{{--                        @endforeach--}}
-{{--                    </ul>--}}
                     <ul>
                         @foreach($allMaterial as $key=> $materials)
                             <li class="list-group-item ">

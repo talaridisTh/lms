@@ -27,14 +27,16 @@ class DatabaseSeeder extends Seeder {
 		factory( App\Material::class, 80)->create()
 			->each( function($material) {
 
-			    $material->update(['type'=>Arr::random(['Announcement','Video','Link'])]);
+			    $material->update(['type'=>Arr::random(['Announcement','Video','Link',"Lesson","Lesson"])]);
 				$material->users()->attach(App\Role::find(2)->users()->select("id")->get()->random()->id);
 			});
 
 		factory( App\Course::class, 30)->create()
 			->each( function($course) {
+                $course->topics()->attach(App\Topic::all()->random()->id);
 				for ( $i = 0; $i < 20; $i++) {
 					$course->users()->attach(App\User::all()->random()->id);
+
 					$course->materials()->attach(App\Material::all()->random()->id, ["priority" => rand( 1, 10000 )]);
 				}
 			});

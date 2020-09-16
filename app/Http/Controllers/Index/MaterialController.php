@@ -23,6 +23,7 @@ class MaterialController extends Controller
 
         $MaterialsOrderByPriority = Course::MaterialsOrderByPriority($course->id);
 
+
         $nextMaterial = Course::nextMaterial($course->id,$materialPriority);
 
         $prevMaterial = Course::prevMaterial($course->id,$materialPriority);

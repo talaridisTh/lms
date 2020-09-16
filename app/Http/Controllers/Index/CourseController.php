@@ -16,6 +16,7 @@ class CourseController extends Controller {
     public function show(Course $course)
     {
 
+
         $topics = [];
         foreach (auth()->user()->courses as $course)
         {
@@ -27,13 +28,14 @@ class CourseController extends Controller {
             return $q;
         });
 
+
         if (request()->idsTopic == "reset" || !request()->ajax())
         {
             $allCourses = auth()->user()->courses;
 
             return view("courses.courses", [
                 'arrayTopics' => $arrayTopics,
-                'allCourses' => $allCourses->flatten(1)])->render();
+                'allCourses' => $allCourses]);
         }
 
         else
@@ -49,6 +51,7 @@ class CourseController extends Controller {
                 ->where("topics.id", "=", request()->idsTopic)
                 ->get();
 //
+
             $allCourses = $queryAllCourse->map(function ($test) {
                 return Course::whereIn('id', [$test->id])->get();
             });
