@@ -124,10 +124,10 @@
 
 							@isset($priority)
 							
-								<input form="material-create" type="text"
+								<input form="material-create" type="text" hidden
 									name="courseId" value="{{ $course->id }}"
 								/>
-								<input form="material-create" type="text"
+								<input form="material-create" type="text" hidden
 									name="priority" value="{{ $priority }}"
 								/>
 								
