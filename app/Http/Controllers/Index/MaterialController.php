@@ -25,6 +25,7 @@ class MaterialController extends Controller
 
 
         $nextMaterial = Course::nextMaterial($course->id,$materialPriority);
+//        dd($nextMaterial);
 
         $prevMaterial = Course::prevMaterial($course->id,$materialPriority);
 
@@ -35,6 +36,17 @@ class MaterialController extends Controller
         return view("index.materials.material-index",compact("priority","materials","course","MaterialsOrderByPriority","nextMaterial","prevMaterial"));
     }
 
+
+
+
+    public function dummyPage(Material $materials)
+    {
+
+
+
+        return view("index.materials.dummy-material",compact('materials'));
+
+    }
 
 
 }

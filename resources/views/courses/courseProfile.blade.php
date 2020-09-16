@@ -70,7 +70,7 @@
                                        class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
                                     </a>
                                 @endif
-                                <button class="px-4 box-title btn bghover btn-secontary font-weight-bold">add watch
+                                <button class="add-watchlist px-4 box-title btn bghover btn-secontary font-weight-bold">Προσθήκη στα αγαπημένα
                                 </button>
                             </div>
                         </div>
