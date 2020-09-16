@@ -105,6 +105,7 @@
 	</div>     
 	<!-- end page title -->
 
+	<!-- additionnal content modal -->
 	<div class="modal fade" id="add-additions-modal" tabindex="-1" aria-labelledby="add-additions-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			  <div class="modal-content">
@@ -155,8 +156,9 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div><!-- ./additionnal content modal -->
 
+	<!-- add users modal -->
 	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
@@ -202,8 +204,9 @@
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+	</div><!-- ./add users modal -->
 
+	<!-- add materials modal -->
 	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
 			<div class="modal-content">
@@ -249,14 +252,12 @@
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
+	</div><!-- ./add materials modal -->
 
 	<div class="wrapper">
 		<div class="content">
 
-			<div class="row">
-				<div class="col-xl-9 col-lg-7 col-md-12">
-
+					<!-- tabs -->
 					<ul class="nav nav-tabs nav-bordered mb-3">
 						<li class="nav-item">
 							<a href="#settings" id="setting-tab-btn"
@@ -282,78 +283,207 @@
 								Χρήστες
 							</a>
 						</li>
-					</ul> <!-- end nav-->
+					</ul><!-- ./tabs -->
 
 					<div class="tab-content">
 
 						<div id="settings" class="tab-pane show active">
-							<form id="edit-course-form"
-								action="{{ isset($course) ? route('course.update', $course->slug) : "/dashboard/courses/store" }}"
-								method="POST" enctype="multipart/form-data" autocomplete="off"
-							>
-								
-								@csrf
-								@if ( isset($course) )
-									@method('PATCH')
-								@endif
+							<div class="row">
+								<div class="col-xl-9 col-lg-7 col-md-12">
+									<form id="edit-course-form"
+										action="{{ isset($course) ? route('course.update', $course->slug) : "/dashboard/courses/store" }}"
+										method="POST" enctype="multipart/form-data" autocomplete="off">
+										
+										@csrf
+										@if ( isset($course) )
+											@method('PATCH')
+										@endif
 
-								<div class="form-group">
-									<label for="title">Τίτλος</label>
-									<input id="title" type="text" 
-										class="form-control @error('title') is-invalid @enderror" 
-										id="title" name="title" 
-										value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}" 
-										placeholder="Εισάγετε τίτλο...">
-									@error('title')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-									@enderror
+										<div class="form-group">
+											<label for="title">Τίτλος</label>
+											<input id="title" type="text" 
+												class="form-control @error('title') is-invalid @enderror" 
+												id="title" name="title" 
+												value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}" 
+												placeholder="Εισάγετε τίτλο...">
+											@error('title')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
+										</div>
+
+										<div class="form-group">
+											<label for="subtitle">Υπότιτλος</label>
+											<input id="subtitle" type="text" 
+												class="form-control @error('subtitle') is-invalid @enderror" 
+												name="subtitle" 
+												value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($course) ? $course['subtitle'] : "" ) }}" 
+												placeholder="Εισάγετε υπότιτλο...">
+											@error('subtitle')
+												<span class="invalid-feedback" role="alert">
+													<strong>{{ $message }}</strong>
+												</span>
+											@enderror
+										</div>
+
+										@isset($course)
+											<div class="form-group">
+												<label for="summary">Σύνοψη</label>
+												<textarea class="form-control @error('summary') is-invalid @enderror"
+													id="summary" name="summary" rows="4" 
+													placeholder="Εισάγετε σύνοψη..."
+												>{{ old('summary') != "" ? old('summary') : ( isset($course) ? $course['summary'] : "" ) }}</textarea>
+												@error('summary')
+													<span class="invalid-feedback" role="alert">
+														<strong>{{ $message }}</strong>
+													</span>
+												@enderror
+											</div>
+										
+											<div class="form-group">
+												<label for="description">Περιγραφή</label>
+												<textarea class="form-control @error('description') is-invalid @enderror"
+													id="description" name="description" rows="4"
+													placeholder="Εισάγετε περιγραφή..."
+												>{{ old('description') != "" ? old('description') : ( isset($course) ? $course['description'] : "" ) }}</textarea>
+												@error('description')
+													<span class="invalid-feedback" role="alert">
+														<strong>{{ $message }}</strong>
+													</span>
+												@enderror
+											</div>
+										@endisset
+									</form>
 								</div>
+								<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
 
-								<div class="form-group">
-									<label for="subtitle">Υπότιτλος</label>
-									<input id="subtitle" type="text" 
-										class="form-control @error('subtitle') is-invalid @enderror" 
-										name="subtitle" 
-										value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($course) ? $course['subtitle'] : "" ) }}" 
-										placeholder="Εισάγετε υπότιτλο...">
-									@error('subtitle')
-										<span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-									@enderror
+									<div class="sticky py-3">
+										<button form="edit-course-form" type="submit"
+											id="update-btn" class="btn btn-primary"
+										>
+											{{ isset($course) ? "Ενημέρωση" : "Αποθήκευση" }}
+										</button>
+										@if ( isset($course) )
+											<a id="preview-btn"
+												href="/courses/course/{{ $course->slug }}"
+												class="btn btn-warning"
+											>
+												<i class="mdi mdi-eye"></i>
+											</a>
+											<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+										@endif
+									</div>
+				
+									<div class="card">
+										<div class="card-body">
+											<div class="form-group">
+				
+				
+												@if ( old('verison') != "" )
+													$normalSelected = old('verison') == "Normal" ? "selected" : ""
+													$trialSelected = old('verison') == "Trial" ? "selected" : ""
+												@endif
+				
+												<label for="version-select">Έκδοση</label>
+												<select form="edit-course-form" id="version-select" name="version"
+													class="select2 form-control @error('version') is-invalid @enderror"
+												>
+													@if ( !isset($course) )
+														<option value="" selected>Επιλέξτε έκδοση</option>
+													@endif
+				
+													<option value="Normal" {{
+														isset($normalSelected) ? $normalSelected
+															: ( isset($course) && $course->version == "Normal" ? "selected" : "" )
+														}}
+													>Normal</option>
+													<option value="Trial" {{
+														isset($trialSelected) ? $trialSelected
+															: ( isset($course) && $course->version == "Trial" ? "selected" : "" )
+														}}
+													>Trial</option>
+												</select>
+												@error('version')
+													<span class="invalid-feedback" role="alert">
+														<strong>{{ $message }}</strong>
+													</span>
+												@enderror
+											</div>
+				
+											<hr>
+				
+											<div class="form-group">
+												<label for="topic">Topic</label>
+												<select form="edit-course-form" 
+													class="select2 form-control select2-multiple"
+													name="topics[]" data-toggle="select2"
+													multiple="multiple" data-placeholder="Επιλέξτε Topics..."
+												>
+														
+													@foreach ($topics as $topic)
+														<option value="{{ $topic->id }}"
+															@if ( isset($course) )
+																@foreach ( $course->topics as $courseTopic )
+																	@if ( $courseTopic->id == $topic->id )
+																		selected
+																		@break
+																	@endif
+																@endforeach
+															@endif
+														>{{ $topic->title }}</option>
+													@endforeach
+				
+												</select>
+											</div>
+											<hr>
+											<label for="curator">Κύριος Εισηγητής</label>
+											<select id="curator" form="edit-course-form"
+												class="select2 form-control" name="curator"
+												data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή..."
+											>
+												@foreach ($instructors as $instructor)
+													@if (  isset($course) && $course->user_id == $instructor->id )
+														<option value="{{ $instructor->id }}" selected>{{ $instructor->first_name }} {{ $instructor->last_name }}</option>	
+														@continue
+													@endif
+													<option value="{{ $instructor->id }}">{{ $instructor->first_name }} {{ $instructor->last_name }}</option>
+												@endforeach
+				
+											</select>
+											<hr>
+											<div class="form-group">
+												<label for="publish-date-select">Δημοσίευση απο:</label>
+												<input form="edit-course-form" type="text" class="form-control"
+													id="publish-date-select" name="publishDate"
+													value="{{ $publish }}"
+													placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask"
+													data-mask-format="00-00-0000 00:00:00" autocomplete="off"
+												/>
+											</div>
+											<hr>
+										</div>
+									</div>
+				
+									@if ( isset($course) )
+										<!-- Cover Preview -->
+										<div class="card">
+											<div class="card-header">
+												<h4 class="card-title mb-0">Cover</h4>
+												
+											</div>
+											<div class="card-body">
+												<img id="cover-image" src="{{ url($course->cover) }}" class="img-fluid"
+													alt="Cover Image">
+												
+												<button id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</button>
+				
+											</div> <!-- end card-body -->
+										</div> <!-- end course info card -->
+									@endif
+
 								</div>
-
-								@isset($course)
-									<div class="form-group">
-										<label for="summary">Σύνοψη</label>
-										<textarea class="form-control @error('summary') is-invalid @enderror"
-											id="summary" name="summary" rows="4" 
-											placeholder="Εισάγετε σύνοψη..."
-										>{{ old('summary') != "" ? old('summary') : ( isset($course) ? $course['summary'] : "" ) }}</textarea>
-										@error('summary')
-											<span class="invalid-feedback" role="alert">
-												<strong>{{ $message }}</strong>
-											</span>
-										@enderror
-									</div>
-								
-									<div class="form-group">
-										<label for="description">Περιγραφή</label>
-										<textarea class="form-control @error('description') is-invalid @enderror"
-											id="description" name="description" rows="4"
-											placeholder="Εισάγετε περιγραφή..."
-										>{{ old('description') != "" ? old('description') : ( isset($course) ? $course['description'] : "" ) }}</textarea>
-										@error('description')
-											<span class="invalid-feedback" role="alert">
-												<strong>{{ $message }}</strong>
-											</span>
-										@enderror
-									</div>
-								@endisset
-
-							</form>
+							</div>
 						</div><!-- settings tab-pane -->
 
 						<div id="materials" class="tab-pane table-cnt mb-3">
@@ -480,135 +610,20 @@
 						</div><!-- users tab-pane -->
 					
 					</div><!-- tab-content -->
-				</div>
-				<div class="col-xl-3 col-lg-5 col-md-12">
-
-					<div class="sticky py-3">
-						<button form="edit-course-form" type="submit"
-							id="update-btn" class="btn btn-primary"
-						>
-							{{ isset($course) ? "Ενημέρωση" : "Αποθήκευση" }}
-						</button>
-						@if ( isset($course) )
-							<a id="preview-btn"
-								href="/courses/course/{{ $course->slug }}"
-								class="btn btn-warning"
-							>
-								<i class="mdi mdi-eye"></i>
-							</a>
-							<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
-						@endif
-					</div>
-
-					<div class="card">
-						<div class="card-body">
-							<div class="form-group">
 
 
-								@if ( old('verison') != "" )
-									$normalSelected = old('verison') == "Normal" ? "selected" : ""
-									$trialSelected = old('verison') == "Trial" ? "selected" : ""
-								@endif
 
-								<label for="version-select">Έκδοση</label>
-								<select form="edit-course-form" id="version-select" name="version"
-									class="select2 form-control @error('version') is-invalid @enderror"
-								>
-									@if ( !isset($course) )
-										<option value="" selected>Επιλέξτε έκδοση</option>
-									@endif
 
-									<option value="Normal" {{
-										isset($normalSelected) ? $normalSelected
-											: ( isset($course) && $course->version == "Normal" ? "selected" : "" )
-										}}
-									>Normal</option>
-									<option value="Trial" {{
-										isset($trialSelected) ? $trialSelected
-											: ( isset($course) && $course->version == "Trial" ? "selected" : "" )
-										}}
-									>Trial</option>
-								</select>
-								@error('version')
-									<span class="invalid-feedback" role="alert">
-										<strong>{{ $message }}</strong>
-									</span>
-								@enderror
-							</div>
 
-							<hr>
 
-							<div class="form-group">
-								<label for="topic">Topic</label>
-								<select form="edit-course-form" 
-									class="select2 form-control select2-multiple"
-									name="topics[]" data-toggle="select2"
-									multiple="multiple" data-placeholder="Επιλέξτε Topics..."
-								>
-										
-									@foreach ($topics as $topic)
-										<option value="{{ $topic->id }}"
-											@if ( isset($course) )
-												@foreach ( $course->topics as $courseTopic )
-													@if ( $courseTopic->id == $topic->id )
-														selected
-														@break
-													@endif
-												@endforeach
-											@endif
-										>{{ $topic->title }}</option>
-									@endforeach
 
-								</select>
-							</div>
-							<hr>
-							<label for="curator">Κύριος Εισηγητής</label>
-							<select id="curator" form="edit-course-form"
-								class="select2 form-control" name="curator"
-								data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή..."
-							>
-								@foreach ($instructors as $instructor)
-									@if (  isset($course) && $course->user_id == $instructor->id )
-										<option value="{{ $instructor->id }}" selected>{{ $instructor->first_name }} {{ $instructor->last_name }}</option>	
-										@continue
-									@endif
-									<option value="{{ $instructor->id }}">{{ $instructor->first_name }} {{ $instructor->last_name }}</option>
-								@endforeach
 
-							</select>
-							<hr>
-							<div class="form-group">
-								<label for="publish-date-select">Δημοσίευση απο:</label>
-								<input form="edit-course-form" type="text" class="form-control"
-									id="publish-date-select" name="publishDate"
-									value="{{ $publish }}"
-									placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask"
-									data-mask-format="00-00-0000 00:00:00" autocomplete="off"
-								/>
-							</div>
-							<hr>
-						</div>
-					</div>
 
-					@if ( isset($course) )
-						<!-- Cover Preview -->
-						<div class="card">
-							<div class="card-header">
-								<h4 class="card-title mb-0">Cover</h4>
-								
-							</div>
-							<div class="card-body">
-								<img id="cover-image" src="{{ url($course->cover) }}" class="img-fluid"
-									alt="Cover Image">
-								
-								<button id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</button>
 
-							</div> <!-- end card-body -->
-						</div> <!-- end course info card -->
-					@endif
 
-				</div>
-			</div>
+
+					
+
 		</div>
 	</div>
 	@if ( isset($course) )
