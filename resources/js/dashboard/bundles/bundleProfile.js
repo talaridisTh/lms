@@ -260,6 +260,50 @@ function activeCoursesCheckboxToggle() {
 	});
 }
 
+
+const bundleUsersTable = $("#bundle-users-table").DataTable({
+	order: [1, "asc"],
+	processing: true,
+	serverSide: true,
+	ajax: {
+		url: "/bundles/bundle-users-datatable",
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		type: "post",
+		data: {
+			id: bundleId
+		}
+	},
+	columns: [
+		{data: 'action', name:'action', orderable: false, searchable: false, className: "align-middle text-center"},
+		{data: 'last_name', name: 'last_name', className: "cursor-default"},
+		{data: 'first_name', name: 'first_name', className: "align-middle text-center cursor-default"},
+		{data: 'btn', name: 'btn', orderable: false, searchable: false, className: "align-middle text-center"}
+	],
+	language: utilities.tableLocale,
+	// fnInitComplete: function( oSettings, json ) {
+	// 	let lenthSelection = $("select[name='remaining-courses-table_length']");
+	// 	lenthSelection.addClass("select2");
+
+	// 	lenthSelection.select2({
+	// 		minimumResultsForSearch: -1,
+	// 	});
+	// },
+	drawCallback:function(){
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+		// $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+		// $(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
+
+		// addcourse();
+		// remainingsCheckboxes();
+		// utilities.resetAddButton(  $("#add-courses-btn"), $("#all-courses-checkbox") );
+	},
+})
+
+
+
+
 const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 	order: [1, "asc"],
 	processing: true,

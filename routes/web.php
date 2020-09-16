@@ -134,6 +134,7 @@ Route::patch( 'courses/remove-students', 'Ajax\CourseController@removeStudents' 
 //! Dashboard Ajax Bundles Datatables
 Route::post( 'bundles/bundles-datatable', 'Ajax\BundleController@index' );
 Route::post( 'bundles/bundle-courses-datatable', 'Ajax\BundleController@show' );
+Route::post( 'bundles/bundle-users-datatable', 'Ajax\BundleController@bundleUsers' );
 Route::post( 'bundles/remaining-courses-datatable', 'Ajax\BundleController@remainingCourses' );
 
 //! Dashboard Ajax Bundles CRUD

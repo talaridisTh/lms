@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ajax;
 use App\Bundle;
 use App\DataTables\BundleCoursesDataTable;
 use App\DataTables\BundleDataTable;
+use App\DataTables\BundleUsersDatatable;
 use App\DataTables\RemainingCoursesDataTable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -129,4 +130,9 @@ class BundleController extends Controller
 		$bundle->save();
 
 	}
+
+	public function bundleUsers( BundleUsersDatatable $dataTable )
+    {
+        return $dataTable->render('bundle.users');
+    }
 }

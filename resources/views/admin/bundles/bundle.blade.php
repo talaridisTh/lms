@@ -167,13 +167,13 @@
 								Courses
 							</a>
 						</li>
-						{{-- <li class="nav-item">
+						<li class="nav-item">
 							<a href="#users" data-toggle="tab" 
 								aria-expanded="true" class="nav-link {{ isset($bundle) ? "" : "text-muted" }}"
 							>
 								Χρήστες
 							</a>
-						</li> --}}
+						</li>
 					</ul> <!-- end nav-->
 
 					<div class="tab-content">
@@ -269,9 +269,8 @@
 
 						</div><!-- settings tab-pane -->
 
-						<!-- Courses table tab-->
+						<!-- Courses table tab -->
 						<div class="tab-pane table-cnt" id="courses">
-
 
 							<div class="row my-3">
 								<div class="col-sm-1">
@@ -325,6 +324,83 @@
 
 						</div><!-- end Courses tab-pane -->
 
+						<!-- Users table tab -->
+						<div id="users" class="tab-pane table-cnt">
+
+							
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<div class="row my-3">
+								<div class="col-sm-1">
+								</div>
+								<div class="col-sm-11 d-flex justify-content-end">
+									<button id="users-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#remaining-users-modal">
+										<i class="mdi mdi-plus-circle mr-2"></i>
+										Προσθήκη Χρηστών
+									</button>
+									<div class="dropdown ml-2">
+										<button id="users-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+											Επιλογές (0)
+										</button>
+										<div class="dropdown-menu dropdown-menu-right" aria-labelledby="users-bulk">
+											<a id="remove-selected-users-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<table id="bundle-users-table" class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
+								<thead>
+									<tr>
+										<th class="text-center">
+											<div class='icheck-primary d-inline'>
+												<input type='checkbox' id='main-active-users-checkbox' autocomplete='off'>
+												<label for='main-active-users-checkbox'></label>
+											</div>
+										</th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center"></th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center"></th>
+										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center"></th>
+									</tr>
+								</tfoot>
+							</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						</div>
 					</div>
 					
 				</div>
