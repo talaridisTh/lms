@@ -205,8 +205,9 @@ Route::get('/home', 'Index\HomeController@index')->name('home');
 Route::get('/{user}/profile', 'Index\UserController@index')->name('index.profile');
 Route::patch('/{user}/profile/update', 'Index\UserController@update')->name('index.profile.update');
 Route::get('/{user}/profile/announcements', 'Index\UserController@ShowAnnouncements')->name('index.profile.announcements');
+Route::get('/{user}/profile/watchlist', 'Index\UserController@watchlist')->name('index.profile.watchlist');
 
-//! Course index
+//! Course
 Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses");
 Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
 //! Material index  ajax

@@ -20,7 +20,7 @@
     <li class="side-nav-title side-nav-item"></li>
 
     <li class="side-nav-item">
-        <a href="#" class="side-nav-link">
+        <a href="{{route('index.profile.watchlist',$user->slug)}}" class="side-nav-link">
             <i class="uil-calender"></i>
             <span>Αγαπημένα</span>
         </a>

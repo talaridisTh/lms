@@ -47,4 +47,14 @@ class UserController extends Controller {
             })->flatten(1)]);
     }
 
+    public function watchlist(User $user)
+    {
+
+        $watchlistCourses = $user->watchlistCourse()->get();
+        $watchlistMaterials = $user->watchlistMaterial()->get();
+
+        return view("index.users.user-watchlist",compact("watchlistCourses","watchlistMaterials"));
+
+    }
+
 }
