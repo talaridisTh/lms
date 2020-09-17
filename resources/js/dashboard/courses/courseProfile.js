@@ -68,7 +68,7 @@ $("#activate-selection").on( 'click', function() {
 
 });
 
-$("#deactivate-selection").click( function() {
+$("#deactivate-selection").on( "click", function() {
 	let selection = $(".js-course-material-checkbox:checked");
 	let data = [];
 
@@ -158,14 +158,14 @@ $("#publish-date-select").on("input", function() {
 
 })
 
-$("#add-user-checkbox").change( function() {
+$("#add-user-checkbox").on( "change", function() {
 	let minorCheckboxes = $(".js-new-user-checkbox");
 	let bulkBtn = $("#add-multiple-users-btn")[0]
 
 	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 })
 
-$("#select-all-active-users").change( function() {
+$("#select-all-active-users").on( "change", function() {
 
 	let minorCheckboxes = $(".js-active-user-checkbox")
 	let bulkBtn = $("#active-users-bulk")[0]
@@ -173,11 +173,11 @@ $("#select-all-active-users").change( function() {
 	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 });
 
-$("#update-btn").click( function() {
+$("#update-btn").on( "click", function() {
 	$("#edit-course-form").submit();
 });
 
-$("#active-switch").change( function() {
+$("#active-switch").on( "change", function() {
 
 	axios.patch( "/courses/status", {
 		course: courseId,
@@ -196,7 +196,7 @@ $("#active-switch").change( function() {
 	});
 });
 
-$("#add-multiple-users-btn").click( function() {
+$("#add-multiple-users-btn").on( "click", function() {
 	let newUsers = $(".js-new-user-checkbox:checked");
 	let userIds = [];
 
@@ -206,9 +206,9 @@ $("#add-multiple-users-btn").click( function() {
 
 	addUsers(userIds);
 	$('#add-user-modal').modal('hide')
-})
+});
 
-$("#remove-selected-users-btn").click( function() {
+$("#remove-selected-users-btn").on( "click", function() {
 
 	let usersCheckbox = $(".js-active-user-checkbox:checked");
 	let userIds = [];
@@ -233,15 +233,15 @@ $("#remove-selected-users-btn").click( function() {
 		}
 	})
 
-})
+});
 
-$("#course-cover-input").change( function() {
+$("#course-cover-input").on( "change", function() {
 	let label = $("#course-cover-label")[0];
 
 	label.textContent = this.value.replace("C:\\fakepath\\", "");
 });
 
-$('#all-remainings-checkbox').change( function() {
+$('#all-remainings-checkbox').on( "change", function() {
 	let checkboxes = $('.js-remainings-checkbox');
 	let bulkBtn = $("#add-remaingings-btn")[0];
 
@@ -249,7 +249,7 @@ $('#all-remainings-checkbox').change( function() {
 
 });
 
-$('#add-remaingings-btn').click( function() {
+$('#add-remaingings-btn').on( "click", function() {
 	let checkboxes = $('.js-remainings-checkbox:checked');
 	let lessonsCount = 0;
 	let additionsCount = 0;
@@ -276,7 +276,7 @@ $('#add-remaingings-btn').click( function() {
 	$('#add-materials-modal').modal('hide');
 });
 
-$('#remove-selection-btn').click( function() {
+$('#remove-selection-btn').on( "click", function() {
 	let checkboxes = $('.js-course-material-checkbox:checked');
 	let ids = [];
 
@@ -308,7 +308,7 @@ $('#remove-selection-btn').click( function() {
 	}
 });
 
-$("#all-active-materials-checkbox").change( function() {
+$("#all-active-materials-checkbox").on( "change", function() {
 
 	let checkboxes = $(".js-course-material-checkbox");
 	let bulkBtn = $("#active-material-bulk")[0];
@@ -517,7 +517,7 @@ $("#active-user-roles").select2({
 	minimumResultsForSearch: -1,
 });
 
-$("#active-user-roles").change( function () {
+$("#active-user-roles").on( "change", function () {
 
 	let label = $("#select2-active-user-roles-container")[0];
 	utilities.filterStyle( label, this.value )
@@ -536,7 +536,7 @@ $("#add-users-roles").select2({
 	minimumResultsForSearch: -1,
 });
 
-$("#add-users-roles").change( function () {
+$("#add-users-roles").on( "change", function () {
 
 	let label = $('#select2-add-users-roles-container')[0];
 
@@ -554,7 +554,7 @@ $("#active-course-status").select2({
 	minimumResultsForSearch: -1,
 });
 
-$("#active-course-status").change( function() {
+$("#active-course-status").on( "change", function() {
 
 	let label = $('#select2-active-course-status-container')[0];
 
@@ -609,7 +609,7 @@ function removeMaterialInit() {
 
 	binBtn.unbind();
 
-	binBtn.click( function() {
+	binBtn.on( "click", function() {
 
 		let id = [ this.dataset.materialId ];
 
@@ -639,7 +639,7 @@ function newUserCheckboxInit() {
 
 	minorCheckboxes.unbind();
 
-	minorCheckboxes.change( function() {
+	minorCheckboxes.on( "change", function() {
 		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
 	});
 
@@ -653,7 +653,7 @@ function activeUsersCheckboxInit() {
 
 	minorCheckboxes.unbind();
 
-	minorCheckboxes.change( function() {
+	minorCheckboxes.on( "change", function() {
 		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
 	});
 }
@@ -663,7 +663,7 @@ function userLinkInit() {
 	let link = $(".js-user-link");
 
 	link.unbind();
-	link.click( function() {
+	link.on( "click", function() {
 
 		let userSlug = this.parentElement.dataset.userSlug
 
@@ -676,7 +676,7 @@ function removeUserBtnInit() {
 	let removeUserBtn = $(".js-remove-user");
 
 	removeUserBtn.unbind();
-	removeUserBtn.click( function() {
+	removeUserBtn.on( "click", function() {
 
 		let id = [ this.dataset.userId ];
 
@@ -704,7 +704,7 @@ function adduserBtnInit() {
 	let addUserBtn = $(".js-add-user-btn");
 
 	addUserBtn.unbind();
-	addUserBtn.click( function() {
+	addUserBtn.on( "click", function() {
 
 		let userId = [ this.dataset.userId ];
 
@@ -717,7 +717,7 @@ function addMaterialsEventListerner() {
 	let addMaterialBtn = $('.js-add-material-btn');
 
 	addMaterialBtn.unbind();
-	addMaterialBtn.click( function() {
+	addMaterialBtn.on( "click", function() {
 		const materialId = [this.dataset.materialId];
 
 		postMaterialIds( materialId );
@@ -790,7 +790,7 @@ function remainingsCheckboxes() {
 	let remainingCheckboxes = $('.js-remainings-checkbox');
 
 	remainingCheckboxes.unbind();
-	remainingCheckboxes.change( remainingMaterialsCheckboxHandler );
+	remainingCheckboxes.on( "change", remainingMaterialsCheckboxHandler );
 }
 
 $(".js-date-search").on( "input", function() {
@@ -815,7 +815,7 @@ function activeMaterialsCheckboxToggle() {
 
 	let activeCheckboxes = $(".js-course-material-checkbox");
 
-	activeCheckboxes.change( activeMaterialsCheckboxHandler );
+	activeCheckboxes.on( "change", activeMaterialsCheckboxHandler );
 }
 
 function activeMaterialsCheckboxHandler() {
@@ -943,7 +943,7 @@ axios.post("/materials/material-types")
 			minimumResultsForSearch: -1,
 		});
 
-		$("#selected-materials-types").change( function() {
+		$("#selected-materials-types").on( "change", function() {
 
 			let label = $('#select2-selected-materials-types-container')[0];
 
@@ -956,7 +956,7 @@ axios.post("/materials/material-types")
 			minimumResultsForSearch: -1,
 		});
 
-		$("#remaining-materials-types").change( function() {
+		$("#remaining-materials-types").on( "change", function() {
 
 			let label = $('#select2-remaining-materials-types-container')[0];
 

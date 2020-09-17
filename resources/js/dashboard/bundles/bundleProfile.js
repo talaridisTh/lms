@@ -91,7 +91,7 @@ $(".under-development").on( 'click', function() {
     });
 });
 
-$("#bundle-delete-btn").click( function() {
+$("#bundle-delete-btn").on( "click", function() {
 	Swal.fire({
 		title: 'Είστε σίγουρος;',
 		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
@@ -116,7 +116,7 @@ let publishDate = $("#publish-date-select").daterangepicker({
 	timePicker: true,
 	autoUpdateInput: false,
 	timePicker24Hour: true,
-
+	cancelButtonClasses: "btn-secondary",
 	locale: {
         format: "DD-MM-YYYY H:mm",
     },
@@ -133,29 +133,21 @@ publishDate.on( 'cancel.daterangepicker', function(event, picker) {
 	this.value = "";
 });
 
-$("#publish-date-select").on("input", function() {
-
-	this.value = this.value.replace( /[^0-9]/g, "" )
-		.replace(/^(\d{2})?(\d{2})?(\d{4})?(\d{2})?(\d{2})?(\d{4})?/g, '$1-$2-$3 $4:$5')
-		.substr(0, 16);
-
-})
-
-$('#main-active-courses-checkbox').click( function() {
+$('#main-active-courses-checkbox').on( "click", function() {
 	let checkboxes = $('.js-course-checkbox');
 	let bulkBtn = $("#courses-bulk")[0];
 
 	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
 });
 
-$('#all-courses-checkbox').change( function() {
+$('#all-courses-checkbox').on( "change", function() {
 	let checkboxes = $('.js-remainings-checkbox');
 	let bulkBtn = $("#add-courses-btn")[0];
 
 	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
 });
 
-$('#add-courses-btn').click( function() {
+$('#add-courses-btn').on( "click", function() {
 	let checkboxes = $('.js-remainings-checkbox:checked');
 	let ids = [];
 
@@ -171,7 +163,7 @@ $('#add-courses-btn').click( function() {
 	}
 });
 
-$('#remove-selected-courses-btn').click( function() {
+$('#remove-selected-courses-btn').on( "click", function() {
 	let checkboxes = $('.js-course-checkbox:checked');
 	let ids = [];
 
@@ -257,7 +249,7 @@ $("#topic-filter").select2({
 
 });
 
-$("#topic-filter").change( function() {
+$("#topic-filter").on( "change", function() {
 
 	let label = $("#select2-topic-filter-container")[0];
 
@@ -276,7 +268,7 @@ $("#active-course-type-slt").select2({
 	minimumResultsForSearch: -1,
 });
 
-$("#active-course-type-slt").change( function() {
+$("#active-course-type-slt").on( "change", function() {
 
 	let label = $("#select2-active-course-type-slt-container")[0];
 	utilities.filterStyle( label, this.value );
@@ -293,7 +285,7 @@ function activeCoursesCheckboxToggle() {
 	let bulkBtn = $("#courses-bulk")[0];
 
 	minorCheckbox.unbind();
-	minorCheckbox.change( function() {
+	minorCheckbox.on( "change", function() {
 		utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckbox, bulkBtn);
 	});
 }
@@ -417,7 +409,7 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 //! DataTables function / EventListener
 
 function addcourse() {
-	$('.js-add-course-btn').click( function() {
+	$('.js-add-course-btn').on( "click", function() {
 
 		const courseId = [this.dataset.courseId];
 
@@ -432,7 +424,7 @@ function remainingsCheckboxes() {
 	let bulkBtn = $("#add-courses-btn")[0];
 
 	minorCheckbox.unbind();
-	minorCheckbox.change( function() {
+	minorCheckbox.on( "change", function() {
 		utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckbox, bulkBtn);
 	});
 }
@@ -452,7 +444,7 @@ $("#add-course-topic-filter").select2({
 
 });
 
-$("#add-course-topic-filter").change( function() {
+$("#add-course-topic-filter").on( "change", function() {
 
 	let label = $("#select2-add-course-topic-filter-container")[0];
 
@@ -472,7 +464,7 @@ $("#add-courses-type-filter").select2({
 	minimumResultsForSearch: -1,
 });
 
-$("#add-courses-type-filter").change( function() {
+$("#add-courses-type-filter").on( "change", function() {
 
 	let label = $("#select2-add-courses-type-filter-container")[0];
 	utilities.filterStyle( label, this.value );
