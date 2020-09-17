@@ -1,14 +1,7 @@
 @extends("layouts.app")
 
 @section("style")
-    <style>
-        .left-side-menu {
-            display: none;
-        }
 
-
-
-    </style>
 @endsection
 
 @section("content")

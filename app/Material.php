@@ -68,11 +68,12 @@ class Material extends Model
 
     public function priority( $material , $course) {
 
-        return DB::table('course_material')
+       return  $test =  DB::table('course_material')
             ->where("course_id",$course)
             ->where("material_id",$material)
             ->select("priority")
             ->first()->priority;
+
     }
 
     public function getVideoLinkAttribute($value)
@@ -84,6 +85,30 @@ class Material extends Model
         return "https://player.vimeo.com/video/" . $test[3];
     }else
         return $value;
+
+    }
+
+    public function getTypeAttribute($value)
+    {
+        if( request()->route()->getName()=='index.userCourse'){
+            if($value=='Lesson'){
+                return 'mdi mdi-file-document-outline';
+            }
+            elseif ($value=='Link'){
+                return 'mdi mdi-link-variant-plus';
+
+            }
+            elseif ($value=='Announcement'){
+                return 'mdi mdi-comment-quote-outline';
+
+            }
+            elseif ($value=='Video'){
+                return 'mdi mdi-camcorder';
+
+            }
+
+        }
+
 
     }
 

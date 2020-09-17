@@ -56,6 +56,7 @@ class CourseController extends Controller {
                 return Course::whereIn('id', [$test->id])->get();
             });
 
+
             return view("courses.courses", [
                 'arrayTopics' => $arrayTopics,
                 'allCourses' => $allCourses->flatten(1)])->render();
@@ -67,6 +68,8 @@ class CourseController extends Controller {
 
         $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
         $lastMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();;
+        $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
+        $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
         $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
 
         return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial"));
@@ -81,11 +84,17 @@ class CourseController extends Controller {
         if (isset($watchlist))
         {
 
+            User::findOrFail($request->userId)
+                ->watchlistCourse()
+                ->detach($request->modelId);
+
             return response("exist");
+        }else{
+            User::findOrFail($request->userId)
+                ->watchlistCourse()
+                ->sync($request->modelId, false);
         }
-        User::findOrFail($request->userId)
-            ->watchlistCourse()
-            ->sync($request->modelId, false);
+
     }
 
 }

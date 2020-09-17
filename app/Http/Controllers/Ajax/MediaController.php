@@ -124,7 +124,7 @@ class MediaController extends Controller
 						$arrayName = (array_diff( $temp, [$image->getClientOriginalExtension()] ));
 						$originalName = implode( ".", $arrayName );
 						$name =  Str::slug( implode("-", $arrayName ), "-" );
-						
+
 						$count = Media::where( "original_name", $originalName)->count();
 
 						if ( $count > 0 ) {
@@ -146,15 +146,15 @@ class MediaController extends Controller
 						$media->height = Image::make( $image )->height();
 						$media->save();
 
-						// // $model->media()->attach( $media->id, [ "usage" => 1 ] );
-						
+						 // $model->media()->attach( $media->id, [ "usage" => 1 ] );
+
 						$image->storeAs("public/images/$date", $fullname);
 
 						if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
 							Storage::disk("local")->makeDirectory("public/thumbnails/$date");
 
 						}
-						
+
 						Image::make( $image )->fit( 215, 215)
 							->save( storage_path("/app/public/thumbnails/$date/$fullname") );
 

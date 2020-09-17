@@ -11,7 +11,8 @@
         }
 
         .box-material-down {
-            background: #E0A228;
+            background: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
+            border-top: 1px solid white;
             border-bottom-right-radius: 15px;
             border-bottom-left-radius: 15px;
 
@@ -21,7 +22,8 @@
             background: #E0A228;
             border-top-right-radius: 15px;
             border-top-left-radius: 15px;
-            background: linear-gradient(0deg, #f19a1a, #ffc73c)
+            background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%)
+
         }
 
         .material-count {
@@ -33,9 +35,27 @@
         .list-material:hover {
 
             cursor: pointer;
-            background: #E7E7E7;
+            background: rgba(231, 231, 231, 0.51);
         }
 
+        .list-material {
+            border-radius: 5px;
+            background: rgba(231, 231, 231, 0.2);
+            margin-bottom: 10px;
+        }
+
+        .material-count:hover {
+            color: rgba(231, 231, 231, 0.2);
+            background: rgba(231, 231, 231, 0.2)
+
+        }
+    .ribbon-edit:hover{
+        text-decoration: underline;
+    }
+
+        .box-title:hover > .mdi-heart-outline , .box-title:hover > .mdi-cards-heart  {
+            color: red;
+        }
 
     </style>
 @endsection
@@ -43,36 +63,45 @@
 @section("content")
     <div class="content-page">
         @role("admin")
-        <div class="sticky-top">
-            <a class=" btn btn-outline-secondary nav-link" href="{{route('course.show',$course->slug)}}" role="button"
-               aria-haspopup="true" aria-expanded="false">
-                Edit this page
-            </a>
+
+        <div class="card ribbon-box" style="background-color: #FAFBFE">
+            <div class="card-body py-0">
+                <div class="ribbon ribbon-secondary float-right"><i class="mdi mdi-access-point mr-1"></i>
+                    <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}"><spant class="ribbon-edit">Edit this page</spant></a>
+                </div>
+            </div> <!-- end card-body -->
         </div>
         @endrole
-        <div class="container-xl my-3" style="width: 1450px">
+        <div class="container-xl my-3" style="max-width: 1650px">
             <div class="row box-material-up px-5 pt-4 pb-2">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-3">
-                            <img height="250"
-                                 src="https://laracasts.s3.amazonaws.com/series/thumbnails/svg/html5-video-and-videojs.svg"
-                                 alt="">
+                            <img height="300" width="300" class="img-fluid img-thumbnail rounded-circle"
+                                 src="{{$course->cover=="vaggelaras"? "http://lorempixel.com/300/300":url($course->cover)}}"
+                                 alt="course-logo"
+                            >
                         </div>
 
 
                         <div class="col-md-6">
-                            <h2  class="display-4 text-light">{{$course->title}}</h2>
-                            <p class="my-4">{{$course->subtitle}}</p>
+                            <h2 class="display-4 text-light">{{$course->title}}</h2>
+                            <p class="text-light my-4">{{$course->subtitle}}</p>
                             <div class="button-course-fav">
                                 @if(count($allMaterial))
                                     <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
-                                       class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Αρχισε
+                                       class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Έναρξη
                                     </a>
                                 @endif
                                 <button
                                     data-model="course" data-course-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
-                                    class="add-watchlist px-4 box-title btn bghover btn-secontary font-weight-bold">Προσθήκη στα αγαπημένα
+                                    class="add-watchlist px-3 box-title btn bghover btn-secontary font-weight-bold">
+                                    <i class="font-16
+                                     {{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
+                                      ">
+
+
+                                    </i> <span>Προσθήκη στα αγαπημένα</span>
                                 </button>
                             </div>
                         </div>
@@ -89,9 +118,9 @@
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
 
-                                    <button class="bghover border font-weight-bold btn btn-secontary">
-                                        <a href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">Δες
-                                            το μαθημα</a>
+                                    <button class="bghover  border font-weight-bold btn btn-secontary ">
+                                        <a class="text-white bghover" href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
+                                          Δες το μαθημα</a>
                                     </button>
                                     @endif
                                 </div>
@@ -102,20 +131,21 @@
                 </div>
             </div>
             <div class="row p-2 box-material-down">
-                <div class="col-md-5  d-flex justify-content-between text-light">
-                    <span>metrio</span>
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","Lesson")->count()}} Μαθήματα  </span>
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","Lesson")->count()}} Extra  </span>
+                <div class="col-md-4  d-flex justify-content-between text-light">
+{{--                    <span>metrio</span>--}}
+
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","mdi mdi-file-document-outline")->count()}} Μαθήματα  </span>
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","mdi mdi-file-document-outline")->count()}} Extra  </span>
                     @foreach($topics as $topic)
-                        <span class="bghover font-weight-bold border px-2">{{$topic}}</span>
+                        <span  class="topic-title font-weight-bold border px-2">{{$topic}}</span>
                     @endforeach
                 </div>
             </div>
         </div>
-        <div class="container" style="max-width: 1400px">
+        <div class="container" style="max-width: 1250px">
             <div class="row background-material">
                 <div class="col-md-12">
-                    <div class="row justify-content-between p-3">
+                    <div class="row justify-content-between px-3 py-2">
                         <div class="col-md-6"><span class="font-weight-bold text-black">Εισηγητής </span>|
                             {{$course->curator->first_name}}
                         </div>
@@ -125,62 +155,61 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12  p-2">
+                <div class="col-md-12 ">
                     <div class="row">
-                        <div class="col-md-2"><img height="80" width="80" class="rounded-circle"
-                                                   src="  {{$course->curator->cover}}"
-                                                   alt=""></div>
+                        <div class="col-md-2 pt-2 text-center">
+                            <img height="80" width="80" class="img-fluid img-thumbnail rounded-circle"
+                                 src="  {{$course->curator->cover}}"
+                                 alt=""></div>
                         <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
-                            <h4>Πληροφορίες </h4>
-                            <p> {{$course->curator->profil}}
-                            </p>
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <h4>Πληροφορίες </h4>
+                                    <p> {{$course->curator->profil}}
+                                    </p>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
         </div>
-        <div class="container my-3" style="max-width: 1350px">
+        <div class="container-fluid my-3" style="max-width: 1250px">
             <div class="row ">
                 <div class="col-md-8">
                     {!! $course->description !!}
                 </div>
                 <div class="col-md-4 ">
-                    <ul>
-                        @foreach($allMaterial as $key=> $materials)
-                            <li class="list-group-item ">
-                                <div id="accordion">
-                                    <button class="btn btn-link" data-toggle="collapse"
-                                            data-target="#{{$materials->slug}}" aria-expanded=""
-                                            aria-controls="{{$materials->slug}}">
-                                                        <span
-                                                            class="mb-2 font-18 text-dark font-weight-bold">
-                                                            <span class="material-count mr-3">{{++$count}}</span>
-                                                            {{$materials->title}}</span>
-                                    </button>
-                                    <a class="d-flex"
-                                       href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
-                                        <div id="{{$materials->slug}}"
-                                             class="w-100 collapse list-material {{$loop->first? "show":""}} "
-                                             aria-labelledby="{{$materials->slug}}{{$key}}"
-                                             data-parent="#accordion">
-                                            <div class="card-body d-flex flex-column ">
-                                                <span class="mb-2 font-14 text-dark">   {{$materials->subtitle}}</span>
-                                                <span class="mb-2 font-14 text-dark">   {{$materials->type}}</span>
-
-                                            </div>
-                                        </div>
-                                    </a>
-
-                                </div>
-
-
+                    <ul class="m-0 p-0">
+                        @foreach($allMaterial as $materials)
+                            <li class="list-group-item list-material border   ">
+                                <a class="d-flex align-items-center m"
+                                   href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
+                                    <div class="col-md-2 ">
+                                        <span class="material-count">{{++$count}}</span>
+                                    </div>
+                                    <div class="col-md-8 d-flex flex-column text-center ">
+                                        <span
+                                            class=" font-18 text-dark font-weight-bold">   {{$materials->title}}</span>
+                                        <span class=" font-14 text-dark">    {{$materials->subtitle}}</span>
+                                    </div>
+                                    <div class="col-md-2 ">
+                                        <span class="badge badge-primary-lighten">
+                                            <i class=" font-24 text-black {{$materials->type}}"></i>
+                                        </span>
+                                    </div>
+                                </a>
                             </li>
                         @endforeach
                     </ul>
 
                 </div>
+
+
             </div>
+
 
         </div>
 
@@ -192,8 +221,12 @@
 @section("script")
 
 
-        <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
+    <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
 
 
 
 @endsection
+
+{{--mdi mdi-heart-outline--}}
+
+{{--mdi mdi-cards-heart--}}

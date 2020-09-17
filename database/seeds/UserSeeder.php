@@ -24,7 +24,7 @@ class UserSeeder extends Seeder {
             'email' => "admin@gmail.com",
             "phone"=>"6978565698",
             "profil"=>"admin profil",
-            'cover' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
+            'cover' => "http://lorempixel.com/80/80/people",
             'slug' => "admin",
             'password' => Hash::make('password'),
             "password_encrypt"=>Crypt::encryptString('password'),
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder {
 		User::create([
             'first_name' => "Υδρόγειος",
             'last_name' => "Idrogios",
-            'cover' => "6176c9b44bf3aa29b77b8d335ec4d38d.jpg",
+            'cover' => "http://lorempixel.com/80/80/people",
             'email' => "idrogios@gmail.com",
             "phone"=>"6978512598",
             "profil"=>"Idrogios profil",

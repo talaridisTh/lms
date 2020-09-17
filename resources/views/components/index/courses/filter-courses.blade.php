@@ -1,6 +1,8 @@
 <div class="d-flex filter-data flex-wrap w-100">
     @foreach($allCourses as $course)
-    @php($allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get())
+    @php
+        $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get()
+    @endphp
     @if($allMaterial->where("type","Lesson")->count() && $allMaterial->where("type","Lesson")->count())
     <div class="col-md-4 mb-4 ">
         <div class="row mr-3" style="background: white;">

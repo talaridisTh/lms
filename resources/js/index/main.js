@@ -39,6 +39,9 @@ const addWhatchlist = () => {
 
 
 const addWhatchlistAxios = async (modelId, userId,model) => {
+    const heart = $(".add-watchlist")[0].children[0];
+    const button = $(".add-watchlist > span")[0];
+
 
     try {
         const res = await axios.patch(`/add-watchlist/${model}`, {
@@ -47,10 +50,20 @@ const addWhatchlistAxios = async (modelId, userId,model) => {
         })
 
         if (res.data) {
-            utilities.toastAlert("info", `Υπάρχει ήδη στα Αγαπημένα`)
+            utilities.toastAlert("success", `Αφαιρέθηκε ήδη στα Αγαπημένα`)
+            heart.className="mdi mdi-heart-outline font-16 mr-2"
+            button.textContent = " Προσθήκη στα αγαπημένα"
+
+
+
 
         } else if (res.status == 200) {
             utilities.toastAlert("success", `Προστέθηκε στα αγαπήμενα`)
+            heart.className="mdi mdi-cards-heart font-16 mr-2"
+            button.textContent = "Αφαίρεση απο τα αγαπημένα"
+
+
+
         }
     } catch (e) {
         console.log(e)

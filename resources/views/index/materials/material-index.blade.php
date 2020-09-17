@@ -1,17 +1,7 @@
 @extends("layouts.app")
 
 @section("style")
-<style>
-    .left-side-menu-detached {
-        display: none;
-    }
 
-    hr.style-two {
-        border: 0;
-        height: 1px;
-        background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-    }
-</style>
 @endsection
 
 @section("content")

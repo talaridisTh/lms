@@ -3470,6 +3470,13 @@ select.is-invalid {
   color: #328af1 !important;
 }
 
+.topic-title {
+  background: white;
+  color: black;
+  transition: background 0.3s, border-color 0.2s;
+  border-radius: 18px;
+}
+
 .material-title:hover {
   background: #E9EAEB;
 }
@@ -3521,7 +3528,7 @@ select.is-invalid {
 }
 
 .box-title {
-  background-color: #E3AC31;
+  background: #EC8505;
   padding: 6px;
   border-radius: 15px;
   color: white;
@@ -3543,8 +3550,9 @@ select.is-invalid {
 
 .box-last-material {
   border-radius: 15px;
-  background: #E2AB30;
+  background: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
   display: flex;
+  border: 1px solid white;
   align-items: center;
   flex-direction: column;
 }
@@ -3552,14 +3560,11 @@ select.is-invalid {
 .box-last-material .box-num-material {
   border-radius: 100%;
   background: white;
-  padding-left: 2.25rem !important;
-  padding-bottom: 1.25rem !important;
-  padding-right: 2.25rem !important;
-  padding-top: 1.25rem !important;
+  padding: 21px;
 }
 
 .box-last-material button {
-  background: #EBC467;
+  background: #EC8505;
   color: white;
   width: 100%;
   border-radius: 19px;
