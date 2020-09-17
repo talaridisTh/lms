@@ -108,6 +108,7 @@ class Material extends Model
             }
 
         }
+        else return $value;
 
 
     }
