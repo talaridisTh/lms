@@ -362,9 +362,7 @@
 								<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
 
 									<div class="sticky py-3">
-{{-- @dd( $course->publish_at )
-@dd( strtotime( $course->publish_at) )
-@dd( time() ) --}}
+
 										@php
 											if ( $course->status == 1 ) {
 												if ( time() > strtotime($course->publish_at) && !is_null($course->publish_at) ) {
