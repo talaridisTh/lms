@@ -20,26 +20,59 @@
 @endsection
 
 @section('content')
-	<!-- start page title -->
-	<div class="row">
-		<div class="col-12">
-			<div class="page-title-box">
-				<div class="page-title-right">
-					<ol class="breadcrumb m-0">
-						<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
-						<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
-						<li class="breadcrumb-item"><a href="/dashboard/bundles" class="custom-link-primary">Bundles</a></li>
-						<li class="breadcrumb-item active">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</li>
-					</ol>
+	
+	@isset($bundle)
+
+		<!-- Add Users Modal -->
+		<div class="modal fade" id="add-users" tabindex="-1" role="dialog" aria-labelledby="add-usersLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl" role="document">
+				<div class="modal-content">
+					<div class="modal-header modal-colored-header bg-primary">
+						<h5 class="modal-title" id="add-usersLabel">Προσθήκη Μαθητών</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body table-cnt">
+						<table id="remaining-users-table" class="table w-100 nowrap modal-table px-3 js-remove-table-classes">
+							<thead>
+								<tr>
+									<th class="select-all w-5">
+										<div class='icheck-primary d-inline'>
+											<input class='js-all-users-checkbox' type='checkbox' id='remaining-all-users-checkbox' autocomplete='off'>
+											<label for='remaining-all-users-checkbox'></label>
+										</div>
+									</th>
+									<th class="text-center">Επώνυμο</th>
+									<th class="text-center">Όνομα</th>
+									<th class="text-center">Email</th>
+									<th class="text-center">Τηλέφωνο</th>
+									<th class="text-center w-5"></th>
+								</tr>
+							</thead>
+							<tbody class="tables-hover-effect"></tbody>
+							<tfoot>
+								<tr>
+									<th class="text-center"></th>
+									<th class="text-center">Επώνυμο</th>
+									<th class="text-center">Όνομα</th>
+									<th class="text-center">Email</th>
+									<th class="text-center">Τηλέφωνο</th>
+									<th class="text-center"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button id="add-users-btn" type="button" data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary" class="btn btn-secondary" disabled>Προσθήκη Επιλογών (0)</button>
+						<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+					</div>
 				</div>
-				<h4 id="bundle-title" class="page-title" data-bundle-id="{{ isset($bundle) ? $bundle['id'] : 1 }}">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</h4>
 			</div>
 		</div>
-	</div>     
-	<!-- end page title -->
 
-	@isset($bundle)
-		<!-- Modal -->
+
+		<!-- Gallery Modal -->
 		<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
 				<div class="modal-content">
@@ -146,6 +179,23 @@
 	    </div><!-- /.modal-dialog -->
 	</div><!-- /.modal -->
 
+	<!-- start page title -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box">
+				<div class="page-title-right">
+					<ol class="breadcrumb m-0">
+						<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+						<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="/dashboard/bundles" class="custom-link-primary">Bundles</a></li>
+						<li class="breadcrumb-item active">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</li>
+					</ol>
+				</div>
+				<h4 id="bundle-title" class="page-title" data-bundle-id="{{ isset($bundle) ? $bundle['id'] : 1 }}">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</h4>
+			</div>
+		</div>
+	</div>
+	<!-- end page title -->
 
 	<div class="wrapper">
 		<div class="content">
@@ -366,7 +416,7 @@
 						<div class="col-sm-1">
 						</div>
 						<div class="col-sm-11 d-flex justify-content-end">
-							<button id="users-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#remaining-users-modal">
+							<button id="users-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-users">
 								<i class="mdi mdi-plus-circle mr-2"></i>
 								Προσθήκη Χρηστών
 							</button>
@@ -392,6 +442,8 @@
 								</th>
 								<th class="text-center">Επώνυμο</th>
 								<th class="text-center">Όνομα</th>
+								<th class="text-center">Email</th>
+								<th class="text-center">Τηλέφωνο</th>
 								<th class="text-center"></th>
 							</tr>
 						</thead>
@@ -401,6 +453,8 @@
 								<th class="text-center"></th>
 								<th class="text-center">Επώνυμο</th>
 								<th class="text-center">Όνομα</th>
+								<th class="text-center">Email</th>
+								<th class="text-center">Τηλέφωνο</th>
 								<th class="text-center"></th>
 							</tr>
 						</tfoot>

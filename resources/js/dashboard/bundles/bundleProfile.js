@@ -8,13 +8,53 @@ import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
-//! GLOBAL VARIABLES
+//!##############################################
+//! 			GLOBAL VARIABLES				#
+//!##############################################
 const bundleId = $("#bundle-title")[0].dataset.bundleId;
 const baseUrl = window.location.origin;
 
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
+
+$("#add-users-btn").on("click", function() {
+	let pickedUsers = $(".js-remaining-user-checkbox:checked");
+	let ids = [];
+
+	for ( let i = 0; i < pickedUsers.length; i++ ) {
+		ids.push( pickedUsers[i].dataset.userId );
+	}
+
+	addUserBundle( ids )
+});
+
+$("#remove-selected-users-btn").on("click", function() {
+
+	let pickUsers = $(".js-active-user-checkbox:checked");
+	let ids = [];
+
+	for (let i = 0; i < pickUsers.length; i++) {
+		ids.push(pickUsers[i].dataset.userId);
+	}
+
+	removeUsers(ids);
+
+});
+
+$("#remaining-all-users-checkbox").on("click", function() {
+	let minorCheckboxes = $(".js-remaining-user-checkbox");
+	let bulk = $("#add-users-btn")[0];
+
+	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulk);
+});
+
+$("#main-active-users-checkbox").on("change", function() {
+	let minorCheckboxes = $(".js-active-user-checkbox");
+	let bulk = $("#users-bulk")[0];
+
+	utilities.minorCheckboxSwitcher( this, minorCheckboxes, bulk );
+});
 
 $("#change-cover-btn").on("click", function() {
 
@@ -100,8 +140,6 @@ $("#publish-date-select").on("input", function() {
 		.substr(0, 16);
 
 })
-
-
 
 $('#main-active-courses-checkbox').click( function() {
 	let checkboxes = $('.js-course-checkbox');
@@ -275,34 +313,62 @@ const bundleUsersTable = $("#bundle-users-table").DataTable({
 	},
 	columns: [
 		{data: 'action', name:'action', orderable: false, searchable: false, className: "align-middle text-center"},
-		{data: 'last_name', name: 'last_name', className: "cursor-default"},
+		{data: 'last_name', name: 'last_name', className: "align-middle text-center cursor-default"},
 		{data: 'first_name', name: 'first_name', className: "align-middle text-center cursor-default"},
+		{data: 'email', name: 'email', className: "align-middle text-center cursor-default"},
+		{data: 'phone', name: 'phone', className: "align-middle text-center cursor-default"},
 		{data: 'btn', name: 'btn', orderable: false, searchable: false, className: "align-middle text-center"}
 	],
 	language: utilities.tableLocale,
-	// fnInitComplete: function( oSettings, json ) {
-	// 	let lenthSelection = $("select[name='remaining-courses-table_length']");
-	// 	lenthSelection.addClass("select2");
-
-	// 	lenthSelection.select2({
-	// 		minimumResultsForSearch: -1,
-	// 	});
-	// },
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-		// $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
-		// $(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
-		// addcourse();
-		// remainingsCheckboxes();
-		// utilities.resetAddButton(  $("#add-courses-btn"), $("#all-courses-checkbox") );
+		utilities.resetBulk(  $("#users-bulk"), $("#main-active-users-checkbox") );
+		activeUsersCheckboxesInit();
+		removeUserBinInit();
 	},
 })
 
+//* Table eventlisteners init
 
+function removeUserBinInit() {
+	
+	let bin = $(".js-remove-user");
 
+	bin.off();
+	bin.on("click", function() {
+
+		Swal.fire({
+			title: 'Είστε σίγουρος/η;',
+			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει έναν απο</p>τους χρήστες του Bundle.`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+			if (result.value) {
+
+				removeUsers([this.dataset.userId]);
+
+			}
+		})
+	});
+}
+
+function activeUsersCheckboxesInit() {
+	
+	let minorCheckboxes = $(".js-active-user-checkbox")
+	let mainCheckbox = $("#main-active-users-checkbox")[0];
+	let bulk = $("#users-bulk")[0];
+
+	minorCheckboxes.off();
+	minorCheckboxes.on( "change", function() {
+		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulk );
+	});
+
+}
 
 const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 	order: [1, "asc"],
@@ -444,7 +510,7 @@ function removeCourses( courseIds ) {
 
 		let message = courseIds.length == 1 ? "1 Course Αφαιρέθηκε" : `${courseIds.length} Course αφαιρέθηκαν`;
 
-		utilities.toastAlert( 'success', message );
+		utilities.toastAlert( 'info', message );
 
 		bundleCoursesTable.ajax.reload();
 		remainingCoursesTable.ajax.reload();
@@ -452,7 +518,107 @@ function removeCourses( courseIds ) {
 		utilities.resetBulk(  $("#courses-bulk"), $("#main-active-courses-checkbox") );
 	})
 	.catch( (err) => {
-		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+}
+
+function removeUsers( users ) {
+	axios.post("/bundles/remove-users", {
+		bundleId,
+		users
+	})
+	.then( res => {
+
+		let count = users.length;
+		let message = count == 1 ? `Ο χρήστης αφαιρέθηκε...` : `${count} χρήστες αφαιρέθηκαν...`;
+
+		utilities.toastAlert("info", message);
+		bundleUsersTable.ajax.reload();
+		remainingUsersTable.ajax.reload();
+
+	})
+	.catch( err => {
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+}
+
+const remainingUsersTable = $("#remaining-users-table").DataTable({
+	order: [1, "asc"],
+	processing: true,
+	serverSide: true,
+	ajax: {
+		url: "/bundles/remaining-users-datatable",
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		type: "post",
+		data: {
+			bundleId: bundleId
+		}
+	},
+	columns: [
+		{data: 'action', name:'action', orderable: false, searchable: false, className: "align-middle text-center"},
+		{data: 'last_name', name: 'last_name', className: "align-middle text-center cursor-default"},
+		{data: 'first_name', name: 'first_name', className: "align-middle text-center cursor-default"},
+		{data: 'email', name: 'email', className: "align-middle text-center cursor-default"},
+		{data: 'phone', name: 'phone', className: "align-middle text-center cursor-default"},
+		{data: 'btn', name: 'btn', orderable: false, searchable: false, className: "align-middle text-center"}
+	],
+	language: utilities.tableLocale,
+	drawCallback:function(){
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+
+		addUserBtnInit();
+		minorUsersCheckboxInit();
+		utilities.resetAddButton(  $("#add-users-btn"), $("#remaining-all-users-checkbox") );
+	},
+
+});
+
+function addUserBtnInit() {
+	let addBtn = $(".js-add-user-btn");
+
+	addBtn.off();
+	addBtn.on("click", function() {
+
+		addUserBundle( [this.dataset.userId] );
+
+	});
+}
+
+function minorUsersCheckboxInit() {
+
+	let main = $("#remaining-all-users-checkbox")[0];
+	let minors = $(".js-remaining-user-checkbox");
+	let bulk = $("#add-users-btn")[0];
+
+	minors.off();
+	minors.on("change", function() {
+		utilities.mainCheckboxSwitcher( main, minors, bulk );
+	});
+
+}
+
+function addUserBundle( users ) {
+	axios.post("/bundles/add-users", {
+		bundleId,
+		users
+	})
+	.then( res => {
+
+		let count = users.length
+		let message = count == 1 ? "Ένας χρήστης προστέθηκε." : `${count} χρήστες προστέθηκαν.`
+
+		remainingUsersTable.ajax.reload();
+		bundleUsersTable.ajax.reload();
+		utilities.toastAlert( "success", message );
+
+		if (count > 1) {
+			$("#add-users").modal("hide");
+		}
+	})
+	.catch( err => {
+		
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }

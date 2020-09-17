@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Bundle;
+use App\DataTables\AddBundleUsersDataTable;
 use App\DataTables\BundleCoursesDataTable;
 use App\DataTables\BundleDataTable;
 use App\DataTables\BundleUsersDatatable;
@@ -134,5 +135,30 @@ class BundleController extends Controller
 	public function bundleUsers( BundleUsersDatatable $dataTable )
     {
         return $dataTable->render('bundle.users');
-    }
+	}
+
+	public function remainingUsers ( AddBundleUsersDataTable $dataTable ) {
+		
+		return $dataTable->render('bundle.remaining.users');
+
+	}
+	
+	public function removeUsers(Request $request) {
+
+		$bundle = Bundle::find( $request->bundleId );
+
+		foreach( $request->users as $id ) {
+			$bundle->users()->detach( $id );
+		}
+
+	}
+
+	public function addUsers(Request $request) {
+
+		$bundle = Bundle::find( $request->bundleId );
+		$bundle->users()->sync( $request->users, false );
+
+	}
+
+
 }
