@@ -153,7 +153,7 @@ class CourseController extends Controller
 		}
 		elseif( $request->publish == 1 ) {
 			$status = 1;
-			$publish = date( "Y-m-d H:i:s", (time() - 50) );
+			$publish = date( "Y-m-d H:i:s", (time() - 10) );
 		}
 		else {
 			$status = 0;

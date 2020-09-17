@@ -16,6 +16,9 @@
 			top: 70px;
 			z-index: 1010;
 		}
+		.circle-icon {
+		padding: 0.1rem 0.2rem;
+	}
 	</style>
 @endsection
 
@@ -70,7 +73,6 @@
 				</div>
 			</div>
 		</div>
-
 
 		<!-- Gallery Modal -->
 		<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
@@ -173,7 +175,7 @@
 	            </div>
 	            <div class="modal-footer">
 	                <button id="add-courses-btn" type="button" data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary" class="btn btn-secondary" disabled>Προσθήκη Επιλογών (0)</button>
-	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+	                <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 	            </div>
 	        </div><!-- /.modal-content -->
 	    </div><!-- /.modal-dialog -->
@@ -311,7 +313,96 @@
 						</div>
 						<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
 							<div class="sticky py-3">
+
+								@php
+									if ( $bundle->status == 1 ) {
+										if ( time() > strtotime($bundle->publish_at) && !is_null($bundle->publish_at) ) {
+											$tooltip = [
+												"color" => "bg-success", 
+												"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+												"text" => "Published"
+											];
+											$storeBtn = [ "color" => "btn-info", "text" => "Update"];
+											$publishBtn = [
+												"color" => "btn-light",
+												"text" => "Set Draft",
+												"value" => 0
+											];
+										}
+										else {
+											$tooltip = [
+												"color" => "bg-info", 
+												"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>", 
+												"text" => "Scheduled"
+											];
+											$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
+											$publishBtn = [
+												"color" => "btn-danger",
+												"text" => "Publish",
+												"value" => 1
+											];
+
+										}
+									}
+									else {
+										$tooltip = [
+											"color" => "bg-light", 
+											"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+											"text" => "Draft"
+										];
+										$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
+										$publishBtn = [
+											"color" => "btn-danger",
+											"text" => "Publish",
+											"value" => 1
+										];
+									}
+								@endphp
+
+								<span id="status-icon"
+									class=" px-1 pointer-default circle-icon btn-sm btn {{ $tooltip['color'] }} text-white rounded-circle"
+									data-toggle="tooltip" data-placement="bottom" title="{{ $tooltip['text'] }}"
+								>
+									{!! $tooltip['icon'] !!}
+								</span>
+
 								<button form="bundle-edit-form" type="submit"
+									class="btn {{ $storeBtn['color'] }}" name="save" value="save"
+								>
+									{{ $storeBtn['text'] }}
+								</button>
+
+								<button form="bundle-edit-form" type="submit" class="btn {{ $publishBtn['color'] }}"
+									name="publish" value="{{ $publishBtn['value'] }}"
+								>
+									{{ $publishBtn['text'] }}
+								</button>
+
+								<a id="preview-btn"
+									href="#"
+									class="btn btn-warning"
+								>
+									<i class="mdi mdi-eye"></i>
+								</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+								{{-- <button form="bundle-edit-form" type="submit"
 									id="update-btn" class="btn btn-primary"
 								>
 									{{ isset($bunle) ? "Ενημέρωση" : "Αποθήκευση" }}
@@ -320,14 +411,18 @@
 								@if ( isset($bundle) )	
 									<a id="preview-btn" href="#" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i></a>
 									<button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
-								@endif
+								@endif --}}
+
+
+
+
 							</div>
 		
 							<div class="card">
 								<div class="card-body">
 									<hr class="mt-0" />
 									<div class="form-group">
-										<label for="publish-date-select">Δημοσίευση απο:</label>
+										<label for="publish-date-select">Published</label>
 										<input form="bundle-edit-form" type="text" class="form-control" id="publish-date-select" name="publishDate" value="{{ $publish }}" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
 									</div>
 									<hr class="mb-0" />

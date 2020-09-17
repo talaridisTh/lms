@@ -155,7 +155,7 @@
 				<input id="store-material-id" type="text" value="" hidden>
 				<input id="store-material-priority" type="text" value="" hidden>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
 			</div>
 		</div>
@@ -203,7 +203,7 @@
 						data-enabled-color="btn-primary" data-disabled-color="btn-secondary" disabled>
 						Προσθήκη Επιλογών (0)
 					</button>
-					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
 			</div><!-- /.modal-content -->
 		</div><!-- /.modal-dialog -->
