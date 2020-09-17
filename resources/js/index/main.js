@@ -27,10 +27,12 @@ const addWhatchlist = () => {
     $(".add-watchlist").click(function () {
 
         addWhatchlistAxios(
-            this.dataset.courseId,
+            this.dataset.modelId,
             this.dataset.userId,
             this.dataset.model,
         );
+
+
 
 
 
@@ -41,6 +43,11 @@ const addWhatchlist = () => {
 const addWhatchlistAxios = async (modelId, userId,model) => {
     const heart = $(".add-watchlist")[0].children[0];
     const button = $(".add-watchlist > span")[0];
+    console.log(modelId)
+    console.log(userId)
+    console.log(model)
+    console.log(heart)
+    console.log(button)
 
 
     try {
@@ -49,15 +56,16 @@ const addWhatchlistAxios = async (modelId, userId,model) => {
             userId
         })
 
-        if (res.data) {
-            utilities.toastAlert("success", `Αφαιρέθηκε ήδη στα Αγαπημένα`)
+
+        if (res.data=="remove") {
+            utilities.toastAlert("info", `Αφαιρέθηκε ήδη στα Αγαπημένα`)
             heart.className="mdi mdi-heart-outline font-16 mr-2"
-            button.textContent = " Προσθήκη στα αγαπημένα"
+            button.textContent = "Προσθήκη στα αγαπημένα"
 
 
 
 
-        } else if (res.status == 200) {
+        } else if (res.data=="add") {
             utilities.toastAlert("success", `Προστέθηκε στα αγαπήμενα`)
             heart.className="mdi mdi-cards-heart font-16 mr-2"
             button.textContent = "Αφαίρεση απο τα αγαπημένα"

@@ -93,7 +93,9 @@ class Material extends Model
 
     public function getTypeAttribute($value)
     {
-        if( request()->route()->getName()=='index.userCourse'){
+
+
+        if( request()->route()->getName()=='index.userCourse' ||request()->route()->getName()=='index.material.show' ){
             if($value=='Lesson'){
                 return 'mdi mdi-file-document-outline';
             }

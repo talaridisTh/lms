@@ -201,15 +201,17 @@
         </div>
         <div class="col-md-4">
             <div class="col-md-12 sticky  py-3 px-2 pl-3    mr-5" style="margin-top: -85px;">
-                <button id="button-createMaterial-form {{isset($material)? "update-btn":""}} " type="submit"
-                        form="material-create"
+                <button id="button-createMaterial-form {{isset($user)? "update-btn":""}} " type="submit"
+                        form="buttonUser"
                         class="btn btn-primary ">
-                    {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
+                    {{isset($user)? "Ενημέρωση":"Δημιουργια"}}
                 </button>
+                @isset($user)
                 <a href="{{route('index.profile',$user->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
                         class="mdi mdi-eye"></i>
                 </a>
-                <button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
+                @endisset
+{{--                <button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>--}}
 
             </div>
             <div class="col-md-12 border-material d-d">

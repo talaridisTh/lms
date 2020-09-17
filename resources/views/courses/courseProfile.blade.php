@@ -53,9 +53,7 @@
         text-decoration: underline;
     }
 
-        .box-title:hover > .mdi-heart-outline , .box-title:hover > .mdi-cards-heart  {
-            color: red;
-        }
+
 
     </style>
 @endsection
@@ -76,8 +74,8 @@
             <div class="row box-material-up px-5 pt-4 pb-2">
                 <div class="col-md-12">
                     <div class="row align-items-center">
-                        <div class="col-md-3">
-                            <img height="300" width="300" class="img-fluid img-thumbnail rounded-circle"
+                        <div class="col-md-3 mb-2">
+                            <img height="300" width="300" class=" img-fluid img-thumbnail rounded-circle"
                                  src="{{$course->cover=="vaggelaras"? "http://lorempixel.com/300/300":url($course->cover)}}"
                                  alt="course-logo"
                             >
@@ -94,8 +92,8 @@
                                     </a>
                                 @endif
                                 <button
-                                    data-model="course" data-course-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
-                                    class="add-watchlist px-3 box-title btn bghover btn-secontary font-weight-bold">
+                                    data-model="course" data-model-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
+                                    class="add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary font-weight-bold">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                       ">
@@ -156,7 +154,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 ">
-                    <div class="row">
+                    <div class="row mb-1">
                         <div class="col-md-2 pt-2 text-center">
                             <img height="80" width="80" class="img-fluid img-thumbnail rounded-circle"
                                  src="  {{$course->curator->cover}}"
@@ -178,10 +176,11 @@
         </div>
         <div class="container-fluid my-3" style="max-width: 1250px">
             <div class="row ">
-                <div class="col-md-8">
+
+                <div class="col-md-8 {{empty($course->description)?"d-none":""}}">
                     {!! $course->description !!}
                 </div>
-                <div class="col-md-4 ">
+                <div class=" {{!empty($course->description)?"col-md-4":"offset-2 col-md-8 offset-2  text-left" }}" >
                     <ul class="m-0 p-0">
                         @foreach($allMaterial as $materials)
                             <li class="list-group-item list-material border   ">
@@ -190,10 +189,10 @@
                                     <div class="col-md-2 ">
                                         <span class="material-count">{{++$count}}</span>
                                     </div>
-                                    <div class="col-md-8 d-flex flex-column text-center ">
+                                    <div class="col-md-8 d-flex flex-column  ">
                                         <span
                                             class=" font-18 text-dark font-weight-bold">   {{$materials->title}}</span>
-                                        <span class=" font-14 text-dark">    {{$materials->subtitle}}</span>
+                                        <span style="word-break: break-all" class=" font-14 text-dark">    {{$materials->subtitle}}</span>
                                     </div>
                                     <div class="col-md-2 ">
                                         <span class="badge badge-primary-lighten">
@@ -227,6 +226,3 @@
 
 @endsection
 
-{{--mdi mdi-heart-outline--}}
-
-{{--mdi mdi-cards-heart--}}

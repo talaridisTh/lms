@@ -38,14 +38,26 @@ class MaterialController extends Controller {
 
         $watchlist = User::findOrFail($request->userId)
             ->watchlistMaterial()->where('watchlistable_id', $request->modelId)->first();
+
+
+
         if (isset($watchlist))
         {
 
-            return response("exist");
+            User::findOrFail($request->userId)
+                ->watchlistMaterial()
+                ->detach($request->modelId);
+
+            return response("remove");
+        }else{
+
+            User::findOrFail($request->userId)
+                ->watchlistMaterial()
+                ->sync($request->modelId, false);
+            return response("add");
+
         }
-        User::findOrFail($request->userId)
-            ->watchlistMaterial()
-            ->sync($request->modelId, false);
+
     }
 
 }

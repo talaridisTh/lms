@@ -38,6 +38,7 @@ class UserController extends Controller {
 
 
         $media = Media::where("type", 0)->paginate(18);
+
         $userIs = User::userIs($user);
         $userCourses = $user->courses()->get();
         $allMaterials = User::findMaterials($user->id);

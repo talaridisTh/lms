@@ -88,11 +88,13 @@ class CourseController extends Controller {
                 ->watchlistCourse()
                 ->detach($request->modelId);
 
-            return response("exist");
+            return response("remove");
         }else{
             User::findOrFail($request->userId)
                 ->watchlistCourse()
                 ->sync($request->modelId, false);
+            return response("add");
+
         }
 
     }

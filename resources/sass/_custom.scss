@@ -325,20 +325,19 @@ select.is-invalid {
 
 
 .box-material {
-    background: linear-gradient(0deg, #f19a1a, #ffc73c)
-}
+    background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);}
 
 .borderBlue {
     border: solid 4px blue;
 }
 
 .now-play {
-    color: #F29D1C;
+    color: #f24e1c;
 }
 
 
 .hover-yellow:hover {
-    background: linear-gradient(0deg, #f19a1a, #ffc73c);
+    background :linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
     border-radius: 18px;
 
 }
@@ -587,4 +586,8 @@ figure.image-center {
 
 .modal-backdrop {
 	background-color:rgba(0,0,0,.5) !important;
+}
+
+.add-watchlist:hover > .mdi-heart-outline , .add-watchlist:hover > .mdi-cards-heart  {
+    color: red;
 }

@@ -8,7 +8,7 @@
         <div class="row mr-3" style="background: white;">
             <div class="col-md-5  p-1">
                 <div class="course-box p-1 d-flex flex-column justify-content-between align-items-center"
-                    style="background: linear-gradient(0deg,#f19a1a,#ffc73c);">
+                    style="background:linear-gradient(315deg, #ff4e00 0%, #ec8505 74%)">
                     @foreach($course->topics as $topic)
                     <h4 class="bghover font-12 box-title">{{$topic->title}}</h4>
                     @endforeach
@@ -17,7 +17,7 @@
                             src="https://laracasts.s3.amazonaws.com/series/thumbnails/javascript-techniques-for-server-side-developers.png?v=8"
                             alt="courses">
                     </a>
-                    <p>metrio</p>
+{{--                    <p>metrio</p>--}}
                 </div>
             </div>
             <div class="col-md-7 d-flex flex-column justify-content-between align-items-center p-2">

@@ -116,35 +116,8 @@ t
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
     <x-routes></x-routes>
-    <script>
-        {{--var editingPost = null;--}}
-        {{--@isset($user)--}}
-        {{--    editingPost = {!! json_encode($user->toArray(), JSON_HEX_TAG) !!};//json_hex_tag for security--}}
-        {{--@endisset--}}
 
 
-        {{--function repopulateMedia(post){--}}
-        {{--    console.log('Repopulating Media...');--}}
-        {{--    let dz = document.getElementById('cover-dropzone').dropzone;--}}
-
-        {{--    post.media.forEach(function(media){--}}
-        {{--        dz.options.addedfile.call(dz, media);--}}
-        {{--        media.previewElement.classList.add('dz-complete');--}}
-        {{--        $('#cover-dropzone').append(--}}
-        {{--            '<div id="' + media.file_name + '">' +--}}
-        {{--            '<input type="hidden" name="media[]" value="' + media.file_name + '">' +--}}
-        {{--            '<input type="hidden" name="media_original_name[]" value="' + media.name + '">' +--}}
-        {{--            '</div>'--}}
-        {{--        );--}}
-        {{--        //Do not let Dropzone create a thumbnail locally, just show the one generated server-side--}}
-        {{--        dz.emit('thumbnail', media, '{{ route('api.media.show', ['mediaItem' => 'replaceMe', 'size' => 'thumb']) }}'.replace('replaceMe', media.id));--}}
-        {{--    });--}}
-
-        {{--}--}}
-
-
-
-    </script>
     <script src="{{ asset('js/dashboard/users/userProfil.js') }}"></script>
 
 @endsection
