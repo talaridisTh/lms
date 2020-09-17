@@ -107,7 +107,6 @@ class CourseController extends Controller
 		}
 		else {
 			$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
-
 		}
 
 		$data = [
@@ -142,39 +141,37 @@ class CourseController extends Controller
     public function update(BundleCourseRequest $request, Course $course)
     {
 
-		if ( $request->publishDate ) {
-			$dateTime = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+		if ( isset($request->save) ) {
+			if ( $request->publishDate ) {
+				$publish = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+				$status = 1;
+			}
+			else {
+				$status = 0;
+				$publish = null;
+			}
+		}
+		elseif( $request->publish == 1 ) {
+			$status = 1;
+			$publish = date( "Y-m-d H:i:s", (time() - 50) );
 		}
 		else {
-			$dateTime = null;
+			$status = 0;
+			$publish = null;
 		}
 
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
-		$course->publish_at = $dateTime;
+		$course->publish_at = $publish;
 		$course->user_id = $request->curator;
-		// $course->status = $request->status;
+		$course->status = $status;
 		$course->slug = Str::slug($request->title, "-");
 		$course->version = $request->version;
-
-		/* if ( !empty($_FILES['cover']['name']) ) {
-			
-			$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
-			$fileName = md5( $request->title ).$ext;
-			
-			Storage::delete( "public/courses/$course->id/cover/$course->cover" );
-			$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
-			
-			$course->cover = $fileName;
-		} */
-
 		$course->save();
 
-
 		$course->topics()->sync( $request->topics );
-
 
         return redirect( "/dashboard/course/$course->slug" );
     }

@@ -17,6 +17,9 @@
 		top: 70px;
 		z-index: 1010;
 	}
+	.circle-icon {
+		padding: 0.1rem 0.2rem;
+	}
 </style>
 @endsection
 
@@ -359,20 +362,80 @@
 								<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
 
 									<div class="sticky py-3">
-										<button form="edit-course-form" type="submit"
-											id="update-btn" class="btn btn-primary"
+{{-- @dd( $course->publish_at )
+@dd( strtotime( $course->publish_at) )
+@dd( time() ) --}}
+										@php
+											if ( $course->status == 1 ) {
+												if ( time() > strtotime($course->publish_at) && !is_null($course->publish_at) ) {
+													$tooltip = [
+														"color" => "bg-success", 
+														"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+														"text" => "Published"
+													];
+													$storeBtn = [ "color" => "btn-info", "text" => "Update"];
+													$publishBtn = [
+														"color" => "btn-light",
+														"text" => "Set Draft",
+														"value" => 0
+													];
+												}
+												else {
+													$tooltip = [
+														"color" => "bg-info", 
+														"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>", 
+														"text" => "Scheduled"
+													];
+													$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
+													$publishBtn = [
+														"color" => "btn-danger",
+														"text" => "Publish",
+														"value" => 1
+													];
+													
+												}
+											}
+											else {
+												$tooltip = [
+													"color" => "bg-light", 
+													"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+													"text" => "Draft"
+												];
+												$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
+												$publishBtn = [
+													"color" => "btn-danger",
+													"text" => "Publish",
+													"value" => 1
+												];
+											}
+										@endphp
+
+										<span id="status-icon"
+											class=" px-1 pointer-default circle-icon btn-sm btn {{ $tooltip['color'] }} text-white rounded-circle"
+											data-toggle="tooltip" data-placement="bottom" title="{{ $tooltip['text'] }}"
 										>
-											{{ isset($course) ? "Ενημέρωση" : "Αποθήκευση" }}
+											{!! $tooltip['icon'] !!}
+										</span>
+
+										<button form="edit-course-form" type="submit"
+											class="btn {{ $storeBtn['color'] }}" name="save" value="save"
+										>
+											{{ $storeBtn['text'] }}
 										</button>
-										@if ( isset($course) )
-											<a id="preview-btn"
-												href="/courses/course/{{ $course->slug }}"
-												class="btn btn-warning"
-											>
-												<i class="mdi mdi-eye"></i>
-											</a>
-											<button id="course-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
-										@endif
+
+										<button form="edit-course-form" type="submit" class="btn {{ $publishBtn['color'] }}"
+											name="publish" value="{{ $publishBtn['value'] }}"
+										>
+											{{ $publishBtn['text'] }}
+										</button>
+
+										<a id="preview-btn"
+											href="/courses/course/{{ $course->slug }}"
+											class="btn btn-warning"
+										>
+											<i class="mdi mdi-eye"></i>
+										</a>
+
 									</div>
 				
 									<div class="card">
@@ -453,7 +516,7 @@
 											</select>
 											<hr>
 											<div class="form-group">
-												<label for="publish-date-select">Δημοσίευση απο:</label>
+												<label for="publish-date-select">Published</label>
 												<input form="edit-course-form" type="text" class="form-control"
 													id="publish-date-select" name="publishDate"
 													value="{{ $publish }}"
