@@ -17,7 +17,7 @@
 			z-index: 1010;
 		}
 		.circle-icon {
-		padding: 0.1rem 0.2rem;
+		padding: 0.2rem 0.2rem;
 	}
 	</style>
 @endsection
@@ -323,11 +323,6 @@
 												"text" => "Published"
 											];
 											$storeBtn = [ "color" => "btn-info", "text" => "Update"];
-											$publishBtn = [
-												"color" => "btn-light",
-												"text" => "Set Draft",
-												"value" => 0
-											];
 										}
 										else {
 											$tooltip = [
@@ -336,13 +331,12 @@
 												"text" => "Scheduled"
 											];
 											$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
-											$publishBtn = [
-												"color" => "btn-danger",
-												"text" => "Publish",
-												"value" => 1
-											];
-
 										}
+										$publishBtn = [
+											"color" => "btn-light",
+											"text" => "Set Draft",
+											"value" => 0
+										];
 									}
 									else {
 										$tooltip = [
