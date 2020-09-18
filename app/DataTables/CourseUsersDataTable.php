@@ -23,20 +23,7 @@ class CourseUsersDataTable extends DataTable {
      */
     public function dataTable($query, Request $request)
     {
-
-        $query = DB::table("course_user")
-            ->join('users', 'course_user.user_id', '=', 'users.id')
-            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
-            ->where('course_user.course_id', $request->courseId)
-            ->select(
-                'users.id',
-                'users.first_name',
-                'users.last_name',
-                'users.email',
-                'users.slug',
-                'model_has_roles.role_id'
-            )
-            ->get();
+		$query = Course::find( $request->courseId )->users()->with("roles")->get();
 
         return datatables()::of($query)
             ->addColumn('action', function ($data) {
@@ -58,7 +45,7 @@ class CourseUsersDataTable extends DataTable {
             })
             ->addColumn('role', function ($data) {
 
-                return $data->role_id == 2 ? "Εισηγητής" : "Μαθητής";
+                return $data->roles[0]->id == 2 ? "Εισηγητής" : "Μαθητής";
             })
             ->setRowAttr(['data-user-id' => function ($data) {
 

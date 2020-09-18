@@ -48,7 +48,7 @@ class BundleDataTable extends DataTable
 				<a href='#' class='custom-link-primary'>View</a>";
 
 			})
-			->editColumn('status', function($data) {
+			->editColumn('toggle', function($data) {
 
 				$status = $data->status == 0 ? "" : "checked";
 
@@ -56,17 +56,27 @@ class BundleDataTable extends DataTable
 					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
-			->editColumn('updated_at', function($data) {
+			->editColumn('publish', function ($data) {
 
-				return "<p class='mb-1'>".$data->updated_at->format( "d / m / Y" )."</p>";
+				if ( $data->status == 1 ) {
+					if ( time() > strtotime($data->publish_at) && !is_null($data->publish_at) ) {
+						$status = ["icon" => "badge-outline-primary", "text" => "Published"];
+					}
+					else {
+						$status = ["icon" => "badge-outline-dark", "text" => "Scheduled"];
+					}
+				}
+				else {
+					$status = ["icon" => "badge-outline-danger", "text" => "Draft"];
+				}
 
+				$date = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("d-m-Y") : "";
+				$time = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("H:i") : "";
+
+				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+				<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
 			})
-			->editColumn('created_at', function($data) {
-
-				return "<p class='mb-1'>".$data->created_at->format( "d / m / Y" )."</p>";
-
-			})
-			->rawColumns(['title', 'action', 'status', 'updated_at', 'created_at'])
+			->rawColumns(['title', 'action', 'toggle', 'publish'])
 			->setRowAttr([ 'data-bundle-id' => function($data) {
 
 				return  $data->id;

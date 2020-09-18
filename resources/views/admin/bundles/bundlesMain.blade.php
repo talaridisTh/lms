@@ -127,20 +127,20 @@
 		<thead>
 			<tr>
 				<th class="text-center option-column">Επιλογή</th>
-				<th class="text-center">Ονομασία</th>
-				<th class="text-center">Ενεργό</th>
+				<th class="text-center">Τίτλος</th>
+				<th class="text-center">Κατάσταση</th>
 				<th class="text-center">Τελ. Ενημέρωση</th>
-				<th class="text-center">Ημ. Δημιουργίας</th>
+				<th class="text-center">Publish</th>
 			</tr>
 		</thead>
 		<tbody class="tables-hover-effect"></tbody>
 		<tfoot>
 			<tr>
 				<th class="text-center">Επιλογή</th>
-				<th class="text-center">Ονομασία</th>
-				<th class="text-center">Ενεργό</th>
+				<th class="text-center">Τίτλος</th>
+				<th class="text-center">Κατάσταση</th>
 				<th class="text-center">Τελ. Ενημέρωση</th>
-				<th class="text-center">Ημ. Δημιουργίας</th>
+				<th class="text-center">Publish</th>
 			</tr>
 		</tfoot>
 	</table>

@@ -148,16 +148,16 @@ class CourseController extends Controller
 			}
 			else {
 				$status = 0;
-				$publish = null;
+				$publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
 			}
 		}
 		elseif( $request->publish == 1 ) {
 			$status = 1;
-			$publish = date( "Y-m-d H:i:s", (time() - 50) );
+			$publish = date( "Y-m-d H:i:s", (time() - 10) );
 		}
 		else {
 			$status = 0;
-			$publish = null;
+			$publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
 		}
 
 		$course->title = $request->title;

@@ -8,6 +8,7 @@ use App\Media;
 use App\Http\Requests\BundleCourseRequest;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class BundleController extends Controller
 {
@@ -90,35 +91,35 @@ class BundleController extends Controller
     }
 
 
-    public function update(BundleCourseRequest $request, Bundle $bundle)
+    public function update(Request $request, Bundle $bundle)
     {
-		if ( isset($request->publishDate) ) {
-			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+
+		if ( isset($request->save) ) {
+			if ( $request->publishDate ) {
+				$publish = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+				$status = 1;
+			}
+			else {
+				$status = 0;
+				$publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
+			}
+		}
+		elseif( $request->publish == 1 ) {
+			$status = 1;
+			$publish = date( "Y-m-d H:i:s", (time() - 10) );
 		}
 		else {
-			$publishDate = null;
+			$status = 0;
+			$publish = $publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
 		}
 
 		$bundle->title = $request->title;
 		$bundle->subtitle = $request->subtitle;
 		$bundle->summary = $request->summary;
 		$bundle->description = $request->description;
-		$bundle->publish_at = $publishDate;
-		$bundle->status = /* $request->status */ 1 ;
+		$bundle->publish_at = $publish;
+		$bundle->status = $status ;
 		$bundle->slug = Str::slug($request->title, "-");
-		$bundle->cover = "https://placehold.co/600x400";
-
-		// if ( !empty($_FILES['cover']['name']) ) {
-			
-		// 	$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
-		// 	$fileName = md5( $request->name ).$ext;
-			
-		// 	Storage::delete( "public/bundles/$bundle->id/cover/$bundle->cover" );
-		// 	$request->cover->storeAs("public/bundles/$bundle->id/cover", $fileName);
-			
-		// 	$bundle->cover = $fileName;
-		// }
-
 		$bundle->save();
 
 		return redirect( "/dashboard/bundle/$bundle->slug" );

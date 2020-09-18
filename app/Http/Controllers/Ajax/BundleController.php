@@ -77,10 +77,7 @@ class BundleController extends Controller
      */
     public function update(Request $request, Bundle $bundle)
     {
-
-		$bundle->status = $request->state;
-		$bundle->save();
-
+		//
     }
 
     /**
@@ -159,6 +156,37 @@ class BundleController extends Controller
 		$bundle->users()->sync( $request->users, false );
 
 	}
+
+	public function toggleStatus(Request $request)
+    {
+		$bundle = Bundle::find( $request->bundleId );
+
+		if ( !$bundle->publish_at && $request->status == 1 ) {
+			$bundle->publish_at = date("Y-m-d H:i:s");
+		}
+
+		$bundle->status = $request->status == 1 ? 1 : 0;
+		// $bundle->publish_at = $request->status == 1 ? date("Y-m-d H:i:s") : null;
+		$bundle->timestamps  = false;
+		$bundle->save();
+
+		if ( $bundle->publish_at ) {
+			$date = Carbon::parse($bundle->publish_at)->format("d-m-Y");
+			$time = Carbon::parse($bundle->publish_at)->format("H:i");
+		}
+		else {
+			$date = "";
+			$time = "";
+		}
+
+		$data = [
+			"date" => $date,
+			"time" => $time
+		];
+
+		echo json_encode($data);
+
+    }
 
 
 }

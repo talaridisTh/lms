@@ -88,7 +88,7 @@ $('#delete-courses-btn').click( function() {
 //! 				Datatables				#
 //!##########################################
 const coursesDatatable = $("#courses-datatable").DataTable({
-	order: [7, "desc"],
+	order: [6, "desc"],
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -103,15 +103,29 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false },
-		{data: 'title', name: 'title' },
-		{data: 'status', name: 'status', visible: false},
-		{data: 'toggle', name: 'status', className: "align-middle text-center"},
-		{data: 'curator', name: 'curator', className: "align-middle text-center" },
-		{data: 'topics', name: 'topics', className: "align-middle" },
-		{data: 'version', name: 'version', className: "align-middle text-center" },
-		{data: 'updated_at', name: 'updated_at', className: "align-middle text-center cursor-default js-updated-at" },
-		{data: 'created_at', name: 'created_at',  className: "align-middle text-center cursor-default"},
+		{ data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false },
+		{ data: 'title', name: 'title' },
+		{ data: 'toggle', name: 'status', className: "align-middle text-center" },
+		{ data: 'curator', name: 'curator', className: "align-middle text-center" },
+		{ data: 'topics', name: 'topics', className: "align-middle" },
+		{ data: 'version', name: 'version', className: "align-middle text-center" },
+		{
+			data: 'updated_at',
+			name: 'updated_at',
+			className: "align-middle text-center cursor-default",
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
+		{ data: 'publish', name: "publish_at", className: "align-middle text-center cursor-default", searchable: false },
+		{ data: 'status', name: 'status', visible: false },
+		{ data: 'updated_at', name: 'updated_at', visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -124,14 +138,14 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-updated-at");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 
 		toggleStatus();
 		checkeBoxesEventListener();
 		cloneEventListener();
 		utilities.resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses"));
 	}
-})
+});
 
 //! #################################################
 //!		Datatable event initialazion functions		#
@@ -166,23 +180,51 @@ function toggleStatus() {
 	$('.js-toggle').unbind();
 
 	$('.js-toggle').on('change', function() {
-		let courseCnt = this.parentElement.parentElement;
-		let updatedAtElm = courseCnt.getElementsByClassName("js-updated-at")[0];
+
 		axios.patch('/courses/status', {
-			course: this.dataset.courseId,
-			state: this.checked
+			courseId: this.dataset.courseId,
+			status: this.checked
 		})
 		.then( (res) => {
+			let row = this.findParent(2);
+			let dateElm = row.getElementsByClassName("js-date")[0];
+			let timeElm = row.getElementsByClassName("js-time")[0];
+			let badge = row.getElementsByClassName("js-badge")[0];
+			let date = res.data.date.split("-").reverse().join("-");
+			let time = res.data.time;
+			let now = new Date();
+
+			date = new Date( `${date} ${time}` );
+
+			if ( this.checked ) {
+				if ( now > date ) {
+					badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+					badge.classList.add("badge-outline-primary");
+					badge.textContent = "Published";
+				}
+				else {
+					badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+					badge.classList.add("badge-outline-dark");
+					badge.textContent = "Scheduled";
+				}
+			}
+			else {
+				badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+				badge.classList.add("badge-outline-danger");
+				badge.textContent = "Draft";
+			}
+
+			dateElm.textContent = res.data.date;
+			timeElm.textContent = res.data.time;
 
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 
 			utilities.toastAlert( icon, message );
 
-			updatedAtElm.textContent = "Μόλις τώρα";
 		})
 		.catch( (err) => {
-
+			console.log(err);
 			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 
 		});
@@ -245,7 +287,7 @@ $("#course-state-select").change( function () {
 
 	utilities.filterStyle( label, this.value );
 
-	coursesDatatable.column(2).search( this.value ).draw();
+	coursesDatatable.column(8).search( this.value ).draw();
 
 });
 
@@ -263,7 +305,7 @@ $("#topic-filter").change( function() {
 
 	//! mia stili einai krimeni gi auto kanoume search tin stili 5
 	//! kai oxi tin 4
-	coursesDatatable.column(5).search( this.value ).draw();
+	coursesDatatable.column(4).search( this.value ).draw();
 
 });
 

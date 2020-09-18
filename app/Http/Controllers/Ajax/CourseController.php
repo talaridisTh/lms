@@ -103,12 +103,37 @@ class CourseController extends Controller
 
 	public function toggleStatus(Request $request) {
 
-		$data = $request->all();
+		// $date = date("Y-m-d");
+		// $time = date("H:i");
+		// $dateTime = date("Y-m-d H:i:s");
+		// dd($dateTime);
 
-		$course = Course::find($data['course']);
-		$course->status = $data['state'] == 1 ? 1 : 0;
-		$course->updated_at = Carbon::now();
+		$course = Course::find($request->courseId);
+
+		if ( !$course->publish_at && $request->status == 1 ) {
+			$course->publish_at = date("Y-m-d H:i:s");
+		}
+
+		$course->status = $request->status == 1 ? 1 : 0;
+		// $course->publish_at = $request->status == 1 ? date("Y-m-d H:i:s") : null;
+		$course->timestamps  = false;
 		$course->save();
+
+		if ( $course->publish_at ) {
+			$date = Carbon::parse($course->publish_at)->format("d-m-Y");
+			$time = Carbon::parse($course->publish_at)->format("H:i");
+		}
+		else {
+			$date = "";
+			$time = "";
+		}
+
+		$data = [
+			"date" => $date,
+			"time" => $time
+		];
+
+		echo json_encode($data);
 	}
 
 	public function changePriority( Request $request ) {
@@ -219,7 +244,7 @@ class CourseController extends Controller
 		$course->save();
 	}
 
-	public function courseStudents( CourseUsersDataTable $dataTable ) {
+	public function courseUsers( CourseUsersDataTable $dataTable ) {
 
 		return $dataTable->render('courses.users');
 
