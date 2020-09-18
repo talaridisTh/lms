@@ -205,19 +205,19 @@ function toggleStatus() {
 
 			if ( this.checked ) {
 				if ( now > date ) {
-					badge.classList.remove("badge-outline-dark", "badge-outline-info");
-					badge.classList.add("badge-outline-success");
+					badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+					badge.classList.add("badge-outline-primary");
 					badge.textContent = "Published";
 				}
 				else {
-					badge.classList.remove("badge-outline-dark", "badge-outline-success");
-					badge.classList.add("badge-outline-info");
+					badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+					badge.classList.add("badge-outline-dark");
 					badge.textContent = "Scheduled";
 				}
 			}
 			else {
-				badge.classList.remove("badge-outline-success", "badge-outline-info");
-				badge.classList.add("badge-outline-dark");
+				badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+				badge.classList.add("badge-outline-danger");
 				badge.textContent = "Draft";
 			}
 
