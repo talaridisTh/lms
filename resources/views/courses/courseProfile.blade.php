@@ -194,6 +194,9 @@
                                         <span
                                             class=" font-18 text-dark font-weight-bold">   {{$materials->title}}</span>
                                         <span style="word-break: break-all" class=" font-14 text-dark">    {{$materials->subtitle}}</span>
+                                        @empty($course->description)
+                                        <span style="word-break: break-all" class=" mt-2 font-14 text-dark">{{Str::limit($materials->description,200)}}</span>
+                                        @endempty
                                     </div>
                                     <div class="col-md-2 ">
                                         <span class="badge badge-primary-lighten">
