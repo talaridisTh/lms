@@ -40,9 +40,14 @@ AddCourseUsersDataTable extends DataTable
 				'first_name',
 				'last_name',
 				'email',
+				'phone',
 				'slug',
 				'model_has_roles.role_id')
 			->get();
+
+
+
+
 
         return datatables()::of($query)
             ->addColumn('action', function($data) {

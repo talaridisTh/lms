@@ -422,7 +422,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/course-students-datatable",
+		url: "/courses/course-users-datatable",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -433,6 +433,8 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		{data: 'action', width: "5%", className: "text-center", orderable: false, searchable: false},
 		{data: 'first_name', name: 'first_name', className: "cursor-default" },
 		{data: 'last_name', name: 'last_name', className: "cursor-default" },
+		{data: 'email', name: 'email', className: "cursor-default" },
+		{data: 'phone', name: 'phone', className: "cursor-default" },
 		{data: 'role', name: 'role', className: "cursor-default" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
@@ -476,6 +478,8 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		{data: 'action', width: "5%", orderable: false, searchable: false},
 		{data: 'first_name', name: 'first_name', className: "cursor-pointer js-user-link" },
 		{data: 'last_name', name: 'last_name', className: "cursor-pointer js-user-link" },
+		{data: 'email', name: 'email', className: "cursor-pointer js-user-link" },
+		{data: 'phone', name: 'phone', className: "cursor-pointer js-user-link" },
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],

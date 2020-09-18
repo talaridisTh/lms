@@ -244,7 +244,7 @@ class CourseController extends Controller
 		$course->save();
 	}
 
-	public function courseStudents( CourseUsersDataTable $dataTable ) {
+	public function courseUsers( CourseUsersDataTable $dataTable ) {
 
 		return $dataTable->render('courses.users');
 

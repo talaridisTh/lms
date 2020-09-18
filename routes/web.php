@@ -120,7 +120,7 @@ Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->nam
 Route::post( 'courses/courses-datatable', 'Ajax\CourseController@index' );
 Route::post( 'courses/course-materials-datatable', 'Ajax\CourseController@courseMaterials' );
 Route::post( 'courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials' );
-Route::post( 'courses/course-students-datatable', 'Ajax\CourseController@courseStudents' );
+Route::post( 'courses/course-users-datatable', 'Ajax\CourseController@courseUsers' );
 Route::post( 'courses/add-course-students-datatable', 'Ajax\CourseController@addCourseStudents' );
 
 //! Dashboard Ajax Courses CRUD

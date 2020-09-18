@@ -181,6 +181,8 @@
 								</th>
 								<th class="text-center">Όνομα</th>
 								<th class="text-center">Επώνυμο</th>
+								<th class="text-center">Email</th>
+								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
 								<th class="text-center"></th>
 							</tr>
@@ -191,6 +193,8 @@
 								<th class="text-center"></th>
 								<th class="text-center">Όνομα</th>
 								<th class="text-center">Επώνυμο</th>
+								<th class="text-center">Email</th>
+								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
 								<th class="text-center"></th>
 							</tr>
@@ -652,6 +656,8 @@
 										</th>
 										<th class="text-center">Όνομα</th>
 										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Email</th>
+										<th class="text-center">Τηλεφωνο</th>
 										<th class="text-center">Ιδιότητα</th>
 										<th class="text-center"></th>
 									</tr>
@@ -662,6 +668,8 @@
 										<th class="text-center"></th>
 										<th class="text-center">Όνομα</th>
 										<th class="text-center">Επώνυμο</th>
+										<th class="text-center">Email</th>
+										<th class="text-center">Τηλεφωνο</th>
 										<th class="text-center">Ιδιότητα</th>
 										<th class="text-center"></th>
 									</tr>
