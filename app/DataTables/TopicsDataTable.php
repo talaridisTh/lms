@@ -11,8 +11,8 @@ use Yajra\DataTables\Services\DataTable;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class TopicsDataTable extends DataTable
-{
+class TopicsDataTable extends DataTable {
+
     /**
      * Build DataTable class.
      *
@@ -22,45 +22,51 @@ class TopicsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-		if ( !is_null($request->startDate) && !is_null($request->endDate) ) {
-			$query = Topic::query()
-				->where(function($subquery) use ($request) {
-					$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
-					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-				});
-		}
+        if (!is_null($request->startDate) && !is_null($request->endDate))
+        {
+            $query = Topic::query()
+                ->where(function ($subquery) use ($request) {
+                    $subquery->whereBetween('updated_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
+                        ->orWhereBetween('created_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"]);
+                });
+        }
 
         return datatables()::of($query)
-            ->addColumn('action', function($data) {
-				
-				return "<div class='icheck-primary d-inline'>
+            ->addColumn('action', function ($data) {
+
+                return "<div class='icheck-primary d-inline'>
 							<input class='js-topic-checkbox' data-topic-id='$data->id' data-topic-title='$data->title' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
+            })
+            ->addColumn('color', function ($data) {
 
-			})
-			->editColumn('title', function($data) {
+                return (
+                "<div id='color-field ' style='display: flex;flex-direction: column;align-items: center;'>
+                   <div class='preview-color' style='height: 50px; width: 80px; margin-bottom: 8px; background:$data->color'></div>
+                    <button type='button' data-topic='$data->id' class='js-color-modal btn-sm  btn btn-warning' data-toggle='modal' data-target='#color-modal'>Επέλεξε χρώμα
+                    </button>
+                </div>");
+            })
+            ->editColumn('title', function ($data) {
 
-				return "<span class='js-quick-edit h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
+                return "<span class='js-quick-edit h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
 					<input type='text' class='js-edit form-control d-none' data-topic-id='$data->id' value='$data->title' placeholder='Εισάγετε Τίτλο...'>
 					<div class='invalid-feedback'>
       					Το πεδίο είναι υποχρεωτικό.
       				</div>
 					<p class='mb-1'>$data->slug</p>
 					<a href='#' class='js-quick-edit custom-link-primary'>Quick Edit</a>";
+            })
+            ->editColumn('updated_at', function ($data) {
 
-			})
-			->editColumn('updated_at', function($data) {
+                return Carbon::parse($data->updated_at)->format("d / m / Y");
+            })
+            ->editColumn('created_at', function ($data) {
 
-				return Carbon::parse( $data->updated_at)->format( "d / m / Y" );
-
-			})
-			->editColumn('created_at', function($data) {
-
-				return Carbon::parse( $data->created_at)->format( "d / m / Y" );
-
-			})
-			->rawColumns(['action', 'title']);
+                return Carbon::parse($data->created_at)->format("d / m / Y");
+            })
+            ->rawColumns(['action', 'title', "color"]);
     }
 
     /**
@@ -82,18 +88,18 @@ class TopicsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('topicsdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('topicsdatatable-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -105,10 +111,10 @@ class TopicsDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('id'),
             Column::make('add your columns'),
             Column::make('created_at'),
@@ -125,4 +131,5 @@ class TopicsDataTable extends DataTable
     {
         return 'Topic_' . date('YmdHis');
     }
+
 }

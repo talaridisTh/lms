@@ -74,7 +74,7 @@
         </div>
         @endrole
         <div class="container-xl my-3" style="max-width: 1650px">
-            <div class="row box-material-up px-5 pt-4 pb-2">
+            <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2" style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-3 mb-2">
@@ -96,7 +96,7 @@
                                 @endif
                                 <button
                                     data-model="course" data-model-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
-                                    class="add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary font-weight-bold">
+                                    class="color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary font-weight-bold">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
@@ -107,7 +107,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="box-last-material p-2 ">
+                            <div class="box-last-material p-2 color-topic-second ">
                                 <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>
                                 <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
                                     <span>Η τελευταία προσθήκη</span>
@@ -119,7 +119,7 @@
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
 
-                                    <button class="bghover  border font-weight-bold btn btn-secontary ">
+                                    <button class="bghover color-topic-second  border font-weight-bold btn btn-secontary ">
                                         <a class="text-white bghover"
                                            href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
                                             Δες το μάθημα</a>
@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row p-2 box-material-down">
+            <div class="row p-2 box-material-down  color-topic-second" style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-4  d-flex justify-content-between text-light">
                     {{--                    <span>metrio</span>--}}
 

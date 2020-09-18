@@ -47,7 +47,7 @@
                 @else
                     <div class="col-md-1"></div>
                 @endif
-                <div class="col-md-9 box-material mx-1" style="border-radius: 20px">
+                <div class="col-md-9 box-material mx-1" style="border-radius: 20px ;background:{{$course->topics->first()->color}}">
                     <div class="row">
                         <div class="col-md-6 p-3">
                             <div class="row">
@@ -71,17 +71,17 @@
                         </div>
                         <div class="col-md-6 d-flex justify-content-center align-items-center">
                             <div class="watchlist  d-flex flex-column">
-                                <button class="mb-2  btn  bghover text-white border btn-outline-secondary">
+                                <button class="mb-2 color-topic-second  btn  bghover text-white border btn-outline-secondary">
                                     <span class="font-weight-bold">Το έχω δει</span>
                                 </button>
                                 <button
                                     data-model="material" data-model-id="{{$materials->id}}"
                                     data-user-id="{{auth()->id()}}"
-                                    class=" add-watchlist mb-2 btn  bghover text-white border btn-outline-secondary">
+                                    class="color-topic-second add-watchlist mb-2 btn  bghover text-white border btn-outline-secondary">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
-                                    </i> <span>Προσθήκη στα αγαπημένα</span>
+                                    </i> <span >Προσθήκη στα αγαπημένα</span>
                                 </button>
                             </div>
 
@@ -164,7 +164,7 @@
                 <div class="col-md-3 pl-3">
                     <div class="row hover-yellow">
                         <div class="col-md-12  border d-flex justify-content-between"
-                             style="border-radius: 18px; padding: 9px;">
+                             style="border-radius: 18px; padding: 9px">
                             <div class="col-md-2 d-flex align-items-center">
                                 <img height="40" width="40" class="rounded-circle"
                                      src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
@@ -177,7 +177,7 @@
                                         class="font-18  text-center text-black font-weight-bold">{{$course->title}}</span>
                                     <div class="d-flex justify-content-around">
                                         {{--                                        <span class="font-12 text-primary">Μέτριο</span>--}}
-                                        <span class="font-14">{{$MaterialsOrderByPriority->count()}} Μάθηματα</span>
+                                        <span class="font-14 text-black">{{$MaterialsOrderByPriority->count()}} Μάθηματα</span>
 
                                     </div>
                                 </a>
@@ -236,6 +236,14 @@
 
     <script>
 
+        $(".hover-yellow > div").mouseover(function () {
+            console.log("f")
+            $(this).css("background", "{{$course->topics->first()->color}}");
+        })
+        $(".hover-yellow > div").mouseout(function () {
+            console.log("f")
+            $(this).css("background", "");
+        })
 
     </script>
 

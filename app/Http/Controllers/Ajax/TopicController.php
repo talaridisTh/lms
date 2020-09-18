@@ -79,7 +79,7 @@ class TopicController extends Controller
 		$topic->title = $request->title;
 		$topic->slug = Str::slug($request->title, "-");
 		$topic->save();
-		
+
     }
 
     /**
@@ -93,10 +93,17 @@ class TopicController extends Controller
 		$ids = explode(",", $ids);
 
 		foreach ( $ids as $id ) {
-			
+
 			Topic::find( $id )->delete();
 
 		}
+
+    }
+
+    public function changeColor(Request $request)
+    {
+
+        Topic::findOrFail($request->topicId)->update(["color"=>$request->color]);
 
     }
 }

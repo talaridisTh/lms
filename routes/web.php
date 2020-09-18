@@ -176,6 +176,7 @@ Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 //! Dashboard Ajax Topic CRUD
 Route::patch( 'topics/update/{topic}', 'Ajax\TopicController@update' );
 Route::delete( 'topics/destroy/{ids}', 'Ajax\TopicController@destroy' );
+    Route::patch( 'topics/change/color', 'Ajax\TopicController@changeColor' );
 
 //! Dashboard Media
 Route::get( 'media/images', 'Ajax\MediaController@index' );

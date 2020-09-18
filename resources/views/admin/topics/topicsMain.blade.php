@@ -2,6 +2,74 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+
+
+        .modal-body {
+            font-family: "Poppins", Helvetica, sans-serif;
+            /* font-weight: 700; */
+            text-align: center;
+            background: linear-gradient(to right, red, yellow);
+            color: white;
+        }
+
+        .wrapper-color {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-top: 35px;
+            margin-bottom: 25px;
+            font-size: 4em;
+        }
+
+        .color-boxes {
+            display: inline-flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .color {
+            border: none;
+            background: none;
+            width: 4em;
+            height: 3em;
+            margin: 0 25px;
+            cursor: pointer;
+        }
+
+        .random {
+            display: inline-block;
+            /*     width: 5%; */
+
+            margin: 0 auto 50px auto;
+
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border: 1px solid white;
+            cursor: pointer;
+        }
+
+        .random:hover {
+            background: black;
+            color: white;
+        }
+
+        .color:hover {
+            border: 2px solid white;
+        }
+
+
+        .css {
+            font-weight: 400;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -21,11 +89,41 @@
 					<h4 class="page-title">Topics</h4>
 				</div>
 			</div>
-		</div>     
-	</div>     
+		</div>
+	</div>
 	<!-- end page title -->
 
-	<!-- Modal -->
+    {{--color modal--}}
+    <div class="modal fade" id="color-modal" tabindex="-1" role="dialog" aria-labelledby="color-modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="color-modal">Topic color</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body d-flex justify-content-center" style="height: 350px">
+                    <div class="wrapper-color">
+
+                        <div class="color-boxes">
+                            <input type="color" name="color1" id="" class="color color1" value="#e66465">
+                            <input type="color" name="color2" id="" class="color color2" value="#f6b73c">
+                        </div>
+
+                        <div class="mt-2" role="group" aria-label="Basic example">
+                            <button type="button" class=" w-20 random btn btn-warning">Random</button>
+                            <button type="button" data-modal class="random js-color-button btn btn-success">Ok</button>
+                        </div>
+
+
+                        <p class="css"></p>
+
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal
+
+ Modal -->
 	<div class="modal fade" id="add-topic-modal" tabindex="-1" role="dialog" aria-labelledby="add-topic-modalLabel" aria-hidden="true">
 		<div class="modal-dialog  modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -37,7 +135,7 @@
 				</div>
 				<div class="modal-body">
 					<form id="add-topic-form" action="topics/store" method="POST">
-						
+
 						@csrf
 
 						<div class="form-group">
@@ -63,6 +161,8 @@
 		</div>
 	</div>
 
+
+
 	<div class="container table-cnt content-width">
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
@@ -72,7 +172,7 @@
 						Νέο Topic
 					</a>
 					<div class="btn-group mb-2">
-						<button id="topic-bulk-action-btn" disabled type="button" 
+						<button id="topic-bulk-action-btn" disabled type="button"
 							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">
 							Επιλογές (0)
@@ -97,6 +197,7 @@
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
+					<th class="text-center">color</th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
@@ -106,6 +207,7 @@
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
+					<th class="text-center">color</th>
 				</tr>
 			</tfoot>
 		</table>

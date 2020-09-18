@@ -50,7 +50,6 @@ class UserController extends Controller {
     public function store(Request $request)
     {
         //
-        dd($request->all());
         $user = new User();
         $data = collect($request)->except("sendMail", "roles", "password_confirmation", "media", "media_original_name")->all();
         $data['password'] = Hash::make("password");

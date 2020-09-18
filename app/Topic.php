@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Topic extends Model
 {
 
+    protected $guarded = [];
     public function materials() {
 
 		return $this->morphedByMany("App\Material", "topicable");

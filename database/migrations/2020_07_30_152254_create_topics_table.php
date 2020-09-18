@@ -18,6 +18,7 @@ class CreateTopicsTable extends Migration
 			$table->string('title', 40);
 			$table->text('summary')->nullable();
 			$table->string('slug');
+			$table->string('color')->nullable();
             $table->timestamps();
         });
     }
