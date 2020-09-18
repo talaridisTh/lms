@@ -70,7 +70,7 @@
     	    </div>
     	</div>
 	@endisset
-	
+
 	<!-- Title - Breadcrumb -->
     <div class="row">
         <div class="col-12">
@@ -123,14 +123,14 @@
 						<div class="col-xl-9 col-lg-7 col-md-12">
 
 							@isset($priority)
-							
+
 								<input form="material-create" type="text" hidden
 									name="courseId" value="{{ $course->id }}"
 								/>
 								<input form="material-create" type="text" hidden
 									name="priority" value="{{ $priority }}"
 								/>
-								
+
 							@endisset
 
 							<div class="form-group mb-3">
@@ -199,7 +199,7 @@
 									<a href="{{route('dummyPage.material.show',$material->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
 										class="mdi mdi-eye"></i>
 									</a>
-									<button form="material-destroy" data-material-slug="{{$material->slug}}" 
+									<button form="material-destroy" data-material-slug="{{$material->slug}}"
 										id="material-delete-btn" class="btn btn-danger float-right"
 									>
 										Διαγραφή
@@ -225,7 +225,7 @@
                                         </div>
 									</div>
 									<hr>
-									
+
 									<div class="form-group mb-3">
                                         <label for="urlMaterial">URL video</label>
                                         <input form="material-create" name="video_link" type="text" class="form-control"
@@ -303,7 +303,7 @@
                                             value="{{auth()->user()->fullName}}" disabled
                                         >
                                     </div>
-									
+
 								</div>
 							</div>
 
@@ -315,8 +315,8 @@
                                     </div>
                                     <div class="card-body">
 										@empty(!$material->cover)
-											
-	
+
+
 										<img id="cover-image" src="{{ url($material->cover) }}"
 											class="img-fluid" alt="Cover Image"
 										/>
@@ -332,8 +332,8 @@
 					</div>
 				</div>
 
-				
-				
+
+
 				<div class="tab-pane " id="courses-tabs">
 					@include("components.admin.materials.tabsCourses")
 				</div>
@@ -354,7 +354,7 @@
 		    @method('PATCH')
 		@endif
     </form>
-	
+
 	@isset($material)
 		<form  id="material-destroy"  method="POST" action="/delete/{{  $material->slug }}">
     	    @csrf
@@ -378,7 +378,7 @@
 
     <x-routes></x-routes>
     {{--    <script src="{{ asset('js/dashboard/materials/material.js') }}"></script>--}}
-    <script src="{{ asset('js/dashboard/materials/materialNew.js') }}"></script>
+    <script src="{{ mix('js/dashboard/materials/materialNew.js') }}"></script>
 
 
 @endsection

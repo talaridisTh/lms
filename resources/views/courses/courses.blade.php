@@ -50,7 +50,7 @@
 
 @section("script")
             <x-routes></x-routes>
-            <script src="{{ asset('js/index/courses/indexCourses.js') }}"></script>
+            <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
 
             <script>
 

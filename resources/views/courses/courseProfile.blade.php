@@ -49,10 +49,10 @@
             background: rgba(231, 231, 231, 0.2)
 
         }
-    .ribbon-edit:hover{
-        text-decoration: underline;
-    }
 
+        .ribbon-edit:hover {
+            text-decoration: underline;
+        }
 
 
     </style>
@@ -66,7 +66,9 @@
         <div class="card ribbon-box" style="background-color: #FAFBFE">
             <div class="card-body py-0">
                 <div class="ribbon ribbon-secondary float-right"><i class="mdi mdi-access-point mr-1"></i>
-                    <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}"><spant class="ribbon-edit">Edit this page</spant></a>
+                    <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}">
+                        <spant class="ribbon-edit">Edit this page</spant>
+                    </a>
                 </div>
             </div> <!-- end card-body -->
         </div>
@@ -76,7 +78,7 @@
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-3 mb-2">
-                            <img height="300" width="300" class=" img-fluid img-thumbnail rounded-circle"
+                            <img height="300" width="300" class="  rounded-circle"
                                  src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
                                  alt="course-logo"
                             >
@@ -97,7 +99,7 @@
                                     class="add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary font-weight-bold">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
-                                      ">
+                                        ">
 
 
                                     </i> <span>Προσθήκη στα αγαπημένα</span>
@@ -118,8 +120,9 @@
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
 
                                     <button class="bghover  border font-weight-bold btn btn-secontary ">
-                                        <a class="text-white bghover" href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
-                                          Δες το μάθημα</a>
+                                        <a class="text-white bghover"
+                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
+                                            Δες το μάθημα</a>
                                     </button>
                                     @endif
                                 </div>
@@ -131,12 +134,12 @@
             </div>
             <div class="row p-2 box-material-down">
                 <div class="col-md-4  d-flex justify-content-between text-light">
-{{--                    <span>metrio</span>--}}
+                    {{--                    <span>metrio</span>--}}
 
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","mdi mdi-file-document-outline")->count()}} Μαθήματα  </span>
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","mdi mdi-file-document-outline")->count()}} Extra  </span>
                     @foreach($topics as $topic)
-                        <span  class="topic-title font-weight-bold border px-2">{{$topic}}</span>
+                        <span class="topic-title font-weight-bold border px-2">{{$topic}}</span>
                     @endforeach
                 </div>
             </div>
@@ -181,7 +184,7 @@
                 <div class="col-md-8 {{empty($course->description)?"d-none":""}}">
                     {!! $course->description !!}
                 </div>
-                <div class=" {{!empty($course->description)?"col-md-4":"offset-2 col-md-8 offset-2  text-left" }}" >
+                <div class=" {{!empty($course->description)?"col-md-4":"offset-2 col-md-8 offset-2  text-left" }}">
                     <ul class="m-0 p-0">
                         @foreach($allMaterial as $materials)
                             <li class="list-group-item list-material border   ">
@@ -191,12 +194,18 @@
                                         <span class="material-count">{{++$count}}</span>
                                     </div>
                                     <div class="col-md-8 d-flex flex-column  ">
-                                        <span
-                                            class=" font-18 text-dark font-weight-bold">   {{$materials->title}}</span>
-                                        <span style="word-break: break-all" class=" font-14 text-dark">    {{$materials->subtitle}}</span>
-                                        @empty($course->description)
-                                        <span style="word-break: break-all" class=" mt-2 font-14 text-dark">{{Str::limit($materials->description,200)}}</span>
-                                        @endempty
+                                        <h3
+                                            class=" font-18 text-dark font-weight-bold">   {{$materials->title}}</h3>
+                                        <span style="word-break: break-all"
+                                              class=" font-14 text-dark">    {{$materials->subtitle}}</span>
+{{--                                        @empty($course->description)--}}
+{{--                                            <div class="mt-3">--}}
+{{--                                            <h3--}}
+{{--                                                class=" font-16 text-dark font-weight-bold">   {{$materials->title}}</h3>--}}
+{{--                                            <span style="word-break: break-all"--}}
+{{--                                                  class="  font-14 text-dark">{{Str::limit($materials->description,200)}}</span>--}}
+{{--                                            </div>--}}
+{{--                                        @endempty--}}
                                     </div>
                                     <div class="col-md-2 ">
                                         <span class="badge badge-primary-lighten">

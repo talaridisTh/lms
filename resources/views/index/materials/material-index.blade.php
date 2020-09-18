@@ -153,7 +153,7 @@
                         </div>
                     </div>
                     <div class="row ">
-                        <div class=" p-3"><span class="font-weight-bold text-black">Σχετικά με το μάθημα</span>
+                        <div class=" p-3"><span class="font-weight-bold text-black"></span>
                         </div>
                         <div class="col-md-12  px-3 {{empty($course->description)?"d-none":""}}">
                             {!! $course->description !!}

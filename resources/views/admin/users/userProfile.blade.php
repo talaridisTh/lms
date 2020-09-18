@@ -118,6 +118,6 @@ t
     <x-routes></x-routes>
 
 
-    <script src="{{ asset('js/dashboard/users/userProfil.js') }}"></script>
+    <script src="{{ mix('js/dashboard/users/userProfil.js') }}"></script>
 
 @endsection

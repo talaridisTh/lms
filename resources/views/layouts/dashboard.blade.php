@@ -15,7 +15,7 @@
 		<link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style" />
 		<link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
 
-		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
 		@yield('css')
 
 	</head>
@@ -334,7 +334,7 @@
 		<!-- bundle -->
 		<script src="/assets/js/vendor.min.js"></script>
 		<script src="/assets/js/app.min.js"></script>
-		<script src="{{ asset('js/app.js') }}"></script>
+		<script src="{{ mix('js/app.js') }}"></script>
 
 		<script>
 			$('#logout-btn').click( function() {

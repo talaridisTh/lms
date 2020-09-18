@@ -39,5 +39,9 @@ class CourseMaterialSeeder extends Seeder
 		factory(App\CourseMaterial::class, 60)->create();
 
 
+
+
+
+
     }
 }

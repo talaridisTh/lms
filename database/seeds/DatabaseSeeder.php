@@ -15,11 +15,12 @@ class DatabaseSeeder extends Seeder {
 
     public function run()
     {
+        $this->call(TestSeeder::class);
         $this->call(RoleSeeder::class);
+        $this->call(TopicSeeder::class);
         $this->call(UserSeeder::class);
-		$this->call(TopicSeeder::class);
 
-		factory( App\User::class, 100)->create()
+        factory( App\User::class, 100)->create()
 			->each( function($user) {
         		$user->assignRole(Arr::random([ 'instructor', 'student','partner' ]));
 			});
@@ -35,7 +36,7 @@ class DatabaseSeeder extends Seeder {
 			->each( function($course) {
                 $course->topics()->attach(App\Topic::all()->random()->id);
 				for ( $i = 0; $i < 20; $i++) {
-					$course->users()->attach(App\User::all()->random()->id);
+					$course->users()->attach(User::where('id', '!=', 1)->get()->random()->id);
 
 					$course->materials()->attach(App\Material::all()->random()->id, ["priority" => rand( 1, 10000 )]);
 				}
@@ -50,5 +51,8 @@ class DatabaseSeeder extends Seeder {
 					$bundle->users()->attach(App\Role::find(4)->users()->select("id")->get()->random()->id);
 				}
 			});
+
+
+
 	}
 }
