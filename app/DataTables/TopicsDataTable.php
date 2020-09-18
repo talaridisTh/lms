@@ -44,8 +44,9 @@ class TopicsDataTable extends DataTable {
                 return (
                 "<div id='color-field ' style='display: flex;flex-direction: column;align-items: center;'>
                    <div class='preview-color' style='height: 50px; width: 80px; margin-bottom: 8px; background:$data->color'></div>
-                    <button type='button' data-topic='$data->id' class='js-color-modal btn-sm  btn btn-warning' data-toggle='modal' data-target='#color-modal'>Επέλεξε χρώμα
-                    </button>
+                      <button type='button' data-topic='$data->id' class='js-color-modal btn-sm  btn btn-warning' data-toggle='modal' data-target='#color-modal'>
+                        <i class=' font-16 mdi mdi-eyedropper-variant'></i>
+                      </button>
                 </div>");
             })
             ->editColumn('title', function ($data) {

@@ -105,6 +105,7 @@
                     <div class="wrapper-color">
 
                         <div class="color-boxes">
+
                             <input type="color" name="color1" id="" class="color color1" value="#e66465">
                             <input type="color" name="color2" id="" class="color color2" value="#f6b73c">
                         </div>
