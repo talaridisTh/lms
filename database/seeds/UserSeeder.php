@@ -93,13 +93,6 @@ class UserSeeder extends Seeder {
 
             });
 
-
-
-
-
-
-
-
 		User::create([
             'first_name' => "Υδρόγειος",
             'last_name' => "Idrogios",
