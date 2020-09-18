@@ -115,7 +115,6 @@ class CoursesDataTable extends DataTable {
 				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
 				<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
 			})
-			
             ->rawColumns(['action', 'title', 'toggle', 'publish'])
             ->setRowAttr(['data-course-id' => function ($data) {
 

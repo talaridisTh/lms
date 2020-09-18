@@ -116,15 +116,8 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 			render: function(data) {
 				let date = new Date(data);
 				let day = date.toLocaleDateString().replace( /[/]/g, "-");
-				let minutes = date.getMinutes();
-				let hours = date.getHours();
-
-				if ( hours < 10 ) {
-					hours = "0" + hours;
-				}
-				if ( minutes < 10 ) {
-					minutes = "0" + minutes;
-				}
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
 
 				let time = `${hours}:${minutes}`;
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
