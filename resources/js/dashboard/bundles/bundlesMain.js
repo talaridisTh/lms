@@ -160,6 +160,29 @@ function activeToggleInit() {
 //!				Datatable Filters				#
 //!##############################################
 
+let tablesLengthLabel = $("#bundle-table_length > label")[0];
+
+let activeBundleFilter = utilities.createStateSelect("bundle-state-select");
+tablesLengthLabel.append( activeBundleFilter );
+
+$("#bundle-state-select").select2({
+	minimumResultsForSearch: -1,
+})
+
+$("#bundle-state-select").on("change", function () {
+
+	let label = $("#select2-bundle-state-select-container")[0];
+
+	utilities.filterStyle( label, this.value );
+
+	bundlesDatatable.column(5).search( this.value ).draw();
+
+});
+
+
+
+
+
 let searchFieldLabel = $("#bundle-table_filter > label > input")[0];
 let dateInput = utilities.createDateElm( "bundle-date-range" );
 
