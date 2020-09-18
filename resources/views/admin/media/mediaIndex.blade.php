@@ -29,7 +29,7 @@
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
 				<div class="text-sm-right sticky-btns mb-2">
-					<a href="/dashboard/course/" class="btn btn-primary">
+					<a href="#" class="btn btn-primary">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Upload
 					</a>
