@@ -200,10 +200,11 @@ function toggleStatus() {
 			let date = res.data.date.split("-").reverse().join("-");
 			let time = res.data.time;
 			let now = new Date();
-			let incDate = new Date( `${date} ${time}` );
+
+			date = new Date( `${date} ${time}` );
 
 			if ( this.checked ) {
-				if ( now > incDate ) {
+				if ( now > date ) {
 					badge.classList.remove("badge-outline-dark", "badge-outline-info");
 					badge.classList.add("badge-outline-success");
 					badge.textContent = "Published";
