@@ -113,11 +113,14 @@ class HomeController extends Controller {
     public function test()
     {
 
-
-        $user = User::find(4);
-        $material = Course::find(8);
-
-        $user->watchlistCourse()->attach($material);
+//        dd(Course::with(["topics", "users"])
+//            ->whereIn("courses.id",
+//                function ($subquery) {
+//                    $subquery->select('topic_id')
+//                        ->from('topicables')
+//                        ->where('topic_id', 5)
+//                        ->get();
+//                })->get());
     }
 
 }

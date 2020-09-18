@@ -59,6 +59,7 @@
 @endsection
 @php($count=0)
 @section("content")
+
     <div class="content-page">
         @role("admin")
 

@@ -20,7 +20,6 @@ class MaterialController extends Controller {
         $materialPriority = $course->materials->where('id', $materials->id)->first()->getOriginal()["pivot_priority"];
         $MaterialsOrderByPriority = Course::MaterialsOrderByPriority($course->id);
         $nextMaterial = Course::nextMaterial($course->id, $materialPriority);
-//        dd($nextMaterial);
         $prevMaterial = Course::prevMaterial($course->id, $materialPriority);
 
         return view("index.materials.material-index", compact("priority", "materials", "course", "MaterialsOrderByPriority", "nextMaterial", "prevMaterial"));

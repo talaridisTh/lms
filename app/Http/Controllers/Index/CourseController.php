@@ -33,10 +33,13 @@ class CourseController extends Controller {
         {
             $allCourses = auth()->user()->courses;
 
+
+
             return view("courses.courses", [
                 'arrayTopics' => $arrayTopics,
                 'allCourses' => $allCourses]);
         }
+
 
         else
         {
@@ -51,15 +54,19 @@ class CourseController extends Controller {
                 ->where("topics.id", "=", request()->idsTopic)
                 ->get();
 //
-
             $allCourses = $queryAllCourse->map(function ($test) {
-                return Course::whereIn('id', [$test->id])->get();
+              return   Course::whereIn('id', [$test->id])->get();
+
             });
 
 
+
+
+
             return view("courses.courses", [
+
                 'arrayTopics' => $arrayTopics,
-                'allCourses' => $allCourses->flatten(1)])->render();
+                'allCourses' => $allCourses->flatten(1)]);
         }
     }
 
@@ -69,8 +76,7 @@ class CourseController extends Controller {
         $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
         $lastMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();;
         $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
-        $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
-        $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
+
 
         return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial"));
     }
