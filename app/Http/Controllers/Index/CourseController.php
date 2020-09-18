@@ -34,7 +34,6 @@ class CourseController extends Controller {
             $allCourses = auth()->user()->courses;
 
 
-
             return view("courses.courses", [
                 'arrayTopics' => $arrayTopics,
                 'allCourses' => $allCourses]);

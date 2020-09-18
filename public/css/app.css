@@ -3550,17 +3550,21 @@ select.is-invalid {
 
 .box-last-material {
   border-radius: 15px;
-  background: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
+  background-color: rgba(18, 14, 14, 0.1);
   display: flex;
-  border: 1px solid white;
   align-items: center;
   flex-direction: column;
 }
 
 .box-last-material .box-num-material {
+  margin-top: 15px;
   border-radius: 100%;
   background: white;
-  padding: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100px;
 }
 
 .box-last-material button {

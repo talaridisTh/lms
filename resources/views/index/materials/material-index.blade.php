@@ -32,10 +32,10 @@
                 @endif
             </div>
         @else
-            <img class="img-thumbnail" src="{{asset("images/video.png")}}" alt="">
+            <img class="img-thumbnail" src="{{url($materials->cover)}}" alt="">
         @endif
         <div class="container" style="max-width: 1277px">
-            <div class="row justify-content-center">
+            <div class="row justify-content- mt-4">
                 @if(!empty($prevMaterial->slug))
                     <div class="arrow col-md-1 d-flex justify-content-center align-items-center">
                         <a data-toggle="tooltip" rel="tooltip" data-placement="left"
@@ -44,6 +44,8 @@
                             <i class="cursor-pointer mdi h2 mdi-chevron-left"></i>
                         </a>
                     </div>
+                @else
+                    <div class="col-md-1"></div>
                 @endif
                 <div class="col-md-9 box-material mx-1" style="border-radius: 20px">
                     <div class="row">
@@ -69,13 +71,13 @@
                         </div>
                         <div class="col-md-6 d-flex justify-content-center align-items-center">
                             <div class="watchlist  d-flex flex-column">
-                                <button class="mb-2  btn btn-lg bghover text-white border btn-outline-secondary">
+                                <button class="mb-2  btn  bghover text-white border btn-outline-secondary">
                                     <span class="font-weight-bold">Το έχω δει</span>
                                 </button>
                                 <button
                                     data-model="material" data-model-id="{{$materials->id}}"
                                     data-user-id="{{auth()->id()}}"
-                                    class=" add-watchlist mb-2 btn btn-lg bghover text-white border btn-outline-secondary">
+                                    class=" add-watchlist mb-2 btn  bghover text-white border btn-outline-secondary">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
@@ -88,13 +90,17 @@
                 </div>
                 @if(!empty($nextMaterial->slug))
                     <div class="arrow col-md-1 d-flex justify-content-center align-items-center">
+
                         <a data-toggle="tooltip" rel="tooltip" data-placement="right"
                            title="Επόμενο {{!empty($nextMaterial->slug)? $nextMaterial->slug : $materials->slug}} "
                            href="{{route('index.material.show',[$course->slug,!empty($nextMaterial->slug)? $nextMaterial->slug : $materials->slug])}}">
                             <i class="cursor-pointer mdi h2 mdi-chevron-right"></i>
                         </a>
                     </div>
+                @else
+                    <div class="col-md-1"></div>
                 @endif
+
             </div>
         </div>
         <div class="container  my-3" style="max-width: 1187px">
@@ -161,7 +167,7 @@
                              style="border-radius: 18px; padding: 9px;">
                             <div class="col-md-2 d-flex align-items-center">
                                 <img height="40" width="40" class="rounded-circle"
-                                     src="{{$course->cover=="vaggelaras"? "http://lorempixel.com/300/300":url($course->cover)}}"
+                                     src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
                                      alt="">
                             </div>
                             <div class="col-md-10 ">

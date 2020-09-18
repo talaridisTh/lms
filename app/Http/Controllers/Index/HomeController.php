@@ -113,14 +113,13 @@ class HomeController extends Controller {
     public function test()
     {
 
-//        dd(Course::with(["topics", "users"])
-//            ->whereIn("courses.id",
-//                function ($subquery) {
-//                    $subquery->select('topic_id')
-//                        ->from('topicables')
-//                        ->where('topic_id', 5)
-//                        ->get();
-//                })->get());
+
+       dd(User::find(1)->courses()->whereIn("title", function ($subquery) {
+            $subquery->from("topics")
+                ->where("id", 1)
+                ->select("id")
+                ->get();
+        })->get());
     }
 
 }

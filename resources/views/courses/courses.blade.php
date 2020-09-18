@@ -9,6 +9,7 @@
         <div class="content">
             <div class="container-xl " style="width: 1450px">
                 <div class="row">
+                    @if(empty(!$arrayTopics))
                     <div class="col-md-12 ">
                         <div id="topic-filter" class="p-2 rounded text-light"
                              style="background-image: linear-gradient(to right, rgb(91, 121, 162) 0%, rgb(46, 68, 105) 100%);">
@@ -29,6 +30,11 @@
                             </div>
                         </div>
                     </div>
+                    @else
+                        <h2 >
+                            Δεν υπάρχουν Courses
+                        </h2>
+                    @endif
                 </div>
 
                 <div class="row my-5 d-flex justify-content-center content-filter">

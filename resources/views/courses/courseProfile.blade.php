@@ -77,7 +77,7 @@
                     <div class="row align-items-center">
                         <div class="col-md-3 mb-2">
                             <img height="300" width="300" class=" img-fluid img-thumbnail rounded-circle"
-                                 src="{{$course->cover=="vaggelaras"? "http://lorempixel.com/300/300":url($course->cover)}}"
+                                 src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
                                  alt="course-logo"
                             >
                         </div>
@@ -105,8 +105,8 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="box-last-material p-4">
-                                <p class="box-num-material display-4">{{$allMaterial->count()}}</p>
+                            <div class="box-last-material p-2 ">
+                                <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>
                                 <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
                                     <span>Η τελευταία προσθήκη</span>
                                     @if(count($allMaterial))
@@ -119,7 +119,7 @@
 
                                     <button class="bghover  border font-weight-bold btn btn-secontary ">
                                         <a class="text-white bghover" href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
-                                          Δες το μαθημα</a>
+                                          Δες το μάθημα</a>
                                     </button>
                                     @endif
                                 </div>
