@@ -62,7 +62,7 @@ class CourseController extends Controller
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
-		$course->status = 1 /* $request->status */;
+		$course->status = 0;
 		$course->slug = Str::slug($request->title, "-");
 		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;

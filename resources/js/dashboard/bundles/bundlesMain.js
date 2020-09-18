@@ -179,10 +179,6 @@ $("#bundle-state-select").on("change", function () {
 
 });
 
-
-
-
-
 let searchFieldLabel = $("#bundle-table_filter > label > input")[0];
 let dateInput = utilities.createDateElm( "bundle-date-range" );
 

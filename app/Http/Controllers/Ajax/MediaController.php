@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\DataTables\FileManagerDataTable;
 use App\Http\Controllers\Controller;
 use App\Media;
 use Illuminate\Http\Request;
@@ -101,6 +102,12 @@ class MediaController extends Controller
         //
 	}
 
+	public function fileManagerTable(FileManagerDataTable $dataTable) {
+
+		return $dataTable->render('file.manager');
+
+	}
+
 	public function editorImages ( Request $request ) {
 
 		// dd();
@@ -136,7 +143,7 @@ class MediaController extends Controller
 
 						$media = new Media;
 						$media->original_name = $originalName;
-						$media->name = $name;
+						$media->name = $fullname;
 						$media->rel_path = "storage/images/$date/$fullname";
 						$media->thumbnail_path = "storage/thumbnails/$date/$fullname";
 						$media->ext = $image->getClientOriginalExtension();

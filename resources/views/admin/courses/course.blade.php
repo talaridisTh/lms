@@ -366,73 +366,84 @@
 								<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
 
 									<div class="sticky py-3">
+										
+										@if ( $course )
+											
+											@php
+												if ( $course->status == 1 ) {
+													if ( time() > strtotime($course->publish_at) && !is_null($course->publish_at) ) {
+														$tooltip = [
+															"color" => "bg-success", 
+															"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+															"text" => "Published"
+														];
+														$storeBtn = [ "color" => "btn-info", "text" => "Update"];
+													}
+													else {
+														$tooltip = [
+															"color" => "bg-info", 
+															"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>", 
+															"text" => "Scheduled"
+														];
+														$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
+													}
 
-										@php
-											if ( $course->status == 1 ) {
-												if ( time() > strtotime($course->publish_at) && !is_null($course->publish_at) ) {
-													$tooltip = [
-														"color" => "bg-success", 
-														"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
-														"text" => "Published"
+													$publishBtn = [
+														"color" => "btn-light",
+														"text" => "Set Draft",
+														"value" => 0
 													];
-													$storeBtn = [ "color" => "btn-info", "text" => "Update"];
+
 												}
 												else {
 													$tooltip = [
-														"color" => "bg-info", 
-														"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>", 
-														"text" => "Scheduled"
+														"color" => "bg-light", 
+														"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+														"text" => "Draft"
 													];
 													$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
+													$publishBtn = [
+														"color" => "btn-danger",
+														"text" => "Publish",
+														"value" => 1
+													];
 												}
+											@endphp
 
-												$publishBtn = [
-													"color" => "btn-light",
-													"text" => "Set Draft",
-													"value" => 0
-												];
-												
-											}
-											else {
-												$tooltip = [
-													"color" => "bg-light", 
-													"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
-													"text" => "Draft"
-												];
-												$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
-												$publishBtn = [
-													"color" => "btn-danger",
-													"text" => "Publish",
-													"value" => 1
-												];
-											}
-										@endphp
+											<span id="status-icon"
+												class=" px-1 pointer-default circle-icon btn-sm btn {{ $tooltip['color'] }} text-white rounded-circle"
+												data-toggle="tooltip" data-placement="bottom" title="{{ $tooltip['text'] }}"
+											>
+												{!! $tooltip['icon'] !!}
+											</span>
 
-										<span id="status-icon"
-											class=" px-1 pointer-default circle-icon btn-sm btn {{ $tooltip['color'] }} text-white rounded-circle"
-											data-toggle="tooltip" data-placement="bottom" title="{{ $tooltip['text'] }}"
-										>
-											{!! $tooltip['icon'] !!}
-										</span>
+											<button form="edit-course-form" type="submit"
+												class="btn {{ $storeBtn['color'] }}" name="save" value="save"
+											>
+												{{ $storeBtn['text'] }}
+											</button>
 
-										<button form="edit-course-form" type="submit"
-											class="btn {{ $storeBtn['color'] }}" name="save" value="save"
-										>
-											{{ $storeBtn['text'] }}
-										</button>
+											<button form="edit-course-form" type="submit" class="btn {{ $publishBtn['color'] }}"
+												name="publish" value="{{ $publishBtn['value'] }}"
+											>
+												{{ $publishBtn['text'] }}
+											</button>
 
-										<button form="edit-course-form" type="submit" class="btn {{ $publishBtn['color'] }}"
-											name="publish" value="{{ $publishBtn['value'] }}"
-										>
-											{{ $publishBtn['text'] }}
-										</button>
+											<a id="preview-btn"
+												href="/courses/course/{{ $course->slug }}"
+												class="btn btn-warning"
+											>
+												<i class="mdi mdi-eye"></i>
+											</a>
+										@else
+											<button form="edit-course-form" type="submit"
+												class="btn btn-primary" name="save" value="save"
+											>
+												Save
+											</button>
+										@endif
 
-										<a id="preview-btn"
-											href="/courses/course/{{ $course->slug }}"
-											class="btn btn-warning"
-										>
-											<i class="mdi mdi-eye"></i>
-										</a>
+										
 
 									</div>
 				
