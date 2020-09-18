@@ -148,7 +148,7 @@ class CourseController extends Controller
 			}
 			else {
 				$status = 0;
-				$publish = null;
+				$publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
 			}
 		}
 		elseif( $request->publish == 1 ) {
@@ -157,7 +157,7 @@ class CourseController extends Controller
 		}
 		else {
 			$status = 0;
-			$publish = null;
+			$publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
 		}
 
 		$course->title = $request->title;

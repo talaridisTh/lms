@@ -16,6 +16,7 @@ $factory->define(Course::class, function (Faker $faker) {
 	$hours = rand(0, 23);
 	$mins = rand(0, 59);
 	$secs = rand(0, 59);
+	$status = rand(0, 1);
 
 	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
@@ -26,10 +27,10 @@ $factory->define(Course::class, function (Faker $faker) {
 		'description' => "Description of Course ".$counter++." ".$faker->slug($nbSentences = 3, $variableNbSentences = true),
 		'user_id' => 2,
 		'slug' => $faker->slug,
-		'status' => $faker->numberBetween( 0 , 1 ),
+		'status' => $status,
 		'version' => $faker->numberBetween( 0 , 1 ) == 0 ? "Trial" : "Normal",
 		'created_at' => $date->format('Y-m-d H:i:s'),
-		'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s'),
-		'publish_at' => $date->addYears( rand(1, 2) ),
+		'updated_at' => $date->addWeeks( rand(1, 12) )->subSeconds( rand(36000, 136000) )->format('Y-m-d H:i:s'),
+		'publish_at' => $status == 1 ? $date->addYears( rand(1, 2) ) : null,
     ];
 });
