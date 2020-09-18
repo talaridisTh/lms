@@ -3584,7 +3584,7 @@ b[role=presentation] {
 }
 
 .content-width {
-  max-width: 1450px;
+  max-width: 1500px;
 }
 
 .ranges {
@@ -3688,6 +3688,14 @@ figure.image-center {
 .add-watchlist:hover > .mdi-heart-outline,
 .add-watchlist:hover > .mdi-cards-heart {
   color: red;
+}
+
+.text-wrap {
+  white-space: normal !important;
+}
+
+.min-width {
+  min-width: 290px !important;
 }
 
 .grid {
