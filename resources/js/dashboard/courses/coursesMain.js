@@ -123,7 +123,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-		{ data: 'publish', className: "align-middle text-center cursor-default", searchable: false, orderable: false },
+		{ data: 'publish', name: "publish_at", className: "align-middle text-center cursor-default", searchable: false },
 		{ data: 'status', name: 'status', visible: false },
 		{ data: 'updated_at', name: 'updated_at', visible: false },
 	],

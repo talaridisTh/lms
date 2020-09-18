@@ -55,7 +55,7 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 	columns: [
 		{ data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
 		{ data: "title", name: "title", className: "cursor-default"},
-		{ data: "toggle", name: "status", className: "align-middle", width: "5%", searchable: false },
+		{ data: "toggle", name: "status", className: "align-middle text-center", width: "5%", searchable: false },
 		{ 
 			data: "updated_at", 
 			name: "updated_at", 
@@ -70,7 +70,7 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-		{ data: "publish", className: "align-middle text-center cursor-default"},
+		{ data: "publish", name: "publish_at", className: "align-middle text-center cursor-default"},
 		{ data: "status", name: "status", className: "align-middle text-center cursor-default", visible: false },
 	],
 	processing: true,
@@ -107,14 +107,47 @@ function activeToggleInit() {
 
 	let toggle = $(".js-toggle");
 
-	toggle.change( function() {
+	toggle.on( "change", function() {
 
-		axios.patch( `/bundles/bundles-toggle-status/${this.dataset.bundleId}`, {
+		axios.patch( `/bundles/status`, {
+			bundleId: this.dataset.bundleId,
 			state: this.checked ? 1 : 0
 		})
 		.then( (res) => {
+			let row = this.findParent(2);
+			let dateElm = row.getElementsByClassName("js-date")[0];
+			let timeElm = row.getElementsByClassName("js-time")[0];
+			let badge = row.getElementsByClassName("js-badge")[0];
+			let date = res.data.date.split("-").reverse().join("-");
+			let time = res.data.time;
+			let now = new Date();
+
+			date = new Date( `${date} ${time}` );
+
+			if ( this.checked ) {
+				if ( now > date ) {
+					badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+					badge.classList.add("badge-outline-primary");
+					badge.textContent = "Published";
+				}
+				else {
+					badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+					badge.classList.add("badge-outline-dark");
+					badge.textContent = "Scheduled";
+				}
+			}
+			else {
+				badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+				badge.classList.add("badge-outline-danger");
+				badge.textContent = "Draft";
+			}
+
+			dateElm.textContent = res.data.date;
+			timeElm.textContent = res.data.time;
+
 			let icon = this.checked ? "success" : "info";
-			let message = this.checked ? "Ενεργοποιήθηκε!" : "Απενεργοποιήθηκε";
+			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
 			utilities.toastAlert( icon, message );
 		})
 		.catch( (err) => {

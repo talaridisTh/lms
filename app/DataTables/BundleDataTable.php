@@ -56,16 +56,6 @@ class BundleDataTable extends DataTable
 					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})
-			// ->editColumn('updated_at', function($data) {
-
-			// 	return "<p class='mb-1'>".$data->updated_at->format( "d / m / Y" )."</p>";
-
-			// })
-			// ->editColumn('created_at', function($data) {
-
-			// 	return "<p class='mb-1'>".$data->created_at->format( "d / m / Y" )."</p>";
-
-			// })
 			->editColumn('publish', function ($data) {
 
 				if ( $data->status == 1 ) {

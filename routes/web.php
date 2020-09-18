@@ -142,7 +142,7 @@ Route::post( 'bundles/remaining-users-datatable', 'Ajax\BundleController@remaini
 
 //! Dashboard Ajax Bundles CRUD
 Route::delete( 'bundles/destroy/{ids}', 'Ajax\BundleController@destroy' );
-Route::patch( 'bundles/bundles-toggle-status/{bundle}', 'Ajax\BundleController@update' );
+Route::patch( 'bundles/status', 'Ajax\BundleController@toggleStatus' );
 Route::patch( 'bundles/add-courses', 'Ajax\BundleController@addCourses' );
 Route::patch( 'bundles/remove-courses', 'Ajax\BundleController@removeCourses' );
 Route::post( 'bundles/remove-users', 'Ajax\BundleController@removeUsers');

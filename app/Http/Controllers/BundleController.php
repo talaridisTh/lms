@@ -101,7 +101,7 @@ class BundleController extends Controller
 			}
 			else {
 				$status = 0;
-				$publish = null;
+				$publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
 			}
 		}
 		elseif( $request->publish == 1 ) {
@@ -110,7 +110,7 @@ class BundleController extends Controller
 		}
 		else {
 			$status = 0;
-			$publish = null;
+			$publish = $publish = $request->publishDate ? Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s") : null;
 		}
 
 		$bundle->title = $request->title;
