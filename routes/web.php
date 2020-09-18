@@ -177,7 +177,10 @@ Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 Route::patch( 'topics/update/{topic}', 'Ajax\TopicController@update' );
 Route::delete( 'topics/destroy/{ids}', 'Ajax\TopicController@destroy' );
 
-//! Dashboard Media
+//! Dashboard File Manager Datatable
+Route::post( '/file-manager', 'Ajax/MediaController@index');
+
+//! Dashboard File Manager
 Route::get( 'media/images', 'Ajax\MediaController@index' );
 
 //! Ajax Upload Files

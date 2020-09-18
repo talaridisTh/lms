@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
+use App\DataTables\FileManagerDataTable;
 use App\Http\Controllers\Controller;
 use App\Media;
 use Illuminate\Http\Request;
@@ -99,6 +100,12 @@ class MediaController extends Controller
     public function destroy(Media $media)
     {
         //
+	}
+
+	public function fileManagerTable(FileManagerDataTable $dataTable) {
+
+		return $dataTable->render('file.manager');
+
 	}
 
 	public function editorImages ( Request $request ) {

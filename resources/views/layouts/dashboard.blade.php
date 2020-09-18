@@ -85,7 +85,7 @@
 
 						<li class="side-nav-item">
 							<a href="/dashboard/topics" class="side-nav-link">
-								<i class="mdi mdi-chart-bubble"></i>
+								<i class="mdi mdi-tag"></i>
 								<span>Topics</span>
 							</a>
 						</li>
@@ -93,7 +93,7 @@
                         <li class="side-nav-item">
                             <a href="{{route('media.index')}}" class="side-nav-link">
                                 <i class="mdi mdi-chart-bubble"></i>
-                                <span>Content</span>
+                                <span>File Manager</span>
                             </a>
                         </li>
 
