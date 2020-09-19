@@ -47,7 +47,7 @@ class UserController extends Controller {
         return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs", "activities","media"));
     }
 
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
         //
         $user = new User();
