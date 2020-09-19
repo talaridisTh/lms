@@ -21,15 +21,15 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->bigInteger('phone');
             $table->text('profil');
-            $table->string('cover');
+            $table->string('cover')->nullable();
             $table->string('facebook_link')->unique()->nullable();
             $table->string('instagram_link')->unique()->nullable();
             $table->string('linkedin_link')->unique()->nullable();
             $table->string('youtube_link')->unique()->nullable();
-            $table->string('slug');
+            $table->string('slug')->nullable();
             $table->text('password');
             $table->text('password_encrypt')->nullable();
-            $table->unsignedBigInteger('status');
+            $table->unsignedBigInteger('status')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
