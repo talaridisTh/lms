@@ -198,7 +198,7 @@
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
-					<th class="text-center">color</th>
+                    <th class="text-center">Χρώμα</th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
@@ -208,7 +208,7 @@
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Τελ. Ενημέρωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
-					<th class="text-center">color</th>
+					<th class="text-center">Χρώμα</th>
 				</tr>
 			</tfoot>
 		</table>

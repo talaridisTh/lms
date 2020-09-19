@@ -52,7 +52,7 @@ class UserController extends Controller {
         //
         $user = new User();
         $data = collect($request)->except("sendMail", "roles", "password_confirmation", "media", "media_original_name")->all();
-        $data['password'] = Hash::make("password");
+//        $data['password'] = Hash::make("password");
         $data["slug"] = Str::slug($request->first_name, "-");
         if ($request->status)
         {
@@ -69,8 +69,10 @@ class UserController extends Controller {
         {
 
             $data["password_encrypt"] = Crypt::encryptString($request->password);
-            $data["password"] = Hash::make(request("password"));
+            $data["password"] = Hash::make($request->password);
+
         }
+
         $currentUser = $user->create($data)->assignRole($request->roles);
 
 

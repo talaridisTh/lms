@@ -243,21 +243,21 @@
                     <div class="col-md-12">
 
                         <!-- Cover Preview -->
-                        @isset($user)
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Cover</h4>
+{{--                        @isset($user)--}}
+{{--                            <div class="card">--}}
+{{--                                <div class="card-header">--}}
+{{--                                    <h4 class="card-title mb-0">Cover</h4>--}}
 
-                                </div>
-                                <div class="card-body">
-                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" class="img-fluid"
-                                         alt="Cover Image">
+{{--                                </div>--}}
+{{--                                <div class="card-body">--}}
+{{--                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" class="img-fluid"--}}
+{{--                                         alt="Cover Image">--}}
 
-                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
+{{--                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>--}}
 
-                                </div> <!-- end card-body -->
-                            </div> <!-- end course info card -->
-                        @endisset
+{{--                                </div> <!-- end card-body -->--}}
+{{--                            </div> <!-- end course info card -->--}}
+{{--                        @endisset--}}
 
 
 {{--              @include("components.dropzone",["model"=>$user,"type"=>"Cover","dropzone"=>"cover-dropzone"] )--}}
