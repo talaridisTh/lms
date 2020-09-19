@@ -145,7 +145,7 @@
                         <div class="col-md-12  px-3 py-1">
                             <div class="row">
                                 <div class="col-md-12 d-flex align-items-center pl-4 text-black">
-                                    {{$materials->description}}
+                                    {!! $course->description !!}
                                 </div>
                                 <p class="d-flex align-items-center pl-4 mt-2 ">
                                     Δημοσιεύθηκε {{$materials->created_at->format("d-m-y")}}.</p>
