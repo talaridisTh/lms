@@ -78,7 +78,7 @@
         background-image: url('images/login-backgound.png');
         background-position-x: center;
         background-position-y: center;
-        background-size: cover;
+        background-size: cover ;
         background-repeat-x: initial;
         background-repeat-y: initial;
         background-attachment: initial;
@@ -87,14 +87,17 @@
         background-color: initial;
 
     }
+    .wrapper{
+        height: 88% !important;
+    }
 </style>
 @section('content')
 
 
-    <div class="container-fluid" style="max-width: 100%;">
-        <div class="row">
-            <div class="col-md-12  col-lg-3 p-4">
-                <div class="row">
+    <div class="container-fluid" style="max-width: 100%; height: 100%">
+        <div class="row" style="height: 100%">
+            <div class="col-md-12  col-lg-3 p-4 d-flex flex-column justify-content-around">
+                <div class="row" style="height: 90%">
 {{--                    <div class="col-md-12 mb-5">--}}
 {{--                        <img height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"--}}
 {{--                             alt="">--}}
@@ -174,7 +177,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-12 text-center" style="margin-top: 180px">
+                    <div class="col-md-12 text-center d-flex justify-content-center align-items-end" style="margin-top: 180px">
                         <a href="https://www.darkpony.com/" class="text-black">
                             With <i class="mdi mdi-heart"></i> by DARKPONY
                         </a>

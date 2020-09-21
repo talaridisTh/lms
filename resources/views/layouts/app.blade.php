@@ -15,13 +15,25 @@
     <link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style"/>
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @yield("style")
+
+    <style>
+
+        .sticky-front{
+
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0px;
+            z-index: 999;
+        }
+
+    </style>
 </head>
 
 <body class="loading" data-layout="detached"
       data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
 <!-- Topbar Start -->
-<div class="navbar-custom topnav-navbar topnav-navbar-white">
+<div class="navbar-custom   sticky-front topnav-navbar topnav-navbar-white">
     <div class="container-fluid">
 
         <div class="row">
