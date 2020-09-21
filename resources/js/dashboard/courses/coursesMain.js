@@ -321,7 +321,7 @@ $("#course-type-selection").change( function() {
 	let label = $("#select2-course-type-selection-container")[0];
 	utilities.filterStyle( label, this.value );
 
-	coursesDatatable.column(6).search( this.value ).draw();
+	coursesDatatable.column(5).search( this.value ).draw();
 
 });
 

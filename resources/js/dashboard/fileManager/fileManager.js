@@ -34,7 +34,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	order: [ 1, "asc" ],
 	columns: [
 		// { data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
-		{ data: "image", className: "cursor-default"},
+		{ data: "image", className: "cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
 		{ data: "type", name: "type", className: "align-middle text-center", width: "5%", searchable: false },
 		{ data: "ext", name: "ext", className: "align-middle text-center cursor-default"},
@@ -55,7 +55,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	},
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
-		let lenthSelection = $("select[name='bundle-table_length']");
+		let lenthSelection = $("select[name='file-manager-datatable_length']");
 		lenthSelection.addClass("select2");
 
 		lenthSelection.select2({
@@ -121,3 +121,20 @@ function paginationRequest( activePage, search) {
 		console.log(err);
 	})
 }
+
+//!##########################################
+//!				Initializers				#
+//!##########################################
+
+let lengthLabel = document.querySelector("#file-manager-datatable_length > label");
+let filter = document.getElementById("ext-table-filter")
+lengthLabel.appendChild( filter );
+
+$("#ext-table-filter").select2({
+	minimumResultsForSearch: -1
+});
+
+$("#ext-table-filter").on("change", function() {
+	fileManagerDatatable.column(3).search( this.value ).draw();
+});
+

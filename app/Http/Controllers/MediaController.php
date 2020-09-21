@@ -9,16 +9,14 @@ use Illuminate\Support\Str;
 
 class MediaController extends Controller
 {
-
     public function index()
     {
+		$files = Media::orderBy("id", "desc")->paginate(24);
 
-        $files = Media::orderBy("id", "desc")->paginate(24);
+		$data = [
+			"files" => $files,
+		];
 
-        return view("admin/media/mediaIndex")->withFiles($files);
-
+        return view("admin/media/mediaIndex")->with($data);
     }
-
-
-
 }

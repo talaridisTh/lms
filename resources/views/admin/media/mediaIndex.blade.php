@@ -7,7 +7,7 @@
 
 @section('content')
 
-	<div class="container table-cnt content-width">
+	<div class="container table-cnt content-width mb-5">
 		<!-- start page title -->
 		<div class="row">
 			<div class="col-12">
@@ -86,8 +86,22 @@
 			</div>
 		</div>
 	
-		
 	</div>
+
+
+	<select id="ext-table-filter" class="ml-1 select2 form-control">
+		<option value="" selected>Όλες οι Επεκτάσεις</option>
+		@php $exts = [] @endphp
+
+		@foreach ( $files as $file )
+			@if ( in_array( $file->ext, $exts) )
+				@continue
+			@endif
+
+			@php array_push($exts, $file->ext) @endphp
+			<option value="{{ $file->ext }}">{{ $file->ext }}</option>
+		@endforeach
+	</select>
 
 @endsection
 
