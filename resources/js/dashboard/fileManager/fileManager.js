@@ -3,6 +3,33 @@
 //!######################################
 import utilities from "../main";
 
+//!######################################
+//!				Global Variables		#
+//!######################################
+
+let timer = 0;
+
+//!######################################
+//!				EventListeners			#
+//!######################################
+
+$("#file-search").on("input", searchHandler);
+
+$(".js-gallery-page-btn").on( 'click', paginationHandler);
+
+$(".custom-tabs").on( "click", function() {
+	let tabs = $(".tab-pane");
+	$(".custom-tabs.btn-dark").removeClass("btn-dark").addClass("btn-light");
+
+	for ( let i = 0; i < tabs.length; i++ ) {
+		tabs[i].style.display = "none";
+	}
+
+	this.classList.remove("btn-light");
+	this.classList.add("btn-dark");
+	document.getElementById(this.dataset.customTab).style.display = "block";
+});
+
 const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	order: [ 1, "asc" ],
 	columns: [
@@ -42,3 +69,55 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 		// activeToggleInit();
 	}
 });
+
+//!######################################
+//! 		Grid View Functions			#
+//!######################################
+
+function paginationHandler(event) {
+
+	event.preventDefault();
+
+	let activePage = this.href.split("page=")[1];
+	let search = $("#file-search").val();
+
+	paginationRequest( activePage, search );
+
+}
+
+function searchHandler() {
+
+	clearTimeout(timer);
+
+	if ( this.value.length < 3 || this.value == "" ) {
+		timer = setTimeout(paginationRequest, 800, 1, "");
+	}
+	else {
+		timer = setTimeout(paginationRequest, 800, 1, this.value);
+	}
+
+}
+
+function paginationRequest( activePage, search) {
+
+	axios.get( `/files`, {
+		params: {
+			page: activePage,
+			search
+		}
+	})
+	.then( (res) => {
+		let gallery = $("#file-manager-content")[0]
+		gallery.innerHTML = res.data;
+
+		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
+
+		for (let i = 0; i < pagination.length; i++) {
+			pagination[i].removeEventListener("click", paginationHandler);
+			pagination[i].addEventListener("click", paginationHandler);
+		}
+	})
+	.catch( err => {
+		console.log(err);
+	})
+}

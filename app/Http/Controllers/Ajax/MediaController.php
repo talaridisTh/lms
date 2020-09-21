@@ -34,7 +34,20 @@ class MediaController extends Controller
 		return View('components.admin.imageGallery', ['media' => $media]);
 	}
 
+	public function gridFileManager( Request $request ) {
 
+		if ( $request->search ) {
+			$files = Media::where("name", "like", "%$request->search%")
+				->orderBy("id", "desc")
+				->paginate(24);
+		}
+		else {
+			$files = Media::orderBy("id", "desc")->paginate(24);
+		}
+
+		return View("components.admin.gridFileManager", ['files' => $files]);
+
+	}
 
     /**
      * Show the form for creating a new resource.

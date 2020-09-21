@@ -23,10 +23,11 @@ class Media extends Model
         return $this->morphedByMany('App\Bundle', 'mediable');
     }
 
-    public function details()
+    public function mediaDetails()
     {
-        return $this->belongsTo('App\MediaDetails');
-    }
+        return $this->hasOne('App\MediaDetails');
+	}
+	
     public function users()
     {
         return $this->morphedByMany('App\User', 'mediable');

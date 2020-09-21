@@ -13,13 +13,9 @@ class MediaController extends Controller
     public function index()
     {
 
-         $allMedia = Media::all();
+        $files = Media::orderBy("id", "desc")->paginate(24);
 
-
-
-
-
-        return view("admin.media.mediaIndex",compact('allMedia'));
+        return view("admin/media/mediaIndex")->withFiles($files);
 
     }
 
