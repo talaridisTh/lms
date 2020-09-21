@@ -251,6 +251,17 @@ class User extends Authenticatable {
         $carbonDate = new Carbon($value);
         return $carbonDate->diffForHumans();
     }
+    public function getUpdatedAtAttribute($value)
+    {
+        $carbonDate = new Carbon($value);
+        return $carbonDate->diffForHumans();
+    }
+
+    public static function getNextId()
+    {
+        $statement = DB::select("show table status like 'users'");
+        return $statement[0]->Auto_increment;
+    }
 
 
 }

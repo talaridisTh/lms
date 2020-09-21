@@ -32,7 +32,7 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         {data: "title", name: "title"},
         {data: "curator", name: "curator"},
         {data: "updated_at", name: "updated_at"},
-        {data: "created_at", name: "created_at",visible:false},
+        {data: "created_at", name: "created_at", visible: false},
 
     ],
     language: {
@@ -56,6 +56,7 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         $("#materials-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
         $("#materials-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
         $("#materials-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
+        $("#scroll-horizontal-datatable_filter").addClass("d-flex justify-content-around");
         utilities.resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
         utilities.resetBulk($("#course-indside-material-bulk"), $(".js-course-inside-material"));
         checkeBoxesEventListener();
@@ -118,16 +119,175 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
 
 //! EDITOR INIT
 //!============================================================
+$R.add('plugin', 'mediaLibrary', {
+    translations: {
+        en: {
+            "mediaLibrary": "Media Library"
+        }
+    },
+    init: function (app) {
+        this.app = app;
+        this.lang = app.lang;
+        this.toolbar = app.toolbar;
+    },
+    start: function () {
+        var buttonData = {
+            title: this.lang.get("mediaLibrary"),
+            icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+            api: "plugin.mediaLibrary.toggle"
+        };
 
-$R('#summaryMaterial',{
-    minHeight: '150px'
+        var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+    },
+    toggle: function () {
+        $('#gallery-content')[0].dataset.action = "summary"
+        $('#gallery-modal').modal('show')
+    }
 });
-$R('#descriptionMaterial',{
-    minHeight: '150px'
+$R("#summary", {
+    buttons: [
+        'html', 'undo', 'redo', 'format',
+        'bold', 'underline', 'italic', 'deleted',
+        'sup', 'sub', 'lists', 'file', 'link', 'image'
+    ],
+    buttonsAddBefore: {before: 'image', buttons: ['mediaLibrary']},
+    style: false,
+    plugins: ["mediaLibrary", 'alignment'],
+    minHeight: '150px',
+    imageResizable: true,
+    imagePosition: {
+        "left": "image-left",
+        "right": "image-right",
+        "center": "image-center text-center"
+    },
+    imageFloatMargin: '20px',
+    imageUpload: "/media/upload-images",
+    // imageData: {
+    // 	// id: courseId,
+    // 	// namespace: "App\\Course"
+    // },
+    callbacks: {
+        upload: {
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            }
+        }
+    }
 });
-$R('#contentMaterial',{
-    minHeight: '150px'
-}); ``
+
+$R.add('plugin', 'mediaLibrary', {
+    translations: {
+        en: {
+            "mediaLibrary": "Media Library"
+        }
+    },
+    init: function (app) {
+        this.app = app;
+        this.lang = app.lang;
+        this.toolbar = app.toolbar;
+    },
+    start: function () {
+        var buttonData = {
+            title: this.lang.get("mediaLibrary"),
+            icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+            api: "plugin.mediaLibrary.toggle"
+        };
+
+        var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+    },
+    toggle: function () {
+        $('#gallery-content')[0].dataset.action = "description-material"
+        $('#gallery-modal').modal('show')
+    }
+});
+$R("#description-material", {
+    buttons: [
+        'html', 'undo', 'redo', 'format',
+        'bold', 'underline', 'italic', 'deleted',
+        'sup', 'sub', 'lists', 'file', 'link', 'image'
+    ],
+    buttonsAddBefore: {before: 'image', buttons: ['mediaLibrary']},
+    style: false,
+    plugins: ["mediaLibrary", 'alignment'],
+    minHeight: '150px',
+    imageResizable: true,
+    imagePosition: {
+        "left": "image-left",
+        "right": "image-right",
+        "center": "image-center text-center"
+    },
+    imageFloatMargin: '20px',
+    imageUpload: "/media/upload-images",
+    // imageData: {
+    // 	// id: courseId,
+    // 	// namespace: "App\\Course"
+    // },
+    callbacks: {
+        upload: {
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            }
+        }
+    }
+});
+
+$R.add('plugin', 'mediaLibrary', {
+    translations: {
+        en: {
+            "mediaLibrary": "Media Library"
+        }
+    },
+    init: function (app) {
+        this.app = app;
+        this.lang = app.lang;
+        this.toolbar = app.toolbar;
+    },
+    start: function () {
+        var buttonData = {
+            title: this.lang.get("mediaLibrary"),
+            icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+            api: "plugin.mediaLibrary.toggle"
+        };
+
+        var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+    },
+    toggle: function () {
+        $('#gallery-content')[0].dataset.action = "content-material"
+        $('#gallery-modal').modal('show')
+    }
+});
+$R("#content-material", {
+    buttons: [
+        'html', 'undo', 'redo', 'format',
+        'bold', 'underline', 'italic', 'deleted',
+        'sup', 'sub', 'lists', 'file', 'link', 'image'
+    ],
+    buttonsAddBefore: {before: 'image', buttons: ['mediaLibrary']},
+    style: false,
+    plugins: ["mediaLibrary", 'alignment'],
+    minHeight: '150px',
+    imageResizable: true,
+    imagePosition: {
+        "left": "image-left",
+        "right": "image-right",
+        "center": "image-center text-center"
+    },
+    imageFloatMargin: '20px',
+    imageUpload: "/media/upload-images",
+    // imageData: {
+    // 	// id: courseId,
+    // 	// namespace: "App\\Course"
+    // },
+    callbacks: {
+        upload: {
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            }
+        }
+    }
+});
+
+
 
 //! METHOD FORM HIDEN
 //!============================================================
@@ -136,9 +296,10 @@ $R('#contentMaterial',{
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable,"#material-course-table_length label")
-utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable,"#material-course-table_length label")
-utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable,"#material-course-table_length label")
+utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable, "#material-course-table_length label")
+utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable, "#material-course-table_length label")
+utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
+utilities.filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label")
 
 //! SELECT2
 //!============================================================
@@ -157,14 +318,18 @@ $("#topicMaterial").select2({
     tags: true
 });
 
+$("#versionFilterMaterial").select2({
+    minimumResultsForSearch: -1,
+});
+
 //datatable
 $("#topicFilterMaterialCourses").select2({});
 
-$(".custom-select").select2({   minimumResultsForSearch: -1,});
+$(".custom-select").select2({minimumResultsForSearch: -1,});
 
-$("#activeFilterMaterialCourses").select2({   minimumResultsForSearch: -1,});
+$("#activeFilterMaterialCourses").select2({minimumResultsForSearch: -1,});
 
-$("#userFilterMaterialCourses").select2({   });
+$("#userFilterMaterialCourses").select2({});
 
 $("#topicFilterMaterialCourses").change(function () {
 
@@ -189,7 +354,6 @@ $("#activeFilterMaterialCourses").change(function () {
     utilities.filterStyle(label, this.value);
 
 });
-
 
 
 //sortable
@@ -226,7 +390,7 @@ dataRange.daterangepicker({
 
 //! EVENT listener
 //!============================================================
-$("#update-btn").click( function() {
+$("#update-btn").click(function () {
     $(".formPrevent").submit();
 });
 
@@ -253,7 +417,7 @@ $('#material-destroy').submit(async (e) => {
 });
 
 
-$(".tab-link").on("show.bs.tab", function(event) {
+$(".tab-link").on("show.bs.tab", function (event) {
 
     event.preventDefault();
     Swal.fire(
@@ -303,13 +467,12 @@ const selectMultipleCheckboxDelete = () => {
         }
 
 
-
-        axiosMultipleDelete(ids,materialId)
+        axiosMultipleDelete(ids, materialId)
 
     })
 }
 
-const axiosMultipleDelete = async (courseId,materialId) => {
+const axiosMultipleDelete = async (courseId, materialId) => {
 
     try {
         const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${courseId.length} απο τα μαθήματα `)
@@ -360,13 +523,13 @@ $("#all-remainings-checkbox").change(function () {
 
 })
 
-const addCourse = ()=>{
-    $(".js-add-courses").click(function(){
-        addCourseAxios(this.findParent(2).dataset.courseId,materialId)
+const addCourse = () => {
+    $(".js-add-courses").click(function () {
+        addCourseAxios(this.findParent(2).dataset.courseId, materialId)
     })
 }
 
-const addCourseAxios = async(courseId,materialId)=>{
+const addCourseAxios = async (courseId, materialId) => {
     try {
         const {status} = await axios.post("/materials/add-course/", {
             courseId,
@@ -379,8 +542,7 @@ const addCourseAxios = async(courseId,materialId)=>{
             materialCourseDatatable.ajax.reload()
 
         }
-    }
-    catch (e) {
+    } catch (e) {
         console.log(e)
         utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
     }
@@ -426,7 +588,6 @@ const axiosMultipleUpdate = async (courseIds, materialId) => {
 }
 
 
-
 //! DROPOZONE
 //!============================================================
 
@@ -441,12 +602,10 @@ $("#change-cover-btn").on("click", function () {
     $("#gallery-modal").modal('show');
 })
 
-
-
 let dropzone = document.getElementById("file-pond");
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
-const pond = FilePond.create( dropzone );
+const pond = FilePond.create(dropzone);
 
 FilePond.setOptions({
     name: 'file[]',
@@ -457,16 +616,16 @@ FilePond.setOptions({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
             },
-            onload: function(data) {
+            onload: function (data) {
 
             },
 
         },
 
     },
-    onprocessfiles: function(data) {
+    onprocessfiles: function (data) {
 
-        utilities.paginationRequest( 1, "" );
+        utilities.paginationRequest(1, "");
         $("#upload-tab-btn").removeClass("active")
         $("#upload").removeClass("active")
         $("#media-library-tab-btn").addClass("active")
@@ -474,7 +633,7 @@ FilePond.setOptions({
 
     },
 
-    onupdatefiles : function( file){
+    onupdatefiles: function (file) {
         utilities.toastAlert("success", `${file.length} εικόνα ανέβηκαν`)
 
     },

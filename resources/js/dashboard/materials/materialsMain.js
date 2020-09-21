@@ -27,7 +27,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         {data: "status", name: "status", className: "text-left",orderable: false,},
         {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
         {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
-        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left",visible: false},
+        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left",  orderData: [ 7]},
         {data: "courses", name: "courses", className: "js-link cursor-pointer text-left",orderable: false,visible:false},
         {data: "id", name: "id",visible: false},
     ],
@@ -38,7 +38,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         lengthMenu: "_MENU_",
         loadingRecords: "Φόρτωση ...",
         processing: "Επεξεργασία ...",
-        search: "Αναζήτηση: ",
+        search: "",
         zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
         paginate: {
             previous: "<i class='mdi mdi-chevron-left'>",
@@ -141,7 +141,7 @@ dataRange.on( 'cancel.daterangepicker', function(event, picker) {
     $(".date")[0].value = "";
     materialsDatatable.ajax.reload();
 })
-
+$("#daterange").detach().insertBefore('#materials-datatable_filter > label ')
 
 
 //! METHOD FIRST TABLE

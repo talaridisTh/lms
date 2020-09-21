@@ -28,9 +28,9 @@ class UserUpdateRequest extends FormRequest {
             'last_name' => ['required', 'string', 'max:255',"min:5"],
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required'],
-            'profil' => 'required|min:3|max:1000',
+            'profil' => 'required|max:1000',
             'password' => ['confirmed'],
-            'cover' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
+//            'cover' => 'required|max:2048',
             'roles' => 'required'
         ];
     }

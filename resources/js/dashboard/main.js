@@ -1,22 +1,22 @@
 Element.prototype.findParent = function (loops) {
-	let parent = this;
+    let parent = this;
 
-	for ( let i = 0; i < loops; i++ ) {
-		parent = parent.parentElement;
-	}
+    for (let i = 0; i < loops; i++) {
+        parent = parent.parentElement;
+    }
 
-	return parent;
-},false;
+    return parent;
+}, false;
 
 Element.prototype.appendBefore = function (element) {
-	element.parentNode.insertBefore(this, element);
-},false;
+    element.parentNode.insertBefore(this, element);
+}, false;
 
 Element.prototype.appendAfter = function (element) {
 
-	element.parentNode.insertBefore(this, element.nextSibling);
+    element.parentNode.insertBefore(this, element.nextSibling);
 
-},false;
+}, false;
 
 //!##########################################
 //!				Global Variables			#
@@ -43,10 +43,10 @@ function toastAlert(icon, message) {
     });
 }
 
-function toastAlertDelete(text,icon="warning"){
-    return   Swal.fire({
+function toastAlertDelete(text, icon = "warning") {
+    return Swal.fire({
         title: 'Είστε σίγουρος;',
-        text:text,
+        text: text,
         icon: icon,
         showCancelButton: true,
         confirmButtonText: 'Ναί, διαγραφή!',
@@ -58,11 +58,11 @@ function toastAlertDelete(text,icon="warning"){
 //!CONFIG
 //!============================================================
 const redactorConfig = {
-	buttons: [
-		'html', 'undo', 'redo', 'format',
-		'bold', 'underline', 'italic', 'deleted',
-		'sup', 'sub', 'lists', 'image', 'file', 'link'
-	],
+    buttons: [
+        'html', 'undo', 'redo', 'format',
+        'bold', 'underline', 'italic', 'deleted',
+        'sup', 'sub', 'lists', 'image', 'file', 'link'
+    ],
     style: false,
     minHeight: '150px',
 }
@@ -171,19 +171,19 @@ function bulkModifier(bulkBtn, status, sum) {
     }
 }
 
-function filterStyle( input, value ) {
+function filterStyle(input, value) {
 
-	if ( value == "" ) {
-		input.classList.remove("select2-selected");
-	}
-	else {
-		input.classList.add("select2-selected");
-	}
+    if (value == "") {
+        input.classList.remove("select2-selected");
+    } else {
+        input.classList.add("select2-selected");
+    }
 
 }
 
-    const filterButton = function (attr, column, table,tableId) {
+const filterButton = function (attr, column, table, tableId) {
     $(attr).detach().appendTo(tableId)
+
 
     $(attr).on('change', function () {
         table.columns(column).search(this.value).draw();
@@ -203,10 +203,10 @@ const changeInputHidden = (attr, hiddenAttr) => {
     })
 }
 
-function createStateSelect( id = "" ) {
+function createStateSelect(id = "") {
     const selectElm = document.createElement("select");
     selectElm.classList.add("ml-1", "select2");
-	selectElm.id = id;
+    selectElm.id = id;
 
     selectElm.innerHTML = `
 		<option value="">Όλες οι Καταστάσεις</option>
@@ -217,26 +217,26 @@ function createStateSelect( id = "" ) {
     return selectElm;
 }
 
-function createDateElm( id ) {
-	let input = document.createElement("input");
+function createDateElm(id) {
+    let input = document.createElement("input");
 
-	input.classList.add("form-control", "date", "d-inline-block", "ml-1", "js-date-search");
-	input.id = id;
-	input.dataset.toggle = "date-picker";
-	input.dataset.cancelClass = "btn-secondary";
-	input.style.height = "31.96px";
-	input.style.width = "195px";
-	input.placeholder = "Επιλέξτε ημερομηνίες...";
+    input.classList.add("form-control", "date", "d-inline-block", "ml-1", "js-date-search");
+    input.id = id;
+    input.dataset.toggle = "date-picker";
+    input.dataset.cancelClass = "btn-secondary";
+    input.style.height = "31.96px";
+    input.style.width = "195px";
+    input.placeholder = "Επιλέξτε ημερομηνίες...";
 
-	return input;
+    return input;
 }
 
-function createCourseTypeSelect( id = "" ) {
+function createCourseTypeSelect(id = "") {
 
-	const selectElm = document.createElement("select");
+    const selectElm = document.createElement("select");
 
     selectElm.classList.add("ml-1", "select2");
-	selectElm.id = id;
+    selectElm.id = id;
 
     selectElm.innerHTML = `
 		<option value="">Όλες οι Εκδόσεις</option>
@@ -247,49 +247,49 @@ function createCourseTypeSelect( id = "" ) {
     return selectElm;
 }
 
-function startDate( input ) {
+function startDate(input) {
 
-	let dateInput = input;
+    let dateInput = input;
 
-	if ( !dateInput || dateInput.value == "" ) {
-		return "";
-	}
+    if (!dateInput || dateInput.value == "") {
+        return "";
+    }
 
-	let dateInputValue = dateInput.value.split(" - ");
-	let firstDate = dateInputValue[0].split("/").reverse().join("-");
+    let dateInputValue = dateInput.value.split(" - ");
+    let firstDate = dateInputValue[0].split("/").reverse().join("-");
 
-	return firstDate;
+    return firstDate;
 }
 
-function endDate( input ) {
+function endDate(input) {
 
-	let dateInput = input;
+    let dateInput = input;
 
-	if ( !dateInput || dateInput.value == "" ) {
-		return "";
-	}
+    if (!dateInput || dateInput.value == "") {
+        return "";
+    }
 
-	let dateInputValue = dateInput.value.split(" - ");
-	let secondDate = dateInputValue[1].split("/").reverse().join("-");
+    let dateInputValue = dateInput.value.split(" - ");
+    let secondDate = dateInputValue[1].split("/").reverse().join("-");
 
-	return secondDate;
+    return secondDate;
 }
 
-function resetBulk( bulkBtn, checkbox ) {
+function resetBulk(bulkBtn, checkbox) {
 
-	bulkBtn.text("Επιλογές  (0)");
-	bulkBtn.addClass("btn-secondary");
-	bulkBtn.removeClass("btn-warning");
-	bulkBtn.prop("disabled", true);
-	checkbox.prop("checked", false);
+    bulkBtn.text("Επιλογές  (0)");
+    bulkBtn.addClass("btn-secondary");
+    bulkBtn.removeClass("btn-warning");
+    bulkBtn.prop("disabled", true);
+    checkbox.prop("checked", false);
 }
 
-function resetAddButton( addBtn, checkbox ) {
-	addBtn.text("Προσθήκη Επιλογών (0)");
-	addBtn.addClass("btn-secondary");
-	addBtn.removeClass("btn-primary");
-	addBtn.prop("disabled", true);
-	checkbox.prop("checked", false);
+function resetAddButton(addBtn, checkbox) {
+    addBtn.text("Προσθήκη Επιλογών (0)");
+    addBtn.addClass("btn-secondary");
+    addBtn.removeClass("btn-primary");
+    addBtn.prop("disabled", true);
+    checkbox.prop("checked", false);
 }
 
 
@@ -299,104 +299,116 @@ function resetAddButton( addBtn, checkbox ) {
 
 function paginationHandler(event) {
 
-	event.preventDefault();
+    event.preventDefault();
 
-	let activePage = this.href.split("page=")[1];
-	let search = $("#image-search").val();
+    let activePage = this.href.split("page=")[1];
+    let search = $("#image-search").val();
 
-	paginationRequest( activePage, search );
+    paginationRequest(activePage, search);
 
 }
 
 function searchHandler() {
 
-	clearTimeout(timer);
+    clearTimeout(timer);
 
-	if ( this.value.length < 3 || this.value == "" ) {
-		timer = setTimeout(paginationRequest, 800, 1, "");
-	}
-	else {
-		timer = setTimeout(paginationRequest, 800, 1, this.value);
-	}
-
-}
-
-function imageHandler () {
-
-
-	let modal = $("#gallery-content")[0];
-	let action = modal.dataset.action;
-	let model = modal.dataset.model;
-	let id = modal.dataset.id;
-
-	// console.log(baseUrl);
-	// return
-
-	let image = {
-		'img': {
-			url: `${baseUrl}/${this.dataset.imageSource}`,
-		}
-	}
-
-	if ( action == "description" ) {
-		ArticleEditor('#description').image.insert( image );
-	}
-	else if ( action == "summary" ){
-		$R('#summary',
-			'insertion.insertHtml',
-			`<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
-		);
-	}
-	else {
-
-		changeCoverRequest( model, id, this.dataset.imageSource );
-
-	}
-
-	$("#gallery-modal").modal('hide');
+    if (this.value.length < 3 || this.value == "") {
+        timer = setTimeout(paginationRequest, 800, 1, "");
+    } else {
+        timer = setTimeout(paginationRequest, 800, 1, this.value);
+    }
 
 }
 
-function paginationRequest( activePage, search) {
+function imageHandler() {
 
-	axios.get( `/media/images`, {
-		params: {
-			page: activePage,
-			search
-		}
-	})
-	.then( (res) => {
-		let gallery = $("#gallery-content")[0]
-		gallery.innerHTML = res.data;
 
-		let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
-		let addBtns = gallery.getElementsByClassName("js-add-image");
+    let modal = $("#gallery-content")[0];
+    let action = modal.dataset.action;
+    let model = modal.dataset.model;
+    let id = modal.dataset.id;
 
-		for ( let i = 0; i < addBtns.length; i++ ) {
-			addBtns[i].removeEventListener("click", imageHandler);
-			addBtns[i].addEventListener("click", imageHandler);
-		}
+    let image = {
+        'img': {
+            url: `${baseUrl}/${this.dataset.imageSource}`,
+        }
+    }
 
-		for (let i = 0; i < pagination.length; i++) {
-			pagination[i].removeEventListener("click", paginationHandler);
-			pagination[i].addEventListener("click", paginationHandler);
-		}
-	})
+    if (action == "description") {
+        ArticleEditor('#description').image.insert(image);
+    } else if (action == "summary") {
+        $R('#summary',
+            'insertion.insertHtml',
+            `<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+        );
+    } else if (action == "description-material") {
+        $R('#description-material',
+            'insertion.insertHtml',
+            `<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+        );
+    } else if (action == "content-material") {
+        $R('#content-material',
+            'insertion.insertHtml',
+            `<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+        );
+    } else {
+
+        changeCoverRequest(model, id, this.dataset.imageSource);
+
+    }
+
+    $("#gallery-modal").modal('hide');
+
 }
 
-function changeCoverRequest( namespace, id, url ) {
+function paginationRequest(activePage, search) {
 
-	axios.patch( "/media/cover/replace", {
-		namespace, id, url
-	})
-		.then( res => {
-			$("#cover-image")[0].src = `${baseUrl}/${url}`;
-			toastAlert("success", "Το Cover άλλαξε!")
-		})
-		.catch( err => {
-			console.log(err);
-			toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
-		})
+    axios.get(`/media/images`, {
+        params: {
+            page: activePage,
+            search
+        }
+    })
+        .then((res) => {
+            let gallery = $("#gallery-content")[0]
+            gallery.innerHTML = res.data;
+
+            let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
+            let addBtns = gallery.getElementsByClassName("js-add-image");
+
+            for (let i = 0; i < addBtns.length; i++) {
+                addBtns[i].removeEventListener("click", imageHandler);
+                addBtns[i].addEventListener("click", imageHandler);
+            }
+
+            for (let i = 0; i < pagination.length; i++) {
+                pagination[i].removeEventListener("click", paginationHandler);
+                pagination[i].addEventListener("click", paginationHandler);
+            }
+        })
+}
+
+function changeCoverRequest(namespace, id, url) {
+    if (namespace == "App\\User" || namespace == "App\\Material" && !id) {
+        $("#cover-image")[0].src = `${baseUrl}/${url}`;
+
+        $("#custom-file")[0].value = `${url}`;
+
+    } else {
+        axios.patch("/media/cover/replace", {
+            namespace, id, url
+        })
+            .then(res => {
+                $("#cover-image")[0].src = `${baseUrl}/${url}`;
+                toastAlert("success", "Το Cover άλλαξε!")
+            })
+            .catch(err => {
+                console.log(err);
+                toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
+            })
+    }
+
+
 }
 
 //!######################################################
@@ -413,17 +425,17 @@ export default {
     redactorConfig,
     createStateSelect,
     datePickerConfig,
-	toastAlertDelete,
-	filterStyle,
-	createDateElm,
-	startDate,
-	endDate,
-	resetBulk,
-	resetAddButton,
-	createCourseTypeSelect,
-	paginationHandler,
-	searchHandler,
-	imageHandler,
-	paginationRequest
+    toastAlertDelete,
+    filterStyle,
+    createDateElm,
+    startDate,
+    endDate,
+    resetBulk,
+    resetAddButton,
+    createCourseTypeSelect,
+    paginationHandler,
+    searchHandler,
+    imageHandler,
+    paginationRequest
 }
 

@@ -62,6 +62,9 @@ class UsersDataTable extends DataTable {
                 return "<input  class='toggle-class' data-user-checked='$status' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
+//            ->editColumn('created_at', function ($data) {
+//                return "<p>Εγγραφη : <b>$data->created_at</b></p><p>Ανανεωση :<b>$data->updated_at</b></p>";
+//            })
             ->editColumn('first_name', function ($data) {
 
                 return "<a href='/dashboard/users/$data->slug' class='h5 custom-link-primary'><p>$data->first_name</p></a>

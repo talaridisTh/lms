@@ -107,7 +107,9 @@ const courses = $(".course-materials-list").DataTable({
     columns: [
         {data: 'chexbox', name: 'chexbox', orderable: false},
         {data: 'title', name: 'title', className: "js-link cursor-pointer"},
+        {data: 'version', name: 'version', className: "js-link cursor-pointer"},
         {data: 'students', name: 'students', className: "js-link cursor-pointer"},
+        { data: 'publish_at', name: "publish_at", className: "align-middle text-center cursor-default", searchable: false },
         {data: 'action', name: 'action'},
     ],
     language: config.datatable.language,
@@ -165,6 +167,25 @@ const addCourse = $("#datatableAddCourse").DataTable({
 
 });
 
+
+//! GLOBAL FUNCTION Filter
+//!============================================================
+utilities.filterButton('#VersionFilterMaterial', 2, courses,"#DataTables_Table_0_length label")
+utilities.filterButton('#statusFilterMaterial', 4, courses,"#DataTables_Table_0_length label")
+
+
+//!select2
+//!============================================================
+$("#VersionFilterMaterial").select2({
+
+    minimumResultsForSearch: -1,
+});
+$(".custom-select").select2({
+    minimumResultsForSearch: -1,
+});
+$("#statusFilterMaterial").select2({
+
+});
 
 //! BULK ACRTION courses TABLE
 //!============================================================
@@ -471,4 +492,65 @@ FilePond.setOptions({
 
 });
 
+
+
+
+//! REDACTOR
+//!============================================================
+$R.add('plugin', 'mediaLibrary', {
+    translations: {
+        en: {
+            "mediaLibrary": "Media Library"
+        }
+    },
+    init: function(app) {
+        this.app = app;
+        this.lang = app.lang;
+        this.toolbar = app.toolbar;
+    },
+    start: function() {
+        var buttonData = {
+            title: this.lang.get("mediaLibrary"),
+            icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+            api: "plugin.mediaLibrary.toggle"
+        };
+
+        var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+    },
+    toggle: function() {
+        $('#gallery-content')[0].dataset.action = "summary"
+        $('#gallery-modal').modal('show')
+    }
+});
+$R("#summary", {
+    buttons: [
+        'html', 'undo', 'redo', 'format',
+        'bold', 'underline', 'italic', 'deleted',
+        'sup', 'sub', 'lists', 'file', 'link', 'image'
+    ],
+    buttonsAddBefore: { before: 'image', buttons: ['mediaLibrary'] },
+    style: false,
+    plugins: ["mediaLibrary", 'alignment'],
+    minHeight: '150px',
+    imageResizable: true,
+    imagePosition : {
+        "left": "image-left",
+        "right": "image-right",
+        "center": "image-center text-center"
+    },
+    imageFloatMargin: '20px',
+    imageUpload: "/media/upload-images",
+    // imageData: {
+    // 	// id: courseId,
+    // 	// namespace: "App\\Course"
+    // },
+    callbacks: {
+        upload: {
+            beforeSend: function(xhr)
+            {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            }
+        }
+    }
+});
 

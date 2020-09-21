@@ -265,19 +265,25 @@ const openModalColor = () => {
     let previewButton = null
 
     $(".js-color-modal").click(function () {
+
         $('.js-color-modal').unbind();
         previewButton = this
     })
 
     $(".js-color-button").click("click", function () {
         $('.js-color-button').unbind();
+
         colorAxios(previewButton.dataset.topic, `linear-gradient(to right, ${color1.value}, ${color2.value}`)
         $("#color-modal").modal('hide')
     })
 }
 
+//
+// background: transparent;
+// border: none;
+// position: absolute;
 const colorAxios = async (topicId, color,) => {
-    console.log(topicId)
+
     try {
         const res = await axios.patch('/topics/change/color', {
             color,

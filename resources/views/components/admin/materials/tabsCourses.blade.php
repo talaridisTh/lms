@@ -1,4 +1,5 @@
 @include("components.admin.materials.filterTabCourses")
+
 <table id="material-course-table" data-material-id="{{isset($material)? $material->id:null}}"  class="table w-100 nowrap center-not-second ">
     <div class=" d-flex justify-content-end mb-3">
         {{--        <button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">--}}
@@ -45,6 +46,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body table-cnt">
+                <select id="versionFilterMaterial">
+                    <option value="">Όλες οι Εκδόσεις</option>
+                    <option value="Normal">Normal</option>
+                    <option value="Trial">Trial</option>
+                </select>
                 <table id="remaining-course-material-table" class=" table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
                     <thead>
                     <tr>

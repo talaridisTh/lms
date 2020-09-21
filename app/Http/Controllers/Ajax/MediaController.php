@@ -181,9 +181,17 @@ class MediaController extends Controller
 		$namespace = $request->namespace;
 		$id = $request->id;
 		$model = $namespace::find( $id );
-
 		$model->cover = $request->url;
 		$model->save();
 
 	}
+
+	public function coverChangeNotExist(Request $request) {
+
+        dd($request->all());
+
+
+	}
+
+
 }

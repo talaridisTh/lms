@@ -47,7 +47,7 @@
                     </div>
                     <div id="upload" class="tab-pane">
 
-                        <input id="file-pond" type="file[]"/>
+                        <input id="file-pond"  type="file[]"/>
 
                     </div>
 
@@ -124,7 +124,7 @@
 
             <div class="form-group">
                 <label for="profil">Προφίλ</label>
-                <textarea name="profil" class="form-control @error('profil') is-invalid @enderror" id="profil"
+                <textarea name="profil"  id="summary" class="form-control @error('profil') is-invalid @enderror" id="profil"
                           placeholder="Εισάγετε πληροφορίες"
                           rows="5"
                 >{{isset($user) ? $user['profil'] : ""}}</textarea>
@@ -201,8 +201,8 @@
         </div>
         <div class="col-md-4">
             <div class="col-md-12 sticky  py-3 px-2 pl-3    mr-5" style="margin-top: -85px;">
-                <button id="button-createMaterial-form {{isset($user)? "update-btn":""}} " type="submit"
-                        form="buttonUser"
+                <button id="button-createMaterial-form  " type="submit"
+
                         class="btn btn-primary ">
                     {{isset($user)? "Ενημέρωση":"Δημιουργια"}}
                 </button>
@@ -243,21 +243,22 @@
                     <div class="col-md-12">
 
                         <!-- Cover Preview -->
-{{--                        @isset($user)--}}
-{{--                            <div class="card">--}}
-{{--                                <div class="card-header">--}}
-{{--                                    <h4 class="card-title mb-0">Cover</h4>--}}
 
-{{--                                </div>--}}
-{{--                                <div class="card-body">--}}
-{{--                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" class="img-fluid"--}}
-{{--                                         alt="Cover Image">--}}
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="card-title mb-0">Cover</h4>
 
-{{--                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>--}}
+                                </div>
+                                <div class="card-body">
+                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" class="img-fluid"
+                                         alt="Cover Image">
 
-{{--                                </div> <!-- end card-body -->--}}
-{{--                            </div> <!-- end course info card -->--}}
-{{--                        @endisset--}}
+                                    <input hidden id="custom-file" name="cover">
+                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
+
+                                </div> <!-- end card-body -->
+                            </div> <!-- end course info card -->
+
 
 
 {{--              @include("components.dropzone",["model"=>$user,"type"=>"Cover","dropzone"=>"cover-dropzone"] )--}}

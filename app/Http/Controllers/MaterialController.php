@@ -41,7 +41,8 @@ class MaterialController extends Controller {
 
     public function store(Request $request)
     {
-		// dd($request->all());
+
+
 
 		$material = new Material();
 		$material->title = $request->title;
@@ -53,17 +54,22 @@ class MaterialController extends Controller {
 		$material->type = $request->type;
 		$material->slug = Str::slug($request->title, '-');
 		$material->status = isset($request->status) ? 1 : 0;
+        if ($request->cover)
+        {
+            $material->cover = $request->cover;
+
+        }
 		$material->save();
 
         $request->instructor ? $material->users()->sync($request->instructor) : "";
 		$request->topic ? $material->topics()->sync($request->topic) : "";
-		
+
 		if ( isset($request->courseId) ) {
 			$course = Course::find( $request->courseId );
 			CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
 
 			$course->materials()->attach( $material->id, ["priority" => ($request->priority + 1)] );
-			
+
 			return redirect("/dashboard/course/$course->slug");
 		}
 
@@ -83,7 +89,8 @@ class MaterialController extends Controller {
 
     public function update(Request $request, Material $material)
     {
-        $material->update($request->except("instructor", "topic", "type", "status"));
+
+        $material->update($request->except("instructor", "topic", "type", "status",'cover'));
         $data = collect($request)->except("instructor", "topic", "status")->all();
         $material->status = isset($request->status) ? 1 : 0;
         $material->save();
@@ -121,13 +128,13 @@ class MaterialController extends Controller {
         return redirect(route('material.index'));
 
 	}
-	
+
 	public function courseMaterial(Course $course, $priority) {
 		$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
         $topics = Topic::all();
         $instructors = User::getInstructor();
 		$types = Material::all()->unique('type');
-		
+
 		$data = [
 			"course" => $course,
 			"priority" => $priority,

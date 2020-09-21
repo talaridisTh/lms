@@ -51,7 +51,7 @@ class UserController extends Controller {
     {
         //
         $user = new User();
-        $data = collect($request)->except("sendMail", "roles", "password_confirmation", "media", "media_original_name")->all();
+        $data = collect($request)->except("sendMail", "roles", "password_confirmation")->all();
 //        $data['password'] = Hash::make("password");
         $data["slug"] = Str::slug($request->first_name, "-");
         if ($request->status)
@@ -72,8 +72,14 @@ class UserController extends Controller {
             $data["password"] = Hash::make($request->password);
 
         }
+        if ($request->cover)
+        {
+            $data["cover"] = $request->cover;
+        }
 
         $currentUser = $user->create($data)->assignRole($request->roles);
+
+
 
 
 //        foreach ($request->input('media', []) as $index => $file)
@@ -106,6 +112,15 @@ class UserController extends Controller {
 
             $user->update(['password_encrypt' => Crypt::encryptString($request->password)]);
             $user->update(['password' => Hash::make(request("password"))]);
+        }
+        if ($request->cover)
+        {
+
+
+            $user->update(['cover' => $request->cover]);
+
+
+
         }
 
 

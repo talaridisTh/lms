@@ -74,7 +74,7 @@
 
                     <div class="form-group">
                         <label for="profil">Προφίλ</label>
-                        <textarea name="profil" class="form-control @error('profil') is-invalid @enderror" id="profil"
+                        <textarea name="profil" id="summary" class="form-control @error('profil') is-invalid @enderror" id="profil"
                                   placeholder="Εισάγετε πληροφορίες"
                                   rows="5"
                         >{{isset($user) ? $user['profil'] : ""}}</textarea>

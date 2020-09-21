@@ -47,7 +47,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
     Route::get('/dashboard/users/create', 'UserController@create')->name('user.create');
     Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
     Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
-    Route::patch('/dashboard/users/update/{user:slug}', 'UserController@update')->name('user.update');
+    Route::patch('/dashboard/users/update/{user}', 'UserController@update')->name('user.update');
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
 	//! Material Routes
@@ -190,6 +190,7 @@ Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadC
 
 Route::post( 'media/upload-images', 'Ajax\MediaController@editorImages' );
 Route::patch( 'media/cover/replace', 'Ajax\MediaController@coverChange');
+Route::patch( 'media/cover/not-exist', 'Ajax\MediaController@coverChangeNotExist');
 
 //!======================================================
 //! 			End ajax Routes					|

@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Course;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
@@ -59,13 +60,34 @@ class UserProfileDataTable extends DataTable {
 						<a href='#' class='custom-link-primary'>View</a>";
 
             })
+            ->editColumn('publish_at', function ($data) {
+
+                if ( $data->status == 1 ) {
+                    if ( time() > strtotime($data->publish_at) && !is_null($data->publish_at) ) {
+                        $status = ["icon" => "badge-outline-primary", "text" => "Published"];
+                    }
+                    else {
+                        $status = ["icon" => "badge-outline-dark", "text" => "Scheduled"];
+                    }
+                }
+                else {
+                    $status = ["icon" => "badge-outline-danger", "text" => "Draft"];
+                }
+
+                $date = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("d-m-Y") : "";
+                $time = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("H:i") : "";
+
+                return "<span data-status=".$status['text']." class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+				<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
+
+            })
 
             ->setRowAttr(['data-course-id' => function ($data) {
                 return [$data->id];
             }, 'data-course-title' => function ($data) {
                 return $data->title;
             }])
-            ->rawColumns(['students', 'action', "chexbox","title"]);
+            ->rawColumns(['students', 'action', "chexbox","title","publish_at"]);
     }
 
     /**

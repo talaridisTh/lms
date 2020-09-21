@@ -55,8 +55,9 @@
                 <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
-                <th class="text-left">Ημ. Εγγραφής</th>
-                <th class="text-left">courses</th>
+{{--                <th class="text-left">Hμερομηνια</th>--}}
+                <th class="text-left">Hμερομηνια Εγ.</th>
+                <th class="text-left">Courses</th>
                 <th class="text-left">id</th>
             </tr>
             </thead>
@@ -76,6 +77,7 @@
                 <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
+{{--                <th class="text-left">Hμερομηνια</th>--}}
                 <th class="text-left">Ημ. Εγγραφής</th>
                 <th class="text-left">courses</th>
                 <th class="text-left">id</th>
