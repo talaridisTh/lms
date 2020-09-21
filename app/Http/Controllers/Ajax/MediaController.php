@@ -166,7 +166,7 @@ class MediaController extends Controller
 							->save( storage_path("/app/public/thumbnails/$date/$fullname") );
 
 						$files["file-". $key] = [
-							"url" => url("storage/$date/images/$name"),
+							"url" => url( $media->rel_path ),
 							"id" => $media->id
 						];
 					}
