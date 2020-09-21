@@ -380,22 +380,6 @@
 								</a>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 								{{-- <button form="bundle-edit-form" type="submit"
 									id="update-btn" class="btn btn-primary"
 								>
@@ -406,8 +390,6 @@
 									<a id="preview-btn" href="#" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i></a>
 									<button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
 								@endif --}}
-
-
 
 
 							</div>
@@ -422,23 +404,26 @@
 									<hr class="mb-0" />
 								</div>
 							</div>
-							@if ( isset($bundle) )	
+
+
 								<!-- Cover Preview -->
 								<div class="card">
 									<div class="card-header">
 										<h4 class="card-title mb-0">Cover</h4>
 									</div>
 									<div class="card-body">
-										<img id="cover-image" src="{{ url($bundle->cover) }}" class="img-fluid" alt="{{ $bundle->title }}">
+										<img id="cover-image" src="{{ !is_null($bundle->cover) ? url($bundle->cover) : "" }}" class="img-fluid" alt="{{ $bundle->title }}">
 									
 										<button id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</button>
 									</div> <!-- end card-body -->
 								</div> <!-- end course info card -->
+
 								<form id="delete-bundle-form" action="{{ $bundle->id }}" method="POST">
 									@csrf
 									@method('DELETE')
 								</form>
-							@endif
+
+
 						</div><!-- ./col -->
 					</div><!-- Settings Row -->
 				</div><!-- settings tab-pane -->
