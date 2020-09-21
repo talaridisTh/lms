@@ -104,7 +104,7 @@
 		<div class="col-sm-4"></div>
 		<div class="col-sm-8">
 			<div class="text-sm-right">
-				<a href="/dashboard/bundle/" class="btn btn-primary mb-2" {{-- data-toggle="modal" data-target="#new-bundle-modal" --}}>
+				<a href="/dashboard/bundles/create" class="btn btn-primary mb-2" {{-- data-toggle="modal" data-target="#new-bundle-modal" --}}>
 					<i class="mdi mdi-plus-circle mr-2"></i>
 					Νέο Bundle
 				</a>

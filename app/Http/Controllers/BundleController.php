@@ -21,43 +21,29 @@ class BundleController extends Controller
 
     public function create()
     {
-        //
+        return view('admin/bundles/newBundle');
     }
 
 
     public function store(BundleCourseRequest $request)
     {
-        // if( !empty($_FILES['cover']['name']) ) {
-		// 	$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
-		// 	$fileName = md5( $request->name ).$ext;
-		// }
-
 		if ( isset($request->publishDate) ) {
 			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
+			$status = 1;
 		}
 		else {
 			$publishDate = null;
+			$status = 0;
 		}
 
 		$bundle = new Bundle;
 		$bundle->title = $request->title;
 		$bundle->subtitle = $request->subtitle;
-		$bundle->summary = $request->summary;
-		$bundle->description = $request->description;
 		$bundle->publish_at = $publishDate;
-		$bundle->status = /* $request->status */ 1;
+		$bundle->status = $status;
 		$bundle->slug = Str::slug($request->title, "-");
-		$bundle->cover = "https://placehold.co/600x400";
-		// $bundle->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
 		
 		$bundle->save();
-		
-		// if ( isset($fileName) ) {
-		// 	$request->cover->storeAs("public/bundles/$bundle->id/cover", $fileName);
-		// }
-		// else {
-		// 	Storage::copy("public/no_image_600x400.png", "public/bundles/$bundle->id/cover/no_image_600x400.png");
-		// }
 		
 		return redirect( "/dashboard/bundle/$bundle->slug" );
     }
