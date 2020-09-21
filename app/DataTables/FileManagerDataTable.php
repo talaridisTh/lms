@@ -19,20 +19,29 @@ class FileManagerDataTable extends DataTable
      */
     public function dataTable($query)
     {
-		$query = Media::all();
+
+		$query = Media::with('mediaDetails');
 
         return datatables()::of($query)
-            // ->addColumn('action', function($data) {
-				
-			// 	return "<div class='icheck-primary d-inline'>
-			// 				<input class='js-bundle-checkbox' data-bundle-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
-			// 				<label for='$data->slug'></label>
-			// 			</div>";
 
-			// })
 			->editColumn("original_name", function($data) {
 
-				return "<a href='#' class='h5 custom-link-primary'>$data->original_name</a>
+				$details = $data->mediaDetails;
+
+				if ( !$details ) {
+					return "
+						<a href='#' class='h5 custom-link-primary'
+							data-title='' data-subtitle=''
+							data-caption='' data-description=''
+						>$data->original_name</a>
+							<p>$data->name</p>";
+				}
+
+				return "
+					<a href='#' class='h5 custom-link-primary'
+						data-title='$details->title' data-subtitle='$details->subtitle'
+						data-caption='$details->caption' data-description='$details->description'
+					>$data->original_name</a>
 						<p>$data->name</p>";
 			})
 			->editColumn("type", function($data) {

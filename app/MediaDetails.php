@@ -8,6 +8,6 @@ class MediaDetails extends Model
 {
 	public function media()
     {
-        return $this->hasOne('App\Media');
+        return $this->belongsTo('App\Media');
     }
 }
