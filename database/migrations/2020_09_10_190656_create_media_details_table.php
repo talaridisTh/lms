@@ -14,16 +14,16 @@ class CreateMediaDetailsTable extends Migration
     public function up()
     {
         Schema::create('media_details', function (Blueprint $table) {
-            $table	->id();
-			$table	->foreignId('media_id')
-					->references('id')->on('media')->onDelete('cascade');
+            $table->id();
+			$table->foreignId('media_id')
+				->references('id')->on('media')->onDelete('cascade');
 
-			$table	->string('title', 255)->nullable()->index();
-			$table	->string('subtitle', 255)->nullable();
-			$table	->string('caption', 255)->nullable();
-			$table	->text('description')->nullable();
-
-            $table	->nullableTimestamps();
+			$table->string('title', 255)->index();
+			$table->string('subtitle', 255)->nullable();
+			$table->string('caption', 255)->nullable();
+			$table->text('description')->nullable();
+			
+            $table->nullableTimestamps();
         });
     }
 

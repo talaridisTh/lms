@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth',"role:admin"]], function () {
 
 
     //! media Routes
-    Route::get("/media", "MediaController@index")->name("media.index");
+	Route::get("/media", "MediaController@index")->name("media.index");
 
 	//! Topic Routes
 	Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
@@ -115,6 +115,7 @@ Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('u
 
 //! Dashboard Ajax Media
 Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');
+Route::post("file-details-store", "Ajax\MediaController@store")->name("file.details.store");
 
 
 //! Dashboard Ajax Courses Datatables

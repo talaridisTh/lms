@@ -13,20 +13,60 @@ let timer = 0;
 //!				EventListeners			#
 //!######################################
 
+$("#save-details-btn").on("click", function() {
+
+	let form = $("#store-file-details-form")[0];
+	let data = new FormData(form);
+
+	axios.post("/file-details-store", 
+		data
+	)
+	.then( res => {
+		utilities.toastAlert("success", "Οι αλλαγές αποθηκεύτηκαν.")
+		fileManagerDatatable.ajax.reload( null, false);
+		$("#edit-file-modal").modal('hide');
+	})
+	.catch( err => {
+		if ( err.response.status == 422 && err.response.data.errors.title !== "undefined" ) {
+			$("#title-input").addClass("is-invalid");
+		}
+	})
+});
+
+$("#edit-file-modal").on("show.bs.modal", function(event) {
+
+	let button = $(event.relatedTarget);
+	let id = button.data("file-id");
+	let title = button.data("title");
+	let subtitle = button.data("subtitle");
+	let caption = button.data("caption");
+	let description = button.data("description");
+	let modal = $(this);
+
+	modal.find("#file-id").val( id );
+	modal.find("#title-input").val( title );
+	modal.find("#caption-input").val( caption );
+	modal.find("#subtitle-input").val( subtitle );
+	modal.find("#file-description-area").val( description );
+
+	$R("#file-description-area", 'destroy');
+	$R("#file-description-area", utilities.redactorConfig);
+});
+
 $("#file-search").on("input", searchHandler);
 
 $(".js-gallery-page-btn").on( 'click', paginationHandler);
 
 $(".custom-tabs").on( "click", function() {
 	let tabs = $(".tab-pane");
-	$(".custom-tabs.btn-dark").removeClass("btn-dark").addClass("btn-light");
+	$(".custom-tabs.btn-light").removeClass("btn-light").addClass("btn-dark");
 
 	for ( let i = 0; i < tabs.length; i++ ) {
 		tabs[i].style.display = "none";
 	}
 
-	this.classList.remove("btn-light");
-	this.classList.add("btn-dark");
+	this.classList.remove("btn-dark");
+	this.classList.add("btn-light");
 	document.getElementById(this.dataset.customTab).style.display = "block";
 });
 
@@ -135,6 +175,9 @@ $("#ext-table-filter").select2({
 });
 
 $("#ext-table-filter").on("change", function() {
+
+	let label = $("#select2-ext-table-filter-container")[0];
+
+	utilities.filterStyle( label, this.value );
 	fileManagerDatatable.column(3).search( this.value ).draw();
 });
-

@@ -30,17 +30,18 @@ class FileManagerDataTable extends DataTable
 
 				if ( !$details ) {
 					return "
-						<a href='#' class='h5 custom-link-primary'
-							data-title='' data-subtitle=''
-							data-caption='' data-description=''
+						<a href='#' class='h5 custom-link-primary' data-title='' data-subtitle=''
+							data-toggle='modal' data-target='#edit-file-modal' data-caption='' data-description=''
+							data-file-id='$data->id'
 						>$data->original_name</a>
 							<p>$data->name</p>";
 				}
 
 				return "
-					<a href='#' class='h5 custom-link-primary'
-						data-title='$details->title' data-subtitle='$details->subtitle'
-						data-caption='$details->caption' data-description='$details->description'
+					<a href='#' class='h5 custom-link-primary' data-title='$details->title'
+						data-subtitle='$details->subtitle' data-caption='$details->caption'
+						data-description='$details->description' data-toggle='modal'
+						data-file-id='$data->id' data-target='#edit-file-modal'
 					>$data->original_name</a>
 						<p>$data->name</p>";
 			})

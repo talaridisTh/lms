@@ -170,9 +170,10 @@
 		$('#clone-course-modal').modal('show')
 	</script>
 @enderror
+
 @error('title')
 	<script>
-		$('#new-course-modal').modal('show')
+		$('#new-course-modal').modal('show');
 	</script>
 @enderror
 
