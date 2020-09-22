@@ -254,7 +254,7 @@
                                          alt="Cover Image">
 
                                     <input hidden id="custom-file" name="cover">
-                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</a>
+                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">{{isset($user)?"Αλλαγή Cover":"Προσθηκη Cover"}}</a>
 
                                 </div> <!-- end card-body -->
                             </div> <!-- end course info card -->

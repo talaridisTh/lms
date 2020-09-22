@@ -11,7 +11,7 @@
 
         <div class="card ribbon-box" style="background-color: #FAFBFE">
             <div class="card-body py-0">
-                <div class="ribbon ribbon-secondary float-right"><i class="mdi mdi-access-point mr-1"></i>
+                <div class="p-1 ribbon-secondary "style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white ribbon-edit" href="{{route('material.show',$materials->slug)}}">
                         <spant class="ribbon-edit">Edit this page</spant>
                     </a>
@@ -20,10 +20,11 @@
         </div>
         @endrole
         @if($materials->video_link)
-            <div class=" container text-center ">
+            <div class=" ">
                 @if(strlen($materials->video_link)<12 )
-                    <iframe src="https://player.vimeo.com/video/{{$materials->video_link}}"
-                            width="1024" height="768" frameborder="0" allow="autoplay; fullscreen"
+                    <iframe style=" height: 100vh; width: 100vw;"
+                            src="https://player.vimeo.com/video/{{$materials->video_link}}"
+                           frameborder="0" allow="autoplay; fullscreen"
                             allowfullscreen></iframe>
                 @else
                     <iframe src="{{$materials->video_link}}" width="1024" height="768" frameborder="0"
@@ -34,8 +35,8 @@
         @else
             <img class="img-thumbnail" src="{{url($materials->cover)}}" alt="">
         @endif
-        <div class="container" style="max-width: 1277px">
-            <div class="row justify-content- mt-4">
+        <div class="container-fluid" style="max-width: 1900px">
+            <div class="row justify-content-center">
                 @if(!empty($prevMaterial->slug))
                     <div class="arrow col-md-1 d-flex justify-content-center align-items-center">
                         <a data-toggle="tooltip" rel="tooltip" data-placement="left"
@@ -47,37 +48,32 @@
                 @else
                     <div class="col-md-1"></div>
                 @endif
-                <div class="col-md-9 box-material mx-1" style="border-radius: 20px ;background:{{$course->topics->first()->color}}">
+                <div class="col-md-10 box-material " style="border-radius: 20px ;background:{{$course->topics->first()->color}}">
                     <div class="row">
-                        <div class="col-md-6 p-3">
+                        <div class="col-md-6 ">
                             <div class="row">
-                                <div class="col-md-4 d-flex align-items-center justify-content-center ">
-                                    <img height="130" width="130" class=" rounded-circle"
-                                         src="{{$materials->cover}}"
-                                         alt="">
-                                </div>
-                                <div class="col-md-8 text-white">
-                                    <h3>{{$materials->title}}</h3>
+                                <div class="col-md-12 text-white d-flex align-items-center justify-content-lg-around">
+                                    <h4>{{$materials->title}}</h4>
                                     <span class="font-weight-bold font-12 ">
                                     Μάθημα {{$priority}} - {{$materials->created_at->format("d-m-y")}}
                                 </span>
-                                    <p class="mt-3  font-weight-bold">Μάθημα
+                                    <span class="font-weight-bold">
                                         <a class="" href="{{route('index.userCourse',$course->slug)}}">
                                             <span class="course-title">{{$course->title}}</span>
                                         </a>
-                                    </p>
+                                    </span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 d-flex justify-content-center align-items-center">
-                            <div class="watchlist  d-flex flex-column">
-                                <button class="mb-2 color-topic-second  btn  bghover text-white border btn-outline-secondary">
+                            <div class="watchlist  d-flex  ">
+                                <button class=" color-topic-second mr-2   bghover text-white border btn-outline-secondary">
                                     <span class="font-weight-bold">Το έχω δει</span>
                                 </button>
                                 <button
                                     data-model="material" data-model-id="{{$materials->id}}"
                                     data-user-id="{{auth()->id()}}"
-                                    class="color-topic-second add-watchlist mb-2 btn  bghover text-white border btn-outline-secondary">
+                                    class="color-topic-second add-watchlist   bghover text-white border btn-outline-secondary">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
@@ -113,8 +109,10 @@
                                     {{$course->curator->first_name}}
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <i class="mdi cursor-pointer h3 mdi-facebook"></i>
-                                    <i class="mdi cursor-pointer h3 mdi-instagram"></i>
+                                    <i class="{{$course->curator->facebook_link?"mdi cursor-pointer h3 mdi-facebook":""}}"></i>
+                                    <i class="{{$course->curator->instagram_link?"mdi cursor-pointer h3 mdi-instagram":""}}"></i>
+                                    <i class="{{$course->curator->youtube_link?"mdi cursor-pointer h3 mdi-youtube":""}}"></i>
+                                    <i class="{{$course->curator->linkedin_link?"mdi cursor-pointer h3 mdi-linkedin":""}}"></i>
                                 </div>
                             </div>
                         </div>
@@ -128,7 +126,7 @@
                                     <div class="row">
                                         <div class="col-md-9">
                                             <h4>Πληροφορίες </h4>
-                                            <p> {{$course->curator->profil}}
+                                            <p> {!! $course->curator->profil !!}
                                             </p>
                                         </div>
                                         <div class="col-md-3"></div>
@@ -152,13 +150,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row ">
-                        <div class=" p-3"><span class="font-weight-bold text-black"></span>
-                        </div>
-                        <div class="col-md-12  px-3 {{empty($course->description)?"d-none":""}}">
-                            {!! $course->description !!}
-                        </div>
-                    </div>
+
 
                 </div>
                 <div class="col-md-3 pl-3">

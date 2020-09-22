@@ -72,10 +72,9 @@ class UserController extends Controller {
             $data["password"] = Hash::make($request->password);
 
         }
-        if ($request->cover)
-        {
-            $data["cover"] = $request->cover;
-        }
+
+       $request->cover? $data["cover"] = $request->cover:$data["cover"]="https://via.placeholder.com/150";
+
 
         $currentUser = $user->create($data)->assignRole($request->roles);
 

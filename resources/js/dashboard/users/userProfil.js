@@ -497,36 +497,36 @@ FilePond.setOptions({
 
 //! REDACTOR
 //!============================================================
-$R.add('plugin', 'mediaLibrary', {
-    translations: {
-        en: {
-            "mediaLibrary": "Media Library"
-        }
-    },
-    init: function(app) {
-        this.app = app;
-        this.lang = app.lang;
-        this.toolbar = app.toolbar;
-    },
-    start: function() {
-        var buttonData = {
-            title: this.lang.get("mediaLibrary"),
-            icon: "<i class='mdi mdi-book-open-page-variant'></i>",
-            api: "plugin.mediaLibrary.toggle"
-        };
-
-        var $button = this.toolbar.addButton("mediaLibrary", buttonData);
-    },
-    toggle: function() {
-        $('#gallery-content')[0].dataset.action = "summary"
-        $('#gallery-modal').modal('show')
-    }
-});
+// $R.add('plugin', 'mediaLibrary', {
+//     translations: {
+//         en: {
+//             "mediaLibrary": "Media Library"
+//         }
+//     },
+//     init: function(app) {
+//         this.app = app;
+//         this.lang = app.lang;
+//         this.toolbar = app.toolbar;
+//     },
+//     start: function() {
+//         var buttonData = {
+//             title: this.lang.get("mediaLibrary"),
+//             icon: "<i class='mdi mdi-book-open-page-variant'></i>",
+//             api: "plugin.mediaLibrary.toggle"
+//         };
+//
+//         var $button = this.toolbar.addButton("mediaLibrary", buttonData);
+//     },
+//     toggle: function() {
+//         $('#gallery-content')[0].dataset.action = "summary"
+//         $('#gallery-modal').modal('show')
+//     }
+// });
 $R("#summary", {
     buttons: [
-        'html', 'undo', 'redo', 'format',
-        'bold', 'underline', 'italic', 'deleted',
-        'sup', 'sub', 'lists', 'file', 'link', 'image'
+        'html',  'format',
+        'bold', 'underline', 'italic',
+       'lists', 'link',
     ],
     buttonsAddBefore: { before: 'image', buttons: ['mediaLibrary'] },
     style: false,

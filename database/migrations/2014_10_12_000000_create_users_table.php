@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('last_name', 50);
             $table->string('email')->unique();
             $table->bigInteger('phone');
-            $table->text('profil');
+            $table->text('profil')->nullable();
             $table->string('cover')->nullable();
             $table->string('facebook_link')->unique()->nullable();
             $table->string('instagram_link')->unique()->nullable();

@@ -3487,7 +3487,7 @@ select.is-invalid {
 .course-title {
   background: white !important;
   color: black !important;
-  padding: 8px;
+  padding: 2px 6px;
   border-radius: 16px;
   margin-left: 13px;
 }
@@ -3593,6 +3593,14 @@ b[role=presentation] {
 
 .daterangepicker.show-ranges.ltr .drp-calendar.left {
   border: none;
+}
+
+.ribbon-box {
+  position: fixed;
+  top: 10px;
+  right: 19px;
+  z-index: 10000;
+  width: 200px;
 }
 
 #select2-instructorMaterial-results .select2-results__option[aria-selected=true]:after {
