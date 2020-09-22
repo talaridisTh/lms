@@ -42,12 +42,32 @@
                             <div id="media-library" class="tab-pane show active">
                                 <!-- Search -->
                                 <div class="row">
-                                    <div class="mx-auto col-4">
-                                        <div class="form-group">
+									<div class="col-5">
+										<div class="form-group">
                                             <input id="image-search" class="form-control text-center" type="text"
                                                    placeholder="Αναζήτηση..."/>
-                                        </div>
-                                    </div>
+										</div>
+									</div>
+                                    {{-- <div class="mx-auto col-4"> --}}
+									<div class="col-3"></div>
+                                        
+									<div class="col-4 d-flex justify-content-end">
+										<div class="btn-group mb-2 ml-auto">
+											<button id="gallery-bulk-action-btn" disabled type="button" 
+												class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+												aria-haspopup="true" aria-expanded="false">
+												Επιλογές (0)
+											</button>
+											<div class="dropdown-menu">
+												<a id="add-gallery-bulk-btn" class="dropdown-item" href="#">Προσθήκη στη Gallery</a>
+												<div class="dropdown-divider"></div>
+												<a class="dropdown-item" href="#">Export</a>
+											</div>
+										</div>
+									</div>
+										
+										
+                                    {{-- </div> --}}
                                 </div>
                                 <div id="gallery-content" data-model="App\Material" data-id={{ isset($material)? $material->id:"" }}>
                                     @include('components.admin.imageGallery', ['media' => $media])
@@ -89,7 +109,9 @@
                         </li>
                     </ol>
                 </div>
-                <h4 class="page-title">{{ isset($material) ? $material->title : "Νέο Υλικό" }}</h4>
+                <h4 id="material-title" class="page-title" data-material-slug="{{ isset($material) ? $material->slug : "" }}">
+					{{ isset($material) ? $material->title : "Νέο Υλικό" }}
+				</h4>
             </div>
         </div>
     </div><!-- ./Title - Breadcrumb -->
@@ -110,6 +132,14 @@
                        class="nav-link {{ !isset($material) ? 'tab-link text-muted' : '' }}">
                         <i class="mdi mdi-account-circle d-md-none d-block"></i>
                         <span class="d-none d-md-block">Courses</span>
+                    </a>
+				</li>
+				<li class="nav-item">
+                    <a href="#gallery-tab" data-toggle="tab" aria-expanded="true"
+
+                       class="nav-link {{ !isset($material) ? 'tab-link text-muted' : '' }}">
+                        <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                        <span class="d-none d-md-block">Gallery</span>
                     </a>
                 </li>
             </ul><!-- ./Tab Links -->
@@ -324,7 +354,7 @@
                                     <input hidden form="material-create" id="custom-file" name="cover">
 
                                     <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">
-                                        Αλλαγή Cover
+                                        {{isset($material)?"Αλλαγή Cover":"Προσθηκη Cover"}}
                                     </a>
                                 </div> <!-- end card-body -->
                             </div> <!-- end course info card -->
@@ -335,8 +365,41 @@
                 </div>
 
 
-                <div class="tab-pane " id="courses-tabs">
+                <div class="tab-pane" id="courses-tabs">
                     @include("components.admin.materials.tabsCourses")
+				</div>
+
+				<div class="tab-pane" id="gallery-tab">
+					<div class="text-sm-right sticky-btns">
+						<a id="add-gallery-images-btn" href="#" class="btn btn-primary mb-2">
+							<i class="mdi mdi-plus-circle mr-2"></i>
+							Προσθήκη Εικόνων
+						</a>
+						<div class="btn-group mb-2">
+							<button id="course-bulk-action-btn" disabled type="button" 
+								class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">
+								Επιλογές (0)
+							</button>
+							<div class="dropdown-menu">
+								<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" href="#">Export</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="card content-width mx-auto mt-2">
+						<div class="card-body">
+							<div id="gallery-cnt" class="row" data-namespace="App\Material"
+								data-model-id="{{ $material->id }}"
+							>
+								@include('components/admin/modelGallery', ["gallery" => $gallery])
+							</div>
+						</div>
+					</div>
                 </div>
             </div>
 

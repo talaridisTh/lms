@@ -186,6 +186,10 @@ Route::post( '/file-manager', 'Ajax\MediaController@fileManagerTable');
 //! Dashboard File Manager
 Route::get( 'media/images', 'Ajax\MediaController@index' );
 
+//! Dashboard Add - Remove from Gallery
+Route::post( 'media/gallery', 'Ajax\MediaController@addToGallery');
+Route::post( 'media/gallery-remove', 'Ajax\MediaController@removeFromGallery');
+
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
 Route::post( 'materials/upload-content-images', 'Ajax\MaterialController@uploadContentImages' );

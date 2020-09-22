@@ -323,11 +323,11 @@ function searchHandler() {
 
 function imageHandler() {
 
-
     let modal = $("#gallery-content")[0];
-    let action = modal.dataset.action;
     let model = modal.dataset.model;
-    let id = modal.dataset.id;
+    let modelId = modal.dataset.id;
+    let editorId = modal.dataset.editorId;
+    let type = modal.dataset.type;
 
     let image = {
         'img': {
@@ -335,26 +335,23 @@ function imageHandler() {
         }
     }
 
-    if (action == "description") {
-        ArticleEditor('#description').image.insert(image);
-    } else if (action == "summary") {
-        $R('#summary',
+    if (type == "article") {
+        ArticleEditor(editorId).image.insert(image);
+	}
+	else if (type == "redactor") {
+        $R( editorId,
             'insertion.insertHtml',
             `<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
         );
-    } else if (action == "description-material") {
-        $R('#description-material',
-            'insertion.insertHtml',
-            `<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
-        );
-    } else if (action == "content-material") {
-        $R('#content-material',
-            'insertion.insertHtml',
-            `<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
-        );
-    } else {
+	}
+	else if ( type == "gallery" ) {
 
-        changeCoverRequest(model, id, this.dataset.imageSource);
+		addToGallery(model, modelId, this.dataset.imageId);
+		return;
+	}
+    else {
+
+        changeCoverRequest(model, modelId, this.dataset.imageSource);
 
     }
 
@@ -408,7 +405,91 @@ function changeCoverRequest(namespace, id, url) {
                 toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
             })
     }
+}
 
+function addToGallery(namespace, id, imageId) {
+
+	axios.post( "/media/gallery", {
+		namespace,
+		modelId: id,
+		ids: [imageId]
+	})
+	.then( res => {
+
+		let gallery = $("#gallery-cnt");
+		gallery.html(res.data);
+
+		let closeBtns = gallery.find(".js-remove-image");
+		closeBtns.on("click", removeImageHandler);
+
+		toastAlert("success", "Οι εικόνες προστέθηκαν.");
+		gallery.modal("hide");
+
+		let bulk = $("#gallery-bulk-action-btn");
+		let checkboxes = $(".js-gallery-checkbox");
+
+		resetGalleryBtns( bulk, checkboxes );
+	})
+	.catch( err => {
+		console.log(err);
+	})
+}
+
+
+function removeImageHandler() {
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		text: 'Η εικόνα θα αφαιρεθεί απο το Gallery.',
+		showCancelButton: true,
+		confirmButtonText: `Ναι, αφαίρεση!`,
+		cancelButtonText: "Άκυρο"
+	})
+	.then((result) => {
+
+		if ( result.isConfirmed ) {
+			removeImages( [this.dataset.imageId] );
+		}
+
+	})
+}
+
+function removeImages( ids ) {
+
+	let gallery = $("#gallery-cnt")[0];
+	let namespace = gallery.dataset.namespace;
+	let modelId = gallery.dataset.modelId;
+
+	axios.post("/media/gallery-remove", {
+		namespace, modelId, ids
+	})
+	.then( res => {
+		
+		let gallery = $("#gallery-cnt");
+		gallery.html(res.data);
+		
+		let closeBtns = gallery.find(".js-remove-image");
+		closeBtns.on("click", removeImageHandler)
+
+	})
+	.catch( err => {
+		console.log(err);
+	})
+
+}
+
+
+
+function resetGalleryBtns( bulk, checkboxes ) {
+
+	bulk.text("Επιλογές (0)")
+	bulk.prop("disabled", true);
+	bulk.removeClass("btn-warning");
+	bulk.addClass("btn-secondary");
+
+	for (let i = 0; i < checkboxes.length; i++) {
+		checkboxes[i].checked = false;
+	}
 
 }
 
@@ -437,6 +518,9 @@ export default {
     paginationHandler,
     searchHandler,
     imageHandler,
-    paginationRequest
+	paginationRequest,
+	resetGalleryBtns,
+	removeImageHandler,
+	removeImages
 }
 

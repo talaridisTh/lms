@@ -50,6 +50,46 @@ class MediaController extends Controller
 
 	}
 
+	public function addToGallery(Request $request) {
+
+		$model = $request->namespace::find( $request->modelId );
+		$existingMedia = $model->media()->pluck("id")->toArray();
+		
+		if ( $model->media()->count() > 0 ) {
+			$validMediaIds = array_diff( $request->ids, $existingMedia );
+			$priority = $model->media()->orderBy("priority", "desc")->first()->pivot->priority;
+		}
+		else {
+			$priority = 0;
+		}
+
+		foreach( $validMediaIds as $key => $id ) {
+
+			$model->media()->attach($id, ['usage' => 1, "priority" => $key + $priority + 1]);
+
+		}
+
+		$gallery = $model->media()->orderBy("priority", "desc")->get();
+		return View('components/admin/modelGallery', ['gallery' => $gallery]);
+
+	}
+
+	public function removeFromGallery(Request $request) {
+
+		$model = $request->namespace::find( $request->modelId );
+
+		// dd($request->all());
+
+		foreach( $request->ids as $id ) {
+			$model->media()->detach( $id );
+		}
+
+		$gallery = $model->media()->orderBy("priority")->get();
+
+		return View('components/admin/modelGallery', ['gallery' => $gallery]);
+
+	}
+
     /**
      * Show the form for creating a new resource.
      *
@@ -166,7 +206,8 @@ class MediaController extends Controller
 						$count = Media::where( "original_name", $originalName)->count();
 
 						if ( $count > 0 ) {
-							$fullname = $name.( $count + 1 ).".".$image->getClientOriginalExtension();
+							$name = $name.( $count + 1 );
+							$fullname = $name.".".$image->getClientOriginalExtension();
 						}
 						else {
 							$fullname = "$name.".$image->getClientOriginalExtension();
@@ -174,9 +215,9 @@ class MediaController extends Controller
 
 						$media = new Media;
 						$media->original_name = $originalName;
-						$media->name = $fullname;
-						$media->rel_path = "storage/images/$date/$fullname";
-						$media->thumbnail_path = "storage/thumbnails/$date/$fullname";
+						$media->name = $name;
+						$media->rel_path = "/storage/images/$date/$fullname";
+						$media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
 						$media->ext = $image->getClientOriginalExtension();
 						$media->file_info = $image->getClientMimeType();
 						$media->size = $image->getSize();
@@ -197,7 +238,7 @@ class MediaController extends Controller
 							->save( storage_path("/app/public/thumbnails/$date/$fullname") );
 
 						$files["file-". $key] = [
-							"url" => url( $media->rel_path ),
+							"url" => $media->rel_path,
 							"id" => $media->id
 						];
 					}

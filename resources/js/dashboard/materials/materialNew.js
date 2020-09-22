@@ -5,7 +5,85 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
 let materialId = $("#material-course-table")[0].dataset.materialId;
+const materialSlug = $("#material-title")[0].dataset.materialSlug;
 const baseUrl = window.location.origin;
+
+//!##################################################
+//!					EventListeners					#
+//!##################################################
+
+$(".js-remove-image").on("click", utilities.removeImageHandler)
+
+$("#add-gallery-bulk-btn").on("click", function() {
+	let checked = $(".js-gallery-checkbox:checked");
+	let ids = [];
+
+	for ( let i = 0; i < checked.length; i++ ) {
+		ids.push(checked[i].dataset.imageId);
+	}
+
+	postImagesIds(ids);
+});
+
+$(".js-gallery-checkbox").on("change", function() {
+	let checked = $(".js-gallery-checkbox:checked");
+	let bulk = $("#gallery-bulk-action-btn")[0];
+
+	if (checked.length > 0 ) {
+		bulk.disabled = false;
+		bulk.classList.remove("btn-secondary");
+		bulk.classList.add("btn-warning");
+	}
+	else {
+		bulk.disabled = true;
+		bulk.classList.remove("btn-warning");
+		bulk.classList.add("btn-secondary");
+	}
+	
+	bulk.textContent = `Επιλογές (${checked.length})`
+})
+
+$("#add-gallery-images-btn").on("click", function() {
+	$("#gallery-content")[0].dataset.type = "gallery";
+
+	$("#gallery-modal").modal('show');
+})
+
+//!##########################################
+//!					Functions				#
+//!##########################################
+
+function postImagesIds(ids) {
+
+	let gallery = $("#gallery-cnt")[0];
+	let namespace = gallery.dataset.namespace;
+	let modelId = gallery.dataset.modelId;
+
+	axios.post("/media/gallery", {
+		namespace, modelId, ids
+	})
+	.then( res => {
+
+		let gallery = $("#gallery-cnt");
+		gallery.html(res.data);
+
+		let closeBtns = gallery.find(".js-remove-image");
+		closeBtns.on("click", utilities.removeImageHandler);
+
+		utilities.toastAlert("success", "Οι εικόνες προστέθηκαν.");
+		gallery.modal("hide");
+
+		let bulk = $("#gallery-bulk-action-btn");
+		let checkboxes = $(".js-gallery-checkbox");
+		utilities.resetGalleryBtns( bulk, checkboxes );
+
+		$("#gallery-modal").modal("hide");
+
+	})
+	.catch( err => {
+		console.log(err);
+	})
+}
 
 //! DATATABLE INIT
 //!============================================================
@@ -140,7 +218,8 @@ $R.add('plugin', 'mediaLibrary', {
         var $button = this.toolbar.addButton("mediaLibrary", buttonData);
     },
     toggle: function () {
-        $('#gallery-content')[0].dataset.action = "summary"
+        $('#gallery-content')[0].dataset.editorId = "#summary"
+        $('#gallery-content')[0].dataset.type = "redactor"
         $('#gallery-modal').modal('show')
     }
 });
@@ -162,10 +241,6 @@ $R("#summary", {
     },
     imageFloatMargin: '20px',
     imageUpload: "/media/upload-images",
-    // imageData: {
-    // 	// id: courseId,
-    // 	// namespace: "App\\Course"
-    // },
     callbacks: {
         upload: {
             beforeSend: function (xhr) {
@@ -196,7 +271,8 @@ $R.add('plugin', 'mediaLibrary', {
         var $button = this.toolbar.addButton("mediaLibrary", buttonData);
     },
     toggle: function () {
-        $('#gallery-content')[0].dataset.action = "description-material"
+		$('#gallery-content')[0].dataset.editorId = "#description-material"
+        $('#gallery-content')[0].dataset.type = "redactor"
         $('#gallery-modal').modal('show')
     }
 });
@@ -252,7 +328,8 @@ $R.add('plugin', 'mediaLibrary', {
         var $button = this.toolbar.addButton("mediaLibrary", buttonData);
     },
     toggle: function () {
-        $('#gallery-content')[0].dataset.action = "content-material"
+		$('#gallery-content')[0].dataset.editorId = "#content-material"
+        $('#gallery-content')[0].dataset.type = "redactor"
         $('#gallery-modal').modal('show')
     }
 });

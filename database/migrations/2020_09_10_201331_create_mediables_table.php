@@ -17,6 +17,7 @@ class CreateMediablesTable extends Migration
             $table->unsignedBigInteger('media_id');
 			$table->unsignedBigInteger('mediable_id');
 			$table->string('mediable_type', 50);
+			$table->unsignedSmallInteger('priority')->nullable();
 			$table->unsignedTinyInteger('usage'); //! 0 Cover, 1 Gallery
         });
     }

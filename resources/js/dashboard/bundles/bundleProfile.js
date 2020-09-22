@@ -674,7 +674,8 @@ $R.add('plugin', 'mediaLibrary', {
 		var $button = this.toolbar.addButton("mediaLibrary", buttonData);
 	},
 	toggle: function() {
-		$('#gallery-content')[0].dataset.action = "summary"
+		$('#gallery-content')[0].dataset.editorId = "#summary"
+		$('#gallery-content')[0].dataset.type = "redactor"
 		$('#gallery-modal').modal('show')
 	}
 });
@@ -721,7 +722,8 @@ ArticleEditor.add('plugin', 'mediaLibrary', {
     },
     modal: function(params, button) {
 		this.app.popup.close();
-		$('#gallery-content')[0].dataset.action = "description"
+		$('#gallery-content')[0].dataset.editorId = "#description"
+		$('#gallery-content')[0].dataset.type = "article"
         $('#gallery-modal').modal('show')
     }
 });
