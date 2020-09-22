@@ -42,33 +42,14 @@
                             <div id="media-library" class="tab-pane show active">
                                 <!-- Search -->
                                 <div class="row">
-									<div class="col-5">
+									<div class="col-4 mx-auto">
 										<div class="form-group">
                                             <input id="image-search" class="form-control text-center" type="text"
                                                    placeholder="Αναζήτηση..."/>
 										</div>
 									</div>
-                                    {{-- <div class="mx-auto col-4"> --}}
-									<div class="col-3"></div>
-                                        
-									<div class="col-4 d-flex justify-content-end">
-										<div class="btn-group mb-2 ml-auto">
-											<button id="gallery-bulk-action-btn" disabled type="button" 
-												class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-												aria-haspopup="true" aria-expanded="false">
-												Επιλογές (0)
-											</button>
-											<div class="dropdown-menu">
-												<a id="add-gallery-bulk-btn" class="dropdown-item" href="#">Προσθήκη στη Gallery</a>
-												<div class="dropdown-divider"></div>
-												<a class="dropdown-item" href="#">Export</a>
-											</div>
-										</div>
-									</div>
-										
-										
-                                    {{-- </div> --}}
-                                </div>
+								</div>
+								
                                 <div id="gallery-content" data-model="App\Material" data-id={{ isset($material)? $material->id:"" }}>
                                     @include('components.admin.imageGallery', ['media' => $media])
                                 </div>
@@ -84,8 +65,18 @@
 
                     </div>
                     <div class="modal-footer">
+						{{-- <div class="btn-group dropup">
+							<button id="gallery-bulk-action-btn" disabled type="button" 
+								class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+								aria-haspopup="true" aria-expanded="false">
+								Επιλογές (0)
+							</button>
+							<div class="dropdown-menu">
+								<a id="add-gallery-bulk-btn" class="dropdown-item" href="#">Προσθήκη στη Gallery</a>
+							</div>
+						</div> --}}
                         <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
-                    </div>
+					</div>
                 </div>
             </div>
         </div>
@@ -145,7 +136,7 @@
             </ul><!-- ./Tab Links -->
 
             <div class="tab-content">
-                <div class="tab-pane show active" id="content">
+                <div class="tab-pane" id="content">
                     <div class="row">
 
                         <!-- form inputs -->
@@ -369,13 +360,13 @@
                     @include("components.admin.materials.tabsCourses")
 				</div>
 
-				<div class="tab-pane" id="gallery-tab">
+				<div class="tab-pane show active" id="gallery-tab">
 					<div class="text-sm-right sticky-btns">
 						<a id="add-gallery-images-btn" href="#" class="btn btn-primary mb-2">
 							<i class="mdi mdi-plus-circle mr-2"></i>
 							Προσθήκη Εικόνων
 						</a>
-						<div class="btn-group mb-2">
+						{{-- <div class="btn-group mb-2">
 							<button id="course-bulk-action-btn" disabled type="button" 
 								class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
@@ -388,7 +379,7 @@
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item" href="#">Export</a>
 							</div>
-						</div>
+						</div> --}}
 					</div>
 
 					<div class="card content-width mx-auto mt-2">
@@ -437,7 +428,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
-    <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+	<script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+	<script src="/assets/js/vendor/dragula.min.js"></script>
+	<script src="/assets/js/ui/component.dragula.js"></script>
+													
 
     <x-routes></x-routes>
     {{--    <script src="{{ asset('js/dashboard/materials/material.js') }}"></script>--}}

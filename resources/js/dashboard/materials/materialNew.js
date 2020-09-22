@@ -5,43 +5,46 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
 let materialId = $("#material-course-table")[0].dataset.materialId;
-const materialSlug = $("#material-title")[0].dataset.materialSlug;
 const baseUrl = window.location.origin;
 
 //!##################################################
 //!					EventListeners					#
 //!##################################################
 
+// $(".js-active-image-checkbox").on("click", function() {
+
+// });
+
 $(".js-remove-image").on("click", utilities.removeImageHandler)
 
-$("#add-gallery-bulk-btn").on("click", function() {
-	let checked = $(".js-gallery-checkbox:checked");
-	let ids = [];
+// $("#add-gallery-bulk-btn").on("click", function() {
+// 	let checked = $(".js-gallery-checkbox:checked");
+// 	let ids = [];
 
-	for ( let i = 0; i < checked.length; i++ ) {
-		ids.push(checked[i].dataset.imageId);
-	}
+// 	for ( let i = 0; i < checked.length; i++ ) {
+// 		ids.push(checked[i].dataset.imageId);
+// 	}
 
-	postImagesIds(ids);
-});
+// 	postImagesIds(ids);
+// });
 
-$(".js-gallery-checkbox").on("change", function() {
-	let checked = $(".js-gallery-checkbox:checked");
-	let bulk = $("#gallery-bulk-action-btn")[0];
+// $(".js-gallery-checkbox").on("change", function() {
+// 	let checked = $(".js-gallery-checkbox:checked");
+// 	let bulk = $("#gallery-bulk-action-btn")[0];
 
-	if (checked.length > 0 ) {
-		bulk.disabled = false;
-		bulk.classList.remove("btn-secondary");
-		bulk.classList.add("btn-warning");
-	}
-	else {
-		bulk.disabled = true;
-		bulk.classList.remove("btn-warning");
-		bulk.classList.add("btn-secondary");
-	}
+// 	if (checked.length > 0 ) {
+// 		bulk.disabled = false;
+// 		bulk.classList.remove("btn-secondary");
+// 		bulk.classList.add("btn-warning");
+// 	}
+// 	else {
+// 		bulk.disabled = true;
+// 		bulk.classList.remove("btn-warning");
+// 		bulk.classList.add("btn-secondary");
+// 	}
 	
-	bulk.textContent = `Επιλογές (${checked.length})`
-})
+// 	bulk.textContent = `Επιλογές (${checked.length})`
+// })
 
 $("#add-gallery-images-btn").on("click", function() {
 	$("#gallery-content")[0].dataset.type = "gallery";
@@ -720,3 +723,14 @@ FilePond.setOptions({
     acceptedFileTypes: ['image/png', 'image/jpeg'],
 
 });
+
+let dragArea = $("#gallery-cnt")[0];
+
+dragula( [dragArea], {
+
+})
+.on("drop", function() {
+	let images = $(".js-active-image");
+	images.splice( -1, 1 );
+	console.log(images);
+})

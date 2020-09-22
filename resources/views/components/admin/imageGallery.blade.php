@@ -1,11 +1,5 @@
 <div class="row">
 
-	@php
-		$temp = explode( "/", Request::path() );
-		array_pop($temp);
-		$url = implode("/", $temp);
-	@endphp
-
 	@forelse ($media as $image)
 		<div class="col-lg-2 col-md-3 p-2 position-relative css-img-cnt">
 			<img class="fade-image img-fluid" src="{{ $image->thumbnail_path }}" alt="{{ $image->name }}">
@@ -13,16 +7,14 @@
 				data-image-id="{{ $image->id }}" data-image-source="{{ $image->rel_path }}
 				"	
 			></i>
-			@if ( $url == "dashboard/material")
-				<div class='icheck-primary absolute-top-left'>
-					<input class="js-gallery-checkbox gallery-checkbox" type='checkbox'
-						id='{{ $image->name }}' data-image-id="{{ $image->id }}"
-						data-image-name="{{ $image->name }}" autocomplete='off'
-						data-image-source="{{ $image->rel_path }}"
-					/>
-					<label class="opacity-transition" for='{{ $image->name }}'></label>
-				</div>
-			@endif
+			{{-- <div class='icheck-primary absolute-top-left'>
+				<input class="js-gallery-checkbox gallery-checkbox" type='checkbox'
+					id='{{ $image->name }}' data-image-id="{{ $image->id }}"
+					data-image-name="{{ $image->name }}" autocomplete='off'
+					data-image-source="{{ $image->rel_path }}"
+				/>
+				<label class="opacity-transition" for='{{ $image->name }}'></label>
+			</div> --}}
 			
 		</div>
 	@empty
