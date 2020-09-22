@@ -331,7 +331,7 @@ function imageHandler() {
 
     let image = {
         'img': {
-            url: `${baseUrl}/${this.dataset.imageSource}`,
+            url: `${this.dataset.imageSource}`,
         }
     }
 
@@ -341,7 +341,7 @@ function imageHandler() {
 	else if (type == "redactor") {
         $R( editorId,
             'insertion.insertHtml',
-            `<img src="${baseUrl}/${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+            `<img src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
         );
 	}
 	else if ( type == "gallery" ) {
