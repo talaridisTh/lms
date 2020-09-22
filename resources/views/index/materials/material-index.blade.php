@@ -20,12 +20,10 @@
         </div>
         @endrole
         @if($materials->video_link)
-            <div class=" ">
+            <div class=" mb-1 ">
                 @if(strlen($materials->video_link)<12 )
-                    <iframe style=" height: 100vh; width: 100vw;"
-                            src="https://player.vimeo.com/video/{{$materials->video_link}}"
-                           frameborder="0" allow="autoplay; fullscreen"
-                            allowfullscreen></iframe>
+                    <iframe  src="https://player.vimeo.com/video/{{$materials->video_link}}" frameborder="0" scrolling="yes" seamless="seamless" style="display:block; width:100%; height:100vh;"></iframe>
+
                 @else
                     <iframe src="{{$materials->video_link}}" width="1024" height="768" frameborder="0"
                             allow="autoplay; fullscreen" allowfullscreen></iframe>

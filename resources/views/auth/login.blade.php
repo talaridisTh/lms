@@ -164,7 +164,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>img-fluid img-thumbnail rounded-circle
+                            </div>
 
                             <div class="form-group row mb-0">
                                 <div class="col-md-12">

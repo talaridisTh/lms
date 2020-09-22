@@ -26,10 +26,12 @@
             z-index: 999;
         }
 
+
+
     </style>
 </head>
 
-<body class="loading" data-layout="detached"
+<body style=" font-family: 'Open Sans' " class="loading" data-layout="detached"
       data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
 <!-- Topbar Start -->
