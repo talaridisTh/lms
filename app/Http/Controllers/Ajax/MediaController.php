@@ -61,6 +61,7 @@ class MediaController extends Controller
 		}
 		else {
 			$priority = 0;
+			$validMediaIds = $request->ids;
 		}
 
 		foreach( $validMediaIds as $key => $id ) {
