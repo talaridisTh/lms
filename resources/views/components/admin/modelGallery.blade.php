@@ -1,6 +1,9 @@
 @forelse ($gallery as $image)
 	<div class="p-2 css-img-cnt position-relative">
-		<img class="js-active-image img-fluid fade-image cursor-move" src="{{ $image->thumbnail_path }}" alt="{{ $image->name }}">
+		<img class="js-active-image img-fluid fade-image cursor-move"
+			src="{{ $image->thumbnail_path }}" alt="{{ $image->name }}"
+			data-image-id="{{ $image->id }}"
+		/>
 		<span data-image-id="{{ $image->id}}" 
 			class="js-remove-image image-overlay h2 px-2 m-0 absolute-top-right cursor-pointer"
 			aria-hidden="true"

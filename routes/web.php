@@ -170,6 +170,7 @@ Route::post('/materials/add-course/', 'Ajax\MaterialController@addCourse');
 Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourseMultiple');
 Route::post('/materials/cover/upload', 'Ajax\MaterialController@coverUpload')->name('user.cover.upload');
 Route::post('/materials/gallery/upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
+Route::patch( 'material/images-sort', 'Ajax\MaterialController@gallerySort');
 
 
 //! Dashboard Topics Datatables
@@ -186,7 +187,7 @@ Route::post( '/file-manager', 'Ajax\MediaController@fileManagerTable');
 //! Dashboard File Manager
 Route::get( 'media/images', 'Ajax\MediaController@index' );
 
-//! Dashboard Add - Remove from Gallery
+//! Dashboard Gallery
 Route::post( 'media/gallery', 'Ajax\MediaController@addToGallery');
 Route::post( 'media/gallery-remove', 'Ajax\MediaController@removeFromGallery');
 

@@ -731,6 +731,20 @@ dragula( [dragArea], {
 })
 .on("drop", function() {
 	let images = $(".js-active-image");
+	let imagesPriority = [];
 	images.splice( -1, 1 );
-	console.log(images);
+
+	for ( let i = 0; i < images.length; i++) {
+		imagesPriority.push(images[i].dataset.imageId)
+	}
+
+	axios.patch("/material/images-sort", {
+		materialId, imagesPriority 
+	})
+	.then( res => {
+
+	})
+	.catch( err => {
+
+	})
 })

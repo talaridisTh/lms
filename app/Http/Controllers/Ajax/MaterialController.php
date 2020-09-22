@@ -272,8 +272,14 @@ class MaterialController extends Controller {
         $image->storeAs("public/$date/images", $name);
     }
 
+	public function gallerySort(Request $request) {
 
+		$material = Material::find( $request->materialId );
 
+		foreach ($request->imagesPriority as $key => $id) {
+			$material->media()->updateExistingPivot($id, ['priority' => ($key + 1) ]);
+		}
 
+	}
 
 }
