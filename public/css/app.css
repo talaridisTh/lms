@@ -3220,6 +3220,10 @@ div.dt-buttons a.btn.processing:after {
   cursor: pointer;
 }
 
+.cursor-move {
+  cursor: move;
+}
+
 .cursor-default {
   cursor: default;
 }
@@ -3655,16 +3659,39 @@ figure.image-center {
           backface-visibility: hidden;
 }
 
-.image-overlay {
-  transition: 0.5s ease;
-  opacity: 0;
+.absolute-center {
   position: absolute;
   top: 45%;
   left: 50%;
   z-index: 2000;
   transform: translate(-50%, -50%);
+}
+
+.absolute-top-left {
+  position: absolute;
+  top: 6px;
+}
+
+.absolute-top-right {
+  position: absolute;
+  top: 6px;
+  right: 2px;
+}
+
+.opacity-transition {
+  transition: 0.5s ease;
+  opacity: 0;
+}
+
+.image-overlay {
+  transition: 0.5s ease;
+  opacity: 0;
   color: white !important;
   cursor: pointer;
+}
+
+.css-img-cnt:hover .opacity-transition {
+  opacity: 1;
 }
 
 .css-img-cnt:hover .fade-image {
@@ -3672,6 +3699,10 @@ figure.image-center {
 }
 
 .css-img-cnt:hover .image-overlay {
+  opacity: 1;
+}
+
+.gallery-checkbox:checked + label {
   opacity: 1;
 }
 
