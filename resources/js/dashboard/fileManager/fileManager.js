@@ -13,20 +13,60 @@ let timer = 0;
 //!				EventListeners			#
 //!######################################
 
+$("#save-details-btn").on("click", function() {
+
+	let form = $("#store-file-details-form")[0];
+	let data = new FormData(form);
+
+	axios.post("/file-details-store", 
+		data
+	)
+	.then( res => {
+		utilities.toastAlert("success", "Οι αλλαγές αποθηκεύτηκαν.")
+		fileManagerDatatable.ajax.reload( null, false);
+		$("#edit-file-modal").modal('hide');
+	})
+	.catch( err => {
+		if ( err.response.status == 422 && err.response.data.errors.title !== "undefined" ) {
+			$("#title-input").addClass("is-invalid");
+		}
+	})
+});
+
+$("#edit-file-modal").on("show.bs.modal", function(event) {
+
+	let button = $(event.relatedTarget);
+	let id = button.data("file-id");
+	let title = button.data("title");
+	let subtitle = button.data("subtitle");
+	let caption = button.data("caption");
+	let description = button.data("description");
+	let modal = $(this);
+
+	modal.find("#file-id").val( id );
+	modal.find("#title-input").val( title );
+	modal.find("#caption-input").val( caption );
+	modal.find("#subtitle-input").val( subtitle );
+	modal.find("#file-description-area").val( description );
+
+	$R("#file-description-area", 'destroy');
+	$R("#file-description-area", utilities.redactorConfig);
+});
+
 $("#file-search").on("input", searchHandler);
 
 $(".js-gallery-page-btn").on( 'click', paginationHandler);
 
 $(".custom-tabs").on( "click", function() {
 	let tabs = $(".tab-pane");
-	$(".custom-tabs.btn-dark").removeClass("btn-dark").addClass("btn-light");
+	$(".custom-tabs.btn-light").removeClass("btn-light").addClass("btn-dark");
 
 	for ( let i = 0; i < tabs.length; i++ ) {
 		tabs[i].style.display = "none";
 	}
 
-	this.classList.remove("btn-light");
-	this.classList.add("btn-dark");
+	this.classList.remove("btn-dark");
+	this.classList.add("btn-light");
 	document.getElementById(this.dataset.customTab).style.display = "block";
 });
 
@@ -34,7 +74,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	order: [ 1, "asc" ],
 	columns: [
 		// { data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
-		{ data: "image", className: "cursor-default"},
+		{ data: "image", className: "cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
 		{ data: "type", name: "type", className: "align-middle text-center", width: "5%", searchable: false },
 		{ data: "ext", name: "ext", className: "align-middle text-center cursor-default"},
@@ -55,7 +95,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	},
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
-		let lenthSelection = $("select[name='bundle-table_length']");
+		let lenthSelection = $("select[name='file-manager-datatable_length']");
 		lenthSelection.addClass("select2");
 
 		lenthSelection.select2({
@@ -121,3 +161,23 @@ function paginationRequest( activePage, search) {
 		console.log(err);
 	})
 }
+
+//!##########################################
+//!				Initializers				#
+//!##########################################
+
+let lengthLabel = document.querySelector("#file-manager-datatable_length > label");
+let filter = document.getElementById("ext-table-filter")
+lengthLabel.appendChild( filter );
+
+$("#ext-table-filter").select2({
+	minimumResultsForSearch: -1
+});
+
+$("#ext-table-filter").on("change", function() {
+
+	let label = $("#select2-ext-table-filter-container")[0];
+
+	utilities.filterStyle( label, this.value );
+	fileManagerDatatable.column(3).search( this.value ).draw();
+});

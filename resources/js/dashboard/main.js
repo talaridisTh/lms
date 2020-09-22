@@ -59,12 +59,13 @@ function toastAlertDelete(text, icon = "warning") {
 //!============================================================
 const redactorConfig = {
     buttons: [
-        'html', 'undo', 'redo', 'format',
-        'bold', 'underline', 'italic', 'deleted',
-        'sup', 'sub', 'lists', 'image', 'file', 'link'
-    ],
-    style: false,
-    minHeight: '150px',
+		'html', 'undo', 'redo', 'format',
+		'bold', 'underline', 'italic', 'deleted',
+		'sup', 'sub', 'lists', 'file', 'link', 'image'
+	],
+	style: false,
+	plugins: ['alignment'],
+	minHeight: '150px',
 }
 
 const datePickerConfig = {

@@ -754,7 +754,7 @@ function sortInputsInit() {
 				},
 			})
 			.then( (res) => {
-				courseMaterialsTable.ajax.reload();
+				courseMaterialsTable.ajax.reload( null, false );
 
 			})
 		}
@@ -840,8 +840,8 @@ function addUsers( userIds ) {
 
 		let message = userIds.length == 1 ? "Ένας χρήστης προστέθηκε" : `${userIds.length} χρήστες προστέθηκαν`;
 		utilities.toastAlert( 'success', message );
-		courseUsersDatatable.ajax.reload();
-		addCourseUsersDatatable.ajax.reload();
+		courseUsersDatatable.ajax.reload( null, false );
+		addCourseUsersDatatable.ajax.reload( null, false );
 
 		utilities.resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
 		utilities.resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
@@ -863,8 +863,8 @@ function removeUsers( userIds, caller ) {
 
 		let message = userIds.length == 1 ? "Ένας χρήστης αφαιρέθηκε" : `${userIds.length} χρήστες αφαιρέθηκαν`;
 		utilities.toastAlert( 'success', message );
-		courseUsersDatatable.ajax.reload();
-		addCourseUsersDatatable.ajax.reload();
+		courseUsersDatatable.ajax.reload( null, false );
+		addCourseUsersDatatable.ajax.reload( null, false );
 
 		utilities.resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
 		utilities.resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
@@ -886,8 +886,8 @@ function postMaterialIds( materialId ) {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
 
 		utilities.toastAlert( 'success', message );
-		courseMaterialsTable.ajax.reload();
-		remainingMaterialsTables.ajax.reload();
+		courseMaterialsTable.ajax.reload( null, false );
+		remainingMaterialsTables.ajax.reload( null, false );
 
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
@@ -910,8 +910,8 @@ function removeMaterials( materialIds ) {
 		let message = materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ύλης`;
 
 		utilities.toastAlert( 'success', message );
-		courseMaterialsTable.ajax.reload();
-		remainingMaterialsTables.ajax.reload();
+		courseMaterialsTable.ajax.reload( null, false );
+		remainingMaterialsTables.ajax.reload( null, false );
 
 		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
@@ -1171,7 +1171,7 @@ function addContent() {
 	)
 		.then( (res) => {
 
-			courseMaterialsTable.ajax.reload();
+			courseMaterialsTable.ajax.reload( null, false );
 			utilities.toastAlert( "success", "Αποθηκεύτηκε" )
 		})
 		.catch( (err) => {

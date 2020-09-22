@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ajax;
 use App\DataTables\FileManagerDataTable;
 use App\Http\Controllers\Controller;
 use App\Media;
+use App\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,7 +68,24 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+		$request->validate([
+			'title' => 'required'
+		]);
+
+		// dd($error);
+
+		$details = Media::find($request->id)->mediaDetails;
+
+		if ( !$details ) {
+			$details = new MediaDetails();
+			$details->media_id = $request->id;
+		}
+
+		$details->title = $request->title;
+		$details->subtitle = $request->subtitle;
+		$details->caption = $request->caption;
+		$details->description = $request->description;
+		$details->save();
     }
 
     /**
