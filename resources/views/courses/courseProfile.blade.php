@@ -73,6 +73,22 @@
             </div> <!-- end card-body -->
         </div>
         @endrole
+        <div class="container content-width">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="custom-link-primary">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}" class="custom-link-primary">Courses</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}" class="custom-link-primary">{{$course->title}}</a></li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">{{$course->title}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="container-xl my-3" style="max-width: 1650px">
             <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2" style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-12">
@@ -196,10 +212,9 @@
                                         <span class="material-count">{{++$count}}</span>
                                     </div>
                                     <div class="col-md-8 d-flex flex-column  ">
-                                        <h3
-                                            class=" font-18 text-dark font-weight-bold">   {{$materials->title}}</h3>
-                                        <span style="word-break: break-all"
-                                              class=" font-14 text-dark">    {{$materials->subtitle}}</span>
+                                        <h3 style="border-radius: 5px"
+                                            class="text-center font-18 text-center text-black font-weight-bold">   {{$materials->title}}</h3><span style="word-break: break-all"
+                                              class="custom-link-primary font-14 text-dark">    {{$materials->subtitle}}</span>
 {{--                                        @empty($course->description)--}}
 {{--                                            <div class="mt-3">--}}
 {{--                                            <h3--}}

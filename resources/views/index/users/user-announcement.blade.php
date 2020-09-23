@@ -33,7 +33,7 @@
     @php($user = auth()->user())
 
 
-    <div class="left-side-menu left-side-menu-detached sidebar" style="max-height: 400px">
+    <div class="l" style="max-height: 400px">
         @include("components.index.users.user-menu")
     </div>
 

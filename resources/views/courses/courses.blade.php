@@ -5,9 +5,25 @@
 @endsection
 
 @section("content")
+
     <div class="content-page pt-3 mt-1" style="background:#F7F8FC;">
+
         <div class="content">
             <div class="container-xl " style="width: 1450px">
+                <div class="container content-width">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <div class="page-title-right">
+                                    <ol class="breadcrumb m-0">
+                                        <li class="breadcrumb-item"><a href="{{route('home')}}" class="custom-link-primary">Home</a></li>
+                                    </ol>
+                                </div>
+                                                    <h4 class="page-title">Courses</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
                     @if(empty(!$arrayTopics))
                     <div class="col-md-12 ">

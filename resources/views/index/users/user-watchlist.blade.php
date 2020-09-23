@@ -5,7 +5,7 @@
 @endsection
 
 @section("content")
-    <div class="left-side-menu left-side-menu-detached sidebar" style="max-height: 600px">
+    <div class="" style="max-height: 600px">
         @include("components.index.users.user-menu")
     </div>
 

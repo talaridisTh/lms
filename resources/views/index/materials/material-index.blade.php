@@ -6,7 +6,27 @@
 
 @section("content")
 
+
     <section class="d-flex wrapper flex-column">
+        <!-- start page title -->
+        <div class="container content-width">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-right">
+                            <ol class="breadcrumb m-0">
+                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="custom-link-primary">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}" class="custom-link-primary">Courses</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}" class="custom-link-primary">{{$course->title}}</a></li>
+                                <li class="breadcrumb-item active">{{$materials->title}}</li>
+                            </ol>
+                        </div>
+                        <h4 class="page-title">{{$materials->title}}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end page title -->
         @role("admin")
 
         <div class="card ribbon-box" style="background-color: #FAFBFE">
@@ -199,7 +219,7 @@
                                 <span
                                     class="font-16 text-center text-black font-weight-bold">{{$material->title}}</span>
                                         <div class="d-flex justify-content-around align-items-center">
-                                            <span class="font-12"> Μάθημα {{$material->priority}}</span>
+                                            <span class="custom-link-primary font-12"> Μάθημα {{$material->priority}}</span>
                                             <span class="font-16"><i
                                                     class="{{App\Material::find($material->material_id)->type}}"></i></span>
                                         </div>

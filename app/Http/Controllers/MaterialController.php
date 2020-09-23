@@ -41,9 +41,6 @@ class MaterialController extends Controller {
 
     public function store(Request $request)
     {
-
-
-
 		$material = new Material();
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
@@ -73,7 +70,8 @@ class MaterialController extends Controller {
 			return redirect("/dashboard/course/$course->slug");
 		}
 
-        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $material->title . ' δημιουργήθηκε');;
+        return redirect( route("material.show",$material->slug) );
+//        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $material->title . ' δημιουργήθηκε');;
 
     }
 
@@ -86,7 +84,7 @@ class MaterialController extends Controller {
 			"material" => $material,
 			"types" => Material::all()->unique('type'),
 			"media" => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-			"gallery" => $material->media()->orderBy("priority")->get()
+			"gallery" =>$material?$material->media()->orderBy("priority")->get():null,
 		];
 
         return view('admin.materials.material')->with($data);
@@ -119,6 +117,7 @@ class MaterialController extends Controller {
 
             $material->update(['type' => $request->type]);
         }
+
 
 
 

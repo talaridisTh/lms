@@ -39,7 +39,7 @@
 
                         <div class="tab-content">
 
-                            <div id="media-library" class="tab-pane show active">
+                            <div id="media-library" class="tab-pane ">
                                 <!-- Search -->
                                 <div class="row">
 									<div class="col-4 mx-auto">
@@ -49,7 +49,7 @@
 										</div>
 									</div>
 								</div>
-								
+
                                 <div id="gallery-content" data-model="App\Material" data-id={{ isset($material)? $material->id:"" }}>
                                     @include('components.admin.imageGallery', ['media' => $media])
                                 </div>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="modal-footer">
 						{{-- <div class="btn-group dropup">
-							<button id="gallery-bulk-action-btn" disabled type="button" 
+							<button id="gallery-bulk-action-btn" disabled type="button"
 								class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false">
 								Επιλογές (0)
@@ -136,7 +136,7 @@
             </ul><!-- ./Tab Links -->
 
             <div class="tab-content">
-                <div class="tab-pane" id="content">
+                <div class="tab-pane show active" id="content">
                     <div class="row">
 
                         <!-- form inputs -->
@@ -176,7 +176,7 @@
                                 <div class="invalid-feedback d-block">{{$message}}</div>
                                 @enderror
                             </div>
-
+                                @isset($material)
                             <div class="form-group mb-3">
                                 <label for="summary">Περίληψη</label>
                                 <textarea form="material-create" name="summary" class="form-control"
@@ -204,6 +204,7 @@
                                           rows="5"
                                 >{{isset($material) ? $material['content'] : ""}}</textarea>
                             </div>
+                                @endisset
                         </div><!-- ./form inputs -->
 
                         <div class="col-xl-3 col-lg-5 col-md-12 pt-1">
@@ -331,7 +332,7 @@
                                 </div>
                             </div>
 
-
+                        @isset($material)
                             <!-- Cover Preview -->
                             <div class="card">
                                 <div class="card-header">
@@ -349,6 +350,7 @@
                                     </a>
                                 </div> <!-- end card-body -->
                             </div> <!-- end course info card -->
+                            @endisset
 
 
                         </div>
@@ -359,7 +361,7 @@
                 <div class="tab-pane" id="courses-tabs">
                     @include("components.admin.materials.tabsCourses")
 				</div>
-
+                @isset($material)
 				<div class="tab-pane show active" id="gallery-tab">
 					<div class="text-sm-right sticky-btns">
 						<a id="add-gallery-images-btn" href="#" class="btn btn-primary mb-2">
@@ -367,9 +369,9 @@
 							Προσθήκη Εικόνων
 						</a>
 						{{-- <div class="btn-group mb-2">
-							<button id="course-bulk-action-btn" disabled type="button" 
+							<button id="course-bulk-action-btn" disabled type="button"
 								class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">
+								aria-haspopup="true" aria-eNxpanded="false">
 								Επιλογές (0)
 							</button>
 							<div class="dropdown-menu">
@@ -382,6 +384,7 @@
 						</div> --}}
 					</div>
 
+
 					<div class="card content-width mx-auto mt-2">
 						<div class="card-body">
 							<div id="gallery-cnt" class="row" data-namespace="App\Material"
@@ -390,6 +393,7 @@
 								@include('components/admin/modelGallery', ["gallery" => $gallery])
 							</div>
 						</div>
+                        @endisset
 					</div>
                 </div>
             </div>
@@ -431,7 +435,7 @@
 	<script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
 	<script src="/assets/js/vendor/dragula.min.js"></script>
 	<script src="/assets/js/ui/component.dragula.js"></script>
-													
+
 
     <x-routes></x-routes>
     {{--    <script src="{{ asset('js/dashboard/materials/material.js') }}"></script>--}}
