@@ -39,7 +39,7 @@
 
                         <div class="tab-content">
 
-                            <div id="media-library" class="tab-pane ">
+                            <div id="media-library" class="tab-pane show active">
                                 <!-- Search -->
                                 <div class="row">
 									<div class="col-4 mx-auto">
@@ -362,7 +362,7 @@
                     @include("components.admin.materials.tabsCourses")
 				</div>
                 @isset($material)
-				<div class="tab-pane show active" id="gallery-tab">
+				<div class="tab-pane" id="gallery-tab">
 					<div class="text-sm-right sticky-btns">
 						<a id="add-gallery-images-btn" href="#" class="btn btn-primary mb-2">
 							<i class="mdi mdi-plus-circle mr-2"></i>

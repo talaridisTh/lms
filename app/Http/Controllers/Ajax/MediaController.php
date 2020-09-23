@@ -197,7 +197,7 @@ class MediaController extends Controller
 		foreach ( $request->file as $key => $image ) {
 			if ( $image->isValid() ) {
 				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
-					if ( $image->getSize() <= 512000 ) {
+					if ( $image->getSize() <= 50000000 ) { // 50MB
 
 						$temp = explode(".", $image->getClientOriginalName());
 						$arrayName = (array_diff( $temp, [$image->getClientOriginalExtension()] ));
