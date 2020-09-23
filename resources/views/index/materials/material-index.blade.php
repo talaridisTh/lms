@@ -219,7 +219,47 @@
 
                         </div>
                     </div>
-                    <hr class="text-blac">
+
+                    @if(count($materials->media)>0)
+                    <div class="col-md-12 my-1">
+                        <div class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
+                            <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
+                            <a type="button" class="my-1 font-18" data-toggle="modal" data-target="#bs-example-modal-lg">Gallery</a>
+                            <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myLargeModalLabel">Gallery</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+
+                                            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    @foreach($materials->media as $media)
+                                                    <div class="carousel-item {{$loop->first?"active":""}}">
+                                                        <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">
+                                                    </div>
+                                                    @endforeach
+                                                </div>
+                                                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
+                        </div>
+                    </div>
+                    @endempty
+
 
                     @foreach($MaterialsOrderByPriority as $material)
                         <div
@@ -267,7 +307,9 @@
 
     <script>
 
-        $(".hover-yellow").mouseover(function () {
+
+        $(".hover-yellow").hover(function () {
+
 
             $(this).css("background", "{{$course->topics->first()->color}}");
         })
