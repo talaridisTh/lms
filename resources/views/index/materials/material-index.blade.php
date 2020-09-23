@@ -196,7 +196,7 @@
 
                 </div>
                 <div class="col-md-4 pl-3">
-                    <div class="row hover-yellow">
+                    <div class="row hover-yellow p-2">
                         <div class="col-md-12  border d-flex justify-content-between"
                              style="border-radius: 8px; padding: 9px">
                             <div class="col-md-2 d-flex align-items-center">
@@ -261,36 +261,38 @@
                     @endempty
 
 
-                    @foreach($MaterialsOrderByPriority as $material)
-                        <div
-                            class="row my-2 material-title @if($material->title==$materials->title)   @endif">
-                            <div class="col-md-12 list-material cursor-pointer  border d-flex justify-content-between align-items-center"
-                                 style="border-radius: 5px;padding: 20px;">
-                                <div class="col-md-2 ">
-                                    @if($material->title==$materials->title)
-                                        <i class=" ml-2 now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
-                                    @else
-                                        <div class="col-md-2 mt-1 ">
-                                            <span class="material-count">  {{$material->priority}}</span>
-                                        </div>
+                    <ul class="my-2 p-0">
+                        @foreach($MaterialsOrderByPriority as $material)
+                            <li class="list-group-item list-material border my-2  ">
+                                <a class="d-flex align-items-center m"
+                                   href="{{route('index.material.show',[$course->slug,$material->slug])}}">
 
-                                    @endif
-                                </div>
-                                <div class="col-md-8 ">
-                                    <a class="d-flex justify-content-center flex-column"
-                                       href="{{route('index.material.show',[$course->slug,$material->slug])}}">
-                                <span  class="font-18 text-left text-black font-weight-bold">{{$material->title}}</span>
-                                    </a>
-                                </div>
                                     <div class="col-md-2 ">
-                                        <span class="badge badge-primary-lighten">
-                                      <i  class=" font-24 text-black {{App\Material::find($material->material_id)->type}}"></i>
-                                        </span>
+                                        @if($material->title==$materials->title)
+                                            <i class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
+                                        @else
+                                            <div class="col-md-2 mt-1 mr-2 ">
+                                                <span style="margin:-11px;" class="material-count">  {{$material->priority}}</span>
+                                            </div>
+
+                                        @endif
                                     </div>
 
-                            </div>
-                        </div>
-                    @endforeach
+                                    <div class="col-md-8 d-flex flex-column  ">
+                                        <h3 style="border-radius: 5px"
+                                            class="font-18  text-black font-weight-bold">   {{$material->title}}</h3>
+                                        <span style="word-break: break-all" class="custom-link-primary font-14 text-dark">    {{$material->subtitle}}</span>
+                                    </div>
+
+                                    <div class="col-md-2 ">
+                                        <span class="badge badge-primary-lighten">
+                                            <i class=" font-24 text-black {{App\Material::find($material->material_id)->type}}"></i>
+                                        </span>
+                                    </div>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
 
                 </div>
             </div>
