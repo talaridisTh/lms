@@ -132,12 +132,7 @@
                                 <div class="row">
                                     <label for="password"
                                            class="col-md-6  text-md-left ">{{ __('Password') }}</label>
-                                    @if (Route::has('password.request'))
-                                        <a class=" text-muted col-md-6 btn btn-link  font-12 text-md-right"
-                                           href="{{ route('password.request') }}">
-                                            {{ __('Forgot Your Password?') }}
-                                        </a>
-                                    @endif
+
                                     <div class="col-md-12">
                                         <input id="password" type="password"
                                                class="form-control @error('password') is-invalid @enderror"
@@ -164,6 +159,12 @@
                                         </label>
                                     </div>
                                 </div>
+                                @if (Route::has('password.request'))
+                                    <a class=" text-muted col-md-6 btn btn-link  font-12 text-md-right"
+                                       href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                @endif
                             </div>
 
                             <div class="form-group row mb-0">
@@ -185,7 +186,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-9 d-md-none d-lg-block background-image"></div>
+            <div class="col-lg-9 d-md-none d-lg-block background-image" style="height: 89vh"></div>
         </div>
     </div>
 
