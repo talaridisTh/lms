@@ -3453,7 +3453,7 @@ select.is-invalid {
 }
 
 .box-material {
-  background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
+  height: 80px;
 }
 
 .borderBlue {
@@ -3465,7 +3465,7 @@ select.is-invalid {
 }
 
 .hover-yellow:hover {
-  border-radius: 18px;
+  border-radius: 8px;
 }
 
 .bghover:hover {
@@ -3477,11 +3477,28 @@ select.is-invalid {
   background: white;
   color: black;
   transition: background 0.3s, border-color 0.2s;
-  border-radius: 18px;
+  border-radius: 8px;
+}
+
+.material-count:hover {
+  color: rgba(231, 231, 231, 0.2);
+  background: rgba(231, 231, 231, 0.2);
 }
 
 .material-title:hover {
-  background: #E9EAEB;
+  background: #E9EAEB !important;
+}
+
+.list-material:hover {
+  background: #E9EAEB !important;
+}
+
+.list-material {
+  background: white !important;
+}
+
+.material-title {
+  background: white;
 }
 
 .material-title-hover {
@@ -3502,37 +3519,42 @@ select.is-invalid {
 
 .bghover {
   transition: background 0.3s, border-color 0.2s;
-  border-radius: 18px;
+  border-radius: 8px;
 }
 
 .arrow {
-  border-radius: 18px;
   opacity: 0.7;
   background-color: #e3e3e3;
+  padding: 23px;
 }
 
 .background-material {
-  border-radius: 18px;
-  background-color: #e3e3e3;
+  border-radius: 8px;
+  background: #E9EAEB;
 }
 
 .text-black {
   color: black;
 }
 
+.material-count {
+  padding: 8px 14px;
+  background: #e7e7e7;
+  border-radius: 100%;
+}
+
 .arrow:hover {
-  border-radius: 18px;
   opacity: 1;
 }
 
 .course-box {
-  border-radius: 15px;
+  border-radius: 8px;
   width: 138px;
 }
 
 .box-title {
   padding: 6px;
-  border-radius: 15px;
+  border-radius: 8px;
   color: white;
   border: solid 0.5px white;
 }
@@ -3551,7 +3573,7 @@ select.is-invalid {
 }
 
 .box-last-material {
-  border-radius: 15px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -3571,7 +3593,7 @@ select.is-invalid {
 .box-last-material button {
   color: white;
   width: 100%;
-  border-radius: 19px;
+  border-radius: 8px;
 }
 
 .btn-begin {

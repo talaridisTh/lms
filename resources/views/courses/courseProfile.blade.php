@@ -13,15 +13,15 @@
         .box-material-down {
             background: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
             border-top: 1px solid white;
-            border-bottom-right-radius: 15px;
-            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 8px;
+            border-bottom-left-radius: 8px;
 
         }
 
         .box-material-up {
             background: #E0A228;
-            border-top-right-radius: 15px;
-            border-top-left-radius: 15px;
+            border-top-right-radius: 8px;
+            border-top-left-radius: 8px;
             background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%)
 
         }
@@ -63,32 +63,18 @@
     <div class="content-page">
         @role("admin")
 
+
         <div class="card ribbon-box" style="background-color: #FAFBFE">
             <div class="card-body py-0">
-                <div class="ribbon ribbon-secondary float-right"><i class="mdi mdi-access-point mr-1"></i>
+                <div class="p-1 bg-secondary "style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}">
-                        <spant class="ribbon-edit">Edit this page</spant>
+                        <spant class="">Edit this page</spant>
                     </a>
                 </div>
             </div> <!-- end card-body -->
         </div>
         @endrole
-        <div class="container content-width">
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="custom-link-primary">Home</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}" class="custom-link-primary">Courses</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}" class="custom-link-primary">{{$course->title}}</a></li>
-                            </ol>
-                        </div>
-                        <h4 class="page-title">{{$course->title}}</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="container-xl my-3" style="max-width: 1650px">
             <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2" style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-12">
@@ -184,7 +170,7 @@
                         <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
                             <div class="row">
                                 <div class="col-md-9">
-                                    <h4>Πληροφορίες </h4>
+                                    <h4> </h4>
                                     <p> {!! $course->curator->profil !!}
                                     </p>
                                 </div>
@@ -213,8 +199,8 @@
                                     </div>
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
-                                            class="text-center font-18 text-center text-black font-weight-bold">   {{$materials->title}}</h3><span style="word-break: break-all"
-                                              class="custom-link-primary font-14 text-dark">    {{$materials->subtitle}}</span>
+                                            class="font-18  text-black font-weight-bold">   {{$materials->title}}</h3>
+                                        <span style="word-break: break-all" class="custom-link-primary font-14 text-dark">    {{$materials->subtitle}}</span>
 {{--                                        @empty($course->description)--}}
 {{--                                            <div class="mt-3">--}}
 {{--                                            <h3--}}
