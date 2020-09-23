@@ -55,7 +55,7 @@
         <div class="container-fluid w-100 p-0 m-0" style="max-width: 100%;border-radius: 0"  >
                 <div class="col-md-12   p-0 defalt-color-topic " style="background:{{$course->topics->first()->color}}">
                     <div class="row align-items-center p-2" >
-                        <div class="col-md-2 m-0">
+                        <div class="col-md-2 m-0 d-flex justify-content-center">
                             <div class="d-flex justify-content-start"></div>
                         @if(!empty($prevMaterial->slug))
                             <div class="  col-md-1 d-flex justify-content-center align-items-center">
@@ -91,7 +91,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2 d-flex justify-content-center">
                             <div class="d-flex justify-content-end pr-1">
                             @if(!empty($nextMaterial->slug))
                                 <div class="p-2 col-md-1 d-flex justify-content-center align-items-center">
