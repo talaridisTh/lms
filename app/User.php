@@ -59,6 +59,7 @@ class User extends Authenticatable {
 
     public function watchlistMaterial() {
 
+
         return $this->morphedByMany(Material::class, 'watchlistable');
 
     }

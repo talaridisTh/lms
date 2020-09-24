@@ -26,11 +26,7 @@
 
         }
 
-        .material-count {
-            padding: 8px 14px;
-            background: #e7e7e7;
-            border-radius: 100%;
-        }
+
 
         .list-material:hover {
 
@@ -104,7 +100,8 @@
                                         ">
 
 
-                                    </i> <span>Προσθήκη στα αγαπημένα</span>
+                                    </i>
+                                    <span >{{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                                 </button>
                             </div>
                         </div>
@@ -151,42 +148,22 @@
             <div class="row ">
 
                 <div class="col-md-8 {{empty($course->description)?"d-none":""}}">
-                    <div class="row background-material">
-                        <div class="col-md-12">
-                            <div class="row justify-content-between py-3 " style="padding-left:4.5rem!important ">
-                                <div class="col-md-6"><span class="font-weight-bold text-black">Εισηγητής </span>|
-                                    {{$course->curator->first_name}}
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <i class="{{$course->curator->facebook_link?"mdi cursor-pointer h3 mdi-facebook":""}}"></i>
-                                    <i class="{{$course->curator->instagram_link?"mdi cursor-pointer h3 mdi-instagram":""}}"></i>
-                                    <i class="{{$course->curator->youtube_link?"mdi cursor-pointer h3 mdi-youtube":""}}"></i>
-                                    <i class="{{$course->curator->linkedin_link?"mdi cursor-pointer h3 mdi-linkedin":""}}"></i>
-                                </div>
+                    @include("components.index.user-info")
+
+
+                    <div class="row  ">
+                        <div class="col-md-12   background-material px-2">
+                            <div class=" px-4 py-2"><span class="font-weight-bold text-black ">Περιγραφή</span>
                             </div>
                         </div>
-                        <div class="col-md-12 pl-3">
-                            <div class="row mb-1 pl-4">
-                                <div class="col-md-2 pt-2 text-center">
-                                    <img height="80" width="80" class="img-fluid img-thumbnail rounded-circle"
-                                         src="  {{$course->curator->cover}}"
-                                         alt=""></div>
-                                <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4> </h4>
-                                            <p> {!! $course->curator->profil !!}
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3"></div>
-                                    </div>
+                        <div class="col-md-12 ">
+                            <div class="row">
+                                <div class="col-md-12 d-flex align-items-center  text-black" style="padding: 2rem 3.6rem ">
+                                    {!! $course->description !!}
                                 </div>
                             </div>
                         </div>
                     </div>
-
-
-                    {!! $course->description !!}
                 </div>
                 <div class=" {{!empty($course->description)?"col-md-4":"offset-2 col-md-8 offset-2  text-left" }}">
                     <ul class="m-0 p-0">
@@ -195,7 +172,7 @@
                                 <a class="d-flex align-items-center m"
                                    href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
                                     <div class="col-md-2 ">
-                                        <span class="material-count">{{++$count}}</span>
+                                        <span class="material-count"><span>{{++$count}}</span></span>
                                     </div>
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"

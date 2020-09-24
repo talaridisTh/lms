@@ -28,7 +28,7 @@
         <!-- end page title -->
         @role("admin")
 
-        <div class="card ribbon-box" style="background-color: #FAFBFE">
+        <div class="card ribbon-box" style="background-color: transparent">
             <div class="card-body py-0">
                 <div class="p-1 bg-secondary "style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white " href="{{route('material.show',$materials->slug)}}">
@@ -59,7 +59,7 @@
                             <div class="d-flex justify-content-start"></div>
                         @if(!empty($prevMaterial->slug))
                             <div class="  col-md-1 d-flex justify-content-center align-items-center">
-                                <a data-toggle="tooltip" rel="tooltip" data-placement="left"
+                                <a {{--data-toggle="tooltip"--}}{{-- rel="tooltip" data-placement="left"--}}
                                    title="Προηγούμενο {{!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug}} "
                                    href="{{route('index.material.show',[$course->slug,!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug])}}">
                                     <i class=" p-3 text-light cursor-pointer mdi h2 mdi-chevron-left"></i>
@@ -69,12 +69,12 @@
                         </div>
                         <div class="col-md-4">
                             <div class="row ">
-                                <div style="margin-left: 5.4rem" class="col-md-12 text-white d-flex align-items-center justify-content-start">
+                                <div style="margin-left: 3.4rem" class="col-md-12 text-white d-flex align-items-center justify-content-start">
                                     <h4 >{{$materials->title}}</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="margin-left: -15px">
                             <div class="watchlist  d-flex justify-content-end align-items-center ml-2  ">
                                 <button class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
                                     <span class="font-16">Το έχω δει</span>
@@ -86,7 +86,8 @@
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
-                                    </i> <span >Προσθήκη στα αγαπημένα</span>
+                                    </i>
+                                    <span >{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                                 </button>
                             </div>
 
@@ -96,7 +97,7 @@
                             @if(!empty($nextMaterial->slug))
                                 <div class="p-2 col-md-1 d-flex justify-content-center align-items-center">
 
-                                    <a data-toggle="tooltip" rel="tooltip" data-placement="right"
+                                    <a {{--data-toggle="tooltip" rel="tooltip" data-placement="right"--}}
                                        title="Επόμενο {{!empty($nextMaterial->slug)? $nextMaterial->slug : $materials->slug}} "
                                        href="{{route('index.material.show',[$course->slug,!empty($nextMaterial->slug)? $nextMaterial->slug : $materials->slug])}}">
                                         <i class=" text-light cursor-pointer mdi h2 mdi-chevron-right"></i>
@@ -112,83 +113,45 @@
         <div class="container  w-100 p my-3" style="max-width: 65%">
             <div class="row ">
                 <div class="col-md-8 ">
-                    <div class="row background-material">
-                        <div class="col-md-12">
-                            <div class="row justify-content-between py-3 " style="padding-left:4.5rem!important ">
-                                <div class="col-md-6"><span class="font-weight-bold text-black">Εισηγητής </span>|
-                                    {{$course->curator->first_name}}
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <i class="{{$course->curator->facebook_link?"mdi cursor-pointer h3 mdi-facebook":""}}"></i>
-                                    <i class="{{$course->curator->instagram_link?"mdi cursor-pointer h3 mdi-instagram":""}}"></i>
-                                    <i class="{{$course->curator->youtube_link?"mdi cursor-pointer h3 mdi-youtube":""}}"></i>
-                                    <i class="{{$course->curator->linkedin_link?"mdi cursor-pointer h3 mdi-linkedin":""}}"></i>
-                                </div>
+                    @include("components.index.user-info")
+                    <div class="row  ">
+                        <div class="col-md-12   background-material ">
+                            <div class=" px-4 py-2 "><span class="font-weight-bold text-black ">Σχετικά με το μάθημα</span>
                             </div>
                         </div>
-                        <div class="col-md-12 pl-3">
-                            <div class="row mb-1 pl-4">
-                                <div class="col-md-2 pt-2 text-center">
-                                    <img height="80" width="80" class="img-fluid img-thumbnail rounded-circle"
-                                         src="  {{$course->curator->cover}}"
-                                         alt=""></div>
-                                <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <h4> </h4>
-                                            <p> {!! $course->curator->profil !!}
-                                            </p>
-                                        </div>
-                                        <div class="col-md-3"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row  mt-3">
-                        <div class="col-md-12   background-material text-center">
-                            <div class=" p-2"><span class="font-weight-bold text-black ">Σχετικά με το μάθημα</span>
-                            </div>
-                        </div>
-                        <div class="col-md-12  px-3 py-1">
+                        <div class="col-md-12  ">
                             <div class="row">
-                                <div class="col-md-12 d-flex align-items-center pl-4 text-black">
+                                <div class="col-md-12 d-flex align-items-center  text-black"style="padding: 2rem 3.6rem "  >
                                     {!! $course->content !!}
                                 </div>
-                                <p class="d-flex align-items-center pl-4 mt-2 ">
-                                    Δημοσιεύθηκε {{$materials->created_at->format("d-m-y")}}.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row  mt-3">
-                        <div class="col-md-12   background-material text-center">
-                            <div class=" p-2"><span class="font-weight-bold text-black ">Περίληψη </span>
+                    <div class="row  ">
+                        <div class="col-md-12   background-material px-2">
+                            <div class=" px-4 py-2"><span class="font-weight-bold text-black " >Περίληψη </span>
                             </div>
                         </div>
-                        <div class="col-md-12  px-3 py-1">
+                        <div class="col-md-12  ">
                             <div class="row">
-                                <div class="col-md-12 d-flex align-items-center pl-4 text-black">
+                                <div class="col-md-12 d-flex align-items-center  text-black"  style="padding: 2rem 3.6rem " >
                                     {!! $course->summary !!}
                                 </div>
-                                <p class="d-flex align-items-center pl-4 mt-2 ">
-                                    Δημοσιεύθηκε {{$materials->created_at->format("d-m-y")}}.</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row  mt-3">
-                        <div class="col-md-12   background-material text-center">
-                            <div class=" p-2"><span class="font-weight-bold text-black ">Περιγραφή</span>
+                    <div class="row  ">
+                        <div class="col-md-12   background-material px-2">
+                            <div class=" px-4 py-2"><span class="font-weight-bold text-black ">Περιγραφή</span>
                             </div>
                         </div>
-                        <div class="col-md-12  px-3 py-1">
+                        <div class="col-md-12 ">
                             <div class="row">
-                                <div class="col-md-12 d-flex align-items-center pl-4 text-black">
+                                <div class="col-md-12 d-flex align-items-center  text-black" style="padding: 2rem 3.6rem ">
                                     {!! $course->description !!}
                                 </div>
-                                <p class="d-flex align-items-center pl-4 mt-2 ">
-                                    Δημοσιεύθηκε {{$materials->created_at->format("d-m-y")}}.</p>
                             </div>
                         </div>
                     </div>
@@ -263,16 +226,16 @@
 
                     <ul class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
-                            <li class="list-group-item list-material border my-2  ">
+                            <li class="list-group-item list-material border my-2 {{$material->title==$materials->title? "list-material-select":""}}  ">
                                 <a class="d-flex align-items-center m"
                                    href="{{route('index.material.show',[$course->slug,$material->slug])}}">
 
                                     <div class="col-md-2 ">
                                         @if($material->title==$materials->title)
-                                            <i class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
+                                            <i style="margin:-8px;" class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                         @else
                                             <div class="col-md-2 mt-1 mr-2 ">
-                                                <span style="margin:-11px;" class="material-count">  {{$material->priority}}</span>
+                                                <span style="margin:-20px;" class="material-count"> <span>{{$material->priority}}</span> </span>
                                             </div>
 
                                         @endif
@@ -310,7 +273,7 @@
     <script>
 
 
-        $(".hover-yellow").hover(function () {
+        $(".hover-yellow").mouseover(function () {
 
 
             $(this).css("background", "{{$course->topics->first()->color}}");
