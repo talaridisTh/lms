@@ -953,12 +953,13 @@ function audioPlayerHandler() {
 		this.classList.add("mdi-pause-circle-outline");
 		this.dataset.audioStatus = "playing";
 
+		audio.currentTime = 0;
 		audio.play(); 
 	}
 	else {
 		this.classList.remove("mdi-pause-circle-outline");
 		this.classList.add("mdi-play-circle-outline");
-		this.dataset.audioStatus = "playing";
+		this.dataset.audioStatus = "paused";
 
 		audio.pause(); 
 	}
