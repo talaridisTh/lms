@@ -13,7 +13,7 @@
 				<tr>
 	        	    <td class="d-flex align-items-center">
 						@if ($file->file_info == "audio/mpeg")
-							<i class="mr-2 js-audio-btn h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>
+							<i class="my-0 mr-2 js-audio-btn h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>
 							<audio class="js-audio">
 								<source src="{{ $file->rel_path }}" type="{{ $file->file_info }}">
 								{{-- <source src="{{ $file->rel->path }}" type="audio/mpeg"> --}}
