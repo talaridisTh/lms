@@ -3470,7 +3470,7 @@ select.is-invalid {
 
 .bghover:hover {
   background: white !important;
-  color: #328af1 !important;
+  color: gray !important;
 }
 
 .topic-title {
@@ -3481,8 +3481,7 @@ select.is-invalid {
 }
 
 .material-count:hover {
-  color: rgba(231, 231, 231, 0.2);
-  background: rgba(231, 231, 231, 0.2);
+  background: rgba(191, 190, 190, 0.2);
 }
 
 .material-title:hover {
@@ -3493,7 +3492,13 @@ select.is-invalid {
   background: #E9EAEB !important;
 }
 
+.list-group-item:first-child {
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+}
+
 .list-material {
+  border-radius: 8px;
   background: white !important;
 }
 
@@ -3526,6 +3531,10 @@ select.is-invalid {
   border-radius: 8px;
 }
 
+.border-orange {
+  border: 1px orange solid;
+}
+
 .arrow {
   opacity: 0.7;
   background-color: #e3e3e3;
@@ -3539,6 +3548,10 @@ select.is-invalid {
 
 .text-black {
   color: black;
+}
+
+.list-group-item + .list-group-item {
+  border-top-width: 1px;
 }
 
 .material-count {

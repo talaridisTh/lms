@@ -1,6 +1,6 @@
 <div class="row background-material mb-3">
     <div class="col-md-12">
-        <div class="row justify-content-between py-3 " style="padding-left:2.5rem!important ">
+        <div class="row justify-content-between p-2 " >
             <div class="col-md-6"><span class="font-weight-bold text-black">Εισηγητής </span>|
                 {{$course->curator->first_name}}
             </div>
@@ -12,15 +12,15 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12 px-3">
-        <div class="row mb-3 pl-1">
-            <div class="col-md-2  text-center">
-                <img height="80" width="80" class="img-fluid img-thumbnail rounded-circle"
+    <div class="col-md-12 ">
+        <div class="row ">
+            <div class="col-md-2 p-0 pb-2 text-center">
+                <img height="90" width="90" class="img-fluid  rounded-circle"
                      src="  {{$course->curator->cover}}"
                      alt=""></div>
             <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 p-0 pr-2">
                         <h4> </h4>
                         <p class=""> {!! $course->curator->profil !!}
                         </p>

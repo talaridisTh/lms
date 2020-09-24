@@ -1,6 +1,11 @@
 @extends("layouts.app")
 
 @section("style")
+    <style>
+        body{
+            box-sizing: border-box;
+        }
+    </style>
 
 @endsection
 
@@ -9,7 +14,7 @@
 
     <section class=" d-flex wrapper flex-column">
         <!-- start page title -->
-        <div class="container content-width">
+        <div class=" ml-5 content-width">
             <div class="row">
                 <div class="col-12">
                     <div class="page-title-box">
@@ -18,7 +23,7 @@
                                 <li class="breadcrumb-item"><a href="{{route('home')}}" class="custom-link-primary">Home</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}" class="custom-link-primary">Courses</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}" class="custom-link-primary">{{$course->title}}</a></li>
-                                <li class="breadcrumb-item active">{{$materials->title}}</li>
+                                <li class="breadcrumb-item  text-black">{{$materials->title}}</li>
                             </ol>
                         </div>
                     </div>
@@ -52,10 +57,10 @@
         @else
             <img class="img-fluid"   src="{{url($materials->cover)}}" alt="">
         @endif
-        <div class="container-fluid w-100 p-0 m-0" style="max-width: 100%;border-radius: 0"  >
-                <div class="col-md-12   p-0 defalt-color-topic " style="background:{{$course->topics->first()->color}}">
+        <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center" style=";border-radius: 0; background:{{$course->topics->first()->color}}"  >
+                <div class="col-md-12   p-0  " style="max-width: 1847px">
                     <div class="row align-items-center p-2" >
-                        <div class="col-md-2 m-0 d-flex justify-content-center">
+                        <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
                             <div class="d-flex justify-content-start"></div>
                         @if(!empty($prevMaterial->slug))
                             <div class="  col-md-1 d-flex justify-content-center align-items-center">
@@ -69,13 +74,13 @@
                         </div>
                         <div class="col-md-4">
                             <div class="row ">
-                                <div style="margin-left: 3.4rem" class="col-md-12 text-white d-flex align-items-center justify-content-start">
+                                <div  class="col-md-12 text-white d-flex align-items-center justify-content-start">
                                     <h4 >{{$materials->title}}</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4" style="margin-left: -15px">
-                            <div class="watchlist  d-flex justify-content-end align-items-center ml-2  ">
+                        <div class="col-md-4" >
+                            <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -2rem;">
                                 <button class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
                                     <span class="font-16">Το έχω δει</span>
                                 </button>
@@ -92,7 +97,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-2 d-flex justify-content-center">
+                        <div class="col-md-2 d-flex justify-content-start">
                             <div class="d-flex justify-content-end pr-1">
                             @if(!empty($nextMaterial->slug))
                                 <div class="p-2 col-md-1 d-flex justify-content-center align-items-center">
@@ -110,18 +115,18 @@
                 </div>
             </div>
         </div>
-        <div class="container  w-100 p my-3" style="max-width: 65%">
+        <div class="container  w-100 p my-3" style="max-width: 1280px">
             <div class="row ">
                 <div class="col-md-8 ">
                     @include("components.index.user-info")
                     <div class="row  ">
                         <div class="col-md-12   background-material ">
-                            <div class=" px-4 py-2 "><span class="font-weight-bold text-black ">Σχετικά με το μάθημα</span>
+                            <div class="  p-2 "><span class="font-weight-bold text-black ">Σχετικά με το μάθημα</span>
                             </div>
                         </div>
-                        <div class="col-md-12  ">
+                        <div class="col-md-12  mb-3">
                             <div class="row">
-                                <div class="col-md-12 d-flex align-items-center  text-black"style="padding: 2rem 3.6rem "  >
+                                <div class="col-md-12 d-flex align-items-center  text-black  pl-3  "  >
                                     {!! $course->content !!}
                                 </div>
                             </div>
@@ -129,13 +134,13 @@
                     </div>
 
                     <div class="row  ">
-                        <div class="col-md-12   background-material px-2">
-                            <div class=" px-4 py-2"><span class="font-weight-bold text-black " >Περίληψη </span>
+                        <div class="col-md-12  mb-3  background-material px-2">
+                            <div class=" p-2"><span class="font-weight-bold text-black   " >Περίληψη </span>
                             </div>
                         </div>
-                        <div class="col-md-12  ">
+                        <div class="col-md-12  mb-3 ">
                             <div class="row">
-                                <div class="col-md-12 d-flex align-items-center  text-black"  style="padding: 2rem 3.6rem " >
+                                <div class="col-md-12 d-flex align-items-center  pl-3  text-black"   >
                                     {!! $course->summary !!}
                                 </div>
                             </div>
@@ -144,12 +149,12 @@
 
                     <div class="row  ">
                         <div class="col-md-12   background-material px-2">
-                            <div class=" px-4 py-2"><span class="font-weight-bold text-black ">Περιγραφή</span>
+                            <div class=" p-2"><span class="font-weight-bold text-black   ">Περιγραφή</span>
                             </div>
                         </div>
                         <div class="col-md-12 ">
                             <div class="row">
-                                <div class="col-md-12 d-flex align-items-center  text-black" style="padding: 2rem 3.6rem ">
+                                <div class="col-md-12 d-flex align-items-center mt-3 pl-3 text-black" >
                                     {!! $course->description !!}
                                 </div>
                             </div>
@@ -226,7 +231,7 @@
 
                     <ul class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
-                            <li class="list-group-item list-material border my-2 {{$material->title==$materials->title? "list-material-select":""}}  ">
+                            <li class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                 <a class="d-flex align-items-center m"
                                    href="{{route('index.material.show',[$course->slug,$material->slug])}}">
 
@@ -243,12 +248,14 @@
 
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
-                                            class="font-18  text-black font-weight-bold">   {{$material->title}}</h3>
-                                        <span style="word-break: break-all" class="custom-link-primary font-14 text-dark">    {{$material->subtitle}}</span>
+                                            class="font-18 mt-1 text-black font-weight-bold">   {{$material->title}}</h3>
+                                        <span style="word-break: break-all" class="
+                                        {{$material->title==$materials->title? "":"custom-link-primary"}}
+                                             font-14 text-dark">    {{$material->subtitle}}</span>
                                     </div>
 
                                     <div class="col-md-2 ">
-                                        <span class="badge badge-primary-lighten">
+                                        <span class="">
                                             <i class=" font-24 text-black {{App\Material::find($material->material_id)->type}}"></i>
                                         </span>
                                     </div>
@@ -270,19 +277,5 @@
     <script src="{{ mix('js/index/materials/indexMaterials.js') }}"></script>
 
 
-    <script>
-
-
-        $(".hover-yellow").mouseover(function () {
-
-
-            $(this).css("background", "{{$course->topics->first()->color}}");
-        })
-        $(".hover-yellow").mouseout(function () {
-
-            $(this).css("background", "");
-        })
-
-    </script>
 
 @endsection

@@ -40,11 +40,7 @@
             margin-bottom: 10px;
         }
 
-        .material-count:hover {
-            color: rgba(231, 231, 231, 0.2);
-            background: rgba(231, 231, 231, 0.2)
 
-        }
 
         .ribbon-edit:hover {
             text-decoration: underline;
@@ -60,7 +56,7 @@
         @role("admin")
 
 
-        <div class="card ribbon-box" style="background-color: #FAFBFE">
+        <div class="card ribbon-box" style="background-color: transparent">
             <div class="card-body py-0">
                 <div class="p-1 bg-secondary "style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}">
@@ -144,7 +140,7 @@
             </div>
         </div>
 
-        <div class="container-fluid my-3" style="max-width: 1250px">
+        <div class="container-fluid my-3" style="max-width: 1280px">
             <div class="row ">
 
                 <div class="col-md-8 {{empty($course->description)?"d-none":""}}">
@@ -153,19 +149,19 @@
 
                     <div class="row  ">
                         <div class="col-md-12   background-material px-2">
-                            <div class=" px-4 py-2"><span class="font-weight-bold text-black ">Περιγραφή</span>
+                            <div class=" p-2"><span class="font-weight-bold text-black ">Περιγραφή</span>
                             </div>
                         </div>
                         <div class="col-md-12 ">
                             <div class="row">
-                                <div class="col-md-12 d-flex align-items-center  text-black" style="padding: 2rem 3.6rem ">
+                                <div class="col-md-12 d-flex align-items-center  text-black mt-2 pl-3" >
                                     {!! $course->description !!}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class=" {{!empty($course->description)?"col-md-4":"offset-2 col-md-8 offset-2  text-left" }}">
+                <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
                     <ul class="m-0 p-0">
                         @foreach($allMaterial as $materials)
                             <li class="list-group-item list-material border   ">

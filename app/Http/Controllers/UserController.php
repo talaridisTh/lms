@@ -6,6 +6,7 @@ use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Mail\NewUserNotification;
+use App\Material;
 use App\Media;
 use App\User;
 use Illuminate\Http\Request;
@@ -77,8 +78,6 @@ class UserController extends Controller {
 
 
         $currentUser = $user->create($data)->assignRole($request->roles);
-
-
 
 
 //        foreach ($request->input('media', []) as $index => $file)
