@@ -58,7 +58,7 @@ $("#main-active-users-checkbox").on("change", function() {
 
 $("#change-cover-btn").on("click", function() {
 
-	$("#gallery-content")[0].dataset.action = "cover";
+	$("#gallery-content")[0].dataset.type = "cover";
 
 	$("#gallery-modal").modal('show');
 })
