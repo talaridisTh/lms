@@ -11,10 +11,11 @@ const baseUrl = window.location.origin;
 //!					EventListeners					#
 //!##################################################
 
+$(".js-audio-btn").on("click", audioPlayerHandler);
+
 $(".js-remove-file").on("click", function() {
 	removeMaterialFiles( [this.dataset.fileId] );
 })
-
 
 $("#remove-all-images-btn").on("click", function() {
 
@@ -211,15 +212,15 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		
 		addFilesBtnInit();
-		audioplayerBtnsInit();
+		// audioplayerBtnsInit();
     }
 })
 
-function audioplayerBtnsInit() {
-	let btns = $(".js-audio-btn");
+// function audioplayerBtnsInit() {
+// 	let btns = $(".js-audio-btn");
 
-	btns.on("click", audioPlayerHandler);
-}
+// 	btns.on("click", audioPlayerHandler);
+// }
 
 function addFilesBtnInit() {
 	let btns = $(".js-add-file-btn");
@@ -238,8 +239,11 @@ function addMaterialFiles(ids) {
 		let container = $("#files-cnt");
 		container.html(res.data);
 
-		let btns = container.find(".js-remove-file");
-		btns.on("click", function() {
+		let audioBtns = $(".js-audio-btn");
+		audioBtns.on("click", audioPlayerHandler);
+
+		let removeBtns = container.find(".js-remove-file");
+		removeBtns.on("click", function() {
 			removeMaterialFiles( [this.dataset.fileId] );
 		});
 
@@ -260,6 +264,9 @@ function removeMaterialFiles(ids) {
 	.then( res => {
 		let container = $("#files-cnt");
 		container.html(res.data);
+
+		let audioBtns = $(".js-audio-btn");
+		audioBtns.on("click", audioPlayerHandler);
 
 		let btns = container.find(".js-remove-file");
 		btns.on("click", function() {
@@ -935,6 +942,8 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 
 function audioPlayerHandler() {
+
+	console.log(this);
 
 	let cnt = this.parentElement;
 	let audio = cnt.getElementsByClassName("js-audio")[0];
