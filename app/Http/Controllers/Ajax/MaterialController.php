@@ -335,7 +335,9 @@ class MaterialController extends Controller {
 			"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
 			"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
 			"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-			"application/vnd.ms-access", "audio/mpeg"
+			"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+			"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+			"application/rtf"
 		];
 		$date = date('Y.m');
 

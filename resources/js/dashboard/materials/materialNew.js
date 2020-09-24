@@ -17,7 +17,6 @@ $(".js-remove-file").on("click", function() {
 	removeMaterialFiles( [this.dataset.fileId] );
 })
 
-
 $("#remove-all-images-btn").on("click", function() {
 
 	axios.delete(`/material/detach-all-files/${materialSlug}`, {
@@ -213,15 +212,15 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		
 		addFilesBtnInit();
-		audioplayerBtnsInit();
+		// audioplayerBtnsInit();
     }
 })
 
-function audioplayerBtnsInit() {
-	let btns = $(".js-audio-btn");
+// function audioplayerBtnsInit() {
+// 	let btns = $(".js-audio-btn");
 
-	btns.on("click", audioPlayerHandler);
-}
+// 	btns.on("click", audioPlayerHandler);
+// }
 
 function addFilesBtnInit() {
 	let btns = $(".js-add-file-btn");
@@ -240,8 +239,11 @@ function addMaterialFiles(ids) {
 		let container = $("#files-cnt");
 		container.html(res.data);
 
-		let btns = container.find(".js-remove-file");
-		btns.on("click", function() {
+		let audioBtns = $(".js-audio-btn");
+		audioBtns.on("click", audioPlayerHandler);
+
+		let removeBtns = container.find(".js-remove-file");
+		removeBtns.on("click", function() {
 			removeMaterialFiles( [this.dataset.fileId] );
 		});
 
@@ -262,6 +264,9 @@ function removeMaterialFiles(ids) {
 	.then( res => {
 		let container = $("#files-cnt");
 		container.html(res.data);
+
+		let audioBtns = $(".js-audio-btn");
+		audioBtns.on("click", audioPlayerHandler);
 
 		let btns = container.find(".js-remove-file");
 		btns.on("click", function() {
@@ -927,7 +932,9 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 		"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
 		"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
 		"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-		"application/vnd.ms-access", "audio/mpeg"
+		"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+		"application/rtf"
 	],
 });
 
@@ -935,6 +942,9 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 
 function audioPlayerHandler() {
+
+	console.log(this);
+
 	let cnt = this.parentElement;
 	let audio = cnt.getElementsByClassName("js-audio")[0];
 
@@ -943,12 +953,13 @@ function audioPlayerHandler() {
 		this.classList.add("mdi-pause-circle-outline");
 		this.dataset.audioStatus = "playing";
 
+		audio.currentTime = 0;
 		audio.play(); 
 	}
 	else {
 		this.classList.remove("mdi-pause-circle-outline");
 		this.classList.add("mdi-play-circle-outline");
-		this.dataset.audioStatus = "playing";
+		this.dataset.audioStatus = "paused";
 
 		audio.pause(); 
 	}
