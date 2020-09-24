@@ -1,5 +1,5 @@
 @forelse ($gallery as $image)
-	<div class="p-2 css-img-cnt position-relative">
+	<div class="col-xl-2 col-md-3 p-2 css-img-cnt position-relative">
 		<img class="js-active-image img-fluid fade-image cursor-move"
 			src="{{ $image->thumbnail_path }}" alt="{{ $image->name }}"
 			data-image-id="{{ $image->id }}"
@@ -20,5 +20,5 @@
 		</div> --}}
 	</div>
 @empty
-	<h3 class="w-100 text-center">Δεν βρέθηκαν εικόνες</h3>
+	<h3 class="w-100 text-center my-5">Δεν βρέθηκαν εικόνες</h3>
 @endforelse

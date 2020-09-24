@@ -1,50 +1,40 @@
 import utilities from '../main';
-import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import * as FilePond from "filepond";
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
 let materialId = $("#material-course-table")[0].dataset.materialId;
+let materialSlug = $("#material-title")[0].dataset.materialSlug;
 const baseUrl = window.location.origin;
 
 //!##################################################
 //!					EventListeners					#
 //!##################################################
 
-// $(".js-active-image-checkbox").on("click", function() {
+$(".js-remove-file").on("click", function() {
+	removeMaterialFiles( [this.dataset.fileId] );
+})
 
-// });
+
+$("#remove-all-images-btn").on("click", function() {
+
+	axios.delete(`/material/detach-all-files/${materialSlug}`, {
+		data: {
+			usage: 1
+		}
+	})
+	.then( res => {
+
+		$("#gallery-cnt").html(`<h3 class="w-100 text-center my-5">Δεν βρέθηκαν εικόνες</h3>`);
+
+	})
+	.catch( err => {
+		
+		console.log(err);
+	})
+});
 
 $(".js-remove-image").on("click", utilities.removeImageHandler)
-
-// $("#add-gallery-bulk-btn").on("click", function() {
-// 	let checked = $(".js-gallery-checkbox:checked");
-// 	let ids = [];
-
-// 	for ( let i = 0; i < checked.length; i++ ) {
-// 		ids.push(checked[i].dataset.imageId);
-// 	}
-
-// 	postImagesIds(ids);
-// });
-
-// $(".js-gallery-checkbox").on("change", function() {
-// 	let checked = $(".js-gallery-checkbox:checked");
-// 	let bulk = $("#gallery-bulk-action-btn")[0];
-
-// 	if (checked.length > 0 ) {
-// 		bulk.disabled = false;
-// 		bulk.classList.remove("btn-secondary");
-// 		bulk.classList.add("btn-warning");
-// 	}
-// 	else {
-// 		bulk.disabled = true;
-// 		bulk.classList.remove("btn-warning");
-// 		bulk.classList.add("btn-secondary");
-// 	}
-	
-// 	bulk.textContent = `Επιλογές (${checked.length})`
-// })
 
 $("#add-gallery-images-btn").on("click", function() {
 	$("#gallery-content")[0].dataset.type = "gallery";
@@ -197,6 +187,86 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
 
     }
 })
+
+const remainingFilesTable = $("#remaining-files-datatable").DataTable({
+    order: [ 0, "asc" ],
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: '/material/remaining-files',
+        headers: config.headers.csrf,
+        type: "post",
+        data: {
+            materialId
+        }
+    },
+    columns: [
+        {data: "original_name", name: "original_name"},
+        {data: "ext", name: "ext", className:"text-center"},
+        {data: "size", name: "size", className:"text-center"},
+        {data: "action", className:"text-center", searchable: false, orderable: false},
+    ],
+    language: utilities.tableLocale,
+    drawCallback: function () {
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		
+		addFilesBtnInit();
+    }
+})
+
+function addFilesBtnInit() {
+	let btns = $(".js-add-file-btn");
+
+	btns.off(addFilesBtnInit);
+
+	btns.on("click", function() {
+		addMaterialFiles( [this.dataset.fileId] );
+	})
+}
+
+function addMaterialFiles(ids) {
+
+	axios.post("/material/add-files", {
+		materialId, ids
+	})
+	.then( res => {
+		let container = $("#files-cnt");
+		container.html(res.data);
+
+		let btns = container.find(".js-remove-file");
+		btns.on("click", function() {
+			removeMaterialFiles( [this.dataset.fileId] );
+		});
+
+		$("#remainings-files-modal").modal("hide");
+		remainingFilesTable.ajax.reload(null, false);
+	})
+	.catch( err => {
+		console.log(err);
+	})
+
+}
+
+function removeMaterialFiles(ids) {
+	
+	axios.post("/material/remove-files", {
+		materialId, ids
+	})
+	.then( res => {
+		let container = $("#files-cnt");
+		container.html(res.data);
+
+		let btns = container.find(".js-remove-file");
+		btns.on("click", function() {
+			removeMaterialFiles( [this.dataset.fileId] );
+		});
+		// console.log(res);
+		remainingFilesTable.ajax.reload(null, false);
+	})
+	.catch( err => {
+		console.log(err);
+	})
+}
 
 //! EDITOR INIT
 //!============================================================
@@ -682,13 +752,14 @@ $("#change-cover-btn").on("click", function () {
     $("#gallery-modal").modal('show');
 })
 
-let dropzone = document.getElementById("file-pond");
-
 FilePond.registerPlugin(FilePondPluginFileValidateType);
-const pond = FilePond.create(dropzone);
-
 FilePond.setOptions({
     name: 'file[]',
+    allowMultiple: true,
+});
+
+let dropzone = document.getElementById("file-pond");
+const pond = FilePond.create(dropzone, {
     server: {
         url: baseUrl,
         process: {
@@ -696,12 +767,7 @@ FilePond.setOptions({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
             },
-            onload: function (data) {
-
-            },
-
         },
-
     },
     onprocessfiles: function (data) {
 
@@ -712,20 +778,146 @@ FilePond.setOptions({
         $("#media-library").addClass("show active")
 
     },
-
     onupdatefiles: function (file) {
         utilities.toastAlert("success", `${file.length} εικόνα ανέβηκαν`)
 
-    },
-    allowMultiple: true,
-    allowRemove: false,
-    allowRevert: false,
-    acceptedFileTypes: ['image/png', 'image/jpeg'],
-
+	},
+	acceptedFileTypes: ['image/png', 'image/jpeg'],
 });
 
-let dragArea = $("#gallery-cnt")[0];
+const materialImgUpload = $("#material-img-upload")[0];
+const materialPond = FilePond.create(materialImgUpload, {
+    server: {
+        url: baseUrl,
+        process: {
+            url: '/materials/gallery-upload',
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			},
+			
+			onload: function(data) {
 
+				$("#gallery-cnt").html(data)
+
+			},
+			ondata: function(formData) {
+				formData.append("id", materialId);
+				return formData
+			}
+		},
+	},
+    onprocessfile: function (error, data) {
+
+		setTimeout(function() {
+			materialPond.removeFile(data.file);
+		}, 2000);
+
+		$("#gallery-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+	},
+	onprocessfileabort: function() {
+		$("#gallery-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+	},
+	onprocessfiles: function() {
+
+		let instance = materialPond.getFiles()
+
+		for (let i = 0; i < instance.length; i++ ) {
+
+			setTimeout(function() {
+				materialPond.removeFile(instance[i].file);
+		
+			}, i * 1000);
+
+		}
+
+	},
+	oninitfile: function(file) {
+		$("#gallery-cnt").addClass("d-none");
+		$("#active-gallery-loading").removeClass("d-none");
+	},
+    acceptedFileTypes: ['image/png', 'image/jpeg'],
+});
+
+
+
+
+const materialFileUpload = $("#material-file-upload")[0];
+const materialFilePond = FilePond.create(materialFileUpload, {
+	name: "file",
+    server: {
+        url: baseUrl,
+        process: {
+            url: '/material/files-upload',
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			},
+			
+			onload: function(data) {
+
+				// $("#files-cnt").html(data)
+
+			},
+			ondata: function(formData) {
+				formData.append("id", materialId);
+				return formData
+			}
+		},
+	},
+    onprocessfile: function (error, data) {
+
+		setTimeout(function() {
+			materialFilePond.removeFile(data.file);
+		}, 2000);
+
+		$("#files-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+	},
+	onprocessfileabort: function() {
+		$("#files-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+	},
+	onprocessfiles: function() {
+
+		let instance = materialFilePond.getFiles()
+
+		for (let i = 0; i < instance.length; i++ ) {
+
+			setTimeout(function() {
+				materialFilePond.removeFile(instance[i].file);
+		
+			}, i * 1000);
+
+		}
+
+	},
+	oninitfile: function(file) {
+		$("#files-cnt").addClass("d-none");
+		$("#active-files-loading").removeClass("d-none");
+	},
+    // acceptedFileTypes: ['image/png', 'image/jpeg'],
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let dragArea = $("#gallery-cnt")[0];
 dragula( [dragArea], {
 
 })

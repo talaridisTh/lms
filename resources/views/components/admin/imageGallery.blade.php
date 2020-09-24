@@ -18,7 +18,7 @@
 			
 		</div>
 	@empty
-		<h3 class="w-100 text-center">Δεν βρέθηκαν εικόνες</h3>
+		<h3 class="w-100 text-center my-5">Δεν βρέθηκαν εικόνες</h3>
 	@endforelse
 
 </div>

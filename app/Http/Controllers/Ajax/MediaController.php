@@ -70,7 +70,7 @@ class MediaController extends Controller
 
 		}
 
-		$gallery = $model->media()->orderBy("priority", "desc")->get();
+		$gallery = $model->media()->orderBy("priority")->get();
 		return View('components/admin/modelGallery', ['gallery' => $gallery]);
 
 	}

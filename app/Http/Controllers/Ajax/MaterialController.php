@@ -6,6 +6,7 @@ use App\Course;
 use App\CourseMaterial;
 use App\DataTables\AddCourseInsideMaterialsDataTable;
 use App\DataTables\CourseInsideMaterialsDataTable;
+use App\DataTables\FilesDataTable;
 use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
@@ -15,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class MaterialController extends Controller {
 
@@ -34,7 +36,14 @@ class MaterialController extends Controller {
     public function addCourseMaterial(AddCourseInsideMaterialsDataTable $dataTable)
     {
         return $dataTable->render('add-course-material');
-    }
+	}
+	
+	public function remainingFilesTable(FilesDataTable $dataTable) {
+
+		return $dataTable->render('remaning.files');
+
+	}
+	
 
     public function toggleStatus(Material $material, Request $request)
     {
@@ -64,32 +73,6 @@ class MaterialController extends Controller {
                     {
                         $id = md5($image->getClientOriginalName());
                         $path = Storage::disk('public')->put("materials/$request->id/descriptionImages", $image);
-                        $files["file-" . $key] = [
-                            "url" => url("/storage/$path"),
-                            "id" => $id
-                        ];
-                    }
-                }
-            }
-        }
-        echo json_encode($files);
-    }
-
-    public function uploadContentImages(Request $request)
-    {
-
-        $allowedTypes = ["image/png", "image/jpeg"];
-        $files = [];
-        foreach ($request->file as $key => $image)
-        {
-            if ($image->isValid())
-            {
-                if (in_array($image->getClientMimeType(), $allowedTypes))
-                {
-                    if ($image->getSize() <= 512000)
-                    {
-                        $id = md5($image->getClientOriginalName());
-                        $path = Storage::disk('public')->put("materials/$request->id/contentImages", $image);
                         $files["file-" . $key] = [
                             "url" => url("/storage/$path"),
                             "id" => $id
@@ -249,27 +232,72 @@ class MaterialController extends Controller {
     public function galleryUpload(Request $request)
     {
 
-        dd($request->all());;
-        $user = Material::findorFail($request->materialId);
-        $date = date('m.Y');
-        $image = $request->file;
+		$material = Material::find($request->id);
+		
+		if ( $material->media()->count() > 0 ) {
+			$priority = $material->media()->orderBy("priority", "desc")->first()->pivot->priority;
+		}
+		else {
+			$priority = 0;
+		}
+		// dd($priority);
 
-        $temp = explode(".", $image->getClientOriginalName());
+		$allowedTypes = ["image/png", "image/jpeg"];
+		$date = date('Y.m');
 
-        $name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
-        $name =  Str::slug( $name, "-" );
-        $name .= ".". $image->getClientOriginalExtension();
+		foreach ( $request->file as $key => $image ) {
+			if ( $image->isValid() ) {
+				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
+					if ( $image->getSize() <= 50000000 ) { // 50MB
 
-        $media = new Media;
-        $media->original_name = $image->getClientOriginalName();
-        $media->name = $name;
-        $media->rel_path = "storage/$date/images/". $name;
-        $media->ext = $image->getClientOriginalExtension();
-        $media->file_info = $image->getClientMimeType();
-        $media->size = $image->getSize();
-        $media->save();
+						$temp = explode(".", $image->getClientOriginalName());
+						$arrayName = (array_diff( $temp, [$image->getClientOriginalExtension()] ));
+						$originalName = implode( ".", $arrayName );
+						$name =  Str::slug( implode("-", $arrayName ), "-" );
 
-        $image->storeAs("public/$date/images", $name);
+						$count = Media::where( "original_name", $originalName)->count();
+
+						if ( $count > 0 ) {
+							$name = $name.( $count + 1 );
+							$fullname = $name.".".$image->getClientOriginalExtension();
+						}
+						else {
+							$fullname = "$name.".$image->getClientOriginalExtension();
+						}
+
+						$media = new Media;
+						$media->original_name = $originalName;
+						$media->name = $name;
+						$media->rel_path = "/storage/images/$date/$fullname";
+						$media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
+						$media->ext = $image->getClientOriginalExtension();
+						$media->file_info = $image->getClientMimeType();
+						$media->size = $image->getSize();
+						$media->width = Image::make( $image )->width();
+						$media->height = Image::make( $image )->height();
+						$media->save();
+
+						$material->media()
+							->attach($media->id, ["usage" => 1, "priority" => $key + 1 + $priority]);
+
+						$image->storeAs("public/images/$date", $fullname);
+
+						if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
+							Storage::disk("local")->makeDirectory("public/thumbnails/$date");
+
+						}
+
+						Image::make( $image )->fit( 215, 215)
+							->save( storage_path("/app/public/thumbnails/$date/$fullname") );
+
+					}
+				}
+			}
+		}
+
+		$gallery = $material->media()->orderBy("priority")->get();
+		return View('components/admin/modelGallery', ['gallery' => $gallery]);
+
     }
 
 	public function gallerySort(Request $request) {
@@ -280,6 +308,86 @@ class MaterialController extends Controller {
 			$material->media()->updateExistingPivot($id, ['priority' => ($key + 1) ]);
 		}
 
+	}
+
+	public function detachAllFiles( Request $request, Material $material) {
+
+		$material->media()->wherePivot("usage", $request->usage)->detach();
+
+	}
+
+	public function fileUpload( Request $request ) {
+
+		$material = Material::find($request->id);
+		$file = $request->file;
+
+		$allowedTypes = ["application/octet-stream", "application/x-zip-compressed", "application/pdf"];
+		$date = date('Y.m');
+
+		if ( $file->isValid() ) {
+			if ( in_array($file->getClientMimeType(), $allowedTypes) ) {
+				if ( $file->getSize() <= 50000000 ) { // 50MB
+
+					$temp = explode(".", $file->getClientOriginalName());
+					$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
+					$originalName = implode( ".", $arrayName );
+					$name =  Str::slug( implode("-", $arrayName ), "-" );
+
+					$count = Media::where( "original_name", $originalName)->count();
+
+					if ( $count > 0 ) {
+						$name = $name.( $count + 1 );
+						$fullname = $name.".".$file->getClientOriginalExtension();
+					}
+					else {
+						$fullname = "$name.".$file->getClientOriginalExtension();
+					}
+
+					$media = new Media;
+					$media->original_name = $originalName;
+					$media->name = $name;
+					$media->type = 1;
+					$media->rel_path = "/storage/files/$date/$fullname";
+					$media->ext = $file->getClientOriginalExtension();
+					$media->file_info = $file->getClientMimeType();
+					$media->size = $file->getSize();
+					$media->save();
+
+					$file->storeAs("public/files/$date", $fullname);
+
+					$material->media()->attach( $media->id, [ "usage" => 3 ] );
+
+				}
+			}
+		}
+
+	}
+
+	public function addFiles(Request $request) {
+
+		$material = Material::find($request->materialId);
+
+		foreach( $request->ids as $id ) {
+			$material->media()->attach( $id, ["usage" => 3]);
+		}
+
+		$files = $material->media()->where("type", 1)->get();
+
+		return view('components/admin/materials/filesTable', ['files' => $files]);
+	}
+
+	public function removeFiles( Request $request ) {
+
+		// dd();
+		$material = Material::find( $request->materialId );
+
+		foreach( $request->ids as $id ) {
+			$material->media()->detach($id);
+		}
+
+		$files = $material->media()->where("type", 1)->get();
+
+		return view('components/admin/materials/filesTable', ['files' => $files]);
 	}
 
 }

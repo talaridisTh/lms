@@ -7,79 +7,106 @@
 
 @section('content')
 
-        <div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
-                <div class="modal-content">
-                    <div class="modal-header modal-colored-header bg-primary">
-                        <h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <ul class="nav nav-tabs nav-bordered mb-3">
-                            <li class="nav-item">
-                                <a href="#media-library" id="media-library-tab-btn"
-                                   data-toggle="tab" aria-expanded="false"
-                                   class="nav-link active"
-                                >
-                                    Media Library
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#upload" id="upload-tab-btn"
-                                   data-toggle="tab" aria-expanded="true"
-                                   class="nav-link"
-                                >
-                                    Upload
-                                </a>
-                            </li>
-                        </ul> <!-- end nav-->
-
-                        <div class="tab-content">
-
-                            <div id="media-library" class="tab-pane show active">
-                                <!-- Search -->
-                                <div class="row">
-									<div class="col-4 mx-auto">
-										<div class="form-group">
-                                            <input id="image-search" class="form-control text-center" type="text"
-                                                   placeholder="Αναζήτηση..."/>
-										</div>
+    <div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul class="nav nav-tabs nav-bordered mb-3">
+                        <li class="nav-item">
+                            <a href="#media-library" id="media-library-tab-btn"
+                               data-toggle="tab" aria-expanded="false"
+                               class="nav-link active"
+                            >
+                                Media Library
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#upload" id="upload-tab-btn"
+                               data-toggle="tab" aria-expanded="true"
+                               class="nav-link"
+                            >
+                                Upload
+                            </a>
+                        </li>
+                    </ul> <!-- end nav-->
+                    <div class="tab-content">
+                        <div id="media-library" class="tab-pane show active">
+                            <!-- Search -->
+                            <div class="row">
+								<div class="col-4 mx-auto">
+									<div class="form-group">
+                                        <input id="image-search" class="form-control text-center" type="text"
+                                               placeholder="Αναζήτηση..."/>
 									</div>
 								</div>
-
-                                <div id="gallery-content" data-model="App\Material" data-id={{ isset($material)? $material->id:"" }}>
-                                    @include('components.admin.imageGallery', ['media' => $media])
-                                </div>
-
-                            </div>
-
-                            <div id="upload" class="tab-pane">
-
-                                <input  id="file-pond" type="file[]"/>
-
+							</div>
+                            <div id="gallery-content" data-model="App\Material" data-id={{ isset($material)? $material->id:"" }}>
+                                @include('components.admin.imageGallery', ['media' => $media])
                             </div>
                         </div>
-
+                        <div id="upload" class="tab-pane">
+                            <input  id="file-pond" type="file[]"/>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-						{{-- <div class="btn-group dropup">
-							<button id="gallery-bulk-action-btn" disabled type="button"
-								class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false">
-								Επιλογές (0)
-							</button>
-							<div class="dropdown-menu">
-								<a id="add-gallery-bulk-btn" class="dropdown-item" href="#">Προσθήκη στη Gallery</a>
-							</div>
-						</div> --}}
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
-					</div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
             </div>
         </div>
+	</div>
+
+
+
+
+
+	<div class="modal fade" id="remainings-files-modal" tabindex="-1" role="dialog" aria-labelledby="remainings-files-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h5 class="modal-title" id="remainings-files-modalLabel">File Library</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+					<table id="remaining-files-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
+						<thead>
+							<tr>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Τύπος</th>
+								<th class="text-center">Μέγεθος</th>
+								<th class="text-center w-5"></th>
+							</tr>
+						</thead>
+						<tbody class="tables-hover-effect"></tbody>
+						<tfoot>
+							<tr>
+								<th class="text-center">Όνομα</th>
+								<th class="text-center">Τύπος</th>
+								<th class="text-center">Μέγεθος</th>
+								<th class="text-center"></th>
+							</tr>
+						</tfoot>
+					</table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
+            </div>
+        </div>
+	</div>
 
     <!-- Title - Breadcrumb -->
     <div class="row">
@@ -125,14 +152,6 @@
                         <span class="d-none d-md-block">Courses</span>
                     </a>
 				</li>
-				<li class="nav-item">
-                    <a href="#gallery-tab" data-toggle="tab" aria-expanded="true"
-
-                       class="nav-link {{ !isset($material) ? 'tab-link text-muted' : '' }}">
-                        <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                        <span class="d-none d-md-block">Gallery</span>
-                    </a>
-                </li>
             </ul><!-- ./Tab Links -->
 
             <div class="tab-content">
@@ -140,7 +159,7 @@
                     <div class="row">
 
                         <!-- form inputs -->
-                        <div class="col-xl-9 col-lg-7 col-md-12">
+                        <div class="col-xl-9 col-lg-8 col-md-12">
 
                             @isset($priority)
 
@@ -204,10 +223,61 @@
                                           rows="5"
                                 >{{isset($material) ? $material['content'] : ""}}</textarea>
                             </div>
-                                @endisset
+								@endisset
+								
+
+							<h5>Gallery</h5>
+							<div class="bg-light">
+								<div class="pt-2 px-2">
+									<button id="add-gallery-images-btn" class="btn btn-primary m-1">
+										Media Library
+									</button>
+									<button id="remove-all-images-btn" class="btn btn-danger m-1">
+										Remove all
+									</button>
+								</div>
+
+								<div id="active-gallery-loading" class="row d-none my-3">
+									<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
+								</div>
+
+
+								<div id="gallery-cnt"  class="row" style="padding: 0 1.1rem;"
+									data-namespace="App\Material" data-model-id="{{ $material->id }}">
+									@include('components/admin/modelGallery', ["gallery" => $gallery])
+								</div>
+								
+
+								<input id="material-img-upload" type="text">
+							</div>
+
+							<h5>Βοηθητικά Αρχεία</h5>
+							<div class="bg-light">
+								<div class="pt-2 px-2">
+									<button id="file-library-btn" class="btn btn-primary m-1" data-toggle="modal" data-target="#remainings-files-modal">
+										File Library
+									</button>
+									<button id="remove-all-files-btn" class="btn btn-danger m-1">
+										Remove all
+									</button>
+								</div>
+
+								<div id="active-files-loading" class="row d-none my-3">
+									<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
+								</div>
+
+
+								<div id="files-cnt"  class="row" style="padding: 0 1.1rem;">
+									@include('components/admin/materials/filesTable', ["files" => $files])
+								</div>
+								
+
+								<input id="material-file-upload" type="text">
+							</div>
+
                         </div><!-- ./form inputs -->
 
-                        <div class="col-xl-3 col-lg-5 col-md-12 pt-1">
+                        <div class="col-xl-3 col-lg-4 col-md-12 pt-1">
 
                             <!-- Βuttons -->
                             <div class="sticky py-3">
@@ -350,52 +420,15 @@
                                     </a>
                                 </div> <!-- end card-body -->
                             </div> <!-- end course info card -->
-                            @endisset
-
+                        @endisset
 
                         </div>
                     </div>
                 </div>
 
-
                 <div class="tab-pane" id="courses-tabs">
                     @include("components.admin.materials.tabsCourses")
 				</div>
-                @isset($material)
-				<div class="tab-pane" id="gallery-tab">
-					<div class="text-sm-right sticky-btns">
-						<a id="add-gallery-images-btn" href="#" class="btn btn-primary mb-2">
-							<i class="mdi mdi-plus-circle mr-2"></i>
-							Προσθήκη Εικόνων
-						</a>
-						{{-- <div class="btn-group mb-2">
-							<button id="course-bulk-action-btn" disabled type="button"
-								class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-								aria-haspopup="true" aria-eNxpanded="false">
-								Επιλογές (0)
-							</button>
-							<div class="dropdown-menu">
-								<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Export</a>
-							</div>
-						</div> --}}
-					</div>
-
-
-					<div class="card content-width mx-auto mt-2">
-						<div class="card-body">
-							<div id="gallery-cnt" class="row" data-namespace="App\Material"
-								data-model-id="{{ $material->id }}"
-							>
-								@include('components/admin/modelGallery', ["gallery" => $gallery])
-							</div>
-						</div>
-                        @endisset
-					</div>
-                </div>
             </div>
 
         </div>
@@ -428,7 +461,6 @@
 
 @section('scripts')
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>

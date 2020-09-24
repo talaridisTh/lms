@@ -1,15 +1,15 @@
 @include("components.admin.materials.filterTabCourses")
 
+<div class=" d-flex justify-content-end mb-3">
+	{{--        <button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">--}}
+	{{--            <i class="mdi mdi-plus-circle mr-2"></i>--}}
+	{{--            Προσθήκη Υλικού--}}
+	{{--        </button>--}}
+	<div class="dropdown ml-2">
+		@include("components.admin.materials.bulkActionCouseInsideMaterial")
+	</div>
+</div>
 <table id="material-course-table" data-material-id="{{isset($material)? $material->id:null}}"  class="table w-100 nowrap center-not-second ">
-    <div class=" d-flex justify-content-end mb-3">
-        {{--        <button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">--}}
-        {{--            <i class="mdi mdi-plus-circle mr-2"></i>--}}
-        {{--            Προσθήκη Υλικού--}}
-        {{--        </button>--}}
-        <div class="dropdown ml-2">
-            @include("components.admin.materials.bulkActionCouseInsideMaterial")
-        </div>
-    </div>
     <thead>
     <tr>
         <th class="text-left ">
