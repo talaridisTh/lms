@@ -227,14 +227,15 @@
 								
 							@if ($material)
 								<h5>Gallery</h5>
-								<div class="bg-light">
+								<div class="bg-light mb-3">
 									<div class="pt-2 px-2">
 										<button id="add-gallery-images-btn" class="btn btn-primary m-1">
 											Media Library
 										</button>
-										<button id="remove-all-images-btn" class="btn btn-danger m-1">
+										<button id="remove-all-images-btn" 
+											class="btn btn-danger m-1 {{ $gallery->isEmpty() ? 'd-none' : "" }}">
 											Remove all
-										</button>
+										</button>	
 									</div>
 								
 									<div id="active-gallery-loading" class="row d-none my-3">
@@ -247,20 +248,16 @@
 											@include('components/admin/modelGallery', ["gallery" => $gallery])
 										</div>
 										
-									
-									
-									
-									
 									<input id="material-img-upload" type="text">
 								</div>
 							
 								<h5>Βοηθητικά Αρχεία</h5>
-								<div class="bg-light">
+								<div class="bg-light mb-3">
 									<div class="pt-2 px-2">
 										<button id="file-library-btn" class="btn btn-primary m-1" data-toggle="modal" data-target="#remainings-files-modal">
 											File Library
 										</button>
-										<button id="remove-all-files-btn" class="btn btn-danger m-1">
+										<button id="remove-all-files-btn" class="btn btn-danger m-1 {{ $files->isEmpty() ? 'd-none' : "" }}">
 											Remove all
 										</button>
 									</div>

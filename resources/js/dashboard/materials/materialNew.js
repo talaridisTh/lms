@@ -11,6 +11,35 @@ const baseUrl = window.location.origin;
 //!					EventListeners					#
 //!##################################################
 
+$("#remove-all-files-btn").on("click", function() {
+	
+	let fileRow = $(".js-file-row")
+	let ids = [];
+
+	for (let i = 0; i < fileRow.length; i++) {
+		ids.push(fileRow[i].dataset.fileId);
+	}
+
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		text: 'Αφαίρεση όλων των αρχείων;',
+		showCancelButton: true,
+		confirmButtonText: `Ναι, αφαίρεση!`,
+		cancelButtonText: `Ακύρωση`,
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			removeMaterialFiles(ids);
+			utilities.toastAlert("info", "Τα αρχεία αφαιρέθηκαν")
+		}
+	  })
+	  .catch( err => {
+		  console.log(err);
+		  utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	  })
+
+})
+
 $(".js-audio-btn").on("click", audioPlayerHandler);
 
 $(".js-remove-file").on("click", function() {
@@ -19,20 +48,28 @@ $(".js-remove-file").on("click", function() {
 
 $("#remove-all-images-btn").on("click", function() {
 
-	axios.delete(`/material/detach-all-files/${materialSlug}`, {
-		data: {
-			usage: 1
+	let images = $(".js-active-image")
+	let ids = [];
+
+	for (let i = 0; i < images.length; i++) {
+		ids.push(images[i].dataset.fileId);
+	}
+
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		text: 'Αφαίρεση όλων των εικόνων;',
+		showCancelButton: true,
+		confirmButtonText: `Ναι, αφαίρεση!`,
+		cancelButtonText: `Ακύρωση`,
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			utilities.removeImages(ids);
+			utilities.toastAlert("info", "Οι εικόνες αφαιρέθηκαν");
+			this.classList.add("d-none");
 		}
-	})
-	.then( res => {
-
-		$("#gallery-cnt").html(`<h3 class="w-100 text-center my-5">Δεν βρέθηκαν εικόνες</h3>`);
-
-	})
-	.catch( err => {
-		
-		console.log(err);
-	})
+	  })
+	
 });
 
 $(".js-remove-image").on("click", utilities.removeImageHandler)
@@ -47,37 +84,37 @@ $("#add-gallery-images-btn").on("click", function() {
 //!					Functions				#
 //!##########################################
 
-function postImagesIds(ids) {
+// function postImagesIds(ids) {
 
-	let gallery = $("#gallery-cnt")[0];
-	let namespace = gallery.dataset.namespace;
-	let modelId = gallery.dataset.modelId;
+// 	let gallery = $("#gallery-cnt")[0];
+// 	let namespace = gallery.dataset.namespace;
+// 	let modelId = gallery.dataset.modelId;
 
-	axios.post("/media/gallery", {
-		namespace, modelId, ids
-	})
-	.then( res => {
+// 	axios.post("/media/gallery", {
+// 		namespace, modelId, ids
+// 	})
+// 	.then( res => {
 
-		let gallery = $("#gallery-cnt");
-		gallery.html(res.data);
+// 		let gallery = $("#gallery-cnt");
+// 		gallery.html(res.data);
 
-		let closeBtns = gallery.find(".js-remove-image");
-		closeBtns.on("click", utilities.removeImageHandler);
+// 		let closeBtns = gallery.find(".js-remove-image");
+// 		closeBtns.on("click", utilities.removeImageHandler);
 
-		utilities.toastAlert("success", "Οι εικόνες προστέθηκαν.");
-		gallery.modal("hide");
+// 		utilities.toastAlert("success", "Οι εικόνες προστέθηκαν.");
+// 		gallery.modal("hide");
 
-		let bulk = $("#gallery-bulk-action-btn");
-		let checkboxes = $(".js-gallery-checkbox");
-		utilities.resetGalleryBtns( bulk, checkboxes );
+// 		let bulk = $("#gallery-bulk-action-btn");
+// 		let checkboxes = $(".js-gallery-checkbox");
+// 		utilities.resetGalleryBtns( bulk, checkboxes );
 
-		$("#gallery-modal").modal("hide");
+// 		$("#gallery-modal").modal("hide");
 
-	})
-	.catch( err => {
-		console.log(err);
-	})
-}
+// 	})
+// 	.catch( err => {
+// 		console.log(err);
+// 	})
+// }
 
 //! DATATABLE INIT
 //!============================================================

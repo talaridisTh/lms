@@ -172,7 +172,7 @@ Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourse
 Route::post('/materials/cover/upload', 'Ajax\MaterialController@coverUpload')->name('user.cover.upload');
 Route::post('materials/gallery-upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
 Route::patch( 'material/images-sort', 'Ajax\MaterialController@gallerySort');
-Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
+// Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 Route::post('material/files-upload', 'Ajax\MaterialController@fileUpload')->name('user.file.upload');
 Route::post('material/add-files', 'Ajax\MaterialController@addFiles')->name('material.add.file');
 Route::post('material/remove-files', 'Ajax\MaterialController@removeFiles')->name('material.remove.file');

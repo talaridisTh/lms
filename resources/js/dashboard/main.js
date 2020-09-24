@@ -346,6 +346,7 @@ function imageHandler() {
 	}
 	else if ( type == "gallery" ) {
 
+		$("#remove-all-images-btn").removeClass("d-none");
 		addToGallery(model, modelId, this.dataset.imageId);
 		return;
 	}
@@ -422,7 +423,7 @@ function addToGallery(namespace, id, imageId) {
 		let closeBtns = gallery.find(".js-remove-image");
 		closeBtns.on("click", removeImageHandler);
 
-		toastAlert("success", "Οι εικόνες προστέθηκαν.");
+		toastAlert("success", "Η εικόνα προστέθηκε.");
 		gallery.modal("hide");
 
 		let bulk = $("#gallery-bulk-action-btn");
@@ -432,6 +433,7 @@ function addToGallery(namespace, id, imageId) {
 	})
 	.catch( err => {
 		console.log(err);
+		toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
 	})
 }
 
@@ -469,11 +471,16 @@ function removeImages( ids ) {
 		gallery.html(res.data);
 		
 		let closeBtns = gallery.find(".js-remove-image");
-		closeBtns.on("click", removeImageHandler)
+		closeBtns.on("click", removeImageHandler);
+
+		if ( closeBtns.length == 0 ) {
+			$("#remove-all-images-btn").addClass("d-none");
+		}
 
 	})
 	.catch( err => {
 		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 
 }

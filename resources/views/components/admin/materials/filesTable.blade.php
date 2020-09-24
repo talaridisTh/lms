@@ -27,7 +27,7 @@
 
 				{{-- @dd( fnmatch($file->ext, "pdf") ) --}}
 
-				<tr>
+				<tr class="js-file-row" data-file-id="{{ $file->id }}">
 	        	    <td class="{{-- d-flex align-items-center --}}">
 						@if ($file->file_info == "audio/mpeg")
 						<i class="my-0 mr-2 js-audio-btn h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>

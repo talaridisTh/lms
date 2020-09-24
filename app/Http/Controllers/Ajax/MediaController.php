@@ -79,8 +79,6 @@ class MediaController extends Controller
 
 		$model = $request->namespace::find( $request->modelId );
 
-		// dd($request->all());
-
 		foreach( $request->ids as $id ) {
 			$model->media()->detach( $id );
 		}
