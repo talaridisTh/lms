@@ -11,8 +11,6 @@ const baseUrl = window.location.origin;
 //!					EventListeners					#
 //!##################################################
 
-$(".js-audio-btn").on("click", audioPlayerHandler);
-
 $(".js-remove-file").on("click", function() {
 	removeMaterialFiles( [this.dataset.fileId] );
 })
@@ -937,6 +935,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 
 function audioPlayerHandler() {
+
 	let cnt = this.parentElement;
 	let audio = cnt.getElementsByClassName("js-audio")[0];
 
