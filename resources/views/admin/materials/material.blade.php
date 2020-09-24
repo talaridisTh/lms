@@ -174,10 +174,10 @@
 
                             <div class="form-group mb-3">
                                 <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                <input form="material-create" name="title" type="text" class="form-control"
-                                       id="titleMaterial"
-                                       placeholder="Εισάγετε τίτλο..."
-                                       value="{{ old('title') != "" ? old('title') : ( isset($material) ? $material['title'] : "" ) }}"
+								<input form="material-create" name="title" type="text"
+									class="form-control" id="titleMaterial"
+                                    placeholder="Εισάγετε τίτλο..." autocomplete="off"
+                                    value="{{ old('title') != "" ? old('title') : ( isset($material) ? $material['title'] : "" ) }}"
                                 >
                                 @error("title")
                                 <div class="invalid-feedback d-block">{{$message}}</div>
@@ -198,8 +198,9 @@
                                 @isset($material)
                             <div class="form-group mb-3">
                                 <label for="summary">Περίληψη</label>
-                                <textarea form="material-create" name="summary" class="form-control"
-                                          placeholder="Εισάγετε περίληψη..." id="summary" rows="5"
+								<textarea form="material-create" name="summary" 
+									class="form-control" id="summary" rows="5"
+                                    placeholder="Εισάγετε περίληψη..." autocomplete="off"
                                 >{{isset($material) ? $material['summary'] : ""}}</textarea>
                             </div>
 
@@ -208,8 +209,10 @@
                                     Περιγραφή
                                     <span class="text-danger"> *</span>
                                 </label>
-                                <textarea form="material-create" name="description" class="form-control"
-                                          placeholder="Εισάγετε περιγραφή..." id="description-material" rows="5"
+								<textarea form="material-create" name="description"
+									class="form-control" id="description-material"
+									placeholder="Εισάγετε περιγραφή..." rows="5"
+									autocomplete="off"
                                 >{{isset($material) ? $material['description'] : ""}}</textarea>
                             </div>
 
@@ -218,9 +221,10 @@
                                     Περιεχόμενο μαθήματος
                                     <span class="text-danger"> *</span>
                                 </label>
-                                <textarea form="material-create" name="content" class="form-control"
-                                          placeholder="Εισάγετε περιεχόμενο μαθήματος..." id="content-material"
-                                          rows="5"
+								<textarea form="material-create" name="content"
+									class="form-control" id="content-material" rows="5"
+                                    placeholder="Εισάγετε περιεχόμενο μαθήματος..."
+									autocomplete="off"
                                 >{{isset($material) ? $material['content'] : ""}}</textarea>
                             </div>
 								@endisset
