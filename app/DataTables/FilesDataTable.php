@@ -36,7 +36,29 @@ class FilesDataTable extends DataTable
 			->addColumn('action', function($data) {
 				return "<button type='button' class='btn btn-primary js-add-file-btn' data-file-id='$data->id'>Προσθήκη</button>";
 			})
-			->rawColumns(['action']);
+			->editColumn("ext", function($data) {
+				$icons = [
+					"mp3" => "mdi-music-clef-treble text-warning",
+					"pdf" => "mdi-file-pdf-outline text-danger",
+					"doc" => "mdi-file-document-outline text-primary",
+					"xl" => "mdi-file-table-box text-success",
+					"pp" => "mdi-file-powerpoint-outline text-danger",
+					"zip" => "mdi-folder-zip-outline text-warning"
+				];
+
+				foreach( $icons as $type => $icon ) {
+					if ( fnmatch("$type*", $data->ext ) ) {
+						return "<i class='h3 mdi {{ $icon }}' title='{{ $data->ext }}'></i>";
+					}
+				}
+
+			})
+			->editColumn("size", function($data) {
+
+				return number_format($data->size / 1000000, 2, ",", ".") ."MB";
+
+			})
+			->rawColumns(['action', 'ext']);
     }
 
     /**

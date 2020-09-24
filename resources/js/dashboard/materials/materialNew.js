@@ -147,12 +147,6 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
         data: {
             materialId
         }
-        // data: function (d) {
-        //     return $.extend({}, d, {
-        //         from_date: fromDay($(".date")[0]),
-        //         to_date: toDay($(".date")[0])
-        //     })
-        // }
     },
     columns: [
         {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-left"},
@@ -212,15 +206,8 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		
 		addFilesBtnInit();
-		// audioplayerBtnsInit();
     }
 })
-
-// function audioplayerBtnsInit() {
-// 	let btns = $(".js-audio-btn");
-
-// 	btns.on("click", audioPlayerHandler);
-// }
 
 function addFilesBtnInit() {
 	let btns = $(".js-add-file-btn");
@@ -449,8 +436,6 @@ $R("#content-material", {
     }
 });
 
-
-
 //! METHOD FORM HIDEN
 //!============================================================
 
@@ -517,12 +502,10 @@ $("#activeFilterMaterialCourses").change(function () {
 
 });
 
-
 //sortable
 $("ul.select2-selection__rendered").sortable({
     containment: 'parent'
 });
-
 
 //! DATARANGE
 //!============================================================
@@ -561,7 +544,6 @@ $('#material-destroy').submit(async (e) => {
     let buttonDelete = $('#material-delete-btn');
     const material = buttonDelete[0].dataset.materialSlug;
 
-
     try {
         const {value} = await utilities.toastAlertDelete("Θέλετε να διαγράψετε αυτό το μάθημα ")
         if (value) {
@@ -575,9 +557,7 @@ $('#material-destroy').submit(async (e) => {
         utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
     }
 
-
 });
-
 
 $(".tab-link").on("show.bs.tab", function (event) {
 
@@ -659,7 +639,6 @@ const axiosMultipleDelete = async (courseId, materialId) => {
     }
 }
 
-
 //! BULK ACTIOON  addCouseModal
 //!============================================================
 function checkeBoxesEventListenerModal() {
@@ -722,14 +701,12 @@ const selectMultipleCheckboxUpdate = () => {
             ids.push(checkboxes[i].dataset.courseId);
         }
 
-
         axiosMultipleUpdate(ids, materialId)
 
     })
 }
 
 const axiosMultipleUpdate = async (courseIds, materialId) => {
-
 
     try {
         const {status} = await axios.post('/materials/add-course/multiple', {
@@ -749,10 +726,8 @@ const axiosMultipleUpdate = async (courseIds, materialId) => {
     }
 }
 
-
 //! DROPOZONE
 //!============================================================
-
 
 $(".js-add-image").on("click", utilities.imageHandler);
 
@@ -889,6 +864,10 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 			}
 		},
 	},
+	onerror: function(error, data) {
+		// console.log(error);
+		// console.log(data);
+	},
     onprocessfile: function (error, data) {
 
 		// setTimeout(function() {
@@ -938,12 +917,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 	],
 });
 
-
-
-
 function audioPlayerHandler() {
-
-	console.log(this);
 
 	let cnt = this.parentElement;
 	let audio = cnt.getElementsByClassName("js-audio")[0];

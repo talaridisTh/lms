@@ -85,7 +85,7 @@ class MediaController extends Controller
 			$model->media()->detach( $id );
 		}
 
-		$gallery = $model->media()->orderBy("priority")->get();
+		$gallery = $model->media()->where("type", 0)->orderBy("priority")->get();
 
 		return View('components/admin/modelGallery', ['gallery' => $gallery]);
 
