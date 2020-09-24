@@ -240,7 +240,6 @@ class MaterialController extends Controller {
 		else {
 			$priority = 0;
 		}
-		// dd($priority);
 
 		$allowedTypes = ["image/png", "image/jpeg"];
 		$date = date('Y.m');
@@ -295,7 +294,7 @@ class MaterialController extends Controller {
 			}
 		}
 
-		$gallery = $material->media()->orderBy("priority")->get();
+		$gallery = $material->media()->where("type", 0)->orderBy("priority")->get();
 		return View('components/admin/modelGallery', ['gallery' => $gallery]);
 
     }

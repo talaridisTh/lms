@@ -17,7 +17,7 @@ class CreateMaterialsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('subtitle');
+            $table->string('subtitle')->nullable();
             $table->text('summary')->nullable();
             $table->string('cover')->default("https://via.placeholder.com/150");
             $table->text('description')->nullable();

@@ -27,16 +27,12 @@ $("#remove-all-files-btn").on("click", function() {
 		showCancelButton: true,
 		confirmButtonText: `Ναι, αφαίρεση!`,
 		cancelButtonText: `Ακύρωση`,
-	  }).then((result) => {
+	}).then((result) => {
 		if (result.isConfirmed) {
 			removeMaterialFiles(ids);
-			utilities.toastAlert("info", "Τα αρχεία αφαιρέθηκαν")
 		}
-	  })
-	  .catch( err => {
-		  console.log(err);
-		  utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
-	  })
+	})
+
 
 })
 
@@ -271,6 +267,8 @@ function addMaterialFiles(ids) {
 			removeMaterialFiles( [this.dataset.fileId] );
 		});
 
+		$("#remove-all-files-btn").removeClass("d-none");
+
 		$("#remainings-files-modal").modal("hide");
 		remainingFilesTable.ajax.reload(null, false);
 	})
@@ -296,11 +294,20 @@ function removeMaterialFiles(ids) {
 		btns.on("click", function() {
 			removeMaterialFiles( [this.dataset.fileId] );
 		});
-		// console.log(res);
+
+		if ( btns.length == 0 ) {
+			$("#remove-all-files-btn").addClass("d-none");
+		}
+		else {
+			$("#remove-all-files-btn").removeClass("d-none");
+		}
+
 		remainingFilesTable.ajax.reload(null, false);
+		utilities.toastAlert("info", "Τα αρχεία αφαιρέθηκαν");
 	})
 	.catch( err => {
 		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
 
@@ -821,7 +828,14 @@ const materialPond = FilePond.create(materialImgUpload, {
 			
 			onload: function(data) {
 
-				$("#gallery-cnt").html(data)
+				let container = $("#gallery-cnt")
+				container.html(data);
+
+				let removeBtns = container.find(".js-remove-image");
+				removeBtns.on("click", utilities.removeImageHandler);
+
+				$("#remove-all-images-btn").removeClass("d-none");
+				utilities.paginationRequest( 1, "");
 
 			},
 			ondata: function(formData) {
@@ -891,7 +905,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 				let audioPlayerBtns = container.find(".js-audio-btn");
 				audioPlayerBtns.on("click", audioPlayerHandler)
 
-				
+				$("#remove-all-files-btn").removeClass("d-none");
 				remainingFilesTable.ajax.reload(null, false);
 				
 			},
@@ -900,10 +914,6 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 				return formData
 			}
 		},
-	},
-	onerror: function(error, data) {
-		// console.log(error);
-		// console.log(data);
 	},
     onprocessfile: function (error, data) {
 
