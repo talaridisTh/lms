@@ -257,7 +257,8 @@
 										<button id="file-library-btn" class="btn btn-primary m-1" data-toggle="modal" data-target="#remainings-files-modal">
 											File Library
 										</button>
-										<button id="remove-all-files-btn" class="btn btn-danger m-1 {{ $files->isEmpty() ? 'd-none' : "" }}">
+										<button id="remove-all-files-btn"
+											class="btn btn-danger m-1 {{ $files->isEmpty() ? 'd-none' : "" }}">
 											Remove all
 										</button>
 									</div>
