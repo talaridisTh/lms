@@ -815,9 +815,9 @@ const materialPond = FilePond.create(materialImgUpload, {
 	},
     onprocessfile: function (error, data) {
 
-		setTimeout(function() {
-			materialPond.removeFile(data.file);
-		}, 2000);
+		// setTimeout(function() {
+		// 	materialPond.removeFile(data.file);
+		// }, 2000);
 
 		$("#gallery-cnt").removeClass("d-none");
 		$("#active-gallery-loading").addClass("d-none");
@@ -828,16 +828,16 @@ const materialPond = FilePond.create(materialImgUpload, {
 	},
 	onprocessfiles: function() {
 
-		let instance = materialPond.getFiles()
+		// let instance = materialPond.getFiles()
 
-		for (let i = 0; i < instance.length; i++ ) {
+		// for (let i = 0; i < instance.length; i++ ) {
 
-			setTimeout(function() {
-				materialPond.removeFile(instance[i].file);
+		// 	setTimeout(function() {
+		// 		materialPond.removeFile(instance[i].file);
 		
-			}, i * 1000);
+		// 	}, i * 1000);
 
-		}
+		// }
 
 	},
 	oninitfile: function(file) {
