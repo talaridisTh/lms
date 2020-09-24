@@ -11,6 +11,8 @@ const baseUrl = window.location.origin;
 //!					EventListeners					#
 //!##################################################
 
+$(".js-audio-btn").on("click", audioPlayerHandler);
+
 $(".js-remove-file").on("click", function() {
 	removeMaterialFiles( [this.dataset.fileId] );
 })
@@ -211,13 +213,18 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		
 		addFilesBtnInit();
+		audioplayerBtnsInit();
     }
 })
 
+function audioplayerBtnsInit() {
+	let btns = $(".js-audio-btn");
+
+	btns.on("click", audioPlayerHandler);
+}
+
 function addFilesBtnInit() {
 	let btns = $(".js-add-file-btn");
-
-	btns.off(addFilesBtnInit);
 
 	btns.on("click", function() {
 		addMaterialFiles( [this.dataset.fileId] );
@@ -747,7 +754,7 @@ $(".js-add-image").on("click", utilities.imageHandler);
 $("#change-cover-btn").on("click", function () {
 
 
-    $("#gallery-content")[0].dataset.action = "cover";
+    $("#gallery-content")[0].dataset.type = "cover";
 
     $("#gallery-modal").modal('show');
 })
@@ -856,8 +863,20 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 			
 			onload: function(data) {
 
-				// $("#files-cnt").html(data)
+				let container = $("#files-cnt")
+				container.html(data)
 
+				let removeBtns = container.find(".js-remove-file");
+				removeBtns.on("click", function() {
+					removeMaterialFiles( [this.dataset.fileId] );
+				});
+
+				let audioPlayerBtns = container.find(".js-audio-btn");
+				audioPlayerBtns.on("click", audioPlayerHandler)
+
+				
+				remainingFilesTable.ajax.reload(null, false);
+				
 			},
 			ondata: function(formData) {
 				formData.append("id", materialId);
@@ -867,41 +886,73 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 	},
     onprocessfile: function (error, data) {
 
-		setTimeout(function() {
-			materialFilePond.removeFile(data.file);
-		}, 2000);
+		// setTimeout(function() {
+		// 	materialFilePond.removeFile(data.file);
+		// }, 2000);
 
 		$("#files-cnt").removeClass("d-none");
-		$("#active-gallery-loading").addClass("d-none");
+		$("#active-files-loading").addClass("d-none");
 	},
 	onprocessfileabort: function() {
 		$("#files-cnt").removeClass("d-none");
-		$("#active-gallery-loading").addClass("d-none");
+		$("#active-files-loading").addClass("d-none");
 	},
 	onprocessfiles: function() {
 
-		let instance = materialFilePond.getFiles()
+		// let instance = materialFilePond.getFiles()
 
-		for (let i = 0; i < instance.length; i++ ) {
+		// for (let i = 0; i < instance.length; i++ ) {
 
-			setTimeout(function() {
-				materialFilePond.removeFile(instance[i].file);
+		// 	setTimeout(function() {
+		// 		materialFilePond.removeFile(instance[i].file);
 		
-			}, i * 1000);
+		// 	}, i * 1000);
 
-		}
+		// }
 
 	},
 	oninitfile: function(file) {
 		$("#files-cnt").addClass("d-none");
 		$("#active-files-loading").removeClass("d-none");
 	},
-    // acceptedFileTypes: ['image/png', 'image/jpeg'],
+    acceptedFileTypes: [
+		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
+		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+		"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+		"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+		"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+		"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+		"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+		"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+		"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+		"application/vnd.ms-access", "audio/mpeg"
+	],
 });
 
 
 
 
+function audioPlayerHandler() {
+	let cnt = this.parentElement;
+	let audio = cnt.getElementsByClassName("js-audio")[0];
+
+	if ( this.dataset.audioStatus == "paused" ) {
+		this.classList.remove("mdi-play-circle-outline");
+		this.classList.add("mdi-pause-circle-outline");
+		this.dataset.audioStatus = "playing";
+
+		audio.play(); 
+	}
+	else {
+		this.classList.remove("mdi-pause-circle-outline");
+		this.classList.add("mdi-play-circle-outline");
+		this.dataset.audioStatus = "playing";
+
+		audio.pause(); 
+	}
+}
 
 
 

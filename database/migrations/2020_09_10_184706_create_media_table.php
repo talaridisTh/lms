@@ -26,7 +26,7 @@ class CreateMediaTable extends Migration
 
 
             $table->string('ext', 10)->nullable(); // the extensions of the media
-            $table->string('file_info', 40)->nullable(); // the mime / file info, think about cases of videos
+            $table->string('file_info')->nullable(); // the mime / file info, think about cases of videos
             $table->unsignedMediumInteger('size')->nullable();
 
             $table->integer('height')->nullable();

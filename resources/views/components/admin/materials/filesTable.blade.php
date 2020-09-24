@@ -2,7 +2,7 @@
 	<table class="table table-hover table-centered my-4">
 	    <thead>
 	        <tr>
-	            <th>Όνομα</th>
+	            <th class="text-center">Όνομα</th>
 	            <th class="text-center">Τύπος</th>
 	            <th class="text-center">Μέγεθος</th>
 	            <th class="w-5"></th>
@@ -11,7 +11,17 @@
 	    <tbody>
 			@foreach ($files as $file)
 				<tr>
-	        	    <td>{{ $file->original_name }}</td>
+	        	    <td>
+						@if ($file->file_info == "audio/mpeg")
+							<i class="js-audio-btn h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>
+							<audio class="js-audio">
+								<source src="{{ $file->rel_path }}" type="{{ $file->file_info }}">
+								{{-- <source src="{{ $file->rel->path }}" type="audio/mpeg"> --}}
+								{{-- Your browser does not support the audio element. --}}
+							</audio>
+						@endif
+						{{ $file->original_name }}
+					</td>
 	        	    <td class="text-center">{{ $file->ext }}</td>
 	        	    <td class="text-center">{{ $file->size }}</td>
 	        	    <td class="text-center">
