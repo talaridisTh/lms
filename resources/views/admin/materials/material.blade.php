@@ -225,56 +225,60 @@
                             </div>
 								@endisset
 								
-
-							<h5>Gallery</h5>
-							<div class="bg-light">
-								<div class="pt-2 px-2">
-									<button id="add-gallery-images-btn" class="btn btn-primary m-1">
-										Media Library
-									</button>
-									<button id="remove-all-images-btn" class="btn btn-danger m-1">
-										Remove all
-									</button>
-								</div>
-
-								<div id="active-gallery-loading" class="row d-none my-3">
-									<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
-								</div>
-
-
-								<div id="gallery-cnt"  class="row" style="padding: 0 1.1rem;"
-									data-namespace="App\Material" data-model-id="{{ $material->id }}">
-									@include('components/admin/modelGallery', ["gallery" => $gallery])
-								</div>
+							@if ($material)
+								<h5>Gallery</h5>
+								<div class="bg-light">
+									<div class="pt-2 px-2">
+										<button id="add-gallery-images-btn" class="btn btn-primary m-1">
+											Media Library
+										</button>
+										<button id="remove-all-images-btn" class="btn btn-danger m-1">
+											Remove all
+										</button>
+									</div>
 								
-
-								<input id="material-img-upload" type="text">
-							</div>
-
-							<h5>Βοηθητικά Αρχεία</h5>
-							<div class="bg-light">
-								<div class="pt-2 px-2">
-									<button id="file-library-btn" class="btn btn-primary m-1" data-toggle="modal" data-target="#remainings-files-modal">
-										File Library
-									</button>
-									<button id="remove-all-files-btn" class="btn btn-danger m-1">
-										Remove all
-									</button>
-								</div>
-
-								<div id="active-files-loading" class="row d-none my-3">
-									<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
-								</div>
-
-
-								<div id="files-cnt"  class="row" style="padding: 0 1.1rem;">
-									@include('components/admin/materials/filesTable', ["files" => $files])
-								</div>
+									<div id="active-gallery-loading" class="row d-none my-3">
+										<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
+									</div>
 								
-
-								<input id="material-file-upload" type="text">
-							</div>
-
+								
+										<div id="gallery-cnt"  class="row" style="padding: 0 1.1rem;"
+											data-namespace="App\Material" data-model-id="{{ $material->id }}">
+											@include('components/admin/modelGallery', ["gallery" => $gallery])
+										</div>
+										
+									
+									
+									
+									
+									<input id="material-img-upload" type="text">
+								</div>
+							
+								<h5>Βοηθητικά Αρχεία</h5>
+								<div class="bg-light">
+									<div class="pt-2 px-2">
+										<button id="file-library-btn" class="btn btn-primary m-1" data-toggle="modal" data-target="#remainings-files-modal">
+											File Library
+										</button>
+										<button id="remove-all-files-btn" class="btn btn-danger m-1">
+											Remove all
+										</button>
+									</div>
+								
+									<div id="active-files-loading" class="row d-none my-3">
+										<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
+									</div>
+								
+								
+										<div id="files-cnt"  class="row" style="padding: 0 1.1rem;">
+											@include('components/admin/materials/filesTable', ["files" => $files])
+										</div>	
+									
+									
+									
+									<input id="material-file-upload" type="text">
+								</div>
+							@endif
                         </div><!-- ./form inputs -->
 
                         <div class="col-xl-3 col-lg-4 col-md-12 pt-1">
