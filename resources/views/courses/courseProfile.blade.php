@@ -27,7 +27,6 @@
         }
 
 
-
         .list-material:hover {
 
             cursor: pointer;
@@ -39,7 +38,6 @@
             background: rgba(231, 231, 231, 0.2);
             margin-bottom: 10px;
         }
-
 
 
         .ribbon-edit:hover {
@@ -58,7 +56,7 @@
 
         <div class="card ribbon-box" style="background-color: transparent">
             <div class="card-body py-0">
-                <div class="p-1 bg-secondary "style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
+                <div class="p-1 bg-secondary " style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}">
                         <spant class="">Edit this page</spant>
                     </a>
@@ -68,7 +66,8 @@
         @endrole
 
         <div class="container-xl my-3" style="max-width: 1650px">
-            <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2" style="background:{{$course->topics->first()->color}}">
+            <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2"
+                 style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-12">
                     <div class="row align-items-center">
                         <div class="col-md-3 mb-2">
@@ -97,7 +96,7 @@
 
 
                                     </i>
-                                    <span >{{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
+                                    <span>{{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                                 </button>
                             </div>
                         </div>
@@ -127,7 +126,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row p-2 box-material-down  color-topic-second" style="background:{{$course->topics->first()->color}}">
+            <div class="row p-2 box-material-down  color-topic-second"
+                 style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-4  d-flex justify-content-between text-light">
                     {{--                    <span>metrio</span>--}}
 
@@ -147,22 +147,37 @@
                     @include("components.index.user-info")
 
 
-                    <div class="row  ">
-                        <div class="col-md-12   background-material px-2">
-                            <div class=" p-2"><span class="font-weight-bold text-black ">Περιγραφή</span>
-                            </div>
+                    <div class="row ">
+                        <div class="col-md-12 p-0">
+
+                            @include("components.index.collapse-menu",
+                                ["idAccordion"=>$course->title."-accordion-summary" ,
+                                "idHeader"=>$course->title."-header-summary",
+                                "href"=>$course->title."-href-summary",
+                                "title"=>"Σχετικά με το μάθημα",
+                                "body"=>$course->summary
+
+                                ])
                         </div>
-                        <div class="col-md-12 ">
-                            <div class="row">
-                                <div class="col-md-12 d-flex align-items-center  text-black mt-2 pl-3" >
-                                    {!! $course->description !!}
-                                </div>
-                            </div>
+
+                        <div class="col-md-12 p-0">
+                            @include("components.index.collapse-menu",
+                                ["idAccordion"=>$course->title."-accordion-description" ,
+                                "idHeader"=>$course->title."-header-description",
+                                "href"=>$course->title."-href-description",
+                                "title"=>"Μάθημα",
+                                "body"=>$course->description
+
+                                ])
                         </div>
+
+
+
+
                     </div>
                 </div>
                 <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
-                    <ul class="m-0 p-0">
+                    <ul data-simplebar style="max-height: 800px" ; class="m-0 p-0">
                         @foreach($allMaterial as $materials)
                             <li class="list-group-item list-material border   ">
                                 <a class="d-flex align-items-center m"
@@ -173,19 +188,20 @@
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
                                             class="font-16  text-black font-weight-bold">   {{$materials->title}}</h3>
-                                        <span style="word-break: break-all" class="font-14 text-dark">    {{$materials->subtitle}}</span>
-{{--                                        @empty($course->description)--}}
-{{--                                            <div class="mt-3">--}}
-{{--                                            <h3--}}
-{{--                                                class=" font-16 text-dark font-weight-bold">   {{$materials->title}}</h3>--}}
-{{--                                            <span style="word-break: break-all"--}}
-{{--                                                  class="  font-14 text-dark">{{Str::limit($materials->description,200)}}</span>--}}
-{{--                                            </div>--}}
-{{--                                        @endempty--}}
+                                        <span style="word-break: break-all"
+                                              class="font-14 text-dark">    {{$materials->subtitle}}</span>
+                                        {{--                                        @empty($course->description)--}}
+                                        {{--                                            <div class="mt-3">--}}
+                                        {{--                                            <h3--}}
+                                        {{--                                                class=" font-16 text-dark font-weight-bold">   {{$materials->title}}</h3>--}}
+                                        {{--                                            <span style="word-break: break-all"--}}
+                                        {{--                                                  class="  font-14 text-dark">{{Str::limit($materials->description,200)}}</span>--}}
+                                        {{--                                            </div>--}}
+                                        {{--                                        @endempty--}}
                                     </div>
                                     <div class="col-md-2 ">
 
-                                            <i class=" font-24 text-black {{$materials->type}}"></i>
+                                        <i class=" font-24 text-black {{$materials->type}}"></i>
 
                                     </div>
                                 </a>

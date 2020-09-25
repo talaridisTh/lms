@@ -119,47 +119,32 @@
             <div class="row ">
                 <div class="col-md-8 ">
                     @include("components.index.user-info")
-                    <div class="row  ">
-                        <div class="col-md-12   background-material ">
-                            <div class="  p-2 "><span class="font-weight-bold text-black ">Σχετικά με το μάθημα</span>
-                            </div>
-                        </div>
-                        <div class="col-md-12  mb-3">
-                            <div class="row">
-                                <div class="col-md-12 d-flex align-items-center  text-black  pl-3  "  >
-                                    {!! $course->content !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @include("components.index.collapse-menu",
+                            ["idAccordion"=>$materials->title."-accordion-summary" ,
+                            "idHeader"=>$materials->title."-header-summary",
+                            "href"=>$materials->title."-href-summary",
+                            "title"=>"Σχετικά με το μάθημα",
+                            "body"=>$materials->summary
 
-                    <div class="row  ">
-                        <div class="col-md-12  mb-3  background-material px-2">
-                            <div class=" p-2"><span class="font-weight-bold text-black   " >Περίληψη </span>
-                            </div>
-                        </div>
-                        <div class="col-md-12  mb-3 ">
-                            <div class="row">
-                                <div class="col-md-12 d-flex align-items-center  pl-3  text-black"   >
-                                    {!! $course->summary !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            ])
+                    @include("components.index.collapse-menu",
+                            ["idAccordion"=>$materials->title."-accordion-description" ,
+                            "idHeader"=>$materials->title."-header-description",
+                            "href"=>$materials->title."-href-description",
+                            "title"=>"Περίληψη",
+                            "body"=>$materials->description
 
-                    <div class="row  ">
-                        <div class="col-md-12   background-material px-2">
-                            <div class=" p-2"><span class="font-weight-bold text-black   ">Περιγραφή</span>
-                            </div>
-                        </div>
-                        <div class="col-md-12 ">
-                            <div class="row">
-                                <div class="col-md-12 d-flex align-items-center mt-3 pl-3 text-black" >
-                                    {!! $course->description !!}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                            ])
+                    @include("components.index.collapse-menu",
+                            ["idAccordion"=>$materials->title."-accordion-content" ,
+                            "idHeader"=>$materials->title."-header-content",
+                            "href"=>$materials->title."-href-content",
+                            "title"=>"Περιγραφή",
+                            "body"=>$materials->content
+
+                            ])
+
+
 
 
                 </div>
