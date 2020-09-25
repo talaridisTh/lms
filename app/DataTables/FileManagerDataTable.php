@@ -51,6 +51,10 @@ class FileManagerDataTable extends DataTable
 			})
 			->addColumn('image', function($data) {
 
+				if ( is_null($data->thumbnail_path) ) {
+					return "<i class='h1 mdi mdi-file-document-outline'></i>";
+				}
+
 				return "<img class='img-fluid' style='max-width: 120px;' src='".url($data->thumbnail_path)."' alt='$data->original_name' />";
 
 			})

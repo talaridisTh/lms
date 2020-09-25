@@ -2,73 +2,36 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+	<link href="/vendor/gpickr/gpickr.min.css" rel="stylesheet" type="text/css"/>
 
-    <style>
+    <style>		
+		#topics-datatable td:nth-child(3){
+			padding-bottom: 0px !important;
 
+		}
 
-        .modal-body {
-            font-family: "Poppins", Helvetica, sans-serif;
-            /* font-weight: 700; */
-            text-align: center;
-            background: linear-gradient(to right, red, yellow);
-            color: white;
-        }
-
-        .wrapper-color {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        h1 {
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            margin-top: 35px;
-            margin-bottom: 25px;
-            font-size: 4em;
-        }
-
-        .color-boxes {
-            display: inline-flex;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-
-        .color {
-            border: none;
-            background: none;
-            width: 4em;
-            height: 3em;
-            margin: 0 25px;
-            cursor: pointer;
-        }
-
-        .random {
-            display: inline-block;
-            /*     width: 5%; */
-
-            margin: 0 auto 50px auto;
-
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            border: 1px solid white;
-            cursor: pointer;
-        }
-
-        .random:hover {
-            background: black;
-            color: white;
-        }
-
-        .color:hover {
-            border: 2px solid white;
-        }
+		.gpickr {
+			width: 100%;
+			box-shadow: 0px 0px 0px !important;
+			padding: 0.5em 0;
+			overflow: initial;
+		}
 
 
-        .css {
-            font-weight: 400;
-        }
+		.pcr-app {
+			width: 50% !important;
+			background: #464f5b;
+		}
+		.gpcr-interaction {
+			width: 50% !important;
+		}
+
+		.pcr-result {
+			background: #464f5b !important;
+			color: #aab8c5 !important;
+			text-align: center !important;
+		}
+		
     </style>
 @endsection
 
@@ -97,34 +60,30 @@
     <div class="modal fade" id="color-modal" tabindex="-1" role="dialog" aria-labelledby="color-modal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="color-modal">Topic color</h4>
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h4 class="modal-title" id="color-modal-title">Edit Gradient</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body d-flex justify-content-center" style="height: 350px">
-                    <div class="wrapper-color">
+                <div class="modal-body">
+					<input id="topic-id" type="text" name="id" hidden />
+					<input id="topic-gradient" type="text" name="gradient" hidden />
+					
+					<div id="select-edit-gradient"></div>
 
-                        <div class="color-boxes">
-
-                            <input type="color" name="color1" id="" class="color color1" value="#e66465">
-                            <input type="color" name="color2" id="" class="color color2" value="#f6b73c">
-                        </div>
-
-                        <div class="mt-2" role="group" aria-label="Basic example">
-                            <button type="button" class=" w-20 random btn btn-warning">Random</button>
-                            <button type="button" data-modal class="random js-color-button btn btn-success">Ok</button>
-                        </div>
-
-
-                        <p class="css"></p>
-
-                    </div>
-                </div>
+				</div><!-- ./modal body -->
+				
+				<div class="modal-footer">
+					<button id="save-edit-gradient" class="btn btn-primary">
+						<i class="mdi mdi-content-save mr-1"></i>
+						Αποθήκευση
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
-    </div><!-- /.modal
+    </div><!-- /.modal -->
 
- Modal -->
+ 	<!-- add topic Modal -->
 	<div class="modal fade" id="add-topic-modal" tabindex="-1" role="dialog" aria-labelledby="add-topic-modalLabel" aria-hidden="true">
 		<div class="modal-dialog  modal-dialog-centered" role="document">
 			<div class="modal-content">
@@ -135,36 +94,48 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="add-topic-form" action="topics/store" method="POST">
+					<form id="add-topic-form" action="topics/store" method="POST" autocomplete="off">
 
 						@csrf
 
 						<div class="form-group">
 							<label for="new-title">Τίτλος</label>
-							<input type="text" class="form-control @error('title') is-invalid @enderror" id="new-title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο...">
+							<input type="text" class="form-control @error('title') is-invalid @enderror" id="new-title" name="title" value="{{ old('title') }}" placeholder="Εισάγετε τίτλο..." />
 							@error('title')
 								<span class="invalid-feedback" role="alert">
 									<strong>{{ $message }}</strong>
 								</span>
 							@enderror
 						</div>
-						<input id="cloning-course-id" class="form-control" type="text" name="id" value="{{ old('id') }}" hidden>
+
+						<div class="form-group my-2">
+							<div class="d-flex align-items-center">
+								<!-- Bool Switch-->
+								<label for="new-gradient-checkbox" class="mr-3 mb-0">Gradient: </label>
+								<input type="checkbox" id="new-gradient-checkbox" checked data-switch="bool"/>
+								<label for="new-gradient-checkbox" class="mb-0" data-on-label="On" data-off-label="Off"></label>
+
+							</div>
+						</div>
+
+						<input id="gradient-input" class="form-control" type="text" name="gradient" value="radial-gradient(circle at right, rgba(66, 68, 90, 1) 0%,rgba(32, 182, 221, 1) 100%)" hidden />
+					
 					</form>
+					<div id="new-topic-gradient"></div>
 				</div>
 				<div class="modal-footer">
 					<button form="add-topic-form" type="submit" class="btn btn-primary">
 						<i class="mdi mdi-content-save mr-1"></i>
 						Αποθήκευση
 					</button>
-					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
 			</div>
 		</div>
 	</div>
 
-
-
 	<div class="container table-cnt content-width">
+
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
@@ -219,6 +190,8 @@
 @section('scripts')
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+<script src="/vendor/gpickr/gpickr.min.js"></script>
+
 
 <script src="{{ mix('js/dashboard/topics/topicsMain.js') }}"></script>
 

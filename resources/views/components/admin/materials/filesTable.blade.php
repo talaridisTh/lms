@@ -2,12 +2,16 @@
 
 	@php
 		$icons = [
-			"mp3" => "mdi-music-clef-treble text-warning",
+			"mp3" => "mdi-music-clef-treble",
 			"pdf" => "mdi-file-pdf-outline text-danger",
-			"doc" => "mdi-file-document-outline text-primary",
+			"doc" => "mdi-file-document-outline text-teal",
+			"odt" => "mdi-file-document-outline text-teal",
+			"rtf" => "mdi-file-document-outline text-teal",
 			"xl" => "mdi-file-table-box text-success",
-			"pp" => "mdi-file-powerpoint-outline text-danger",
-			"zip" => "mdi-folder-zip-outline text-warning"
+			"ods" => "mdi-file-table-box text-success",
+			"pp" => "mdi-file-powerpoint-outline text-orange",
+			"odp" => "mdi-file-powerpoint-outline text-orange",
+			"zip" => "mdi-folder-zip-outline text-warning",
 		]
 	@endphp
 
@@ -17,7 +21,7 @@
 	    <thead>
 	        <tr>
 	            <th class="text-center">Όνομα</th>
-	            <th class="text-center">Τύπος</th>
+	            {{-- <th class="text-center">Τύπος</th> --}}
 	            <th class="text-center">Μέγεθος</th>
 	            <th class="w-5"></th>
 	        </tr>
@@ -29,16 +33,44 @@
 
 				<tr class="js-file-row" data-file-id="{{ $file->id }}">
 	        	    <td class="{{-- d-flex align-items-center --}}">
-						@if ($file->file_info == "audio/mpeg")
+						<div class="d-flex">
+							@foreach ($icons as $type => $icon)
+
+								@if ( fnmatch("$type*", $file->ext ) && $file->ext != "mp3")
+									<i class="my-1 h3 mdi {{ $icon }}" title="{{ $file->ext }}"></i>
+									@break
+
+								@elseif ( $file->ext == "mp3" )
+
+									<i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>
+									<audio class="js-audio">
+										<source src="{{ $file->rel_path }}" type="{{ $file->file_info }}">
+									</audio>
+									@break
+
+								@endif
+								
+							@endforeach
+
+							<div class="d-inline">
+
+								<a href="{{ $file->rel_path }}" class="mb-0 ml-2 custom-link-primary" download>{{ $file->original_name }}</a>
+								<p class="mb-0 ml-2">{{ $file->name}}</p>
+								
+							</div>
+						</div>
+						
+
+						{{-- @if ($file->file_info == "audio/mpeg")
 						<i class="my-0 mr-2 js-audio-btn h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>
 						<audio class="js-audio">
 							<source src="{{ $file->rel_path }}" type="{{ $file->file_info }}">
 							</audio>
-							@endif
-							{{ $file->original_name }}
+							@endif --}}
+							
 					</td>
 
-					<td class="text-center">
+					{{-- <td class="text-center">
 						@foreach ($icons as $type => $icon)
 
 							@if ( fnmatch("$type*", $file->ext ) )
@@ -47,7 +79,8 @@
 							@endif
 							
 						@endforeach
-					</td>
+						{{ $file->ext }}
+					</td> --}}
 
 	        	    <td class="text-center">{{ number_format($file->size / 1000000, 2, ",", ".") ."MB" }}</td>
 	        	    <td class="text-center">

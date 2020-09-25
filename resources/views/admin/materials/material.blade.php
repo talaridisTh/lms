@@ -399,9 +399,9 @@
                                              class="img-fluid"
                                              class="img-fluid" alt="Cover Image"/>
 
-                                        <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">
+                                        <button id="change-cover-btn" class="btn btn-primary btn-block mt-3">
                                             {{isset($material)?"Αλλαγή Cover":"Προσθηκη Cover"}}
-                                        </a>
+										</button>
                                     </div> <!-- end card-body -->
                                 </div> <!-- end course info card -->
                             @endisset

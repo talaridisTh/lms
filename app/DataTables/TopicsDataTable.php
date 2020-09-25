@@ -38,7 +38,7 @@ class TopicsDataTable extends DataTable {
 							<input class='js-topic-checkbox' data-topic-id='$data->id' data-topic-title='$data->title' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
-            })
+			})
             ->addColumn('color', function ($data) {
 
                 return (
@@ -57,17 +57,42 @@ class TopicsDataTable extends DataTable {
       					Το πεδίο είναι υποχρεωτικό.
       				</div>
 					<p class='mb-1'>$data->slug</p>
-					<a href='#' class='js-quick-edit custom-link-primary'>Quick Edit</a>";
+					<a href='#' class='js-quick-edit custom-link-primary'>Quick Edit</a>
+					<span class='mx-2'>|</span>
+					<a href='#' class='js-edit-gradient custom-link-primary' data-target='#color-modal'
+						data-topic-id='$data->id' data-topic-title='$data->title' data-toggle='modal'>Edit Gradient</a>";
             })
             ->editColumn('updated_at', function ($data) {
 
-                return Carbon::parse($data->updated_at)->format("d / m / Y");
+				$updatedAt = $data->updated_at->format("d - m - Y");
+				$createdAt = $data->created_at->format("d - m - Y");
+
+				if ( $data->color ) {
+					$preview = [
+						"style" => "style='background:$data->color'",
+						"text" => ""
+					];
+				}
+				else {
+					$preview = [
+						"style" => "",
+						"text" => "<a href='#' class='custom-link-primary cursor-pointer'>Edit Gradient</a>"
+					];
+				}
+
+				return "<div class='row'>
+							<div class='col-6 border-right-gray'>$updatedAt</div>
+							<div class='col-6'>$createdAt</div>
+						</div>
+						<div class='gradient-cnt mt-2 cursor-pointer' data-target='#color-modal'
+							data-topic-id='$data->id' data-toggle='modal' data-topic-title='$data->title'
+						".$preview['style'].">".$preview['text']."</div>";
             })
             ->editColumn('created_at', function ($data) {
 
                 return Carbon::parse($data->created_at)->format("d / m / Y");
             })
-            ->rawColumns(['action', 'title', "color"]);
+            ->rawColumns(['action', 'title', "updated_at", "color", "myColor"]);
     }
 
     /**
