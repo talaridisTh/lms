@@ -1,11 +1,9 @@
 @extends("layouts.app")
 
 @section("style")
-    <style>
-        body{
-            box-sizing: border-box;
-        }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
 
 @endsection
 
@@ -58,48 +56,48 @@
             <img class="img-fluid"   src="{{url($materials->cover)}}" alt="">
         @endif
         <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center" style=";border-radius: 0; background:{{$course->topics->first()->color}}"  >
-                <div class="col-md-12   p-0  " style="min-width:1868px;max-width: 1868px">
-                    <div class="row align-items-center p-2" >
-                        <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
-                            <div class="d-flex justify-content-start"></div>
+            <div class="col-md-12   p-0  " style="min-width:1868px;max-width: 1868px">
+                <div class="row align-items-center p-2" >
+                    <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
+                        <div class="d-flex justify-content-start"></div>
                         @if(!empty($prevMaterial->slug))
                             <div class="  col-md-1 d-flex justify-content-center align-items-center">
                                 <a class="arrow"{{--data-toggle="tooltip"--}}{{-- rel="tooltip" data-placement="left"--}}
-                                   title="Προηγούμενο {{!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug}} "
+                                title="Προηγούμενο {{!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug}} "
                                    href="{{route('index.material.show',[$course->slug,!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug])}}">
                                     <i class=" p-3 text-light cursor-pointer mdi h2 mdi-chevron-left"></i>
                                 </a>
                             </div>
                         @endif
-                        </div>
-                        <div class="col-md-4">
-                            <div class="row ">
-                                <div  class="fixed col-md-12 text-white d-flex align-items-center justify-content-start">
-                                    <h4 >{{$materials->title}}</h4>
-                                </div>
-
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row ">
+                            <div  class="fixed col-md-12 text-white d-flex align-items-center justify-content-start">
+                                <h4 >{{$materials->title}}</h4>
                             </div>
+
                         </div>
-                        <div class="col-md-4" >
-                            <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -1.6rem;">
-                                <button class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
-                                    <span class="font-16">Το έχω δει</span>
-                                </button>
-                                <button
-                                    data-model="material" data-model-id="{{$materials->id}}"
-                                    data-user-id="{{auth()->id()}}"
-                                    class="px-3 py-1 color-topic-second add-watchlist   bghover text-white border btn-outline-secondary">
-                                    <i class="font-16
+                    </div>
+                    <div class="col-md-4" >
+                        <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -1.6rem;">
+                            <button class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
+                                <span class="font-16">Το έχω δει</span>
+                            </button>
+                            <button
+                                data-model="material" data-model-id="{{$materials->id}}"
+                                data-user-id="{{auth()->id()}}"
+                                class="px-3 py-1 color-topic-second add-watchlist   bghover text-white border btn-outline-secondary">
+                                <i class="font-16
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
-                                        ">
-                                    </i>
-                                    <span class="font-16" >{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
-                                </button>
-                            </div>
-
+                                    ">
+                                </i>
+                                <span class="font-16" >{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
+                            </button>
                         </div>
-                        <div class="col-md-2 d-flex justify-content-start">
-                            <div class="d-flex justify-content-end pr-1">
+
+                    </div>
+                    <div class="col-md-2 d-flex justify-content-start">
+                        <div class="d-flex justify-content-end pr-1">
                             @if(!empty($nextMaterial->slug))
                                 <div class=" p-2 col-md-1 d-flex justify-content-center align-items-center">
 
@@ -111,11 +109,11 @@
                                     </a>
                                 </div>
                             @endif
-                            </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <div class="container  w-100  p-sm-3 p-lg-2 my-3" style="max-width: 1280px">
             <div class="row ">
@@ -191,41 +189,75 @@
                     </div>
 
                     @if(count($materials->media)>0)
-                    <div class="col-md-12 my-1">
-                        <div class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
-                            <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
-                            <a type="button" class="my-1 font-18" data-toggle="modal" data-target="#bs-example-modal-lg">Gallery</a>
-                            <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
+                        <div class="col-md-12 my-1">
+                            <div class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
+                                <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
+                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal" data-target="#bs-example-modal-lg">Gallery</a>
+                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="swiper-container">
+                                                    <!-- Additional required wrapper -->
+                                                    <div class="swiper-wrapper">
+                                                        <!-- Slides -->
 
-                                            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-                                                <div class="carousel-inner">
-                                                    @foreach($materials->media as $media)
-                                                    <div class="carousel-item {{$loop->first?"active":""}}">
-                                                        <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">
+                                                        @foreach($materials->media as $media)
+                                                            <div class="swiper-slide">
+                                                                <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">
+                                                            </div>
+                                                        @endforeach
+
+
+
+
                                                     </div>
-                                                    @endforeach
-                                                </div>
-                                                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                            </div>
+                                                    <!-- If we need pagination -->
+                                                    <div class="swiper-pagination"></div>
 
-                                        </div>
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
+                                                    <!-- If we need navigation buttons -->
+                                                    <div class="swiper-button-prev"></div>
+                                                    <div class="swiper-button-next"></div>
+
+                                                    <!-- If we need scrollbar -->
+                                                    <div class="swiper-scrollbar"></div>
+                                                </div>
+
+
+
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
                         </div>
-                    </div>
                     @endempty
 
+{{--                    <div class="swiper-container">--}}
+{{--                        <!-- Additional required wrapper -->--}}
+{{--                        <div class="swiper-wrapper">--}}
+{{--                            <!-- Slides -->--}}
+
+{{--                            @foreach($materials->media as $media)--}}
+{{--                                <div class="swiper-slide">--}}
+{{--                                    <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">--}}
+{{--                                </div>--}}
+{{--                            @endforeach--}}
+
+
+
+
+{{--                        </div>--}}
+{{--                        <!-- If we need pagination -->--}}
+{{--                        <div class="swiper-pagination"></div>--}}
+
+{{--                        <!-- If we need navigation buttons -->--}}
+{{--                        <div class="swiper-button-prev"></div>--}}
+{{--                        <div class="swiper-button-next"></div>--}}
+
+{{--                        <!-- If we need scrollbar -->--}}
+{{--                        <div class="swiper-scrollbar"></div>--}}
+{{--                    </div>--}}
 
                     <ul class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
@@ -249,7 +281,7 @@
                                             class="font-16 mt-1 text-black font-weight-bold">   {{$material->title}}</h3>
                                         <span style="word-break: break-all" class="
                                         {{$material->title==$materials->title? "":""}}
-                                             font-14 text-dark">    {{$material->subtitle}}</span>
+                                            font-14 text-dark">    {{$material->subtitle}}</span>
                                     </div>
 
                                     <div class="col-md-2 ">
@@ -272,8 +304,12 @@
 @endsection
 
 @section("script")
-    <script src="{{ mix('js/index/materials/indexMaterials.js') }}"></script>
 
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <script src="{{ mix('js/index/materials/indexMaterials.js') }}"></script>
 
 
 @endsection

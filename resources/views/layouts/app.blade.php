@@ -14,11 +14,15 @@
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style"/>
     <link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style"/>
+
+
+
+
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     @yield("style")
 
     <style>
-        Route::get('/', [PageController::class, 'home']);
+
         .sticky-front{
 
             position: -webkit-sticky;
