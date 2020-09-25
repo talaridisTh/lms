@@ -88,7 +88,7 @@ class MaterialController extends Controller {
 		$data = [
 			"topics" => Topic::all(),
 			"instructors" => Role::find(2)->users,
-			"activeInstructors" => $material->users()->pluck("users.id")->toArray(),
+			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
 			"material" => $material,
 			"types" => $types,
 			"media" => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
