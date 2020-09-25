@@ -18,9 +18,12 @@
                     <div class="page-title-box">
                         <div class="page-title-left">
                             <ol class="breadcrumb p-1 m-0">
-                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="custom-link-primary">Home</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}" class="custom-link-primary">Courses</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}" class="custom-link-primary">{{$course->title}}</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('home')}}"
+                                                               class="custom-link-primary">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"
+                                                               class="custom-link-primary">Courses</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"
+                                                               class="custom-link-primary">{{$course->title}}</a></li>
                                 <li class="breadcrumb-item  text-black">{{$materials->title}}</li>
                             </ol>
                         </div>
@@ -33,7 +36,7 @@
 
         <div class="card ribbon-box" style="background-color: transparent">
             <div class="card-body py-0">
-                <div class="p-1 bg-secondary "style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
+                <div class="p-1 bg-secondary " style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white " href="{{route('material.show',$materials->slug)}}">
                         <spant class="">Edit this page</spant>
                     </a>
@@ -41,29 +44,43 @@
             </div> <!-- end card-body -->
         </div>
         @endrole
-        @if($materials->video_link)
-            <div class=" mb-1 ">
-                @if(strlen($materials->video_link)<12 )
-                    <iframe  src="https://player.vimeo.com/video/{{$materials->video_link}}" frameborder="0" scrolling="yes" seamless="seamless" style="display:block; width:100%; height:100vh;"></iframe>
+        <div style="-webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;background-image: url('{{url($materials->cover)}}')">
+            <div class="row">
+                <div class="col-md-12">
+                    @if($materials->video_link)
+                        <div class=" mb-1 ">
+                            @if(strlen($materials->video_link)<12 )
+                                <iframe src="https://player.vimeo.com/video/{{$materials->video_link}}" frameborder="0"
+                                        scrolling="yes" seamless="seamless"
+                                        style="display:block; width:100%; height:100vh;"></iframe>
 
-                @else
-                    <iframe src="{{$materials->video_link}}" width="1024" height="768" frameborder="0"
-                            allow="autoplay; fullscreen" allowfullscreen></iframe>
+                            @else
+                                <iframe src="{{$materials->video_link}}" width="1024" height="768" frameborder="0"
+                                        allow="autoplay; fullscreen" allowfullscreen></iframe>
 
-                @endif
+                            @endif
+                        </div>
+                    @else
+                        <div style="height: 800px"></div>
+                    @endif
+                </div>
             </div>
-        @else
-            <img class="img-fluid"   src="{{url($materials->cover)}}" alt="">
-        @endif
-        <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center" style=";border-radius: 0; background:{{$course->topics->first()->color}}"  >
+        </div>
+
+        <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center"
+             style=";border-radius: 0; background:{{$course->topics->first()->color}}">
             <div class="col-md-12   p-0  " style="min-width:1826px;max-width: 1826px">
-                <div class="row align-items-center p-2" >
+                <div class="row align-items-center p-2">
                     <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
                         <div class="d-flex justify-content-start"></div>
                         @if(!empty($prevMaterial->slug))
                             <div class="  col-md-1 d-flex justify-content-center align-items-center">
-                                <a class="arrow"{{--data-toggle="tooltip"--}}{{-- rel="tooltip" data-placement="left"--}}
-                                title="Προηγούμενο {{!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug}} "
+                                <a class="arrow"
+                                   {{--data-toggle="tooltip"--}}{{-- rel="tooltip" data-placement="left"--}}
+                                   title="Προηγούμενο {{!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug}} "
                                    href="{{route('index.material.show',[$course->slug,!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug])}}">
                                     <i class=" p-3 text-light cursor-pointer mdi h2 mdi-chevron-left"></i>
                                 </a>
@@ -72,15 +89,17 @@
                     </div>
                     <div class="col-md-4">
                         <div class="row ">
-                            <div  class="fixed col-md-12 text-white d-flex align-items-center justify-content-start">
-                                <h4 >{{$materials->title}}</h4>
+                            <div class="fixed col-md-12 text-white d-flex align-items-center justify-content-start">
+                                <h4>{{$materials->title}}</h4>
                             </div>
 
                         </div>
                     </div>
-                    <div class="col-md-4" >
-                        <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -2.6rem;">
-                            <button class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
+                    <div class="col-md-4">
+                        <div class="watchlist  d-flex justify-content-end align-items-center ml-2 "
+                             style=" margin-right: -2.6rem;">
+                            <button
+                                class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
                                 <span class="font-16">Το έχω δει</span>
                             </button>
                             <button
@@ -91,7 +110,8 @@
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                     ">
                                 </i>
-                                <span class="font-16" >{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
+                                <span
+                                    class="font-16">{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                             </button>
                         </div>
 
@@ -143,8 +163,6 @@
                             ])
 
 
-
-
                 </div>
                 <div class="col-md-4 pl-3">
                     <div class="row hover-yellow px-2">
@@ -162,7 +180,8 @@
                                         class="font-18  text-center text-black font-weight-bold">{{$course->title}}</span>
                                     <div class="d-flex justify-content-around">
                                         {{--                                        <span class="font-12 text-primary">Μέτριο</span>--}}
-                                        <span class="font-14 text-black">{{$MaterialsOrderByPriority->count()}} Μάθηματα</span>
+                                        <span
+                                            class="font-14 text-black">{{$MaterialsOrderByPriority->count()}} Μάθηματα</span>
 
                                     </div>
                                 </a>
@@ -173,10 +192,13 @@
 
                     @if(count($materials->media)>0)
                         <div class="col-md-12 my-1">
-                            <div class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
+                            <div
+                                class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
                                 <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
-                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal" data-target="#bs-example-modal-lg">Gallery</a>
-                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
+                                   data-target="#bs-example-modal-lg">Gallery</a>
+                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
+                                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-body">
@@ -187,11 +209,10 @@
 
                                                         @foreach($materials->media as $media)
                                                             <div class="swiper-slide">
-                                                                <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">
+                                                                <img class="d-block img-fluid"
+                                                                     src="{{url($media->rel_path)}}" alt="First slide">
                                                             </div>
                                                         @endforeach
-
-
 
 
                                                     </div>
@@ -207,7 +228,6 @@
                                                 </div>
 
 
-
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -216,31 +236,31 @@
                         </div>
                     @endempty
 
-{{--                    <div class="swiper-container">--}}
-{{--                        <!-- Additional required wrapper -->--}}
-{{--                        <div class="swiper-wrapper">--}}
-{{--                            <!-- Slides -->--}}
+                    {{--                    <div class="swiper-container">--}}
+                    {{--                        <!-- Additional required wrapper -->--}}
+                    {{--                        <div class="swiper-wrapper">--}}
+                    {{--                            <!-- Slides -->--}}
 
-{{--                            @foreach($materials->media as $media)--}}
-{{--                                <div class="swiper-slide">--}}
-{{--                                    <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">--}}
-{{--                                </div>--}}
-{{--                            @endforeach--}}
-
-
+                    {{--                            @foreach($materials->media as $media)--}}
+                    {{--                                <div class="swiper-slide">--}}
+                    {{--                                    <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">--}}
+                    {{--                                </div>--}}
+                    {{--                            @endforeach--}}
 
 
-{{--                        </div>--}}
-{{--                        <!-- If we need pagination -->--}}
-{{--                        <div class="swiper-pagination"></div>--}}
 
-{{--                        <!-- If we need navigation buttons -->--}}
-{{--                        <div class="swiper-button-prev"></div>--}}
-{{--                        <div class="swiper-button-next"></div>--}}
 
-{{--                        <!-- If we need scrollbar -->--}}
-{{--                        <div class="swiper-scrollbar"></div>--}}
-{{--                    </div>--}}
+                    {{--                        </div>--}}
+                    {{--                        <!-- If we need pagination -->--}}
+                    {{--                        <div class="swiper-pagination"></div>--}}
+
+                    {{--                        <!-- If we need navigation buttons -->--}}
+                    {{--                        <div class="swiper-button-prev"></div>--}}
+                    {{--                        <div class="swiper-button-next"></div>--}}
+
+                    {{--                        <!-- If we need scrollbar -->--}}
+                    {{--                        <div class="swiper-scrollbar"></div>--}}
+                    {{--                    </div>--}}
 
                     <ul data-simplebar style="max-height: 800px" class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
@@ -250,10 +270,12 @@
 
                                     <div class="col-md-2 ">
                                         @if($material->title==$materials->title)
-                                            <i style="margin:-8px;" class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
+                                            <i style="margin:-8px;"
+                                               class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                         @else
                                             <div class="col-md-2 mt-1 mr-2 ">
-                                                <span style="margin:-20px;" class="material-count"> <span>{{$material->priority}}</span> </span>
+                                                <span style="margin:-20px;"
+                                                      class="material-count"> <span>{{$material->priority}}</span> </span>
                                             </div>
 
                                         @endif
