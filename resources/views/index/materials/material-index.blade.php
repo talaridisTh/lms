@@ -125,7 +125,6 @@
                             "href"=>$materials->title."-href-summary",
                             "title"=>"Σχετικά με το μάθημα",
                             "body"=>$materials->summary
-
                             ])
                     @include("components.index.collapse-menu",
                             ["idAccordion"=>$materials->title."-accordion-description" ,
@@ -133,7 +132,6 @@
                             "href"=>$materials->title."-href-description",
                             "title"=>"Περίληψη",
                             "body"=>$materials->description
-
                             ])
                     @include("components.index.collapse-menu",
                             ["idAccordion"=>$materials->title."-accordion-content" ,
@@ -266,7 +264,7 @@
                                             class="font-16 mt-1 text-black font-weight-bold">   {{$material->title}}</h3>
                                         <span style="word-break: break-all" class="
                                         {{$material->title==$materials->title? "":""}}
-                                            font-14 text-dark">    {{$material->subtitle}}</span>
+                                            font-12 text-dark">    {{$material->subtitle}}</span>
                                     </div>
 
                                     <div class="col-md-2 ">

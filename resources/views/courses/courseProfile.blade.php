@@ -189,7 +189,7 @@
                                         <h3 style="border-radius: 5px"
                                             class="font-16  text-black font-weight-bold">   {{$materials->title}}</h3>
                                         <span style="word-break: break-all"
-                                              class="font-14 text-dark">    {{$materials->subtitle}}</span>
+                                              class="font-12 text-dark">    {{$materials->subtitle}}</span>
                                         {{--                                        @empty($course->description)--}}
                                         {{--                                            <div class="mt-3">--}}
                                         {{--                                            <h3--}}
