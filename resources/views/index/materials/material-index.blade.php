@@ -141,23 +141,23 @@
                 <div class="col-md-8 ">
                     @include("components.index.user-info")
                     @include("components.index.collapse-menu",
-                            ["idAccordion"=>$materials->title."-accordion-summary" ,
-                            "idHeader"=>$materials->title."-header-summary",
-                            "href"=>$materials->title."-href-summary",
+                            ["idAccordion"=>$materials->slug."-accordion-summary" ,
+                            "idHeader"=>$materials->slug."-header-summary",
+                            "href"=>$materials->slug."-href-summary",
                             "title"=>"Σχετικά με το μάθημα",
                             "body"=>$materials->summary
                             ])
                     @include("components.index.collapse-menu",
-                            ["idAccordion"=>$materials->title."-accordion-description" ,
-                            "idHeader"=>$materials->title."-header-description",
-                            "href"=>$materials->title."-href-description",
+                            ["idAccordion"=>$materials->slug."-accordion-description" ,
+                            "idHeader"=>$materials->slug."-header-description",
+                            "href"=>$materials->slug."-href-description",
                             "title"=>"Περίληψη",
                             "body"=>$materials->description
                             ])
                     @include("components.index.collapse-menu",
-                            ["idAccordion"=>$materials->title."-accordion-content" ,
-                            "idHeader"=>$materials->title."-header-content",
-                            "href"=>$materials->title."-href-content",
+                            ["idAccordion"=>$materials->slug."-accordion-content" ,
+                            "idHeader"=>$materials->slug."-header-content",
+                            "href"=>$materials->slug."-href-content",
                             "title"=>"Περιγραφή",
                             "body"=>$materials->content
 
