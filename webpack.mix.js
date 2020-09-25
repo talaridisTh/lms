@@ -19,13 +19,14 @@ mix.js('resources/js/app.js', 'public/js')
 
 	.js('resources/js/dashboard/materials/materialsMain.js', 'public/js/dashboard/materials')
 	.js('resources/js/dashboard/materials/material.js', 'public/js/dashboard/materials')
-	
+
 	.js('resources/js/dashboard/users/userMain.js', 'public/js/dashboard/users')
 	.js('resources/js/dashboard/users/userProfil.js', 'public/js/dashboard/users')
 	.js('resources/js/dashboard/fileManager/fileManager.js', 'public/js/dashboard/fileManager')
 	.js('resources/js/dashboard/main.js', 'public/js/dashboard/')
     .js('resources/js/index/courses/indexCourses.js', 'public/js/index/courses')
     .js('resources/js/index/materials/indexMaterials.js', 'public/js/index/materials')
+    .js('resources/js/index/chat/message.js', 'public/js/index/chat')
     .sass('resources/sass/customArticleStyle.scss', 'public/css')
     .sass('resources/sass/app.scss', 'public/css')
     .browserSync("http://127.0.0.1:8000/")

@@ -47,6 +47,12 @@
             </a>
         </li>
         <li class="side-nav-item">
+            <a href="{{route('index.message')}}" class="side-nav-link">
+                <i class="uil-calender"></i>
+                <span>message</span>
+            </a>
+        </li>
+        <li class="side-nav-item">
             <a href="#" class="side-nav-link">
                 <i class="uil-calender"></i>
                 <span>Logout</span>

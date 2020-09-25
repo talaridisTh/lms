@@ -2,6 +2,7 @@
 
 use App\Course;
 use App\User;
+use Database\Seeders\MessageSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 
@@ -22,7 +23,28 @@ class DatabaseSeeder extends Seeder {
         factory( App\User::class, 100)->create()
 			->each( function($user) {
         		$user->assignRole(Arr::random([ 'instructor', 'student','partner' ]));
-			});
+			})->each( function($user) {
+
+
+			    if ($user->getRoleNames()[0]=="instructor"){
+                    do
+                    {
+                        $from = rand(1, 30);
+                        $to = rand(1, 30);
+                        $read = rand(0, 1);
+                    } while ($from === $to);
+
+
+                    factory( App\Message::class)->create([
+                        "from" => $from,
+                        "to" => $to,
+                        "message" => '$faker->sentence',
+                        "read" => rand(1, 0)
+                    ]);
+                }
+
+
+            });
 
 		factory( App\Material::class, 80)->create()
 			->each( function($material) {
@@ -50,6 +72,9 @@ class DatabaseSeeder extends Seeder {
 					$bundle->users()->attach(App\Role::find(4)->users()->select("id")->get()->random()->id);
 				}
 			});
+
+
+
 
 
 

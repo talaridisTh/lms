@@ -43,12 +43,6 @@ const addWhatchlist = () => {
 const addWhatchlistAxios = async (modelId, userId,model) => {
     const heart = $(".add-watchlist")[0].children[0];
     const button = $(".add-watchlist > span")[0];
-    console.log(modelId)
-    console.log(userId)
-    console.log(model)
-    console.log(heart)
-    console.log(button)
-
 
     try {
         const res = await axios.patch(`/add-watchlist/${model}`, {

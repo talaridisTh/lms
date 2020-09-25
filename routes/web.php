@@ -244,13 +244,16 @@ Route::get('/partner-links', function (Request $request) {
     }
 })->name('link');
 
+//meessage
+Route::get("/message/", "MessageController@index")->name("index.message");
+Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
+Route::post("/message/sent", "MessageController@sendMessage")->name("index.sendMessage");
 
 //! Material index
 Route::get("/material/{course}/{materials}", "Index\MaterialController@show")->name("index.material.show");
 Route::get("/dummy-course/{materials}", "Index\MaterialController@dummyPage")->name("dummyPage.material.show");
 
 //! Material index  ajax
-
 Route::patch('/add-watchlist/material', 'Index\MaterialController@watchlistMaterial')->name('index.watchlist.material');
 
 
