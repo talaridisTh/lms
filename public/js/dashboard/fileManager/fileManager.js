@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 11);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -110,7 +110,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nElement.prototype.findParent 
 
 /***/ }),
 
-/***/ 11:
+/***/ 10:
 /*!*****************************************************************!*\
   !*** multi ./resources/js/dashboard/fileManager/fileManager.js ***!
   \*****************************************************************/

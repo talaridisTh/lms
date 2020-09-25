@@ -16,9 +16,13 @@ mix.js('resources/js/app.js', 'public/js')
 	.js('resources/js/dashboard/courses/courseProfile.js', 'public/js/dashboard/courses')
 	.js('resources/js/dashboard/bundles/bundlesMain.js', 'public/js/dashboard/bundles')
 	.js('resources/js/dashboard/bundles/bundleProfile.js', 'public/js/dashboard/bundles')
+
+
 	.js('resources/js/dashboard/materials/materialsMain.js', 'public/js/dashboard/materials')
 	.js('resources/js/dashboard/materials/material.js', 'public/js/dashboard/materials')
-	.js('resources/js/dashboard/materials/materialNew.js', 'public/js/dashboard/materials')
+	// .js('resources/js/dashboard/materials/materialNew.js', 'public/js/dashboard/materials')
+	
+	
 	.js('resources/js/dashboard/users/userMain.js', 'public/js/dashboard/users')
 	.js('resources/js/dashboard/users/userProfil.js', 'public/js/dashboard/users')
 	.js('resources/js/dashboard/fileManager/fileManager.js', 'public/js/dashboard/fileManager')

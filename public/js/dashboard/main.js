@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -98,7 +98,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nElement.prototype.findParent 
 
 /***/ }),
 
-/***/ 12:
+/***/ 11:
 /*!**********************************************!*\
   !*** multi ./resources/js/dashboard/main.js ***!
   \**********************************************/

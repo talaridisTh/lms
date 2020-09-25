@@ -10,7 +10,7 @@ use Illuminate\Support\Carbon;
 
 $factory->define(Material::class, function (Faker $faker) {
 
-	static $counter = 1;
+	static $counter = 3;
 
 	$year = rand(2015, 2020);
 	$month = rand(1, 12);

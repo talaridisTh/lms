@@ -5,14 +5,13 @@
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=ab51913731749fad4cf7",
     "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=b82c0e122f813062f1d4",
     "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=b9935c968fcaf8078e68",
-    "/js/dashboard/fileManager/fileManager.js": "/js/dashboard/fileManager/fileManager.js?id=e9f3838c63440e3ba913",
-    "/js/dashboard/main.js": "/js/dashboard/main.js?id=1aa3cdb47bcdd93888b7",
-    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=94e7adec1de06cec5aa5",
-    "/js/dashboard/materials/materialNew.js": "/js/dashboard/materials/materialNew.js?id=3399d6c6fecbd6b2d312",
+    "/js/dashboard/fileManager/fileManager.js": "/js/dashboard/fileManager/fileManager.js?id=3c8a79a267e862f2b84c",
+    "/js/dashboard/main.js": "/js/dashboard/main.js?id=938fb231ceb36b1f730a",
+    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=dc1a5868b59006469911",
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=ced20a6b4cf100c27d46",
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=bec39f5004e12d390717",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=e2ff57e6451402edbf3f",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=21075b40ea529e9047d7",
-    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=c8f15f9b3a8be14a1b62",
-    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=4939c7939c31162c010b"
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=419a7f136a2ce94e327d",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=fa09e01e397f11376243",
+    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=dec341d577c3e09ca4cd",
+    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=c1a30f69d8f03b89b627"
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Role;
 use App\CourseMaterial;
 use App\Http\Requests\CreateMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
@@ -77,12 +78,19 @@ class MaterialController extends Controller {
 
     public function show(Material $material = null)
     {
+		$types = [ 
+			"Lesson" => "Μάθημα", 
+			"Announcement" => "Ανακοίνωση", 
+			"Video" => "Video", 
+			"Link" => "Link"
+		];
 
 		$data = [
 			"topics" => Topic::all(),
-			"instructors" => User::getInstructor(),
+			"instructors" => Role::find(2)->users,
+			"activeInstructors" => $material->users()->pluck("users.id")->toArray(),
 			"material" => $material,
-			"types" => Material::all()->unique('type'),
+			"types" => $types,
 			"media" => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
 			"gallery" => $material ? $material->media()->wherePivot("usage", "!=", 3)->orderBy("priority")->get() : null,
 			"files" => $material ? $material->media()->where("type", 1)->get() : null
@@ -94,33 +102,19 @@ class MaterialController extends Controller {
     public function update(Request $request, Material $material)
     {
 
-        $material->update($request->except("instructor", "topic", "type", "status",'cover'));
-        $data = collect($request)->except("instructor", "topic", "status")->all();
+		// dd($request->all());
+
+		$request->validate([
+			'title' => 'required',
+			'type' => 'required',
+		]);
+
+        $material->update($request->except("instructors", "status"));
+
         $material->status = isset($request->status) ? 1 : 0;
         $material->save();
-        if ($request->instructor)
-        {
-            $material->users()->sync($request->instructor);
-        }
-        else{
-            $material->users()->detach();
-        }
-        if ($request->topic)
-        {
 
-            foreach ($request->topic as $topic)
-            {
-                $material->topics()->sync($request->topic);
-            }
-        }
-        if ($request->type)
-        {
-
-            $material->update(['type' => $request->type]);
-        }
-
-
-
+        $material->users()->sync($request->instructors);
 
         return redirect()->back()->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
     }
