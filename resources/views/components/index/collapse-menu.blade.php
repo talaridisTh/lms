@@ -1,5 +1,5 @@
 @if($body)
-    <div class="accordion custom-accordion" id="{{$idAccordion}}">
+    <div class="accordion custom-accordion mb-2" id="{{$idAccordion}}">
         <div class="card mb-0">
             <div class="card-header p-2" id="{{$idHeader}}">
                 <h5 class="m-0 pl-2">

@@ -51,6 +51,24 @@
 @section("content")
 
     <div class="content-page">
+        <div class=" ml-5 content-width">
+            <div class="row">
+                <div class="col-12">
+                    <div class="page-title-box">
+                        <div class="page-title-left">
+                            <ol class="breadcrumb p-1 m-0">
+                                <li class="breadcrumb-item"><a href="{{route('home')}}"
+                                                               class="text-secondary">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"
+                                                               class="text-secondary">Courses</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"
+                                                               class="text-black">{{$course->title}}</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         @role("admin")
 
 
@@ -65,7 +83,7 @@
         </div>
         @endrole
 
-        <div class="container-xl my-3" style="max-width: 1650px">
+        <div class="container-xl mb-3" style="max-width: 1705px">
             <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2"
                  style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-12">
@@ -148,7 +166,7 @@
 
 
                     <div class="row ">
-                        <div class="col-md-12 p-2">
+                        <div class="col-md-12 px-2">
 
                             @include("components.index.collapse-menu",
                                 ["idAccordion"=>$course->title."-accordion-summary" ,
@@ -160,7 +178,7 @@
                                 ])
                         </div>
 
-                        <div class="col-md-12 p-0">
+                        <div class="col-md-12 px-2">
                             @include("components.index.collapse-menu",
                                 ["idAccordion"=>$course->title."-accordion-description" ,
                                 "idHeader"=>$course->title."-header-description",
@@ -187,9 +205,9 @@
                                     </div>
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
-                                            class="font-16  text-black font-weight-bold">   {{$materials->title}}</h3>
+                                            class="font-16  text-black font-weight-bold">   {!! $materials->title!!}</h3>
                                         <span style="word-break: break-all"
-                                              class="font-12 text-dark">    {{$materials->subtitle}}</span>
+                                              class="font-12 text-dark">    {!! $materials->subtitle !!}</span>
                                         {{--                                        @empty($course->description)--}}
                                         {{--                                            <div class="mt-3">--}}
                                         {{--                                            <h3--}}

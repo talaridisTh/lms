@@ -19,11 +19,11 @@
                         <div class="page-title-left">
                             <ol class="breadcrumb p-1 m-0">
                                 <li class="breadcrumb-item"><a href="{{route('home')}}"
-                                                               class="custom-link-primary">Home</a></li>
+                                                               class="text-secondary">Home</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"
-                                                               class="custom-link-primary">Courses</a></li>
+                                                               class="text-secondary">Courses</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"
-                                                               class="custom-link-primary">{{$course->title}}</a></li>
+                                                               class="text-secondary">{{$course->title}}</a></li>
                                 <li class="breadcrumb-item  text-black">{{$materials->title}}</li>
                             </ol>
                         </div>
@@ -73,7 +73,7 @@
 
         <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center"
              style=";border-radius: 0; background:{{$course->topics->first()->color}}">
-            <div class="col-md-12   p-0  " style="min-width:1826px;max-width: 1826px">
+            <div class="col-md-12   p-0  " style="min-width:1857px;max-width: 1857px">
                 <div class="row align-items-center p-2">
                     <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
                         <div class="d-flex justify-content-start"></div>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="watchlist  d-flex justify-content-end align-items-center ml-2 "
-                             style=" margin-right: -2.6rem;">
+                             style=" margin-right: -1.3rem;">
                             <button
                                 class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
                                 <span class="font-16">Το έχω δει</span>
@@ -284,10 +284,10 @@
 
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
-                                            class="font-16 mt-1 text-black font-weight-bold">   {{$material->title}}</h3>
+                                            class="font-16 mt-1 text-black font-weight-bold">   {!! $material->title !!}</h3>
                                         <span style="word-break: break-all" class="
                                         {{$material->title==$materials->title? "":""}}
-                                            font-12 text-dark">    {{$material->subtitle}}</span>
+                                            font-12 text-dark">    {!! $material->subtitle !!}</span>
                                     </div>
 
                                     <div class="col-md-2 ">

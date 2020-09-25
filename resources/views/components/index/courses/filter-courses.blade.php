@@ -25,9 +25,9 @@
 
                 <div class="col-md-7 d-flex flex-column justify-content-between align-items-center p-2">
                     <h3 class="font-16 font-weight-bold"><a
-                            href="{{route('index.userCourse',[$course->slug,auth()->user()])}}">{{$course->title}}</a>
+                            href="{{route('index.userCourse',[$course->slug,auth()->user()])}}">{!!$course->title  !!}</a>
                     </h3>
-                    <p class="font-12 text-center">{{$course->subtitle}}</p>
+                    <p class="font-12 text-center">{!! $course->subtitle !!}</p>
                     <div class="material-box d-flex justify-content-between font-10">
                         <span class="mr-3">Lessons : {{$allMaterial->where("type","Lesson")->count()}}</span>
                         <span>Extras :{{$allMaterial->where("type","!=","Lesson")->count()}}</span>
