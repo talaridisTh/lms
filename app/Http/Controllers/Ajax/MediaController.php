@@ -214,7 +214,7 @@ class MediaController extends Controller
 
 						$media = new Media;
 						$media->original_name = $originalName;
-						$media->name = $name;
+						$media->name = $fullname;
 						$media->rel_path = "/storage/images/$date/$fullname";
 						$media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
 						$media->ext = $image->getClientOriginalExtension();

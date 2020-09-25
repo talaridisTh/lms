@@ -361,7 +361,7 @@ class MaterialController extends Controller {
 
 					$media = new Media;
 					$media->original_name = $originalName;
-					$media->name = $name;
+					$media->name = $fullname;
 					$media->type = 1;
 					$media->rel_path = "/storage/files/$date/$fullname";
 					$media->ext = $file->getClientOriginalExtension();
