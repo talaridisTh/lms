@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
             $table->string('title');
             $table->string('subtitle')->nullable();
             $table->text('summary')->nullable();
-            $table->string('cover')->default("empty");
+            $table->string('cover')->default("https://placehold.co/600x400");
             $table->text('description')->nullable();
             $table->unsignedBigInteger('user_id')->references('id')->on('users')->nullable();
             $table->string('slug');

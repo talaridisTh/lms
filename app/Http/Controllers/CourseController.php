@@ -41,10 +41,6 @@ class CourseController extends Controller
 
     public function store(BundleCourseRequest $request)
     {
-		// if( !empty($_FILES['cover']['name']) ) {
-		// 	$ext = $_FILES['cover']['type'] == "image/png" ? ".png" : ".jpeg";
-		// 	$fileName = md5( $request->name ).$ext;
-		// }
 		$request->validate([
 			'title' => 'required|unique:courses',
 			'version' => 'required'
@@ -67,24 +63,12 @@ class CourseController extends Controller
 		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;
 		$course->version = $request->version;
-		// $course->publish_at = $request->publishDate;
-		// $course->cover = isset($fileName) ? $fileName : "no_image_600x400.png";
-		$course->cover = "https://placehold.co/600x400";
 		
 		$course->save();
 
 		if ( $request->topics ) {
-			foreach ( $request->topics as $id ) {
-				$course->topics()->attach( $id );
-			}
+			$course->topics()->attach( $request->topics );
 		}
-		
-		// if ( isset($fileName) ) {
-		// 	$request->cover->storeAs("public/courses/$course->id/cover", $fileName);
-		// }
-		// else {
-		// 	Storage::copy("public/no_image_600x400.png", "public/courses/$course->id/cover/no_image_600x400.png");
-		// }
 		
 		return redirect( "/dashboard/course/$course->slug" );
 
@@ -98,9 +82,9 @@ class CourseController extends Controller
     public function show(Course $course = null, Request $request)
     {
 		
-		$topics = Topic::all();
-		$instructors = Role::find( 2 )->users;
-		$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
+		// $topics = Topic::all();
+		// $instructors = Role::find( 2 )->users;
+		// $media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
 		
 		if ( is_null($course) ) {
 			$publish = "";
@@ -111,9 +95,10 @@ class CourseController extends Controller
 
 		$data = [
 			'course' => $course,
-			'media' => $media,
-			'topics' => $topics,
-			'instructors' => $instructors,
+			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
+			'courseTopics' => $course ? $course->topics()->pluck("topics.id")->toArray() : null,
+			'topics' => Topic::all(),
+			'instructors' => Role::find( 2 )->users,
 			'publish' => $publish,
 		];
 		

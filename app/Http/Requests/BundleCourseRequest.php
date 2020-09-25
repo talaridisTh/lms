@@ -30,14 +30,14 @@ class BundleCourseRequest extends FormRequest
     public function rules()
     {
         return [
-			'title' => 'required|string|max:50'
+			'title' => 'required|string|max:50',
+			'version' => 'required'
 		];
 	}
 	
-	public function messages()
-{
-    return [
-        'dimensions' => "Οι διαστάσεις του :attribute πρέπει να είναι 600 x 400.",
-    ];
-}
+	public function messages() {
+    	return [
+    	    'dimensions' => "Οι διαστάσεις του :attribute πρέπει να είναι 600 x 400.",
+    	];
+	}
 }

@@ -177,29 +177,48 @@
                                     @method('PATCH')
                                 @endif
 
-                                <div class="form-group mb-3">
-                                    <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                    <input name="title" id="titleMaterial" type="text"
-                                           class="form-control @error("title") is-invalid @enderror"
-                                           placeholder="Εισάγετε τίτλο..."
-                                           value="{{ old('title') != "" ? old('title')
-											: ( isset($material) ? $material->title : "" ) }}"/>
-                                    @error("title")
-                                    <span class="invalid-feedback" role="alert">
-											<strong>{{ $message }}</strong>
-										</span>
-                                    @enderror
-                                </div>
 
-                                <div class="form-group mb-3">
-                                    <label for="subtitleMaterial">Υποτίτλος</label>
-                                    <input id="subtitleMaterial" name="subtitle" type="text"
-                                           class="form-control" placeholder="Εισάγετε υποτίτλο..."
-                                           value="{{ old('subtitle') != "" ? old('subtitle')
-											: ( isset($material) ? $material->subtitle : "" ) }}"/>
-                                </div>
+								<div class="form-row">
+
+									<div class="form-group col-lg-6">
+										<label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
+										<input name="title" id="titleMaterial" type="text"
+											   class="form-control @error("title") is-invalid @enderror"
+											   placeholder="Εισάγετε τίτλο..."
+											   value="{{ old('title') != "" ? old('title')
+												: ( isset($material) ? $material->title : "" ) }}"/>
+										@error("title")
+										<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
+									</div>
+									
+									<div class="form-group col-lg-6">
+										<label for="subtitleMaterial">Υποτίτλος</label>
+										<input id="subtitleMaterial" name="subtitle" type="text"
+											   class="form-control" placeholder="Εισάγετε υποτίτλο..."
+											   value="{{ old('subtitle') != "" ? old('subtitle')
+												: ( isset($material) ? $material->subtitle : "" ) }}"/>
+									</div>
+
+								</div>
+
+
+								
+
+
+
+
+
+
+
+
+
+
+
                                 @isset($material)
-                                    <div class="form-group mb-3">
+                                    <div class="form-group">
                                         <label for="summary">Περίληψη</label>
                                         <textarea id="summary" name="summary"
                                                   class="form-control" rows="5"
@@ -208,7 +227,7 @@
 											: (isset($material) ? $material->summary : "") }}</textarea>
                                     </div>
 
-                                    <div class="form-group mb-3">
+                                    <div class="form-group">
                                         <label for="description-material">
                                             Περιγραφή
                                         </label>
@@ -219,7 +238,7 @@
 											: (isset($material) ? $material->description : "") }}</textarea>
                                     </div>
 
-                                    <div class="form-group mb-3">
+                                    <div class="form-group">
                                         <label for="content-material">
                                             Περιεχόμενο μαθήματος
                                         </label>
@@ -235,7 +254,7 @@
 
                             @isset($material)
                                 <h5>Gallery</h5>
-                                <div class="bg-light mb-3">
+                                <div class="bg-light">
                                     <div class="pt-2 px-2">
                                         <button id="add-gallery-images-btn" class="btn btn-primary m-1">
                                             Media Library
