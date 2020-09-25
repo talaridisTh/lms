@@ -44,10 +44,7 @@
             </div> <!-- end card-body -->
         </div>
         @endrole
-        <div style="-webkit-background-size: cover;
-            -moz-background-size: cover;
-            background-size: cover;
-            -o-background-size: cover;background-image: url('{{url($materials->cover)}}')">
+        <div >
             <div class="row">
                 <div class="col-md-12">
                     @if($materials->video_link)
@@ -64,7 +61,11 @@
                             @endif
                         </div>
                     @else
-                        <div style="height: 800px"></div>
+                        <div style="   background-repeat: no-repeat;
+                            background-size: 100% 100%;
+                            height: 100vh;
+                            margin: 3px auto 0;
+                            position: relative;background-image: url('{{url($materials->cover)}}')"></div>
                     @endif
                 </div>
             </div>
