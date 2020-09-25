@@ -169,9 +169,9 @@
                         <div class="col-md-12 px-2">
 
                             @include("components.index.collapse-menu",
-                                ["idAccordion"=>$course->title."-accordion-summary" ,
-                                "idHeader"=>$course->title."-header-summary",
-                                "href"=>$course->title."-href-summary",
+                                ["idAccordion"=>$course->slug."-accordion-summary" ,
+                                "idHeader"=>$course->slug."-header-summary",
+                                "href"=>$course->slug."-href-summary",
                                 "title"=>"Σχετικά με το μάθημα",
                                 "body"=>$course->summary
 
@@ -180,9 +180,9 @@
 
                         <div class="col-md-12 px-2">
                             @include("components.index.collapse-menu",
-                                ["idAccordion"=>$course->title."-accordion-description" ,
-                                "idHeader"=>$course->title."-header-description",
-                                "href"=>$course->title."-href-description",
+                                ["idAccordion"=>$course->slug."-accordion-description" ,
+                                "idHeader"=>$course->slug."-header-description",
+                                "href"=>$course->slug."-href-description",
                                 "title"=>"Μάθημα",
                                 "body"=>$course->description
 
