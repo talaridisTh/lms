@@ -56,7 +56,7 @@
             <img class="img-fluid"   src="{{url($materials->cover)}}" alt="">
         @endif
         <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center" style=";border-radius: 0; background:{{$course->topics->first()->color}}"  >
-            <div class="col-md-12   p-0  " style="min-width:1868px;max-width: 1868px">
+            <div class="col-md-12   p-0  " style="min-width:1826px;max-width: 1826px">
                 <div class="row align-items-center p-2" >
                     <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
                         <div class="d-flex justify-content-start"></div>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div class="col-md-4" >
-                        <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -1.6rem;">
+                        <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -2.6rem;">
                             <button class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
                                 <span class="font-16">Το έχω δει</span>
                             </button>
@@ -242,7 +242,7 @@
 {{--                        <div class="swiper-scrollbar"></div>--}}
 {{--                    </div>--}}
 
-                    <ul class="my-2 p-0">
+                    <ul data-simplebar style="max-height: 800px" class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
                             <li class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                 <a class="d-flex align-items-center m"

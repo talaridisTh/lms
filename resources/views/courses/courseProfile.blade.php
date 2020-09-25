@@ -148,7 +148,7 @@
 
 
                     <div class="row ">
-                        <div class="col-md-12 p-0">
+                        <div class="col-md-12 p-2">
 
                             @include("components.index.collapse-menu",
                                 ["idAccordion"=>$course->title."-accordion-summary" ,
@@ -177,7 +177,7 @@
                     </div>
                 </div>
                 <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
-                    <ul data-simplebar style="max-height: 800px" ; class="m-0 p-0">
+                    <ul data-simplebar style="max-height: 800px"  class="m-0 p-0">
                         @foreach($allMaterial as $materials)
                             <li class="list-group-item list-material border   ">
                                 <a class="d-flex align-items-center m"

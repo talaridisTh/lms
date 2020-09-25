@@ -1,4 +1,4 @@
-<div class="row background-material mb-3">
+<div class="background-material mb-3">
     <div class="col-md-12">
         <div class="row justify-content-between p-2 " >
             <div class="col-md-6"><span class="font-weight-bold text-black">Εισηγητής </span>|
