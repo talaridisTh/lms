@@ -1356,7 +1356,8 @@ ArticleEditor('#description', {
 	css: "/css/",
 	custom: {
 		css: [
-			"/css/bootstrap.min.css"
+			"/css/bootstrap.min.css",
+			"/css/customArticleStyle.css",
 		]
 	},
 	plugins: ['mediaLibrary', 'reorder'],
