@@ -90,7 +90,7 @@
                                 @endif
                                 <button
                                     data-model="course" data-model-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
-                                    class="color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary font-weight-bold">
+                                    class="color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary ">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
@@ -114,7 +114,7 @@
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
 
-                                    <button class="bghover color-topic-second  border font-weight-bold btn btn-secontary ">
+                                    <button class="bghover color-topic-second  border  btn btn-secontary ">
                                         <a class="text-white bghover"
                                            href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
                                             Δες το μάθημα</a>
@@ -172,8 +172,8 @@
                                     </div>
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
-                                            class="font-18  text-black font-weight-bold">   {{$materials->title}}</h3>
-                                        <span style="word-break: break-all" class="custom-link-primary font-14 text-dark">    {{$materials->subtitle}}</span>
+                                            class="font-16  text-black font-weight-bold">   {{$materials->title}}</h3>
+                                        <span style="word-break: break-all" class="font-14 text-dark">    {{$materials->subtitle}}</span>
 {{--                                        @empty($course->description)--}}
 {{--                                            <div class="mt-3">--}}
 {{--                                            <h3--}}
@@ -184,9 +184,9 @@
 {{--                                        @endempty--}}
                                     </div>
                                     <div class="col-md-2 ">
-                                        <span class="badge badge-primary-lighten">
+
                                             <i class=" font-24 text-black {{$materials->type}}"></i>
-                                        </span>
+
                                     </div>
                                 </a>
                             </li>

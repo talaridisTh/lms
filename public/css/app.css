@@ -3535,12 +3535,6 @@ select.is-invalid {
   border: 1px orange solid;
 }
 
-.arrow {
-  opacity: 0.7;
-  background-color: #e3e3e3;
-  padding: 23px;
-}
-
 .background-material {
   border-radius: 8px;
   background: #E9EAEB;
@@ -3579,10 +3573,6 @@ select.is-invalid {
 .material-count span {
   display: inline-block;
   vertical-align: middle;
-}
-
-.arrow:hover {
-  opacity: 1;
 }
 
 .course-box {
@@ -3803,6 +3793,10 @@ figure.image-center {
 
 .color-topic-second {
   background-color: rgba(0, 0, 0, 0.26);
+}
+
+.arrow:hover {
+  transform: scale(1.5);
 }
 
 /*!

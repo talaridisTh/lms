@@ -97,18 +97,18 @@ class Material extends Model
 
         if( request()->route()->getName()=='index.userCourse' ||request()->route()->getName()=='index.material.show' ){
             if($value=='Lesson'){
-                return 'mdi mdi-file-document-outline';
+                return 'mdi mdi-file-document-outline text-success';
             }
             elseif ($value=='Link'){
-                return 'mdi mdi-link-variant-plus';
+                return 'mdi mdi-link-variant-plus text-info';
 
             }
             elseif ($value=='Announcement'){
-                return 'mdi mdi-comment-quote-outline';
+                return 'mdi mdi-comment-quote-outline text-danger';
 
             }
             elseif ($value=='Video'){
-                return 'mdi mdi-camcorder';
+                return 'mdi mdi-camcorder text-primary';
 
             }
 

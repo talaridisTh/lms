@@ -12,7 +12,7 @@ const baseUrl = window.location.origin;
 //!##################################################
 
 $("#remove-all-files-btn").on("click", function() {
-	
+
 	let fileRow = $(".js-file-row")
 	let ids = [];
 
@@ -65,7 +65,7 @@ $("#remove-all-images-btn").on("click", function() {
 			this.classList.add("d-none");
 		}
 	  })
-	
+
 });
 
 $(".js-remove-image").on("click", utilities.removeImageHandler)
@@ -165,7 +165,7 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     language: utilities.tableLocale,
     drawCallback: function () {
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-		
+
 		addFilesBtnInit();
     }
 })
@@ -207,7 +207,7 @@ function addMaterialFiles(ids) {
 }
 
 function removeMaterialFiles(ids) {
-	
+
 	axios.post("/material/remove-files", {
 		materialId, ids
 	})
@@ -721,7 +721,7 @@ const materialPond = FilePond.create(materialImgUpload, {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
 			},
-			
+
 			onload: function(data) {
 
 				let container = $("#gallery-cnt")
@@ -761,7 +761,7 @@ const materialPond = FilePond.create(materialImgUpload, {
 
 		// 	setTimeout(function() {
 		// 		materialPond.removeFile(instance[i].file);
-		
+
 		// 	}, i * 1000);
 
 		// }
@@ -774,9 +774,6 @@ const materialPond = FilePond.create(materialImgUpload, {
     acceptedFileTypes: ['image/png', 'image/jpeg'],
 });
 
-
-
-
 const materialFileUpload = $("#material-file-upload")[0];
 const materialFilePond = FilePond.create(materialFileUpload, {
 	name: "file",
@@ -787,7 +784,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
 			},
-			
+
 			onload: function(data) {
 
 				let container = $("#files-cnt")
@@ -803,7 +800,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 				$("#remove-all-files-btn").removeClass("d-none");
 				remainingFilesTable.ajax.reload(null, false);
-				
+
 			},
 			ondata: function(formData) {
 				formData.append("id", materialId);
@@ -832,7 +829,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 		// 	setTimeout(function() {
 		// 		materialFilePond.removeFile(instance[i].file);
-		
+
 		// 	}, i * 1000);
 
 		// }
@@ -844,7 +841,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 	},
     acceptedFileTypes: [
 		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
-		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 		"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
 		"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
 		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
@@ -871,14 +868,14 @@ function audioPlayerHandler() {
 		this.dataset.audioStatus = "playing";
 
 		audio.currentTime = 0;
-		audio.play(); 
+		audio.play();
 	}
 	else {
 		this.classList.remove("mdi-pause-circle-outline");
 		this.classList.add("mdi-play-circle-outline");
 		this.dataset.audioStatus = "paused";
 
-		audio.pause(); 
+		audio.pause();
 	}
 }
 
@@ -910,7 +907,7 @@ dragula( [dragArea], {
 	}
 
 	axios.patch("/material/images-sort", {
-		materialId, imagesPriority 
+		materialId, imagesPriority
 	})
 	.then( res => {
 

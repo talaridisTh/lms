@@ -19,7 +19,7 @@
                 <div class="col-12">
                     <div class="page-title-box">
                         <div class="page-title-left">
-                            <ol class="breadcrumb m-0">
+                            <ol class="breadcrumb p-1 m-0">
                                 <li class="breadcrumb-item"><a href="{{route('home')}}" class="custom-link-primary">Home</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}" class="custom-link-primary">Courses</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}" class="custom-link-primary">{{$course->title}}</a></li>
@@ -58,13 +58,13 @@
             <img class="img-fluid"   src="{{url($materials->cover)}}" alt="">
         @endif
         <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center" style=";border-radius: 0; background:{{$course->topics->first()->color}}"  >
-                <div class="col-md-12   p-0  " style="max-width: 1847px">
+                <div class="col-md-12   p-0  " style="min-width:1868px;max-width: 1868px">
                     <div class="row align-items-center p-2" >
                         <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
                             <div class="d-flex justify-content-start"></div>
                         @if(!empty($prevMaterial->slug))
                             <div class="  col-md-1 d-flex justify-content-center align-items-center">
-                                <a {{--data-toggle="tooltip"--}}{{-- rel="tooltip" data-placement="left"--}}
+                                <a class="arrow"{{--data-toggle="tooltip"--}}{{-- rel="tooltip" data-placement="left"--}}
                                    title="Προηγούμενο {{!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug}} "
                                    href="{{route('index.material.show',[$course->slug,!empty($prevMaterial->slug)? $prevMaterial->slug : $materials->slug])}}">
                                     <i class=" p-3 text-light cursor-pointer mdi h2 mdi-chevron-left"></i>
@@ -74,13 +74,14 @@
                         </div>
                         <div class="col-md-4">
                             <div class="row ">
-                                <div  class="col-md-12 text-white d-flex align-items-center justify-content-start">
+                                <div  class="fixed col-md-12 text-white d-flex align-items-center justify-content-start">
                                     <h4 >{{$materials->title}}</h4>
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-md-4" >
-                            <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -2rem;">
+                            <div class="watchlist  d-flex justify-content-end align-items-center ml-2 " style=" margin-right: -1.6rem;">
                                 <button class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
                                     <span class="font-16">Το έχω δει</span>
                                 </button>
@@ -92,7 +93,7 @@
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
                                     </i>
-                                    <span >{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
+                                    <span class="font-16" >{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                                 </button>
                             </div>
 
@@ -100,9 +101,10 @@
                         <div class="col-md-2 d-flex justify-content-start">
                             <div class="d-flex justify-content-end pr-1">
                             @if(!empty($nextMaterial->slug))
-                                <div class="p-2 col-md-1 d-flex justify-content-center align-items-center">
+                                <div class=" p-2 col-md-1 d-flex justify-content-center align-items-center">
 
                                     <a {{--data-toggle="tooltip" rel="tooltip" data-placement="right"--}}
+                                       class="arrow"
                                        title="Επόμενο {{!empty($nextMaterial->slug)? $nextMaterial->slug : $materials->slug}} "
                                        href="{{route('index.material.show',[$course->slug,!empty($nextMaterial->slug)? $nextMaterial->slug : $materials->slug])}}">
                                         <i class=" text-light cursor-pointer mdi h2 mdi-chevron-right"></i>
@@ -115,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="container  w-100 p my-3" style="max-width: 1280px">
+        <div class="container  w-100  p-sm-3 p-lg-2 my-3" style="max-width: 1280px">
             <div class="row ">
                 <div class="col-md-8 ">
                     @include("components.index.user-info")
@@ -164,7 +166,7 @@
 
                 </div>
                 <div class="col-md-4 pl-3">
-                    <div class="row hover-yellow p-2">
+                    <div class="row hover-yellow px-2">
                         <div class="col-md-12  border d-flex justify-content-between"
                              style="border-radius: 8px; padding: 9px">
                             <div class="col-md-2 d-flex align-items-center">
@@ -196,10 +198,6 @@
                             <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="myLargeModalLabel">Gallery</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        </div>
                                         <div class="modal-body">
 
                                             <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
@@ -248,9 +246,9 @@
 
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
-                                            class="font-18 mt-1 text-black font-weight-bold">   {{$material->title}}</h3>
+                                            class="font-16 mt-1 text-black font-weight-bold">   {{$material->title}}</h3>
                                         <span style="word-break: break-all" class="
-                                        {{$material->title==$materials->title? "":"custom-link-primary"}}
+                                        {{$material->title==$materials->title? "":""}}
                                              font-14 text-dark">    {{$material->subtitle}}</span>
                                     </div>
 

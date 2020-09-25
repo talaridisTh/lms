@@ -78,10 +78,10 @@ class MaterialController extends Controller {
 
     public function show(Material $material = null)
     {
-		$types = [ 
-			"Lesson" => "Μάθημα", 
-			"Announcement" => "Ανακοίνωση", 
-			"Video" => "Video", 
+		$types = [
+			"Lesson" => "Μάθημα",
+			"Announcement" => "Ανακοίνωση",
+			"Video" => "Video",
 			"Link" => "Link"
 		];
 
