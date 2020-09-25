@@ -117,7 +117,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nElement.prototype.findParent 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\lmsdemo - HEAD\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Back Up\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
 
 
 /***/ })
