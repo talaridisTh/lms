@@ -185,7 +185,7 @@ Route::post( 'topics/topics-datatable', 'Ajax\TopicController@index' );
 //! Dashboard Ajax Topic CRUD
 Route::patch( 'topics/update/{topic}', 'Ajax\TopicController@update' );
 Route::delete( 'topics/destroy/{ids}', 'Ajax\TopicController@destroy' );
-    Route::patch( 'topics/change/color', 'Ajax\TopicController@changeColor' );
+Route::patch( 'topics/change/color', 'Ajax\TopicController@changeColor' );
 
 //! Dashboard File Manager Datatable
 Route::post( '/file-manager', 'Ajax\MediaController@fileManagerTable');

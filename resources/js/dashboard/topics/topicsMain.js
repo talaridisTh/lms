@@ -7,7 +7,50 @@ import utilities from '../main';
 //!				EventListeners				#
 //!##########################################
 
-$("#select-all-topics").change(function () {
+$("#new-gradient-checkbox").on("change", function() {
+	let modal = $("#add-topic-modal");
+	let gpicker = modal.find(".gpickr");
+	let gInput = $("#gradient-input");
+
+	if ( this.checked ) {
+		gpicker.css("display", "inline-flex");
+		gInput.prop("disabled", false);
+	}
+	else {
+		gpicker.css("display", "none");
+		gInput.prop("disabled", true);
+	}
+})
+
+$("#save-edit-gradient").on( "click", function() {
+	let topicId = $("#topic-id").val();
+	let color = $("#topic-gradient").val();
+
+	axios.patch( "/topics/change/color", {
+		topicId, color
+	})
+	.then( res => {
+		utilities.toastAlert("success", "Το Gradient άλλαξε!")
+		topicsDatatable.ajax.reload( null, false );
+		$("#color-modal").modal('hide');
+	})
+	.catch( err => {
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+});
+
+$("#color-modal").on("show.bs.modal", function(event) {
+	let button = $(event.relatedTarget);
+	let id = button.data('topic-id');
+	let title = button.data('topic-title');
+
+	let modal = $(this);
+	modal.find("#topic-id").val( id );
+	modal.find("#topic-gradient").val("linear-gradient(90deg, rgba(1, 1, 1, 1) 0%,rgba(255, 1, 1, 1) 100%)");
+	modal.find("#color-modal-title").text(`Edit ${title}`);
+});
+
+$("#select-all-topics").on( "change", function () {
 
     let checkbox = $(".js-topic-checkbox");
     let bulk = $("#topic-bulk-action-btn")[0];
@@ -16,7 +59,7 @@ $("#select-all-topics").change(function () {
 
 });
 
-$("#delete-topics-btn").click(function () {
+$("#delete-topics-btn").on( "click", function () {
 
     let checkedBoxes = $(".js-topic-checkbox:checked");
     let ids = [];
@@ -83,9 +126,9 @@ const topicsDatatable = $("#topics-datatable").DataTable({
     columns: [
         {data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false},
         {data: 'title', name: 'title'},
-        {data: 'updated_at', name: 'updated_at', className: "align-middle text-center cursor-default js-updated-at"},
-        {data: 'created_at', name: 'created_at', className: "align-middle text-center cursor-default"},
-        {data: 'color', name: 'color', className: "align-middle text-center cursor-default"},
+        {data: 'updated_at', name: 'updated_at', className: "align-middle text-center cursor-default js-updated-at js-colspan"},
+        {data: 'created_at', name: 'created_at', className: "align-middle text-center cursor-default d-none"},
+        {data: 'color', visible: false,  name: 'color',  className: "align-middle text-center cursor-default"},
     ],
     language: utilities.tableLocale,
     fnInitComplete: function (oSettings, json) {
@@ -98,12 +141,12 @@ const topicsDatatable = $("#topics-datatable").DataTable({
     },
     drawCallback: function () {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-        $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer js-updated-at");
+        $(".js-remove-table-classes > thead > tr > th").removeClass("d-none cursor-pointer js-updated-at js-colspan");
+		$(".js-colspan").attr("colspan", 2);
 
         showEditInit();
         editInputInit();
         topicCheckboxesInit();
-        openModalColor();
     }
 });
 
@@ -157,7 +200,7 @@ function topicCheckboxesInit() {
     let topicCheckbox = $(".js-topic-checkbox");
     let bulk = $("#topic-bulk-action-btn")[0];
 
-    topicCheckbox.change(function () {
+    topicCheckbox.on( "change", function () {
         utilities.mainCheckboxSwitcher(primaryCheckbox, topicCheckbox, bulk);
     });
 
@@ -166,7 +209,7 @@ function topicCheckboxesInit() {
 function showEditInit() {
     let editBtns = $(".js-quick-edit");
 
-    editBtns.click(function () {
+    editBtns.on( "click", function () {
         let row = this.findParent(2);
         let title = row.getElementsByClassName("js-title")[0];
         let input = row.getElementsByClassName("js-edit")[0];
@@ -251,79 +294,35 @@ function resetBulk(bulkBtn, checkbox) {
 }
 
 //!##############################################
-//!				gradient			            #
-
-
+//!					Initializers	            #
 //!##############################################
-let body = document.querySelector(".modal-body");
-let color1 = document.querySelector(".color1");
-let color2 = document.querySelector(".color2");
-let randomBtn = document.querySelector(".random");
 
+const gpickr = new GPickr({
+	el: '#new-topic-gradient',
+	stops: [
+        ['rgba(66, 68, 90, 1)', 0],
+        ['rgba(32, 182, 221, 1)', 1]
+    ]
+})
 
-const openModalColor = () => {
-    let previewButton = null
+// radial-gradient(circle at right, rgba(66, 68, 90, 1) 0%,rgba(32, 182, 221, 1) 100%)
 
-    $(".js-color-modal").click(function () {
+gpickr.on('change', instance => {
 
-        $('.js-color-modal').unbind();
-        previewButton = this
-    })
+	$("#gradient-input").val( instance.getGradient() )
 
-    $(".js-color-button").click("click", function () {
-        $('.js-color-button').unbind();
+});
 
-        colorAxios(previewButton.dataset.topic, `linear-gradient(to right, ${color1.value}, ${color2.value}`)
-        $("#color-modal").modal('hide')
-    })
-}
+const gpickrEdit = new GPickr({
+	el: '#select-edit-gradient',
+	stops: [
+        ['rgb(1,1,1)', 0],
+        ['rgb(255,1,1)', 1]
+    ]
+})
 
-//
-// background: transparent;
-// border: none;
-// position: absolute;
-const colorAxios = async (topicId, color,) => {
+gpickrEdit.on('change', instance => {
 
-    try {
-        const res = await axios.patch('/topics/change/color', {
-            color,
-            topicId
-        })
-        if (res.status == 200) {
-            topicsDatatable.ajax.reload()
-        }
+	$("#topic-gradient").val( instance.getGradient() )
 
-    } catch
-        (e) {
-        console.log(e)
-    }
-
-}
-
-randomColorValues();
-
-updateGradient();
-
-function updateGradient() {
-    body.style.background = `linear-gradient(to right, ${color1.value}, ${color2.value}`;
-}
-
-function getRandomColor() {
-    let letters = "0123456789ABCDEF".split("");
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-        color += letters[Math.round(Math.random() * 15)];
-    }
-    return color;
-}
-
-function randomColorValues() {
-    color1.value = getRandomColor();
-    color2.value = getRandomColor();
-
-    updateGradient();
-}
-
-color1.addEventListener("input", updateGradient);
-color2.addEventListener("input", updateGradient);
-randomBtn.addEventListener("click", randomColorValues);
+});

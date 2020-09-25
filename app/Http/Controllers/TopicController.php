@@ -36,12 +36,15 @@ class TopicController extends Controller
      */
     public function store(Request $request)
     {
+		// dd( $request->all() );
 		$request->validate([
 			'title' => 'required|unique:topics'
 		]);
+
 		$topic = new Topic;
 		$topic->title = $request->title;
 		$topic->slug = Str::slug($request->title, "-");
+		$topic->color = isset($request->gradient) ? $request->gradient : null;
 		$topic->save();
 
 		return redirect("/dashboard/topics");
