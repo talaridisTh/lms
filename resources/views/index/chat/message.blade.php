@@ -9,7 +9,7 @@
     <div class="content">
 
         <!-- start page title -->
-        <div class="row">
+        <div class="row mt-5">
             <div class="col-12">
                 <div class="page-title-box">
                     <div class="page-title-right">
@@ -26,7 +26,7 @@
 
         <div class="row">
             <!-- start chat users-->
-            <div class="col-xl-3 col-lg-6 order-lg-1 order-xl-1">
+            <div class="col-xl-3 col-lg-6 order-lg-1 order-xl-1" id="js-chat" data-auth-id="{{auth()->id()}}">
                 <div class="card">
                     <div class="card-body p-0">
                         <ul class="nav nav-tabs nav-bordered">
@@ -66,18 +66,26 @@
                                 <div class="row">
                                     <div class="col">
                                         <div data-simplebar style="max-height: 550px">
-                                            @foreach($instructors as $instructor)
-                                                 <a href="javascript:void(0);" data-user-id="{{$instructor->id}}" class="js-message-chat text-body">
+                                            @foreach($users as $instructor)
+                                                 <a id="{{ $instructor->id }}" href="javascript:void(0);" data-user-id="{{$instructor->id}}" class="js-message-chat text-body">
                                                 <div class="media mt-1 p-2">
 {{--                                                    <img src="{{ $instructor->cover}} " class="mr-2 rounded-circle" height="48" alt="{{$instructor->first_name}}" />--}}
                                                     <div class=" media-body" >
+
                                                         <h5 class="mt-0 mb-0 font-14">
                                                             <span class="float-right text-muted font-12">4:30am</span>
-                                                            {{ $instructor->fullName}}
+                                                            {{ App\User::find($instructor->id)->fullName}}
                                                         </h5>
                                                         <p class="mt-1 mb-0 text-muted font-14">
-                                                            <span class="w-25 float-right text-right"><span class="badge badge-danger-lighten">3</span></span>
-                                                            <span class="w-75">How are you today?</span>
+
+                                                            <span class="w-25 float-right text-right unread-container">
+
+                                                                @if(($instructor->unread))
+                                                                <span class="unread-message badge badge-danger-lighten">{{$instructor->unread}}</span>
+                                                                @endif
+                                                            </span>
+
+                                                            <span class="w-75 preview-message"></span>
                                                         </p>
                                                     </div>
                                                 </div>

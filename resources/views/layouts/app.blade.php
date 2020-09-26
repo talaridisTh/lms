@@ -136,6 +136,7 @@
 </form>
 
 <!-- bundle -->
+<script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script src="/assets/js/vendor.min.js"></script>
 <script src="/assets/js/app.min.js"></script>
 <script src="{{ mix('js/app.js') }}"></script>

@@ -11,6 +11,7 @@ use App\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
@@ -114,12 +115,8 @@ class HomeController extends Controller {
     {
 
 
-       dd(User::find(1)->courses()->whereIn("title", function ($subquery) {
-            $subquery->from("topics")
-                ->where("id", 1)
-                ->select("id")
-                ->get();
-        })->get());
+
+
     }
 
 }

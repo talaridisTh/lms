@@ -1,9 +1,9 @@
 
 
-        <div class="card">
+            <div class="card testa">
             <div class="card-body">
-                <ul class="conversation-list" data-simplebar style="max-height: 800px">
-                    @foreach($message as $msg)
+                <ul class="conversation-list testa" data-simplebar style="max-height: 800px">
+                    @forelse($message as $msg)
                     <li class="clearfix {{$msg->from==Auth::id()? "odd":""}}">
                         <div class="chat-avatar">
                             <img src="assets/images/users/avatar-5.jpg" class="rounded" alt="Shreyu N" />
@@ -11,7 +11,8 @@
                         </div>
                         <div class="conversation-text">
                             <div class="ctext-wrap">
-                                <i>{{App\User::find($msg->id)->fullName}}</i>
+
+                                <i>{{App\User::find($msg->from)->fullName}}</i>
                                 <p>
                                     {{$msg->message}}
                                 </p>
@@ -28,7 +29,10 @@
                             </div>
                         </div>
                     </li>
-                    @endforeach
+                    @empty
+
+                        <h4>den iparxi</h4>
+                    @endforelse
                 </ul>
 
                 <div class="row">
