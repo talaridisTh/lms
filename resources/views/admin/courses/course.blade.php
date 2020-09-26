@@ -479,10 +479,10 @@
 				
 									<div class="form-group">
 										<label for="topic">Topic</label>
-										<select form="edit-course-form" 
+										<select form="edit-course-form" id="topics-select"
 											class="select2 form-control select2-multiple"
-											name="topics[]" data-toggle="select2"
-											multiple="multiple" data-placeholder="Επιλέξτε Topics...">
+											name="topics[]" multiple="multiple"
+											placeholder="Επιλέξτε Topics...">
 														
 											@foreach ($topics as $topic)
 

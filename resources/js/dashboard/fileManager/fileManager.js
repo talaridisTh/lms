@@ -74,7 +74,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	order: [ 1, "asc" ],
 	columns: [
 		// { data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
-		{ data: "image", className: "cursor-default", searchable: false, orderable: false },
+		{ data: "image", className: "text-center cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
 		{ data: "type", name: "type", className: "align-middle text-center", width: "5%", searchable: false },
 		{ data: "ext", name: "ext", className: "align-middle text-center cursor-default"},

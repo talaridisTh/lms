@@ -1284,6 +1284,11 @@ function endDate( input ) {
 //!				Initializations				#
 //!##########################################
 
+$("#topics-select").select2({
+	closeOnSelect: false,
+	placeholder: "Επιλέξτε Topics..."
+})
+
 $("#version-select").select2({
 	minimumResultsForSearch: -1
 })
