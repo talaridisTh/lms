@@ -21,7 +21,7 @@ class MessageController extends Controller {
         where users.id != " . Auth::id() . "
         group by users.id, users.email");
 
-        dd($users);
+
 
 
         return view("index.chat.message", compact("users"));

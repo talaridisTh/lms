@@ -75,6 +75,20 @@ class User extends Authenticatable {
         return $this->belongsToMany(Course::class)->withTimestamps();
     }
 
+
+    public function receiverMessasge()
+    {
+
+        return $this->hasMany(Message::class, "from","id");
+    }
+
+    public function sentMessage()
+    {
+
+        return $this->hasMany(Message::class, "to","id");
+    }
+
+
     public function guest()
     {
 
@@ -83,6 +97,8 @@ class User extends Authenticatable {
             ->withTimestamps()
             ->withPivot("user_link",'id');
     }
+
+
 
     public function role()
     {

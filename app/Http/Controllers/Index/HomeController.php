@@ -115,6 +115,10 @@ class HomeController extends Controller {
     {
 
 
+        $users = User::find(1)->sentMessage;
+
+
+        dd($users);
 
 
     }

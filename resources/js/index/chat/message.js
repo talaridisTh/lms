@@ -107,5 +107,5 @@ const onChangePage = () => {
         element.scrollTop = element.scrollHeight - element.clientHeight;
         $('html').scrollTop($('html')[0].scrollHeight+230);
 
-    }, 1);
+    }, 10);
 }
