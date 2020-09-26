@@ -79,17 +79,17 @@ class Material extends Model
 
     }
 
-    public function getVideoLinkAttribute($value)
-    {
-        if (strlen($value) >12){
+    // public function getVideoLinkAttribute($value)
+    // {
+    //     if (strlen($value) >12){
 
-            $test = explode("/", $value);
+    //         $test = explode("/", $value);
 
-        return "https://player.vimeo.com/video/" . $test[3];
-    }else
-        return $value;
+    //     return "https://player.vimeo.com/video/" . $test[3];
+    // }else
+    //     return $value;
 
-    }
+    // }
 
     public function getTypeAttribute($value)
     {
