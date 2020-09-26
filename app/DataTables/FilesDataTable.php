@@ -38,12 +38,16 @@ class FilesDataTable extends DataTable
 			})
 			->editColumn("ext", function($data) {
 				$icons = [
-					"mp3" => "mdi-music-clef-treble text-warning",
+					"mp3" => "mdi-music-clef-treble",
 					"pdf" => "mdi-file-pdf-outline text-danger",
-					"doc" => "mdi-file-document-outline text-primary",
+					"doc" => "mdi-file-document-outline text-teal",
+					"odt" => "mdi-file-document-outline text-teal",
+					"rtf" => "mdi-file-document-outline text-teal",
 					"xl" => "mdi-file-table-box text-success",
-					"pp" => "mdi-file-powerpoint-outline text-danger",
-					"zip" => "mdi-folder-zip-outline text-warning"
+					"ods" => "mdi-file-table-box text-success",
+					"pp" => "mdi-file-powerpoint-outline text-orange",
+					"odp" => "mdi-file-powerpoint-outline text-orange",
+					"zip" => "mdi-folder-zip-outline text-warning",
 				];
 
 				foreach( $icons as $type => $icon ) {

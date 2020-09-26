@@ -3638,7 +3638,7 @@ b[role=presentation] {
 }
 
 .content-width {
-  max-width: 1530px;
+  max-width: 1580px;
 }
 
 .ranges {
@@ -3817,6 +3817,31 @@ figure.image-center {
 
 .border-right-gray {
   border-right: 1px solid #aab8c5;
+}
+
+.embed-responsive {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  padding-bottom: 56.25%;
+  padding-top: 25px;
+  height: 0;
+}
+
+.embed-responsive iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.custom-select2-warning.is-invalid + span > span > span {
+  border: 1px solid #ff5b5b !important;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff5b5b' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23ff5b5b' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+  background-repeat: no-repeat;
+  background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+  background-position: right calc( 1.6em + .1875rem) center;
 }
 
 /*!

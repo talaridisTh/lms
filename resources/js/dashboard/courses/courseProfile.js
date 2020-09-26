@@ -15,11 +15,23 @@ import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
-
-
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
+
+$("#title").on("input", function() {
+	if (this.value) {
+		this.classList.remove("is-invalid");
+	}
+});
+
+$("#version-select").on("change", function() {
+
+	if (this.value) {
+		this.classList.remove("is-invalid");
+	}
+
+})
 
 $("#add-new-material-btn").on("click", function() {
 	let priority = $("#store-material-priority").val();
@@ -1271,6 +1283,11 @@ function endDate( input ) {
 //!##########################################
 //!				Initializations				#
 //!##########################################
+
+$("#topics-select").select2({
+	closeOnSelect: false,
+	placeholder: "Επιλέξτε Topics..."
+})
 
 $("#version-select").select2({
 	minimumResultsForSearch: -1

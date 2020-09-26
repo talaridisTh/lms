@@ -51,8 +51,27 @@ class FileManagerDataTable extends DataTable
 			})
 			->addColumn('image', function($data) {
 
+				$icons = [
+					"mp3" => "mdi-music-clef-treble",
+					"pdf" => "mdi-file-pdf-outline text-danger",
+					"doc" => "mdi-file-document-outline text-teal",
+					"odt" => "mdi-file-document-outline text-teal",
+					"rtf" => "mdi-file-document-outline text-teal",
+					"xl" => "mdi-file-table-box text-success",
+					"ods" => "mdi-file-table-box text-success",
+					"pp" => "mdi-file-powerpoint-outline text-orange",
+					"odp" => "mdi-file-powerpoint-outline text-orange",
+					"zip" => "mdi-folder-zip-outline text-warning",
+				];
+
+				
+
 				if ( is_null($data->thumbnail_path) ) {
-					return "<i class='h1 mdi mdi-file-document-outline'></i>";
+					foreach( $icons as $type => $icon ) {
+						if ( fnmatch("$type*", $data->ext ) ) {
+							return "<i class='h3 mdi {{ $icon }}' style='font-size: 105px;' title='{{ $data->ext }}'></i>";
+						}
+				}
 				}
 
 				return "<img class='img-fluid' style='max-width: 120px;' src='".url($data->thumbnail_path)."' alt='$data->original_name' />";
