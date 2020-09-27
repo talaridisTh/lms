@@ -42,6 +42,9 @@ class MaterialController extends Controller {
 
     public function store(Request $request)
     {
+
+		// dd($request->all());
+
 		$material = new Material();
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
@@ -101,8 +104,6 @@ class MaterialController extends Controller {
 
     public function update(Request $request, Material $material)
     {
-
-		// dd($request->all());
 
 		$request->validate([
 			'title' => 'required',
