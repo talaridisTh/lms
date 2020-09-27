@@ -115,7 +115,10 @@ class HomeController extends Controller {
     {
 
 
-        $users = User::find(1)->sentMessage;
+        $users = DB::select("select users.id,users.email,messages.message, count(is_read) as unread
+        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
+        where users.id != " . Auth::id() . "
+        group by users.id, messages.id");
 
 
         dd($users);

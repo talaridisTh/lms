@@ -249,6 +249,34 @@ class User extends Authenticatable {
         return $request->hasValidSignature()==1? " Ενεργο": " Εληξε";
     }
 
+    public  static function getlastMessage($user){
+	    if(isset(User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->message)){
+
+	       return User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->message;
+        }else
+        {
+
+            return "";
+        }
+
+
+
+    }
+
+    public  static function getlastHour($user){
+        if(isset(User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->updated_at)){
+
+            return User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->updated_at->diffForHumans();
+        }else
+        {
+
+            return "";
+        }
+
+
+
+    }
+
 
 
     // $user->fullName  // Onoma Epitheto
