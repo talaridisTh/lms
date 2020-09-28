@@ -5,10 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model {
 
-    use SoftDeletes;
+	use SoftDeletes;
+    use HasFactory;
 
     public function media()
     {

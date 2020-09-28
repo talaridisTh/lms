@@ -1,8 +1,9 @@
 <?php
 
+use App\Bundle;
 use Illuminate\Database\Seeder;
 
-class TopicableSeeder extends Seeder
+class BundleSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class TopicableSeeder extends Seeder
      */
     public function run()
     {
-        //
+		Bundle::factory()->times(3)->create();
     }
 }

@@ -1,27 +1,42 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\CourseMaterial;
-use Faker\Generator as Faker;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
-$factory->define(CourseMaterial::class, function (Faker $faker) {
+class CourseMaterialFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = CourseMaterial::class;
 
-	$year = rand(2018, 2021);
-	$month = rand(1, 12);
-	$day = rand(1, 31);
-	$hours = rand(0, 23);
-	$mins = rand(0, 59);
-	$secs = rand(0, 59);
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+		$year = rand(2018, 2021);
+		$month = rand(1, 12);
+		$day = rand(1, 31);
+		$hours = rand(0, 23);
+		$mins = rand(0, 59);
+		$secs = rand(0, 59);
 
-	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
+		$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
-    return [
-		'course_id' => $faker->numberBetween( 1, 15),
-		'material_id' => $faker->numberBetween( 1, 10),
-		'status' => $faker->numberBetween( 0, 1 ),
-		'priority' => $faker->numberBetween( 1, 10000),
-		'publish_at' => $date
-    ];
-});
+        return [
+            'course_id' => $this->faker->numberBetween( 1, 15),
+			'material_id' => $this->faker->numberBetween( 1, 10),
+			'status' => $this->faker->numberBetween( 0, 1 ),
+			'priority' => $this->faker->numberBetween( 1, 10000),
+			'publish_at' => $date
+        ];
+    }
+}

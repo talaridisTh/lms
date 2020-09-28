@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Course;
 
-class MediableSeeder extends Seeder
+class CourseSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class MediableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Course::factory()->times(5)->create();
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Watchlistable extends Model
 {
+    use HasFactory;
 
     public function materials() {
 

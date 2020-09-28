@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -13,12 +15,12 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-         Role::create(['name' => 'admin']);
-         Role::create(['name' => 'instructor']);
-         Role::create(['name' => 'partner']);
-         Role::create(['name' => 'student']);
-         Role::create(['name' => 'Υδρογειος']);
-         Role::create(['name' => 'trial user']);
+        Role::create(['name' => 'admin']);
+        Role::create(['name' => 'instructor']);
+        Role::create(['name' => 'partner']);
+        Role::create(['name' => 'student']);
+        Role::create(['name' => 'Υδρογειος']);
+        Role::create(['name' => 'trial user']);
 
         Permission::create(['name' => 'edit user']);
         Permission::create(['name' => 'delete user']);

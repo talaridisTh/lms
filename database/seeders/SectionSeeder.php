@@ -1,8 +1,10 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 
-class BundleSeeder extends Seeder
+class SectionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +13,6 @@ class BundleSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Bundle::class, 3)->create();
+        //
     }
 }

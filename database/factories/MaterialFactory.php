@@ -1,38 +1,51 @@
 <?php
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+namespace Database\Factories;
 
 use App\Material;
-use App\User;
-use Faker\Generator as Faker;
+use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
+class MaterialFactory extends Factory
+{
+    /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Material::class;
 
-$factory->define(Material::class, function (Faker $faker) {
+    /**
+     * Define the model's default state.
+     *
+     * @return array
+     */
+    public function definition()
+    {
+		static $counter = 3;
 
-	static $counter = 3;
+		$year = rand(2015, 2020);
+		$month = rand(1, 12);
+		$day = rand(1, 31);
+		$hours = rand(0, 23);
+		$mins = rand(0, 59);
+		$secs = rand(0, 59);
 
-	$year = rand(2015, 2020);
-	$month = rand(1, 12);
-	$day = rand(1, 31);
-	$hours = rand(0, 23);
-	$mins = rand(0, 59);
-	$secs = rand(0, 59);
+		$types = ['Announcement', 'Video','Link', "Lesson", "Lesson", "Lesson"];
 
-	$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
+		$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
-
-
-    return [
-		'title' => "Title of Lesson ".$counter ,
-		'subtitle' => "Subtitle of Lesson ".$counter ,
-		'cover' => $faker->imageUrl(),
-		'description' => "Description of Lesson ".$counter ,
-		'content' => "Content of Lesson ".$counter++ ,
-		'status' => rand( 0, 1 ),
-		'slug' => $faker->slug,
-		'type' => $faker->numberBetween( 0, 1) == 0 ? "Lesson" : $faker->fileExtension,
-		'created_at' => $date->format('Y-m-d H:i:s'),
-		'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
-    ];
-});
+        return [
+            'title' => "Title of Lesson ".$counter ,
+			'subtitle' => "Subtitle of Lesson ".$counter ,
+			'cover' => $this->faker->imageUrl(),
+			'description' => "Description of Lesson ".$counter ,
+			'content' => "Content of Lesson ".$counter++ ,
+			'status' => rand( 0, 1 ),
+			'slug' => $this->faker->slug,
+			'type' => $types[ rand(1,5) ],
+			'created_at' => $date->format('Y-m-d H:i:s'),
+			'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
+        ];
+    }
+}

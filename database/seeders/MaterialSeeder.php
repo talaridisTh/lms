@@ -1,8 +1,9 @@
 <?php
 
+use App\Material;
 use Illuminate\Database\Seeder;
 
-class TopicSeeder extends Seeder
+class MaterialSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,6 +12,6 @@ class TopicSeeder extends Seeder
      */
     public function run()
     {
-        factory( App\Topic::class, 8 )->create();
+        Material::factory()->times(5)->create();
     }
 }
