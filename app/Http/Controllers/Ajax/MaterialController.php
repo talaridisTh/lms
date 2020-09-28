@@ -36,14 +36,7 @@ class MaterialController extends Controller {
     public function addCourseMaterial(AddCourseInsideMaterialsDataTable $dataTable)
     {
         return $dataTable->render('add-course-material');
-	}
-	
-	public function remainingFilesTable(FilesDataTable $dataTable) {
-
-		return $dataTable->render('remaning.files');
-
-	}
-	
+	}	
 
     public function toggleStatus(Material $material, Request $request)
     {
@@ -313,33 +306,6 @@ class MaterialController extends Controller {
 
 		$material->media()->wherePivot("usage", $request->usage)->detach();
 
-	}
-
-	public function addFiles(Request $request) {
-
-		$material = Material::find($request->materialId);
-
-		foreach( $request->ids as $id ) {
-			$material->media()->attach( $id, ["usage" => 3]);
-		}
-
-		$files = $material->media()->where("type", 1)->get();
-
-		return view('components/admin/filesTable', ['files' => $files]);
-	}
-
-	public function removeFiles( Request $request ) {
-
-		// dd();
-		$material = Material::find( $request->materialId );
-
-		foreach( $request->ids as $id ) {
-			$material->media()->detach($id);
-		}
-
-		$files = $material->media()->where("type", 1)->get();
-
-		return view('components/admin/filesTable', ['files' => $files]);
 	}
 
 }

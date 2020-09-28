@@ -286,7 +286,7 @@
 
                                     <input id="material-file-upload" type="text">
                                 </div>
-                            @endif
+                            @endisset
 
 
                         </div><!-- ./form inputs -->

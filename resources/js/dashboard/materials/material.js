@@ -53,17 +53,15 @@ $("#remove-all-files-btn").on("click", function() {
 		cancelButtonText: `Ακύρωση`,
 	}).then((result) => {
 		if (result.isConfirmed) {
-			removeMaterialFiles(ids);
+			removeFiles(ids);
 		}
 	})
-
-
 })
 
 $(".js-audio-btn").on("click", audioPlayerHandler);
 
 $(".js-remove-file").on("click", function() {
-	removeMaterialFiles( [this.dataset.fileId] );
+	removeFiles( [this.dataset.fileId] );
 })
 
 $("#remove-all-images-btn").on("click", function() {
@@ -173,11 +171,12 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: '/material/remaining-files',
-        headers: config.headers.csrf,
+        url: '/media/remaining-files',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
         data: {
-            materialId
+			namespace,
+			id: materialId
         }
     },
     columns: [
@@ -204,8 +203,10 @@ function addFilesBtnInit() {
 
 function addMaterialFiles(ids) {
 
-	axios.post("/material/add-files", {
-		materialId, ids
+	axios.post("/media/add-files", {
+		namespace, 
+		modelId: materialId,
+		ids
 	})
 	.then( res => {
 		let container = $("#files-cnt");
@@ -216,7 +217,7 @@ function addMaterialFiles(ids) {
 
 		let removeBtns = container.find(".js-remove-file");
 		removeBtns.on("click", function() {
-			removeMaterialFiles( [this.dataset.fileId] );
+			removeFiles( [this.dataset.fileId] );
 		});
 
 		$("#remove-all-files-btn").removeClass("d-none");
@@ -230,10 +231,12 @@ function addMaterialFiles(ids) {
 
 }
 
-function removeMaterialFiles(ids) {
+function removeFiles(ids) {
 
-	axios.post("/material/remove-files", {
-		materialId, ids
+	axios.post("/media/remove-files", {
+		namespace, 
+		modelId: materialId,
+		ids
 	})
 	.then( res => {
 		let container = $("#files-cnt");
@@ -244,7 +247,7 @@ function removeMaterialFiles(ids) {
 
 		let btns = container.find(".js-remove-file");
 		btns.on("click", function() {
-			removeMaterialFiles( [this.dataset.fileId] );
+			removeFiles( [this.dataset.fileId] );
 		});
 
 		if ( btns.length == 0 ) {
@@ -816,7 +819,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 				let removeBtns = container.find(".js-remove-file");
 				removeBtns.on("click", function() {
-					removeMaterialFiles( [this.dataset.fileId] );
+					removeFiles( [this.dataset.fileId] );
 				});
 
 				let audioPlayerBtns = container.find(".js-audio-btn");

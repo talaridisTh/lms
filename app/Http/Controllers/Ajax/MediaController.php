@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use App\DataTables\FilesDataTable;
 
 class MediaController extends Controller
 {
@@ -98,6 +99,12 @@ class MediaController extends Controller
 
 	}
 
+	public function remainingFilesTable(FilesDataTable $dataTable) {
+
+		return $dataTable->render('remaning.files');
+
+	}
+
     /**
      * Show the form for creating a new resource.
      *
@@ -134,7 +141,33 @@ class MediaController extends Controller
 		$details->caption = $request->caption;
 		$details->description = $request->description;
 		$details->save();
-    }
+	}
+	
+	public function addFiles(Request $request) {
+
+		$model = $request->namespace::find($request->modelId);
+
+		foreach( $request->ids as $id ) {
+			$model->media()->attach( $id, ["usage" => 3]);
+		}
+
+		$files = $model->media()->where("type", 1)->get();
+
+		return view('components/admin/filesTable', ['files' => $files]);
+	}
+
+	public function removeFiles( Request $request ) {
+
+		$model = $request->namespace::find( $request->modelId );
+
+		foreach( $request->ids as $id ) {
+			$model->media()->detach($id);
+		}
+
+		$files = $model->media()->where("type", 1)->get();
+
+		return view('components/admin/filesTable', ['files' => $files]);
+	}
 
     /**
      * Display the specified resource.
