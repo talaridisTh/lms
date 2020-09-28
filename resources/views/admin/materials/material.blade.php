@@ -77,7 +77,6 @@
                 </div>
                 <div class="modal-body">
 
-
                     <table id="remaining-files-datatable"
                            class="table w-100 nowrap center-not-second js-remove-table-classes">
                         <thead>
@@ -281,7 +280,7 @@
 
 
                                     <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
-                                        @include('components/admin/materials/filesTable', ["files" => $files])
+                                        @include('components/admin/filesTable', ["files" => $files])
                                     </div>
 
 

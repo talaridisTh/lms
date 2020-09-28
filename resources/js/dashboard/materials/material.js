@@ -804,7 +804,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
     server: {
         url: baseUrl,
         process: {
-            url: '/material/files-upload',
+            url: '/media/files-upload',
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
 			},
@@ -827,6 +827,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 			},
 			ondata: function(formData) {
+				formData.append("namespace", "App\\Material");
 				formData.append("id", materialId);
 				return formData
 			}
