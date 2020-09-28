@@ -325,7 +325,7 @@ class MaterialController extends Controller {
 
 		$files = $material->media()->where("type", 1)->get();
 
-		return view('components/admin/materials/filesTable', ['files' => $files]);
+		return view('components/admin/filesTable', ['files' => $files]);
 	}
 
 	public function removeFiles( Request $request ) {
@@ -339,7 +339,7 @@ class MaterialController extends Controller {
 
 		$files = $material->media()->where("type", 1)->get();
 
-		return view('components/admin/materials/filesTable', ['files' => $files]);
+		return view('components/admin/filesTable', ['files' => $files]);
 	}
 
 }
