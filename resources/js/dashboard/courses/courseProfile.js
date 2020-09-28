@@ -264,8 +264,6 @@ $('#all-remainings-checkbox').on( "change", function() {
 
 $('#add-remaingings-btn').on( "click", function() {
 	let checkboxes = $('.js-remainings-checkbox:checked');
-	let lessonsCount = 0;
-	let additionsCount = 0;
 	let ids = [];
 
 	if ( checkboxes.length == 0 ) {
@@ -273,16 +271,6 @@ $('#add-remaingings-btn').on( "click", function() {
 		return;
 	}
 	else {
-		for ( let i = 0; i < checkboxes.length; i++) {
-			ids.push(checkboxes[i].dataset.materialId);
-
-			if ( checkboxes[i].dataset.materialType == "Lesson" ) {
-				lessonsCount++
-			}
-			else {
-				additionsCount++
-			}
-		}
 		postMaterialIds( ids);
 	}
 
@@ -1155,13 +1143,11 @@ function addContent() {
 
 	if ( !valid ) {
 
-
 		Swal.fire(
 			'Προσοχή!',
 			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
 			'info'
-		)
-
+		);
 
 		return
 	}

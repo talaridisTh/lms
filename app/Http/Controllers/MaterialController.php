@@ -75,7 +75,6 @@ class MaterialController extends Controller {
 		}
 
         return redirect( route("material.show",$material->slug) );
-//        return redirect(route("material.index"))->with('create', 'Το μάθημα ' . $material->title . ' δημιουργήθηκε');;
 
     }
 
@@ -143,7 +142,7 @@ class MaterialController extends Controller {
 			"instructors" => $instructors,
 			"types" => $types
 		];
-		// dd("hit");
+
         return view('admin.materials.material')->with($data);
 	}
 

@@ -398,8 +398,19 @@ function changeCoverRequest(namespace, id, url) {
             namespace, id, url
         })
             .then(res => {
-                $("#cover-image")[0].src = `${baseUrl}/${url}`;
-                toastAlert("success", "Το Cover άλλαξε!")
+				let img = $("#cover-image")[0];
+				let removeBtnCnt = $("#remove-cover-btn").parent();
+				
+				img.src = `${baseUrl}/${url}`;
+				img.classList.remove("d-none");
+
+				$("#change-cover-btn").text("Αλλαγή");
+				$("#cover-status").addClass("d-none");
+				
+				removeBtnCnt.removeClass("d-none");
+				removeBtnCnt.addClass("d-flex");
+
+                toastAlert("success", "Το Cover άλλαξε!");
             })
             .catch(err => {
                 console.log(err);

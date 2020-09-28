@@ -116,6 +116,7 @@ Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('u
 //! Dashboard Ajax Media
 Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');
 Route::post("file-details-store", "Ajax\MediaController@store")->name("file.details.store");
+Route::patch("media/remove-cover", "Ajax\MediaController@removeCover");
 
 
 //! Dashboard Ajax Courses Datatables

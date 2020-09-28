@@ -5,11 +5,35 @@ import 'filepond/dist/filepond.min.css';
 
 let materialId = $("#material-course-table")[0].dataset.materialId;
 let materialSlug = $("#material-title")[0].dataset.materialSlug;
+const namespace = "App\\Material";
 const baseUrl = window.location.origin;
 
 //!##################################################
 //!					EventListeners					#
 //!##################################################
+
+$("#remove-cover-btn").on("click", function() {
+	
+	axios.patch( "/media/remove-cover", {
+		namespace,
+		id: materialId
+	})
+	.then( res => {
+
+		let cnt = this.parentElement;
+
+		$("#cover-image").addClass("d-none");
+		$("#cover-status").removeClass("d-none");
+		$("#change-cover-btn").text("Προσθήκη")
+
+		cnt.classList.remove("d-flex");
+		cnt.classList.add("d-none");
+
+	})
+	.catch( err => {
+		console.log(err);
+	})
+});
 
 $("#remove-all-files-btn").on("click", function() {
 
@@ -853,7 +877,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 		"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
 		"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
 		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
-		"application/rtf"
+		"application/rtf", "application/vnd.oasis.opendocument.graphics"
 	],
 });
 
@@ -878,20 +902,6 @@ function audioPlayerHandler() {
 		audio.pause();
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 let dragArea = $("#gallery-cnt")[0];
 dragula( [dragArea], {

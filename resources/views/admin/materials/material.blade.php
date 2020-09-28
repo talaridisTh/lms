@@ -204,20 +204,6 @@
 
 								</div>
 
-
-								
-
-
-
-
-
-
-
-
-
-
-
-                                @isset($material)
                                     <div class="form-group">
                                         <label for="summary">Περίληψη</label>
                                         <textarea id="summary" name="summary"
@@ -248,7 +234,6 @@
                                         >{{ old('content') != "" ? old('content')
 											: (isset($material) ? $material->content : "") }}</textarea>
                                     </div>
-                                @endif
 
                             </form>
 
@@ -414,16 +399,30 @@
                                     </div>
                                     <div class="card-body">
 
-                                        <img id="cover-image" src="{{ url(isset($material)? $material->cover:"" ) }}"
-                                             class="img-fluid"
-                                             class="img-fluid" alt="Cover Image"/>
+                                        <img id="cover-image" src="{{ $material->cover }}"
+                                            class="img-fluid{{ (isset($material) &&  is_null($material->cover)) ? " d-none" : "" }}" alt="Cover Image"/>
+                                        <p id="cover-status" class="text-center{{ (isset($material) &&  !is_null($material->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
 
-                                        <button id="change-cover-btn" class="btn btn-primary btn-block mt-3">
-                                            {{isset($material)?"Αλλαγή Cover":"Προσθηκη Cover"}}
-										</button>
+                                        <div class="form-row mt-2">
+
+                                            <div class="col-md-6 d-flex justify-content-center">
+                                                <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
+                                                    {{isset($material) && !is_null($material->cover) ?"Αλλαγή":"Προσθηκη"}}
+                                                </button>
+
+                                            </div>
+                                            {{-- @if ( isset($material) && !is_null($material->cover) ) --}}
+											<div class="{{ isset($material) && !is_null($material->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+                                                    <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
+                                                        Αφαίρεση
+                                                    </button>
+                                                </div>
+                                            {{-- @endif --}}
+                                        
+                                        </div>
                                     </div> <!-- end card-body -->
                                 </div> <!-- end course info card -->
-                            @endisset
+                        @endisset
 
                         </div>
                     </div>
