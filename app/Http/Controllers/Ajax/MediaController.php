@@ -89,6 +89,15 @@ class MediaController extends Controller
 
 	}
 
+	public function removeCover(Request $request) {
+
+		$model = $request->namespace::find( $request->id );
+
+		$model->cover = null;
+		$model->save();
+
+	}
+
     /**
      * Show the form for creating a new resource.
      *
@@ -214,7 +223,7 @@ class MediaController extends Controller
 
 						$media = new Media;
 						$media->original_name = $originalName;
-						$media->name = $fullname;
+						$media->name = $name;
 						$media->rel_path = "/storage/images/$date/$fullname";
 						$media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
 						$media->ext = $image->getClientOriginalExtension();

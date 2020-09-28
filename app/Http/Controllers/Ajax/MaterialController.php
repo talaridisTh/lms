@@ -336,7 +336,7 @@ class MaterialController extends Controller {
 			"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
 			"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
 			"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
-			"application/rtf"
+			"application/rtf", "application/vnd.oasis.opendocument.graphics"
 		];
 		$date = date('Y.m');
 
@@ -361,7 +361,7 @@ class MaterialController extends Controller {
 
 					$media = new Media;
 					$media->original_name = $originalName;
-					$media->name = $fullname;
+					$media->name = $name;
 					$media->type = 1;
 					$media->rel_path = "/storage/files/$date/$fullname";
 					$media->ext = $file->getClientOriginalExtension();

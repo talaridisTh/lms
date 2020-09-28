@@ -39,7 +39,8 @@ class FilesDataTable extends DataTable
 			->editColumn("ext", function($data) {
 				$icons = [
 					"mp3" => "mdi-music-clef-treble",
-					"pdf" => "mdi-file-pdf-outline text-danger",
+                    "pdf" => "mdi-file-pdf-outline text-danger",
+        			"odg" => "mdi-file-pdf text-danger",
 					"doc" => "mdi-file-document-outline text-teal",
 					"odt" => "mdi-file-document-outline text-teal",
 					"rtf" => "mdi-file-document-outline text-teal",
