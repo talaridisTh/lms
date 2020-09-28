@@ -550,10 +550,24 @@
 										<h4 class="card-title mb-0">Cover</h4>
 									</div>
 									<div class="card-body">
-										<img id="cover-image" src="{{ url($course->cover) }}" class="img-fluid"
-											alt="Cover Image">
+										<img id="cover-image" src="{{ $course->cover }}"
+											class="img-fluid{{ (isset($course) &&  is_null($course->cover)) ? " d-none" : "" }}"
+											alt="Cover Image" />
+										<p id="cover-status" class="text-center{{ (isset($course) &&  !is_null($course->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
 										
-										<button id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</button>
+										<div class="form-row mt-2">
+                                            <div class="col-md-6 d-flex justify-content-center">
+                                                <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
+                                                    {{isset($course) && !is_null($course->cover) ?"Αλλαγή":"Προσθηκη"}}
+                                                </button>
+
+                                            </div>
+											<div class="{{ isset($course) && !is_null($course->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+                                                <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
+                                                    Αφαίρεση
+                                                </button>
+                                            </div>
+                                        </div>
 		
 									</div> <!-- end card-body -->
 								</div> <!-- end course info card -->

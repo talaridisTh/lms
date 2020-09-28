@@ -1,6 +1,7 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
+const namespace = "App\\Course";
 const courseSlug = $("#course-materials-list")[0].dataset.courseSlug
 const baseUrl = window.location.origin;
 
@@ -18,6 +19,29 @@ import 'filepond/dist/filepond.min.css';
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
+
+$("#remove-cover-btn").on("click", function() {
+	
+	axios.patch( "/media/remove-cover", {
+		namespace,
+		id: courseId
+	})
+	.then( res => {
+
+		let cnt = this.parentElement;
+
+		$("#cover-image").addClass("d-none");
+		$("#cover-status").removeClass("d-none");
+		$("#change-cover-btn").text("Προσθήκη")
+
+		cnt.classList.remove("d-flex");
+		cnt.classList.add("d-none");
+
+	})
+	.catch( err => {
+		console.log(err);
+	})
+});
 
 $("#title").on("input", function() {
 	if (this.value) {
