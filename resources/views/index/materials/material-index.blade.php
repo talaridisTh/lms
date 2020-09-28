@@ -4,7 +4,22 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
 
+    <style>
+        .content-page {
+            overflow: initial;
+        }
+        .wrapper {
+            overflow: initial;
+        }
+        .sticky-front{
 
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0px;
+            z-index: 1999;
+        }
+
+    </style>
 @endsection
 
 @section("content")
@@ -38,34 +53,38 @@
             <div class="card-body py-0">
                 <div class="p-1 bg-secondary " style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white " href="{{route('material.show',$materials->slug)}}">
-                        <spant class="">Edit this page</spant>
+                        <span class="">Edit this page</span>
                     </a>
                 </div>
             </div> <!-- end card-body -->
         </div>
         @endrole
-        <div >
-            <div class="row">
-                <div class="col-md-12">
+        <div>
+            <div class="row justify-content-center" style="background-color: black">
+                <div class="col-md-12 position-relative" style="max-width: 150vh;">
+
                     @if($materials->video_link)
-                        <div class="embed-responsive embed-responsive-16by9 " style="background-color: black">
-                            <iframe class="embed-responsive-item"src="https://player.vimeo.com/video/{{$materials->video_link}}" allowfullscreen></iframe>
+                        <div class="embed-responsive " >
+                            <iframe class="embed-responsive-item"
+                                    src="https://player.vimeo.com/video/{{$materials->video_link}}"
+                                    allowfullscreen></iframe>
 
                         </div>
                     @else
-                        <div style="   background-repeat: no-repeat;
+                        <div style="background-repeat: no-repeat;
                             background-size: 100% 100%;
-                            height: 100vh;
+
+                            height: 69vh;
+                            max-width: 100%;
                             margin: 3px auto 0;
                             position: relative;background-image: url('{{url($materials->cover)}}')"></div>
                     @endif
-                </div>
-            </div>
+
         </div>
 
         <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center"
              style=";border-radius: 0; background:{{$course->topics->first()->color}}">
-            <div class="col-md-12   p-0  " style="min-width:1857px;max-width: 1857px">
+            <div class="col-md-12   p-0  " style="min-width:1900px;max-width: 1900px">
                 <div class="row align-items-center p-2">
                     <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
                         <div class="d-flex justify-content-start"></div>
@@ -82,7 +101,7 @@
                     </div>
                     <div class="col-md-4">
                         <div class="row ">
-                            <div class="fixed col-md-12 text-white d-flex align-items-center justify-content-start">
+                            <div class="ml-2 fixed col-md-12 text-white d-flex align-items-center justify-content-start">
                                 <h4>{{$materials->title}}</h4>
                             </div>
 
@@ -159,15 +178,15 @@
                 </div>
                 <div class="col-md-4 pl-3">
                     <div class="row hover-yellow px-2">
-                        <div class="col-md-12  border d-flex justify-content-between"
-                             style="border-radius: 8px; padding: 9px">
+                        <div class="col-md-12   border d-flex justify-content-between"
+                             style="border-radius: 8px; padding: 9px;background-color: #E9EAEB ;">
                             <div class="col-md-2 d-flex align-items-center">
                                 <img height="40" width="40" class="rounded-circle"
                                      src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
                                      alt="">
                             </div>
                             <div class="col-md-10 ">
-                                <a class="d-flex justify-content-center flex-column"
+                                <a class="d-flex  justify-content-center flex-column"
                                    href="{{route('index.userCourse',$course->slug)}}">
                                     <span
                                         class="font-18  text-center text-black font-weight-bold">{{$course->title}}</span>
@@ -182,77 +201,101 @@
 
                         </div>
                     </div>
-                    @if(count($materials->media)>0)
-                        <div class="accordion custom-accordion mb-2 mt-3" id="show-extra-content">
+
+                    @if(count($materials->media->where("type","!=",1))>0)
+
+                        <div class="col-md-12 my-1">
+                            <div
+                                class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
+                                <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
+                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
+                                   data-target="#bs-example-modal-lg">Gallery</a>
+                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
+                                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="swiper-container">
+                                                    <!-- Additional required wrapper -->
+                                                    <div class="swiper-wrapper">
+                                                        <!-- Slides -->
+
+                                                        @foreach($materials->media->where("type","!=",1) as $media)
+                                                            <div class="swiper-slide">
+                                                                <img class="d-block img-fluid"
+                                                                     src="{{url($media->rel_path)}}" alt="First slide">
+                                                            </div>
+                                                        @endforeach
+
+
+                                                    </div>
+                                                    <!-- If we need pagination -->
+                                                    <div class="swiper-pagination"></div>
+
+                                                    <!-- If we need navigation buttons -->
+                                                    <div class="swiper-button-prev"></div>
+                                                    <div class="swiper-button-next"></div>
+
+                                                    <!-- If we need scrollbar -->
+                                                    <div class="swiper-scrollbar"></div>
+                                                </div>
+
+
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
+                        </div>
+
+                    @endif
+                    @if(count($materials->media->where("type","!=",0))>0)
+                        <div class="accordion custom-accordion mb-2" id="extra-content">
                             <div class="card mb-0">
                                 <div class="card-header p-2" id="head-extra-content">
                                     <h5 class="m-0 pl-2">
                                         <a class="custom-accordion-title d-block py-1"
-                                           data-toggle="collapse" href="#extra-content-gallery"
-                                           aria-expanded="true" aria-controls="extra-content-gallery">
-                                            gallery <i
+                                           data-toggle="collapse" href="#collapse-extra-content"
+                                           aria-expanded="true" aria-controls="collapse-extra-content">
+                                            Extra Content<i
                                                 class="mdi mdi-chevron-down accordion-arrow"></i>
                                         </a>
                                     </h5>
                                 </div>
-                                @foreach($materials->media->where("type",'!=',0) as $type => $media)
-                                    <i  class="mdi  h4 {{$materials->getIcon($media->ext)}}"></i>
-                                @endforeach
-                                <div id="extra-content-gallery" class="collapse show"
+
+                                <div id="collapse-extra-content" class="collapse show"
                                      aria-labelledby="head-extra-content"
-                                     data-parent="#show-extra-content">
-                                    <div class="card-body">
-                                        <div class="col-md-12 my-1">
-                                            <div
-                                                class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
-                                                <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
-                                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
-                                                   data-target="#bs-example-modal-lg">Gallery</a>
-                                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
-                                                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-lg">
-                                                        <div class="modal-content">
-                                                            <div class="modal-body">
-                                                                <div class="swiper-container">
-                                                                    <!-- Additional required wrapper -->
-                                                                    <div class="swiper-wrapper">
-                                                                        <!-- Slides -->
+                                     data-parent="#extra-content">
+                                    <div class="card-body" style="padding: 30px">
+                                        @foreach($materials->media->where("type","!=",0) as $media)
+                                            @if($media->ext=="mp3")
 
-                                                                        @foreach($materials->media as $media)
-                                                                            <div class="swiper-slide">
-                                                                                <img class="d-block img-fluid"
-                                                                                     src="{{url($media->rel_path)}}" alt="First slide">
-                                                                            </div>
-                                                                        @endforeach
+                                                <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
+                                                   data-audio-status="paused"></i>
+                                                <audio class="js-audio">
+                                                    <source src="{{ $media->rel_path }}"
+                                                            type="{{ $media->file_info }}">
+                                                </audio>
+                                                <span class=" ml-3">{{$media->original_name}}</span>
+                                            @else
 
+                                                <div class="d-flex flex-column">
 
+                                                    <a class="my-1" href="{{url($media->rel_path)}}">
+                                                        <i class="h3 mdi {{$materials->getIcon($media->ext)}}"></i>
+                                                        <span class=" ml-3">{{$media->original_name}}</span>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        @endforeach
 
-                                                                    </div>
-                                                                    <!-- If we need pagination -->
-                                                                    <div class="swiper-pagination"></div>
-
-                                                                    <!-- If we need navigation buttons -->
-                                                                    <div class="swiper-button-prev"></div>
-                                                                    <div class="swiper-button-next"></div>
-
-                                                                    <!-- If we need scrollbar -->
-                                                                    <div class="swiper-scrollbar"></div>
-                                                                </div>
-
-
-                                                            </div>
-                                                        </div><!-- /.modal-content -->
-                                                    </div><!-- /.modal-dialog -->
-                                                </div><!-- /.modal -->
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     @endif
 
-                    <ul data-simplebar style="max-height: 800px" class="my-2 p-0">
+                    <ul style="max-height: 800px" class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
                             <li class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                 <a class="d-flex align-items-center m"

@@ -76,25 +76,18 @@
 <style>
     .background-image{
         background-image: url('images/login-backgound.png');
-        background-position-x: center;
-        background-position-y: center;
-        background-size: cover ;
-        background-repeat-x: initial;
-        background-repeat-y: initial;
-        background-attachment: initial;
-        background-origin: initial;
-        background-clip: initial;
-        background-color: initial;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+
+        margin: 3px auto 0;
 
     }
-    .wrapper{
-        height: 88% !important;
-    }
+
 </style>
 @section('content')
 
 
-    <div class="container-fluid" style="max-width: 100%; height: 100%">
+    <div class="container-fluid " style=" position: fixed ;max-width: 100%; height: 100%">
         <div class="row" style="height: 100%">
             <div class="col-md-12  col-lg-3 p-4 d-flex flex-column justify-content-around">
                 <div class="row" style="height: 90%">
@@ -186,7 +179,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-9 d-md-none d-lg-block background-image" style="height: 89vh"></div>
+            <div class="col-lg-9 d-md-none d-lg-block background-image"></div>
         </div>
     </div>
 

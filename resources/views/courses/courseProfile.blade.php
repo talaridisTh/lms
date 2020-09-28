@@ -50,11 +50,11 @@
 @php($count=0)
 @section("content")
 
-    <div class="content-page">
+    <div class="content-page" >
         <div class=" ml-5 content-width">
             <div class="row">
                 <div class="col-12">
-                    <div class="page-title-box">
+                    <div class="page-title-box ">
                         <div class="page-title-left">
                             <ol class="breadcrumb p-1 m-0">
                                 <li class="breadcrumb-item"><a href="{{route('home')}}"
@@ -130,12 +130,13 @@
                                 <div class="box-button-subtitle text-light text-center">
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
+                                    <a class="text-white "
+                                       href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
+                                    <button class="bghover  color-topic-second  border  btn btn-secontary ">
 
-                                    <button class="bghover color-topic-second  border  btn btn-secontary ">
-                                        <a class="text-white bghover"
-                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
-                                            Δες το μάθημα</a>
+                                            Δες το μάθημα
                                     </button>
+                                    </a>
                                     @endif
                                 </div>
                             </div>
@@ -152,7 +153,7 @@
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","mdi mdi-file-document-outline")->count()}} Μαθήματα  </span>
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","mdi mdi-file-document-outline")->count()}} Extra  </span>
                     @foreach($topics as $topic)
-                        <span class="topic-title font-weight-bold border px-2">{{$topic}}</span>
+                        <span class="topic-title  border px-2">{{$topic}}</span>
                     @endforeach
                 </div>
             </div>
@@ -195,7 +196,7 @@
                     </div>
                 </div>
                 <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
-                    <ul data-simplebar style="max-height: 800px"  class="m-0 p-0">
+                    <ul  style="max-height: 800px"  class="m-0 p-0">
                         @foreach($allMaterial as $materials)
                             <li class="list-group-item list-material border   ">
                                 <a class="d-flex align-items-center m"

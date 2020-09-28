@@ -4,7 +4,7 @@
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 	<link href="/vendor/gpickr/gpickr.min.css" rel="stylesheet" type="text/css"/>
 
-    <style>		
+    <style>
 		#topics-datatable td:nth-child(3){
 			padding-bottom: 0px !important;
 
@@ -31,7 +31,7 @@
 			color: #aab8c5 !important;
 			text-align: center !important;
 		}
-		
+
     </style>
 @endsection
 
@@ -67,11 +67,11 @@
                 <div class="modal-body">
 					<input id="topic-id" type="text" name="id" hidden />
 					<input id="topic-gradient" type="text" name="gradient" hidden />
-					
+
 					<div id="select-edit-gradient"></div>
 
 				</div><!-- ./modal body -->
-				
+
 				<div class="modal-footer">
 					<button id="save-edit-gradient" class="btn btn-primary">
 						<i class="mdi mdi-content-save mr-1"></i>
@@ -94,7 +94,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="add-topic-form" action="topics/store" method="POST" autocomplete="off">
+					<form id="add-topic-form" action="topics/store" method="POST" autocomplete="min-width:1857px;max-width: 1857px">
 
 						@csrf
 
@@ -119,7 +119,7 @@
 						</div>
 
 						<input id="gradient-input" class="form-control" type="text" name="gradient" value="radial-gradient(circle at right, rgba(66, 68, 90, 1) 0%,rgba(32, 182, 221, 1) 100%)" hidden />
-					
+
 					</form>
 					<div id="new-topic-gradient"></div>
 				</div>

@@ -359,6 +359,11 @@ select.is-invalid {
 .bghover:hover {
     background: white !important;
     color: gray !important;
+
+     a:hover {
+        color: gray !important;
+    }
+
 }
 
 
@@ -543,7 +548,7 @@ select.is-invalid {
 
 .btn-begin {
     color: black;
-    font-weight: bold;
+
 
     :hover {
         color: #328af1;
@@ -575,8 +580,8 @@ b[role="presentation"] {
 .ribbon-box {
     position: fixed;
     top: 25px;
-    right: 350px;
-    z-index: 10000;
+    right: 439px;
+    z-index: 1000;
     width: 200px;
 
 }

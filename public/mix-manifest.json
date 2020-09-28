@@ -1,7 +1,7 @@
 {
     "/js/app.js": "/js/app.js?id=b48bbdd0ad51f9b8f71d",
     "/css/customArticleStyle.css": "/css/customArticleStyle.css?id=3fdf6a04d6ee18c3997a",
-    "/css/app.css": "/css/app.css?id=d57ce7afa77c37164557",
+    "/css/app.css": "/css/app.css?id=277a29a108db40a73f7f",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=c9061730d51e0a3cdac2",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=3289187efca6d6c86611",
     "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=c4503ce56eca3116f3c6",
@@ -15,5 +15,5 @@
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=40be087f3ad9606996a5",
     "/js/index/chat/message.js": "/js/index/chat/message.js?id=4ccbe7702996a8ffb779",
     "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=92508ba5fcab7f70c8be",
-    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=3f9bfcbf4fae65917b84"
+    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=e78a0a74591d7ea22b45"
 }

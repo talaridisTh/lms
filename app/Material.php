@@ -67,7 +67,7 @@ class Material extends Model {
     public static function getIcon($value)
     {
         $icons = [
-            "mp3" => "mdi-music-clef-treble",
+            "mp3" => "mdi-play-circle-outline",
             "pdf" => "mdi-file-pdf-outline text-danger",
             "doc" => "mdi-file-document-outline text-teal",
             "odt" => "mdi-file-document-outline text-teal",
