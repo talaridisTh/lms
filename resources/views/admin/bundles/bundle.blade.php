@@ -379,19 +379,6 @@
 									<i class="mdi mdi-eye"></i>
 								</a>
 
-
-								{{-- <button form="bundle-edit-form" type="submit"
-									id="update-btn" class="btn btn-primary"
-								>
-									{{ isset($bunle) ? "Ενημέρωση" : "Αποθήκευση" }}
-								</button>
-								
-								@if ( isset($bundle) )	
-									<a id="preview-btn" href="#" class="under-development btn btn-warning"><i class="mdi mdi-eye"></i></a>
-									<button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>
-								@endif --}}
-
-
 							</div>
 		
 							<div class="card">
@@ -406,22 +393,37 @@
 							</div>
 
 
-								<!-- Cover Preview -->
-								<div class="card">
-									<div class="card-header">
-										<h4 class="card-title mb-0">Cover</h4>
-									</div>
-									<div class="card-body">
-										<img id="cover-image" src="{{ !is_null($bundle->cover) ? url($bundle->cover) : "" }}" class="img-fluid" alt="{{ $bundle->title }}">
+							<!-- Cover Preview -->
+							<div class="card">
+								<div class="card-header">
+									<h4 class="card-title mb-0">Cover</h4>
+								</div>
+								<div class="card-body">
+									<img id="cover-image" src="{{ $bundle->cover }}"
+										class="img-fluid{{ (isset($bundle) &&  is_null($bundle->cover)) ? " d-none" : "" }}"
+										alt="Cover Image" />
+									<p id="cover-status" class="text-center{{ (isset($bundle) &&  !is_null($bundle->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
 									
-										<button id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</button>
-									</div> <!-- end card-body -->
-								</div> <!-- end course info card -->
+									<div class="form-row mt-2">
+										<div class="col-md-6 d-flex justify-content-center">
+											<button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
+												{{isset($bundle) && !is_null($bundle->cover) ?"Αλλαγή":"Προσθηκη"}}
+											</button>
 
-								<form id="delete-bundle-form" action="{{ $bundle->id }}" method="POST">
-									@csrf
-									@method('DELETE')
-								</form>
+										</div>
+										<div class="{{ isset($bundle) && !is_null($bundle->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+											<button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
+												Αφαίρεση
+											</button>
+										</div>
+									</div>
+								</div> <!-- end card-body -->
+							</div> <!-- end bundle info card -->
+
+							<form id="delete-bundle-form" action="{{ $bundle->id }}" method="POST">
+								@csrf
+								@method('DELETE')
+							</form>
 
 
 						</div><!-- ./col -->
