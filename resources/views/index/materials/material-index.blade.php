@@ -48,17 +48,9 @@
             <div class="row">
                 <div class="col-md-12">
                     @if($materials->video_link)
-                        <div class=" mb-1 ">
-                            @if(strlen($materials->video_link)<12 )
-                                <iframe src="https://player.vimeo.com/video/{{$materials->video_link}}" frameborder="0"
-                                        scrolling="yes" seamless="seamless"
-                                        style="display:block; width:100%; height:100vh;"></iframe>
+                        <div class="embed-responsive embed-responsive-16by9 " style="background-color: black">
+                            <iframe class="embed-responsive-item"src="https://player.vimeo.com/video/{{$materials->video_link}}" allowfullscreen></iframe>
 
-                            @else
-                                <iframe src="{{$materials->video_link}}" width="1024" height="768" frameborder="0"
-                                        allow="autoplay; fullscreen" allowfullscreen></iframe>
-
-                            @endif
                         </div>
                     @else
                         <div style="   background-repeat: no-repeat;
@@ -190,78 +182,75 @@
 
                         </div>
                     </div>
-
                     @if(count($materials->media)>0)
-                        <div class="col-md-12 my-1">
-                            <div
-                                class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
-                                <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
-                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
-                                   data-target="#bs-example-modal-lg">Gallery</a>
-                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
-                                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <div class="swiper-container">
-                                                    <!-- Additional required wrapper -->
-                                                    <div class="swiper-wrapper">
-                                                        <!-- Slides -->
+                        <div class="accordion custom-accordion mb-2 mt-3" id="show-extra-content">
+                            <div class="card mb-0">
+                                <div class="card-header p-2" id="head-extra-content">
+                                    <h5 class="m-0 pl-2">
+                                        <a class="custom-accordion-title d-block py-1"
+                                           data-toggle="collapse" href="#extra-content-gallery"
+                                           aria-expanded="true" aria-controls="extra-content-gallery">
+                                            gallery <i
+                                                class="mdi mdi-chevron-down accordion-arrow"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+                                @foreach($materials->media->where("type",'!=',0) as $type => $media)
+                                    <i  class="mdi  h4 {{$materials->getIcon($media->ext)}}"></i>
+                                @endforeach
+                                <div id="extra-content-gallery" class="collapse show"
+                                     aria-labelledby="head-extra-content"
+                                     data-parent="#show-extra-content">
+                                    <div class="card-body">
+                                        <div class="col-md-12 my-1">
+                                            <div
+                                                class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
+                                                <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
+                                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
+                                                   data-target="#bs-example-modal-lg">Gallery</a>
+                                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
+                                                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-lg">
+                                                        <div class="modal-content">
+                                                            <div class="modal-body">
+                                                                <div class="swiper-container">
+                                                                    <!-- Additional required wrapper -->
+                                                                    <div class="swiper-wrapper">
+                                                                        <!-- Slides -->
 
-                                                        @foreach($materials->media as $media)
-                                                            <div class="swiper-slide">
-                                                                <img class="d-block img-fluid"
-                                                                     src="{{url($media->rel_path)}}" alt="First slide">
+                                                                        @foreach($materials->media as $media)
+                                                                            <div class="swiper-slide">
+                                                                                <img class="d-block img-fluid"
+                                                                                     src="{{url($media->rel_path)}}" alt="First slide">
+                                                                            </div>
+                                                                        @endforeach
+
+
+
+                                                                    </div>
+                                                                    <!-- If we need pagination -->
+                                                                    <div class="swiper-pagination"></div>
+
+                                                                    <!-- If we need navigation buttons -->
+                                                                    <div class="swiper-button-prev"></div>
+                                                                    <div class="swiper-button-next"></div>
+
+                                                                    <!-- If we need scrollbar -->
+                                                                    <div class="swiper-scrollbar"></div>
+                                                                </div>
+
+
                                                             </div>
-                                                        @endforeach
-
-
-                                                    </div>
-                                                    <!-- If we need pagination -->
-                                                    <div class="swiper-pagination"></div>
-
-                                                    <!-- If we need navigation buttons -->
-                                                    <div class="swiper-button-prev"></div>
-                                                    <div class="swiper-button-next"></div>
-
-                                                    <!-- If we need scrollbar -->
-                                                    <div class="swiper-scrollbar"></div>
-                                                </div>
-
-
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal -->
                                             </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    @endempty
-
-                    {{--                    <div class="swiper-container">--}}
-                    {{--                        <!-- Additional required wrapper -->--}}
-                    {{--                        <div class="swiper-wrapper">--}}
-                    {{--                            <!-- Slides -->--}}
-
-                    {{--                            @foreach($materials->media as $media)--}}
-                    {{--                                <div class="swiper-slide">--}}
-                    {{--                                    <img class="d-block img-fluid" src="{{url($media->rel_path)}}" alt="First slide">--}}
-                    {{--                                </div>--}}
-                    {{--                            @endforeach--}}
-
-
-
-
-                    {{--                        </div>--}}
-                    {{--                        <!-- If we need pagination -->--}}
-                    {{--                        <div class="swiper-pagination"></div>--}}
-
-                    {{--                        <!-- If we need navigation buttons -->--}}
-                    {{--                        <div class="swiper-button-prev"></div>--}}
-                    {{--                        <div class="swiper-button-next"></div>--}}
-
-                    {{--                        <!-- If we need scrollbar -->--}}
-                    {{--                        <div class="swiper-scrollbar"></div>--}}
-                    {{--                    </div>--}}
+                    @endif
 
                     <ul data-simplebar style="max-height: 800px" class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)

@@ -47,7 +47,7 @@
             <div class="col-3">
                 <a href="{{route('home')}}" class="topnav-logo">
                 		    <span class=" stopnav-logo-lg">
-                		        <img class="m-2" height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="">
+                		        <img class="m-2" height="60" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="">
                 		    </span>
                     <span class="topnav-logo-sm">
 {{--                		        <img class="m-2" height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="" height="33">--}}

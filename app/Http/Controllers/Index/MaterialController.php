@@ -14,6 +14,19 @@ class MaterialController extends Controller {
 
     public function show(Course $course, Material $materials)
     {
+        $icons = [
+            "mp3" => "mdi-music-clef-treble",
+            "pdf" => "mdi-file-pdf-outline text-danger",
+            "doc" => "mdi-file-document-outline text-teal",
+            "odt" => "mdi-file-document-outline text-teal",
+            "rtf" => "mdi-file-document-outline text-teal",
+            "xl" => "mdi-file-table-box text-success",
+            "ods" => "mdi-file-table-box text-success",
+            "pp" => "mdi-file-powerpoint-outline text-orange",
+            "odp" => "mdi-file-powerpoint-outline text-orange",
+            "zip" => "mdi-folder-zip-outline text-warning",
+        ];
+
 
         $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
         $priority = $materials->priority($materials->id, $course->id);
@@ -22,7 +35,7 @@ class MaterialController extends Controller {
         $nextMaterial = Course::nextMaterial($course->id, $materialPriority);
         $prevMaterial = Course::prevMaterial($course->id, $materialPriority);
 
-        return view("index.materials.material-index", compact("priority", "materials", "course", "MaterialsOrderByPriority", "nextMaterial", "prevMaterial"));
+        return view("index.materials.material-index", compact("priority", "materials", "course", "MaterialsOrderByPriority", "nextMaterial", "prevMaterial","icons"));
     }
 
     public function dummyPage(Material $materials)
