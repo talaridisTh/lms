@@ -155,7 +155,6 @@ Route::post( 'bundles/add-users', 'Ajax\BundleController@addUsers');
 Route::post( 'materials/materials-datatable', 'Ajax\MaterialController@index' );
 Route::post( 'materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse' )->name("material-courses-datatable");
 Route::post( 'materials/add-course-inside-material', 'Ajax\MaterialController@addCourseMaterial' )->name("add-course-material-datatable");
-Route::post('material/remaining-files', 'Ajax\MaterialController@remainingFilesTable');
 
 //! Dashboard Ajax Bundles CRUD
 Route::post( 'materials/material-types', 'Ajax\MaterialController@materialTypes' );
@@ -174,9 +173,7 @@ Route::post('/materials/cover/upload', 'Ajax\MaterialController@coverUpload')->n
 Route::post('materials/gallery-upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
 Route::patch( 'material/images-sort', 'Ajax\MaterialController@gallerySort');
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
-Route::post('material/files-upload', 'Ajax\MaterialController@fileUpload')->name('user.file.upload');
-Route::post('material/add-files', 'Ajax\MaterialController@addFiles')->name('material.add.file');
-Route::post('material/remove-files', 'Ajax\MaterialController@removeFiles')->name('material.remove.file');
+
 
 
 
@@ -191,6 +188,9 @@ Route::patch( 'topics/change/color', 'Ajax\TopicController@changeColor' );
 //! Dashboard File Manager Datatable
 Route::post( '/file-manager', 'Ajax\MediaController@fileManagerTable');
 
+//! Dashboard Course - Materials Datatable
+Route::post('media/remaining-files', 'Ajax\MediaController@remainingFilesTable');
+
 //! Dashboard File Manager
 Route::get( 'media/images', 'Ajax\MediaController@index' );
 
@@ -202,8 +202,12 @@ Route::post( 'media/gallery-remove', 'Ajax\MediaController@removeFromGallery');
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
 
 Route::post( 'media/upload-images', 'Ajax\MediaController@editorImages' );
+Route::post( 'media/files-upload', 'Ajax\MediaController@fileUpload');
 Route::patch( 'media/cover/replace', 'Ajax\MediaController@coverChange');
 Route::patch( 'media/cover/not-exist', 'Ajax\MediaController@coverChangeNotExist');
+
+Route::post('media/add-files', 'Ajax\MediaController@addFiles');
+Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
 
 //!======================================================
 //! 			End ajax Routes					|

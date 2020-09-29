@@ -1,6 +1,7 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
+const namespace = "App\\Course";
 const courseSlug = $("#course-materials-list")[0].dataset.courseSlug
 const baseUrl = window.location.origin;
 
@@ -18,6 +19,58 @@ import 'filepond/dist/filepond.min.css';
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
+
+$("#remove-all-files-btn").on("click", function() {
+
+	let fileRow = $(".js-file-row")
+	let ids = [];
+
+	for (let i = 0; i < fileRow.length; i++) {
+		ids.push(fileRow[i].dataset.fileId);
+	}
+
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		text: 'Αφαίρεση όλων των αρχείων;',
+		showCancelButton: true,
+		confirmButtonText: `Ναι, αφαίρεση!`,
+		cancelButtonText: `Ακύρωση`,
+	}).then((result) => {
+		if (result.isConfirmed) {
+			removeFiles(ids);
+		}
+	})
+})
+
+$(".js-remove-file").on("click", function() {
+	removeFiles( [this.dataset.fileId] );
+})
+
+$(".js-audio-btn").on("click", audioPlayerHandler);
+
+$("#remove-cover-btn").on("click", function() {
+	
+	axios.patch( "/media/remove-cover", {
+		namespace,
+		id: courseId
+	})
+	.then( res => {
+
+		let cnt = this.parentElement;
+
+		$("#cover-image").addClass("d-none");
+		$("#cover-status").removeClass("d-none");
+		$("#change-cover-btn").text("Προσθήκη")
+
+		cnt.classList.remove("d-flex");
+		cnt.classList.add("d-none");
+
+	})
+	.catch( err => {
+		console.log(err);
+	})
+});
 
 $("#title").on("input", function() {
 	if (this.value) {
@@ -507,6 +560,106 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 	},
 
 });
+
+const remainingFilesTable = $("#remaining-files-datatable").DataTable({
+    order: [ 0, "asc" ],
+    processing: true,
+    serverSide: true,
+    ajax: {
+        url: '/media/remaining-files',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+        type: "post",
+        data: {
+			namespace,
+			id: courseId
+        }
+    },
+    columns: [
+        {data: "original_name", name: "original_name"},
+        {data: "ext", name: "ext", className:"text-center"},
+        {data: "size", name: "size", className:"text-center"},
+        {data: "action", className:"text-center", searchable: false, orderable: false},
+    ],
+    language: utilities.tableLocale,
+    drawCallback: function () {
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+
+		addFilesBtnInit();
+    }
+})
+
+function addFilesBtnInit() {
+	let btns = $(".js-add-file-btn");
+
+	btns.on("click", function() {
+		addCourseFiles( [this.dataset.fileId] );
+	})
+}
+
+function addCourseFiles(ids) {
+
+	axios.post("/media/add-files", {
+		namespace, 
+		modelId: courseId,
+		ids
+	})
+	.then( res => {
+		let container = $("#files-cnt");
+		container.html(res.data);
+
+		let audioBtns = $(".js-audio-btn");
+		audioBtns.on("click", audioPlayerHandler);
+
+		let removeBtns = container.find(".js-remove-file");
+		removeBtns.on("click", function() {
+			removeFiles( [this.dataset.fileId] );
+		});
+
+		$("#remove-all-files-btn").removeClass("d-none");
+
+		$("#remainings-files-modal").modal("hide");
+		remainingFilesTable.ajax.reload(null, false);
+	})
+	.catch( err => {
+		console.log(err);
+	})
+
+}
+
+function removeFiles(ids) {
+
+	axios.post("/media/remove-files", {
+		namespace, 
+		modelId: courseId,
+		ids
+	})
+	.then( res => {
+		let container = $("#files-cnt");
+		container.html(res.data);
+
+		let audioBtns = $(".js-audio-btn");
+		audioBtns.on("click", audioPlayerHandler);
+
+		let btns = container.find(".js-remove-file");
+		btns.on("click", function() {
+			removeFiles( [this.dataset.fileId] );
+		});
+
+		if ( btns.length == 0 ) {
+			$("#remove-all-files-btn").addClass("d-none");
+		}
+		else {
+			$("#remove-all-files-btn").removeClass("d-none");
+		}
+
+		remainingFilesTable.ajax.reload(null, false);
+		utilities.toastAlert("info", "Τα αρχεία αφαιρέθηκαν");
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+}
 
 //!######################################
 //! 		Datatable Filters			#
@@ -1179,6 +1332,28 @@ function addContent() {
 
 }
 
+function audioPlayerHandler() {
+
+	let cnt = this.parentElement;
+	let audio = cnt.getElementsByClassName("js-audio")[0];
+
+	if ( this.dataset.audioStatus == "paused" ) {
+		this.classList.remove("mdi-play-circle-outline");
+		this.classList.add("mdi-pause-circle-outline");
+		this.dataset.audioStatus = "playing";
+
+		audio.currentTime = 0;
+		audio.play();
+	}
+	else {
+		this.classList.remove("mdi-pause-circle-outline");
+		this.classList.add("mdi-play-circle-outline");
+		this.dataset.audioStatus = "paused";
+
+		audio.pause();
+	}
+}
+
 function checkEmpty( container, elmClass) {
 
 	let elements = container.getElementsByClassName( elmClass );
@@ -1411,14 +1586,15 @@ ArticleEditor('#description', {
 		}
 	}
 });
-
-let dropzone = document.getElementById("file-pond");
+FilePond.setOptions({
+    name: 'file[]',
+    allowMultiple: true,
+});
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
-const pond = FilePond.create( dropzone );
 
-FilePond.setOptions({
-	name: 'file[]',
+let dropzone = document.getElementById("file-pond");
+const pond = FilePond.create( dropzone, {
 	server: {
 		url: baseUrl,
 		process: {
@@ -1432,9 +1608,89 @@ FilePond.setOptions({
 		}
 		
 	},
-	allowMultiple: true,
-	allowRemove: false,
-	allowRevert: false,
 	acceptedFileTypes: ['image/png', 'image/jpeg'],
+} );
 
+const courseFileUpload = $("#course-file-upload")[0];
+const courseFilePond = FilePond.create(courseFileUpload, {
+	name: "file",
+    server: {
+        url: baseUrl,
+        process: {
+            url: '/media/files-upload',
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			},
+
+			onload: function(data) {
+
+				let container = $("#files-cnt")
+				container.html(data)
+
+				let removeBtns = container.find(".js-remove-file");
+				removeBtns.on("click", function() {
+					removeFiles( [this.dataset.fileId] );
+				});
+
+				let audioPlayerBtns = container.find(".js-audio-btn");
+				audioPlayerBtns.on("click", audioPlayerHandler)
+
+				$("#remove-all-files-btn").removeClass("d-none");
+				remainingFilesTable.ajax.reload(null, false);
+
+			},
+			ondata: function(formData) {
+				formData.append("namespace", namespace);
+				formData.append("id", courseId);
+				return formData
+			}
+		},
+	},
+    onprocessfile: function (error, data) {
+
+		// setTimeout(function() {
+		// 	materialFilePond.removeFile(data.file);
+		// }, 2000);
+
+		$("#files-cnt").removeClass("d-none");
+		$("#active-files-loading").addClass("d-none");
+	},
+	onprocessfileabort: function() {
+		$("#files-cnt").removeClass("d-none");
+		$("#active-files-loading").addClass("d-none");
+	},
+	onprocessfiles: function() {
+
+		// let instance = materialFilePond.getFiles()
+
+		// for (let i = 0; i < instance.length; i++ ) {
+
+		// 	setTimeout(function() {
+		// 		materialFilePond.removeFile(instance[i].file);
+
+		// 	}, i * 1000);
+
+		// }
+
+	},
+	oninitfile: function(file) {
+		$("#files-cnt").addClass("d-none");
+		$("#active-files-loading").removeClass("d-none");
+	},
+    acceptedFileTypes: [
+		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
+		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+		"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+		"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+		"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+		"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+		"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+		"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+		"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+		"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+		"application/rtf", "application/vnd.oasis.opendocument.graphics"
+	],
 });

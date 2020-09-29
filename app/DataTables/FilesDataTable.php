@@ -25,8 +25,8 @@ class FilesDataTable extends DataTable
 		$query = Media::where("type", 1)->whereNotIn("id", function($subquery) use ($request) {
 			$subquery->select("media_id")->from("mediables")
 				->where([
-					["mediable_id", $request->materialId],
-					["mediable_type", Material::class]
+					["mediable_id", $request->id],
+					["mediable_type", $request->namespace]
 				])
 				->get();
 		})

@@ -11,13 +11,11 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable {
 
-    use Notifiable, HasRoles ;
-
-
-
+    use Notifiable, HasRoles, HasFactory ;
 
     /**
      * The attributes that are mass assignable.

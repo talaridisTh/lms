@@ -77,7 +77,6 @@
                 </div>
                 <div class="modal-body">
 
-
                     <table id="remaining-files-datatable"
                            class="table w-100 nowrap center-not-second js-remove-table-classes">
                         <thead>
@@ -281,13 +280,13 @@
 
 
                                     <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
-                                        @include('components/admin/materials/filesTable', ["files" => $files])
+                                        @include('components/admin/filesTable', ["files" => $files])
                                     </div>
 
 
                                     <input id="material-file-upload" type="text">
                                 </div>
-                            @endif
+                            @endisset
 
 
                         </div><!-- ./form inputs -->
@@ -404,21 +403,17 @@
                                         <p id="cover-status" class="text-center{{ (isset($material) &&  !is_null($material->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
 
                                         <div class="form-row mt-2">
-
                                             <div class="col-md-6 d-flex justify-content-center">
                                                 <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
                                                     {{isset($material) && !is_null($material->cover) ?"Αλλαγή":"Προσθηκη"}}
                                                 </button>
 
                                             </div>
-                                            {{-- @if ( isset($material) && !is_null($material->cover) ) --}}
 											<div class="{{ isset($material) && !is_null($material->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
-                                                    <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
-                                                        Αφαίρεση
-                                                    </button>
-                                                </div>
-                                            {{-- @endif --}}
-                                        
+                                                <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
+                                                    Αφαίρεση
+                                                </button>
+                                            </div>
                                         </div>
                                     </div> <!-- end card-body -->
                                 </div> <!-- end course info card -->

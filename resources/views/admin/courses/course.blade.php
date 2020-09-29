@@ -25,6 +25,70 @@
 
 @section('content')
 
+
+
+
+	<div class="modal fade" id="remainings-files-modal" tabindex="-1" role="dialog"
+         aria-labelledby="remainings-files-modalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-colored-header bg-primary">
+                    <h5 class="modal-title" id="remainings-files-modalLabel">File Library</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <table id="remaining-files-datatable"
+                           class="table w-100 nowrap center-not-second js-remove-table-classes">
+                        <thead>
+                        <tr>
+                            <th class="text-center">Όνομα</th>
+                            <th class="text-center">Τύπος</th>
+                            <th class="text-center">Μέγεθος</th>
+                            <th class="text-center w-5"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="tables-hover-effect"></tbody>
+                        <tfoot>
+                        <tr>
+                            <th class="text-center">Όνομα</th>
+                            <th class="text-center">Τύπος</th>
+                            <th class="text-center">Μέγεθος</th>
+                            <th class="text-center"></th>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<!-- Modal -->
 	<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
@@ -305,9 +369,8 @@
 								<div class="form-row">
 									<div class="form-group col-lg-6">
 										<label for="title">Τίτλος <span class="text-danger">*</span></label>
-										<input id="title" type="text" 
+										<input id="title" type="text" name="title"
 											class="form-control @error('title') is-invalid @enderror" 
-											id="title" name="title" 
 											value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}" 
 											placeholder="Εισάγετε τίτλο...">
 										@error('title')
@@ -359,6 +422,32 @@
 								</div>
 
 							</form>
+
+							@isset($course)
+								<h5>Βοηθητικά Αρχεία</h5>
+                            	<div class="bg-light mb-3">
+                            	    <div class="pt-2 px-2">
+										<button id="file-library-btn" class="btn btn-primary m-1"
+											data-toggle="modal" data-target="#remainings-files-modal">
+                            	            File Library
+                            	        </button>
+                            	        <button id="remove-all-files-btn"
+                            	                class="btn btn-danger m-1 {{ $files->isEmpty() ? 'd-none' : "" }}">
+                            	            Remove all
+                            	        </button>
+                            	    </div>
+                            	    <div id="active-files-loading" class="row d-none my-3">
+                            	        <div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
+                            	    </div>
+                            	    <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
+                            	        @include('components/admin/filesTable', ["files" => $files])
+									</div>
+									
+									<!-- FilePond -->
+                            	    <input id="course-file-upload" type="text">
+                            	</div>
+							@endisset
+
 						</div>
 						<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
 
@@ -550,10 +639,24 @@
 										<h4 class="card-title mb-0">Cover</h4>
 									</div>
 									<div class="card-body">
-										<img id="cover-image" src="{{ url($course->cover) }}" class="img-fluid"
-											alt="Cover Image">
+										<img id="cover-image" src="{{ $course->cover }}"
+											class="img-fluid{{ (isset($course) &&  is_null($course->cover)) ? " d-none" : "" }}"
+											alt="Cover Image" />
+										<p id="cover-status" class="text-center{{ (isset($course) &&  !is_null($course->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
 										
-										<button id="change-cover-btn" class="btn btn-primary btn-block mt-3">Αλλαγή Cover</button>
+										<div class="form-row mt-2">
+                                            <div class="col-md-6 d-flex justify-content-center">
+                                                <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
+                                                    {{isset($course) && !is_null($course->cover) ?"Αλλαγή":"Προσθηκη"}}
+                                                </button>
+
+                                            </div>
+											<div class="{{ isset($course) && !is_null($course->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+                                                <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
+                                                    Αφαίρεση
+                                                </button>
+                                            </div>
+                                        </div>
 		
 									</div> <!-- end card-body -->
 								</div> <!-- end course info card -->

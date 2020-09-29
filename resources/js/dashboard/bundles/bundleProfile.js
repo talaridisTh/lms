@@ -12,11 +12,35 @@ import 'filepond/dist/filepond.min.css';
 //! 			GLOBAL VARIABLES				#
 //!##############################################
 const bundleId = $("#bundle-title")[0].dataset.bundleId;
+const namespace = "App\\Bundle";
 const baseUrl = window.location.origin;
 
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
+
+$("#remove-cover-btn").on("click", function() {
+	
+	axios.patch( "/media/remove-cover", {
+		namespace,
+		id: bundleId
+	})
+	.then( res => {
+
+		let cnt = this.parentElement;
+
+		$("#cover-image").addClass("d-none");
+		$("#cover-status").removeClass("d-none");
+		$("#change-cover-btn").text("Προσθήκη")
+
+		cnt.classList.remove("d-flex");
+		cnt.classList.add("d-none");
+
+	})
+	.catch( err => {
+		console.log(err);
+	})
+});
 
 $("#add-users-btn").on("click", function() {
 	let pickedUsers = $(".js-remaining-user-checkbox:checked");

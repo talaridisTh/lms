@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use App\DataTables\FilesDataTable;
 
 class MediaController extends Controller
 {
@@ -98,6 +99,12 @@ class MediaController extends Controller
 
 	}
 
+	public function remainingFilesTable(FilesDataTable $dataTable) {
+
+		return $dataTable->render('remaning.files');
+
+	}
+
     /**
      * Show the form for creating a new resource.
      *
@@ -134,7 +141,33 @@ class MediaController extends Controller
 		$details->caption = $request->caption;
 		$details->description = $request->description;
 		$details->save();
-    }
+	}
+	
+	public function addFiles(Request $request) {
+
+		$model = $request->namespace::find($request->modelId);
+
+		foreach( $request->ids as $id ) {
+			$model->media()->attach( $id, ["usage" => 3]);
+		}
+
+		$files = $model->media()->where("type", 1)->get();
+
+		return view('components/admin/filesTable', ['files' => $files]);
+	}
+
+	public function removeFiles( Request $request ) {
+
+		$model = $request->namespace::find( $request->modelId );
+
+		foreach( $request->ids as $id ) {
+			$model->media()->detach($id);
+		}
+
+		$files = $model->media()->where("type", 1)->get();
+
+		return view('components/admin/filesTable', ['files' => $files]);
+	}
 
     /**
      * Display the specified resource.
@@ -254,6 +287,73 @@ class MediaController extends Controller
 			}
 		}
 		echo json_encode($files);
+	}
+
+	public function fileUpload( Request $request ) {
+
+		$model = $request->namespace::find($request->id);
+		$file = $request->file;
+
+		$allowedTypes = [
+			"application/octet-stream", "application/x-zip-compressed", "application/pdf",
+			"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+			"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+			"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+			"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+			"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+			"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+			"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+			"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+			"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+			"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+			"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+			"application/rtf", "application/vnd.oasis.opendocument.graphics"
+		];
+		
+		$date = date('Y.m');
+
+		if ( $file->isValid() ) {
+			if ( in_array($file->getClientMimeType(), $allowedTypes) ) {
+				if ( $file->getSize() <= 50000000 ) { // 50MB
+
+					$temp = explode(".", $file->getClientOriginalName());
+					$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
+					$originalName = implode( ".", $arrayName );
+					$name =  Str::slug( implode("-", $arrayName ), "-" );
+
+					$count = Media::where( "original_name", $originalName)->count();
+
+					if ( $count > 0 ) {
+						$name = $name.( $count + 1 );
+						$fullname = $name.".".$file->getClientOriginalExtension();
+					}
+					else {
+						$fullname = "$name.".$file->getClientOriginalExtension();
+					}
+
+					$media = new Media;
+					$media->original_name = $originalName;
+					$media->name = $name;
+					$media->type = 1;
+					$media->rel_path = "/storage/files/$date/$fullname";
+					$media->ext = $file->getClientOriginalExtension();
+					$media->file_info = $file->getClientMimeType();
+					$media->size = $file->getSize();
+					$media->save();
+
+					$file->storeAs("public/files/$date", $fullname);
+
+					$model->media()->attach( $media->id, [ "usage" => 3 ] );
+
+				}
+			}
+		}
+
+		$files = $model->media()->where("type", 1)->get();
+
+		return view('components/admin/filesTable', ['files' => $files]);
+
 	}
 
 	public function coverChange(Request $request) {
