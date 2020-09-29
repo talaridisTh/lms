@@ -1,5 +1,5 @@
 {
-    "/js/app.js": "/js/app.js?id=9a5616ba834773a4b60c",
+    "/js/app.js": "/js/app.js?id=b48bbdd0ad51f9b8f71d",
     "/css/customArticleStyle.css": "/css/customArticleStyle.css?id=3fdf6a04d6ee18c3997a",
     "/css/app.css": "/css/app.css?id=277a29a108db40a73f7f",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=f999b9060d808b5dd893",
@@ -12,8 +12,8 @@
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=3d5068be7b3c67b037ab",
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=aa71d1223c3c9c329a57",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=8d5fdcdfa2d3802837b3",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=904a67797caf7b14775d",
-    "/js/index/chat/message.js": "/js/index/chat/message.js?id=2fc83957ad79ecb651ba",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=b17a59d7e47f23c9399f",
+    "/js/index/chat/message.js": "/js/index/chat/message.js?id=4ccbe7702996a8ffb779",
     "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=e36b248ce034f17de452",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=26f0da8f6c052a537390"
 }

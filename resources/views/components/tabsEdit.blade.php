@@ -250,11 +250,25 @@
 
                                 </div>
                                 <div class="card-body">
-                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" class="img-fluid"
+
+                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" hidden class="img-fluid"
                                          alt="Cover Image">
 
+
                                     <input hidden id="custom-file" name="cover">
-                                    <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">{{isset($user)?"Αλλαγή Cover":"Προσθηκη Cover"}}</a>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">{{isset($user)?"Αλλαγή Cover":"Προσθηκη Cover"}}</a>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a id="delete-cover-btn" hidden class="btn btn-danger btn-block mt-3">
+                                                Αφαίρεση
+                                            </a>
+
+                                        </div>
+
+                                    </div>
 
                                 </div> <!-- end card-body -->
                             </div> <!-- end course info card -->

@@ -385,6 +385,10 @@ $('#material-modal-shown-btn').click(() => {
 
 //! DROPOZONE
 //!============================================================
+$(".js-add-image").on("click",function () {
+$("#cover-image").removeAttr('hidden')
+$("#delete-cover-btn").removeAttr('hidden')
+});
 
 $(".js-add-image").on("click", utilities.imageHandler);
 
@@ -393,6 +397,13 @@ $("#change-cover-btn").on("click", function () {
     $("#gallery-content")[0].dataset.action = "cover";
 
     $("#gallery-modal").modal('show');
+})
+
+$("#delete-cover-btn").on("click", function () {
+    console.log("S")
+
+    $("#cover-image").attr('hidden',true)
+    $("#delete-cover-btn").attr('hidden',true)
 })
 
 // Dropzone.autoDiscover = false;
@@ -553,4 +564,38 @@ $R("#summary", {
         }
     }
 });
+
+
+// const bundleId = $("#bundle-title")[0].dataset.bundleId;
+// const namespace = "App\\Bundle";
+// const baseUrl = window.location.origin;
+//
+// //!##########################################
+// //! 			EventListerners				#
+// //!##########################################
+//
+// $("#remove-cover-btn").on("click", function() {
+//
+//     axios.patch( "/media/remove-cover", {
+//         namespace,
+//         id: bundleId
+//     })
+//         .then( res => {
+//
+//             let cnt = this.parentElement;
+//
+//             $("#cover-image").addClass("d-none");
+//             $("#cover-status").removeClass("d-none");
+//             $("#change-cover-btn").text("Προσθήκη")
+//
+//             cnt.classList.remove("d-flex");
+//             cnt.classList.add("d-none");
+//
+//         })
+//         .catch( err => {
+//             console.log(err);
+//         })
+// });
+//
+//
 
