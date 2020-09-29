@@ -3,6 +3,7 @@
 //!######################################
 import utilities from '../main';
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
+require("../../../plugins/article-editor/plugins/reorder/reorder");
 
 import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
@@ -760,7 +761,7 @@ ArticleEditor('#description', {
 			"/css/customArticleStyle.css",
 		]
 	},
-	plugins: ['mediaLibrary'],
+	plugins: ['mediaLibrary', 'reorder'],
 	classes: {
 		img: 'img-fluid',
 		p: 'text-wrap'

@@ -10,7 +10,7 @@ const baseUrl = window.location.origin;
 //!######################################
 import utilities from '../main';
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
-import Reorder from "../../../plugins/article-editor/plugins/reorder/reorder"
+require("../../../plugins/article-editor/plugins/reorder/reorder");
 
 import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';

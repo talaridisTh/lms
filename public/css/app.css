@@ -734,7 +734,7 @@ div.dt-buttons a.btn.processing:after {
 
 #redactor-image-resizer {
   position: absolute;
-  z-index: 1050;
+  z-index: 1051;
   background-color: rgba(0, 125, 255, 0.9);
   width: 13px;
   height: 13px;

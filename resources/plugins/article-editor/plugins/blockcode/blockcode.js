@@ -66,6 +66,7 @@ ArticleEditor.add('plugin', 'blockcode', {
         }
 
         // create
+        code = this.app.parser.parse(code, false);
         var $source = this.dom(code);
         var instance = this.app.create('block.' + current.getType(), $source);
 
