@@ -324,6 +324,9 @@ $('#add-remaingings-btn').on( "click", function() {
 		return;
 	}
 	else {
+		for ( let i = 0; i < checkboxes.length; i++ ) {
+			ids.push(checkboxes[i].dataset.materialId);
+		}
 		postMaterialIds( ids);
 	}
 
