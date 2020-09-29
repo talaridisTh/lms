@@ -39,17 +39,10 @@ class TopicsDataTable extends DataTable {
 							<label for='$data->slug'></label>
 						</div>";
 			})
-            ->addColumn('color', function ($data) {
-
-                return (
-                "<div id='color-field ' style='display: flex;flex-direction: column;align-items: center;'>
-                   <div class='preview-color' style='border-radius :4px;height: 50px; width: 80px; margin-bottom: 8px; background:$data->color'></div>
-                      <button type='button' data-topic='$data->id' class='js-color-modal btn-sm  btn btn-warning' data-toggle='modal' data-target='#color-modal'>
-                        <i class=' font-16 mdi mdi-eyedropper-variant'></i>
-                      </button>
-                </div>");
-            })
             ->editColumn('title', function ($data) {
+
+				$dNone = is_null($data->color) ? " d-none" : "";
+
 
                 return "<span class='js-quick-edit h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
 					<input type='text' class='js-edit form-control d-none' data-topic-id='$data->id' value='$data->title' placeholder='Εισάγετε Τίτλο...'>
@@ -60,37 +53,10 @@ class TopicsDataTable extends DataTable {
 					<a href='#' class='js-quick-edit custom-link-primary'>Quick Edit</a>
 					<span class='mx-2'>|</span>
 					<a href='#' class='js-edit-gradient custom-link-primary' data-target='#color-modal'
-						data-topic-id='$data->id' data-topic-title='$data->title' data-toggle='modal'>Edit Gradient</a>";
-            })
-            ->editColumn('updated_at', function ($data) {
-
-				$updatedAt = $data->updated_at->format("d - m - Y");
-				$createdAt = $data->created_at->format("d - m - Y");
-
-				if ( $data->color ) {
-					$preview = [
-						"style" => "style='background:$data->color'",
-						"text" => ""
-					];
-				}
-				else {
-					$preview = [
-						"style" => "",
-						"text" => "<a href='#' class='custom-link-primary cursor-pointer'>Edit Gradient</a>"
-					];
-				}
-
-				return "<div class='row'>
-							<div class='col-6 border-right-gray'>$updatedAt</div>
-							<div class='col-6'>$createdAt</div>
-						</div>
-						<div class='gradient-cnt mt-2 cursor-pointer' data-target='#color-modal'
-							data-topic-id='$data->id' data-toggle='modal' data-topic-title='$data->title'
-						".$preview['style'].">".$preview['text']."</div>";
-            })
-            ->editColumn('created_at', function ($data) {
-
-                return Carbon::parse($data->created_at)->format("d / m / Y");
+						data-topic-id='$data->id' data-topic-title='$data->title' data-toggle='modal'>Edit Gradient</a>
+						<div class='gradient-cnt mt-2 cursor-pointer$dNone' data-target='#color-modal'
+						data-topic-id='$data->id' data-toggle='modal' data-topic-title='$data->title'
+					style='background: $data->color'></div>";
             })
             ->rawColumns(['action', 'title', "updated_at", "color", "myColor"]);
     }

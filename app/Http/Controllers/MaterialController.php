@@ -129,17 +129,20 @@ class MaterialController extends Controller {
 	}
 
 	public function courseMaterial(Course $course, $priority) {
-		$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
-        $topics = Topic::all();
-        $instructors = User::getInstructor();
-		$types = Material::all()->unique('type');
+
+		$types = [
+			"Lesson" => "Μάθημα",
+			"Announcement" => "Ανακοίνωση",
+			"Video" => "Video",
+			"Link" => "Link"
+		];
 
 		$data = [
 			"course" => $course,
 			"priority" => $priority,
-			"media" => $media,
-			"topics" => $topics,
-			"instructors" => $instructors,
+			"media" =>  Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
+			"topics" => Topic::all(),
+			"instructors" => User::getInstructor(),
 			"types" => $types
 		];
 

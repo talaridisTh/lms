@@ -47,7 +47,11 @@
 
     </style>
 @endsection
-@php($count=0)
+@php
+
+	$count=0;
+
+@endphp
 @section("content")
 
     <div class="content-page">
@@ -195,7 +199,6 @@
                                                             </div>
                                                             <div class="modal-body ">
                                                                 {{$announcement->summary}}
-                                                                {{dd($announcement)}}
                                                             </div>
                                                         </div><!-- /.modal-content -->
                                                     </div><!-- /.modal-dialog -->

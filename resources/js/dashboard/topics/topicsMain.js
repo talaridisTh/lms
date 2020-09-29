@@ -109,7 +109,7 @@ $("#delete-topics-btn").on( "click", function () {
 //! 				Datatables				#
 //!##########################################
 const topicsDatatable = $("#topics-datatable").DataTable({
-    order: [3, "desc"],
+    order: [1, "desc"],
     processing: true,
     serverSide: true,
     ajax: {
@@ -126,9 +126,6 @@ const topicsDatatable = $("#topics-datatable").DataTable({
     columns: [
         {data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false},
         {data: 'title', name: 'title'},
-        {data: 'updated_at', name: 'updated_at', className: "align-middle text-center cursor-default js-updated-at js-colspan"},
-        {data: 'created_at', name: 'created_at', className: "align-middle text-center cursor-default d-none"},
-        {data: 'color', visible: false,  name: 'color',  className: "align-middle text-center cursor-default"},
     ],
     language: utilities.tableLocale,
     fnInitComplete: function (oSettings, json) {
