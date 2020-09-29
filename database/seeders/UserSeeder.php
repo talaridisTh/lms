@@ -165,13 +165,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim odio 
         ])->assignRole("trial user");
 
 
+}
 
 
 
-
-//
-
-//
-    }
 
 }

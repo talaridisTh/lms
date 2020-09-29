@@ -75,9 +75,10 @@
 @extends('layouts.app')
 <style>
     .background-image{
-        background-image: url('images/login-backgound.png');
+        background-image: url('images/login-backgound.png') ;
         background-repeat: no-repeat;
-        background-size: 100% 100%;
+        /*background-size: 100% 100%;*/
+        background-position: center ;
 
         margin: 3px auto 0;
 
@@ -89,7 +90,7 @@
 
     <div class="container-fluid " style=" position: fixed ;max-width: 100%; height: 100%">
         <div class="row" style="height: 100%">
-            <div class="col-md-12  col-lg-3 p-4 d-flex flex-column justify-content-around">
+            <div class="col-md-12  col-lg-4 p-4 d-flex flex-column justify-content-around">
                 <div class="row" style="height: 90%">
 {{--                    <div class="col-md-12 mb-5">--}}
 {{--                        <img height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"--}}
@@ -179,7 +180,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-9 d-md-none d-lg-block background-image"></div>
+            <div class="col-lg-8  d-md-none d-lg-block background-image"></div>
         </div>
     </div>
 

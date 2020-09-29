@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Material extends Model {
 
+
+//    soft-delete
+//    use SoftDeletes;
     use HasFactory;
 
     protected $guarded = [];

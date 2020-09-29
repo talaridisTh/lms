@@ -14,12 +14,12 @@
                     <h3 class="m-2">My course</h3>
                     @if(empty(!$arrayTopics))
                     <div class="col-md-12 ">
-                        <div id="topic-filter" class="p-2 rounded text-light"
-                             style="background-image: linear-gradient(to right, rgb(91, 121, 162) 0%, rgb(46, 68, 105) 100%);">
+                        <div id="topic-filter" class="p-2 rounded text-dark"
+                            >
                             <div class="container">
                                 <ul data-user-slug="{{auth()->user()->slug}}" class="d-flex topic-link justify-content-around">
                                     <li class="filter-topic"  data-topic-id="reset" >
-                                        <a href="#"> <span class="text-light">Όλα </span></a>
+                                        <a href="#"> <span class="text-dark">Όλα </span></a>
                                     </li>
 
                                     @foreach($arrayTopics as $key => $topic)

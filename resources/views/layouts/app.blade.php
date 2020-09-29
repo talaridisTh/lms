@@ -104,7 +104,7 @@
                     </div>
                     <div>
                         <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
-                            <span>Courses</span>
+                            <span>My Courses</span>
                         </a>
                     </div>
 
