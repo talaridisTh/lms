@@ -881,6 +881,10 @@ function addMaterialsEventListerner() {
 	addMaterialBtn.on( "click", function() {
 		const materialId = [this.dataset.materialId];
 
+		for (let i = 0; i < addMaterialBtn.length; i++) {
+			addMaterialBtn[i].disabled = true;
+		}
+
 		postMaterialIds( materialId );
 	});
 }
