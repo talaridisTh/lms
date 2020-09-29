@@ -47,7 +47,7 @@
             </div>
         </div>
         @include("components.filterDatatableMaterial")
-		<table id="materials-datatable" class="table w-100 nowrap custom-center-table center-not-second js-remove-table-classes">
+		<table id="materials-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
                     <th id='all-user-checkbox' class="text-left">
@@ -56,13 +56,13 @@
                             <label for='select-all-courses'></label>
                         </div>
                     </th>
-					<th class="text-left">Μάθημα</th>
-					<th class="text-left">Ενεργό</th>
-					<th class="text-left">Τύπος</th>
-					<th class="text-left">Τελ. Ανανέωση</th>
-					<th class="text-left">Ημ. Δημιουργίας</th>
-					<th class="text-left">create</th>
-					<th class="text-left">id</th>
+					<th class="text-center">Μάθημα</th>
+					<th class="text-center">Ενεργό</th>
+					<th class="text-center">Τύπος</th>
+					<th class="text-center">Τελ. Ανανέωση</th>
+					<th class="text-center">Ημ. Δημιουργίας</th>
+					<th class="text-center">create</th>
+					<th class="text-center">id</th>
 				</tr>
 			</thead>
 			<tbody  class="tables-hover-effect"></tbody>
@@ -74,13 +74,13 @@
                             <label for='select-all-courses'></label>
                         </div>
                     </th>
-                    <th class="text-left">Μάθημα</th>
-					<th class="text-left">Ενεργό</th>
-					<th class="text-left">Τύπος</th>
-					<th class="text-left">Τελ. Ανανέωση</th>
-                    <th class="text-left">Ημ. Δημιουργίας</th>
-                    <th class="text-left">create</th>
-                    <th class="text-left">id</th>
+                    <th class="text-center">Μάθημα</th>
+					<th class="text-center">Ενεργό</th>
+					<th class="text-center">Τύπος</th>
+					<th class="text-center">Τελ. Ανανέωση</th>
+                    <th class="text-center">Ημ. Δημιουργίας</th>
+                    <th class="text-center">create</th>
+                    <th class="text-center">id</th>
 
             </tfoot>
 		</table>
@@ -95,17 +95,4 @@
 	<script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
     <x-routes></x-routes>
 	<script src="{{ mix('js/dashboard/materials/materialsMain.js') }}"></script>
-
-
-
-    <script>
-        $(".custom-select").select2({
-            minimumResultsForSearch: -1,
-
-
-        });
-
-
-        $(".ragneButton").detach().appendTo('.dataTables_length label')
-    </script>
 @endsection

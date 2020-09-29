@@ -22,39 +22,25 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         }
     },
     columns: [
-        {data: "action", name: "action", searchable: false, orderable: false, className: "text-left"},
-        {data: "title", name: "title", className: "js-link cursor-pointer text-left"},
-        {data: "status", name: "status", className: "text-left",orderable: false,},
-        {data: "type", name: "type", className: "js-link cursor-pointer text-left"},
-        {data: "updated_at", name: "updated_at", className: "js-link cursor-pointer text-left js-updated-at"},
-        {data: "created_at", name: "created_at", className: "js-link cursor-pointer text-left",  orderData: [ 7]},
-        {data: "courses", name: "courses", className: "js-link cursor-pointer text-left",orderable: false,visible:false},
+        {data: "action", name: "action", searchable: false, orderable: false, className: "align-middle text-center"},
+        {data: "title", name: "title" },
+        {data: "status", name: "status", className: "align-middle text-center"},
+        {data: "type", name: "type", className: "align-middle text-center"},
+        {data: "updated_at", name: "updated_at", className: "align-middle text-center"},
+        {data: "created_at", name: "created_at", className: "align-middle text-center",  orderData: [ 7]},
+        {data: "courses", name: "courses", className: "align-middle text-center", orderable: false,visible:false},
         {data: "id", name: "id",visible: false},
     ],
-    language: {
-        emptyTable: "Δεν υπάρχουν εγγραφές",
-        info: "_START_ έως _END_ απο τα _TOTAL_ αποτελέσματα",
-        infoEmpty: "0 απο 0 τα 0 αποτελέσματα",
-        lengthMenu: "_MENU_",
-        loadingRecords: "Φόρτωση ...",
-        processing: "Επεξεργασία ...",
-        search: "",
-        zeroRecords: "Δεν βρέθηκαν αποτελέσματα",
-        paginate: {
-            previous: "<i class='mdi mdi-chevron-left'>",
-            next: "<i class='mdi mdi-chevron-right'>"
-        }
-    },
+    language: utilities.tableLocale,
     drawCallback: function () {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-        $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
-        $("#materials-datatable_wrapper > .row:first-child > div:first-child").removeClass(" col-md-6");
-        $("#materials-datatable_wrapper > .row:first-child > div:last-child").removeClass(" col-md-6");
-        $("#materials-datatable_wrapper > .row:first-child > div:first-child").addClass("col-md-8");
-        $("#materials-datatable_wrapper > .row:first-child > div:last-child").addClass("col-md-4");
+        $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+
         utilities.resetBulk($("#course-bulk-action-btn"), $("#select-all-courses"));
         utilities.resetBulk($("#course-bulk-action-btn"), $(".js-material-checkbox"));
-        atLinkEventListener();
+
         toggleInit();
         selectMultipleCheckboxDelete()
         selectMultipleCheckboxUpdate()
@@ -165,15 +151,6 @@ function toggleInit() {
                 console.log(err)
                 utilities.toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
             })
-    });
-}
-
-function atLinkEventListener() {
-    $('.js-link').click(function () {
-        let materialSlug = this.parentElement.dataset.materialSlug;
-        // let materialSlug = this.parentElement.dataset.materialSlug;
-
-        window.location = `material/${materialSlug}`;
     });
 }
 
@@ -356,10 +333,7 @@ $("#select-all-courses").change(function () {
 
 })
 
+$(".custom-select").select2({
+	minimumResultsForSearch: -1,
 
-
-
-
-
-
-
+});
