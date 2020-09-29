@@ -17,8 +17,18 @@
 
 		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
 		@yield('css')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179237450-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-	</head>
+            gtag('config', 'UA-179237450-1');
+        </script>
+
+
+    </head>
 
 	<body class="loading right-bar-enabled" data-layout-config='{"leftSideBarTheme":"default","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":true, "showRightSidebarOnStart": true }'>
 		<!-- Begin page -->
@@ -344,6 +354,17 @@
 			})
 		</script>
 
-		@yield('scripts')
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179237450-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-179237450-1');
+        </script>
+
+
+        @yield('scripts')
 	</body>
 </html>

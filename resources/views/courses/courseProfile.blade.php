@@ -185,7 +185,7 @@
                                          data-parent="#announcement-collapse">
                                         <div class="card-body d-flex flex-column alig">
                                             @foreach($announcements as $announcement)
-                                                <button  type="button" class=" my-2 w-25 btn btn-danger" data-toggle="modal" data-target="#bs-example-modal-sm">{{$announcement->title}}</button>
+                                                <span  type="button" class="text-danger h5 my-2 w-25 " data-toggle="modal" data-target="#bs-example-modal-sm">{{$announcement->title}}</span>
                                                 <div class="modal fade" id="bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog modal-sm">
                                                         <div class="modal-content ">
@@ -195,6 +195,7 @@
                                                             </div>
                                                             <div class="modal-body ">
                                                                 {{$announcement->summary}}
+                                                                {{dd($announcement)}}
                                                             </div>
                                                         </div><!-- /.modal-content -->
                                                     </div><!-- /.modal-dialog -->
