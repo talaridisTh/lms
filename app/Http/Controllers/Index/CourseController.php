@@ -74,10 +74,12 @@ class CourseController extends Controller {
 
         $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
         $lastMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();;
-        $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
+        $allMaterial = $course->materials()->where("type","!=","Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
+        $announcements = $course->materials()->where("type","Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
 
 
-        return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial"));
+
+        return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial","announcements"));
     }
 
 

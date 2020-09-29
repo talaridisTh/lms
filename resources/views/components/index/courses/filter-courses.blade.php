@@ -12,7 +12,7 @@
                     <div class="defalt-color-topic course-box p-1 d-flex flex-column justify-content-between align-items-center"
                          style="background:{{$course->topics->first()->color}}">
                         @foreach($course->topics as $topic)
-                            <h4 style="background:{{$topic->color}}" class="defalt-color-topic font-12 box-title">{{$topic->title}}</h4>
+                            <h4 style="background:{{$topic->color}} " class="color-topic-second  font-12 box-title">{{$topic->title}}</h4>
                         @endforeach
                         <a href="{{route('index.userCourse',$course->slug)}}">
                             <img height="100" width="100" class="rounded-circle my-3"

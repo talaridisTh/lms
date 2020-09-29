@@ -50,7 +50,7 @@
 @php($count=0)
 @section("content")
 
-    <div class="content-page" >
+    <div class="content-page">
         <div class=" ml-5 content-width">
             <div class="row">
                 <div class="col-12">
@@ -84,30 +84,28 @@
         @endrole
 
         <div class="container-xl mb-3" style="max-width: 1705px">
-            <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2"
+            <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2 px-lg-2 px-xl-5"
                  style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-12">
-                    <div class="row align-items-center">
-                        <div class="col-md-3 mb-2">
-                            <img height="300" width="300" class="  rounded-circle"
+                    <div class="row align-items-center text-center text-sm-left ">
+                        <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
+                            <img height="270" width="270" class="  rounded-circle"
                                  src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
                                  alt="course-logo"
                             >
                         </div>
-
-
-                        <div class="col-md-6">
+                        <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
                             <p class="text-light my-4">{{$course->subtitle}}</p>
-                            <div class="button-course-fav">
+                            <div class="button-course-fav my-sm-2">
                                 @if(count($allMaterial))
                                     <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
-                                       class=" mr-2 px-4  btn-begin btn bghover btn" style="background:white">Έναρξη
+                                       class=" mr-2 px-4 mb-xl-0 mb-md-2     btn-begin btn bghover btn" style="background:white">Έναρξη
                                     </a>
                                 @endif
                                 <button
                                     data-model="course" data-model-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
-                                    class="color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary ">
+                                    class=" my-2 my-sm-0 color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary ">
                                     <i class="font-16
                                      {{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                         ">
@@ -118,7 +116,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-12 mt-md-2 col-lg-4 col-xl-3">
                             <div class="box-last-material p-2 color-topic-second ">
                                 <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>
                                 <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
@@ -132,10 +130,10 @@
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
                                     <a class="text-white "
                                        href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
-                                    <button class="bghover  color-topic-second  border  btn btn-secontary ">
+                                        <button class="bghover  color-topic-second  border  btn btn-secontary ">
 
                                             Δες το μάθημα
-                                    </button>
+                                        </button>
                                     </a>
                                     @endif
                                 </div>
@@ -147,7 +145,7 @@
             </div>
             <div class="row p-2 box-material-down  color-topic-second"
                  style="background:{{$course->topics->first()->color}}">
-                <div class="col-md-4  d-flex justify-content-between text-light">
+                <div class="col-md-12 col-xl-4 px-md-5  d-flex justify-content-between text-light">
                     {{--                    <span>metrio</span>--}}
 
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","mdi mdi-file-document-outline")->count()}} Μαθήματα  </span>
@@ -167,6 +165,48 @@
 
 
                     <div class="row ">
+                        @isset($announcements)
+                        <div class="col-md-12 px-2">
+                            <div class="accordion custom-accordion mb-2" id="announcement-collapse">
+                                <div class="card mb-0">
+                                    <div class="card-header p-2" id="announcement-head">
+                                        <h5 class="m-0 pl-2">
+                                            <a class="custom-accordion-title d-block py-1"
+                                               data-toggle="collapse" href="#announcement-col"
+                                               aria-expanded="true" aria-controls="announcement-col">
+                                                Ανακοινώσεις  <i
+                                                    class="mdi mdi-chevron-down accordion-arrow"></i>
+                                            </a>
+                                        </h5>
+                                    </div>
+
+                                    <div id="announcement-col" class="collapse show"
+                                         aria-labelledby="announcement-head"
+                                         data-parent="#announcement-collapse">
+                                        <div class="card-body d-flex flex-column alig">
+                                            @foreach($announcements as $announcement)
+                                                <button  type="button" class=" my-2 w-25 btn btn-danger" data-toggle="modal" data-target="#bs-example-modal-sm">{{$announcement->title}}</button>
+                                                <div class="modal fade" id="bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog modal-sm">
+                                                        <div class="modal-content ">
+                                                            <div class="modal-header">
+                                                                <h4 class="modal-title" id="mySmallModalLabel">{{$announcement->title}}</h4>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                            </div>
+                                                            <div class="modal-body ">
+                                                                {{$announcement->summary}}
+                                                            </div>
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal -->
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endisset
+
                         <div class="col-md-12 px-2">
 
                             @include("components.index.collapse-menu",
@@ -178,6 +218,7 @@
 
                                 ])
                         </div>
+
 
                         <div class="col-md-12 px-2">
                             @include("components.index.collapse-menu",
@@ -191,24 +232,22 @@
                         </div>
 
 
-
-
                     </div>
                 </div>
                 <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
-                    <ul  style="max-height: 800px"  class="m-0 p-0">
+                    <ul style="max-height: 800px" class="m-0 p-0">
                         @foreach($allMaterial as $materials)
-                            <li class="list-group-item list-material border   ">
+                            <li class="list-group-item list-material border p-md-1  ">
                                 <a class="d-flex align-items-center m"
                                    href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
-                                    <div class="col-md-2 ">
+                                    <div class="col-md-2 mr-2 ">
                                         <span class="material-count"><span>{{++$count}}</span></span>
                                     </div>
                                     <div class="col-md-8 d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
-                                            class="font-16  text-black font-weight-bold">   {!! $materials->title!!}</h3>
+                                            class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold">   {!! $materials->title!!}</h3>
                                         <span style="word-break: break-all"
-                                              class="font-12 text-dark">    {!! $materials->subtitle !!}</span>
+                                              class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
                                         {{--                                        @empty($course->description)--}}
                                         {{--                                            <div class="mt-3">--}}
                                         {{--                                            <h3--}}
@@ -218,7 +257,7 @@
                                         {{--                                            </div>--}}
                                         {{--                                        @endempty--}}
                                     </div>
-                                    <div class="col-md-2 ">
+                                    <div class="col-md-2 p-0">
 
                                         <i class=" font-24 text-black {{$materials->type}}"></i>
 

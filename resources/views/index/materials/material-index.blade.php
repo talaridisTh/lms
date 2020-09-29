@@ -63,8 +63,8 @@
         @endrole
         <div>
 
-            <div class="row justify-content-center" style="background-color: black">
-                <div class="container">
+            <div class="row " style="background-color: black">
+                <div class="container-fluid d-flex justify-content-center">
                     <div class="col-md-12 position-relative" style="max-width: 150vh;">
                         @if($materials->video_link)
                             <div class="embed-responsive embed-responsive-4by3">
