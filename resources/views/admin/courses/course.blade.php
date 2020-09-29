@@ -25,9 +25,6 @@
 
 @section('content')
 
-
-
-
 	<div class="modal fade" id="remainings-files-modal" tabindex="-1" role="dialog"
          aria-labelledby="remainings-files-modalLabel"
          aria-hidden="true">
@@ -69,25 +66,6 @@
             </div>
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	<!-- Modal -->
 	<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
