@@ -198,6 +198,9 @@ Route::get( 'media/images', 'Ajax\MediaController@index' );
 Route::post( 'media/gallery', 'Ajax\MediaController@addToGallery');
 Route::post( 'media/gallery-remove', 'Ajax\MediaController@removeFromGallery');
 
+//! Dashboard Global Search
+Route::post( "dashboard-search", "Ajax\DashboardController@globalSearch");
+
 //! Ajax Upload Files
 Route::post( 'materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages' );
 

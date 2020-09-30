@@ -12,8 +12,10 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
 	.js('resources/js/dashboard/topics/topicsMain.js', 'public/js/dashboard/topics')
+
 	.js('resources/js/dashboard/courses/coursesMain.js', 'public/js/dashboard/courses')
 	.js('resources/js/dashboard/courses/courseProfile.js', 'public/js/dashboard/courses')
+
 	.js('resources/js/dashboard/bundles/bundlesMain.js', 'public/js/dashboard/bundles')
 	.js('resources/js/dashboard/bundles/bundleProfile.js', 'public/js/dashboard/bundles')
 
@@ -22,8 +24,13 @@ mix.js('resources/js/app.js', 'public/js')
 
 	.js('resources/js/dashboard/users/userMain.js', 'public/js/dashboard/users')
 	.js('resources/js/dashboard/users/userProfil.js', 'public/js/dashboard/users')
+
 	.js('resources/js/dashboard/fileManager/fileManager.js', 'public/js/dashboard/fileManager')
+	
+	.js('resources/js/dashboard/dashboard.js', 'public/js/dashboard')
+
 	.js('resources/js/dashboard/main.js', 'public/js/dashboard/')
+
     .js('resources/js/index/courses/indexCourses.js', 'public/js/index/courses')
     .js('resources/js/index/materials/indexMaterials.js', 'public/js/index/materials')
     .js('resources/js/index/chat/message.js', 'public/js/index/chat')

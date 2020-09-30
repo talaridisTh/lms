@@ -12,7 +12,6 @@
 			background-color: #343a40;
 			position: sticky;
 			top: 70px;
-			z-index: 1010;
 		}
 	</style>
 @endsection
@@ -31,7 +30,7 @@
 						<li class="breadcrumb-item active">Νέο Bundle</li>
 					</ol>
 				</div>
-				<h4 id="bundle-title" class="page-title">Νέο Bundle"</h4>
+				<h4 id="bundle-title" class="page-title">Νέο Bundle</h4>
 			</div>
 		</div>
 	</div>
