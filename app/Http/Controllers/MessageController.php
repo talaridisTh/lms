@@ -53,6 +53,16 @@ class MessageController extends Controller {
 
         return view("index.chat.chat", compact("message"));
     }
+    public function info( $user)
+    {
+
+        $user = User::findOrFail($user);
+
+
+
+
+        return view("index.chat.chat-info", compact("user"));
+    }
 
     public function sendMessage(Request $request)
     {

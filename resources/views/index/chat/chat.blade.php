@@ -1,7 +1,15 @@
 @forelse($message as $msg)
+
+{{--    {{dd(Auth::id())}}--}}
+{{--    {{dd($msg->to==Auth::id())}}--}}
     <li class="clearfix {{$msg->from==Auth::id()? "odd":""}}">
         <div class="chat-avatar">
-            <img src="assets/images/users/avatar-5.jpg" class="rounded" alt="Shreyu N"/>
+            @if($msg->from==Auth::id())
+                <img src="{{ App\User::find($msg->from)->cover}}" class="rounded" alt="Shreyu N"/>
+            @else
+                <img src="{{ App\User::find($msg->from)->cover}}" class="rounded" alt="Shreyu N"/>
+            @endif
+
             <i>{{$msg->created_at->diffForHumans()}}</i>
         </div>
         <div class="conversation-text">
@@ -26,7 +34,7 @@
     </li>
 @empty
 
-    <h4>den iparxi</h4>
+    <h4 class="ml-3">Δεν υπαρχουν μηνύματα</h4>
     @endforelse
     </ul>
 
@@ -45,7 +53,7 @@
                     <div class="col-sm-auto">
                         <div class="btn-group">
                             <a href="#" class="btn btn-light"><i class="uil uil-paperclip"></i></a>
-                            <button  class="btn btn-light emoji-button"> <i class='uil uil-smile'></i> </button>
+                            <button class="btn btn-light emoji-button"><i class='uil uil-smile'></i></button>
                             <button type="submit" class="btn btn-success chat-send btn-block"><i
                                     class='uil uil-message'></i></button>
                         </div>

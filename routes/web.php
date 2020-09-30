@@ -255,6 +255,7 @@ Route::get('/partner-links', function (Request $request) {
 //meessage
 Route::get("/message/", "MessageController@index")->name("index.message");
 Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
+Route::get("/message/info/{user}", "MessageController@info")->name("index.info");
 Route::post("/message/sent", "MessageController@sendMessage")->name("index.sendMessage");
 
 //! Material index
