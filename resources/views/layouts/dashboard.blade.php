@@ -25,7 +25,27 @@
             gtag('js', new Date());
 
             gtag('config', 'UA-179237450-1');
-        </script>
+		</script>
+		
+		<style>
+			.results-cnt {
+				min-width: 315px;
+				max-width: 640px;
+				z-index: 1100 !important;
+			}
+
+			.results-cnt .dropdown-item {
+				width: 290px;
+			}
+
+			.search-text-ellipsis {
+				max-width: 210px;
+ 				display: block;
+ 				text-overflow: ellipsis;
+ 				overflow: hidden;
+			}
+
+		</style>
 
 
     </head>
@@ -129,111 +149,11 @@
 								<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 									<i class="dripicons-search noti-icon"></i>
 								</a>
-								<div class="dropdown-menu dropdown-menu-animated dropdown-lg p-0">
+								<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg p-0">
 									<form class="p-3">
-										<input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
+										<input type="text" class="form-control js-global-search" placeholder="Search ..." aria-label="Recipient's username">
 									</form>
 								</div>
-							</li>
-                            <li class="notification-list">
-                                <a class="nav-link right-bar-toggle" href="javascript: void(0);">
-                                    <i class="dripicons-gear noti-icon"></i>
-                                </a>
-                            </li>
-
-							<li class="dropdown notification-list">
-								<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-									<i class="dripicons-bell noti-icon"></i>
-									<span class="noti-icon-badge"></span>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg">
-
-									<!-- item-->
-									<div class="dropdown-item noti-title">
-										<h5 class="m-0">
-											<span class="float-right">
-												<a href="javascript: void(0);" class="text-dark">
-													<small>Clear All</small>
-												</a>
-											</span>Notification
-										</h5>
-									</div>
-
-									<div style="max-height: 230px;" data-simplebar>
-										<!-- item-->
-										<a href="javascript:void(0);" class="dropdown-item notify-item">
-											<div class="notify-icon bg-primary">
-												<i class="mdi mdi-comment-account-outline"></i>
-											</div>
-											<p class="notify-details">Caleb Flakelar commented on Admin
-												<small class="text-muted">1 min ago</small>
-											</p>
-										</a>
-
-										<!-- item-->
-										<a href="javascript:void(0);" class="dropdown-item notify-item">
-											<div class="notify-icon bg-info">
-												<i class="mdi mdi-account-plus"></i>
-											</div>
-											<p class="notify-details">New user registered.
-												<small class="text-muted">5 hours ago</small>
-											</p>
-										</a>
-
-										<!-- item-->
-										<a href="javascript:void(0);" class="dropdown-item notify-item">
-											<div class="notify-icon">
-												<img src="/assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle" alt="" /> </div>
-											<p class="notify-details">Cristina Pride</p>
-											<p class="text-muted mb-0 user-msg">
-												<small>Hi, How are you? What about our next meeting</small>
-											</p>
-										</a>
-
-										<!-- item-->
-										<a href="javascript:void(0);" class="dropdown-item notify-item">
-											<div class="notify-icon bg-primary">
-												<i class="mdi mdi-comment-account-outline"></i>
-											</div>
-											<p class="notify-details">Caleb Flakelar commented on Admin
-												<small class="text-muted">4 days ago</small>
-											</p>
-										</a>
-
-										<!-- item-->
-										<a href="javascript:void(0);" class="dropdown-item notify-item">
-											<div class="notify-icon">
-												<img src="/assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle" alt="" /> </div>
-											<p class="notify-details">Karen Robinson</p>
-											<p class="text-muted mb-0 user-msg">
-												<small>Wow ! this admin looks good and awesome design</small>
-											</p>
-										</a>
-
-										<!-- item-->
-										<a href="javascript:void(0);" class="dropdown-item notify-item">
-											<div class="notify-icon bg-info">
-												<i class="mdi mdi-heart"></i>
-											</div>
-											<p class="notify-details">Carlos Crouch liked
-												<b>Admin</b>
-												<small class="text-muted">13 days ago</small>
-											</p>
-										</a>
-									</div>
-
-									<!-- All-->
-									<a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
-										View All
-									</a>
-
-								</div>
-							</li>
-
-							<li class="dropdown notification-list d-none d-sm-inline-block">
-								<a class="nav-link dropdown-toggle arrow-none" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-									<i class="dripicons-view-apps noti-icon"></i>
-								</a>
 							</li>
 
 							<li class="dropdown notification-list">
@@ -281,14 +201,24 @@
 						<div class="app-search dropdown d-none d-lg-block">
 							<form>
 								<div class="input-group">
-									<input type="text" class="form-control dropdown-toggle" placeholder="Search..." id="top-search">
+									<input type="text" class="js-global-search form-control dropdown-toggle" placeholder="Search..." id="top-search">
 									<span class="mdi mdi-magnify search-icon"></span>
 									<div class="input-group-append">
 										<button class="btn btn-primary" type="submit">Search</button>
 									</div>
 								</div>
-
 							</form>
+
+							<div id="search-dropdown" class="results-cnt dropdown-menu dropdown-menu-animated">
+								
+								<div class="row mx-0">
+									<span class="py-2 d-block text-center mx-auto font-16">
+										<i class="mdi mdi-magnify mr-1"></i>
+										<u>3 Characters or more</u>
+									</span>
+								</div>
+						
+							</div> 
 
 						</div>
 					</div>
@@ -345,6 +275,7 @@
 		<script src="/assets/js/vendor.min.js"></script>
 		<script src="/assets/js/app.min.js"></script>
 		<script src="{{ mix('js/app.js') }}"></script>
+		<script src="{{ mix('js/dashboard/dashboard.js') }}"></script>
 
 		<script>
 			$('#logout-btn').click( function() {

@@ -15,7 +15,7 @@ class CreateBundlesTable extends Migration
     {
         Schema::create('bundles', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->index();
             $table->string('subtitle')->nullable();
             $table->text('summary')->nullable();
             $table->string('cover', 50)->nullable();

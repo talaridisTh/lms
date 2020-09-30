@@ -38,7 +38,7 @@ class UserFactory extends Factory
         	'email' => $this->faker->unique()->safeEmail,
         	'phone' => 69 . $this->faker->numberBetween(3, 9) . $this->faker->randomNumber(7, false),
         	'profil' => $this->faker->sentence,
-        	'cover' => $this->faker->md5 . ".jpg",
+        	'cover' => "/images/avatar-placeholder.png",
         	"slug" => Str::slug($this->faker->firstName, "-"),
         	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         	'password_encrypt' => Crypt::encryptString('password'), // password
