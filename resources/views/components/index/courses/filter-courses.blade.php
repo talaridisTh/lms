@@ -8,7 +8,7 @@
 
         <div class="col-md-4 mb-4 ">
             <div class="row mr-3" style="background: white;">
-                <div class="col-md-5  p-1">
+                <div class="col-md-4  p-1">
                     <div class="defalt-color-topic course-box p-1 d-flex flex-column justify-content-between align-items-center"
                          style="background:{{$course->topics->first()->color}}">
                         @foreach($course->topics as $topic)
@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-7 d-flex flex-column justify-content-between align-items-center p-2">
+                <div class="col-md-8 d-flex flex-column justify-content-between align-items-center p-2">
                     <h3 class="font-16 font-weight-bold"><a
                             href="{{route('index.userCourse',[$course->slug,auth()->user()])}}">{!!$course->title  !!}</a>
                     </h3>

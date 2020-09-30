@@ -65,7 +65,7 @@
 
             <div class="row " style="background-color: black">
                 <div class="container-fluid d-flex justify-content-center">
-                    <div class="col-md-12 position-relative" style="max-width: 150vh;">
+                    <div class="col-md-12 position-relative p-0" style="max-width: 150vh;">
                         @if($materials->video_link)
                             <div class="embed-responsive embed-responsive-4by3">
                                 <iframe class="embed-responsive-item "
@@ -78,7 +78,7 @@
                             <div style="background-repeat: no-repeat;
                                 background-size: 100% ;
                                 background-position: center ;
-                                height:65vh;
+                                height:77vh;
                                 max-width: 100%;
                                 margin: 0px auto 0;
                                 position: relative;background-image: url('{{url($materials->cover)}}')">
@@ -260,7 +260,7 @@
 
                         @endif
                         @if(count($materials->media->where("type","!=",0))>0)
-                            <div class="accordion custom-accordion mb-2" id="extra-content">
+                            <div class="accordion custom-accordion my-2" id="extra-content">
                                 <div class="card mb-0">
                                     <div class="card-header p-2" id="head-extra-content">
                                         <h5 class="m-0 pl-2">

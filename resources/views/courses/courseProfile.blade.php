@@ -91,7 +91,7 @@
             <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2 px-lg-2 px-xl-5"
                  style="background:{{$course->topics->first()->color}}">
                 <div class="col-md-12">
-                    <div class="row align-items-center text-center text-sm-left ">
+                    <div class="row align-items-center text-center ">
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
                             <img height="270" width="270" class="  rounded-circle"
                                  src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"

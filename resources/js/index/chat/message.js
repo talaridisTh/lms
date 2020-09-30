@@ -9,9 +9,10 @@ users.forEach((user, idx) => {
         //     this.childNodes[1].childNodes[1].childNodes[3].childNodes[1].childNodes[1].remove()
         // }
 
-        // let test = document.querySelector(".unread-container");
-        //
-        // console.log(this.contains(test))
+        let test = document.querySelector(".unread-message");
+
+        console.log(this)
+        console.log(this.contains(test))
 
         receiverUserId = user.dataset.userId
         axiosGetReceiver(user.dataset.userId)
