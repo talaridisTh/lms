@@ -76,7 +76,7 @@
                         @else
 
                             <div style="background-repeat: no-repeat;
-                                background-size: 100% ;
+                                background-size: cover ;
                                 background-position: center ;
                                 height:77vh;
                                 max-width: 100%;
@@ -117,11 +117,20 @@
                             </div>
                         </div>
                         <div class="col-md-4">
+                            @php
+                                $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first();
+                                $text=  isset($active)?"Δεν το έχω δει":"Το έχω δει";
+                                $hover=  isset($active)? "bg-white" :""
+                            @endphp
+
+
                             <div class="watchlist  d-flex justify-content-end align-items-center ml-2 "
                                  style=" margin-right: -1.3rem;">
                                 <button
-                                    class=" px-3 py-1 color-topic-second mr-2   bghover text-white border btn-outline-secondary">
-                                    <span class="font-16">Το έχω δει</span>
+                                    data-course-id="{{$course->id}}"
+                                    data-material-id="{{$materials->id}}"
+                                    class="js-watchlist-btn px-3 py-1 color-topic-second mr-2 {{$hover}}  bghover text-white border btn-outline-secondary">
+                                    <span class="{{$active?"text-dark":""}} font-16">{{$text}}</span>
                                 </button>
                                 <button
                                     data-model="material" data-model-id="{{$materials->id}}"
@@ -311,18 +320,28 @@
                     @endif
                     <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
-                            <li data-material-id="{{$material->material_id}}" data-material-priority="{{$material->priority}}" class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
+                            @php
+                                $active =  auth()->user()->witchlist() ->where('material_id',$material->material_id)->where('course_id',$course->id)->first();
+                                $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":"$material->priority";
+                                $hover=  isset($active)? "data-hover='hover'" :''
+                            @endphp
+                            <li data-material-id="{{$material->material_id}}"
+                                data-material-priority="{{$material->priority}}"
+                                class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                 <a class="d-flex align-items-center {{
                             $material->type=="Link"?"js-link-material":""}}"
                                    href="{{$material->type=="link"?"$material->video_link":route('index.material.show',[$course->slug,$material->slug])}}">
                                     <div class="col-md-2 ">
                                         @if($material->title==$materials->title)
                                             <i style="margin:-8px;"
+
                                                class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                         @else
                                             <div class="col-md-2 mt-1 mr-2 ">
-                                                <span style="margin:-20px;"
-                                                      class="material-count"> <span>{{$material->priority}}</span> </span>
+                                                <span {{$hover}} style="margin:-20px;"
+                                                      class="material-count">
+                                                       {!! $activeClass !!}
+                                                </span>
                                             </div>
 
                                         @endif

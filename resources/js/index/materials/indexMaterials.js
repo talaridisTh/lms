@@ -62,9 +62,11 @@ $(".js-audio-btn").click(function () {
     }
 })
 
-$(".js-alert").on("click",async function (e) {
-    const href = this.findParent(1).href;
-    this.findParent(1).removeAttribute("href")
+$(".js-link-material").on("click", async function (e) {
+    // const href = this.findParent(1).href;
+    // this.findParent(1).removeAttribute("href")
+    const href = this.href;
+    this.removeAttribute("href")
     const {value} = await Swal.fire({
         icon: 'question',
         text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
@@ -75,38 +77,66 @@ $(".js-alert").on("click",async function (e) {
     }
 })
 
-$(".material-count").on("click", async function (e) {
+$(".material-count").on("click",  function (e) {
     event.preventDefault();
-    const courseId = this.findParent(5).dataset.courseId;
-    const materialId = this.findParent(4).dataset.materialId;
-    const materialPriority = this.findParent(4).dataset.materialPriority;
 
+    axiosAddWitchlist(
+        this.findParent(5).dataset.courseId,
+        this.findParent(4).dataset.materialId,
+        this.findParent(4).dataset.materialPriority,
+        this
+    )
+
+
+}).on('mouseenter', function () {
+    setTimeout(() => {
+        if (!this.dataset.hover) {
+            this.innerHTML = "<i style='opacity: 0.6' class='text-danger  h4 mdi mdi-check-bold'></i>"
+        }
+    }, 150)
+}).on('mouseleave', function () {
+    setTimeout(() => {
+        if (!this.dataset.hover) {
+
+            this.innerHTML = `${this.findParent(4).dataset.materialPriority}`
+        }
+    }, 150)
+
+});
+
+$(".js-watchlist-btn").on("click",function () {
+    console.log(this)
+
+    axiosAddWitchlist(this.dataset.courseId,this.dataset.materialId,null,this)
+})
+
+const axiosAddWitchlist =async (courseId, materialId, materialPriority=null,that) => {
+   const btnWatchlist  = $(".js-watchlist-btn")[0];
     try {
-        const {data, status} = await axios.patch(`/add-witchlist/material`, {
+        const {data} = await axios.patch(`/add-witchlist/material`, {
             courseId,
             materialId
         })
         if (data === "remove") {
-            this.children[0].innerHTML = "<i class='text-danger h4 mdi mdi-check-bold'></i>"
-            this.dataset.hover = "hover"
+            that.innerHTML = `${materialPriority}`
+            if (!materialPriority){
+                btnWatchlist.innerHTML = "<span class='font-16'>Το έχω δει</span>"
+                btnWatchlist.style.backgroundColor = null
+                btnWatchlist.classList.remove("bg-white")
+            }
+
+            delete that.dataset.hover
+
         } else {
-            this.children[0].innerHTML = `<span>${materialPriority}</span>`
-            delete this.dataset.hover
+            that.innerHTML = "<i class='text-danger h4 mdi mdi-check-bold'></i>"
+            that.dataset.hover = "hover"
+            if (!materialPriority) {
+                btnWatchlist.innerHTML = "<span class='text-dark font-16'>Δεν το έχω δει</span>"
+                btnWatchlist.style.backgroundColor = "white"
+            }
         }
 
     } catch (e) {
         console.log(e)
     }
-
-
-}).on('mouseenter', function () {
-    if (!this.dataset.hover) {
-
-        this.children[0].innerHTML = "<i style='opacity: 0.6' class='text-danger  h4 mdi mdi-check-bold'></i>"
-    }
-}).on('mouseleave', function () {
-    if (!this.dataset.hover) {
-        this.children[0].innerHTML = `<span>${this.findParent(4).dataset.materialPriority}</span>`
-    }
-});
-
+}

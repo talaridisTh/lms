@@ -72,6 +72,8 @@ class MaterialController extends Controller {
 
     }
 
+
+
     public function addWitchlist(Request $request)
     {
 
