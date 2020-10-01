@@ -218,6 +218,8 @@ Route::group(['middleware' => ['auth', "verifyCourse"]], function () {
     Route::get("/dummy-course/{materials}", "Index\MaterialController@dummyPage")->name("dummyPage.material.show");
 //! Material index  ajax
     Route::patch('/add-watchlist/material', 'Index\MaterialController@watchlistMaterial')->name('index.watchlist.material');
+    Route::patch('/add-witchlist/material', 'Index\MaterialController@addWitchlist')->name('index.watchlist.material');
+
 });
 
 

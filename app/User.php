@@ -116,6 +116,17 @@ class User extends Authenticatable {
         return $this->belongsToMany(Material::class);
     }
 
+//    public function Witchlist()
+//    {
+//        return $this->belongsToMany('App\User', 'Witchlist', 'user_id', 'material_id'  );
+//    }
+
+    public function witchlist()
+    {
+        return $this->belongsToMany(User::class,'Witchlist', 'user_id', 'material_id'  );
+    }
+
+
 //    CUSTOM METHOD
     public static function getInstructor()
     {

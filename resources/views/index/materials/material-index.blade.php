@@ -309,10 +309,9 @@
                             </div>
                         </div>
                     @endif
-
-                    <ul style="max-height: 800px" class="my-2 p-0">
+                    <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="my-2 p-0">
                         @foreach($MaterialsOrderByPriority as $material)
-                            <li class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
+                            <li data-material-id="{{$material->material_id}}" data-material-priority="{{$material->priority}}" class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                 <a class="d-flex align-items-center {{
                             $material->type=="Link"?"js-link-material":""}}"
                                    href="{{$material->type=="link"?"$material->video_link":route('index.material.show',[$course->slug,$material->slug])}}">
@@ -329,7 +328,7 @@
                                         @endif
                                     </div>
 
-                                    <div class="col-md-8 d-flex flex-column  ">
+                                    <div class="col-md-8 js-alert d-flex flex-column  ">
                                         <h3 style="border-radius: 5px"
                                             class="font-16 mt-1 text-black font-weight-bold">   {!! $material->title !!}</h3>
                                         <span style="word-break: break-all" class="
@@ -337,7 +336,7 @@
                                             font-12 text-dark">    {!! $material->subtitle !!}</span>
                                     </div>
 
-                                    <div class="col-md-2 ">
+                                    <div class="col-md-2 js-alert">
                                         <span class="">
                                             <i class=" font-24 text-black {{App\Material::find($material->material_id)->type}}"></i>
                                         </span>

@@ -62,16 +62,51 @@ $(".js-audio-btn").click(function () {
     }
 })
 
-$(".js-link-material").click( async function () {
-    const href = this.href;
-    this.removeAttribute("href")
-    const {value} =  await Swal.fire({
+$(".js-alert").on("click",async function (e) {
+    const href = this.findParent(1).href;
+    this.findParent(1).removeAttribute("href")
+    const {value} = await Swal.fire({
         icon: 'question',
         text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
         showCancelButton: true,
     })
-    if (value){
+    if (value) {
         window.open(`${href}`, '_blank');
     }
 })
+
+$(".material-count").on("click", async function (e) {
+    event.preventDefault();
+    const courseId = this.findParent(5).dataset.courseId;
+    const materialId = this.findParent(4).dataset.materialId;
+    const materialPriority = this.findParent(4).dataset.materialPriority;
+
+    try {
+        const {data, status} = await axios.patch(`/add-witchlist/material`, {
+            courseId,
+            materialId
+        })
+        if (data === "remove") {
+            this.children[0].innerHTML = "<i class='text-danger h4 mdi mdi-check-bold'></i>"
+            this.dataset.hover = "hover"
+        } else {
+            this.children[0].innerHTML = `<span>${materialPriority}</span>`
+            delete this.dataset.hover
+        }
+
+    } catch (e) {
+        console.log(e)
+    }
+
+
+}).on('mouseenter', function () {
+    if (!this.dataset.hover) {
+
+        this.children[0].innerHTML = "<i style='opacity: 0.6' class='text-danger  h4 mdi mdi-check-bold'></i>"
+    }
+}).on('mouseleave', function () {
+    if (!this.dataset.hover) {
+        this.children[0].innerHTML = `<span>${this.findParent(4).dataset.materialPriority}</span>`
+    }
+});
 

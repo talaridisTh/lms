@@ -53,8 +53,6 @@ class MaterialController extends Controller {
         $watchlist = User::findOrFail($request->userId)
             ->watchlistMaterial()->where('watchlistable_id', $request->modelId)->first();
 
-
-
         if (isset($watchlist))
         {
 
@@ -71,6 +69,33 @@ class MaterialController extends Controller {
             return response("add");
 
         }
+
+    }
+
+    public function addWitchlist(Request $request)
+    {
+
+
+        $user =  auth()->user();
+
+        $watchlist = $user
+            ->witchlist()
+            ->where('material_id',$request->materialId)
+            ->where('course_id',$request->courseId)
+            ->first();
+
+        if (isset($watchlist))
+        {
+
+            $user->witchlist()->detach($watchlist);
+            return response("remove");
+        }else{
+
+            $user->witchlist()->attach($request->materialId,["course_id"=>$request->courseId]);
+            return response("add");
+        }
+
+
 
     }
 
