@@ -114,32 +114,6 @@ class HomeController extends Controller {
     public function test()
     {
 
-        $material = Material::find(8);
-        $course = Course::find(8);
-
-<<<<<<< HEAD
-        $user =  auth()->user();
-
-//        dd( $user->witchlist());
-
-
-        $watchlist = $user
-            ->witchlist()
-            ->where('material_id',$course->id)
-            ->where('course_id',$course->id)
-            ->first();
-
-        dd($watchlist);
-
-
-//        $user->witchlist()->attach($material->id,["course_id"=>$course->id]);
-
-
-=======
-        $material = Material::where("type", "Section")->get()->random();
->>>>>>> 75fba4ec2014f574c84cc7c2161ded5b0216b615
-
-		dd($material);
     }
 
 }
