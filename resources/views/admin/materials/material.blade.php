@@ -177,62 +177,62 @@
                                 @endif
 
 
-								<div class="form-row">
+                                <div class="form-row">
 
-									<div class="form-group col-lg-6">
-										<label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-										<input name="title" id="titleMaterial" type="text"
-											   class="form-control @error("title") is-invalid @enderror"
-											   placeholder="Εισάγετε τίτλο..."
-											   value="{{ old('title') != "" ? old('title')
+                                    <div class="form-group col-lg-6">
+                                        <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
+                                        <input name="title" id="titleMaterial" type="text"
+                                               class="form-control @error("title") is-invalid @enderror"
+                                               placeholder="Εισάγετε τίτλο..."
+                                               value="{{ old('title') != "" ? old('title')
 												: ( isset($material) ? $material->title : "" ) }}"/>
-										@error("title")
-										<span class="invalid-feedback" role="alert">
+                                        @error("title")
+                                        <span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
 											</span>
-										@enderror
-									</div>
-									
-									<div class="form-group col-lg-6">
-										<label for="subtitleMaterial">Υποτίτλος</label>
-										<input id="subtitleMaterial" name="subtitle" type="text"
-											   class="form-control" placeholder="Εισάγετε υποτίτλο..."
-											   value="{{ old('subtitle') != "" ? old('subtitle')
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group col-lg-6">
+                                        <label for="subtitleMaterial">Υποτίτλος</label>
+                                        <input id="subtitleMaterial" name="subtitle" type="text"
+                                               class="form-control" placeholder="Εισάγετε υποτίτλο..."
+                                               value="{{ old('subtitle') != "" ? old('subtitle')
 												: ( isset($material) ? $material->subtitle : "" ) }}"/>
-									</div>
+                                    </div>
 
-								</div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="summary">Περίληψη</label>
-                                        <textarea id="summary" name="summary"
-                                                  class="form-control" rows="5"
-                                                  placeholder="Εισάγετε περίληψη..."
-                                        >{{ old('summary') != "" ? old('summary')
+                                <div class="form-group">
+                                    <label for="summary">Περίληψη</label>
+                                    <textarea id="summary" name="summary"
+                                              class="form-control" rows="5"
+                                              placeholder="Εισάγετε περίληψη..."
+                                    >{{ old('summary') != "" ? old('summary')
 											: (isset($material) ? $material->summary : "") }}</textarea>
-                                    </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="description-material">
-                                            Περιγραφή
-                                        </label>
-                                        <textarea id="description-material" name="description"
-                                                  class="form-control" rows="5"
-                                                  placeholder="Εισάγετε περιγραφή..."
-                                        >{{ old('description') != "" ? old('description')
+                                <div class="form-group">
+                                    <label for="description-material">
+                                        Περιγραφή
+                                    </label>
+                                    <textarea id="description-material" name="description"
+                                              class="form-control" rows="5"
+                                              placeholder="Εισάγετε περιγραφή..."
+                                    >{{ old('description') != "" ? old('description')
 											: (isset($material) ? $material->description : "") }}</textarea>
-                                    </div>
+                                </div>
 
-                                    <div class="form-group">
-                                        <label for="content-material">
-                                            Περιεχόμενο μαθήματος
-                                        </label>
-                                        <textarea id="content-material" name="content"
-                                                  class="form-control" rows="5"
-                                                  placeholder="Εισάγετε περιεχόμενο μαθήματος..."
-                                        >{{ old('content') != "" ? old('content')
+                                <div class="form-group">
+                                    <label for="content-material">
+                                        Περιεχόμενο μαθήματος
+                                    </label>
+                                    <textarea id="content-material" name="content"
+                                              class="form-control" rows="5"
+                                              placeholder="Εισάγετε περιεχόμενο μαθήματος..."
+                                    >{{ old('content') != "" ? old('content')
 											: (isset($material) ? $material->content : "") }}</textarea>
-                                    </div>
+                                </div>
 
                             </form>
 
@@ -299,12 +299,13 @@
                                         type="submit" form="material-create">
                                     {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
                                 </button>
-                                @isset($material)
-                                    <a href="{{route('dummyPage.material.show',$material->slug)}}" id="preview-btn"
-                                       class="under-development btn btn-warning">
+                                @if(isset($material) && count($material->courses)>0  && $material->type != "Link" && $material->type != "Announcement"  )
+                                    <a href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"
+                                       id="preview-btn"
+                                       class="btn btn-warning">
                                         <i class="mdi mdi-eye"></i>
                                     </a>
-                                @endisset
+                                @endif
                             </div><!-- ./Βuttons -->
 
                             <div class="card">
@@ -399,25 +400,31 @@
                                     <div class="card-body">
 
                                         <img id="cover-image" src="{{ $material->cover }}"
-                                            class="img-fluid{{ (isset($material) &&  is_null($material->cover)) ? " d-none" : "" }}" alt="Cover Image"/>
-                                        <p id="cover-status" class="text-center{{ (isset($material) &&  !is_null($material->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
+                                             class="img-fluid{{ (isset($material) &&  is_null($material->cover)) ? " d-none" : "" }}"
+                                             alt="Cover Image"/>
+                                        <p id="cover-status"
+                                           class="text-center{{ (isset($material) &&  !is_null($material->cover)) ? " d-none" : "" }}">
+                                            <strong>Δεν βρέθηκε εικόνα</strong></p>
 
                                         <div class="form-row mt-2">
                                             <div class="col-md-6 d-flex justify-content-center">
-                                                <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
+                                                <button id="change-cover-btn"
+                                                        class="btn btn-primary btn-block text-nowrap">
                                                     {{isset($material) && !is_null($material->cover) ?"Αλλαγή":"Προσθηκη"}}
                                                 </button>
 
                                             </div>
-											<div class="{{ isset($material) && !is_null($material->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
-                                                <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
+                                            <div
+                                                class="{{ isset($material) && !is_null($material->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+                                                <button id="remove-cover-btn"
+                                                        class="btn btn-danger btn-block text-nowrap">
                                                     Αφαίρεση
                                                 </button>
                                             </div>
                                         </div>
                                     </div> <!-- end card-body -->
                                 </div> <!-- end course info card -->
-                        @endisset
+                            @endisset
 
                         </div>
                     </div>

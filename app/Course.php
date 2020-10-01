@@ -109,6 +109,7 @@ class Course extends Model {
         return DB::table("materials")
             ->join("course_material", "course_material.material_id", "=", "materials.id")
             ->where("course_id", $courseId)
+            ->where("type","!=" ,"Announcement")
             ->where("course_material.status", 1)
             ->orderBy("priority", 'asc')
             ->get();

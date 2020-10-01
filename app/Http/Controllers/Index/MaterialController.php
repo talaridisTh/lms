@@ -28,14 +28,16 @@ class MaterialController extends Controller {
         ];
 
 
-        $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();
         $priority = $materials->priority($materials->id, $course->id);
         $materialPriority = $course->materials->where('id', $materials->id)->first()->getOriginal()["pivot_priority"];
         $MaterialsOrderByPriority = Course::MaterialsOrderByPriority($course->id);
         $nextMaterial = Course::nextMaterial($course->id, $materialPriority);
         $prevMaterial = Course::prevMaterial($course->id, $materialPriority);
+        $announcements = $course->materials()->where("type", "Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
 
-        return view("index.materials.material-index", compact("priority", "materials", "course", "MaterialsOrderByPriority", "nextMaterial", "prevMaterial","icons"));
+
+        return view("index.materials.material-index",
+            compact("announcements","priority", "materials", "course", "MaterialsOrderByPriority", "nextMaterial", "prevMaterial","icons"));
     }
 
     public function dummyPage(Material $materials)

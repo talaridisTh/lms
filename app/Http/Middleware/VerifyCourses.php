@@ -17,6 +17,9 @@ class VerifyCourses
     public function handle(Request $request, Closure $next)
     {
 
+        if (auth()->user()->getRoleNames()[0]=="admin"){
+            return $next($request);
+        }
 
         $courseId = $request->route("course")->id;
 

@@ -74,6 +74,7 @@ const addWhatchlistAxios = async (modelId, userId,model) => {
 }
 
 
+
 export default {
     addWhatchlist
 }

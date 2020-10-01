@@ -16,7 +16,6 @@ class CourseController extends Controller {
     public function show(Course $course)
     {
 
-
         $topics = [];
         foreach (auth()->user()->courses as $course)
         {
@@ -27,20 +26,14 @@ class CourseController extends Controller {
         $arrayTopics = collect($topics)->mapWithKeys(function ($q) {
             return $q;
         });
-
-
         if (request()->idsTopic == "reset" || !request()->ajax())
         {
             $allCourses = auth()->user()->courses;
 
-
             return view("courses.courses", [
                 'arrayTopics' => $arrayTopics,
                 'allCourses' => $allCourses]);
-        }
-
-
-        else
+        } else
         {
 
             $queryAllCourse = DB::table('courses')
@@ -54,16 +47,10 @@ class CourseController extends Controller {
                 ->get();
 //
             $allCourses = $queryAllCourse->map(function ($test) {
-              return   Course::whereIn('id', [$test->id])->get();
-
+                return Course::whereIn('id', [$test->id])->get();
             });
 
-
-
-
-
             return view("courses.courses", [
-
                 'arrayTopics' => $arrayTopics,
                 'allCourses' => $allCourses->flatten(1)]);
         }
@@ -74,14 +61,11 @@ class CourseController extends Controller {
 
         $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
         $lastMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();;
-        $allMaterial = $course->materials()->where("type","!=","Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
-        $announcements = $course->materials()->where("type","Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
+        $allMaterial = $course->materials()->where("type", "!=", "Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
+        $announcements = $course->materials()->where("type", "Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
 
-
-
-        return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial","announcements"));
+        return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
-
 
     public function watchlistCourse(Request $request)
     {
@@ -96,14 +80,14 @@ class CourseController extends Controller {
                 ->detach($request->modelId);
 
             return response("remove");
-        }else{
+        } else
+        {
             User::findOrFail($request->userId)
                 ->watchlistCourse()
                 ->sync($request->modelId, false);
+
             return response("add");
-
         }
-
     }
 
 }

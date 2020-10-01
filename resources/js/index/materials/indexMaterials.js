@@ -42,7 +42,6 @@ $('#bs-example-modal-lg').on('shown.bs.modal', function (e) {
     swiper.update();
 });
 
-
 $(".js-audio-btn").click(function () {
     let cnt = this.parentElement;
     let audio = cnt.getElementsByClassName("js-audio")[0];
@@ -63,4 +62,16 @@ $(".js-audio-btn").click(function () {
     }
 })
 
+$(".js-link-material").click( async function () {
+    const href = this.href;
+    this.removeAttribute("href")
+    const {value} =  await Swal.fire({
+        icon: 'question',
+        text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
+        showCancelButton: true,
+    })
+    if (value){
+        window.open(`${href}`, '_blank');
+    }
+})
 

@@ -49,7 +49,7 @@
 @endsection
 @php
 
-	$count=0;
+    $count=0;
 
 @endphp
 @section("content")
@@ -104,7 +104,8 @@
                             <div class="button-course-fav my-sm-2">
                                 @if(count($allMaterial))
                                     <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
-                                       class=" mr-2 px-4 mb-xl-0 mb-md-2     btn-begin btn bghover btn" style="background:white">Έναρξη
+                                       class=" mr-2 px-4 mb-xl-0 mb-md-2     btn-begin btn bghover btn"
+                                       style="background:white">Έναρξη
                                     </a>
                                 @endif
                                 <button
@@ -169,50 +170,11 @@
 
 
                     <div class="row ">
-                        @isset($announcements)
                         <div class="col-md-12 px-2">
-                            <div class="accordion custom-accordion mb-2" id="announcement-collapse">
-                                <div class="card mb-0">
-                                    <div class="card-header p-2" id="announcement-head">
-                                        <h5 class="m-0 pl-2">
-                                            <a class="custom-accordion-title d-block py-1"
-                                               data-toggle="collapse" href="#announcement-col"
-                                               aria-expanded="true" aria-controls="announcement-col">
-                                                Ανακοινώσεις  <i
-                                                    class="mdi mdi-chevron-down accordion-arrow"></i>
-                                            </a>
-                                        </h5>
-                                    </div>
-
-                                    <div id="announcement-col" class="collapse show"
-                                         aria-labelledby="announcement-head"
-                                         data-parent="#announcement-collapse">
-                                        <div class="card-body d-flex flex-column alig">
-                                            @foreach($announcements as $announcement)
-                                                <span  type="button" class="text-danger h5 my-2 w-25 " data-toggle="modal" data-target="#bs-example-modal-sm">{{$announcement->title}}</span>
-                                                <div class="modal fade" id="bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog modal-sm">
-                                                        <div class="modal-content ">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title" id="mySmallModalLabel">{{$announcement->title}}</h4>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                            </div>
-                                                            <div class="modal-body ">
-                                                                {{$announcement->summary}}
-                                                            </div>
-                                                        </div><!-- /.modal-content -->
-                                                    </div><!-- /.modal-dialog -->
-                                                </div><!-- /.modal -->
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @include("components.index.announcements")
                         </div>
-                        @endisset
 
                         <div class="col-md-12 px-2">
-
                             @include("components.index.collapse-menu",
                                 ["idAccordion"=>$course->slug."-accordion-summary" ,
                                 "idHeader"=>$course->slug."-header-summary",
@@ -242,8 +204,9 @@
                     <ul style="max-height: 800px" class="m-0 p-0">
                         @foreach($allMaterial as $materials)
                             <li class="list-group-item list-material border p-md-1  ">
-                                <a class="d-flex align-items-center m"
-                                   href="{{route('index.material.show',[$course->slug,$materials->slug])}}">
+                                <a class="d-flex align-items-center {{
+                            $materials->type=="mdi mdi-link-variant-plus text-info"?"js-link-material":""}}"
+                                   href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?$materials->video_link:route('index.material.show',[$course->slug,$materials->slug])}}">
                                     <div class="col-md-2 mr-2 ">
                                         <span class="material-count"><span>{{++$count}}</span></span>
                                     </div>
