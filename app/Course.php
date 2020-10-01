@@ -10,7 +10,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Course extends Model {
 
 	use SoftDeletes;
-    use HasFactory;
+	use HasFactory;
+	
+	public function sections() {
+
+		return $this->hasMany("App\Section");
+
+	}
 
     public function media()
     {

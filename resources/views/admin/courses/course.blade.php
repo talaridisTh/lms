@@ -269,7 +269,6 @@
 									</div>
 								</th>
 								<th class="text-center">Τίτλος</th>
-								<th class="text-center">Topic</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center"></th>
 							</tr>
@@ -279,7 +278,6 @@
 							<tr>
 								<th class="text-center">Επιλογή</th>
 								<th class="text-center">Τίτλος</th>
-								<th class="text-center">Topic</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center"></th>
 							</tr>

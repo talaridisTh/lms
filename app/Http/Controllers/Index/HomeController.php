@@ -115,15 +115,9 @@ class HomeController extends Controller {
     {
 
 
-        $users = DB::select("select users.id,users.email,messages.message, count(is_read) as unread
-        from users LEFT  JOIN  messages ON users.id = messages.from and is_read = 0 and messages.to = " . Auth::id() . "
-        where users.id != " . Auth::id() . "
-        group by users.id, messages.id");
+        $material = Material::where("type", "Section")->get()->random();
 
-
-        dd($users);
-
-
+		dd($material);
     }
 
 }

@@ -31,7 +31,7 @@ class MaterialFactory extends Factory
 		$mins = rand(0, 59);
 		$secs = rand(0, 59);
 
-		$types = ['Announcement', 'Video','Link', "Lesson", "Lesson", "Lesson"];
+		$types = ['Announcement', 'Video','Link', "Lesson", "Lesson", "Lesson", "Lesson", "Section", "Section"];
 
 		$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
@@ -43,7 +43,7 @@ class MaterialFactory extends Factory
 			'content' => "Content of Lesson ".$counter++ ,
 			'status' => rand( 0, 1 ),
 			'slug' => $this->faker->slug,
-			'type' => $types[ rand(1,5) ],
+			'type' => $types[ rand(0,8) ],
 			'created_at' => $date->format('Y-m-d H:i:s'),
 			'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
         ];

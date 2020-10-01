@@ -13,3 +13,5 @@ yarn-error.log
 bash.exe.stackdump
 .idea
 /public/.htaccess
+composer.lock
+*.DS_Store

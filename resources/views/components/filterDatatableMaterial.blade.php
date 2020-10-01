@@ -11,7 +11,7 @@
 
 <select id="typeFilterMaterial">
     <option value="">Όλα τα Type</option>
-    @foreach(App\Material::all()->unique('type') as $course)
+    @foreach(App\Material::where("type", "!=", "Section")->get()->unique('type') as $course)
     <option value="{{$course->type}}">{{$course->type}}</option>
     @endforeach
 </select>
