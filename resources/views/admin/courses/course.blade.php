@@ -778,27 +778,81 @@
 				<div id="sections" class="tab-pane mb-3">
 
 
-
+					
 
 
 					<div class="accordion" id="accordionExample">
-						@foreach ($course->sections as $key => $section)
+						@foreach ($course->sections as $key => $sectionInfo)
 
 							<div class="card mb-0">
-								<div class="card-header" id="{{ $section->slug }}">
+								<div class="card-header" id="{{ $sectionInfo->slug }}">
 									<h5 class="m-0">
 										<a class="custom-accordion-title d-block pt-2 pb-2"
-											data-toggle="collapse" href="#{{ $section->slug }}-collapse"
-											aria-expanded="true" aria-controls="{{ $section->slug }}-collapse">
-											{{ $section->title }}
+											data-toggle="collapse" href="#{{ $sectionInfo->slug }}-collapse"
+											aria-expanded="true" aria-controls="{{ $sectionInfo->slug }}-collapse">
+											{{ $sectionInfo->title }}
 										</a>
 									</h5>
 								</div>
 							
-								<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
-									aria-labelledby="{{ $section->slug }}" data-parent="#accordionExample">
+								<div id="{{ $sectionInfo->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
+									aria-labelledby="{{ $sectionInfo->slug }}" data-parent="#accordionExample">
 									<div class="card-body">
-										...
+
+										<table class="table mb-0">
+											<thead>
+												<tr>
+													<th scope="col">#</th>
+													<th scope="col">Heading</th>
+													<th scope="col">Heading</th>
+													<th scope="col">Heading</th>
+													<th scope="col">Heading</th>
+													<th scope="col">Heading</th>
+													<th scope="col">Heading</th>
+													<th scope="col">Heading</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<th scope="row">1</th>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+												</tr>
+												<tr>
+													<th scope="row">2</th>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+												</tr>
+												<tr>
+													<th scope="row">3</th>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+													<td>Cell</td>
+												</tr>
+											</tbody>
+										</table>
+																						
+										
+
+
+
+
+
+
 									</div>
 								</div>
 							</div>
