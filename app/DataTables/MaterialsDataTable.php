@@ -24,21 +24,26 @@ class MaterialsDataTable extends DataTable {
     public function dataTable($query)
     {
 
-        if (request()->trash == 1)
-        {
+        // if (request()->trash == 1)
+        // {
 
-            $data = Material::onlyTrashed()->get();
-        } else
-        {
+        //     $data = Material::onlyTrashed()->get();
+        // } else
+        // {
             if (!request()->from_date && !request()->to_date)
             {
 
-                $data = Material::with("courses")->get();
+                $data = Material::where("type", "!=", "Section")->with("courses")->get();
             } else
             {
-                $data = Material:: whereBetween('created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])->get();
+                $data = Material::where(function ($subquery) {
+
+					$subquery->where("type", "!=", "Section")
+						->whereBetween('created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
+						->get();
+				})->get();
             }
-        }
+        // }
 
         return DataTables::of($data)
             ->addColumn('action', function ($data) {

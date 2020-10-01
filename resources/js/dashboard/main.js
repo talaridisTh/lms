@@ -102,7 +102,8 @@ const tableLocale = {
     paginate: {
         previous: "<i class='mdi mdi-chevron-left'>",
         next: "<i class='mdi mdi-chevron-right'>"
-    }
+	},
+	infoFiltered: "(Φιλτραρισμένα απο τις _MAX_ εγγραφές)"
 }
 
 //!GLOBAL FUNCTION

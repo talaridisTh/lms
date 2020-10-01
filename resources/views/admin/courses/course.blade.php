@@ -269,7 +269,6 @@
 									</div>
 								</th>
 								<th class="text-center">Τίτλος</th>
-								<th class="text-center">Topic</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center"></th>
 							</tr>
@@ -279,7 +278,6 @@
 							<tr>
 								<th class="text-center">Επιλογή</th>
 								<th class="text-center">Τίτλος</th>
-								<th class="text-center">Topic</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center"></th>
 							</tr>
@@ -327,11 +325,19 @@
 						Χρήστες
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="#sections" id="sections-tab-btn"
+						data-toggle="tab" aria-expanded="true"
+						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}"
+					>
+						Sections
+					</a>
+				</li>
 			</ul><!-- ./tabs -->
 
 			<div class="tab-content">
 
-				<div id="settings" class="tab-pane show active">
+				<div id="settings" class="tab-pane show active mb-3">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
 							<form id="edit-course-form"
@@ -713,7 +719,7 @@
 
 				</div><!-- materials tab-pane -->
 
-				<div id="users" class="tab-pane table-cnt">
+				<div id="users" class="tab-pane table-cnt mb-3">
 					<div class="row my-3">
 						<div class="col-sm-1">
 						</div>
@@ -767,6 +773,58 @@
 					</table>
 
 				</div><!-- users tab-pane -->
+
+
+				<div id="sections" class="tab-pane mb-3">
+
+
+
+
+
+					<div class="accordion" id="accordionExample">
+						@foreach ($course->sections as $key => $section)
+
+							<div class="card mb-0">
+								<div class="card-header" id="{{ $section->slug }}">
+									<h5 class="m-0">
+										<a class="custom-accordion-title d-block pt-2 pb-2"
+											data-toggle="collapse" href="#{{ $section->slug }}-collapse"
+											aria-expanded="true" aria-controls="{{ $section->slug }}-collapse">
+											{{ $section->title }}
+										</a>
+									</h5>
+								</div>
+							
+								<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
+									aria-labelledby="{{ $section->slug }}" data-parent="#accordionExample">
+									<div class="card-body">
+										...
+									</div>
+								</div>
+							</div>
+
+
+						@endforeach
+					</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+				</div>
+
+
 			</div><!-- tab-content -->
 
 		</div>

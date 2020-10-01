@@ -8,6 +8,7 @@ use App\Material;
 use App\Role;
 use App\Topic;
 use App\Bundle;
+use App\Section;
 use Database\Seeders\MessageSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
@@ -47,6 +48,26 @@ class DatabaseSeeder extends Seeder {
 
 					$course->materials()->attach( Material::all()->random()->id, ["priority" => rand( 1, 10000 )]);
 				}
+			});
+
+		Section::factory()->times(90)
+			->state(function() {
+
+				$material = Material::where("type", "Section")->get()->random();
+
+				return [
+					"parent_id" => $material->id,
+					"course_id" => Course::all()->random()->id,
+					"title" => $material->title,
+					"slug" => $material->slug,
+				];
+
+			})->create()->each( function($section) {
+
+				static $counter = 0;
+
+				$section->materials()->attach( Material::all()->random()->id, ["priority" => $counter++]);
+			
 			});
 
 		Bundle::factory()->times(15)->create()

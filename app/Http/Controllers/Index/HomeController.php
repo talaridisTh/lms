@@ -117,6 +117,7 @@ class HomeController extends Controller {
         $material = Material::find(8);
         $course = Course::find(8);
 
+<<<<<<< HEAD
         $user =  auth()->user();
 
 //        dd( $user->witchlist());
@@ -134,7 +135,11 @@ class HomeController extends Controller {
 //        $user->witchlist()->attach($material->id,["course_id"=>$course->id]);
 
 
+=======
+        $material = Material::where("type", "Section")->get()->random();
+>>>>>>> 75fba4ec2014f574c84cc7c2161ded5b0216b615
 
+		dd($material);
     }
 
 }

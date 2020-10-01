@@ -445,11 +445,10 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', width: "5%", className: "text-center", orderable: false},
-		{data: 'title', name: 'materials.title', className: "cursor-default"},
-		{data: 'topics', name: 'topics.title', className: "text-center cursor-default"},
-		{data: 'type', name: 'materials.type', className: "text-center cursor-default"},
-		{data: 'addBtn', width: "12%", class: "text-center", searchable: false, orderable: false},
+		{data: 'action', className: "text-center", orderable: false},
+		{data: 'title', name: 'title', className: "cursor-default"},
+		{data: 'type', name: 'type', className: "text-center cursor-default"},
+		{data: 'addBtn', class: "text-center", searchable: false, orderable: false},
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {

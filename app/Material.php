@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Material extends Model {
 
-
-//    soft-delete
-//    use SoftDeletes;
     use HasFactory;
 
-    protected $guarded = [];
+	protected $guarded = [];
+	
+	public function sections() {
+
+		return $this->belongsToMany(Section::class);
+
+	}
 
     public function courses()
     {
