@@ -12,6 +12,7 @@ use App\Section;
 use Database\Seeders\MessageSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 
 class DatabaseSeeder extends Seeder {
 
@@ -64,10 +65,20 @@ class DatabaseSeeder extends Seeder {
 
 			})->create()->each( function($section) {
 
-				static $counter = 0;
+				$rand = rand(2, 5);
+				$year = rand(2019, 2022);
+				$month = rand(1, 12);
+				$day = rand(1, 31);
+				$hours = rand(0, 23);
+				$mins = rand(0, 59);
+				$secs = rand(0, 59);
+				$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
 
-				$section->materials()->attach( Material::all()->random()->id, ["priority" => $counter++]);
-			
+				for ( $i = 0; $i < $rand; $i++) {
+					$section->materials()->attach( Material::all()
+						->random()->id, ["priority" => rand( 1, 255 ), "status" => rand(0,1), "publish_at" => $date]);
+				}
+
 			});
 
 		Bundle::factory()->times(15)->create()
