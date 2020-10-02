@@ -243,13 +243,16 @@ class CourseController extends Controller
 					$material->pivot->update(["priority" => $counter++]);
 
 					//! otan einai etoima ta section na bgei apo comment
-					// if ($material->type == "Section") {
-					// 	$course->sections()->where("parent_id", $material->id)
-					// 		->update(["priority" => $counter]);
-					// }
+					if ($material->type == "Section") {
+						$course->sections()->where("parent_id", $material->id)
+							->update(["priority" => $counter]);
+					}
 				}
 			
 			});
+
+		$sections = $course->sections()->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 
 	}
 

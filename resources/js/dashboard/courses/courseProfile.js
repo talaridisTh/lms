@@ -1065,9 +1065,6 @@ function postMaterialIds( materialId ) {
 
 function removeMaterials( materials ) {
 
-
-	console.log(materials);
-
 	axios.patch( "/courses/remove-materials", {
 		courseId,
 		materials
@@ -1075,7 +1072,7 @@ function removeMaterials( materials ) {
 	.then( (res) => {
 
 		let message = materials.length == 1 ? "1 αρχείο εκτός ύλης" : `${materials.length} αρχεία εκτός ύλης`;
-		// let sectionRows = $(".js-accordion-row");
+
 
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload( null, false );
@@ -1084,9 +1081,7 @@ function removeMaterials( materials ) {
 		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 
-		// for ( let i = 0; i < sectionRows.length; i++ ) {
-		// 	if (sectionRows[i].dataset.material)
-		// }
+		$("#section-accordion").html(res.data);
 	})
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
