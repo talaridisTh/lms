@@ -123,7 +123,7 @@ class User extends Authenticatable {
 
     public function witchlist()
     {
-        return $this->belongsToMany(User::class,'Witchlist', 'user_id', 'material_id'  );
+        return $this->belongsToMany(User::class,'witchlist', 'user_id', 'material_id'  );
     }
 
 
