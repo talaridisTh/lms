@@ -147,39 +147,27 @@
 
 	<!-- additionnal content modal -->
 	<div class="modal fade" id="add-additions-modal" tabindex="-1" aria-labelledby="add-additions-modalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
 			  <div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header bg-light">
 					<h5 class="modal-title" id="add-additions-modalLabel">Προσθήκη Υλικού</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<div class="row px-3">
 
-						<div class="col-6">
-							<div id="add-new-material-btn" class="card cursor-pointer">
-								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-file-document-outline	display-3"></i>
-									<h5 class="card-title mt-2">Μάθημα</h5>
-								</div>
-							</div>
-							<div class="card cursor-pointer js-material" data-type="Video">
-								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-camcorder	display-3"></i>
-									<h5 class="card-title mt-2">Video</h5>
-								</div>
-							</div>
-						</div>
-					
-						<div class="col-6">
+
+					<div class="row px-3">
+						<div class="col-4">
 							<div class="card cursor-pointer js-material" data-type="Announcement">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-comment-quote-outline display-3"></i>
 									<h5 class="card-title mt-2">Ανακοίνωση</h5>
 								</div>
 							</div>
+						</div>
+						<div class="col-4">
 							<div class="card cursor-pointer js-material" data-type="Link">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-link-variant-plus	display-3"></i>
@@ -187,7 +175,41 @@
 								</div>
 							</div>
 						</div>
+						<div class="col-4">
+							<div class="card cursor-pointer js-material" data-type="Video">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-camcorder	display-3"></i>
+									<h5 class="card-title mt-2">Video</h5>
+								</div>
+							</div>
+						</div>
 					</div>
+
+					<div class="row px-3">
+
+						<div class="col-6">
+							
+							<div class="card cursor-pointer js-material" data-type="Section">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-wunderlist display-3"></i>
+									<h5 class="card-title mt-2">Section</h5>
+								</div>
+							</div>
+
+						</div>
+					
+						<div class="col-6">
+							<div id="add-new-material-btn" class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-file-document-outline	display-3"></i>
+									<h5 class="card-title mt-2">Μάθημα</h5>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					
 				</div>
 				<input id="store-material-id" type="text" value="" hidden>
 				<input id="store-material-priority" type="text" value="" hidden>
@@ -797,7 +819,7 @@
 										<table class="table mb-0">
 											<thead>
 												<tr>
-													<th class="text-center" scope="col">Title</th>
+													<th class="text-center" scope="col" style="min-width: 400px;">Title</th>
 													<th class="text-center w-10" scope="col">Κατάσταση</th>
 													<th class="text-center w-10" scope="col">Κατάταξη</th>
 													<th class="text-center w-10" scope="col">Τύπος</th>
@@ -807,7 +829,7 @@
 											</thead>
 											<tbody>
 
-												@foreach ($sectionInfo->materials as $material)
+												@forelse ($sectionInfo->materials as $material)
 													<tr class="js-accordion-row" data-material-id="{{ $material->id }}">
 														<td>
 															<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
@@ -854,7 +876,11 @@
 															<i class="h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"></i>
 														</td>
 													</tr>
-												@endforeach
+
+												@empty
+
+													<td colspan="5" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
+												@endforelse
 												
 
 

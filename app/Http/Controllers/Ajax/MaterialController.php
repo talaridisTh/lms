@@ -11,6 +11,7 @@ use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Media;
+use App\Section;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -80,26 +81,48 @@ class MaterialController extends Controller {
     public function addContent(Request $request)
     {
 
-        $pattern = "/[^a-z0-9\x{0370}-\x{03FF}]/mu";
         $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
         $material->type = $request->type;
         $material->status = $request->state;
-        $material->slug = preg_replace($pattern, "-", mb_strtolower($request->title));
+		$material->slug = Str::slug($request->title, "-");
+		
         if ($request->type == "Video")
         {
             $material->video_link = $request->video;
         } elseif ($request->type == "Link")
         {
             $material->file = $request->link;
-        }
-        $material->save();
-        CourseMaterial::incrementPriority($request->courseId, $request->priority);
-        Course::find($request->courseId)->materials()
-            ->attach($material->id, ["status" => $request->state, "priority" => $request->priority + 1, "publish_at" => $publish]);
-    }
+		}
+		
+		$material->save();
+		
+		CourseMaterial::incrementPriority($request->courseId, $request->priority);
+		
+		$course = Course::find($request->courseId);
+		$course->materials()
+			->attach($material->id, [
+				"status" => $request->state,
+				"priority" => $request->priority + 1,
+				"publish_at" => $publish
+			]);
+	
+		if ( $request->type == "Section") {
+			$course->sections()->where("priority", ">", $request->priority)
+				->increment("priority");
+
+			$section = new Section;
+			$section->parent_id = $material->id;
+			$section->course_id = $request->courseId;
+			$section->title = $material->title;
+			$section->slug = $material->slug;
+			$section->status = $material->status;
+			$section->priority = $request->priority + 1;
+			$section->save();
+		}
+	}
 
     public function destroyMultipleMaterials(Request $request)
     {

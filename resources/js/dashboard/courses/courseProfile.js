@@ -20,6 +20,10 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$(".under-development").on("click", function() {
+	utilities.toastAlert("info", "Under Development");
+})
+
 $("#remove-all-files-btn").on("click", function() {
 
 	let fileRow = $(".js-file-row")
@@ -1198,7 +1202,7 @@ function linkForm( type, priority) {
 
 	return `<td id="add-content-row" class="text-left" colspan="8">
 				<div id="additional-content-form">
-					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη ${ type }</h3>
+					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο ${ type }</h3>
 					<div class="form-row">
 						<div class="form-group col-6">
 							<label for="new-title">Τίτλος</label>
@@ -1210,6 +1214,7 @@ function linkForm( type, priority) {
 						<div class="form-group col-6">
 							<label for="new-subtitle">Υπότιτλος</label>
 							<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..."/>
+							<input type="text" id="new-content" class="js-content form-control" placeholder="Εισάγετε περιεχόμενο..." hidden/>
 						</div>
 					</div>
 					<div class="form-row">
@@ -1237,7 +1242,7 @@ function annoucementForm( priority ) {
 
 	return `<td id="add-content-row" class="text-left" colspan="8">
 				<div id="additional-content-form">
-					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Προσθήκη Ανακοίνωσης</h3>
+					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέα Ανακοίνωση</h3>
 					<div class="form-row">
 						<div class="form-group col-9">
 							<label for="new-title">Τίτλος</label>
@@ -1254,7 +1259,8 @@ function annoucementForm( priority ) {
 					</div>
 						<div class="form-group">
 							<label for="new-announcement">Ανακοίνωση</label>
-							<textarea id="new-announcement" class="js-empty js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..."></textarea>
+							<textarea id="new-announcement" class="js-empty js-content form-control" placeholder="Εισάγετε ανακοίνωση..."></textarea>
+							<textarea class="js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..." hidden></textarea>
 						</div>
 						<div class="form-group float-right">
 							<button  class="js-add-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
@@ -1263,6 +1269,39 @@ function annoucementForm( priority ) {
 
 				</div>
 			</td>`
+}
+
+function sectionForm(priority) {
+
+	return `<td id="add-content-row" class="text-left" colspan="8">
+		<div id="additional-content-form">
+			<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
+			
+			<div class="form-group">
+				<label for="new-title">Τίτλος</label>
+				<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
+
+				<input type="text" class="js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..." hidden/>
+				<input type="text" class="js-content form-control" placeholder="Εισάγετε περιεχόμενο..." hidden/>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-8">
+					<label for="state-select">Κατάσταση</label>
+					<select class="js-state form-control" id="state-select">
+						<option value="1">Ενεργό</option>
+						<option value="0" selected>Ανενεργό</option>
+					</select>
+				</div>
+				<div class="form-group col-4 d-flex justify-content-center align-items-end">
+					
+					<button  class="js-add-content btn btn-primary" data-type="Section" data-priority="${ priority }">Αποθήκευση</button>
+					<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
+					
+				</div>
+			</div>
+
+		</div>
+	</td>`;
 }
 
 function createTableRow( type, priority ) {
@@ -1277,7 +1316,15 @@ function createTableRow( type, priority ) {
 
 	}
 
-	rowElm.innerHTML = type == "Announcement" ? annoucementForm( priority ) : linkForm( type, priority)
+	if (type == "Announcement") {
+		rowElm.innerHTML = annoucementForm( priority );
+	}
+	else if ( type == "Section" ) {
+		rowElm.innerHTML = sectionForm( priority );
+	}
+	else {
+		rowElm.innerHTML = linkForm( type, priority);
+	}
 
 	let saveBtn = rowElm.getElementsByClassName("js-add-content")[0];
 	let cancelBtn = rowElm.getElementsByClassName("js-cancel-addition")[0];
@@ -1299,11 +1346,12 @@ function cancelAddition() {
 }
 
 function addContent() {
-	let container = this.parentElement.parentElement.parentElement;
+	let container = this.findParent(3);
 	let priority = this.dataset.priority;
 	let type = this.dataset.type;
 	let title = container.getElementsByClassName("js-title")[0];
 	let subtitle = container.getElementsByClassName("js-subtitle")[0];
+	let content = container.getElementsByClassName("js-content")[0];
 	let link = container.getElementsByClassName("js-link")[0];
 	let state = container.getElementsByClassName("js-state")[0];
 	let valid = checkEmpty( container, "js-empty" );
@@ -1324,6 +1372,7 @@ function addContent() {
 	data.append( "courseId", courseId );
 	data.append( "title", title.value );
 	data.append( "subtitle", subtitle.value );
+	data.append( "content", content.value );
 	data.append( "priority", priority );
 	data.append( "type", type );
 	data.append( "state", state.value );
