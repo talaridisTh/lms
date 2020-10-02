@@ -15,7 +15,7 @@ class CreateSectionsTable extends Migration
     {
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
-			$table->unsignedBigInteger("parent_id")->references('id')
+			$table->foreignId("parent_id")->references('id')
 				->on('materials')->onDelete('cascade'); //! einai to material_id
 														//! to section stin ousia apo8ikeuete san material
 														//! kai ka8e fora pou dimiourgite ena section/material

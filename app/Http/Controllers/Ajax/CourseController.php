@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Course;
+use App\Material;
 use App\CourseMaterial;
 use App\DataTables\AddCourseUsersDataTable;
 use App\Http\Controllers\Controller;
@@ -224,24 +225,31 @@ class CourseController extends Controller
 	public function removeMaterials( Request $request ) {
 
 		$courseId = $request->courseId;
-		$materialIds = $request->materialIds;
 		$course = Course::find($courseId);
+	
+		$course->materials()->orderBy('priority')
+			->each( function($material) use ($course, $request) {
 
-		foreach( $materialIds as $id ) {
-			$course->materials()->detach( $id );
-		}
+				static $counter = 1;
+				if ( in_array($material->id, $request->materials) ) {
+					if ($material->type == "Section") {
+						$material->delete();
+					}
+					else {
+						$course->materials()->detach( $material->id );
+					}
+				}
+				else {
+					$material->pivot->update(["priority" => $counter++]);
 
-		$totalMaterials = $course->materials()->orderBy('priority')->get();
+					// if ($material->type == "Section") {
+					// 	$course->sections()->where("parent_id", $material->id)
+					// 		->update(["priority" => $counter]);
+					// }
+				}
+			
+			});
 
-		foreach ( $totalMaterials as $key => $material ) {
-			DB::table('course_material')
-				->where('course_id', $courseId)
-				->where('material_id', $material['id'])
-				->update( ['priority' => $key + 1] );
-		}
-
-		$course->updated_at = Carbon::now();
-		$course->save();
 	}
 
 	public function courseUsers( CourseUsersDataTable $dataTable ) {
