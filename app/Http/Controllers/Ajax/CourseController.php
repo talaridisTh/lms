@@ -240,13 +240,13 @@ class CourseController extends Controller
 					}
 				}
 				else {
-					$material->pivot->update(["priority" => $counter++]);
+					$material->pivot->update(["priority" => $counter]);
 
-					//! otan einai etoima ta section na bgei apo comment
 					if ($material->type == "Section") {
 						$course->sections()->where("parent_id", $material->id)
 							->update(["priority" => $counter]);
 					}
+					$counter++;
 				}
 			
 			});

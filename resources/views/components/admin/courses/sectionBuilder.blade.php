@@ -73,7 +73,7 @@
 							</td>
 						</tr>
 						@empty
-							<td colspan="5" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
+							<td colspan="6" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
 						@endforelse
 					</tbody>
 				</table>															
