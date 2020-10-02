@@ -808,7 +808,7 @@
 											<tbody>
 
 												@foreach ($sectionInfo->materials as $material)
-													<tr>
+													<tr class="js-accordion-row" data-material-id="{{ $material->id }}">
 														<td>
 															<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
 															<p class='mb-1'>{{ $material->slug }}</p>
@@ -831,7 +831,6 @@
 																	data-current-priority="{{ $material->pivot->priority }}" 
 																	value="{{ $material->pivot->priority }}" autocomplete='off'>
 															</div>
-															{{-- {{ $material->pivot->priority}} --}}
 														</td>
 														<td class="align-middle text-center">{{ $material->type}}</td>
 														<td class="text-center">

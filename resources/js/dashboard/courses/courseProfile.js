@@ -335,7 +335,7 @@ $('#add-remaingings-btn').on( "click", function() {
 
 $('#remove-selection-btn').on( "click", function() {
 	let checkboxes = $('.js-course-material-checkbox:checked');
-	let ids = [];
+	let materials = [];
 
 	if ( checkboxes.length == 0 ) {
 
@@ -344,7 +344,7 @@ $('#remove-selection-btn').on( "click", function() {
 	}
 	else {
 		for ( var i = 0; i < checkboxes.length; i++ ) {
-			ids.push( checkboxes[i].dataset.materialId );
+			materials.push( checkboxes[i].dataset.materialId );
 		}
 
 		Swal.fire({
@@ -357,7 +357,7 @@ $('#remove-selection-btn').on( "click", function() {
 		}).then( (result) => {
 			if (result.value) {
 
-				removeMaterials( ids );
+				removeMaterials( materials );
 
 			}
 		})
@@ -771,7 +771,7 @@ function removeMaterialInit() {
 
 	binBtn.on( "click", function() {
 
-		let id = [ this.dataset.materialId ];
+		let id = this.dataset.materialId;
 
 		Swal.fire({
 			title: "Είστε σίγουρος/η;",
@@ -784,7 +784,7 @@ function removeMaterialInit() {
 
 			if (result.value) {
 
-				removeMaterials( id );
+				removeMaterials( [id] );
 
 			}
 		})
@@ -1059,15 +1059,19 @@ function postMaterialIds( materialId ) {
 	})
 }
 
-function removeMaterials( materialIds ) {
+function removeMaterials( materials ) {
+
+
+	console.log(materials);
 
 	axios.patch( "/courses/remove-materials", {
 		courseId,
-		materialIds
+		materials
 	})
 	.then( (res) => {
 
-		let message = materialIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${materialIds.length} αρχεία εκτός ύλης`;
+		let message = materials.length == 1 ? "1 αρχείο εκτός ύλης" : `${materials.length} αρχεία εκτός ύλης`;
+		// let sectionRows = $(".js-accordion-row");
 
 		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload( null, false );
@@ -1075,6 +1079,10 @@ function removeMaterials( materialIds ) {
 
 		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
+
+		// for ( let i = 0; i < sectionRows.length; i++ ) {
+		// 	if (sectionRows[i].dataset.material)
+		// }
 	})
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
