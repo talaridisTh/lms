@@ -96,7 +96,8 @@ class CourseController extends Controller
 			'topics' => Topic::all(),
 			'instructors' => Role::find( 2 )->users,
 			'publish' => $publish,
-			"files" => $course ? $course->media()->where("type", 1)->get() : null
+			"files" => $course ? $course->media()->where("type", 1)->get() : null,
+			"sections" => $course ? $course->sections()->orderBy("priority")->get() : null,
 		];
 		
         return view('admin.courses.course')->with($data);

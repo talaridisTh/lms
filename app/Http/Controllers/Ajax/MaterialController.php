@@ -122,6 +122,9 @@ class MaterialController extends Controller {
 			$section->priority = $request->priority + 1;
 			$section->save();
 		}
+
+		$sections = $course->sections()->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
     public function destroyMultipleMaterials(Request $request)

@@ -1387,7 +1387,11 @@ function addContent() {
 		.then( (res) => {
 
 			courseMaterialsTable.ajax.reload( null, false );
-			utilities.toastAlert( "success", "Αποθηκεύτηκε" )
+
+			$("#section-accordion").html(res.data);
+			console.log(res);
+
+			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
 		})
 		.catch( (err) => {
 			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
