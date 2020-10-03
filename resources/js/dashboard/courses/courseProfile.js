@@ -920,6 +920,7 @@ function sortInputsInit() {
 			.then( (res) => {
 				courseMaterialsTable.ajax.reload( null, false );
 
+				$("#section-accordion").html(res.data);
 			})
 		}
 

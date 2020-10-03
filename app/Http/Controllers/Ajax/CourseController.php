@@ -15,6 +15,7 @@ use App\DataTables\CourseMaterialsDataTable;
 use App\DataTables\CourseUsersDataTable;
 use App\DataTables\RemainingMaterialsDataTable;
 use App\Media;
+use App\Section;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -139,43 +140,53 @@ class CourseController extends Controller
 
 	public function changePriority( Request $request ) {
 
-		$data = $request->all();
+		$course = Course::find( $request->courseId );
 
-		$course = Course::find($data['courseId']);
-		$lastMaterial = Course::find($data['courseId'])
-			->materials()->orderBy("priority", "desc")->first();
+		$lastInOrder = $course->materials()
+			->orderBy("priority", "desc")->first()->pivot->priority;
 
-		$lastInOrder = $lastMaterial->pivot->priority;
+		$priority = $request->priority;
 
-		if ( $data['priority']['new'] == 0 ) {
-			$data['priority']['new'] = 1;
+		if ( $priority['new'] == 0 ) {
+			$priority['new'] = 1;
 		}
-		elseif ( $data['priority']['new'] > $lastInOrder ) {
-			$data['priority']['new'] = $lastInOrder;
+		elseif ( $priority['new'] > $lastInOrder ) {
+			$priority['new'] = $lastInOrder;
 		}
 
-		$priorityRange = [ $data['priority']['new'], $data['priority']['old'] ];
+		$priorityRange = [ $priority['new'], $priority['old'] ];
 		sort( $priorityRange );
 
-			if ( $data['priority']['new'] < $data['priority']['old'] ) {
-				DB::table('course_material')
-					->where('course_id', $data['courseId'])
-					->whereBetween('priority', $priorityRange)
-					->increment('priority');
-			}
-			else {
-				DB::table('course_material')
-					->where('course_id', $data['courseId'])
-					->whereBetween('priority', $priorityRange)
-					->decrement('priority');
+		$counter = $priority['new'] < $priority['old'] ? $priority['new'] + 1 : $priority['old'] - 1 ;
+
+		$materials = $course->materials()->whereBetween('priority', $priorityRange)
+			->orderBy("priority")->get();
+
+		foreach ($materials as $material) {
+
+			$material->pivot->update(["priority" => $counter]);
+
+			if ( $material->type == "Section" ) {
+				Section::where("parent_id", $request->materialId)
+					->update(["priority" => $counter]);
 			}
 
-		CourseMaterial::where( 'course_id', $data['courseId'] )
-			->where( 'material_id', $data['materialId'] )
-			->update( ['priority' => $data['priority']['new']] );
+			$counter++;
+		}
+
+		$material = $course->materials()->where("materials.id", $request->materialId)->first();
+		$material->pivot->update([ "priority" => $priority['new'] ]);
+
+		if ( $material->type == "Section" ) {
+			Section::where("parent_id", $request->materialId)
+				->update(["priority" => $priority['new']]);
+		}
 
 		$course->updated_at = Carbon::now();
 		$course->save();
+
+		$sections = $course->sections()->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 
 	}
 
