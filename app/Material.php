@@ -12,9 +12,12 @@ class Material extends Model {
 
 	protected $guarded = [];
 
-	public function sections() {
+	public function chapters() {
 
-		return $this->belongsToMany(Section::class);
+		return $this->belongsToMany(
+			Material::class, "material_section",
+			"section_id", "material_id"
+		)->withPivot('status', 'priority');
 
 	}
 
@@ -97,25 +100,25 @@ class Material extends Model {
         }
     }
 
-    public function getTypeAttribute($value)
-    {
+    // public function getTypeAttribute($value)
+    // {
 
-        if (request()->route()->getName() == 'index.userCourse' || request()->route()->getName() == 'index.material.show')
-        {
-            if ($value == 'Lesson')
-            {
-                return 'mdi mdi-file-document-outline text-success';
-            } elseif ($value == 'Link')
-            {
-                return 'mdi mdi-link-variant-plus text-info';
-            } elseif ($value == 'Announcement')
-            {
-                return 'mdi mdi-comment-quote-outline text-danger';
-            } elseif ($value == 'Video')
-            {
-                return 'mdi mdi-camcorder text-primary';
-            }
-        } else return $value;
-    }
+    //     if (request()->route()->getName() == 'index.userCourse' || request()->route()->getName() == 'index.material.show')
+    //     {
+    //         if ($value == 'Lesson')
+    //         {
+    //             return 'mdi mdi-file-document-outline text-success';
+    //         } elseif ($value == 'Link')
+    //         {
+    //             return 'mdi mdi-link-variant-plus text-info';
+    //         } elseif ($value == 'Announcement')
+    //         {
+    //             return 'mdi mdi-comment-quote-outline text-danger';
+    //         } elseif ($value == 'Video')
+    //         {
+    //             return 'mdi mdi-camcorder text-primary';
+    //         }
+    //     } else return $value;
+    // }
 
 }

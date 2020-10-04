@@ -39,6 +39,12 @@ class DatabaseSeeder extends Seeder {
 			->each( function($material) {
 
 				$material->users()->attach( Role::find(2)->users()->select("id")->get()->random()->id);
+				
+				if ( $material->type == "Section" ) {
+					for ( $j = 0; $j < 5; $j++ ) {
+						$material->chapters()->attach( rand(1, 80), ["priority" =>  rand( 1, 10000 )]);
+					}
+				}
 			});
 
 		Course::factory()->times(30)->create()
@@ -47,38 +53,9 @@ class DatabaseSeeder extends Seeder {
 				for ( $i = 0; $i < 20; $i++) {
 					$course->users()->attach(User::where('id', '!=', 1)->get()->random()->id);
 
-					$course->materials()->attach( Material::all()->random()->id, ["priority" => rand( 1, 10000 )]);
+					$course->materials()->attach( rand(1, 80), ["priority" => rand( 1, 10000 )]);
+
 				}
-			});
-
-		Section::factory()->times(90)
-			->state(function() {
-
-				$material = Material::where("type", "Section")->get()->random();
-
-				return [
-					"parent_id" => $material->id,
-					"course_id" => Course::all()->random()->id,
-					"title" => $material->title,
-					"slug" => $material->slug,
-				];
-
-			})->create()->each( function($section) {
-
-				$rand = rand(2, 5);
-				$year = rand(2019, 2022);
-				$month = rand(1, 12);
-				$day = rand(1, 31);
-				$hours = rand(0, 23);
-				$mins = rand(0, 59);
-				$secs = rand(0, 59);
-				$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
-
-				for ( $i = 0; $i < $rand; $i++) {
-					$section->materials()->attach( Material::all()
-						->random()->id, ["priority" => rand( 1, 255 ), "status" => rand(0,1), "publish_at" => $date]);
-				}
-
 			});
 
 		Bundle::factory()->times(15)->create()

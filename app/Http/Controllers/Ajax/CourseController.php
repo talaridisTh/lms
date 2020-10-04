@@ -164,28 +164,17 @@ class CourseController extends Controller
 
 		foreach ($materials as $material) {
 
-			$material->pivot->update(["priority" => $counter]);
+			$material->pivot->update(["priority" => $counter++]);
 
-			if ( $material->type == "Section" ) {
-				Section::where("parent_id", $request->materialId)
-					->update(["priority" => $counter]);
-			}
-
-			$counter++;
 		}
 
 		$material = $course->materials()->where("materials.id", $request->materialId)->first();
 		$material->pivot->update([ "priority" => $priority['new'] ]);
 
-		if ( $material->type == "Section" ) {
-			Section::where("parent_id", $request->materialId)
-				->update(["priority" => $priority['new']]);
-		}
-
 		$course->updated_at = Carbon::now();
 		$course->save();
 
-		$sections = $course->sections()->orderBy("priority")->get();
+		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 
 	}
@@ -243,26 +232,19 @@ class CourseController extends Controller
 
 				static $counter = 1;
 				if ( in_array($material->id, $request->materials) ) {
-					if ($material->type == "Section") {
-						$material->delete();
-					}
-					else {
-						$course->materials()->detach( $material->id );
-					}
+
+					$course->materials()->detach( $material->id );
+
 				}
 				else {
 					$material->pivot->update(["priority" => $counter]);
 
-					if ($material->type == "Section") {
-						$course->sections()->where("parent_id", $material->id)
-							->update(["priority" => $counter]);
-					}
 					$counter++;
 				}
 			
 			});
 
-		$sections = $course->sections()->orderBy("priority")->get();
+		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 
 	}

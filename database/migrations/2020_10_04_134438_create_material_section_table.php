@@ -14,12 +14,13 @@ class CreateMaterialSectionTable extends Migration
     public function up()
     {
         Schema::create('material_section', function (Blueprint $table) {
-            $table->id();
-			$table->foreignId('section_id')->references('id')->on('sections')->onDelete('cascade');
+			$table->id();
+			$table->foreignId('section_id')->references('id')->on('materials')->onDelete('cascade');
 			$table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
-			$table->unsignedTinyInteger('status')->default(0);
-			$table->unsignedTinyInteger('priority');
+			$table->unsignedSmallInteger('status')->default(0);
+			$table->unsignedSmallInteger('priority');
 			$table->timestamp('publish_at')->nullable();
+			$table->timestamps();
         });
     }
 

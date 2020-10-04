@@ -27,7 +27,7 @@
 					</thead>
 					<tbody>
 
-						@forelse ($section->materials as $material)
+						@forelse ($section->chapters as $material)
 						<tr class="js-accordion-row" data-material-id="{{ $material->id }}">
 							<td>
 								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>

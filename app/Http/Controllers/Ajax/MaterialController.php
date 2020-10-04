@@ -109,21 +109,7 @@ class MaterialController extends Controller {
 				"publish_at" => $publish
 			]);
 	
-		if ( $request->type == "Section") {
-			$course->sections()->where("priority", ">", $request->priority)
-				->increment("priority");
-
-			$section = new Section;
-			$section->parent_id = $material->id;
-			$section->course_id = $request->courseId;
-			$section->title = $material->title;
-			$section->slug = $material->slug;
-			$section->status = $material->status;
-			$section->priority = $request->priority + 1;
-			$section->save();
-		}
-
-		$sections = $course->sections()->orderBy("priority")->get();
+		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
