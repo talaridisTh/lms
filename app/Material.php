@@ -70,11 +70,13 @@ class Material extends Model {
     public function priority($material, $course)
     {
 
+
         return $test = DB::table('course_material')
             ->where("course_id", $course)
             ->where("material_id", $material)
             ->select("priority")
-            ->first()->priority;
+            ->first();
+
     }
 
     public static function getIcon($value)

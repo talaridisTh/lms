@@ -177,12 +177,9 @@
                 <!-- end chat users-->
                 <div class="col-xl-5 col-lg-12 order-lg-2 order-xl-1 ">
                     <div class="card ">
-                        <div class="card-body">
-                            <ul class="conversation-list testa" data-simplebar style="max-height: 650px">
-                                <div class="message-custom">
+                        <div class="message-custom">
 
-                                </div>
-                            </ul>
+
                         </div>
 
                     </div>

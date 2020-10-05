@@ -5,43 +5,6 @@ utilities.addWhatchlist()
 
 
 
-//! announcements-swiper
-//!============================================================
-var swiper = new Swiper('.swiper-container-announcements', {
-    // Optional parameters
-
-
-    // If we need pagination
-    pagination: {
-        el: '.swiper-pagination-announcements',
-        draggable: true,
-    },
-    fadeEffect: {
-        crossFade: true
-    },
-
-    // Navigation arrows
-    navigation: {
-        nextEl: '.swiper-button-next-announcements',
-        prevEl: '.swiper-button-prev-announcements',
-    },
-
-    // And if we need scrollbar
-    scrollbar: {
-        el: '.swiper-scrollbar-announcements',
-    },
-    keyboard: {
-        enabled: true,
-        onlyInViewport: false,
-    },
-})
-$('#announcements-modal').on('shown.bs.modal', function (e) {
-    swiper.update();
-    var $invoker = $(e.relatedTarget);
-    swiper.slideTo($invoker.data('slider'));
-    swiper.update();
-});
-
 
 $(".filter-topic").click(function () {
     filterTopic(this.dataset.topicId, this.findParent(1).dataset.userSlug)

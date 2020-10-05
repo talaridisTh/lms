@@ -116,7 +116,6 @@ class Course extends Model {
             ->join("course_material", "course_material.material_id", "=", "materials.id")
             ->where("course_id", $courseId)
             ->where("type","!=" ,"Announcement")
-            ->where("type","!=" ,"Section")
             ->where("course_material.status", 1)
             ->orderBy("priority", 'asc')
             ->get();
@@ -127,6 +126,8 @@ class Course extends Model {
         return DB::table("materials")
             ->join("course_material", "course_material.material_id", "=", "materials.id")
             ->where("course_id", $courseId)
+            ->where("type","!=" ,"Announcement")
+            ->where("type","!=" ,"Section")
             ->where("course_material.status", 1)
             ->where("priority", '>', $materialPriority)
             ->orderBy("priority", 'asc')
