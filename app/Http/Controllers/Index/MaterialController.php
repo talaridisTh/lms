@@ -41,7 +41,7 @@ class MaterialController extends Controller {
 
 
         return view("index.materials.material-index",
-            compact("announcements","priority", "materials", "course", "MaterialsOrderByPriority", "nextMaterial", "prevMaterial","icons"));
+            compact("sections","announcements","priority", "materials", "course", "MaterialsOrderByPriority", "nextMaterial", "prevMaterial","icons"));
     }
 
     public function dummyPage(Material $materials)
@@ -80,6 +80,7 @@ class MaterialController extends Controller {
 
     public function addWitchlist(Request $request)
     {
+
 
 
         $user =  auth()->user();

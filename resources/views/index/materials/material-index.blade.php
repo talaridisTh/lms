@@ -318,13 +318,19 @@
                             </div>
                         </div>
                     @endif
+
                     <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="my-2 p-0">
+
                         @foreach($MaterialsOrderByPriority as $material)
+{{--                            @if($material->type=="Section")--}}
+{{--                                <h3>thanos</h3>--}}
+{{--                            @endif--}}
                             @php
                                 $active =  auth()->user()->witchlist() ->where('material_id',$material->material_id)->where('course_id',$course->id)->first();
                                 $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":"$material->priority";
                                 $hover=  isset($active)? "data-hover='hover'" :''
                             @endphp
+
                             <li data-material-id="{{$material->material_id}}"
                                 data-material-priority="{{$material->priority}}"
                                 class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">

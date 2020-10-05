@@ -59,6 +59,7 @@ class CourseController extends Controller {
     public function userCourse(Course $course)
     {
 
+
         $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
         $lastMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();;
         $allMaterial = $course->materials()

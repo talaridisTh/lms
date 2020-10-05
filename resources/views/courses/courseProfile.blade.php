@@ -200,28 +200,30 @@
                     </div>
                 </div>
                 <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
-                    <ul style="max-height: 800px" class="m-0 p-0">
+                    <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="m-0 p-0">
                         @foreach($allMaterial as $materials)
-                            <li class="list-group-item list-material border p-md-1  ">
+
+                            @php
+                                $count= $count+1;
+                                  $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first();
+                                  $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$count;
+                                  $hover=  isset($active)? "data-hover='hover'" :'';
+                            @endphp
+
+                            <li data-material-id="{{$materials->id}}"
+                                data-material-priority="{{$count+1}}"
+                                class="list-group-item list-material border p-md-1">
                                 <a class="d-flex align-items-center {{
                             $materials->type=="mdi mdigi-link-variant-plus text-info"?"js-link-material":""}}"
                                    href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?$materials->video_link:route('index.material.show',[$course->slug,$materials->slug])}}">
                                     <div class="col-md-2 mr-2 ">
-                                        <span class="material-count"><span>{{++$count}}</span></span>
+                                        <span {{$hover}} class="material-count"><span>{!! $activeClass !!}</span></span>
                                     </div>
-                                    <div class="col-md-8 d-flex flex-column  ">
+                                    <div class="col-md-8 d-flex flex-column">
                                         <h3 style="border-radius: 5px"
                                             class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold">   {!! $materials->title!!}</h3>
                                         <span style="word-break: break-all"
                                               class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
-                                        {{--                                        @empty($course->description)--}}
-                                        {{--                                            <div class="mt-3">--}}
-                                        {{--                                            <h3--}}
-                                        {{--                                                class=" font-16 text-dark font-weight-bold">   {{$materials->title}}</h3>--}}
-                                        {{--                                            <span style="word-break: break-all"--}}
-                                        {{--                                                  class="  font-14 text-dark">{{Str::limit($materials->description,200)}}</span>--}}
-                                        {{--                                            </div>--}}
-                                        {{--                                        @endempty--}}
                                     </div>
                                     <div class="col-md-2 p-0">
 
