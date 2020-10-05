@@ -4,17 +4,17 @@
     "/css/app.css": "/css/app.css?id=65475a87a8c715d1fa60",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=4c96c4fb2b33fc36d41d",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=a1fef762dbf887427f54",
-    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=29375ad5978ad8bac75d",
+    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=e086ca6395a14d041336",
     "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=10ab6bb21c67bb9bde4d",
     "/js/dashboard/dashboard.js": "/js/dashboard/dashboard.js?id=486c585145c766b6bc95",
     "/js/dashboard/fileManager/fileManager.js": "/js/dashboard/fileManager/fileManager.js?id=fbeac55e3ce51f0bd7ce",
     "/js/dashboard/main.js": "/js/dashboard/main.js?id=1dcc554e6880d49a69c7",
     "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=eede2cca8b1c636451ef",
-    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=644f750172cf1d961581",
+    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=5e80f13391164e299dd6",
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=a4c073c208bf5db0f265",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=0e6c817429b083e4d714",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=7b231e899bf181700406",
     "/js/index/chat/message.js": "/js/index/chat/message.js?id=e3705e873ad16d1eccf5",
-    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=0b601d45459ca646e186",
-    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=2411660638b54b5ef7b7"
+    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=afa960547c79ef16b1ee",
+    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=3465970b00787cf371b2"
 }
