@@ -136,7 +136,7 @@ function toggleInit() {
     $(".js-toggle").change(function () {
 
         let materialSlug = this.parentElement.parentElement.dataset.materialSlug
-        let updatedAtCnt = this.parentElement.parentElement.getElementsByClassName("js-updated-at")[0];
+        // let updatedAtCnt = this.parentElement.parentElement.getElementsByClassName("js-updated-at")[0];
 
         axios.patch(`/materials/toggle-status/${materialSlug}`, {
             state: this.checked ? 1 : 0
@@ -145,7 +145,7 @@ function toggleInit() {
                 let icon = this.checked ? "success" : "info";
                 let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
                 utilities.toastAlert(icon, message);
-                updatedAtCnt.textContent = "Μόλις τώρα";
+                // updatedAtCnt.textContent = "Μόλις τώρα";
             })
             .catch((err) => {
                 console.log(err)

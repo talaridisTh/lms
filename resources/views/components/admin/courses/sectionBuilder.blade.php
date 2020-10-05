@@ -1,14 +1,44 @@
 @foreach ($sections as $key => $section)
 
+	@php
+		$status = [
+			'color' => $section->pivot->status == 1 ? 'badge-outline-success px-1 mr-1' : 'badge-outline-danger',
+			'text' => $section->pivot->status == 1 ? 'Active' : 'Inactive'
+		]
+	@endphp
+
 	<div class="card mb-0">
-		<div class="card-header" id="{{ $section->slug }}">
-			<h5 class="m-0">
-				<a class="custom-accordion-title d-block pt-2 pb-2"
-					data-toggle="collapse" href="#{{ $section->slug }}-collapse"
+		<div class="card-header d-flex justify-content-between align-items-center" id="{{ $section->slug }}">
+			
+
+			
+			<h5 class="m-0 flex-grow-1">
+				<a class="js-chapter-title custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse"
+					href="#{{ $section->slug }}-collapse"
 					aria-expanded="true" aria-controls="{{ $section->slug }}-collapse">
 					{{ $section->title }}
 				</a>
+
+				<div class="js-edit-chapter d-none form-group w-50">
+					<label>Title</label>
+					<div class="input-group">
+						<input type="text" class="js-chapter-input form-control"
+							value="{{ $section->title }}" placeholder="Εισάγετε τίτλο..."
+							data-material-slug="{{ $section->slug }}" aria-label="Recipient's username" />
+						<div class="input-group-append">
+							<button class="js-sumbit-chapter-title-btn btn btn-primary" type="button">Save</button>
+						</div>
+					</div>
+				</div>
 			</h5>
+			<div class="tools-cnt pl-4 pr-1 h3 d-flex align-items-center">
+				<i class="js-edit-chapter-btn px-1 mdi mdi-square-edit-outline custom-primary cursor-pointer"></i>
+				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
+					data-material-id="{{ $section->id }}"></i>
+				<div class="d-flex justify-content-end align-items-center" style="width: 81px;">
+					<span class="px-1 font-12 badge {{ $status['color'] }} badge-pill">{{ $status['text'] }}</span>
+				</div>
+			</div>
 		</div>
 		
 		<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"

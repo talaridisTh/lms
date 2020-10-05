@@ -19,6 +19,10 @@
 	.circle-icon {
 		padding: 0.2rem 0.2rem;
 	}
+	.custom-accordion-title {
+		color:#b2bcc5;
+	}
+
 </style>
 @endsection
 
@@ -716,7 +720,7 @@
 									</div>
 								</th>
 								<th class="text-center">Τίτλος</th>
-								<th class="text-center">Ενεργό</th>
+								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center">Τελ. Ανανέωση</th>
@@ -729,7 +733,7 @@
 							<tr>
 								<th class="text-center"></th>
 								<th class="text-center">Τίτλος</th>
-								<th class="text-center">Ενεργό</th>
+								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>
 								<th class="text-center">Τελ. Ανανέωση</th>

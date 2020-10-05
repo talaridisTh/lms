@@ -26,7 +26,18 @@ class MaterialController extends Controller {
     {
 
         return $dataTable->render('materials.index');
-    }
+	}
+	
+	public function editChapter(Material $material, Request $request) {
+
+		$material->title = $request->title;
+		$material->slug = Str::slug($request->title, "-");
+		$material->save();
+
+		$sections = Course::find( $request->courseId )->materials()
+			->where("type", "Section")->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
 
     public function indexCourse(CourseInsideMaterialsDataTable $dataTable)
     {

@@ -143,7 +143,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourseMultiple');
     Route::post('/materials/cover/upload', 'Ajax\MaterialController@coverUpload')->name('user.cover.upload');
     Route::post('materials/gallery-upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
-    Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
+	Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
+	Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables
     Route::post('topics/topics-datatable', 'Ajax\TopicController@index');
