@@ -336,7 +336,7 @@
                                 class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                 <a class="d-flex align-items-center {{
                             $material->type=="Link"?"js-link-material":""}}"
-                                   href="{{$material->type=="link"?"$material->video_link":route('index.material.show',[$course->slug,$material->slug])}}">
+                                   href="{{$material->type=="link"? "$material->video_link":route('index.material.show',[$course->slug,$material->slug])}}">
                                     <div class="col-md-2 ">
                                         @if($material->title==$materials->title)
                                             <i style="margin:-8px;"

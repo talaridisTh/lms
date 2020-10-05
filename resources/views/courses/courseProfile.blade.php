@@ -215,7 +215,7 @@
                                 class="list-group-item list-material border p-md-1">
                                 <a class="d-flex align-items-center {{
                             $materials->type=="mdi mdigi-link-variant-plus text-info"?"js-link-material":""}}"
-                                   href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?$materials->video_link:route('index.material.show',[$course->slug,$materials->slug])}}">
+                                   href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?"$materials->video_link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                     <div class="col-md-2 mr-2 ">
                                         <span {{$hover}} class="material-count"><span>{!! $activeClass !!}</span></span>
                                     </div>

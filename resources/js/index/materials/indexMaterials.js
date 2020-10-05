@@ -63,21 +63,28 @@ $(".js-audio-btn").click(function () {
 })
 
 $(".js-link-material").on("click", async function (e) {
-    // const href = this.findParent(1).href;
-    // this.findParent(1).removeAttribute("href")
+
     const href = this.href;
-    this.removeAttribute("href")
-    const {value} = await Swal.fire({
-        icon: 'question',
-        text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
-        showCancelButton: true,
-    })
-    if (value) {
-        window.open(`${href}`, '_blank');
+    e.preventDefault()
+    console.log(e.target.tagName)
+    if (e.target.tagName === "SPAN" || e.target.tagName === "I" ) {
+        return
+
+    } else {
+        const {value} = await Swal.fire({
+            icon: 'question',
+            text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
+            showCancelButton: true,
+        })
+        if (value) {
+            window.open(href, '_blank');
+        }
     }
+
+
 })
 
-$(".material-count").on("click",  function (e) {
+$(".material-count").on("click", function (e) {
     event.preventDefault();
 
     axiosAddWitchlist(
@@ -104,14 +111,14 @@ $(".material-count").on("click",  function (e) {
 
 });
 
-$(".js-watchlist-btn").on("click",function () {
+$(".js-watchlist-btn").on("click", function () {
     console.log(this)
 
-    axiosAddWitchlist(this.dataset.courseId,this.dataset.materialId,null,this)
+    axiosAddWitchlist(this.dataset.courseId, this.dataset.materialId, null, this)
 })
 
-const axiosAddWitchlist =async (courseId, materialId, materialPriority=null,that) => {
-   const btnWatchlist  = $(".js-watchlist-btn")[0];
+const axiosAddWitchlist = async (courseId, materialId, materialPriority = null, that) => {
+    const btnWatchlist = $(".js-watchlist-btn")[0];
     try {
         const {data} = await axios.patch(`/add-witchlist/material`, {
             courseId,
@@ -119,7 +126,7 @@ const axiosAddWitchlist =async (courseId, materialId, materialPriority=null,that
         })
         if (data === "remove") {
             that.innerHTML = `${materialPriority}`
-            if (!materialPriority){
+            if (!materialPriority) {
                 btnWatchlist.innerHTML = "<span class='font-16'>Το έχω δει</span>"
                 btnWatchlist.style.backgroundColor = null
                 btnWatchlist.classList.remove("bg-white")

@@ -32,18 +32,28 @@ const filterTopic = async (idsTopic, userSlug) => {
 }
 
 
-$(".js-link-material").click( async function () {
+$(".js-link-material").on("click", async function (e) {
+
     const href = this.href;
-  this.removeAttribute("href")
-   const {value} =  await Swal.fire({
-        icon: 'question',
-        text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
-        showCancelButton: true,
-    })
-    if (value){
-        window.open(`${href}`, '_blank');
+    e.preventDefault()
+    console.log(e.target.tagName)
+    if (e.target.tagName === "SPAN" || e.target.tagName === "I" ) {
+        return
+
+    } else {
+        const {value} = await Swal.fire({
+            icon: 'question',
+            text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
+            showCancelButton: true,
+        })
+        if (value) {
+            window.open(href, '_blank');
+        }
     }
+
+
 })
+
 
 
 
