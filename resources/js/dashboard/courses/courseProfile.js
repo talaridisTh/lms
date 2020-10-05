@@ -20,6 +20,14 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$("#add-materials-modal").on("show.bs.modal", function(event) {
+	let button = $(event.relatedTarget);
+	let chapter = button.data("chapter");
+	let modal = $("#add-materials-modal")[0];
+
+	modal.dataset.chapter = chapter;
+})
+
 $(".under-development").on("click", function() {
 	utilities.toastAlert("info", "Under Development");
 })
@@ -321,6 +329,7 @@ $('#all-remainings-checkbox').on( "change", function() {
 
 $('#add-remaingings-btn').on( "click", function() {
 	let checkboxes = $('.js-remainings-checkbox:checked');
+	let chapterId = document.getElementById("add-materials-modal").dataset.chapter;
 	let ids = [];
 
 	if ( checkboxes.length == 0 ) {
@@ -331,7 +340,13 @@ $('#add-remaingings-btn').on( "click", function() {
 		for ( let i = 0; i < checkboxes.length; i++ ) {
 			ids.push(checkboxes[i].dataset.materialId);
 		}
-		postMaterialIds( ids);
+
+		if ( chapterId == "main" ) {
+			addCourseMaterials( ids );
+		}
+		else {
+			addChapterMaterials( chapterId, ids );
+		}
 	}
 
 	$('#add-materials-modal').modal('hide');
@@ -600,15 +615,16 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 function chapterSubmitBtnInit() {
 
 	let submitBtn = $(".js-sumbit-chapter-title-btn");
+	let cancelbtn = $(".js-cancel-chapter-title-btn")
 
-	submitBtn.on("click", submitChapterBtnHandler)
+	submitBtn.on("click", submitChapterBtnHandler);
+	cancelbtn.on("click", editChapterOnBlurHandler )
 }
 
 function chapterInputInit() {
 
 	let input = $(".js-chapter-input");
 
-	input.on("blur", editChapterOnBlurHandler);
 	input.on("keyup", editChapterOnKeyupHandler)
 
 }
@@ -879,13 +895,21 @@ function addMaterialsEventListerner() {
 	let addMaterialBtn = $('.js-add-material-btn');
 
 	addMaterialBtn.on( "click", function() {
-		const materialId = [this.dataset.materialId];
+		let chapterId = document.getElementById("add-materials-modal").dataset.chapter;
+		let materialId = [this.dataset.materialId];
 
 		for (let i = 0; i < addMaterialBtn.length; i++) {
 			addMaterialBtn[i].disabled = true;
 		}
 
-		postMaterialIds( materialId );
+		console.log(chapterId);
+		if ( chapterId == "main" ) {
+			addCourseMaterials( materialId );
+		}
+		else {
+			addChapterMaterials( chapterId, materialId );
+		}
+
 	});
 }
 
@@ -989,7 +1013,13 @@ function submitChapterBtnHandler() {
 function editChapterOnKeyupHandler(event) {
 
 	if (event.keyCode == 27 ) {
-		this.blur();
+		let cnt = this.findParent(4);
+		let titleCnt = cnt.getElementsByClassName("js-chapter-title")[0];
+		let editCnt = cnt.getElementsByClassName("js-edit-chapter")[0];
+
+		titleCnt.classList.remove("d-none");
+		titleCnt.classList.add("d-block");
+		editCnt.classList.add("d-none");
 	}
 	else if ( event.keyCode == 13 ) {
 		editChaptersTitle(this.dataset.materialSlug, this.value);
@@ -998,16 +1028,15 @@ function editChapterOnKeyupHandler(event) {
 
 function editChapterOnBlurHandler() {
 
-	let cnt = this.findParent(3);
+	let cnt = this.findParent(4);
+
 	let titleCnt = cnt.getElementsByClassName("js-chapter-title")[0];
 	let editCnt = cnt.getElementsByClassName("js-edit-chapter")[0];
 
-	setTimeout(function() {
-		titleCnt.classList.remove("d-none");
-		titleCnt.classList.add("d-block");
-	
-		editCnt.classList.add("d-none");
-	}, 100);
+	titleCnt.classList.remove("d-none");
+	titleCnt.classList.add("d-flex");
+
+	editCnt.classList.add("d-none");
 
 }
 
@@ -1018,7 +1047,7 @@ function editChapterBtnHandler() {
 	let editCnt = cnt.getElementsByClassName("js-edit-chapter")[0];
 	let input = editCnt.getElementsByTagName("input")[0];
 
-	titleCnt.classList.remove("d-block");
+	titleCnt.classList.remove("d-flex");
 	titleCnt.classList.add("d-none");
 
 	editCnt.classList.remove("d-none");
@@ -1130,10 +1159,23 @@ function removeUsers( userIds, caller ) {
 	})
 }
 
-function postMaterialIds( materialId ) {
+function addChapterMaterials( chapterId, materialIds ) {
+	axios.post("/materials/add-materials", {
+		courseId, chapterId, materialIds
+	})
+	.then( res => {
+		$("#section-accordion").html(res.data);
+		courseMaterialsTable.ajax.reload( null, false );
+		remainingMaterialsTables.ajax.reload( null, false );
+	})
+	.catch( err => {
+		console.log(err);
+	})
+}
+
+function addCourseMaterials( materialId ) {
 	axios.post( "/courses/add-materials", {
-		courseId,
-		materialId
+		courseId, materialId
 	})
 	.then( (res) => {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
@@ -1221,7 +1263,7 @@ axios.post("/materials/material-types")
 			let label = $('#select2-remaining-materials-types-container')[0];
 
 			utilities.filterStyle( label, this.value )
-			remainingMaterialsTables.columns( 3 ).search( this.value ).draw();
+			remainingMaterialsTables.columns( 2 ).search( this.value ).draw();
 		})
 
 	})

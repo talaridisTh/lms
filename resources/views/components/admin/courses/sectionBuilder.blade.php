@@ -11,10 +11,14 @@
 		<div class="card-header d-flex justify-content-between align-items-center" id="{{ $section->slug }}">
 
 			<h5 class="m-0 flex-grow-1">
-				<a class="js-chapter-title custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse"
+				<a class="js-chapter-title custom-accordion-title d-flex align-items-center pt-2 pb-2" data-toggle="collapse"
 					href="#{{ $section->slug }}-collapse"
 					aria-expanded="true" aria-controls="{{ $section->slug }}-collapse">
 					{{ $section->title }}
+					<div class="d-flex justify-content-end align-items-center" style="width: 81px;">
+						<span class="js-chapter-badge px-1 font-12 badge {{ $status['color'] }} badge-pill"
+							data-material-id="{{ $section->id }}">{{ $status['text'] }}</span>
+					</div>
 				</a>
 
 				<div class="js-edit-chapter d-none form-group w-50">
@@ -26,17 +30,40 @@
 						<div class="input-group-append">
 							<button class="js-sumbit-chapter-title-btn btn btn-primary" type="button">Save</button>
 						</div>
+						<div class="input-group-append">
+							<button class="js-cancel-chapter-title-btn btn btn-light ml-2" type="button">Cancel</button>
+						</div>
 					</div>
 				</div>
 			</h5>
 			<div class="tools-cnt pl-4 pr-1 h3 d-flex align-items-center">
-				<i class="js-edit-chapter-btn px-1 mdi mdi-square-edit-outline custom-primary cursor-pointer" title="Edit section"></i>
+
+				
+				
+				<i class="js-edit-chapter-btn px-1 ml-2 mdi mdi-square-edit-outline custom-primary cursor-pointer" title="Edit section"></i>
 				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
 					data-material-id="{{ $section->id }}" title="Delete section"></i>
-				<div class="d-flex justify-content-end align-items-center" style="width: 81px;">
-					<span class="js-chapter-badge px-1 font-12 badge {{ $status['color'] }} badge-pill"
-						data-material-id="{{ $section->id }}">{{ $status['text'] }}</span>
+
+
+
+
+				<div class="dropdown">
+					<i class="ml-2 mdi mdi-dots-vertical cursor-pointer custom-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+					<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated" aria-labelledby="dropdownMenuButton">
+						<a class="js-add-chapters-btn dropdown-item d-block py-2" href="#"
+							data-toggle="modal" data-chapter="{{ $section->id }}"
+							data-target="#add-materials-modal">Προσθήκη Υλικού</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item d-block py-2" href="#">Αλλαγή Κατάστασης</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item d-block py-2" href="#">Αφαίρεση επιλεγμένων</a>
+					</div>
 				</div>
+
+
+
+
+
 			</div>
 		</div>
 		
@@ -82,7 +109,7 @@
 								</div>
 							</td>
 							<td class="align-middle text-center">{{ $material->type}}</td>
-							<td class="text-center">
+							<td class="text-center align-middle">
 								@php
 									if ( !is_null($material->updated_at) ) {
 										$date = date_create($material->updated_at);

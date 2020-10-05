@@ -332,4 +332,30 @@ class MaterialController extends Controller {
 
 	}
 
+	public function addMaterials(Request $request) {
+
+		// dd($request->all());
+		$course = Course::find( $request->courseId );
+		$material = Material::find( $request->chapterId );
+
+		if ( $material->chapters()->count() > 0 ) {
+			$lastpriority = $material->chapters()->orderBy("priority", "desc")
+				->first()->pivot->priority;
+		}
+		else {
+			$lastpriority = 0;
+		}
+
+		foreach ( $request->materialIds as $key => $id ) {
+			$material->chapters()
+				->attach( $id, ['status' => 0, 'priority' => $lastpriority + $key + 1 ]);
+		}
+
+		$material->updated_at = Carbon::now();
+		$material->save();
+
+		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
 }

@@ -145,6 +145,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('materials/gallery-upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
 	Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
 	Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
+	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables
     Route::post('topics/topics-datatable', 'Ajax\TopicController@index');

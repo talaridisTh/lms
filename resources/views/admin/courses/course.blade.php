@@ -681,7 +681,9 @@
 						<div class="col-sm-1">
 						</div>
 						<div class="col-sm-11 d-flex justify-content-end">
-							<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-materials-modal">
+							<button id="material-modal-shown-btn" type="button"
+								class="btn btn-primary" data-toggle="modal"
+								data-target="#add-materials-modal"  data-chapter="main">
 								<i class="mdi mdi-plus-circle mr-2"></i>
 								Προσθήκη Υλικού
 							</button>
@@ -693,6 +695,7 @@
 								</button>
 								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 									<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+									<div class="dropdown-divider"></div>
 									<div class="btn-group dropleft w-100">
 										<a class="dropdown-toggle dropdown-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Αλλαγή κατάστασης
@@ -750,7 +753,9 @@
 						<div class="col-sm-1">
 						</div>
 						<div class="col-sm-11 d-flex justify-content-end">
-							<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user-modal">
+							<button id="material-modal-shown-btn" type="button"
+								class="btn btn-primary" data-toggle="modal"
+								data-target="#add-user-modal">
 								<i class="mdi mdi-account-multiple-plus mr-2"></i>
 								Προσθήκη Χρηστών
 							</button>

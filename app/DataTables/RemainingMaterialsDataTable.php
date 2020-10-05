@@ -9,8 +9,8 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
+use App\Course;
 
 
 class RemainingMaterialsDataTable extends DataTable
@@ -23,6 +23,16 @@ class RemainingMaterialsDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
+		$materialIds = Course::find( $request->courseId)->materials()->pluck("materials.id");
+		$ids = [];
+
+		foreach ($materialIds as $id ) {
+			$tempIds = Material::find( $id )->chapters()
+				->pluck("material_section.material_id")->toArray();
+			
+			$ids = array_merge($ids, $tempIds);
+		}
+
 		if ( is_null($request->startDate) && is_null($request->endDate) ) {
 
 			$query = Material::where("type", "!=", "Section")
@@ -36,7 +46,8 @@ class RemainingMaterialsDataTable extends DataTable
 							->get();
 
 					}
-				);
+				)
+				->whereNotIn("materials.id", $ids);
 		}
 		else {
 			$query = Material::where("type", "!=", "Section")
@@ -54,7 +65,8 @@ class RemainingMaterialsDataTable extends DataTable
 							->get();
 
 					}
-				);
+				)
+				->whereNotIn("materials.id", $ids);
 		}
 
         return Datatables::of($query)
