@@ -158,7 +158,7 @@ $("#deactivate-selection").on( "click", function() {
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
 
-		if (result.value) {
+		if (result.isConfirmed) {
 
 			toggleState( data );
 
@@ -601,16 +601,12 @@ function chapterSubmitBtnInit() {
 
 	let submitBtn = $(".js-sumbit-chapter-title-btn");
 
-	submitBtn.off(submitChapterBtnHandler)
 	submitBtn.on("click", submitChapterBtnHandler)
 }
 
 function chapterInputInit() {
 
 	let input = $(".js-chapter-input");
-
-	input.off(editChapterOnBlurHandler);
-	input.off(editChapterOnKeyupHandler);
 
 	input.on("blur", editChapterOnBlurHandler);
 	input.on("keyup", editChapterOnKeyupHandler)
@@ -621,7 +617,6 @@ function editChapterBtnInit() {
 
 	let btn = $(".js-edit-chapter-btn");
 
-	btn.off(editChapterBtnHandler)
 	btn.on("click", editChapterBtnHandler);
 }
 
@@ -802,8 +797,6 @@ function removeMaterialInit() {
 
 	let binBtn = $(".js-remove-material")
 
-	binBtn.off(removeMaterialHandler);
-
 	binBtn.on( "click", removeMaterialHandler);
 }
 
@@ -812,8 +805,6 @@ function newUserCheckboxInit() {
 	let mainCheckbox = $("#add-user-checkbox")[0];
 	let minorCheckboxes = $(".js-new-user-checkbox");
 	let bulkBtn = $("#add-multiple-users-btn")[0]
-
-	minorCheckboxes.unbind();
 
 	minorCheckboxes.on( "change", function() {
 		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
@@ -827,8 +818,6 @@ function activeUsersCheckboxInit() {
 	let minorCheckboxes = $(".js-active-user-checkbox");
 	let bulkBtn = $("#active-users-bulk")[0]
 
-	minorCheckboxes.unbind();
-
 	minorCheckboxes.on( "change", function() {
 		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
 	});
@@ -838,7 +827,6 @@ function userLinkInit() {
 
 	let link = $(".js-user-link");
 
-	link.unbind();
 	link.on( "click", function() {
 
 		let userSlug = this.parentElement.dataset.userSlug
@@ -851,7 +839,6 @@ function removeUserBtnInit() {
 
 	let removeUserBtn = $(".js-remove-user");
 
-	removeUserBtn.unbind();
 	removeUserBtn.on( "click", function() {
 
 		let id = [ this.dataset.userId ];
@@ -879,7 +866,6 @@ function adduserBtnInit() {
 
 	let addUserBtn = $(".js-add-user-btn");
 
-	addUserBtn.unbind();
 	addUserBtn.on( "click", function() {
 
 		let userId = [ this.dataset.userId ];
@@ -892,7 +878,6 @@ function addMaterialsEventListerner() {
 
 	let addMaterialBtn = $('.js-add-material-btn');
 
-	addMaterialBtn.unbind();
 	addMaterialBtn.on( "click", function() {
 		const materialId = [this.dataset.materialId];
 
@@ -905,8 +890,6 @@ function addMaterialsEventListerner() {
 }
 
 function sortInputsInit() {
-
-	$('.js-sort-input').unbind();
 
 	$('.js-sort-input').on( "input", function() {
 
@@ -940,7 +923,6 @@ function sortInputsInit() {
 }
 
 function toggleCourseMaterial() {
-	$('.js-toggle').unbind();
 
 	$('.js-toggle').on('change', function() {
 
@@ -956,6 +938,18 @@ function toggleCourseMaterial() {
 		.then( (res) => {
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+			let badge = $(`.js-chapter-badge[data-material-id="${this.dataset.materialId}"]`);
+
+			if ( this.checked ) {
+				badge.removeClass("badge-outline-danger");
+				badge.addClass("badge-outline-success px-1 mr-1");
+				badge.text("Active");
+			}
+			else {
+				badge.removeClass("badge-outline-success px-1 mr-1");
+				badge.addClass("badge-outline-danger");
+				badge.text("Inactive");
+			}
 
 			utilities.toastAlert( icon, message );
 
@@ -970,7 +964,6 @@ function remainingsCheckboxes() {
 
 	let remainingCheckboxes = $('.js-remainings-checkbox');
 
-	remainingCheckboxes.unbind();
 	remainingCheckboxes.on( "change", remainingMaterialsCheckboxHandler );
 }
 
@@ -1544,6 +1537,7 @@ function createDateElm( id ) {
 }
 
 function toggleState(data) {
+
 	axios.patch('/courses/toggle-materials', {
 		courseId,
 		data
@@ -1553,12 +1547,29 @@ function toggleState(data) {
 		let status = data[0].status;
 		let message = "";
 		let icon = status == 1 ? "success" : "info";
+		let badge = "";
 
 		if ( materialCount == 1 ) {
 			message = status == 1 ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 		}
 		else {
 			message = status == 1 ? "Ενεργοποιήθηκαν" : "Απενεργοποιήθηκαν";
+		}
+
+		for (let i = 0; i < data.length; i++) {
+			badge = $(`.js-chapter-badge[data-material-id="${data[i].id}"]`);
+	
+			if ( data[i].status == 1 ) {
+				badge.removeClass("badge-outline-danger");
+				badge.addClass("badge-outline-success px-1 mr-1");
+				badge.text("Active");
+			}
+			else {
+				badge.removeClass("badge-outline-success px-1 mr-1");
+				badge.addClass("badge-outline-danger");
+				badge.text("Inactive");
+			}
+	
 		}
 
 		utilities.toastAlert( icon, message );

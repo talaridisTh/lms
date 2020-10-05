@@ -9,9 +9,7 @@
 
 	<div class="card mb-0">
 		<div class="card-header d-flex justify-content-between align-items-center" id="{{ $section->slug }}">
-			
 
-			
 			<h5 class="m-0 flex-grow-1">
 				<a class="js-chapter-title custom-accordion-title d-block pt-2 pb-2" data-toggle="collapse"
 					href="#{{ $section->slug }}-collapse"
@@ -32,11 +30,12 @@
 				</div>
 			</h5>
 			<div class="tools-cnt pl-4 pr-1 h3 d-flex align-items-center">
-				<i class="js-edit-chapter-btn px-1 mdi mdi-square-edit-outline custom-primary cursor-pointer"></i>
+				<i class="js-edit-chapter-btn px-1 mdi mdi-square-edit-outline custom-primary cursor-pointer" title="Edit section"></i>
 				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
-					data-material-id="{{ $section->id }}"></i>
+					data-material-id="{{ $section->id }}" title="Delete section"></i>
 				<div class="d-flex justify-content-end align-items-center" style="width: 81px;">
-					<span class="px-1 font-12 badge {{ $status['color'] }} badge-pill">{{ $status['text'] }}</span>
+					<span class="js-chapter-badge px-1 font-12 badge {{ $status['color'] }} badge-pill"
+						data-material-id="{{ $section->id }}">{{ $status['text'] }}</span>
 				</div>
 			</div>
 		</div>
@@ -57,7 +56,7 @@
 					</thead>
 					<tbody>
 
-						@forelse ($section->chapters as $material)
+						@forelse ($section->chapters()->orderBy("priority")->get() as $material)
 						<tr class="js-accordion-row" data-material-id="{{ $material->id }}">
 							<td>
 								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
