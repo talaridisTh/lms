@@ -10,16 +10,16 @@ class Material extends Model {
 
     use HasFactory;
 
-	protected $guarded = [];
+    protected $guarded = [];
 
-	public function chapters() {
+    public function chapters()
+    {
 
-		return $this->belongsToMany(
-			Material::class, "material_section",
-			"section_id", "material_id"
-		)->withPivot('status', 'priority');
-
-	}
+        return $this->belongsToMany(
+            Material::class, "material_section",
+            "section_id", "material_id"
+        )->withPivot('status', 'priority');
+    }
 
     public function courses()
     {
@@ -91,34 +91,36 @@ class Material extends Model {
             "odp" => "mdi-file-powerpoint-outline text-orange",
             "zip" => "mdi-folder-zip-outline text-warning",
         ];
-
-
-        foreach( $icons as $type => $icon ) {
-            if ( fnmatch("$type*", $value ) ) {
+        foreach ($icons as $type => $icon)
+        {
+            if (fnmatch("$type*", $value))
+            {
                 return $icon;
             }
         }
     }
 
-    // public function getTypeAttribute($value)
-    // {
-
-    //     if (request()->route()->getName() == 'index.userCourse' || request()->route()->getName() == 'index.material.show')
-    //     {
-    //         if ($value == 'Lesson')
-    //         {
-    //             return 'mdi mdi-file-document-outline text-success';
-    //         } elseif ($value == 'Link')
-    //         {
-    //             return 'mdi mdi-link-variant-plus text-info';
-    //         } elseif ($value == 'Announcement')
-    //         {
-    //             return 'mdi mdi-comment-quote-outline text-danger';
-    //         } elseif ($value == 'Video')
-    //         {
-    //             return 'mdi mdi-camcorder text-primary';
-    //         }
-    //     } else return $value;
-    // }
+    public function getTypeAttribute($value)
+    {
+        if (!isset(request()->route()->uri))
+        {
+            return $value;
+        } elseif (request()->route()->getName() == 'index.userCourse' || request()->route()->getName() == 'index.material.show')
+        {
+            if ($value == 'Lesson')
+            {
+                return 'mdi mdi-file-document-outline text-success';
+            } elseif ($value == 'Link')
+            {
+                return 'mdi mdi-link-variant-plus text-info';
+            } elseif ($value == 'Announcement')
+            {
+                return 'mdi mdi-comment-quote-outline text-danger';
+            } elseif ($value == 'Video')
+            {
+                return 'mdi mdi-camcorder text-primary';
+            }
+        } else return $value;
+    }
 
 }
