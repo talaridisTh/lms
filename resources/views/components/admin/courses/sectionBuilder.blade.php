@@ -56,7 +56,7 @@
 					</thead>
 					<tbody>
 
-						@forelse ($section->chapters as $material)
+						@forelse ($section->chapters()->orderBy("priority")->get() as $material)
 						<tr class="js-accordion-row" data-material-id="{{ $material->id }}">
 							<td>
 								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>

@@ -18,7 +18,7 @@ class Material extends Model {
         return $this->belongsToMany(
             Material::class, "material_section",
             "section_id", "material_id"
-        )->withPivot('status', 'priority')->orderBy("material_section.priority");
+        )->withPivot('status', 'priority');
     }
 
     public function courses()
