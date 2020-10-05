@@ -11,7 +11,7 @@ class Course extends Model {
 
 	use SoftDeletes;
 	use HasFactory;
-	
+
 	public function sections() {
 
 		return $this->hasMany("App\Section");
@@ -116,6 +116,7 @@ class Course extends Model {
             ->join("course_material", "course_material.material_id", "=", "materials.id")
             ->where("course_id", $courseId)
             ->where("type","!=" ,"Announcement")
+            ->where("type","!=" ,"Section")
             ->where("course_material.status", 1)
             ->orderBy("priority", 'asc')
             ->get();

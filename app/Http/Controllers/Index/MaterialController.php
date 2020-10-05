@@ -34,6 +34,10 @@ class MaterialController extends Controller {
         $nextMaterial = Course::nextMaterial($course->id, $materialPriority);
         $prevMaterial = Course::prevMaterial($course->id, $materialPriority);
         $announcements = $course->materials()->where("type", "Announcement")->orderBy("priority")->wherePivotIn("status", [1])->get();
+        $sections = $course->materials()
+            ->where("type", "Section")
+            ->orderBy("priority")
+            ->wherePivotIn("status", [1])->get();
 
 
         return view("index.materials.material-index",
