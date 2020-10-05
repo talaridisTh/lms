@@ -4,7 +4,7 @@ import utilities from '../../index/main';
 utilities.addWhatchlist()
 
 
-//! CAROUSEL
+//! CAROUSEL-swiper
 //!============================================================
 var swiper = new Swiper('.swiper-container', {
     // Optional parameters
@@ -36,6 +36,42 @@ var swiper = new Swiper('.swiper-container', {
 })
 $('#bs-example-modal-lg').on('shown.bs.modal', function (e) {
     console.log("S")
+    swiper.update();
+    var $invoker = $(e.relatedTarget);
+    swiper.slideTo($invoker.data('slider'));
+    swiper.update();
+});
+//! announcements-swiper
+//!============================================================
+var swiper = new Swiper('.swiper-container-announcements', {
+    // Optional parameters
+
+
+    // If we need pagination
+    pagination: {
+        el: '.swiper-pagination-announcements',
+        draggable: true,
+    },
+    fadeEffect: {
+        crossFade: true
+    },
+
+    // Navigation arrows
+    navigation: {
+        nextEl: '.swiper-button-next-announcements',
+        prevEl: '.swiper-button-prev-announcements',
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+        el: '.swiper-scrollbar-announcements',
+    },
+    keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+    },
+})
+$('#announcements-modal').on('shown.bs.modal', function (e) {
     swiper.update();
     var $invoker = $(e.relatedTarget);
     swiper.slideTo($invoker.data('slider'));
