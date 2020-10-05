@@ -96,6 +96,7 @@ class MaterialController extends Controller {
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
+        $material->content = $request->content;
         $material->type = $request->type;
         $material->status = $request->state;
 		$material->slug = Str::slug($request->title, "-");
