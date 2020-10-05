@@ -427,6 +427,9 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		toggleCourseMaterial();
 		sortInputsInit();
 		removeMaterialInit();
+		editChapterBtnInit();
+		chapterInputInit();
+		chapterSubmitBtnInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -593,6 +596,34 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		addFilesBtnInit();
     }
 })
+
+function chapterSubmitBtnInit() {
+
+	let submitBtn = $(".js-sumbit-chapter-title-btn");
+
+	submitBtn.off(submitChapterBtnHandler)
+	submitBtn.on("click", submitChapterBtnHandler)
+}
+
+function chapterInputInit() {
+
+	let input = $(".js-chapter-input");
+
+	input.off(editChapterOnBlurHandler);
+	input.off(editChapterOnKeyupHandler);
+
+	input.on("blur", editChapterOnBlurHandler);
+	input.on("keyup", editChapterOnKeyupHandler)
+
+}
+
+function editChapterBtnInit() {
+
+	let btn = $(".js-edit-chapter-btn");
+
+	btn.off(editChapterBtnHandler)
+	btn.on("click", editChapterBtnHandler);
+}
 
 function addFilesBtnInit() {
 	let btns = $(".js-add-file-btn");
@@ -771,28 +802,9 @@ function removeMaterialInit() {
 
 	let binBtn = $(".js-remove-material")
 
-	binBtn.unbind();
+	binBtn.off(removeMaterialHandler);
 
-	binBtn.on( "click", function() {
-
-		let id = this.dataset.materialId;
-
-		Swal.fire({
-			title: "Είστε σίγουρος/η;",
-			text: 'Το υλικό θα αφαιρεθεί απο το Course.',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonText: 'Ναι, αφαίρεση!',
-			cancelButtonText: 'Άκυρο'
-		}).then( (result) => {
-
-			if (result.value) {
-
-				removeMaterials( [id] );
-
-			}
-		})
-	});
+	binBtn.on( "click", removeMaterialHandler);
 }
 
 function newUserCheckboxInit() {
@@ -971,6 +983,78 @@ $(".js-date-search").on( "input", function() {
 });
 // DataTables function / EventListener End
 
+function submitChapterBtnHandler() {
+	
+	let input = this.findParent(2).getElementsByClassName("js-chapter-input")[0];
+	let slug = input.dataset.materialSlug;
+	let title = input.value;
+
+	editChaptersTitle(slug, title);
+
+}
+
+function editChapterOnKeyupHandler(event) {
+
+	if (event.keyCode == 27 ) {
+		this.blur();
+	}
+	else if ( event.keyCode == 13 ) {
+		editChaptersTitle(this.dataset.materialSlug, this.value);
+	}
+}
+
+function editChapterOnBlurHandler() {
+
+	let cnt = this.findParent(3);
+	let titleCnt = cnt.getElementsByClassName("js-chapter-title")[0];
+	let editCnt = cnt.getElementsByClassName("js-edit-chapter")[0];
+
+	setTimeout(function() {
+		titleCnt.classList.remove("d-none");
+		titleCnt.classList.add("d-block");
+	
+		editCnt.classList.add("d-none");
+	}, 100);
+
+}
+
+function editChapterBtnHandler() {
+
+	let cnt = this.findParent(2);
+	let titleCnt = cnt.getElementsByClassName("js-chapter-title")[0];
+	let editCnt = cnt.getElementsByClassName("js-edit-chapter")[0];
+	let input = editCnt.getElementsByTagName("input")[0];
+
+	titleCnt.classList.remove("d-block");
+	titleCnt.classList.add("d-none");
+
+	editCnt.classList.remove("d-none");
+	input.focus();
+	input.value = "";
+	input.value = input.defaultValue;
+}
+
+function removeMaterialHandler() {
+
+	let id = this.dataset.materialId;
+
+	Swal.fire({
+		title: "Είστε σίγουρος/η;",
+		text: 'Το υλικό θα αφαιρεθεί απο το Course.',
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonText: 'Ναι, αφαίρεση!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+
+		if (result.value) {
+
+			removeMaterials( [id] );
+
+		}
+	})
+}
+
 function remainingMaterialsCheckboxHandler() {
 
 	let mainCheckbox = $('#all-remainings-checkbox')[0];
@@ -994,6 +1078,17 @@ function activeMaterialsCheckboxHandler() {
 	let bulkBtn = $("#active-material-bulk")[0];
 
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
+}
+
+function editChaptersTitle(materialSlug, title) {
+
+	axios.patch(`/materials/edit-chapter/${materialSlug}`, {
+		courseId, title
+	})
+	.then( res => {
+		$("#section-accordion").html(res.data);
+		courseMaterialsTable.ajax.reload(null, false);
+	})
 }
 
 function addUsers( userIds ) {

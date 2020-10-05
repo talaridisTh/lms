@@ -41,8 +41,8 @@ class DatabaseSeeder extends Seeder {
 				$material->users()->attach( Role::find(2)->users()->select("id")->get()->random()->id);
 				
 				if ( $material->type == "Section" ) {
-					for ( $j = 0; $j < 5; $j++ ) {
-						$material->chapters()->attach( rand(1, 80), ["priority" =>  rand( 1, 10000 )]);
+					for ( $i = 0; $i < 5; $i++ ) {
+						$material->chapters()->attach( rand(1, 80), ["priority" =>  $i + 1]);
 					}
 				}
 			});
@@ -53,7 +53,7 @@ class DatabaseSeeder extends Seeder {
 				for ( $i = 0; $i < 20; $i++) {
 					$course->users()->attach(User::where('id', '!=', 1)->get()->random()->id);
 
-					$course->materials()->attach( rand(1, 80), ["priority" => rand( 1, 10000 )]);
+					$course->materials()->attach( rand(1, 80), ["priority" => $i + 1]);
 
 				}
 			});
