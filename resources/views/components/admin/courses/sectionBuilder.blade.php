@@ -113,8 +113,8 @@
 							</td>
 							<td class="align-middle text-center">
 								<div class='form-group mb-0'>
-									<input type='text' class='js-chapter-input form-control text-center'
-										data-material-id='{{ $material->id }}'
+									<input type='text' class='js-chapter-priority form-control text-center'
+										data-material-id='{{ $material->id }}' data-section-slug="{{ $section->slug }}"
 										data-current-priority="{{ $material->pivot->priority }}"
 										value="{{ $material->pivot->priority }}" autocomplete='off'>
 								</div>

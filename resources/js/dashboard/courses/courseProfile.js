@@ -452,6 +452,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		chapterCheckInit();
 		sectionCheckInit();
 		chapterStatusInit();
+		chapterPriorityInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -618,6 +619,54 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		addFilesBtnInit();
     }
 })
+
+function chapterPriorityInit() {
+
+	$(".js-chapter-priority").on("input", function() {
+		let inputValue = this.value;
+
+		if ( isNaN( inputValue ) || inputValue < 0 ) {
+			return this.value = inputValue.replace(/[^0-9]/g, '');
+		}
+	});
+
+	$('.js-chapter-priority').on('keyup', function() {
+
+		if ( event.keyCode == 13 && !isNaN( this.value) ) {
+
+			let sectionSlug = this.dataset.sectionSlug;
+
+			axios.patch(`/section/${sectionSlug}/chapters-priority`, {
+				courseId,
+				materialId: this.dataset.materialId,
+				priority: {
+					new: this.value,
+					old: this.dataset.currentPriority
+				},
+			})
+			.then( (res) => {
+				let sectionsCnt = document.getElementsByClassName("accordion")[0];
+				sectionsCnt.innerHTML = res.data;
+
+				let sections = sectionsCnt.getElementsByClassName("collapse");
+				for (let i = 0; i < sections.length; i++ ) {
+					sections[i].classList.remove("show");
+				}
+			
+				let shownChapter = sectionsCnt.dataset.shownChapter;
+				if ( typeof shownChapter !== "undefined" ) {
+					document.getElementById(`${shownChapter}-collapse`).classList.add("show");
+				}
+				else {
+					sectionsCnt.getElementsByClassName("collapse")[0].classList.add("show");
+				}
+
+				courseMaterialsTable.ajax.reload( null, false );
+			})
+		}
+
+	});
+}
 
 function chapterStatusInit() {
 
@@ -790,9 +839,7 @@ function chapterSubmitBtnInit() {
 
 function chapterInputInit() {
 
-	let input = $(".js-chapter-input");
-
-	input.on("keyup", editChapterOnKeyupHandler)
+	$(".js-chapter-input").on("keyup", editChapterOnKeyupHandler)
 
 }
 
@@ -1085,7 +1132,7 @@ function sortInputsInit() {
 
 		let inputValue = this.value;
 
-		if ( isNaN( inputValue ) ) {
+		if ( isNaN( inputValue ) || inputValue < 0 ) {
 			return this.value = inputValue.replace(/[^0-9]/g, '');
 		}
 

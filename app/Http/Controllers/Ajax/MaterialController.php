@@ -391,4 +391,42 @@ class MaterialController extends Controller {
 
 	}
 
+	public function chaptersPriority(Material $material, Request $request) {
+
+		$lastInOrder = $material->chapters()
+			->orderBy("priority", "desc")->first()->pivot->priority;
+
+		$priority = $request->priority;
+
+		if ( $priority['new'] == 0 ) {
+			$priority['new'] = 1;
+		}
+		elseif ( $priority['new'] > $lastInOrder ) {
+			$priority['new'] = $lastInOrder;
+		}
+
+		$priorityRange = [ $priority['new'], $priority['old'] ];
+		sort( $priorityRange );
+
+		$counter = $priority['new'] < $priority['old'] ? $priority['new'] + 1 : $priority['old'] - 1 ;
+
+		$chapters = $material->chapters()->whereBetween('priority', $priorityRange)
+			->orderBy("priority")->get();
+
+		foreach ($chapters as $chapter) {
+
+			$chapter->pivot->update(["priority" => $counter++]);
+	
+		}
+
+		$chapter = $material->chapters()->where("materials.id", $request->materialId)->first();
+		$chapter->pivot->update([ "priority" => $priority['new'] ]);
+
+		$material->updated_at = Carbon::now();
+		$material->save();
+		
+		$sections = Course::find( $request->courseId )->materials()->where("type", "Section")->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
 }

@@ -148,6 +148,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
 	Route::post("section/{material}/remove-chapters", "Ajax\MaterialController@removeChapters");
 	Route::patch("section/{material}/toggle-chapters", "Ajax\MaterialController@toggleChapters");
+	Route::patch("section/{material}/chapters-priority", "Ajax\MaterialController@chaptersPriority");
 
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables
