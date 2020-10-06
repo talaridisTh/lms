@@ -12,7 +12,7 @@
 
 			<h5 class="m-0 flex-grow-1">
 				<a class="js-chapter-title custom-accordion-title d-flex align-items-center pt-2 pb-2" data-toggle="collapse"
-					href="#{{ $section->slug }}-collapse"
+					href="#{{ $section->slug }}-collapse" data-material-slug="{{ $section->slug }}"
 					aria-expanded="true" aria-controls="{{ $section->slug }}-collapse">
 					{{ $section->title }}
 					<div class="d-flex justify-content-end align-items-center" style="width: 81px;">
@@ -59,10 +59,6 @@
 						<a class="dropdown-item d-block py-2" href="#">Αφαίρεση επιλεγμένων</a>
 					</div>
 				</div>
-
-
-
-
 
 			</div>
 		</div>
