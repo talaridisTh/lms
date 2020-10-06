@@ -20,12 +20,12 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
-$(".js-chapter-title").on("click", function() {
+// $(".js-chapter-title").on("click", function() {
 
-	let slug = this.dataset.materialSlug
+// 	let slug = this.dataset.materialSlug
 
-	$("#section-accordion")[0].dataset.shownChapter = slug;
-})
+// 	$("#section-accordion")[0].dataset.shownChapter = slug;
+// })
 
 $("#add-materials-modal").on("show.bs.modal", function(event) {
 	let button = $(event.relatedTarget);
@@ -452,6 +452,9 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		editChapterBtnInit();
 		chapterInputInit();
 		chapterSubmitBtnInit();
+		removeMaterialSectionBtnInit();
+		setShownSlugInit();
+		sectionDotsBehaviorInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -618,6 +621,56 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		addFilesBtnInit();
     }
 })
+
+function sectionDotsBehaviorInit() {
+
+	$(".js-section-dots").on("click", function() {
+
+		let parent = this.findParent(4);
+		let collapseBtn = parent.getElementsByClassName("collapse")[0];
+
+		$(collapseBtn).collapse("show");
+
+	});
+
+}
+
+function setShownSlugInit() {
+
+	$(".js-chapter-title").on("click", function() {
+
+		let slug = this.dataset.materialSlug;
+	
+		$("#section-accordion")[0].dataset.shownChapter = slug;
+	})
+}
+
+function removeMaterialSectionBtnInit() {
+
+	let btn = $(".js-remove-chapter");
+	
+	btn.on("click", function() {
+
+		let sectionSlug = this.findParent(4).dataset.sectionSlug;
+		let id = [this.dataset.materialId];
+
+		Swal.fire({
+			title: "Είστε σίγουρος/η;",
+			text: 'Το υλικό θα αφαιρεθεί απο το Course.',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+			
+			if (result.isConfirmed) {
+	
+				removeChapters(sectionSlug, id);
+	
+			}
+		})
+	})
+}
 
 function chapterSubmitBtnInit() {
 
@@ -909,7 +962,6 @@ function addMaterialsEventListerner() {
 			addMaterialBtn[i].disabled = true;
 		}
 
-		console.log(chapterId);
 		if ( chapterId == "main" ) {
 			addCourseMaterials( materialId );
 		}
@@ -1109,6 +1161,39 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
 }
 
+function removeChapters(sectionSlug, chapterIds) {
+
+	axios.post(`/section/${sectionSlug}/remove-chapters`, {
+		courseId, chapterIds
+	})
+	.then( res => {
+		let message = chapterIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${chapterIds.length} αρχεία εκτός ύλης`;
+		let sectionsCnt = document.getElementsByClassName("accordion")[0];
+		sectionsCnt.innerHTML = res.data;
+
+		let sections = sectionsCnt.getElementsByClassName("collapse");
+		for (let i = 0; i < sections.length; i++ ) {
+			sections[i].classList.remove("show");
+		}
+
+		let shownChapter = sectionsCnt.dataset.shownChapter;
+		if ( typeof shownChapter !== "undefined" ) {
+			document.getElementById(`${shownChapter}-collapse`).classList.add("show");
+		}
+		else {
+			sectionsCnt.getElementsByClassName("collapse")[0].classList.add("show");
+		}
+
+		courseMaterialsTable.ajax.reload(null, false);
+		remainingMaterialsTables.ajax.reload(null, false);
+		utilities.toastAlert( 'info', message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+}
+
 function editChaptersTitle(materialSlug, title) {
 
 	axios.patch(`/materials/edit-chapter/${materialSlug}`, {
@@ -1171,12 +1256,21 @@ function addChapterMaterials( chapterId, materialIds ) {
 		courseId, chapterId, materialIds
 	})
 	.then( res => {
-		let sectionCnt = $("#section-accordion");
-		sectionCnt.html(res.data);
-		sectionCnt.find(".collapse").removeClass("show");
+		let sectionsCnt = document.getElementsByClassName("accordion")[0];
+		sectionsCnt.innerHTML = res.data;
 
-		let shownChapter = sectionCnt.data("shown-chapter");
-		sectionCnt.find(`#${shownChapter}-collapse`).addClass("show");
+		let sections = sectionsCnt.getElementsByClassName("collapse");
+		for (let i = 0; i < sections.length; i++ ) {
+			sections[i].classList.remove("show");
+		}
+
+		let shownChapter = sectionsCnt.dataset.shownChapter;
+		if ( typeof shownChapter !== "undefined" ) {
+			document.getElementById(`${shownChapter}-collapse`).classList.add("show");
+		}
+		else {
+			sectionsCnt.getElementsByClassName("collapse")[0].classList.add("show");
+		}
 
 		courseMaterialsTable.ajax.reload( null, false );
 		remainingMaterialsTables.ajax.reload( null, false );

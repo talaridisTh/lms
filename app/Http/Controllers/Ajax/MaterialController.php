@@ -358,4 +358,28 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
+	public function removeChapters(Material $material, Request $request) {
+
+		$course = Course::find( $request->courseId );
+
+		$material->chapters()->orderBy("priority")
+			->each( function($chapter) use ($material, $request) {
+
+				static $counter = 1;
+				if ( in_array($chapter->id, $request->chapterIds) ) {
+
+					$material->chapters()->detach( $chapter->id );
+
+				}
+				else {
+					$chapter->pivot->update(["priority" => $counter]);
+
+					$counter++;
+				}
+			});
+		
+		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
 }

@@ -46,12 +46,9 @@
 				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
 					data-material-id="{{ $section->id }}" title="Delete section"></i>
 
-
-
-
 				<div class="dropdown">
-					<i class="ml-2 mdi mdi-dots-vertical cursor-pointer custom-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-					<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated" aria-labelledby="dropdownMenuButton">
+					<i id="{{ $section->slug }}-dropdown" class="js-section-dots ml-2 mdi mdi-dots-vertical cursor-pointer custom-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+					<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated" aria-labelledby="{{ $section->slug }}-dropdown">
 						<a class="js-add-chapters-btn dropdown-item d-block py-2" href="#"
 							data-toggle="modal" data-chapter="{{ $section->id }}"
 							data-target="#add-materials-modal">Προσθήκη Υλικού</a>
@@ -68,7 +65,7 @@
 		<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
 			aria-labelledby="{{ $section->slug }}" data-parent="#section-accordion">
 			<div class="card-body">
-				<table class="table mb-0">
+				<table class="table mb-0" data-section-slug="{{ $section->slug }}">
 					<thead>
 						<tr>
 							<th class="text-center" scope="col" style="min-width: 400px;">Title</th>
@@ -123,7 +120,8 @@
 								<p class='js-time mb-0'>{{ $hour }}</p>
 							</td>
 							<td class="align-middle text-center">
-								<i class="h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"></i>
+								<i class="js-remove-chapter h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
+									data-material-id="{{ $material->id }}"></i>
 							</td>
 						</tr>
 						@empty
