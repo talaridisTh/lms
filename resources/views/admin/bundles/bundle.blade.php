@@ -354,27 +354,24 @@
 
 								<span id="status-icon"
 									class=" px-1 pointer-default circle-icon btn-sm btn {{ $tooltip['color'] }} text-white rounded-circle"
-									data-toggle="tooltip" data-placement="bottom" title="{{ $tooltip['text'] }}"
-								>
+									data-toggle="tooltip" data-placement="bottom" title="{{ $tooltip['text'] }}" >
 									{!! $tooltip['icon'] !!}
 								</span>
 
 								<button form="bundle-edit-form" type="submit"
-									class="btn {{ $storeBtn['color'] }}" name="save" value="save"
-								>
+									class="btn {{ $storeBtn['color'] }}" name="save" value="save" >
 									{{ $storeBtn['text'] }}
 								</button>
 
 								<button form="bundle-edit-form" type="submit" class="btn {{ $publishBtn['color'] }}"
-									name="publish" value="{{ $publishBtn['value'] }}"
-								>
+									name="publish" value="{{ $publishBtn['value'] }}" >
 									{{ $publishBtn['text'] }}
 								</button>
 
 								<a id="preview-btn"
-									href="#"
-									class="btn btn-warning"
-								>
+									href="#" target="_blank"
+									class="btn btn-warning" >
+
 									<i class="mdi mdi-eye"></i>
 								</a>
 
@@ -390,7 +387,6 @@
 									<hr class="mb-0" />
 								</div>
 							</div>
-
 
 							<!-- Cover Preview -->
 							<div class="card">

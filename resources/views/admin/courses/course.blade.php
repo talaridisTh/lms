@@ -524,7 +524,7 @@
 
 									<a id="preview-btn"
 										href="/courses/course/{{ $course->slug }}"
-										class="btn btn-warning"
+										class="btn btn-warning" target="_blank"
 									>
 										<i class="mdi mdi-eye"></i>
 									</a>

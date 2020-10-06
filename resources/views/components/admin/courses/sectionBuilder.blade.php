@@ -55,7 +55,7 @@
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item d-block py-2" href="#">Αλλαγή Κατάστασης</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item d-block py-2" href="#">Αφαίρεση επιλεγμένων</a>
+						<a class="js-multiple-chapter-remove dropdown-item d-block py-2" href="#" disabled>Αφαίρεση επιλεγμένων (0)</a>
 					</div>
 				</div>
 
@@ -68,6 +68,12 @@
 				<table class="table mb-0" data-section-slug="{{ $section->slug }}">
 					<thead>
 						<tr>
+							<th class="text-center align-middle" scope="col">
+								<div class='icheck-primary d-inline'>
+									<input id='{{ $section->slug }}-main-checkbox' class="js-section-main-checkbox" type='checkbox' autocomplete='off'>
+									<label for='{{ $section->slug }}-main-checkbox'></label>
+								</div>
+							</th>
 							<th class="text-center" scope="col" style="min-width: 400px;">Title</th>
 							<th class="text-center w-10" scope="col">Κατάσταση</th>
 							<th class="text-center w-10" scope="col">Κατάταξη</th>
@@ -80,6 +86,14 @@
 
 						@forelse ($section->chapters()->orderBy("priority")->get() as $material)
 						<tr class="js-accordion-row" data-material-id="{{ $material->id }}">
+							<td class="text-center align-middle">
+								<div class='icheck-primary d-inline'>
+									<input id='{{ $material->slug }}-chapter-checkbox'
+										class="js-chapter-checkbox" type='checkbox'
+										data-material-id="{{ $material->id }}" autocomplete='off'>
+									<label for='{{ $material->slug }}-chapter-checkbox'></label>
+								</div>
+							</td>
 							<td>
 								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
 								<p class='mb-1'>{{ $material->slug }}</p>
