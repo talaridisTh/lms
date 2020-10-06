@@ -67,17 +67,18 @@ class Material extends Model {
         return "slug";
     }
 
-    public function priority($material, $course)
-    {
-
-
-        return $test = DB::table('course_material')
-            ->where("course_id", $course)
-            ->where("material_id", $material)
-            ->select("priority")
-            ->first();
-
-    }
+//    public function priority($material, $course)
+//    {
+//
+//
+//
+//        return $test = DB::table('course_material')
+//            ->where("course_id", $course)
+//            ->where("material_id", $material)
+//            ->select("priority")
+//            ->first();
+//
+//    }
 
     public static function getIcon($value)
     {
@@ -121,6 +122,9 @@ class Material extends Model {
             } elseif ($value == 'Video')
             {
                 return 'mdi mdi-camcorder text-primary';
+            } elseif ($value == 'Section')
+            {
+                return $value;
             }
         } else return $value;
     }

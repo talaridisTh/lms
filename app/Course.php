@@ -9,14 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model {
 
-	use SoftDeletes;
-	use HasFactory;
+    use SoftDeletes;
+    use HasFactory;
 
-	public function sections() {
+    public function sections()
+    {
 
-		return $this->hasMany("App\Section");
-
-	}
+        return $this->hasMany("App\Section");
+    }
 
     public function media()
     {
@@ -112,13 +112,17 @@ class Course extends Model {
 
     public static function materialsOrderByPriority($courseId)
     {
-        return DB::table("materials")
-            ->join("course_material", "course_material.material_id", "=", "materials.id")
-            ->where("course_id", $courseId)
-            ->where("type","!=" ,"Announcement")
+
+
+
+      return Course::find($courseId)->materials()
+            ->where("type", "!=", "Announcement")
             ->where("course_material.status", 1)
             ->orderBy("priority", 'asc')
             ->get();
+
+
+
     }
 
     public static function nextMaterial($courseId, $materialPriority)
@@ -126,8 +130,8 @@ class Course extends Model {
         return DB::table("materials")
             ->join("course_material", "course_material.material_id", "=", "materials.id")
             ->where("course_id", $courseId)
-            ->where("type","!=" ,"Announcement")
-            ->where("type","!=" ,"Section")
+            ->where("type", "!=", "Announcement")
+            ->where("type", "!=", "Section")
             ->where("course_material.status", 1)
             ->where("priority", '>', $materialPriority)
             ->orderBy("priority", 'asc')
@@ -155,7 +159,5 @@ class Course extends Model {
 
         return Course::with('topics')->find($course->id)->topics()->get();
     }
-
-
 
 }

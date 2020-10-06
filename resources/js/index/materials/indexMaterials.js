@@ -130,6 +130,8 @@ $(".material-count").on("click", function (e) {
         this
     )
 
+    console.log(this)
+
 
 }).on('mouseenter', function () {
     setTimeout(() => {

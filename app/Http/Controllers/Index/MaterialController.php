@@ -28,7 +28,7 @@ class MaterialController extends Controller {
         ];
 
 
-        $priority = $materials->priority($materials->id, $course->id);
+//        $priority = $materials->priority($materials->id, $course->id);
 
 
 
@@ -44,7 +44,7 @@ class MaterialController extends Controller {
 
 
         return view("index.materials.material-index",
-            compact("sections","announcements","priority", "materials", "course", "MaterialsOrderByPriority","icons"));
+            compact("sections","announcements", "materials", "course", "MaterialsOrderByPriority","icons"));
     }
 
     public function dummyPage(Material $materials)
