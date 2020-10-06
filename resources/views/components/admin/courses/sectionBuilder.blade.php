@@ -40,8 +40,6 @@
 			</h5>
 			<div class="tools-cnt pl-4 pr-1 h3 d-flex align-items-center">
 
-
-
 				<i class="js-edit-chapter-btn px-1 ml-2 mdi mdi-square-edit-outline custom-primary cursor-pointer" title="Edit section"></i>
 				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
 					data-material-id="{{ $section->id }}" title="Delete section"></i>
@@ -53,7 +51,19 @@
 							data-toggle="modal" data-chapter="{{ $section->id }}"
 							data-target="#add-materials-modal">Προσθήκη Υλικού</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item d-block py-2" href="#">Αλλαγή Κατάστασης</a>
+						
+						<div class="btn-group dropleft w-100">
+							<a class="js-chapters-status dropdown-toggle dropdown-item cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Αλλαγή κατάστασης (0)
+							</a>
+							<div class="dropdown-menu">
+								<a class="activate-chapters dropdown-item" href="#"
+									data-section-slug="{{ $section->slug }}">Ενεργοποιήση</a>
+								<a class="deactivate-chapters dropdown-item" href="#"
+									data-section-slug="{{ $section->slug }}">Απενεργοποίηση</a>
+							</div>
+						</div>
+
 						<div class="dropdown-divider"></div>
 						<a class="js-multiple-chapter-remove dropdown-item d-block py-2" href="#" disabled>Αφαίρεση επιλεγμένων (0)</a>
 					</div>

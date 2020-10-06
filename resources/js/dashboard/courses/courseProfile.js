@@ -453,6 +453,8 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		sectionCheckInit();
 		chapterStatusInit();
 		chapterPriorityInit();
+		multipleChapterActivateInit();
+		multipleChapterDeactivateInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -620,6 +622,75 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     }
 })
 
+function multipleChapterDeactivateInit() {
+	// deactivate-chapters
+
+	$(".deactivate-chapters").on( 'click', function() {
+		let mainCnt = this.findParent(7);
+		let sectionSlug = this.dataset.sectionSlug;
+		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
+		let data = [];
+	
+		checkedboxes.forEach( checkbox => {
+			data.push({
+				id: checkbox.dataset.materialId,
+				status: 0
+			})
+		});
+	
+		Swal.fire({
+			title: 'Ενεργοποίηση;',
+			html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, απενεργοποιήση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+	
+			if (result.isConfirmed) {
+	
+				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+	
+			}
+		})
+	
+	});
+
+}
+
+function multipleChapterActivateInit() {
+	$(".activate-chapters").on( 'click', function() {
+		let mainCnt = this.findParent(7);
+		let sectionSlug = this.dataset.sectionSlug;
+		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
+		let data = [];
+	
+		checkedboxes.forEach( checkbox => {
+			data.push({
+				id: checkbox.dataset.materialId,
+				status: 1
+			})
+		});
+	
+		Swal.fire({
+			title: 'Ενεργοποίηση;',
+			html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, ενεργοποίηση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+	
+			if (result.isConfirmed) {
+	
+				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+	
+			}
+		})
+	
+	});
+}
+
 function chapterPriorityInit() {
 
 	$(".js-chapter-priority").on("input", function() {
@@ -701,6 +772,7 @@ function sectionCheckInit() {
 		let mainCnt = this.findParent(8);
 		let minorCheck = mainCnt.querySelectorAll(".js-chapter-checkbox");
 		let removeBtn = mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0];
+		let statusMenu = mainCnt.getElementsByClassName("js-chapters-status")[0];
 		let counter = 0;
 
 		if ( this.checked && minorCheck.length > 0 ) {
@@ -716,6 +788,7 @@ function sectionCheckInit() {
 		}
 
 		removeBtn.textContent = `Αφαίρεση επιλεγμένων (${counter})`;
+		statusMenu.textContent = `Αλλαγή κατάστασης (${counter})`;
 	})
 }
 
@@ -727,6 +800,7 @@ function chapterCheckInit() {
 		let checked = mainCnt.querySelectorAll(".js-chapter-checkbox");
 		let mainCheckbox = mainCnt.getElementsByClassName("js-section-main-checkbox")[0];
 		let removeBtn = mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0];
+		let statusMenu = mainCnt.getElementsByClassName("js-chapters-status")[0];
 		let counter = 0;
 
 		checked.forEach( checkbox => {
@@ -743,6 +817,7 @@ function chapterCheckInit() {
 		}
 
 		removeBtn.textContent = `Αφαίρεση επιλεγμένων (${counter})`;
+		statusMenu.textContent = `Αλλαγή κατάστασης (${counter})`;
 	});
 }
 
@@ -1313,6 +1388,44 @@ function activeMaterialsCheckboxHandler() {
 	let bulkBtn = $("#active-material-bulk")[0];
 
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
+}
+
+function toggleChapters( sectionSlug, data, mainCnt, checkedboxes ) {
+
+	axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
+		courseId, data
+	})
+	.then( res => {
+		let icon = "";
+		let message = "";
+
+		if ( data[0].status == 1 ) {
+			icon = "success";
+			message = data.length == 1 ? "Ενεργοποιήθηκε" : "Ενεργοποιήθηκαν";
+			checkedboxes.forEach( checkbox => {
+				checkbox.checked = false;
+				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = true;
+			});
+		}
+		else {
+			icon = "info";
+			message = data.length == 1 ? "Απενεργοποιήθηκε" : "Απενεργοποιήθηκαν";
+			checkedboxes.forEach( checkbox => {
+				checkbox.checked = false;
+				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = false;
+			});
+		}
+
+		mainCnt.getElementsByClassName("js-section-main-checkbox")[0].checked = false;
+		mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0].textContent = "Αφαίρεση επιλεγμένων (0)"
+		mainCnt.getElementsByClassName("js-chapters-status")[0].textContent = "Αλλαγή κατάστασης (0)";
+		utilities.toastAlert( icon, message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+
 }
 
 function removeChapters(sectionSlug, chapterIds) {
