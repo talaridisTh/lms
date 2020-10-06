@@ -65,9 +65,9 @@ class UsersDataTable extends DataTable {
 //            ->editColumn('created_at', function ($data) {
 //                return "<p>Εγγραφη : <b>$data->created_at</b></p><p>Ανανεωση :<b>$data->updated_at</b></p>";
 //            })
-            ->editColumn('last_name', function ($data) {\
+            ->editColumn('last_name', function ($data) {
 
-                return "<p>$data->first_name</p>
+                return  "<p>$data->first_name</p>
 						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
 						<a href='#' class='custom-link-primary'>View</a>";
