@@ -20,6 +20,13 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$(".js-chapter-title").on("click", function() {
+
+	let slug = this.dataset.materialSlug
+
+	$("#section-accordion")[0].dataset.shownChapter = slug;
+})
+
 $("#add-materials-modal").on("show.bs.modal", function(event) {
 	let button = $(event.relatedTarget);
 	let chapter = button.data("chapter");
@@ -1164,7 +1171,13 @@ function addChapterMaterials( chapterId, materialIds ) {
 		courseId, chapterId, materialIds
 	})
 	.then( res => {
-		$("#section-accordion").html(res.data);
+		let sectionCnt = $("#section-accordion");
+		sectionCnt.html(res.data);
+		sectionCnt.find(".collapse").removeClass("show");
+
+		let shownChapter = sectionCnt.data("shown-chapter");
+		sectionCnt.find(`#${shownChapter}-collapse`).addClass("show");
+
 		courseMaterialsTable.ajax.reload( null, false );
 		remainingMaterialsTables.ajax.reload( null, false );
 	})
