@@ -38,6 +38,7 @@ class UserController extends Controller {
     {
 
 
+
         $media = Media::where("type", 0)->paginate(18);
 
         $userIs = User::userIs($user);
@@ -64,7 +65,7 @@ class UserController extends Controller {
         }
         if ($request->sendMail)
         {
-            Mail::to(auth()->user()->email)->send(new NewUserNotification($user->fullName));
+            Mail::to(auth()->user()->email)->send(new NewUserNotification($request->email,$request->password));
         }
         if ($request->password)
         {

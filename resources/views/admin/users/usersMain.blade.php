@@ -50,8 +50,8 @@
                         <label for='select-all-courses'></label>
                     </div>
                 </th>
-                <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
+                <th class="text-left">Όνομα</th>
                 <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>
@@ -72,8 +72,8 @@
                         <label for='select-all-courses'></label>
                     </div>
                 </th>
-                <th class="text-left">Όνομα</th>
                 <th class="text-left">Επώνυμο</th>
+                <th class="text-left">Όνομα</th>
                 <th class="text-left">Ρόλος</th>
                 <th class="text-left">Email</th>
                 <th class="text-left">Ενεργός</th>

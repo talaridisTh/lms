@@ -43,7 +43,8 @@ $('#bs-example-modal-lg').on('shown.bs.modal', function (e) {
 });
 //! announcements-swiper
 //!============================================================
-var swiper = new Swiper('.swiper-container-announcements', {
+
+var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
     // Optional parameters
 
 
@@ -72,10 +73,10 @@ var swiper = new Swiper('.swiper-container-announcements', {
     },
 })
 $('#announcements-modal').on('shown.bs.modal', function (e) {
-    swiper.update();
+    swiperAnnouncements.update();
     var $invoker = $(e.relatedTarget);
-    swiper.slideTo($invoker.data('slider'));
-    swiper.update();
+    swiperAnnouncements.slideTo($invoker.data('slider'));
+    swiperAnnouncements.update();
 });
 
 $(".js-audio-btn").click(function () {

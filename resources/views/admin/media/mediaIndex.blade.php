@@ -3,6 +3,7 @@
 
 @section('css')
 
+
 @endsection
 
 @section('content')
@@ -45,7 +46,7 @@
 							<label for="file-description-area">Περιγραφή</label>
 							<textarea id="file-description-area" class="form-control" rows="3" name="description" placeholder="Εισάγετε Περιγραφή"></textarea>
 						</div>
-						
+
 						<input id="file-id" class="form-control" type="text" name="id" value="{{ old('id') }}" hidden />
 					</form>
 				</div>
@@ -76,7 +77,7 @@
 				</div>
 			</div>
 		</div>
-	
+
 		<!-- Button Row -->
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
@@ -98,7 +99,7 @@
 		</div><!-- ./Button Row -->
 
 		<div class="tab-content">
-			
+
 			<div id="list-view" class="tab-pane show active">
 				<table id="file-manager-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 					<thead>
@@ -138,7 +139,7 @@
 				</div>
 			</div>
 		</div>
-	
+
 	</div>
 
 

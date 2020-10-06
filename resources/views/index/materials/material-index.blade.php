@@ -1,4 +1,7 @@
 @extends("layouts.app")
+@php
+    $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";
+@endphp
 
 @section("style")
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
@@ -91,7 +94,7 @@
             </div>
 
             <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center"
-                 style=";border-radius: 0; background:{{$course->topics->first()->color}}">
+                 style=";border-radius: 0; background:{{$bgColor}}">
                 <div class="col-md-12   p-0  " style="min-width:1900px;max-width: 1900px">
                     <div class="row align-items-center p-2">
                         <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
@@ -170,7 +173,7 @@
                 <div class="col-md-8 ">
 
 
-                    @include("components.index.user-info")
+{{--                    @include("components.index.user-info")--}}
 
                     @include("components.index.announcements")
 

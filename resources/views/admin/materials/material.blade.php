@@ -1,7 +1,22 @@
 @extends('layouts.dashboard')
 
 @section('css')
-<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+
+        <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
+<style>
+    .wrapper-video {
+        position: relative;
+    }
+    .input-video {
+        padding-left: 135px;
+    }
+    .wrapper-video span {
+        position: absolute;
+        left: 2px;
+        top:36px
+    }
+</style>
+
 
 @endsection
 
@@ -283,7 +298,7 @@
                             </button>
                             @if(isset($material) && count($material->courses)>0 && $material->type != "Link" &&
                             $material->type != "Announcement" )
-                            <a href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"
+                            <a target="_blank" href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"
                                 id="preview-btn" class="btn btn-warning">
                                 <i class="mdi mdi-eye"></i>
                             </a>
@@ -305,11 +320,13 @@
                                 </div>
                                 <hr>
 
-                                <div class="form-group mb-3">
+                                <div class="form-group mb-3 wrapper-video">
                                     <label for="urlMaterial">URL video</label>
-                                    <input form="material-create" name="video_link" type="text" class="form-control"
-                                        id="urlMaterial" placeholder="Εισάγετε URL video..." value="{{ old('video_link') != "" ? old('video_link')
-												: ( isset($material) ? $material->video_link : "" ) }}" />
+                                    <input  title="An absolute URL (usually starts with http://)" form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
+                                        id="urlMaterial" placeholder="vimeo-id" value="{{ old('video_link') != "" ? old('video_link')
+												: ( isset($material) ? $material->video_link : "" ) }}"  />
+                                    <span class="font-16" >https://vimeo.com/</span>
+
                                 </div>
                                 <hr>
 

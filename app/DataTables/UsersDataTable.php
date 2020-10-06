@@ -65,14 +65,14 @@ class UsersDataTable extends DataTable {
 //            ->editColumn('created_at', function ($data) {
 //                return "<p>Εγγραφη : <b>$data->created_at</b></p><p>Ανανεωση :<b>$data->updated_at</b></p>";
 //            })
-            ->editColumn('first_name', function ($data) {
+            ->editColumn('last_name', function ($data) {\
 
-                return "<a href='/dashboard/users/$data->slug' class='h5 custom-link-primary'><p>$data->first_name</p></a>
+                return "<p>$data->first_name</p>
 						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
 						<a href='#' class='custom-link-primary'>View</a>";
             })
-            ->rawColumns(['roles', 'status', "activeNum", "chexbox", "courses", "first_name"])
+            ->rawColumns(['roles', 'status', "activeNum", "chexbox", "courses", "last_name"])
             ->setRowAttr([
                 'data-user-id' => function ($data) {
                     return $data->id;

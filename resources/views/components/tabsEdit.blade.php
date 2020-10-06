@@ -207,12 +207,11 @@
                     {{isset($user)? "Ενημέρωση":"Δημιουργια"}}
                 </button>
                 @isset($user)
-                <a href="{{route('index.profile',$user->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
+                <a target="_blank" href="{{route('index.profile',$user->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
                         class="mdi mdi-eye"></i>
                 </a>
                 @endisset
 {{--                <button id="bundle-delete-btn" class="btn btn-danger float-right">Διαγραφή</button>--}}
-
             </div>
             <div class="col-md-12 border-material d-d">
                 <h4>Προσωπικές πληροφορίες</h4>

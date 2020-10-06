@@ -48,8 +48,8 @@
     </style>
 @endsection
 @php
-
-    $count=0;
+    $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";
+       $count=0;
 
 @endphp
 @section("content")
@@ -89,7 +89,7 @@
 
         <div class="container-xl mb-3" style="max-width: 1705px">
             <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2 px-lg-2 px-xl-5"
-                 style="background:{{$course->topics->first()->color}}">
+                 style="background:{{$bgColor}}">
                 <div class="col-md-12">
                     <div class="row align-items-center text-center ">
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div class="row p-2 box-material-down  color-topic-second"
-                 style="background:{{$course->topics->first()->color}}">
+                 style="background:{{$bgColor}}">
                 <div class="col-md-12 col-xl-4 px-md-5  d-flex justify-content-between text-light">
                     {{--                    <span>metrio</span>--}}
 
@@ -199,7 +199,53 @@
 
                     </div>
                 </div>
+
                 <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
+                    @if(count($course->media->where("type","!=",0))>0)
+                        <div class="accordion custom-accordion my-2" id="extra-content">
+                            <div class="card mb-0">
+                                <div class="card-header p-2" id="head-extra-content">
+                                    <h5 class="m-0 pl-2">
+                                        <a class="custom-accordion-title d-block py-1"
+                                           data-toggle="collapse" href="#collapse-extra-content"
+                                           aria-expanded="true" aria-controls="collapse-extra-content">
+                                            Extra Content<i
+                                                class="mdi mdi-chevron-down accordion-arrow"></i>
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapse-extra-content" class="collapse show"
+                                     aria-labelledby="head-extra-content"
+                                     data-parent="#extra-content">
+                                    <div class="card-body" style="padding: 30px">
+                                        @foreach($course->media->where("type","!=",0) as $media)
+                                            @if($media->ext=="mp3")
+
+                                                <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
+                                                   data-audio-status="paused"></i>
+                                                <audio class="js-audio">
+                                                    <source src="{{ $media->rel_path }}"
+                                                            type="{{ $media->file_info }}">
+                                                </audio>
+                                                <span class=" ml-3">{{$media->original_name}}</span>
+                                            @else
+
+                                                <div class="d-flex flex-column">
+
+                                                    <a class="my-1" href="{{url($media->rel_path)}}">
+                                                        <i class="h3 mdi {{$course->getIcon($media->ext)}}"></i>
+                                                        <span class=" ml-3">{{$media->original_name}}</span>
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                     <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="m-0 p-0">
                         @php
                             $count = 0;

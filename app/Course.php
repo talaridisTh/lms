@@ -160,4 +160,27 @@ class Course extends Model {
         return Course::with('topics')->find($course->id)->topics()->get();
     }
 
+    public static function getIcon($value)
+    {
+        $icons = [
+            "mp3" => "mdi-play-circle-outline",
+            "pdf" => "mdi-file-pdf-outline text-danger",
+            "doc" => "mdi-file-document-outline text-teal",
+            "odt" => "mdi-file-document-outline text-teal",
+            "rtf" => "mdi-file-document-outline text-teal",
+            "xl" => "mdi-file-table-box text-success",
+            "ods" => "mdi-file-table-box text-success",
+            "pp" => "mdi-file-powerpoint-outline text-orange",
+            "odp" => "mdi-file-powerpoint-outline text-orange",
+            "zip" => "mdi-folder-zip-outline text-warning",
+        ];
+        foreach ($icons as $type => $icon)
+        {
+            if (fnmatch("$type*", $value))
+            {
+                return $icon;
+            }
+        }
+    }
+
 }

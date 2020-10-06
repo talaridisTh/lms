@@ -1,3 +1,5 @@
+
+@if($sections)
 @foreach ($sections as $key => $section)
 
 	@php
@@ -38,8 +40,8 @@
 			</h5>
 			<div class="tools-cnt pl-4 pr-1 h3 d-flex align-items-center">
 
-				
-				
+
+
 				<i class="js-edit-chapter-btn px-1 ml-2 mdi mdi-square-edit-outline custom-primary cursor-pointer" title="Edit section"></i>
 				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
 					data-material-id="{{ $section->id }}" title="Delete section"></i>
@@ -62,7 +64,7 @@
 
 			</div>
 		</div>
-		
+
 		<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
 			aria-labelledby="{{ $section->slug }}" data-parent="#section-accordion">
 			<div class="card-body">
@@ -86,21 +88,21 @@
 								<p class='mb-1'>{{ $material->slug }}</p>
 								<a href='/dashboard/material/{{ $material->slug }}' class='custom-link-primary'>Edit</a>
 								<span class='mx-2'>|</span>
-								<a href='#' class='custom-link-primary'>View</a>	
+								<a href='#' class='custom-link-primary'>View</a>
 							</td>
 							<td class="align-middle text-center">
 								@php
 									$status = $material->pivot->status == 0 ? "" : "checked";
 								@endphp
-													
+
 								<input data-material-id='{{ $material->id }}' type='checkbox' id='{{ $material->slug }}-toggle-checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
 								<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
 							</td>
 							<td class="align-middle text-center">
 								<div class='form-group mb-0'>
-									<input type='text' class='form-control text-center' 
-										data-material-id='{{ $material->id }}' 
-										data-current-priority="{{ $material->pivot->priority }}" 
+									<input type='text' class='form-control text-center'
+										data-material-id='{{ $material->id }}'
+										data-current-priority="{{ $material->pivot->priority }}"
 										value="{{ $material->pivot->priority }}" autocomplete='off'>
 								</div>
 							</td>
@@ -128,9 +130,10 @@
 							<td colspan="6" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
 						@endforelse
 					</tbody>
-				</table>															
+				</table>
 			</div><!-- ./card-body -->
 		</div><!-- ./accordion -->
 	</div>
 
 @endforeach
+@endif

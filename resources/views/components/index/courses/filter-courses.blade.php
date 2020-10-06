@@ -1,7 +1,8 @@
 <div class="d-flex filter-data flex-wrap w-100">
     @foreach($allCourses as $course)
         @php
-            $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get()
+            $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get();
+            $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";;
         @endphp
 
 
@@ -10,7 +11,7 @@
             <div class="row mr-3" style="background: white;">
                 <div class="col-md-4  p-1">
                     <div class="defalt-color-topic course-box p-1 d-flex flex-column justify-content-between align-items-center"
-                         style="background:{{$course->topics->first()->color}}">
+                         style="background:{{$bgColor}}">
                         @foreach($course->topics as $topic)
                             <h4 style="background:{{$topic->color}} " class="color-topic-second  font-12 box-title">{{$topic->title}}</h4>
                         @endforeach

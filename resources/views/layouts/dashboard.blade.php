@@ -16,7 +16,9 @@
 		<link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
 
 		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
-		@yield('css')
+
+
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179237450-1"></script>
         <script>
@@ -26,7 +28,7 @@
 
             gtag('config', 'UA-179237450-1');
 		</script>
-		
+
 		<style>
 			.results-cnt {
 				min-width: 315px;
@@ -46,7 +48,7 @@
 			}
 
 		</style>
-
+        @yield('css')
 
     </head>
 
@@ -210,15 +212,15 @@
 							</form>
 
 							<div id="search-dropdown" class="results-cnt dropdown-menu dropdown-menu-animated">
-								
+
 								<div class="row mx-0">
 									<span class="py-2 d-block text-center mx-auto font-16">
 										<i class="mdi mdi-magnify mr-1"></i>
 										<u>3 Characters or more</u>
 									</span>
 								</div>
-						
-							</div> 
+
+							</div>
 
 						</div>
 					</div>

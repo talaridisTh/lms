@@ -32,8 +32,8 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
             defaultContent: `<i class="mdi h4 mdi-plus-circle-outline text-success"></i>`
         },
         {data: "chexbox", name: "chexbox", orderable: false,},
-        {data: "first_name", name: "users.first_name"},
         {data: "last_name", name: "users.last_name", className: "js-link cursor-pointer"},
+        {data: "first_name", name: "users.first_name"},
         {data: "roles", name: "roles.name", className: "js-link cursor-pointer role-user"},
         {data: "email", name: "users.email", className: "js-link cursor-pointer"},
         {data: 'status', name: 'users.status', orderable: false},
