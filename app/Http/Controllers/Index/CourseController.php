@@ -64,7 +64,6 @@ class CourseController extends Controller {
         $lastMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();;
         $allMaterial = $course->materials()
             ->where("type", "!=", "Announcement")
-            ->where("type", "!=", "Section")
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
@@ -73,16 +72,14 @@ class CourseController extends Controller {
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
-        $sections = $course->materials()
-            ->where("type", "Section")
-            ->orderBy("priority")
-            ->wherePivotIn("status", [1])->get();
+
 
         return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
 
     public function watchlistCourse(Request $request)
     {
+
 
         $watchlist = User::findOrFail($request->userId)
             ->watchlistCourse()->where('watchlistable_id', $request->modelId)->first();

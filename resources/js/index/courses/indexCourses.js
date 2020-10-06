@@ -60,12 +60,13 @@ $(".material-count").on("click",  function (e) {
     event.preventDefault();
 
     axiosAddWitchlist(
-        this.findParent(4).dataset.courseId,
-        this.findParent(3).dataset.materialId,
-        this.findParent(3).dataset.materialPriority,
+        this.findParent(5).dataset.courseId,
+        this.findParent(4).dataset.materialId,
+        this.findParent(4).dataset.materialPriority,
         this
     )
 
+    console.log(this)
 
 
 
@@ -80,7 +81,7 @@ $(".material-count").on("click",  function (e) {
         if (!this.dataset.hover) {
 
             console.log(this)
-            this.innerHTML = `${this.findParent(3).dataset.materialPriority}`
+            this.innerHTML = `${this.findParent(4).dataset.materialPriority}`
         }
     }, 150)
 

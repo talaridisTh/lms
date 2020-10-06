@@ -201,37 +201,120 @@
                 </div>
                 <div class=" {{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2  text-left" }}">
                     <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="m-0 p-0">
+                        @php
+                            $count = 0;
+                        @endphp
                         @foreach($allMaterial as $materials)
 
                             @php
-                                $count= $count+1;
-                                  $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first();
-                                  $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$count;
-                                  $hover=  isset($active)? "data-hover='hover'" :'';
+
+                                $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first();
+                                  $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$count;
+                                $hover=  isset($active)? "data-hover='hover'" :'';
                             @endphp
+                            @if($materials->type==="Section")
+                                @php
+                                    --$count;
+                                @endphp
+                                <div class="accordion" id="{{$materials->slug}}">
+                                    <div class="card mb-0">
+                                        <div class="card-header d-flex align-center" id="{{$materials->slug}}-head">
+                                            <h5 class="w-100 m-0 d-flex align-center">
+                                                <span class="mr-2">Section :</span>
+                                                <a class="custom-accordion-title d-block "
+                                                   data-toggle="collapse" href="#{{$materials->slug}}-collapse"
+                                                   aria-expanded="true" aria-controls="{{$materials->slug}}-collapse">
+                                                    {{$materials->title}}
+                                                </a>
+                                            </h5>
+                                        </div>
 
-                            <li data-material-id="{{$materials->id}}"
-                                data-material-priority="{{$count+1}}"
-                                class="list-group-item list-material border p-md-1">
-                                <a class="d-flex align-items-center {{
+                                        <div id="{{$materials->slug}}-collapse" class="collapse "
+                                             aria-labelledby="{{$materials->slug}}-head"
+                                             data-parent="#{{$materials->slug}}">
+                                            <div class="p-0 card-body">
+
+                                                @foreach($materials->chapters as $chapter)
+                                                    @php
+                                                        $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
+                                                         $link = route('index.material.show',[$course->slug,$chapter->slug]);
+                                                            $hover=  isset($active)? "data-hover='hover'" :'';
+                                                         $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$chapter->pivot->priority;
+                                                    @endphp
+                                                    <ul data-course-id="{{$course->id}}" style="max-height: 800px"
+                                                        class="my-2 p-0">
+                                                        <li data-material-id="{{$chapter->id}}"
+                                                            data-material-priority="{{$chapter->pivot->priority}}"
+                                                            class="list-group-item list-material  my-2 {{$chapter->title==$materials->title? "list-material-select border-orange":"border"}}  ">
+                                                            <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
+                                                               href="{{$link}}">
+                                                                <div class="col-md-2 ">
+                                                                    @if($chapter->title==$materials->title)
+                                                                        <i style="margin:-8px;"
+                                                                           class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
+                                                                    @else
+                                                                        <div class="col-md-2 mt-1 mr-2 ">
+
+                                                                <span {{$hover}} style="margin:-20px;"
+                                                                      class="material-count">
+                                                                    {!! $activeClass!!}
+                                                                </span>
+                                                                        </div>
+
+                                                                    @endif
+                                                                </div>
+                                                                <div class="col-md-8 js-alert d-flex flex-column  ">
+                                                                    <h3 style="border-radius: 5px"
+                                                                        class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
+                                                                    </h3>
+                                                                    <span style="word-break: break-all" class="
+                                                                    font-12 text-dark">    {!! $chapter->subtitle !!}</span>
+                                                                </div>
+
+                                                                <div class="col-md-2 js-alert">
+                                                        <span class="">
+                                                            <i class=" font-24 text-black {{App\Material::find($chapter->id)->type}}"></i>
+                                                        </span>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                <li data-material-id="{{$materials->id}}"
+                                    data-material-priority="{{$count+1}}"
+                                    class="list-group-item list-material border p-md-1">
+                                    <a class="d-flex align-items-center {{
                             $materials->type=="mdi mdi-link-variant-plus text-info"?"js-link-material":""}}"
-                                   href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?"$materials->video_link":route('index.material.show',[$course->slug,$materials->slug])}}">
-                                    <div class="col-md-2 mr-2 ">
-                                        <span {{$hover}} class="material-count"><span>{!! $activeClass !!}</span></span>
-                                    </div>
-                                    <div class="col-md-8 d-flex flex-column">
-                                        <h3 style="border-radius: 5px"
-                                            class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold">   {!! $materials->title!!}</h3>
-                                        <span style="word-break: break-all"
-                                              class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
-                                    </div>
-                                    <div class="col-md-2 p-0">
+                                       href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?"$materials->video_link":route('index.material.show',[$course->slug,$materials->slug])}}">
+                                        <div class="col-md-2 mr-2 ">
 
-                                        <i class=" font-24 text-black {{$materials->type}}"></i>
+                                            <div>
+                                            <span
+                                                {{$hover}} class="material-count">
+                                                <span>{!! $activeClass !!}</span>
+                                            </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-8 d-flex flex-column">
+                                            <h3 style="border-radius: 5px"
+                                                class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold">   {!! $materials->title!!}</h3>
+                                            <span style="word-break: break-all"
+                                                  class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
+                                        </div>
+                                        <div class="col-md-2 p-0">
 
-                                    </div>
-                                </a>
-                            </li>
+                                            <i class=" font-24 text-black {{$materials->type}}"></i>
+
+                                        </div>
+                                    </a>
+                                </li>
+                            @endif
+
                         @endforeach
                     </ul>
 
