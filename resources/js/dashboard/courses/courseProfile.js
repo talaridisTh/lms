@@ -20,13 +20,6 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
-// $(".js-chapter-title").on("click", function() {
-
-// 	let slug = this.dataset.materialSlug
-
-// 	$("#section-accordion")[0].dataset.shownChapter = slug;
-// })
-
 $("#add-materials-modal").on("show.bs.modal", function(event) {
 	let button = $(event.relatedTarget);
 	let chapter = button.data("chapter");
@@ -455,6 +448,9 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		removeMaterialSectionBtnInit();
 		setShownSlugInit();
 		sectionDotsBehaviorInit();
+		multipleChapterRemoveInit();
+		chapterCheckInit();
+		sectionCheckInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -621,6 +617,90 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		addFilesBtnInit();
     }
 })
+
+function sectionCheckInit() {
+
+	
+	$(".js-section-main-checkbox").on("change", function() {
+		let mainCnt = this.findParent(8);
+		let minorCheck = mainCnt.querySelectorAll(".js-chapter-checkbox");
+		let removeBtn = mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0];
+		let counter = 0;
+
+		if ( this.checked && minorCheck.length > 0 ) {
+			minorCheck.forEach( checkbox => {
+				checkbox.checked = true;
+			});
+			counter = minorCheck.length;
+		}
+		else {
+			minorCheck.forEach( checkbox => {
+				checkbox.checked = false;
+			});
+		}
+
+		removeBtn.textContent = `Αφαίρεση επιλεγμένων (${counter})`;
+	})
+}
+
+function chapterCheckInit() {
+
+	$(".js-chapter-checkbox").on("change", function() {
+
+		let mainCnt = this.findParent(8);
+		let checked = mainCnt.querySelectorAll(".js-chapter-checkbox");
+		let mainCheckbox = mainCnt.getElementsByClassName("js-section-main-checkbox")[0];
+		let removeBtn = mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0];
+		let counter = 0;
+
+		checked.forEach( checkbox => {
+			if (checkbox.checked) {
+				counter++;
+			}
+		});
+
+		if ( counter == checked.length) {
+			mainCheckbox.checked = true;
+		}
+		else {
+			mainCheckbox.checked = false;
+		}
+
+		removeBtn.textContent = `Αφαίρεση επιλεγμένων (${counter})`;
+	});
+}
+
+function multipleChapterRemoveInit() {
+
+	$(".js-multiple-chapter-remove").on("click", function() {
+
+		let mainCnt = this.findParent(5);
+		let sectionSlug = mainCnt.getElementsByClassName("table")[0].dataset.sectionSlug;
+		let checked = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
+		let ids = [];
+
+		checked.forEach( checked => {
+			ids.push(checked.dataset.materialId)
+		});
+
+
+		
+		Swal.fire({
+			title: 'Είστε σίγουρος/η;',
+			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${ids.length} απο</p>τα περιεχόμενα του Course.`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+			if (result.isConfirmed) {
+
+				removeChapters(sectionSlug, ids);
+
+			}
+		})
+	})
+}
 
 function sectionDotsBehaviorInit() {
 
