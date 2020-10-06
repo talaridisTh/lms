@@ -451,6 +451,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		multipleChapterRemoveInit();
 		chapterCheckInit();
 		sectionCheckInit();
+		chapterStatusInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -618,9 +619,35 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     }
 })
 
+function chapterStatusInit() {
+
+	$(".js-chapter-toggle").on("change", function() {
+
+		let sectionSlug = this.dataset.sectionSlug;
+
+		axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
+			courseId, 
+			data: [{
+				id: this.dataset.materialId,
+				status: this.checked ? 1 : 0
+			}],
+		})
+		.then( res => {
+			let icon = this.checked ? "success" : "info";
+			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+			utilities.toastAlert( icon, message );
+		})
+		.catch( err => {
+			console.log(err);
+			utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		})
+	});
+
+}
+
 function sectionCheckInit() {
 
-	
 	$(".js-section-main-checkbox").on("change", function() {
 		let mainCnt = this.findParent(8);
 		let minorCheck = mainCnt.querySelectorAll(".js-chapter-checkbox");

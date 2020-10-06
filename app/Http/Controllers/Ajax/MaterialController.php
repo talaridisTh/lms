@@ -382,4 +382,13 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
+	public function toggleChapters(Material $material, Request $request) {
+		
+		foreach ($request->data as $chapter ) {
+			$material->chapters()
+				->updateExistingPivot($chapter['id'], ["status" => $chapter['status']]);
+		}
+
+	}
+
 }

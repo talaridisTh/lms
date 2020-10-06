@@ -106,12 +106,14 @@
 									$status = $material->pivot->status == 0 ? "" : "checked";
 								@endphp
 
-								<input data-material-id='{{ $material->id }}' type='checkbox' id='{{ $material->slug }}-toggle-checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
+								<input id='{{ $material->slug }}-toggle-checkbox' data-section-slug="{{ $section->slug }}"
+									class="js-chapter-toggle" data-material-id='{{ $material->id }}'
+									type='checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
 								<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
 							</td>
 							<td class="align-middle text-center">
 								<div class='form-group mb-0'>
-									<input type='text' class='form-control text-center'
+									<input type='text' class='js-chapter-input form-control text-center'
 										data-material-id='{{ $material->id }}'
 										data-current-priority="{{ $material->pivot->priority }}"
 										value="{{ $material->pivot->priority }}" autocomplete='off'>
