@@ -1906,7 +1906,6 @@ function addContent() {
 			courseMaterialsTable.ajax.reload( null, false );
 
 			$("#section-accordion").html(res.data);
-			console.log(res);
 
 			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
 		})

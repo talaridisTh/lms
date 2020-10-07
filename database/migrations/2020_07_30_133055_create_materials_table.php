@@ -23,8 +23,7 @@ class CreateMaterialsTable extends Migration
             $table->text('content')->nullable();
             $table->string('cover')->nullable();
             $table->text('video_link')->nullable();
-            $table->text('gallery')->nullable();
-            $table->text('file')->nullable();
+            $table->text('link')->nullable();
             $table->unsignedTinyInteger('status');
 			$table->string('type', 20);
 			$table->json('fields')->nullable();

@@ -6,13 +6,10 @@ use App\Course;
 use App\CourseMaterial;
 use App\DataTables\AddCourseInsideMaterialsDataTable;
 use App\DataTables\CourseInsideMaterialsDataTable;
-use App\DataTables\FilesDataTable;
 use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Media;
-use App\Section;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -101,12 +98,15 @@ class MaterialController extends Controller {
         $material->status = $request->state;
 		$material->slug = Str::slug($request->title, "-");
 		
-        if ($request->type == "Video")
-        {
-            $material->video_link = $request->video;
-        } elseif ($request->type == "Link")
-        {
-            $material->file = $request->link;
+        if ($request->type == "Video") {
+
+			$material->video_link = $request->video;
+			
+		} 
+		elseif ($request->type == "Link") {
+			
+			$material->link = $request->link;
+			
 		}
 		
 		$material->save();

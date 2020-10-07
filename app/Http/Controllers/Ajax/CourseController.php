@@ -3,21 +3,15 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Course;
-use App\Material;
-use App\CourseMaterial;
 use App\DataTables\AddCourseUsersDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use App\DataTables\CoursesDataTable;
 use App\DataTables\CourseMaterialsDataTable;
 use App\DataTables\CourseUsersDataTable;
 use App\DataTables\RemainingMaterialsDataTable;
-use App\Media;
-use App\Section;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
+
 
 class CourseController extends Controller
 {
