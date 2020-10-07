@@ -40,8 +40,6 @@
 			</h5>
 			<div class="tools-cnt pl-4 pr-1 h3 d-flex align-items-center">
 
-
-
 				<i class="js-edit-chapter-btn px-1 ml-2 mdi mdi-square-edit-outline custom-primary cursor-pointer" title="Edit section"></i>
 				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
 					data-material-id="{{ $section->id }}" title="Delete section"></i>
@@ -53,7 +51,19 @@
 							data-toggle="modal" data-chapter="{{ $section->id }}"
 							data-target="#add-materials-modal">Προσθήκη Υλικού</a>
 						<div class="dropdown-divider"></div>
-						<a class="dropdown-item d-block py-2" href="#">Αλλαγή Κατάστασης</a>
+						
+						<div class="btn-group dropleft w-100">
+							<a class="js-chapters-status dropdown-toggle dropdown-item cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Αλλαγή κατάστασης (0)
+							</a>
+							<div class="dropdown-menu">
+								<a class="activate-chapters dropdown-item" href="#"
+									data-section-slug="{{ $section->slug }}">Ενεργοποιήση</a>
+								<a class="deactivate-chapters dropdown-item" href="#"
+									data-section-slug="{{ $section->slug }}">Απενεργοποίηση</a>
+							</div>
+						</div>
+
 						<div class="dropdown-divider"></div>
 						<a class="js-multiple-chapter-remove dropdown-item d-block py-2" href="#" disabled>Αφαίρεση επιλεγμένων (0)</a>
 					</div>
@@ -106,13 +116,15 @@
 									$status = $material->pivot->status == 0 ? "" : "checked";
 								@endphp
 
-								<input data-material-id='{{ $material->id }}' type='checkbox' id='{{ $material->slug }}-toggle-checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
+								<input id='{{ $material->slug }}-toggle-checkbox' data-section-slug="{{ $section->slug }}"
+									class="js-chapter-toggle" data-material-id='{{ $material->id }}'
+									type='checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
 								<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
 							</td>
 							<td class="align-middle text-center">
 								<div class='form-group mb-0'>
-									<input type='text' class='form-control text-center'
-										data-material-id='{{ $material->id }}'
+									<input type='text' class='js-chapter-priority form-control text-center'
+										data-material-id='{{ $material->id }}' data-section-slug="{{ $section->slug }}"
 										data-current-priority="{{ $material->pivot->priority }}"
 										value="{{ $material->pivot->priority }}" autocomplete='off'>
 								</div>

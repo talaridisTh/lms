@@ -98,6 +98,7 @@ class CourseController extends Controller
 			'publish' => $publish,
 			"files" => $course ? $course->media()->where("type", 1)->get() : null,
 			"sections" => $course ? $course->materials()->where("type", "Section")->orderBy("priority")->get() : null,
+			"fields" => json_decode($course->fields)
 		];
 
         return view('admin.courses.course')->with($data);

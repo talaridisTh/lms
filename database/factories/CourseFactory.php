@@ -44,6 +44,7 @@ class CourseFactory extends Factory
 			'slug' => $this->faker->slug,
 			'status' => $status,
 			'version' => $this->faker->numberBetween( 0 , 1 ) == 0 ? "Trial" : "Normal",
+			'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1)]),
 			'created_at' => $date->format('Y-m-d H:i:s'),
 			'updated_at' => $date->addWeeks( rand(1, 12) )->subSeconds( rand(36000, 136000) )->format('Y-m-d H:i:s'),
 			'publish_at' => $status == 1 ? $date->addYears( rand(1, 2) ) : null,

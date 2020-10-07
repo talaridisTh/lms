@@ -20,6 +20,33 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$(".js-editors-toggle").on("change", function() {
+	let editorToggles = $(".js-editors-toggle");
+	let field = {};
+
+	for ( let i = 0; i < editorToggles.length; i++) {
+
+		field[`${editorToggles[i].dataset.field}`] = editorToggles[i].checked ? 1 : 0;
+	}
+
+	let fields = JSON.stringify(field);
+
+	axios.patch(`/course/${courseSlug}/toggle-editors`, {
+		fields
+	})
+	.then( res => {
+		let icon = this.checked ? "success" : "info";
+		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+		utilities.toastAlert( icon, message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+
+})
+
 $("#add-materials-modal").on("show.bs.modal", function(event) {
 	let button = $(event.relatedTarget);
 	let chapter = button.data("chapter");
@@ -451,6 +478,10 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		multipleChapterRemoveInit();
 		chapterCheckInit();
 		sectionCheckInit();
+		chapterStatusInit();
+		chapterPriorityInit();
+		multipleChapterActivateInit();
+		multipleChapterDeactivateInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -618,13 +649,157 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     }
 })
 
+function multipleChapterDeactivateInit() {
+	// deactivate-chapters
+
+	$(".deactivate-chapters").on( 'click', function() {
+		let mainCnt = this.findParent(7);
+		let sectionSlug = this.dataset.sectionSlug;
+		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
+		let data = [];
+	
+		checkedboxes.forEach( checkbox => {
+			data.push({
+				id: checkbox.dataset.materialId,
+				status: 0
+			})
+		});
+	
+		Swal.fire({
+			title: 'Ενεργοποίηση;',
+			html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, απενεργοποιήση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+	
+			if (result.isConfirmed) {
+	
+				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+	
+			}
+		})
+	
+	});
+
+}
+
+function multipleChapterActivateInit() {
+	$(".activate-chapters").on( 'click', function() {
+		let mainCnt = this.findParent(7);
+		let sectionSlug = this.dataset.sectionSlug;
+		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
+		let data = [];
+	
+		checkedboxes.forEach( checkbox => {
+			data.push({
+				id: checkbox.dataset.materialId,
+				status: 1
+			})
+		});
+	
+		Swal.fire({
+			title: 'Ενεργοποίηση;',
+			html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
+			icon: 'info',
+			showCancelButton: true,
+			confirmButtonText: 'Ναι, ενεργοποίηση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+	
+			if (result.isConfirmed) {
+	
+				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+	
+			}
+		})
+	
+	});
+}
+
+function chapterPriorityInit() {
+
+	$(".js-chapter-priority").on("input", function() {
+		let inputValue = this.value;
+
+		if ( isNaN( inputValue ) || inputValue < 0 ) {
+			return this.value = inputValue.replace(/[^0-9]/g, '');
+		}
+	});
+
+	$('.js-chapter-priority').on('keyup', function() {
+
+		if ( event.keyCode == 13 && !isNaN( this.value) ) {
+
+			let sectionSlug = this.dataset.sectionSlug;
+
+			axios.patch(`/section/${sectionSlug}/chapters-priority`, {
+				courseId,
+				materialId: this.dataset.materialId,
+				priority: {
+					new: this.value,
+					old: this.dataset.currentPriority
+				},
+			})
+			.then( (res) => {
+				let sectionsCnt = document.getElementsByClassName("accordion")[0];
+				sectionsCnt.innerHTML = res.data;
+
+				let sections = sectionsCnt.getElementsByClassName("collapse");
+				for (let i = 0; i < sections.length; i++ ) {
+					sections[i].classList.remove("show");
+				}
+			
+				let shownChapter = sectionsCnt.dataset.shownChapter;
+				if ( typeof shownChapter !== "undefined" ) {
+					document.getElementById(`${shownChapter}-collapse`).classList.add("show");
+				}
+				else {
+					sectionsCnt.getElementsByClassName("collapse")[0].classList.add("show");
+				}
+
+				courseMaterialsTable.ajax.reload( null, false );
+			})
+		}
+
+	});
+}
+
+function chapterStatusInit() {
+
+	$(".js-chapter-toggle").on("change", function() {
+
+		let sectionSlug = this.dataset.sectionSlug;
+
+		axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
+			courseId, 
+			data: [{
+				id: this.dataset.materialId,
+				status: this.checked ? 1 : 0
+			}],
+		})
+		.then( res => {
+			let icon = this.checked ? "success" : "info";
+			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+			utilities.toastAlert( icon, message );
+		})
+		.catch( err => {
+			console.log(err);
+			utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		})
+	});
+
+}
+
 function sectionCheckInit() {
 
-	
 	$(".js-section-main-checkbox").on("change", function() {
 		let mainCnt = this.findParent(8);
 		let minorCheck = mainCnt.querySelectorAll(".js-chapter-checkbox");
 		let removeBtn = mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0];
+		let statusMenu = mainCnt.getElementsByClassName("js-chapters-status")[0];
 		let counter = 0;
 
 		if ( this.checked && minorCheck.length > 0 ) {
@@ -640,6 +815,7 @@ function sectionCheckInit() {
 		}
 
 		removeBtn.textContent = `Αφαίρεση επιλεγμένων (${counter})`;
+		statusMenu.textContent = `Αλλαγή κατάστασης (${counter})`;
 	})
 }
 
@@ -651,6 +827,7 @@ function chapterCheckInit() {
 		let checked = mainCnt.querySelectorAll(".js-chapter-checkbox");
 		let mainCheckbox = mainCnt.getElementsByClassName("js-section-main-checkbox")[0];
 		let removeBtn = mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0];
+		let statusMenu = mainCnt.getElementsByClassName("js-chapters-status")[0];
 		let counter = 0;
 
 		checked.forEach( checkbox => {
@@ -667,6 +844,7 @@ function chapterCheckInit() {
 		}
 
 		removeBtn.textContent = `Αφαίρεση επιλεγμένων (${counter})`;
+		statusMenu.textContent = `Αλλαγή κατάστασης (${counter})`;
 	});
 }
 
@@ -763,9 +941,7 @@ function chapterSubmitBtnInit() {
 
 function chapterInputInit() {
 
-	let input = $(".js-chapter-input");
-
-	input.on("keyup", editChapterOnKeyupHandler)
+	$(".js-chapter-input").on("keyup", editChapterOnKeyupHandler)
 
 }
 
@@ -1058,7 +1234,7 @@ function sortInputsInit() {
 
 		let inputValue = this.value;
 
-		if ( isNaN( inputValue ) ) {
+		if ( isNaN( inputValue ) || inputValue < 0 ) {
 			return this.value = inputValue.replace(/[^0-9]/g, '');
 		}
 
@@ -1239,6 +1415,44 @@ function activeMaterialsCheckboxHandler() {
 	let bulkBtn = $("#active-material-bulk")[0];
 
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
+}
+
+function toggleChapters( sectionSlug, data, mainCnt, checkedboxes ) {
+
+	axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
+		courseId, data
+	})
+	.then( res => {
+		let icon = "";
+		let message = "";
+
+		if ( data[0].status == 1 ) {
+			icon = "success";
+			message = data.length == 1 ? "Ενεργοποιήθηκε" : "Ενεργοποιήθηκαν";
+			checkedboxes.forEach( checkbox => {
+				checkbox.checked = false;
+				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = true;
+			});
+		}
+		else {
+			icon = "info";
+			message = data.length == 1 ? "Απενεργοποιήθηκε" : "Απενεργοποιήθηκαν";
+			checkedboxes.forEach( checkbox => {
+				checkbox.checked = false;
+				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = false;
+			});
+		}
+
+		mainCnt.getElementsByClassName("js-section-main-checkbox")[0].checked = false;
+		mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0].textContent = "Αφαίρεση επιλεγμένων (0)"
+		mainCnt.getElementsByClassName("js-chapters-status")[0].textContent = "Αλλαγή κατάστασης (0)";
+		utilities.toastAlert( icon, message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+
 }
 
 function removeChapters(sectionSlug, chapterIds) {
