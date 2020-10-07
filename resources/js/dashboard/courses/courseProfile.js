@@ -202,16 +202,6 @@ $("#deactivate-selection").on( "click", function() {
 
 });
 
-$(".tab-link").on("show.bs.tab", function(event) {
-
-		event.preventDefault();
-		Swal.fire(
-			'Προσοχή',
-			'<p>Θα πρέπει να αποθηκεύσετε το Course</p>για να συνεχίσετε!',
-			'info'
-		);
-})
-
 $("#courseDelete-btn").on( "click", function() {
 	Swal.fire({
 		title: 'Είστε σίγουρος;',

@@ -87,7 +87,7 @@
 			<div class="col-sm-8">
 
 				<div class="text-sm-right sticky-btns">
-					<a href="/dashboard/course/" class="btn btn-primary mb-2">
+					<a href="/dashboard/courses/create" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
