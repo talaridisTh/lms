@@ -93,7 +93,7 @@
                 <div class="col-md-12">
                     <div class="row align-items-center text-center ">
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
-                            <img height="270" width="270" class="  rounded-circle"
+                            <img  class=" avatar-image rounded-circle"
                                  src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
                                  alt="course-logo"
                             >
@@ -264,23 +264,29 @@
                                 @endphp
                                 <div class="accordion" id="{{$materials->slug}}">
                                     <div class="card mb-0">
+                                        <a class="custom-accordion-title d-block "
+                                           data-toggle="collapse" href="#{{$materials->slug}}-collapse"
+                                           aria-expanded="true" aria-controls="{{$materials->slug}}-collapse">
                                         <div class="card-header d-flex align-center mb-2 head-section" id="{{$materials->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
                                                 <span class="mr-2">Section :</span>
-                                                <a class="custom-accordion-title d-block "
-                                                   data-toggle="collapse" href="#{{$materials->slug}}-collapse"
-                                                   aria-expanded="true" aria-controls="{{$materials->slug}}-collapse">
+
                                                     {{$materials->title}}
-                                                </a>
+
                                             </h5>
+                                            <i
+                                                class="mdi mdi-chevron-down accordion-arrow"></i>
                                         </div>
+                                        </a>
 
                                         <div id="{{$materials->slug}}-collapse" class="collapse "
                                              aria-labelledby="{{$materials->slug}}-head"
                                              data-parent="#{{$materials->slug}}">
                                             <div class="p-0 card-body">
 
-                                                @foreach($materials->chapters as $chapter)
+
+                                                @foreach($materials->chapters->where("type", "!=", "Announcement") as $chapter)
+
                                                     @php
                                                         $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
                                                          $link = route('index.material.show',[$course->slug,$chapter->slug]);
@@ -319,7 +325,7 @@
 
                                                                 <div class="col-md-2 js-alert">
                                                         <span class="">
-                                                            <i class=" font-24 text-black {{App\Material::find($chapter->id)->type}}"></i>
+                                                            <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i>
                                                         </span>
                                                                 </div>
                                                             </a>
@@ -335,8 +341,8 @@
                                     data-material-priority="{{$count+1}}"
                                     class="list-group-item list-material border ">
                                     <a class="d-flex align-items-center {{
-                            $materials->type=="mdi mdi-link-variant-plus text-info"?"js-link-material":""}}"
-                                       href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?"$materials->video_link":route('index.material.show',[$course->slug,$materials->slug])}}">
+                            $materials->type=="Link"?"js-link-material":""}}"
+                                       href="{{$materials->type=="Link"?"$materials->video_link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         <div class="col-md-2 mr-2 ">
 
                                             <div>
@@ -354,7 +360,7 @@
                                         </div>
                                         <div class="col-md-2 p-0">
 
-                                            <i class=" font-24 text-black {{$materials->type}}"></i>
+                                            <i class=" font-24 text-black {{App\Material::getType($materials->type)}}"></i>
 
                                         </div>
                                     </a>

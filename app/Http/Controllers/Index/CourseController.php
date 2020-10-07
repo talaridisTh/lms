@@ -59,7 +59,6 @@ class CourseController extends Controller {
     public function userCourse(Course $course)
     {
 
-
         $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
         $lastMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status", [1])->get();;
         $allMaterial = $course->materials()
@@ -67,19 +66,33 @@ class CourseController extends Controller {
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
+//
+//        $chapters = $allMaterial->map(function ($chapter) {
+//            if(count($chapter->chapters)>1){
+//                return $chapter->chapters;
+//            }
+//        })
+//            ->reject(function ($name) {
+//                return empty($name);
+//            });
+//
+//        dd($chapters->flatten()->map(function ($chapter) {
+//            if($chapter->type!="Announcement"){
+//                return $chapter->type;
+//            }
+//        }));
+
+
         $announcements = $course->materials()
             ->where("type", "Announcement")
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
-
-
 
         return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
 
     public function watchlistCourse(Request $request)
     {
-
 
         $watchlist = User::findOrFail($request->userId)
             ->watchlistCourse()->where('watchlistable_id', $request->modelId)->first();

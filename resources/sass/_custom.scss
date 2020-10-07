@@ -825,3 +825,10 @@ figure.image-center {
     background: #dedee0;
 
 }
+
+.avatar-image{
+    object-fit: cover;
+    border-radius:50%;
+    width: 270px;
+    height: 270px;
+}

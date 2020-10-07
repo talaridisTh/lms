@@ -328,6 +328,7 @@
                         @endphp
                         @foreach($MaterialsOrderByPriority as $material)
 
+
                             @php
                                 $active =  auth()->user()->witchlist()->where('material_id',$material->id)->where('course_id',$course->id)->first();
                                 $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$count;
@@ -366,7 +367,8 @@
                                              data-parent="#{{$material->slug}}">
                                             <div class="p-0 card-body">
 
-                                                @foreach($material->chapters as $chapter)
+                                                @foreach($material->chapters->where("type", "!=", "Announcement")  as $chapter)
+
                                                     @php
                                                         $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
                                                          $link = route('index.material.show',[$course->slug,$chapter->slug]);
@@ -405,7 +407,7 @@
 
                                                                 <div class="col-md-2 js-alert">
                                                         <span class="">
-                                                            <i class=" font-24 text-black {{App\Material::find($chapter->id)->type}}"></i>
+                                                            <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i>
                                                         </span>
                                                                 </div>
                                                             </a>
@@ -450,7 +452,7 @@
 
                                         <div class="col-md-2 js-alert">
                                         <span class="">
-                                            <i class=" font-24 text-black {{$material->type}}"></i>
+                                            <i class=" font-24 text-black {{App\Material::getType($material->type)}}"></i>
                                         </span>
                                         </div>
                                     </a>

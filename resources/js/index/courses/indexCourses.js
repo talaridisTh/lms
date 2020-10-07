@@ -50,6 +50,7 @@ $(".js-link-material").on("click", async function (e) {
         })
         if (value) {
             window.open(href, '_blank');
+            console.log(href)
         }
     }
 

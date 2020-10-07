@@ -103,30 +103,50 @@ class Material extends Model {
         }
     }
 
-    public function getTypeAttribute($value)
+
+    public static function getType($value)
     {
-        if (!isset(request()->route()->uri))
+        $icons = [
+            "Lesson" => "mdi mdi-file-document-outline text-success",
+            "Link" => 'mdi mdi-link-variant-plus text-info',
+            "Announcement" => "mdi mdi-comment-quote-outline text-danger",
+            "Video" => "mdi mdi-camcorder text-primary",
+
+        ];
+        foreach ($icons as $type => $icon)
         {
-            return $value;
-        } elseif (request()->route()->getName() == 'index.userCourse' || request()->route()->getName() == 'index.material.show')
-        {
-            if ($value == 'Lesson')
+            if (fnmatch("$type*", $value))
             {
-                return 'mdi mdi-file-document-outline text-success';
-            } elseif ($value == 'Link')
-            {
-                return 'mdi mdi-link-variant-plus text-info';
-            } elseif ($value == 'Announcement')
-            {
-                return 'mdi mdi-comment-quote-outline text-danger';
-            } elseif ($value == 'Video')
-            {
-                return 'mdi mdi-camcorder text-primary';
-            } elseif ($value == 'Section')
-            {
-                return $value;
+
+                return $icon;
             }
-        } else return $value;
+        }
     }
+
+//    public function getTypeAttribute($value)
+//    {
+//        if (!isset(request()->route()->uri))
+//        {
+//            return $value;
+//        } elseif (request()->route()->getName() == 'index.userCourse' || request()->route()->getName() == 'index.material.show')
+//        {
+//            if ($value == 'Lesson')
+//            {
+//                return 'mdi mdi-file-document-outline text-success';
+//            } elseif ($value == 'Link')
+//            {
+//                return 'mdi mdi-link-variant-plus text-info';
+//            } elseif ($value == 'Announcement')
+//            {
+//                return 'mdi mdi-comment-quote-outline text-danger';
+//            } elseif ($value == 'Video')
+//            {
+//                return 'mdi mdi-camcorder text-primary';
+//            } elseif ($value == 'Section')
+//            {
+//                return $value;
+//            }
+//        } else return $value;
+//    }
 
 }

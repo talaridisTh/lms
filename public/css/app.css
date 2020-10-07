@@ -3869,6 +3869,14 @@ figure.image-center {
   background: #dedee0;
 }
 
+.avatar-image {
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  width: 270px;
+  height: 270px;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.
