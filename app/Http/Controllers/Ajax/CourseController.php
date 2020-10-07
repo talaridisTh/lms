@@ -283,4 +283,11 @@ class CourseController extends Controller
 
 	}
 
+	public function toggleEditors(Course $course, Request $request) {
+
+		$course->fields = $request->fields;
+		$course->save();
+		
+	}
+
 }

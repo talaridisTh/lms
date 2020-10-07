@@ -330,32 +330,28 @@
 				<li class="nav-item">
 					<a href="#settings" id="setting-tab-btn"
 						data-toggle="tab" aria-expanded="false"
-						class="nav-link active"
-					>
+						class="nav-link active">
 						Ρυθμίσεις
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="#materials" id="materials-tab-btn"
 						data-toggle="tab" aria-expanded="true"
-						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}"
-					>
+						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
 						Υλικό
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="#users" id="users-tab-btn"
 						data-toggle="tab" aria-expanded="true"
-						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}"
-					>
+						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
 						Χρήστες
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="#sections" id="sections-tab-btn"
 						data-toggle="tab" aria-expanded="true"
-						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}"
-					>
+						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
 						Sections
 					</a>
 				</li>
@@ -409,7 +405,7 @@
 									<textarea class="form-control @error('summary') is-invalid @enderror"
 										id="summary" name="summary" rows="4" 
 										placeholder="Εισάγετε σύνοψη..."
-									>{{ old('summary') != "" ? old('summary') : ( isset($course) ? $course['summary'] : "" ) }}</textarea>
+										>{{ old('summary') != "" ? old('summary') : ( isset($course) ? $course['summary'] : "" ) }}</textarea>
 									@error('summary')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -422,7 +418,7 @@
 									<textarea class="form-control @error('description') is-invalid @enderror"
 										id="description" name="description" rows="4"
 										placeholder="Εισάγετε περιγραφή..."
-									>{{ old('description') != "" ? old('description') : ( isset($course) ? $course['description'] : "" ) }}</textarea>
+										>{{ old('description') != "" ? old('description') : ( isset($course) ? $course['description'] : "" ) }}</textarea>
 									@error('description')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -638,6 +634,32 @@
 											placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask"
 											data-mask-format="00-00-0000 00:00:00" autocomplete="off" />
 									</div>
+									<hr>
+
+									<div class="d-flex justify-content-between align-items-center">
+										<label class="mb-0" for="summary-toggle">Σύνοψη</label>
+										<input id="summary-toggle" class="js-editors-toggle"
+											data-field="summary" type="checkbox" data-switch="bool"
+											@if ($fields->summary == 1)
+												checked
+											@endif
+										/>
+
+										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
+									</div>
+									<hr>
+
+									<div class="d-flex justify-content-between align-items-center">
+										<label class="mb-0" for="description-toggle">Περιγραφή</label>
+										<input id="description-toggle" class="js-editors-toggle"
+											data-field="description" type="checkbox" data-switch="bool"
+											@if ($fields->description == 1)
+												checked
+											@endif
+										/>
+										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+									</div>
+
 								</div>
 							</div>
 				

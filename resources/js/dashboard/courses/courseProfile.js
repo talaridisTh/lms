@@ -20,6 +20,33 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$(".js-editors-toggle").on("change", function() {
+	let editorToggles = $(".js-editors-toggle");
+	let field = {};
+
+	for ( let i = 0; i < editorToggles.length; i++) {
+
+		field[`${editorToggles[i].dataset.field}`] = editorToggles[i].checked ? 1 : 0;
+	}
+
+	let fields = JSON.stringify(field);
+
+	axios.patch(`/course/${courseSlug}/toggle-editors`, {
+		fields
+	})
+	.then( res => {
+		let icon = this.checked ? "success" : "info";
+		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+		utilities.toastAlert( icon, message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+
+})
+
 $("#add-materials-modal").on("show.bs.modal", function(event) {
 	let button = $(event.relatedTarget);
 	let chapter = button.data("chapter");

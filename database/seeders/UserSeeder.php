@@ -44,7 +44,8 @@ class UserSeeder extends Seeder {
                         "user_id"=>2,
                         "slug"=>"javascript",
                         "version"=>"Trial",
-                        "status"=>1,
+						"status"=>1,
+						'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1)]),
                         "publish_at"=>now()
                     ]
                 );
@@ -72,7 +73,8 @@ class UserSeeder extends Seeder {
                     "user_id"=>2,
                     "slug"=>"laravel",
                     "version"=>"Trial",
-                    "status"=>1,
+					"status"=>1,
+					'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1)]),
                     "publish_at"=>now()
                 ]);
                 $laravel->users()->sync(User::find(1));
