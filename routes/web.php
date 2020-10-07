@@ -127,7 +127,9 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('bundles/add-courses', 'Ajax\BundleController@addCourses');
     Route::patch('bundles/remove-courses', 'Ajax\BundleController@removeCourses');
     Route::post('bundles/remove-users', 'Ajax\BundleController@removeUsers');
-    Route::post('bundles/add-users', 'Ajax\BundleController@addUsers');
+	Route::post('bundles/add-users', 'Ajax\BundleController@addUsers');
+	Route::patch('bundle/{bundle}/toggle-editors', 'Ajax\BundleController@toggleEditors');
+
 //! Dashboard Ajax Materials Datatables
     Route::post('materials/materials-datatable', 'Ajax\MaterialController@index');
     Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");
@@ -152,6 +154,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 	Route::post("section/{material}/remove-chapters", "Ajax\MaterialController@removeChapters");
 	Route::patch("section/{material}/toggle-chapters", "Ajax\MaterialController@toggleChapters");
 	Route::patch("section/{material}/chapters-priority", "Ajax\MaterialController@chaptersPriority");
+	Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
 
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables

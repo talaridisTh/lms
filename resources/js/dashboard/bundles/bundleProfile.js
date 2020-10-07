@@ -13,12 +13,40 @@ import 'filepond/dist/filepond.min.css';
 //! 			GLOBAL VARIABLES				#
 //!##############################################
 const bundleId = $("#bundle-title")[0].dataset.bundleId;
+const bundleSlug = $("#bundle-title")[0].dataset.bundleSlug;
 const namespace = "App\\Bundle";
 const baseUrl = window.location.origin;
 
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
+
+$(".js-editors-toggle").on("change", function() {
+	let editorToggles = $(".js-editors-toggle");
+	let field = {};
+
+	for ( let i = 0; i < editorToggles.length; i++) {
+
+		field[`${editorToggles[i].dataset.field}`] = editorToggles[i].checked ? 1 : 0;
+	}
+
+	let fields = JSON.stringify(field);
+
+	axios.patch(`/bundle/${bundleSlug}/toggle-editors`, {
+		fields
+	})
+	.then( res => {
+		let icon = this.checked ? "success" : "info";
+		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+		utilities.toastAlert( icon, message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+
+})
 
 $("#remove-cover-btn").on("click", function() {
 	

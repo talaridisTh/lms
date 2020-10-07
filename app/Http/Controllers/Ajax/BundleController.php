@@ -166,7 +166,6 @@ class BundleController extends Controller
 		}
 
 		$bundle->status = $request->status == 1 ? 1 : 0;
-		// $bundle->publish_at = $request->status == 1 ? date("Y-m-d H:i:s") : null;
 		$bundle->timestamps  = false;
 		$bundle->save();
 
@@ -188,5 +187,11 @@ class BundleController extends Controller
 
     }
 
+	public function toggleEditors(Bundle $bundle, Request $request) {
+
+		$bundle->fields = $request->fields;
+		$bundle->save();
+		
+	}
 
 }

@@ -429,4 +429,11 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
+	public function toggleEditors(Material $material, Request $request) {
+
+		$material->fields = $request->fields;
+		$material->save();
+		
+	}
+
 }
