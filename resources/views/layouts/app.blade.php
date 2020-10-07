@@ -10,12 +10,12 @@
     <link rel="shortcut icon" href="assets/images/favicon.ico">
 
     <!-- App css -->
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style"/>
     <link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style"/>
-
-
 
 
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
@@ -23,14 +23,13 @@
 
     <style>
 
-        .sticky-front{
+        .sticky-front {
 
             position: -webkit-sticky;
             position: sticky;
             top: 0px;
             z-index: 999;
         }
-
 
 
     </style>
@@ -47,7 +46,9 @@
             <div class="col-3">
                 <a href="{{route('home')}}" class="topnav-logo">
                 		    <span class=" stopnav-logo-lg">
-                		        <img class="m-2" height="60" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="">
+                		        <img class="m-2" height="60"
+                                     src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
+                                     alt="">
                 		    </span>
                     <span class="topnav-logo-sm">
 {{--                		        <img class="m-2" height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="" height="33">--}}
@@ -84,16 +85,19 @@
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="my-acount">
-                                <a href="{{route('index.profile',auth()->user()->slug)}}" class="dropdown-item side-nav-link">
+                                <a href="{{route('index.profile',auth()->user()->slug)}}"
+                                   class="dropdown-item side-nav-link">
                                     <span>Profile</span>
                                 </a>
-                                <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}" class="side-nav-link dropdown-item">
+                                <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
+                                   class="side-nav-link dropdown-item">
                                     <span>Αγαπημένα</span>
                                 </a>
                                 <a href="#" class="side-nav-link dropdown-item">
                                     <span>Ιστορικό </span>
                                 </a>
-                                <a href="{{route('index.profile.announcements',auth()->user()->slug)}}" class="side-nav-link dropdown-item">
+                                <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
+                                   class="side-nav-link dropdown-item">
                                     <span>Ανακοινώσεις</span>
                                 </a>
                                 <a href="{{route('index.message')}}" class="side-nav-link dropdown-item">
@@ -113,6 +117,7 @@
 
 
                     <div>
+                        @role("admin")
                         <div class="dropdown">
                             <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -123,6 +128,7 @@
                                 <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
                             </div>
                         </div>
+                        @endrole
                     </div>
                     <div>
                         <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
@@ -149,7 +155,7 @@
     @if(Route::currentRouteName() =='home')
         <div class="">
 
-                @include("components.index.users.user-menu")
+            @include("components.index.users.user-menu")
 
         </div>
         <!-- Left Sidebar End -->

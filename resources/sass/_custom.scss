@@ -807,3 +807,21 @@ figure.image-center {
 	background-size: calc(.75em + .375rem) calc(.75em + .375rem);
 	background-position: right calc( 1.6em + .1875rem) center;
 }
+
+
+.wrapper-video {
+    position: relative;
+}
+.input-video {
+    padding-left: 135px;
+}
+.wrapper-video span {
+    position: absolute;
+    left: 2px;
+    top:36px
+}
+
+.head-section{
+    background: #dedee0;
+
+}

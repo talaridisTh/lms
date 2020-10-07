@@ -3,19 +3,6 @@
 @section('css')
 
         <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" />
-<style>
-    .wrapper-video {
-        position: relative;
-    }
-    .input-video {
-        padding-left: 135px;
-    }
-    .wrapper-video span {
-        position: absolute;
-        left: 2px;
-        top:36px
-    }
-</style>
 
 
 @endsection

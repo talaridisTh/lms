@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('users/view-user', 'Ajax\UserController@show')->name("show.datatable");
     Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->name("courseModal.datatable");
     Route::post('/user/courses-inside-users', 'Ajax\UserController@coursesInsideUsers')->name("coursesInsideUsers.datatable");
+    Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
 //! Dashboard Ajax Users CRUD
     Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
@@ -186,7 +187,8 @@ Route::group(['middleware' => ['auth']], function () {
     //home index
     Route::get('/home', 'Index\HomeController@index')->name('home');
     //excehl
-    Route::get("/expot/users", "ExportController@usersAll")->name("export.usersAll");
+    Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
+    Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
 //user-profile index
     Route::get('/{user}/profile', 'Index\UserController@index')->name('index.profile');
     Route::patch('/{user}/profile/update', 'Index\UserController@update')->name('index.profile.update');

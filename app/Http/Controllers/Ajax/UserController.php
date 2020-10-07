@@ -10,10 +10,13 @@ use App\DataTables\UsersDataTable;
 use App\Media;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use App\Mail\NewUserNotification;
 
 class UserController {
 
@@ -175,5 +178,16 @@ class UserController {
 
 
     }
+
+    public function sentInfo()
+    {
+        $user = auth()->user();
+
+        Mail::to(auth()->user()->email)->send(new NewUserNotification(auth()->user()->fullName, Crypt::decryptString($user->password_encrypt)));
+    }
+
+
+
+
 
 }

@@ -3851,6 +3851,24 @@ figure.image-center {
   background-position: right calc( 1.6em + .1875rem) center;
 }
 
+.wrapper-video {
+  position: relative;
+}
+
+.input-video {
+  padding-left: 135px;
+}
+
+.wrapper-video span {
+  position: absolute;
+  left: 2px;
+  top: 36px;
+}
+
+.head-section {
+  background: #dedee0;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.

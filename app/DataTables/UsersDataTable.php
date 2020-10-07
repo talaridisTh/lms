@@ -29,7 +29,10 @@ class UsersDataTable extends DataTable {
         {
 
 
-            $data = User::with(["roles","courses"])->select("users.*");
+            $data = User::with(["roles","courses"])->get();
+
+
+//            $data = User::with("courses")->get();
 
         } else
         {
@@ -58,13 +61,10 @@ class UsersDataTable extends DataTable {
             ->editColumn('status', function ($data) {
                 $status = $data->status == 0 ? "": "checked";
 
-//                dump($data->status);
                 return "<input  class='toggle-class' data-user-checked='$status' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
-//            ->editColumn('created_at', function ($data) {
-//                return "<p>Εγγραφη : <b>$data->created_at</b></p><p>Ανανεωση :<b>$data->updated_at</b></p>";
-//            })
+
             ->editColumn('last_name', function ($data) {
 
                 return  "<p>$data->first_name</p>

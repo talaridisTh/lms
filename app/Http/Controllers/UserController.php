@@ -89,7 +89,7 @@ class UserController extends Controller {
 //                ->toMediaCollection("users");
 //        }
 
-        return redirect(route("user.index"))->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
+        return redirect()->back()->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }
 
     public function update(UserUpdateRequest $request, User $user)

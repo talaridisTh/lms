@@ -25,7 +25,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
     columns: [
         {
             data: null,
-            searchable : false,
+            searchable: false,
             name: "extra",
             orderable: false,
             className: 'details-control cursor-pointer',
@@ -34,12 +34,12 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         {data: "chexbox", name: "chexbox", orderable: false,},
         {data: "last_name", name: "users.last_name", className: "js-link cursor-pointer"},
         {data: "first_name", name: "users.first_name"},
-        {data: "roles", name: "roles.name", className: "js-link cursor-pointer role-user"},
+        {data: "roles", name: "roles", className: "js-link cursor-pointer role-user"},
         {data: "email", name: "users.email", className: "js-link cursor-pointer"},
-        {data: 'status', name: 'users.status', orderable: false},
+        {data: 'status', name: 'status', orderable: false},
         // {data: 'created', name: 'created',orderData: [ 10],visible:false},
-        {data: 'created_at', name: 'users.created_at',orderData: [ 9]},
-        {data: 'courses', name: 'courses.title',orderable: false,visible:false},
+        {data: 'created_at', name: 'users.created_at', orderData: [9]},
+        {data: 'courses', name: 'courses', orderable: false, visible: false},
         {data: 'id', name: 'users.id'},
     ],
     language: config.datatable.language,
@@ -123,9 +123,9 @@ const sub_DataTable = (vtask_id, table_id, attr) => {
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#activeFilter', 6, tables,"#scroll-horizontal-datatable_length label")
-utilities.filterButton('#rolesFilter', 4, tables,"#scroll-horizontal-datatable_length label")
-utilities.filterButton('#fullNameFilter', 8, tables,"#scroll-horizontal-datatable_length label")
+utilities.filterButton('#activeFilter', 6, tables, "#scroll-horizontal-datatable_length label")
+utilities.filterButton('#rolesFilter', 4, tables, "#scroll-horizontal-datatable_length label")
+utilities.filterButton('#fullNameFilter', 8, tables, "#scroll-horizontal-datatable_length label")
 
 //! EVENT LISTENER
 //!============================================================
@@ -188,7 +188,7 @@ function toDay(input) {
 
 dataRange.daterangepicker(utilities.datePickerConfig);
 
-$(".ragneButton").detach().insertBefore ('#scroll-horizontal-datatable_filter > label ')
+$(".ragneButton").detach().insertBefore('#scroll-horizontal-datatable_filter > label ')
 
 dataRange.on("apply.daterangepicker", function (event, picker) {
 
@@ -386,17 +386,14 @@ const selectDetachCourses = () => {
     })
 }
 
-$("#course-bulk-action-btn").click(function(){
+$("#course-bulk-action-btn").click(function () {
     const elements = document.querySelectorAll('.role-user');
     let trialUser = ""
 
-    elements.forEach(function el(){
-
-            console.log(this)
+    elements.forEach(function el() {
 
 
-
-   })
+    })
     // console.log($(".role-user")[0].textContent))
 })
 
@@ -405,10 +402,38 @@ $("#course-bulk-action-btn").click(function(){
 //!============================================================
 function buttonEx() {
     $('.button-Excel').unbind();
-    $('.button-Excel').on('click', function (e, dt, node, config) {
-        console.log(e)
-        console.log(node)
+    $('.button-Excel').on('click', function () {
+        let checkboxes = $(".js-user-checkbox:checked")
+
+
+        let test = []
+
+        for (var i = 0; i < checkboxes.length; i++) {
+
+            test.push(checkboxes[i].dataset.userId)
+
+        }
+        var arrayOfNumbers = test.map(parseFloat)
+        axiosExportUser(arrayOfNumbers, this)
+
     });
+}
+
+const axiosExportUser = async (id, that) => {
+
+    try {
+        const res = await axios.get(`/export/users/${id}`)
+
+
+        if (res.status == 200) {
+            window.location.href = `/export/users/${id}`;
+            utilities.toastAlert('success',"")
+        }
+
+
+    } catch (e) {
+        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    }
 }
 
 

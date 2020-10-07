@@ -23,11 +23,27 @@ const routeLink = () => {
     });
 }
 
+$(".js-send-message").on("click", async function ()  {
+
+    try {
+        const {status} = await axios.post("/user/sent-info")
+
+        if (status==200){
+            utilities.toastAlert('success', "Σταλθηκαν στο εμαιλ")
+            this.disabled = true;
+        }
+    }catch (e){
+        console.log(e)
+    }
+})
+
+
+
 $(".js-link-passwordShow").click(async function () {
     const {value: password} = await Swal.fire({
-        title: 'Εισάγετε  password',
+        title: 'Εισάγετε  password διαχειριστή',
         input: 'password',
-        inputPlaceholder: 'Εισάγετε password',
+        inputPlaceholder: 'Password...',
         inputAttributes: {
             maxlength: 50,
             autocapitalize: 'off',
@@ -109,7 +125,12 @@ const courses = $(".course-materials-list").DataTable({
         {data: 'title', name: 'title', className: "js-link cursor-pointer"},
         {data: 'version', name: 'version', className: "js-link cursor-pointer"},
         {data: 'students', name: 'students', className: "js-link cursor-pointer"},
-        { data: 'publish_at', name: "publish_at", className: "align-middle text-center cursor-default", searchable: false },
+        {
+            data: 'publish_at',
+            name: "publish_at",
+            className: "align-middle text-center cursor-default",
+            searchable: false
+        },
         {data: 'action', name: 'action'},
     ],
     language: config.datatable.language,
@@ -170,8 +191,8 @@ const addCourse = $("#datatableAddCourse").DataTable({
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#VersionFilterMaterial', 2, courses,"#DataTables_Table_0_length label")
-utilities.filterButton('#statusFilterMaterial', 4, courses,"#DataTables_Table_0_length label")
+utilities.filterButton('#VersionFilterMaterial', 2, courses, "#DataTables_Table_0_length label")
+utilities.filterButton('#statusFilterMaterial', 4, courses, "#DataTables_Table_0_length label")
 
 
 //!select2
@@ -183,9 +204,7 @@ $("#VersionFilterMaterial").select2({
 $(".custom-select").select2({
     minimumResultsForSearch: -1,
 });
-$("#statusFilterMaterial").select2({
-
-});
+$("#statusFilterMaterial").select2({});
 
 //! BULK ACRTION courses TABLE
 //!============================================================
@@ -385,9 +404,9 @@ $('#material-modal-shown-btn').click(() => {
 
 //! DROPOZONE
 //!============================================================
-$(".js-add-image").on("click",function () {
-$("#cover-image").removeAttr('hidden')
-$("#delete-cover-btn").removeAttr('hidden')
+$(".js-add-image").on("click", function () {
+    $("#cover-image").removeAttr('hidden')
+    $("#delete-cover-btn").removeAttr('hidden')
 });
 
 $(".js-add-image").on("click", utilities.imageHandler);
@@ -402,65 +421,19 @@ $("#change-cover-btn").on("click", function () {
 $("#delete-cover-btn").on("click", function () {
     console.log("S")
 
-    $("#cover-image").attr('hidden',true)
-    $("#delete-cover-btn").attr('hidden',true)
+    $("#cover-image").attr('hidden', true)
+    $("#delete-cover-btn").attr('hidden', true)
 })
-
-// Dropzone.autoDiscover = false;
-//
-// let dropzone = new Dropzone("#cover-dropzone", {
-//     thumbnailWidth: 80,
-//     thumbnailHeight: 80,
-//     previewTemplate: $("#uploadPreviewTemplate").html(),
-//     url: `/users/avatar/upload`,
-//     params: {userId},
-//     maxFilesize: 2,
-//     maxFiles: 1,
-//     acceptedFiles: 'image/*',
-//     headers: {
-//         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
-//     },
-//     success: function (file, response) {
-//         console.log(file)
-//         axios.get(`/media/images`, {})
-//             .then((res) => {
-//                 // console.log(res.data)
-//                 let gallery = $("#gallery-content")[0]
-//                 gallery.innerHTML = res.data;
-//
-//
-//                 let pagination = gallery.getElementsByClassName("js-gallery-page-btn");
-//                 let addBtns = gallery.getElementsByClassName("js-add-image");
-//
-//                 for ( let i = 0; i < addBtns.length; i++ ) {
-//                     addBtns[i].removeEventListener("click", utilities.imageHandler);
-//                     addBtns[i].addEventListener("click", utilities.imageHandler);
-//                 }
-//
-//             })
-//         this.removeAllFiles();
-//         $("#upload-tab-btn").removeClass("active")
-//         $("#upload").removeClass("active")
-//         $("#media-library-tab-btn").addClass("active")
-//         $("#media-library").addClass("show active")
-//
-//
-//
-//
-//
-//     }
-//
-// })
 
 
 let dropzone = document.getElementById("file-pond");
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
-const pond = FilePond.create( dropzone );
+const pond = FilePond.create(dropzone);
 
 FilePond.setOptions({
     name: 'file[]',
-    data:{
+    data: {
         param: 'test'
     },
     server: {
@@ -471,7 +444,7 @@ FilePond.setOptions({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
             },
-            onload: function(data) {
+            onload: function (data) {
 
             },
 
@@ -479,9 +452,9 @@ FilePond.setOptions({
         },
 
     },
-    onprocessfiles: function(data) {
+    onprocessfiles: function (data) {
 
-        utilities.paginationRequest( 1, "" );
+        utilities.paginationRequest(1, "");
         $("#upload-tab-btn").removeClass("active")
         $("#upload").removeClass("active")
         $("#media-library-tab-btn").addClass("active")
@@ -489,11 +462,10 @@ FilePond.setOptions({
 
     },
 
-    onupdatefiles : function( file){
+    onupdatefiles: function (file) {
         utilities.toastAlert("success", `${file.length} εικόνα ανέβηκαν`)
 
     },
-
 
 
     allowMultiple: true,
@@ -502,8 +474,6 @@ FilePond.setOptions({
     acceptedFileTypes: ['image/png', 'image/jpeg'],
 
 });
-
-
 
 
 //! REDACTOR
@@ -535,16 +505,16 @@ FilePond.setOptions({
 // });
 $R("#summary", {
     buttons: [
-        'html',  'format',
+        'html', 'format',
         'bold', 'underline', 'italic',
-       'lists', 'link',
+        'lists', 'link',
     ],
-    buttonsAddBefore: { before: 'image', buttons: ['mediaLibrary'] },
+    buttonsAddBefore: {before: 'image', buttons: ['mediaLibrary']},
     style: false,
     plugins: ["mediaLibrary", 'alignment'],
     minHeight: '150px',
     imageResizable: true,
-    imagePosition : {
+    imagePosition: {
         "left": "image-left",
         "right": "image-right",
         "center": "image-center text-center"
@@ -557,45 +527,11 @@ $R("#summary", {
     // },
     callbacks: {
         upload: {
-            beforeSend: function(xhr)
-            {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
             }
         }
     }
 });
 
-
-// const bundleId = $("#bundle-title")[0].dataset.bundleId;
-// const namespace = "App\\Bundle";
-// const baseUrl = window.location.origin;
-//
-// //!##########################################
-// //! 			EventListerners				#
-// //!##########################################
-//
-// $("#remove-cover-btn").on("click", function() {
-//
-//     axios.patch( "/media/remove-cover", {
-//         namespace,
-//         id: bundleId
-//     })
-//         .then( res => {
-//
-//             let cnt = this.parentElement;
-//
-//             $("#cover-image").addClass("d-none");
-//             $("#cover-status").removeClass("d-none");
-//             $("#change-cover-btn").text("Προσθήκη")
-//
-//             cnt.classList.remove("d-flex");
-//             cnt.classList.add("d-none");
-//
-//         })
-//         .catch( err => {
-//             console.log(err);
-//         })
-// });
-//
-//
 

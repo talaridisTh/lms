@@ -233,7 +233,7 @@
 
                                                 <div class="d-flex flex-column">
 
-                                                    <a class="my-1" href="{{url($media->rel_path)}}">
+                                                    <a target="_blank" class="my-1" href="{{url($media->rel_path)}}">
                                                         <i class="h3 mdi {{$course->getIcon($media->ext)}}"></i>
                                                         <span class=" ml-3">{{$media->original_name}}</span>
                                                     </a>
@@ -264,7 +264,7 @@
                                 @endphp
                                 <div class="accordion" id="{{$materials->slug}}">
                                     <div class="card mb-0">
-                                        <div class="card-header d-flex align-center" id="{{$materials->slug}}-head">
+                                        <div class="card-header d-flex align-center mb-2 head-section" id="{{$materials->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
                                                 <span class="mr-2">Section :</span>
                                                 <a class="custom-accordion-title d-block "
@@ -333,7 +333,7 @@
                             @else
                                 <li data-material-id="{{$materials->id}}"
                                     data-material-priority="{{$count+1}}"
-                                    class="list-group-item list-material border p-md-1">
+                                    class="list-group-item list-material border ">
                                     <a class="d-flex align-items-center {{
                             $materials->type=="mdi mdi-link-variant-plus text-info"?"js-link-material":""}}"
                                        href="{{$materials->type=="mdi mdi-link-variant-plus text-info"?"$materials->video_link":route('index.material.show',[$course->slug,$materials->slug])}}">

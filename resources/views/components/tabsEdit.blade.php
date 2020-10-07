@@ -139,7 +139,7 @@
                 <div class="form-group">
                     <select name="roles" id="roles" class="form-control  select2" data-toggle="select2">
                         @foreach ($rolesName as $role)
-                            <option value="{{$role->name}}"
+                            <option {{$role->name==="student"?"selected":""}} value="{{$role->name}}"
                             @if(isset($user))
                                 {{$user->getRoleNames()->first() == $role->name? "selected":""}}
                                 @endif
@@ -187,7 +187,7 @@
                     </div>
                 </div>
 
-                @isset($user )
+                @isset($user)
 
                 <h5 class="js-link-passwordShow -4 cursor-pointer custom-link-primary">Eμφάνιση password</h5>
                 <div class="form-group mt-4 passwordShow d-none">
@@ -195,6 +195,22 @@
                     <h5>Password: <span class="font-weight-normal">{{\Crypt::decryptString($user->password_encrypt)}}</span></h5>
                 </div>
                 @endisset
+                <hr>
+                @isset($user)
+                <div class="form-group">
+                    <div>
+                        <label class="mr-2" >Aποστολή κωδικού στο χρήστη με email</label>
+                        <button type="button" class="js-send-message font-12 btn btn-warning btn-sm">Send</button>
+                    </div>
+                </div>
+                @else
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="sendMail" class="custom-control-input" id="sendMail">
+                            <label class="custom-control-label" for="sendMail">Aποστολή κωδικού στο χρήστη με email</label>
+                        </div>
+                    </div>
+                @endif
 
 
             </div>
@@ -204,7 +220,7 @@
                 <button id="button-createMaterial-form  " type="submit"
 
                         class="btn btn-primary ">
-                    {{isset($user)? "Ενημέρωση":"Δημιουργια"}}
+                    {{isset($user)? "Ενημέρωση":"Δημιουργία"}}
                 </button>
                 @isset($user)
                 <a target="_blank" href="{{route('index.profile',$user->slug)}}" id="preview-btn" class="under-development btn btn-warning"><i
@@ -272,19 +288,6 @@
                                 </div> <!-- end card-body -->
                             </div> <!-- end course info card -->
 
-
-
-{{--              @include("components.dropzone",["model"=>$user,"type"=>"Cover","dropzone"=>"cover-dropzone"] )--}}
-
-                        <hr>
-
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" name="sendMail" class="custom-control-input" id="sendMail">
-                                <label class="custom-control-label" for="sendMail">Ενημέρωση χρήστη με
-                                    e-mail</label>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

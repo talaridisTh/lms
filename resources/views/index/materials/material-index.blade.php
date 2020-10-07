@@ -308,7 +308,7 @@
 
                                                 <div class="d-flex flex-column">
 
-                                                    <a class="my-1" href="{{url($media->rel_path)}}">
+                                                    <a target="_blank" class="my-1" href="{{url($media->rel_path)}}">
                                                         <i class="h3 mdi {{$materials->getIcon($media->ext)}}"></i>
                                                         <span class=" ml-3">{{$media->original_name}}</span>
                                                     </a>
@@ -348,17 +348,19 @@
 
                                 <div class="accordion" id="{{$material->slug}}">
                                     <div class="card mb-0">
-                                        <div class="card-header d-flex align-center" id="{{$material->slug}}-head">
+                                        <a class="custom-accordion-title d-block "
+                                           data-toggle="collapse" href="#{{$material->slug}}-collapse"
+                                           aria-expanded="true" aria-controls="{{$material->slug}}-collapse">
+                                        <div class="card-header d-flex align-center head-section " id="{{$material->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
                                                 <span class="mr-2">Section :</span>
-                                                <a class="custom-accordion-title d-block "
-                                                   data-toggle="collapse" href="#{{$material->slug}}-collapse"
-                                                   aria-expanded="true" aria-controls="{{$material->slug}}-collapse">
-                                                    {{$material->title}}
-                                                </a>
-                                            </h5>
-                                        </div>
 
+                                                    {{$material->title}}
+
+                                            </h5>
+                                            <i class="font-14 mdi mdi-chevron-down"></i>
+                                        </div>
+                                        </a>
                                         <div id="{{$material->slug}}-collapse" class="collapse "
                                              aria-labelledby="{{$material->slug}}-head"
                                              data-parent="#{{$material->slug}}">

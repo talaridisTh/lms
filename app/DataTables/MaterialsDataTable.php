@@ -24,12 +24,8 @@ class MaterialsDataTable extends DataTable {
     public function dataTable($query)
     {
 
-        // if (request()->trash == 1)
-        // {
 
-        //     $data = Material::onlyTrashed()->get();
-        // } else
-        // {
+
             if (!request()->from_date && !request()->to_date)
             {
 

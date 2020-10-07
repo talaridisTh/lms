@@ -9,12 +9,23 @@ use Maatwebsite\Excel\Facades\Excel;
 class ExportController extends Controller
 {
     //
-
-
-    public function usersAll ()
+    public function actions($ids)
     {
 
-        return Excel::download(new UsersExportView(),"users.xlsx" );
+
+
+
+        return Excel::download(new UsersExportView($ids),"users.xlsx" );
+
+
+
 
     }
+//
+//    public function usersAll ()
+//    {
+//
+//        return Excel::download(new UsersExportView(),"users.xlsx" );
+//
+//    }
 }
