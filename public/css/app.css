@@ -3305,6 +3305,10 @@ select.is-invalid {
   z-index: 10;
 }
 
+.bg-light-gray .add-material {
+  top: 80%;
+}
+
 #course-materials-list > tbody > tr:hover .add-material {
   display: inline !important;
 }
@@ -3645,7 +3649,7 @@ b[role=presentation] {
 }
 
 .content-width {
-  max-width: 1580px;
+  max-width: 1500px;
 }
 
 .ranges {
@@ -3790,8 +3794,8 @@ figure.image-center {
   white-space: normal !important;
 }
 
-.min-width {
-  min-width: 290px !important;
+.min-width-200 {
+  min-width: 200px !important;
 }
 
 .defalt-color-topic {
@@ -3875,6 +3879,33 @@ figure.image-center {
   border-radius: 50%;
   width: 270px;
   height: 270px;
+}
+
+.bg-light-gray {
+  background-color: #2d333c;
+}
+
+.bg-light-gray:hover {
+  background-color: #383f49;
+}
+
+.row-hover:hover:not(.extra-content-row) {
+  background-color: #3a444e;
+}
+
+.overflow-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
+}
+
+figure > img {
+  width: 100%;
+  height: auto;
 }
 
 /*!

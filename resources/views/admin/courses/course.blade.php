@@ -399,9 +399,18 @@
 									</div>
 								</div>
 
-
 								<div class="form-group">
-									<label for="summary">Σύνοψη</label>
+									<div class="d-flex justify-content-between">
+										<label for="summary-toggle">Σύνοψη</label>
+										<input id="summary-toggle" class="js-editors-toggle"
+											data-field="summary" type="checkbox" data-switch="bool"
+											@if ( isset($fields->summary) && $fields->summary == 1)
+												checked
+											@endif
+										/>
+										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
+									</div>
+
 									<textarea class="form-control @error('summary') is-invalid @enderror"
 										id="summary" name="summary" rows="4" 
 										placeholder="Εισάγετε σύνοψη..."
@@ -414,7 +423,18 @@
 								</div>
 										
 								<div class="form-group">
-									<label for="description">Περιγραφή</label>
+									<div class="d-flex justify-content-between">
+										
+										<label for="description">Περιγραφή</label>
+										<input id="description-toggle" class="js-editors-toggle"
+											data-field="description" type="checkbox" data-switch="bool"
+											@if ( isset($fields->description) && $fields->description == 1)
+												checked
+											@endif
+										/>
+										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+
+									</div>
 									<textarea class="form-control @error('description') is-invalid @enderror"
 										id="description" name="description" rows="4"
 										placeholder="Εισάγετε περιγραφή..."
@@ -634,31 +654,6 @@
 											placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask"
 											data-mask-format="00-00-0000 00:00:00" autocomplete="off" />
 									</div>
-									<hr>
-
-									<div class="d-flex justify-content-between align-items-center">
-										<label class="mb-0" for="summary-toggle">Σύνοψη</label>
-										<input id="summary-toggle" class="js-editors-toggle"
-											data-field="summary" type="checkbox" data-switch="bool"
-											@if ( isset($fields->summary) && $fields->summary == 1)
-												checked
-											@endif
-										/>
-
-										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
-									</div>
-									<hr>
-
-									<div class="d-flex justify-content-between align-items-center">
-										<label class="mb-0" for="description-toggle">Περιγραφή</label>
-										<input id="description-toggle" class="js-editors-toggle"
-											data-field="description" type="checkbox" data-switch="bool"
-											@if ( isset($fields->description) && $fields->description == 1)
-												checked
-											@endif
-										/>
-										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
-									</div>
 
 								</div>
 							</div>
@@ -715,16 +710,18 @@
 									aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-									<a id="remove-selection-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
-									<div class="dropdown-divider"></div>
+								<div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
+									
+									<a id="remove-selection-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
+									<div class="dropdown-divider my-0"></div>
 									<div class="btn-group dropleft w-100">
-										<a class="dropdown-toggle dropdown-item" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<a class="dropdown-toggle dropdown-item py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Αλλαγή κατάστασης
 										</a>
-										<div class="dropdown-menu">
-											<a id="activate-selection" class="dropdown-item" href="#">Ενεργοποιήση</a>
-											<a id="deactivate-selection" class="dropdown-item" href="#">Απενεργοποίηση</a>
+										<div class="dropdown-menu py-0">
+											<a id="activate-selection" class="dropdown-item py-2" href="#">Ενεργοποιήση</a>
+											<div class="dropdown-divider my-0"></div>
+											<a id="deactivate-selection" class="dropdown-item py-2" href="#">Απενεργοποίηση</a>
 										</div>
 									</div>
 								</div>
@@ -753,7 +750,7 @@
 								<th class="text-center"></th>
 							</tr>
 						</thead>
-						<tbody class="tables-hover-effect"></tbody>
+						<tbody></tbody>
 						<tfoot>
 							<tr>
 								<th class="text-center"></th>
@@ -787,8 +784,8 @@
 									aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-									<a id="remove-selected-users-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
+								<div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
+									<a id="remove-selected-users-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
 								</div>
 							</div>
 						</div>

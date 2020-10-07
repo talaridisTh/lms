@@ -107,7 +107,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{ data: 'title', name: 'title' },
 		{ data: 'toggle', name: 'status', className: "align-middle text-center" },
 		{ data: 'curator', name: 'curator', className: "align-middle text-center" },
-		{ data: 'topics', name: 'topics', className: "align-middle text-wrap min-width" },
+		{ data: 'topics', name: 'topics', className: "align-middle text-wrap min-width-200" },
 		{ data: 'version', name: 'version', className: "align-middle text-center" },
 		{
 			data: 'updated_at',

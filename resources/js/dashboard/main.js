@@ -342,7 +342,7 @@ function imageHandler() {
 	else if (type == "redactor") {
         $R( editorId,
             'insertion.insertHtml',
-            `<img src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
+            `<img class="img-fluid" src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
         );
 	}
 	else if ( type == "gallery" ) {
