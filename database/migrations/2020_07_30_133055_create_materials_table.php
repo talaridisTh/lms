@@ -19,14 +19,15 @@ class CreateMaterialsTable extends Migration
             $table->string('slug');
             $table->string('subtitle')->nullable();
             $table->text('summary')->nullable();
-            $table->string('cover')->nullable();
             $table->text('description')->nullable();
-            $table->text('video_link')->nullable();
             $table->text('content')->nullable();
+            $table->string('cover')->nullable();
+            $table->text('video_link')->nullable();
             $table->text('gallery')->nullable();
             $table->text('file')->nullable();
             $table->unsignedTinyInteger('status');
-            $table->string('type', 20);
+			$table->string('type', 20);
+			$table->json('fields')->nullable();
             $table->timestamps();
 //            soft-delete
 //            $table->softDeletes();

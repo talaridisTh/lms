@@ -42,6 +42,7 @@ class BundleFactory extends Factory
 			'slug' => $this->faker->slug,
 			'status' => $this->faker->numberBetween( 0, 1 ),
 			'created_at' => $date->format('Y-m-d H:i:s'),
+			'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1)]),
 			'updated_at' => $date->addWeeks( rand(1, 12) )->subSeconds( rand(36000, 136000) )->format('Y-m-d H:i:s'),
 			'publish_at' => $date->addYears( rand(1, 2) ),
         ];

@@ -45,6 +45,7 @@ class MaterialFactory extends Factory
 			'status' => rand( 0, 1 ),
 			'slug' => $this->faker->slug,
 			'type' => $type,
+			'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1), "content" => rand(0,1)]),
 			'created_at' => $date->format('Y-m-d H:i:s'),
 			'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
         ];
