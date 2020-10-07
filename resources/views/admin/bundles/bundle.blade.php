@@ -192,7 +192,9 @@
 						<li class="breadcrumb-item active">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</li>
 					</ol>
 				</div>
-				<h4 id="bundle-title" class="page-title" data-bundle-id="{{ isset($bundle) ? $bundle['id'] : 1 }}">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</h4>
+				<h4 id="bundle-title" class="page-title"
+					data-bundle-id="{{ isset($bundle) ? $bundle['id'] : 1 }}"
+					data-bundle-slug="{{ $bundle->slug }}">{{ isset($bundle) ? $bundle->title : "Νέο Bundle" }}</h4>
 			</div>
 		</div>
 	</div>
@@ -379,12 +381,36 @@
 		
 							<div class="card">
 								<div class="card-body">
-									<hr class="mt-0" />
+
 									<div class="form-group">
 										<label for="publish-date-select">Published</label>
 										<input form="bundle-edit-form" type="text" class="form-control" id="publish-date-select" name="publishDate" value="{{ $publish }}" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
 									</div>
-									<hr class="mb-0" />
+									
+									<hr>
+									<div class="d-flex justify-content-between align-items-center">
+										<label class="mb-0" for="summary-toggle">Σύνοψη</label>
+										<input id="summary-toggle" class="js-editors-toggle"
+											data-field="summary" type="checkbox" data-switch="bool"
+											@if ( isset($fields->summary) && $fields->summary == 1)
+												checked
+											@endif
+										/>
+										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
+									</div>
+
+									<hr>
+									<div class="d-flex justify-content-between align-items-center">
+										<label class="mb-0" for="description-toggle">Περιγραφή</label>
+										<input id="description-toggle" class="js-editors-toggle"
+											data-field="description" type="checkbox" data-switch="bool"
+											@if ( isset($fields->description) && $fields->description == 1)
+												checked
+											@endif
+										/>
+										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+									</div>
+
 								</div>
 							</div>
 

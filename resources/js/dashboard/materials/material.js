@@ -12,6 +12,33 @@ const baseUrl = window.location.origin;
 //!					EventListeners					#
 //!##################################################
 
+$(".js-editors-toggle").on("change", function() {
+	let editorToggles = $(".js-editors-toggle");
+	let field = {};
+
+	for ( let i = 0; i < editorToggles.length; i++) {
+
+		field[`${editorToggles[i].dataset.field}`] = editorToggles[i].checked ? 1 : 0;
+	}
+
+	let fields = JSON.stringify(field);
+
+	axios.patch(`/material/${materialSlug}/toggle-editors`, {
+		fields
+	})
+	.then( res => {
+		let icon = this.checked ? "success" : "info";
+		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+		utilities.toastAlert( icon, message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+
+})
+
 $("#remove-cover-btn").on("click", function() {
 	
 	axios.patch( "/media/remove-cover", {

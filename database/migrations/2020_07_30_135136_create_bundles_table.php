@@ -22,6 +22,7 @@ class CreateBundlesTable extends Migration
             $table->text('description')->nullable();
             $table->string('slug', 100);
 			$table->unsignedTinyInteger('status');
+			$table->json('fields')->nullable();
 			$table->timestamp('publish_at')->nullable();
 			$table->timestamps();
 			$table->softDeletes();

@@ -194,9 +194,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="summary">Περίληψη</label>
+                                <label for="summary">Σύνοψη</label>
                                 <textarea id="summary" name="summary" class="form-control" rows="5"
-                                    placeholder="Εισάγετε περίληψη...">{{ old('summary') != "" ? old('summary')
+                                    placeholder="Εισάγετε σύνοψη...">{{ old('summary') != "" ? old('summary')
 											: (isset($material) ? $material->summary : "") }}</textarea>
                             </div>
 
@@ -211,7 +211,7 @@
 
                             <div class="form-group">
                                 <label for="content-material">
-                                    Περιεχόμενο μαθήματος
+                                    Περιεχόμενο
                                 </label>
                                 <textarea id="content-material" name="content" class="form-control" rows="5"
                                     placeholder="Εισάγετε περιεχόμενο μαθήματος...">{{ old('content') != "" ? old('content')
@@ -370,6 +370,46 @@
                                         @endphp
                                     </select>
                                 </div>
+
+								<hr>
+								<div class="d-flex justify-content-between align-items-center">
+									<label class="mb-0" for="summary-toggle">Σύνοψη</label>
+									<input id="summary-toggle" class="js-editors-toggle"
+										data-field="summary" type="checkbox" data-switch="bool"
+										@if ( isset($fields->summary) && $fields->summary == 1)
+											checked
+										@endif
+									/>
+									<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
+								</div>
+
+								<hr>
+								<div class="d-flex justify-content-between align-items-center">
+									<label class="mb-0" for="description-toggle">Περιγραφή</label>
+									<input id="description-toggle" class="js-editors-toggle"
+										data-field="description" type="checkbox" data-switch="bool"
+										@if ( isset($fields->description) && $fields->description == 1)
+											checked
+										@endif
+									/>
+									<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+								</div>
+
+								<hr>
+								<div class="d-flex justify-content-between align-items-center">
+									<label class="mb-0" for="content-toggle">Περιεχόμενο</label>
+									<input id="content-toggle" class="js-editors-toggle"
+										data-field="content" type="checkbox" data-switch="bool"
+										@if ( isset($fields->content) && $fields->content == 1)
+											checked
+										@endif
+									/>
+									<label class="mb-0" for="content-toggle" data-on-label="On" data-off-label="Off"></label>
+								</div>
+
+
+
+
 
                             </div>
                         </div>

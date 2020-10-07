@@ -57,14 +57,13 @@ class BundleController extends Controller
 		else {
 			$publish = is_null($bundle->publish_at) ? null : Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
 		}
-		$topics = Topic::all("title");
-		$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
 
 		$data = [
 			'bundle' => $bundle,
-			'media' => $media,
-			'topics' => $topics,
+			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
+			'topics' => Topic::all("title"),
 			'publish' => $publish,
+			"fields" => json_decode($bundle->fields)
 		];
 
         return view("admin/bundles/bundle")->with($data);

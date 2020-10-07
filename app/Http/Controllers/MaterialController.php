@@ -95,7 +95,8 @@ class MaterialController extends Controller {
 			"types" => $types,
 			"media" => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
 			"gallery" => $material ? $material->media()->wherePivot("usage", "!=", 3)->orderBy("priority")->get() : null,
-			"files" => $material ? $material->media()->where("type", 1)->get() : null
+			"files" => $material ? $material->media()->where("type", 1)->get() : null,
+			"fields" => json_decode($material->fields)
 		];
 
         return view('admin.materials.material')->with($data);

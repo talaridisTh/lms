@@ -640,7 +640,7 @@
 										<label class="mb-0" for="summary-toggle">Σύνοψη</label>
 										<input id="summary-toggle" class="js-editors-toggle"
 											data-field="summary" type="checkbox" data-switch="bool"
-											@if ($fields->summary == 1)
+											@if ( isset($fields->summary) && $fields->summary == 1)
 												checked
 											@endif
 										/>
@@ -653,7 +653,7 @@
 										<label class="mb-0" for="description-toggle">Περιγραφή</label>
 										<input id="description-toggle" class="js-editors-toggle"
 											data-field="description" type="checkbox" data-switch="bool"
-											@if ($fields->description == 1)
+											@if ( isset($fields->description) && $fields->description == 1)
 												checked
 											@endif
 										/>

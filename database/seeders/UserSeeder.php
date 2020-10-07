@@ -59,7 +59,8 @@ class UserSeeder extends Seeder {
                     'cover' => "https://img-a.udemycdn.com/course/750x422/1929394_4932_4.jpg",
                     'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim odio sit amet magna sagittis, quis sagittis ex convallis. Pellentesque suscipit, neque vitae finibus pretium. ",
                     'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim odio sit amet magna sagittis, quis sagittis ex convallis. Pellentesque suscipit, neque vitae finibus pretium. ",
-                    'status' => "1",
+					'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1), "content" => rand(0,1)]),
+					'status' => "1",
                     'type' => "Lesson",
 
 
@@ -83,12 +84,12 @@ class UserSeeder extends Seeder {
                     'title' => "Controller",
                     'slug' => "controller",
                     'subtitle' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim odio sit amet magna sagittis, quis sagittis ex convallis. Pellentesque suscipit, neque vitae finibus pretium. ",
-
                     'summary' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim odio sit amet magna sagittis, quis sagittis ex convallis. Pellentesque suscipit, neque vitae finibus pretium. ",
                     'cover' => "https://miro.medium.com/max/960/1*Vu2ThQPxr72UEOP0LMo4hA.jpeg",
                     'description' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim odio sit amet magna sagittis, quis sagittis ex convallis. Pellentesque suscipit, neque vitae finibus pretium. ",
                     'content' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dignissim odio sit amet magna sagittis, quis sagittis ex convallis. Pellentesque suscipit, neque vitae finibus pretium. ",
-                    'status' => "1",
+					'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1), "content" => rand(0,1)]),
+					'status' => "1",
                     'type' => "Link",
                     'video_Link' => "43014286",
 
