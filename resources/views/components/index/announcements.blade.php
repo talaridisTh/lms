@@ -4,12 +4,12 @@
     }
 </style>
 @if(count($announcements)>0)
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger pl-3" role="alert">
         <span class="alert-link">{{--<i class=" h3 mdi mdi-chat-alert mr-3">--}}</i>{!!$announcements->first()->title !!}</span>
         <div class="pt-2" style="padding-right: 3.95rem">
             <span> {!!$announcements->sortByDesc('created_at')->first()->content !!}</span>
         </div>
-        <div style="padding-right: 4rem" class="text-right">
+        <div style="padding-right: 1rem" class="text-right">
             <a type="button" class="" style="color: #000000" data-toggle="modal"
                data-target="#announcements-modal">Δείτε περισσότερα
             </a>

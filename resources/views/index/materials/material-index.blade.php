@@ -193,26 +193,30 @@
 
                     @include("components.index.announcements")
 
+
                     @include("components.index.collapse-menu",
                             ["idAccordion"=>$materials->slug."-accordion-summary" ,
                             "idHeader"=>$materials->slug."-header-summary",
                             "href"=>$materials->slug."-href-summary",
                             "title"=>"Σχετικά με το μάθημα",
-                            "body"=>$materials->summary
+                            "body"=>$materials->summary,
+                             "fields"=>json_decode($materials->fields)->summary
                             ])
                     @include("components.index.collapse-menu",
                             ["idAccordion"=>$materials->slug."-accordion-description" ,
                             "idHeader"=>$materials->slug."-header-description",
                             "href"=>$materials->slug."-href-description",
                             "title"=>"Περίληψη",
-                            "body"=>$materials->description
+                            "body"=>$materials->description,
+                             "fields"=>json_decode($materials->fields)->description
                             ])
                     @include("components.index.collapse-menu",
                             ["idAccordion"=>$materials->slug."-accordion-content" ,
                             "idHeader"=>$materials->slug."-header-content",
                             "href"=>$materials->slug."-href-content",
                             "title"=>"Περιγραφή",
-                            "body"=>$materials->content
+                            "body"=>$materials->content,
+                             "fields"=>json_decode($materials->fields)->content
 
                             ])
 
@@ -358,11 +362,7 @@
                                 }
                             @endphp
                             @if($material->type==="Section")
-                                @php
-                                --$count;
-                                @endphp
-
-
+                                @php --$count; @endphp
                                 <div class="accordion" id="{{$material->slug}}">
                                     <div class="card mb-0">
                                         <a class="custom-accordion-title d-block "

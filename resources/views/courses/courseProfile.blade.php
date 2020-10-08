@@ -114,7 +114,6 @@
                                     <a class="text-white "
                                        href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
                                         <button class="bghover  color-topic-second  border  btn btn-secontary ">
-
                                             Δες το μάθημα
                                         </button>
                                     </a>
@@ -157,7 +156,8 @@
                                 "idHeader"=>$course->slug."-header-summary",
                                 "href"=>$course->slug."-href-summary",
                                 "title"=>"Σχετικά με το μάθημα",
-                                "body"=>$course->summary
+                                "body"=>$course->summary,
+                                "fields"=>json_decode($course->fields)->summary
 
                                 ])
                         </div>
@@ -169,7 +169,8 @@
                                 "idHeader"=>$course->slug."-header-description",
                                 "href"=>$course->slug."-href-description",
                                 "title"=>"Μάθημα",
-                                "body"=>$course->description
+                                "body"=>$course->description,
+                                 "fields"=>json_decode($course->fields)->description
 
                                 ])
                         </div>

@@ -3908,10 +3908,6 @@ figure > img {
   height: auto;
 }
 
-.left-side-menu {
-  display: none;
-}
-
 .box-material-down {
   background: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
   border-top: 1px solid white;

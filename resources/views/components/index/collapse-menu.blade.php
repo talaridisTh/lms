@@ -1,4 +1,5 @@
-@if($body)
+@if($body && $fields)
+
     <div class="accordion custom-accordion mb-2" id="{{$idAccordion}}">
         <div class="card mb-0">
             <div class="card-header p-2" id="{{$idHeader}}">
