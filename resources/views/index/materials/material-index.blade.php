@@ -235,7 +235,7 @@
                                 class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
                                 <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
                                 <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
-                                   data-target="#bs-example-modal-lg">Gallery</a>
+                                   data-target="#bs-example-modal-lg">Εικόνες</a>
                                 <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
                                      aria-labelledby="myLargeModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-lg">
@@ -284,7 +284,7 @@
                                         <a class="custom-accordion-title d-block py-1"
                                            data-toggle="collapse" href="#collapse-extra-content"
                                            aria-expanded="true" aria-controls="collapse-extra-content">
-                                            Extra Content<i
+                                            Βοηθητικά Αρχεία<i
                                                 class="mdi mdi-chevron-down accordion-arrow"></i>
                                         </a>
                                     </h5>
@@ -354,7 +354,7 @@
                                            aria-expanded="true" aria-controls="{{$material->slug}}-collapse">
                                         <div class="card-header d-flex align-center head-section " id="{{$material->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
-                                                <span class="mr-2">Section :</span>
+                                                <span class="mr-2">Ενότητα :</span>
 
                                                     {{$material->title}}
 

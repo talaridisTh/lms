@@ -81,7 +81,7 @@
                         <div class="dropdown">
                             <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                My Account
+                                Λογαριασμός μου
                             </a>
 
                             <div class="dropdown-menu" aria-labelledby="my-acount">
@@ -111,7 +111,7 @@
                     </div>
                     <div>
                         <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
-                            <span>My Courses</span>
+                            <span>Μαθήματα</span>
                         </a>
                     </div>
 
@@ -132,8 +132,8 @@
                     </div>
                     <div>
                         <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
-                           aria-expanded="false">
-                            Log Out
+                           aria-expanded="false" data-toggle="tooltip" data-original-title="Έξοδος">
+                            <i class=" h4 mdi mdi-logout"></i>
                         </a>
                     </div>
                 @endif
@@ -151,15 +151,6 @@
 
 
     <!-- ========== Left Sidebar Start ========== -->
-
-    @if(Route::currentRouteName() =='home')
-        <div class="">
-
-            @include("components.index.users.user-menu")
-
-        </div>
-        <!-- Left Sidebar End -->
-    @endif
 
 
     @yield('content')

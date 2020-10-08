@@ -11,7 +11,7 @@
         <div class="content">
             <div class="container-xl " style="width: 1450px">
                 <div class="row">
-                    <h3 class="m-2">My courses</h3>
+                    <h3 class="m-2">Μαθήματα</h3>
                     @if(empty(!$arrayTopics))
                     <div class="col-md-12 ">
                         <div id="topic-filter" class="p-2 rounded text-dark"

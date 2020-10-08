@@ -22,7 +22,7 @@
 @endsection
 
 @section('content')
-	
+
 	@isset($bundle)
 
 		<!-- Add Users Modal -->
@@ -78,7 +78,7 @@
 			<div class="modal-dialog modal-dialog-centered" style="max-width: 1100px" role="document">
 				<div class="modal-content">
 					<div class="modal-header modal-colored-header bg-primary">
-						<h5 class="modal-title" id="gallery-modalLabel">Media Library</h5>
+						<h5 class="modal-title" id="Εικόνες-modalLabel">Media Library</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -114,7 +114,7 @@
 										</div>
 									</div>
 								</div>
-								<div id="gallery-content" data-model="App\Bundle" data-id={{ $bundle->id }}>	
+								<div id="gallery-content" data-model="App\Bundle" data-id={{ $bundle->id }}>
 									@include('components.admin.imageGallery', ['media' => $media])
 								</div>
 							</div>
@@ -122,8 +122,8 @@
 							<div id="upload" class="tab-pane">
 
 								<input id="file-pond" type="file[]"/>
-							
-							</div>			
+
+							</div>
 						</div>
 
 					</div>
@@ -202,7 +202,7 @@
 
 	<div class="wrapper">
 		<div class="content">
-	
+
 			<ul class="nav nav-tabs nav-bordered mb-3">
 				<li class="nav-item">
 					<a href="#settings" data-toggle="tab" aria-expanded="false"
@@ -218,7 +218,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#users" data-toggle="tab" 
+					<a href="#users" data-toggle="tab"
 						aria-expanded="true" class="nav-link {{ isset($bundle) ? "" : "text-muted" }}"
 					>
 						Χρήστες
@@ -242,8 +242,8 @@
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="name">Τίτλος</label>
-											<input type="text" class="form-control @error('title') is-invalid @enderror" 
-												id="name" name="title" 
+											<input type="text" class="form-control @error('title') is-invalid @enderror"
+												id="name" name="title"
 												value="{{ old('title') != "" ? old('title') : ( isset($bundle) ? $bundle['title'] : "" ) }}"
 												placeholder="Εισάγετε τίτλο...">
 											@error('title')
@@ -260,7 +260,7 @@
 											    <div class="custom-file">
 													<input class="form-control @error('subtitle') is-invalid @enderror"
 														name="subtitle" id="subtitle-input" type="text" placeholder="Εισάγετε υπότιτλο..."
-														value="{{ old('subtitle') != "" ? old('subtitle') 
+														value="{{ old('subtitle') != "" ? old('subtitle')
 															: ( isset($bundle) ? $bundle['subtitle'] : "" )
 														}}"
 													>
@@ -281,7 +281,7 @@
 							    	            <label for="summary">Σύνοψη</label>
 												<textarea class="form-control @error('summary') is-invalid @enderror"
 													id="summary" name="summary" rows="4" placeholder="Σύνοψη Bundle..."
-												>{{ old('summary') != "" ? old('summary') 
+												>{{ old('summary') != "" ? old('summary')
 													: ( isset($bundle) ? $bundle['summary'] : "" )
 												}}</textarea>
 												@error('summary')
@@ -319,16 +319,16 @@
 									if ( $bundle->status == 1 ) {
 										if ( time() > strtotime($bundle->publish_at) && !is_null($bundle->publish_at) ) {
 											$tooltip = [
-												"color" => "bg-success", 
-												"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+												"color" => "bg-success",
+												"icon" => "<i class='h2 mdi mdi-cloud'></i>",
 												"text" => "Published"
 											];
 											$storeBtn = [ "color" => "btn-info", "text" => "Update"];
 										}
 										else {
 											$tooltip = [
-												"color" => "bg-info", 
-												"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>", 
+												"color" => "bg-info",
+												"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>",
 												"text" => "Scheduled"
 											];
 											$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
@@ -341,8 +341,8 @@
 									}
 									else {
 										$tooltip = [
-											"color" => "bg-light", 
-											"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+											"color" => "bg-light",
+											"icon" => "<i class='h2 mdi mdi-cloud'></i>",
 											"text" => "Draft"
 										];
 										$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
@@ -378,7 +378,7 @@
 								</a>
 
 							</div>
-		
+
 							<div class="card">
 								<div class="card-body">
 
@@ -386,7 +386,7 @@
 										<label for="publish-date-select">Published</label>
 										<input form="bundle-edit-form" type="text" class="form-control" id="publish-date-select" name="publishDate" value="{{ $publish }}" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
 									</div>
-									
+
 									<hr>
 									<div class="d-flex justify-content-between align-items-center">
 										<label class="mb-0" for="summary-toggle">Σύνοψη</label>
@@ -424,7 +424,7 @@
 										class="img-fluid{{ (isset($bundle) &&  is_null($bundle->cover)) ? " d-none" : "" }}"
 										alt="Cover Image" />
 									<p id="cover-status" class="text-center{{ (isset($bundle) &&  !is_null($bundle->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
-									
+
 									<div class="form-row mt-2">
 										<div class="col-md-6 d-flex justify-content-center">
 											<button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
@@ -576,7 +576,7 @@
 			<option value="{{ $topic->title }}">{{ $topic->title }}</option>
 		@endforeach
 	</select>
-	
+
 
 @endsection
 

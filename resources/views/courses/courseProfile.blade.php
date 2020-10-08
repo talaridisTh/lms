@@ -153,7 +153,7 @@
                     {{--                    <span>metrio</span>--}}
 
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","mdi mdi-file-document-outline")->count()}} Μαθήματα  </span>
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","mdi mdi-file-document-outline")->count()}} Extra  </span>
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","mdi mdi-file-document-outline")->count()}} Βοηθητικά Αρχεία  </span>
                     @foreach($topics as $topic)
                         <span class="topic-title  border px-2">{{$topic}}</span>
                     @endforeach
@@ -209,7 +209,7 @@
                                         <a class="custom-accordion-title d-block py-1"
                                            data-toggle="collapse" href="#collapse-extra-content"
                                            aria-expanded="true" aria-controls="collapse-extra-content">
-                                            Extra Content<i
+                                            Βοηθητικά Αρχεία<i
                                                 class="mdi mdi-chevron-down accordion-arrow"></i>
                                         </a>
                                     </h5>
@@ -269,7 +269,7 @@
                                            aria-expanded="true" aria-controls="{{$materials->slug}}-collapse">
                                         <div class="card-header d-flex align-center mb-2 head-section" id="{{$materials->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
-                                                <span class="mr-2">Section :</span>
+                                                <span class="mr-2">Ενότητα :</span>
 
                                                     {{$materials->title}}
 

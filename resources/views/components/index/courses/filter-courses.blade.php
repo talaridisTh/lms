@@ -30,8 +30,8 @@
                     </h3>
                     <p class="font-12 text-center">{!! $course->subtitle !!}</p>
                     <div class="material-box d-flex justify-content-between font-10">
-                        <span class="mr-3">Lessons : {{$allMaterial->where("type","Lesson")->count()}}</span>
-                        <span>Extras :{{$allMaterial->where("type","!=","Lesson")->count()}}</span>
+                        <span class="mr-3">Μαθήματα : {{$allMaterial->where("type","Lesson")->count()}}</span>
+                        <span>Βοηθητικά Αρχεία :{{$allMaterial->where("type","!=","Lesson")->count()}}</span>
                     </div>
                 </div>
             </div>
