@@ -133,16 +133,19 @@
                 @enderror
             </div>
         </div>
+
         <div class="col-md-4">
             <div class="col-md-12 border-material">
-                <h4>Security</h4>
+                <h4>ROLES</h4>
                 <div class="form-group">
                     <select name="roles" id="roles" class="form-control  select2" data-toggle="select2">
                         @foreach ($rolesName as $role)
-                            <option {{$role->name==="student"?"selected":""}} value="{{$role->name}}"
                             @if(isset($user))
+                                <option  value="{{$role->name}}"
                                 {{$user->getRoleNames()->first() == $role->name? "selected":""}}
-                                @endif
+                            @else
+                                <option {{$role->name==="student"?"selected":""}} value="{{$role->name}}"
+                                    @endif
                             >{{$role->name}}
                             </option>
                         @endforeach
