@@ -1034,7 +1034,7 @@ $("#active-user-roles").on( "change", function () {
 	let label = $("#select2-active-user-roles-container")[0];
 	utilities.filterStyle( label, this.value )
 
-	courseUsersDatatable.columns(3).search( this.value ).draw();
+	courseUsersDatatable.columns(5).search( this.value ).draw();
 
 });
 
