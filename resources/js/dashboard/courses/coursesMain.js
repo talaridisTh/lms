@@ -28,7 +28,7 @@ $("#select-all-courses").change( function() {
 
 })
 
-$("#submit-form-btn").click( function() {
+$("#submit-form-btn").on("click", function() {
 
 	$("#new-course-form").submit()
 
@@ -38,7 +38,7 @@ $("#cover-input").change( function() {
 	$("#cover-input-label")[0].textContent = this.value.replace("C:\\fakepath\\", "");
 });
 
-$('#delete-courses-btn').click( function() {
+$('#delete-courses-btn').on("click", function() {
 
 	let checkedBoxes = $('.js-course-checkbox:checked');
 
@@ -157,7 +157,7 @@ function cloneEventListener() {
 
 	let cloneBtns = $(".js-course-clone-btn");
 
-	cloneBtns.click( function() {
+	cloneBtns.on("click", function() {
 
 		$('#clone-course-modal').modal('show')
 
