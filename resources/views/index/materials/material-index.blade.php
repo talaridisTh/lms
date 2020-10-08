@@ -111,7 +111,7 @@
 
             <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center"
                  style=";border-radius: 0; background:{{$bgColor}}">
-                <div class="col-md-12   p-0  " style="min-width:1900px;max-width: 1900px">
+                <div class="col-md-12   p-0  " style="min-width:2095px;max-width: 2095px">
                     <div class="row align-items-center p-2">
                         <div class="col-md-2 m-0 d-flex justify-content-end" style="padding-right: 3.5rem;">
                             <div class="d-flex justify-content-start"></div>
@@ -144,7 +144,7 @@
 
 
                             <div class="watchlist  d-flex justify-content-end align-items-center ml-2 "
-                                 style=" margin-right: -1.3rem;">
+                                 style=" margin-right: -0.7rem;">
                                 <button
                                     data-course-id="{{$course->id}}"
                                     data-material-id="{{$materials->id}}"
@@ -184,7 +184,7 @@
                 </div>
             </div>
         </div>
-        <div class="container  w-100  p-sm-3 p-lg-2 my-3" style="max-width: 1280px">
+        <div class="container  w-100  p-sm-3 p-lg-2 my-3" style="max-width: 1423px">
             <div class="row ">
                 <div class="col-md-8 ">
 

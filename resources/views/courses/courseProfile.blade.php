@@ -138,7 +138,7 @@
             </div>
         </div>
 
-        <div class="container-fluid my-3" style="max-width: 1280px">
+        <div class="container-fluid my-3" style="max-width: 1423px">
             <div class="row ">
 
                 <div class="col-md-8 {{empty($course->description)?"d-none":""}}">
@@ -317,13 +317,14 @@
                                         </div>
                                     </div>
                                 </div>
+
                             @else
                                 <li data-material-id="{{$materials->id}}"
                                     data-material-priority="{{$count+1}}"
                                     class="list-group-item list-material border ">
                                     <a class="d-flex align-items-center {{
                             $materials->type=="Link"?"js-link-material":""}}"
-                                       href="{{$materials->type=="Link"?"$materials->video_link":route('index.material.show',[$course->slug,$materials->slug])}}">
+                                       href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         <div class="col-md-2 mr-2 ">
 
                                             <div>

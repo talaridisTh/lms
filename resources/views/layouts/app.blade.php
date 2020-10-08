@@ -149,18 +149,50 @@
 <!-- Begin page -->
 <div class="wrapper">
 
-
-    <!-- ========== Left Sidebar Start ========== -->
-
-
     @yield('content')
 
 </div>
 
 
-{{--<footer class="footer footer-alt ">--}}
-{{--    2018 - 2020 © Hyper - Coderthemes.com--}}
-{{--</footer>--}}
+<footer class=" footer-alt ">
+    <div class="container" style="max-width: 1440px;">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="row align-items-center">
+                    <div class="col-md-4" style="width: 147px; height: 79px;">
+                        <img src="/images/logo.png" alt="logo">
+                    </div>
+                    <div class=" col-md-8">
+                        <h4 class="text-left font-weight-bold font-20 mb-0" style="color: #585d63">
+                            Θεσσαλονίκη
+                        </h4>
+                        <p class="text-left d-flex flex-column font-16" style="color: #585d63">
+                            <span>Παπαναστασίου 150, 54249,</span>
+                            <span>Χαριλάου Τηλ. 2310 328797 - Fax 2310 328898</span>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end  ">
+                <img  class="pr-2" src="/images/facebook.png" alt="logo">
+                <img class="pr-2" src="/images/instagram.png" alt="logo">
+                <img class="pr-2" src="/images/twitter.png" alt="logo">
+                <img class="pr-2" src="/images/youtube.png" alt="logo">
+                <img class="pr-2" src="/images/linked-in.png" alt="logo">
+            </div>
+
+        </div>
+    </div>
+    <hr class="border">
+    <div class="container-fluid  mb-2" style="max-width: 1705px;">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-left">COPYRIGHT © 2019 IDROGIOS EDUCATION</div>
+            <div class="col-md-4 ">Πολιτική Απορρήτου</div>
+            <div class="col-md-4 text-right">DESIGNED & DEVELOPED BY DARKPONY</div>
+        </div>
+    </div>
+</footer>
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST">
     @csrf
