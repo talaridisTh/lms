@@ -20,6 +20,57 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$(".js-section-material").on("click", function() {
+
+	const modal = $("#sections-additions-modal")[0];
+	const sectionId = modal.dataset.sectionId;
+	const priority = modal.dataset.priority;
+	const type = this.dataset.type;
+
+	const selection = document.getElementsByClassName("js-section-addition")[0];
+
+	if (selection) {
+		selection.remove();
+	}
+	
+	const newRow = document.createElement("tr");
+	newRow.classList.add("js-section-addition")
+
+	const row = $(`table[data-section-id='${sectionId}'] > tbody > tr[data-priority='${priority}']`)[0];
+
+	if ( type == "Announcement" ) {
+		newRow.innerHTML = annoucementForm( priority );
+	}
+	else {
+		newRow.innerHTML = linkForm( type, priority);
+	}
+
+	newRow.appendAfter(row);
+
+	const saveBtn = newRow.getElementsByClassName("js-section-content")[0];
+	saveBtn.dataset.sectionId = sectionId;
+	saveBtn.addEventListener("click", sectionAdditionHandler);
+	
+	const cancelBtn = newRow.getElementsByClassName("js-cancel-addition")[0];
+	cancelBtn.addEventListener("click", function() {
+		this.findParent(4).remove();
+	});
+
+	
+})
+
+$("#sections-additions-modal").on("show.bs.modal", function(event) {
+
+	const btn = event.relatedTarget;
+	const sectionId = btn.dataset.sectionId;
+	const priority = btn.dataset.priority;
+
+	this.dataset.sectionId = sectionId;
+	this.dataset.priority = priority;
+
+});
+
+
 $(".js-editors-toggle").on("change", function() {
 	let editorToggles = $(".js-editors-toggle");
 	let field = {};
@@ -1303,6 +1354,73 @@ $(".js-date-search").on( "input", function() {
 });
 // DataTables function / EventListener End
 
+function sectionAdditionHandler() {
+
+	const container = this.findParent(4);
+	const title = container.getElementsByClassName("js-title")[0];
+	const subtitle = container.getElementsByClassName("js-subtitle")[0];
+	const link = container.getElementsByClassName("js-link")[0];
+	const status = container.getElementsByClassName("js-state")[0];
+	const content = container.getElementsByClassName("js-content")[0];
+	const type = this.dataset.type;
+	const priority = this.dataset.priority;
+	const sectionId = this.dataset.sectionId;
+
+	let valid = checkEmpty( container, "js-empty" );
+
+	if ( !valid ) {
+
+		Swal.fire(
+			'Προσοχή!',
+			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
+			'info'
+		);
+
+		return
+	}
+
+	const data = new FormData();
+
+	data.append("courseId", courseId);
+	data.append("sectionId", sectionId);
+	data.append("title", title.value);
+	data.append("subtitle", subtitle.value);
+	data.append("status", status.value);
+	data.append("content", content.value);
+	data.append("type", type);
+	data.append("priority", priority);
+
+	if ( link ) {
+		data.append("link", link.value);
+	}
+
+	axios.post( "/section/add-content", data )
+		.then( res => {
+			let sectionsCnt = document.getElementsByClassName("accordion")[0];
+			sectionsCnt.innerHTML = res.data;
+
+			let sections = sectionsCnt.getElementsByClassName("collapse");
+			for (let i = 0; i < sections.length; i++ ) {
+				sections[i].classList.remove("show");
+			}
+			
+			let shownChapter = sectionsCnt.dataset.shownChapter;
+			if ( typeof shownChapter !== "undefined" ) {
+				document.getElementById(`${shownChapter}-collapse`).classList.add("show");
+			}
+			else {
+				sectionsCnt.getElementsByClassName("collapse")[0].classList.add("show");
+			}
+
+			courseMaterialsTable.ajax.reload( null, false );
+
+			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
+		})
+		.catch( (err) => {
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
+		});
+}
+
 function submitChapterBtnHandler() {
 	
 	let input = this.findParent(2).getElementsByClassName("js-chapter-input")[0];
@@ -1745,7 +1863,7 @@ function linkForm( type, priority) {
 							</select>
 						</div>
 						<div class="form-group col-3 d-flex justify-content-center align-items-start" style="padding-top: 1.85rem;">
-							<button  class="js-add-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
+							<button  class="js-add-content js-section-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
 							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
 					</div>
@@ -1778,7 +1896,7 @@ function annoucementForm( priority ) {
 							<textarea class="js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..." hidden></textarea>
 						</div>
 						<div class="form-group float-right">
-							<button  class="js-add-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
+							<button  class="js-add-content js-section-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
 							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
 

@@ -99,15 +99,23 @@
 					<tbody>
 
 						@forelse ($section->chapters()->orderBy("priority")->get() as $material)
-						<tr class="js-accordion-row row-hover" data-material-id="{{ $material->id }}">
-							<td class="text-center align-middle">
+						<tr class="js-accordion-row row-hover" data-material-id="{{ $material->id }}"
+							data-priority="{{ $material->pivot->priority }}">
+							<td class="position-relative text-center align-middle ">
 								<div class='icheck-primary d-inline'>
 									<input id='{{ $material->slug }}-chapter-checkbox'
 										class="js-chapter-checkbox" type='checkbox'
 										data-material-id="{{ $material->id }}" autocomplete='off'>
 									<label for='{{ $material->slug }}-chapter-checkbox'></label>
 								</div>
+
+								<a class='custom-primary add-material' href='#' data-section-id="{{ $section->id }}"
+									data-priority='{{ $material->pivot->priority }}' data-toggle='modal'
+									data-target='#sections-additions-modal'>
+									<i class='mdi mdi-plus-circle-outline mr-1'></i>
+								</a>
 							</td>
+
 							<td>
 								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
 								<p class='overflow-ellipsis mb-1' title="{{ $material->slug }}" style="max-width: 400px;">{{ $material->slug }}</p>
@@ -158,6 +166,17 @@
 							<td colspan="6" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
 						@endforelse
 					</tbody>
+					<thead>
+						<tr>
+							<th scope="col"></th>
+							<th class="text-center" scope="col">Title</th>
+							<th class="text-center w-10" scope="col">Κατάσταση</th>
+							<th class="text-center w-10" scope="col">Κατάταξη</th>
+							<th class="text-center w-10" scope="col">Τύπος</th>
+							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
+							<th class="text-center w-5" scope="col"></th>
+						</tr>
+					</thead>
 				</table>
 			</div><!-- ./card-body -->
 		</div><!-- ./accordion -->

@@ -442,4 +442,45 @@ class MaterialController extends Controller {
 		
 	}
 
+	public function addSectionContent(Request $request) {
+
+		$section = Material::find( $request->sectionId );
+		
+		$material = new Material;
+		$material->title = $request->title;
+		$material->subtitle = $request->subtitle;
+		$material->content = $request->content;
+		$material->type = $request->type;
+		$material->status = $request->status;
+		$material->slug = Str::slug($request->title, "-");
+
+		if ($request->type == "Video") {
+
+			$material->video_link = $request->video;
+			
+		} 
+		elseif ($request->type == "Link") {
+			
+			$material->link = $request->link;
+			
+		}
+
+		$material->save();
+
+		$section->chapters()->wherePivot("priority", ">", $request->priority)
+			->increment("priority");
+
+		$section->chapters()
+			->attach( $material->id, [
+				"status" => $request->status,
+				"priority" => $request->priority + 1
+			]);
+
+
+		$sections = Course::find( $request->courseId )->materials()
+			->where("type", "Section")->orderBy("priority")->get();
+
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
 }
