@@ -1053,7 +1053,7 @@ $("#add-users-roles").on( "change", function () {
 	let label = $('#select2-add-users-roles-container')[0];
 
 	utilities.filterStyle( label, this.value )
-	addCourseUsersDatatable.columns(3).search( this.value ).draw();
+	addCourseUsersDatatable.columns(5).search( this.value ).draw();
 
 });
 
