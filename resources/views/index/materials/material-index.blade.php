@@ -1,6 +1,22 @@
 @extends("layouts.app")
 @php
     $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";
+
+    $countMaterial= $MaterialsOrderByPriority->where("type","Lesson")->count()+
+    $MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
+        return count($chapter->chapters->where("type","Lesson"));
+    })->first();
+    $textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
+
+
+//count extra
+    $countExtra= $MaterialsOrderByPriority->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
+    $MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
+        return count($chapter->chapters->where("type","!=","Lesson")->where("type","!=","Announcement"));
+    })->first();
+    $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
+
+
 @endphp
 
 @section("style")
@@ -219,7 +235,7 @@
                                     <div class="d-flex justify-content-around">
                                         {{--                                        <span class="font-12 text-primary">Μέτριο</span>--}}
                                         <span
-                                            class="font-14 text-black">{{$MaterialsOrderByPriority->count()}} Μάθηματα</span>
+                                            class="font-14 text-black">{{$textMaterial}}</span>
 
                                     </div>
                                 </a>
@@ -326,7 +342,7 @@
                         @php
                         $count = 0;
                         @endphp
-                        @foreach($MaterialsOrderByPriority as $material)
+                        @foreach($MaterialsOrderByPriority as $key=> $material)
 
 
                             @php
@@ -354,7 +370,7 @@
                                            aria-expanded="true" aria-controls="{{$material->slug}}-collapse">
                                         <div class="card-header d-flex align-center head-section " id="{{$material->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
-                                                <span class="mr-2">Ενότητα :</span>
+                                                <span class="mr-2">Ενότητα {{$key -$count+1 }} :</span>
 
                                                     {{$material->title}}
 
@@ -367,7 +383,7 @@
                                              data-parent="#{{$material->slug}}">
                                             <div class="p-0 card-body">
 
-                                                @foreach($material->chapters->where("type", "!=", "Announcement")  as $chapter)
+                                                @foreach($material->chapters->where("type", "!=", "Announcement")  as   $chapter)
 
                                                     @php
                                                         $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();

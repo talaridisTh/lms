@@ -843,7 +843,7 @@ figure.image-center {
 .bg-light-gray:hover {
 	background-color: #383f49;
 
-} 
+}
 
 .row-hover:hover:not(.extra-content-row) {
     background-color: #3a444e;
@@ -862,4 +862,43 @@ figure.image-center {
 figure > img {
 	width: 100%;
 	height: auto;
+}
+
+
+.left-side-menu {
+    display: none;
+}
+
+.box-material-down {
+    background: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
+    border-top: 1px solid white;
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+
+}
+
+.box-material-up {
+    background: #E0A228;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+    background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%)
+
+}
+
+
+.list-material:hover {
+
+    cursor: pointer;
+    background: rgba(231, 231, 231, 0.51);
+}
+
+.list-material {
+    border-radius: 5px;
+    background: rgba(231, 231, 231, 0.2);
+    margin-bottom: 10px;
+}
+
+
+.ribbon-edit:hover {
+    text-decoration: underline;
 }

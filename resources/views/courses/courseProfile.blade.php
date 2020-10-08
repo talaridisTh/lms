@@ -3,53 +3,31 @@
 @section("style")
 
 
-
-
-    <style>
-        .left-side-menu {
-            display: none;
-        }
-
-        .box-material-down {
-            background: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
-            border-top: 1px solid white;
-            border-bottom-right-radius: 8px;
-            border-bottom-left-radius: 8px;
-
-        }
-
-        .box-material-up {
-            background: #E0A228;
-            border-top-right-radius: 8px;
-            border-top-left-radius: 8px;
-            background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%)
-
-        }
-
-
-        .list-material:hover {
-
-            cursor: pointer;
-            background: rgba(231, 231, 231, 0.51);
-        }
-
-        .list-material {
-            border-radius: 5px;
-            background: rgba(231, 231, 231, 0.2);
-            margin-bottom: 10px;
-        }
-
-
-        .ribbon-edit:hover {
-            text-decoration: underline;
-        }
-
-
-    </style>
 @endsection
 @php
+//background
     $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";
-       $count=0;
+
+//count Material
+    $countMaterial= $allMaterial->where("type","Lesson")->count()+
+    $allMaterial->where("type","Section")->map(function ($chapter){
+        return count($chapter->chapters->where("type","Lesson"));
+    })->first();
+    $textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
+
+
+//count extra
+    $countExtra= $allMaterial->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
+    $allMaterial->where("type","Section")->map(function ($chapter){
+        return count($chapter->chapters->where("type","!=","Lesson")->where("type","!=","Announcement"));
+    })->first();
+    $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
+
+
+
+
+
+
 
 @endphp
 @section("content")
@@ -152,8 +130,8 @@
                 <div class="col-md-12 col-xl-4 px-md-5  d-flex justify-content-between text-light">
                     {{--                    <span>metrio</span>--}}
 
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","mdi mdi-file-document-outline")->count()}} Μαθήματα  </span>
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$allMaterial->where("type","!=","mdi mdi-file-document-outline")->count()}} Βοηθητικά Αρχεία  </span>
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textExtra}}  </span>
                     @foreach($topics as $topic)
                         <span class="topic-title  border px-2">{{$topic}}</span>
                     @endforeach
@@ -287,11 +265,13 @@
 
                                                 @foreach($materials->chapters->where("type", "!=", "Announcement") as $chapter)
 
+
+
                                                     @php
-                                                        $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
-                                                         $link = route('index.material.show',[$course->slug,$chapter->slug]);
-                                                            $hover=  isset($active)? "data-hover='hover'" :'';
-                                                         $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$chapter->pivot->priority;
+                                                           $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
+                                                            $link = route('index.material.show',[$course->slug,$chapter->slug]);
+                                                               $hover=  isset($active)? "data-hover='hover'" :'';
+                                                            $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$chapter->pivot->priority;
                                                     @endphp
                                                     <ul data-course-id="{{$course->id}}" style="max-height: 800px"
                                                         class="my-2 p-0">
