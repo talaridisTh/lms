@@ -644,7 +644,7 @@ function multipleChapterDeactivateInit() {
 
 	$(".deactivate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
-		let sectionSlug = this.dataset.sectionSlug;
+		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let data = [];
 	
@@ -656,7 +656,7 @@ function multipleChapterDeactivateInit() {
 		});
 	
 		Swal.fire({
-			title: 'Ενεργοποίηση;',
+			title: 'Απενεργοποίηση;',
 			html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
 			icon: 'info',
 			showCancelButton: true,
@@ -666,7 +666,7 @@ function multipleChapterDeactivateInit() {
 	
 			if (result.isConfirmed) {
 	
-				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, data, mainCnt, checkedboxes )
 	
 			}
 		})
@@ -678,7 +678,7 @@ function multipleChapterDeactivateInit() {
 function multipleChapterActivateInit() {
 	$(".activate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
-		let sectionSlug = this.dataset.sectionSlug;
+		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let data = [];
 	
@@ -700,7 +700,7 @@ function multipleChapterActivateInit() {
 	
 			if (result.isConfirmed) {
 	
-				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, data, mainCnt, checkedboxes )
 	
 			}
 		})
@@ -722,10 +722,10 @@ function chapterPriorityInit() {
 
 		if ( event.keyCode == 13 && !isNaN( this.value) ) {
 
-			let sectionSlug = this.dataset.sectionSlug;
+			let sectionId = this.dataset.sectionId;
 
-			axios.patch(`/section/${sectionSlug}/chapters-priority`, {
-				courseId,
+			axios.patch(`/section/chapters-priority`, {
+				courseId, sectionId,
 				materialId: this.dataset.materialId,
 				priority: {
 					new: this.value,
@@ -760,10 +760,10 @@ function chapterStatusInit() {
 
 	$(".js-chapter-toggle").on("change", function() {
 
-		let sectionSlug = this.dataset.sectionSlug;
+		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
-			courseId, 
+		axios.patch(`/section/toggle-chapters`, {
+			courseId, sectionId,
 			data: [{
 				id: this.dataset.materialId,
 				status: this.checked ? 1 : 0
@@ -843,7 +843,7 @@ function multipleChapterRemoveInit() {
 	$(".js-multiple-chapter-remove").on("click", function() {
 
 		let mainCnt = this.findParent(5);
-		let sectionSlug = mainCnt.getElementsByClassName("table")[0].dataset.sectionSlug;
+		let sectionId = mainCnt.getElementsByClassName("table")[0].dataset.sectionId;
 		let checked = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let ids = [];
 
@@ -851,8 +851,6 @@ function multipleChapterRemoveInit() {
 			ids.push(checked.dataset.materialId)
 		});
 
-
-		
 		Swal.fire({
 			title: 'Είστε σίγουρος/η;',
 			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${ids.length} απο</p>τα περιεχόμενα του Course.`,
@@ -863,7 +861,7 @@ function multipleChapterRemoveInit() {
 		}).then( (result) => {
 			if (result.isConfirmed) {
 
-				removeChapters(sectionSlug, ids);
+				removeChapters(sectionId, ids);
 
 			}
 		})
@@ -899,7 +897,7 @@ function removeMaterialSectionBtnInit() {
 	
 	btn.on("click", function() {
 
-		let sectionSlug = this.findParent(4).dataset.sectionSlug;
+		let sectionId = this.findParent(4).dataset.sectionId;
 		let id = [this.dataset.materialId];
 
 		Swal.fire({
@@ -913,7 +911,7 @@ function removeMaterialSectionBtnInit() {
 			
 			if (result.isConfirmed) {
 	
-				removeChapters(sectionSlug, id);
+				removeChapters(sectionId, id);
 	
 			}
 		})
@@ -1407,10 +1405,10 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
 }
 
-function toggleChapters( sectionSlug, data, mainCnt, checkedboxes ) {
+function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
-		courseId, data
+	axios.patch(`/section/toggle-chapters`, {
+		courseId, sectionId, data
 	})
 	.then( res => {
 		let icon = "";
@@ -1445,10 +1443,10 @@ function toggleChapters( sectionSlug, data, mainCnt, checkedboxes ) {
 
 }
 
-function removeChapters(sectionSlug, chapterIds) {
+function removeChapters(sectionId, chapterIds) {
 
-	axios.post(`/section/${sectionSlug}/remove-chapters`, {
-		courseId, chapterIds
+	axios.post(`/section/remove-chapters`, {
+		courseId, sectionId, chapterIds
 	})
 	.then( res => {
 		let message = chapterIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${chapterIds.length} αρχεία εκτός ύλης`;

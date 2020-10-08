@@ -59,12 +59,12 @@
 							</a>
 							<div class="dropdown-menu py-0">
 								<a class="activate-chapters dropdown-item my-0 py-2" href="#"
-									data-section-slug="{{ $section->slug }}">Ενεργοποιήση</a>
+									data-section-id="{{ $section->id }}">Ενεργοποιήση</a>
 
 								<div class="dropdown-divider my-0"></div>
 
 								<a class="deactivate-chapters dropdown-item my-0 py-2" href="#"
-									data-section-slug="{{ $section->slug }}">Απενεργοποίηση</a>
+									data-section-id="{{ $section->id }}">Απενεργοποίηση</a>
 							</div>
 						</div>
 
@@ -79,7 +79,7 @@
 		<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
 			aria-labelledby="{{ $section->slug }}" data-parent="#section-accordion">
 			<div class="card-body overflow-x-auto">
-				<table class="table mb-0" data-section-slug="{{ $section->slug }}">
+				<table class="table mb-0" data-section-id="{{ $section->id }}" data-section-slug="{{ $section->slug }}">
 					<thead>
 						<tr>
 							<th class="text-center align-middle" scope="col">
@@ -120,7 +120,7 @@
 									$status = $material->pivot->status == 0 ? "" : "checked";
 								@endphp
 
-								<input id='{{ $material->slug }}-toggle-checkbox' data-section-slug="{{ $section->slug }}"
+								<input id='{{ $material->slug }}-toggle-checkbox' data-section-id="{{ $section->id }}"
 									class="js-chapter-toggle" data-material-id='{{ $material->id }}'
 									type='checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
 								<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
@@ -128,7 +128,7 @@
 							<td class="align-middle text-center">
 								<div class='form-group mb-0'>
 									<input type='text' class='js-chapter-priority form-control text-center'
-										data-material-id='{{ $material->id }}' data-section-slug="{{ $section->slug }}"
+										data-material-id='{{ $material->id }}' data-section-id="{{ $section->id }}"
 										data-current-priority="{{ $material->pivot->priority }}"
 										value="{{ $material->pivot->priority }}" autocomplete='off'>
 								</div>

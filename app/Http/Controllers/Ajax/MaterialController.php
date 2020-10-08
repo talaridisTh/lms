@@ -358,7 +358,9 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	public function removeChapters(Material $material, Request $request) {
+	public function removeChapters(Request $request) {
+
+		$material = Material::find($request->sectionId);
 
 		$course = Course::find( $request->courseId );
 
@@ -382,7 +384,9 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	public function toggleChapters(Material $material, Request $request) {
+	public function toggleChapters( Request $request ) {
+
+		$material = Material::find( $request->sectionId );
 		
 		foreach ($request->data as $chapter ) {
 			$material->chapters()
@@ -391,7 +395,9 @@ class MaterialController extends Controller {
 
 	}
 
-	public function chaptersPriority(Material $material, Request $request) {
+	public function chaptersPriority(Request $request) {
+
+		$material = Material::find( $request->sectionId );
 
 		$lastInOrder = $material->chapters()
 			->orderBy("priority", "desc")->first()->pivot->priority;
