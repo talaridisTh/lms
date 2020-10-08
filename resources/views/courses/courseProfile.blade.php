@@ -124,9 +124,10 @@
                     </div>
                 </div>
             </div>
+
             <div class="row p-2 box-material-down  color-topic-second"
                  style="background:{{$bgColor}}">
-                <div class="col-md-12 col-xl-4 px-md-5  d-flex justify-content-between text-light">
+                <div class="col-md-12 col-xl-4 px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">
                     {{--                    <span>metrio</span>--}}
 
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>
