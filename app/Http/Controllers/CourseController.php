@@ -218,11 +218,37 @@ class CourseController extends Controller
 			if ( $key === "materials" ) {
 
 				foreach ( $relation as $material ) {
-	
-					// $status = $material->pivot->status;
+
 					$priority = $material->pivot->priority;
 					$publish_at = $material->pivot->publish_at;
-	
+
+					if ( $material->type == "Section" ) {
+						$newSection = $material->replicate();
+						$newSection->push();
+
+						$material->chapters()->orderBy("priority")
+							->each( function($chapter) use ($newSection) {
+
+								static $counter = 1;
+
+								$newSection->chapters()
+									->attach( $chapter->id, [
+										"status" => 0,
+										"priority" => $counter++
+									]);
+
+							});
+
+						$newCourse->materials()->attach($newSection->id, [
+							'status' => 0,
+							'priority' => $priority,
+							'publish_at' => $publish_at
+						]);
+
+						continue;
+
+					}
+
 					$newCourse->materials()->attach($material->id, [
 						'status' => 0,
 						'priority' => $priority,
