@@ -46,25 +46,29 @@
 
 				<div class="dropdown">
 					<i id="{{ $section->slug }}-dropdown" class="js-section-dots ml-2 mdi mdi-dots-vertical cursor-pointer custom-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-					<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated" aria-labelledby="{{ $section->slug }}-dropdown">
+					<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated py-0" aria-labelledby="{{ $section->slug }}-dropdown">
 						<a class="js-add-chapters-btn dropdown-item d-block py-2" href="#"
 							data-toggle="modal" data-chapter="{{ $section->id }}"
 							data-target="#add-materials-modal">Προσθήκη Υλικού</a>
-						<div class="dropdown-divider"></div>
+
+						<div class="dropdown-divider my-0"></div>
 						
 						<div class="btn-group dropleft w-100">
-							<a class="js-chapters-status dropdown-toggle dropdown-item cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<a class="js-chapters-status py-2 dropdown-toggle dropdown-item cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Αλλαγή κατάστασης (0)
 							</a>
-							<div class="dropdown-menu">
-								<a class="activate-chapters dropdown-item" href="#"
+							<div class="dropdown-menu py-0">
+								<a class="activate-chapters dropdown-item my-0 py-2" href="#"
 									data-section-slug="{{ $section->slug }}">Ενεργοποιήση</a>
-								<a class="deactivate-chapters dropdown-item" href="#"
+
+								<div class="dropdown-divider my-0"></div>
+
+								<a class="deactivate-chapters dropdown-item my-0 py-2" href="#"
 									data-section-slug="{{ $section->slug }}">Απενεργοποίηση</a>
 							</div>
 						</div>
 
-						<div class="dropdown-divider"></div>
+						<div class="dropdown-divider my-0"></div>
 						<a class="js-multiple-chapter-remove dropdown-item d-block py-2" href="#" disabled>Αφαίρεση επιλεγμένων (0)</a>
 					</div>
 				</div>
@@ -74,7 +78,7 @@
 
 		<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
 			aria-labelledby="{{ $section->slug }}" data-parent="#section-accordion">
-			<div class="card-body">
+			<div class="card-body overflow-x-auto">
 				<table class="table mb-0" data-section-slug="{{ $section->slug }}">
 					<thead>
 						<tr>
@@ -84,18 +88,18 @@
 									<label for='{{ $section->slug }}-main-checkbox'></label>
 								</div>
 							</th>
-							<th class="text-center" scope="col" style="min-width: 400px;">Title</th>
+							<th class="text-center" scope="col">Title</th>
 							<th class="text-center w-10" scope="col">Κατάσταση</th>
 							<th class="text-center w-10" scope="col">Κατάταξη</th>
 							<th class="text-center w-10" scope="col">Τύπος</th>
-							<th class="text-center" scope="col">Τελ. Ανανέωση</th>
+							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
 							<th class="text-center w-5" scope="col"></th>
 						</tr>
 					</thead>
 					<tbody>
 
 						@forelse ($section->chapters()->orderBy("priority")->get() as $material)
-						<tr class="js-accordion-row" data-material-id="{{ $material->id }}">
+						<tr class="js-accordion-row row-hover" data-material-id="{{ $material->id }}">
 							<td class="text-center align-middle">
 								<div class='icheck-primary d-inline'>
 									<input id='{{ $material->slug }}-chapter-checkbox'
@@ -106,7 +110,7 @@
 							</td>
 							<td>
 								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
-								<p class='mb-1'>{{ $material->slug }}</p>
+								<p class='overflow-ellipsis mb-1' title="{{ $material->slug }}" style="max-width: 400px;">{{ $material->slug }}</p>
 								<a href='/dashboard/material/{{ $material->slug }}' class='custom-link-primary'>Edit</a>
 								<span class='mx-2'>|</span>
 								<a href='#' class='custom-link-primary'>View</a>

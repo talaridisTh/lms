@@ -27,17 +27,15 @@ class CourseController extends Controller
 
     public function create()
     {
-		$topics = Topic::all();
-		$instructors = Role::find( 2 )->users;
 
 		$data = [
-			'topics' => $topics,
-			'instructors' => $instructors
+			'topics' => Topic::all(),
+			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
+			'instructors' => Role::find( 2 )->users
 		];
 		return view('admin/courses/newCourse')->with( $data );
 
     }
-
 
     public function store(BundleCourseRequest $request)
     {

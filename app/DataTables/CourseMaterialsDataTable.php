@@ -54,11 +54,20 @@ class CourseMaterialsDataTable extends DataTable
 			})
 			->editColumn('title', function($data) {
 
-				return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>
-						<p class='mb-1'>$data->slug</p>
-						<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
-						<span class='mx-2'>|</span>
-						<a href='#' class='custom-link-primary'>View</a>";
+				if ($data->type != "Section") {
+
+					return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+							<p class='mb-1'>$data->slug</p>
+							<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
+							<span class='mx-2'>|</span>
+							<a href='#' class='custom-link-primary'>View</a>";
+
+				}
+				else {
+					return "<h4>$data->title</h4>";
+				}
+
+
 
 			})
 			->editColumn('updated_at', function($data) {
@@ -106,6 +115,18 @@ class CourseMaterialsDataTable extends DataTable
 					'type', 'updated_at', 'created_at', 'btns'
 				]
 			)
+			->setRowClass(function ($data) {
+
+				if ( $data->type == "Section" ) {
+					
+					return 'bg-light-gray';
+
+				}
+				else {
+					return "row-hover";
+				}
+
+			})
 			->setRowAttr(
 				[ 'data-material-id' => function($data) {
 

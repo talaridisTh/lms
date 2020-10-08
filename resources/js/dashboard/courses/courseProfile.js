@@ -202,16 +202,6 @@ $("#deactivate-selection").on( "click", function() {
 
 });
 
-$(".tab-link").on("show.bs.tab", function(event) {
-
-		event.preventDefault();
-		Swal.fire(
-			'Προσοχή',
-			'<p>Θα πρέπει να αποθηκεύσετε το Course</p>για να συνεχίσετε!',
-			'info'
-		);
-})
-
 $("#courseDelete-btn").on( "click", function() {
 	Swal.fire({
 		title: 'Είστε σίγουρος;',
@@ -1044,7 +1034,7 @@ $("#active-user-roles").on( "change", function () {
 	let label = $("#select2-active-user-roles-container")[0];
 	utilities.filterStyle( label, this.value )
 
-	courseUsersDatatable.columns(3).search( this.value ).draw();
+	courseUsersDatatable.columns(5).search( this.value ).draw();
 
 });
 
@@ -1063,7 +1053,7 @@ $("#add-users-roles").on( "change", function () {
 	let label = $('#select2-add-users-roles-container')[0];
 
 	utilities.filterStyle( label, this.value )
-	addCourseUsersDatatable.columns(3).search( this.value ).draw();
+	addCourseUsersDatatable.columns(5).search( this.value ).draw();
 
 });
 
@@ -1916,7 +1906,6 @@ function addContent() {
 			courseMaterialsTable.ajax.reload( null, false );
 
 			$("#section-accordion").html(res.data);
-			console.log(res);
 
 			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
 		})

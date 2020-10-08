@@ -5,50 +5,50 @@
         Επιλογές (0)
     </button>
 
-    <div class="dropdown-menu dropdown-menu-animated">
-        <div class="btn-group dropleft">
-            <div class="dropdown-divider"></div>
-            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated py-0">
+        <div class="btn-group dropleft w-100">
+            <button type="button" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Προσθήκη σε course
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <div class="dropdown-menu py-0">
                 @foreach($activeCourses as $courses)
-                    <a class="dropdown-item js-multiple-update cursor-pointer" data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
+                    <a class="dropdown-item js-multiple-update cursor-pointer py-2" data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
+					<div class="dropdown-divider my-0"></div>
                 @endforeach
             </div>
         </div>
 
-
-        <div class="dropdown-divider"></div>
-        <div class="btn-group dropleft">
-            <div class="dropdown-divider"></div>
-            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Αλλαγή κατάστασης
+		<div class="dropdown-divider my-0"></div>
+		
+        <div class="btn-group dropleft w-100">
+            <button type="button" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				Αλλαγή κατάστασης
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="on">Ενεργά</a>
-                <a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="off">Μη ενεργά</a>
+            <div class="dropdown-menu py-0">
+				<a class="dropdown-item js-multiple-change cursor-pointer py-2" data-courses-change="on">Ενεργά</a>
+				<div class="dropdown-divider my-0"></div>
+				<a class="dropdown-item js-multiple-change cursor-pointer py-2" data-courses-change="off">Μη ενεργά</a>
             </div>
         </div>
 
-
-
-        <div class="dropdown-divider"></div>
-        <div class="btn-group dropleft">
-            <div class="dropdown-divider"></div>
-            <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		<div class="dropdown-divider my-0"></div>
+		
+        <div class="btn-group dropleft w-100">
+            <button type="button" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Export
             </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Print</a>
-                <a class="dropdown-item button-Excel" href="{{route('export.usersAll')}}">Excel</a>
-                <a class="dropdown-item" href="#">CVS </a>
+            <div class="dropdown-menu py-0">
+                <a class="dropdown-item py-2" href="#">Print</a>
+				<div class="dropdown-divider my-0"></div>
+                <a class="dropdown-item button-Excel py-2" href="{{route('export.usersAll')}}">Excel</a>
+				<div class="dropdown-divider my-0"></div>
+                <a class="dropdown-item py-2" href="#">CVS </a>
             </div>
         </div>
 
+        <div class="dropdown-divider my-0"></div>
 
 
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item js-multiple-delete" href="#">Διαγραφή επιλεγμένων</a>
+        <a class="dropdown-item js-multiple-delete py-2" href="#">Διαγραφή επιλεγμένων</a>
     </div>
 </div>

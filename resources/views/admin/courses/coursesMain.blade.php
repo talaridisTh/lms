@@ -82,12 +82,12 @@
 
 	<div class="container table-cnt content-width">
 
-		<div class="row mb-2">
+		<div class="row mb-2 sticky-btns">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
 
-				<div class="text-sm-right sticky-btns">
-					<a href="/dashboard/course/" class="btn btn-primary mb-2">
+				<div class="text-sm-right">
+					<a href="/dashboard/courses/create" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Νέο Course
 					</a>
@@ -97,12 +97,12 @@
 							aria-haspopup="true" aria-expanded="false">
 							Επιλογές (0)
 						</button>
-						<div class="dropdown-menu">
-							<a id="delete-courses-btn" class="dropdown-item" href="#">Διαγραφή</a>
-							<div class="dropdown-divider"></div>
+						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
+							<a id="delete-courses-btn" class="dropdown-item py-2" href="#">Διαγραφή</a>
+							{{-- <div class="dropdown-divider"></div>
 							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Export</a>
+							<a class="dropdown-item" href="#">Export</a> --}}
 						</div>
 					</div>
 				</div>
