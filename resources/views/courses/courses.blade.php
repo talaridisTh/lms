@@ -13,28 +13,29 @@
                 <div class="row">
                     <h3 class="m-2">Μαθήματα</h3>
                     @if(empty(!$arrayTopics))
-                    <div class="col-md-12 ">
-                        <div id="topic-filter" class="p-2 rounded text-dark"
+                        <div class="col-md-12 ">
+                            <div id="topic-filter" class="p-2 rounded text-dark"
                             >
-                            <div class="container">
-                                <ul data-user-slug="{{auth()->user()->slug}}" class="d-flex topic-link justify-content-around">
-                                    <li class="filter-topic"  data-topic-id="reset" >
-                                        <a href="#"> <span class="text-dark">Όλα </span></a>
-                                    </li>
+                                <div class="container">
+                                    <ul data-user-slug="{{auth()->user()->slug}}"
+                                        class="d-flex topic-link justify-content-around">
+                                        <li class="filter-topic" data-topic-id="reset">
+                                            <a href="#"> <span class="text-dark">Όλα </span></a>
+                                        </li>
 
-                                    @foreach($arrayTopics as $key => $topic)
-                                    <li class="filter-topic "  data-topic-id="{{$key}}">
-                                        <a href="#">
-                                            <span>{{$topic}}</span>
-                                        </a>
-                                    </li>
-                                    @endforeach
-                                </ul>
+                                        @foreach($arrayTopics as $key => $topic)
+                                            <li class="filter-topic " data-topic-id="{{$key}}">
+                                                <a href="#">
+                                                    <span>{{$topic}}</span>
+                                                </a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @else
-                        <h2 >
+                        <h2>
                             Δεν υπάρχουν Courses
                         </h2>
                     @endif
@@ -45,6 +46,7 @@
                 </div>
             </div>
         </div>
+    </div>
 
 
 
@@ -52,12 +54,9 @@
 
 
 @section("script")
-            <x-routes></x-routes>
-            <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
+    <x-routes></x-routes>
+    <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
 
-            <script>
-
-            </script>
 
 @endsection
 
