@@ -150,6 +150,7 @@ $("#bundle-delete-btn").on( "click", function() {
 		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
 		icon: 'warning',
 		showCancelButton: true,
+		confirmButtonColor: '#ff5b5b',
 		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
@@ -390,6 +391,7 @@ function removeUserBinInit() {
 			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει έναν απο</p>τους χρήστες του Bundle.`,
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {

@@ -124,6 +124,7 @@ $("#remove-all-files-btn").on("click", function() {
 		title: 'Προσοχή!',
 		text: 'Αφαίρεση όλων των αρχείων;',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: `Ναι, αφαίρεση!`,
 		cancelButtonText: `Ακύρωση`,
 	}).then((result) => {
@@ -211,6 +212,7 @@ $("#activate-selection").on( 'click', function() {
 		html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
 		icon: 'info',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: 'Ναι, ενεργοποίηση!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
@@ -240,6 +242,7 @@ $("#deactivate-selection").on( "click", function() {
 		html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
 		icon: 'warning',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: 'Ναι, απενεργοποίηση!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
@@ -253,23 +256,23 @@ $("#deactivate-selection").on( "click", function() {
 
 });
 
-$("#courseDelete-btn").on( "click", function() {
-	Swal.fire({
-		title: 'Είστε σίγουρος;',
-		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonText: 'Ναι, διαγραφή!',
-		cancelButtonText: 'Άκυρο'
-	}).then( (result) => {
+// $("#courseDelete-btn").on( "click", function() {
+// 	Swal.fire({
+// 		title: 'Είστε σίγουρος;',
+// 		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
+// 		icon: 'warning',
+// 		showCancelButton: true,
+// 		confirmButtonText: 'Ναι, διαγραφή!',
+// 		cancelButtonText: 'Άκυρο'
+// 	}).then( (result) => {
 
-		if (result.value) {
+// 		if (result.value) {
 
-			$("#delete-course-form").submit();
+// 			$("#delete-course-form").submit();
 
-		}
-	})
-})
+// 		}
+// 	})
+// })
 
 let publishDate = $("#publish-date-select").daterangepicker({
 	singleDatePicker: true,
@@ -368,6 +371,7 @@ $("#remove-selected-users-btn").on( "click", function() {
 		text: `Η ενέργεια θα αφαιρέσει ${ i > 1 ? i : "έναν" } απο τους χρήστες.`,
 		icon: 'warning',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: 'Ναι, αφαίρεση!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
@@ -439,6 +443,7 @@ $('#remove-selection-btn').on( "click", function() {
 			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${i} απο</p>τα περιεχόμενα του Course.`,
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -711,6 +716,7 @@ function multipleChapterDeactivateInit() {
 			html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
 			icon: 'info',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, απενεργοποιήση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -745,6 +751,7 @@ function multipleChapterActivateInit() {
 			html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
 			icon: 'info',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, ενεργοποίηση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -907,6 +914,7 @@ function multipleChapterRemoveInit() {
 			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${ids.length} απο</p>τα περιεχόμενα του Course.`,
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -956,6 +964,7 @@ function removeMaterialSectionBtnInit() {
 			text: 'Το υλικό θα αφαιρεθεί απο το Course.',
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -1219,6 +1228,7 @@ function removeUserBtnInit() {
 			html: "<p class='mb-0'>Η ενέργεια θα αφαιρέσει έναν</p>απο τους χρήστες του Course.",
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -1483,10 +1493,11 @@ function removeMaterialHandler() {
 
 	Swal.fire({
 		title: "Είστε σίγουρος/η;",
-		text: 'Το υλικό θα αφαιρεθεί απο το Course.',
+		text: 'Η ενότητα θα διαγραφεί απο το Course.',
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonText: 'Ναι, αφαίρεση!',
+		confirmButtonColor: '#ff5b5b',
+		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
 
