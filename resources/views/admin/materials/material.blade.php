@@ -199,25 +199,49 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="summary">Σύνοψη</label>
+								<div class="d-flex justify-content-between align-items-center">
+									<label for="toggle">Σύνοψη</label>
+									<input id="summary-toggle" class="js-editors-toggle"
+										data-field="summary" type="checkbox" data-switch="bool"
+										@if ( isset($fields->summary) && $fields->summary == 1)
+											checked
+										@endif
+									/>
+									<label for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
+								</div>
+
                                 <textarea id="summary" name="summary" class="form-control" rows="5"
                                     placeholder="Εισάγετε σύνοψη...">{{ old('summary') != "" ? old('summary')
 											: (isset($material) ? $material->summary : "") }}</textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="description-material">
-                                    Περιγραφή
-                                </label>
+								<div class="d-flex justify-content-between align-items-center">
+									<label for="description-material">Περιγραφή</label>
+									<input id="description-toggle" class="js-editors-toggle"
+										data-field="description" type="checkbox" data-switch="bool"
+										@if ( isset($fields->description) && $fields->description == 1)
+											checked
+										@endif
+									/>
+									<label for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+								</div>
                                 <textarea id="description-material" name="description" class="form-control" rows="5"
                                     placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description')
 											: (isset($material) ? $material->description : "") }}</textarea>
                             </div>
 
                             <div class="form-group">
-                                <label for="content-material">
-                                    Περιεχόμενο
-                                </label>
+								<div class="d-flex justify-content-between align-items-center">
+									<label for="content-material">Περιεχόμενο</label>
+									<input id="content-toggle" class="js-editors-toggle"
+										data-field="content" type="checkbox" data-switch="bool"
+										@if ( isset($fields->content) && $fields->content == 1)
+											checked
+										@endif
+									/>
+									<label for="content-toggle" data-on-label="On" data-off-label="Off"></label>
+								</div>
                                 <textarea id="content-material" name="content" class="form-control" rows="5"
                                     placeholder="Εισάγετε περιεχόμενο μαθήματος...">{{ old('content') != "" ? old('content')
 											: (isset($material) ? $material->content : "") }}</textarea>
@@ -262,22 +286,15 @@
                                     Remove all
                                 </button>
                             </div>
-
                             <div id="active-files-loading" class="row d-none my-3">
                                 <div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
                             </div>
-
-
                             <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
                                 @include('components/admin/filesTable', ["files" => $files])
                             </div>
-
-
                             <input id="material-file-upload" type="text">
                         </div>
                         @endisset
-
-
                     </div><!-- ./form inputs -->
 
                     <div class="col-xl-3 col-lg-4 col-md-12 pt-1">
@@ -375,46 +392,6 @@
                                         @endphp
                                     </select>
                                 </div>
-
-								<hr>
-								<div class="d-flex justify-content-between align-items-center">
-									<label class="mb-0" for="summary-toggle">Σύνοψη</label>
-									<input id="summary-toggle" class="js-editors-toggle"
-										data-field="summary" type="checkbox" data-switch="bool"
-										@if ( isset($fields->summary) && $fields->summary == 1)
-											checked
-										@endif
-									/>
-									<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
-								</div>
-
-								<hr>
-								<div class="d-flex justify-content-between align-items-center">
-									<label class="mb-0" for="description-toggle">Περιγραφή</label>
-									<input id="description-toggle" class="js-editors-toggle"
-										data-field="description" type="checkbox" data-switch="bool"
-										@if ( isset($fields->description) && $fields->description == 1)
-											checked
-										@endif
-									/>
-									<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
-								</div>
-
-								<hr>
-								<div class="d-flex justify-content-between align-items-center">
-									<label class="mb-0" for="content-toggle">Περιεχόμενο</label>
-									<input id="content-toggle" class="js-editors-toggle"
-										data-field="content" type="checkbox" data-switch="bool"
-										@if ( isset($fields->content) && $fields->content == 1)
-											checked
-										@endif
-									/>
-									<label class="mb-0" for="content-toggle" data-on-label="On" data-off-label="Off"></label>
-								</div>
-
-
-
-
 
                             </div>
                         </div>
