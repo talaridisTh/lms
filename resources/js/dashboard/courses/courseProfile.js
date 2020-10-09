@@ -20,6 +20,16 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$("#section-chapter-btn").on("click", function() {
+
+	const modal = $("#sections-additions-modal")[0];
+	const sectionId = modal.dataset.sectionId;
+	const priority = modal.dataset.priority;
+
+	window.location = `/dashboard/materials/coursematerial/${courseSlug}/${priority}/${sectionId}`;
+
+})
+
 $(".js-section-material").on("click", function() {
 
 	const modal = $("#sections-additions-modal")[0];
@@ -27,14 +37,15 @@ $(".js-section-material").on("click", function() {
 	const priority = modal.dataset.priority;
 	const type = this.dataset.type;
 
-	const selection = document.getElementsByClassName("js-section-addition")[0];
+	// const selection = document.getElementsByClassName("js-section-addition")[0];
+	const selection = document.getElementsByClassName("extra-content-row")[0];
 
 	if (selection) {
 		selection.remove();
 	}
 	
 	const newRow = document.createElement("tr");
-	newRow.classList.add("js-section-addition")
+	newRow.classList.add("extra-content-row")
 
 	const row = $(`table[data-section-id='${sectionId}'] > tbody > tr[data-priority='${priority}']`)[0];
 
@@ -56,6 +67,11 @@ $(".js-section-material").on("click", function() {
 		this.findParent(4).remove();
 	});
 
+	if ( type == "Announcement" ) {
+		$R('#new-announcement', utilities.redactorConfig );
+	}
+
+	$("#sections-additions-modal").modal("hide");
 	
 })
 

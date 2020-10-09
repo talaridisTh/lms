@@ -160,8 +160,13 @@
 									: "/dashboard/materials/store" }}" enctype="multipart/form-data" autocomplete="off">
 
                             @isset($priority)
-                            <input type="text" hidden name="courseId" value="{{ $course->id }}" />
-                            <input type="text" hidden name="priority" value="{{ $priority }}" />
+                            	<input type="text" hidden name="courseId" value="{{ $course->id }}" />
+								<input type="text" hidden name="priority" value="{{ $priority }}" />
+								@if ( !is_null($section) )
+								
+									<input type="text" hidden name="sectionId" value="{{ $section->id }}" />
+									
+								@endif
                             @endisset
 
                             @csrf
