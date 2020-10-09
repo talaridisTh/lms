@@ -43,10 +43,13 @@ $("#color-modal").on("show.bs.modal", function(event) {
 	let button = $(event.relatedTarget);
 	let id = button.data('topic-id');
 	let title = button.data('topic-title');
+	let gradient = button.data('gradient');
+
+	gpickrEdit.setGradient(`${gradient}`);
 
 	let modal = $(this);
 	modal.find("#topic-id").val( id );
-	modal.find("#topic-gradient").val("linear-gradient(90deg, rgba(1, 1, 1, 1) 0%,rgba(255, 1, 1, 1) 100%)");
+	modal.find("#topic-gradient").val(`${gradient}`);
 	modal.find("#color-modal-title").text(`Edit ${title}`);
 });
 
@@ -127,6 +130,7 @@ const topicsDatatable = $("#topics-datatable").DataTable({
     columns: [
         {data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false},
         {data: 'title', name: 'title'},
+        {data: 'gradient'},
     ],
     language: utilities.tableLocale,
     fnInitComplete: function (oSettings, json) {
@@ -147,6 +151,7 @@ const topicsDatatable = $("#topics-datatable").DataTable({
         topicCheckboxesInit();
     }
 });
+
 
 //!##############################################
 //!				Datatable Filters				#
@@ -296,14 +301,9 @@ function resetBulk(bulkBtn, checkbox) {
 //!##############################################
 
 const gpickr = new GPickr({
-	el: '#new-topic-gradient',
-	stops: [
-        ['rgba(66, 68, 90, 1)', 0],
-        ['rgba(32, 182, 221, 1)', 1]
-    ]
-})
+	el: '#new-topic-gradient'
 
-// radial-gradient(circle at right, rgba(66, 68, 90, 1) 0%,rgba(32, 182, 221, 1) 100%)
+})
 
 gpickr.on('change', instance => {
 
@@ -313,10 +313,8 @@ gpickr.on('change', instance => {
 
 const gpickrEdit = new GPickr({
 	el: '#select-edit-gradient',
-	stops: [
-        ['rgb(1,1,1)', 0],
-        ['rgb(255,1,1)', 1]
-    ]
+	stops: []	//! na min sbisti gia kanena logo!!!!
+	
 })
 
 gpickrEdit.on('change', instance => {

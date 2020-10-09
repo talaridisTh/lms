@@ -168,8 +168,8 @@
 					</th>
 					<th class="text-center">Τίτλος</th>
 					{{-- <th class="text-center">Τελ. Ενημέρωση</th>
-					<th class="text-center">Ημ. Δημιουργίας</th>
-                    <th class="text-center">Χρώμα</th> --}}
+					<th class="text-center">Ημ. Δημιουργίας</th> --}}
+                    <th class="text-center">Gradient</th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
@@ -178,8 +178,8 @@
 					<th class="text-center"></th>
 					<th class="text-center">Τίτλος</th>
 					{{-- <th class="text-center">Τελ. Ενημέρωση</th>
-					<th class="text-center">Ημ. Δημιουργίας</th>
-					<th class="text-center">Χρώμα</th> --}}
+					<th class="text-center">Ημ. Δημιουργίας</th> --}}
+					<th class="text-center">Gradient</th>
 				</tr>
 			</tfoot>
 		</table>

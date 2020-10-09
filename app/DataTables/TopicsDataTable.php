@@ -41,9 +41,6 @@ class TopicsDataTable extends DataTable {
 			})
             ->editColumn('title', function ($data) {
 
-				$dNone = is_null($data->color) ? " d-none" : "";
-
-
                 return "<span class='js-quick-edit h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
 					<input type='text' class='js-edit form-control d-none' data-topic-id='$data->id' value='$data->title' placeholder='Εισάγετε Τίτλο...'>
 					<div class='invalid-feedback'>
@@ -53,12 +50,20 @@ class TopicsDataTable extends DataTable {
 					<a href='#' class='js-quick-edit custom-link-primary'>Quick Edit</a>
 					<span class='mx-2'>|</span>
 					<a href='#' class='js-edit-gradient custom-link-primary' data-target='#color-modal'
-						data-topic-id='$data->id' data-topic-title='$data->title' data-toggle='modal'>Edit Gradient</a>
-						<div class='gradient-cnt mt-2 cursor-pointer$dNone' data-target='#color-modal'
-						data-topic-id='$data->id' data-toggle='modal' data-topic-title='$data->title'
-					style='background: $data->color'></div>";
-            })
-            ->rawColumns(['action', 'title', "updated_at", "color", "myColor"]);
+						data-toggle='modal' data-topic-id='$data->id' data-gradient='$data->color'
+						data-topic-title='$data->title'>
+						Edit Gradient
+					</a>";
+			})
+			->addColumn("gradient", function($data) {
+
+				$preview = !is_null($data->color) ? "style='background:$data->color'" : "";
+
+				return "<div class='gradient-cnt mt-2 cursor-pointer' data-target='#color-modal'
+							data-toggle='modal' data-topic-id='$data->id' data-topic-title='$data->title'
+						 data-gradient='$data->color' $preview></div>";
+			})
+            ->rawColumns(['action', 'title', "gradient"]);
     }
 
     /**
