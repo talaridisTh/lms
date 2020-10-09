@@ -227,7 +227,7 @@ eval("ArticleEditor.add('plugin', 'reorder', {\n  defaults: {\n    icon: '<svg h
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\dashboard\courses\courseProfile.js */"./resources/js/dashboard/courses/courseProfile.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\courses\courseProfile.js */"./resources/js/dashboard/courses/courseProfile.js");
 
 
 /***/ })
