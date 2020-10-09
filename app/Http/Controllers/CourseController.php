@@ -51,6 +51,11 @@ class CourseController extends Controller
 			$publishDate = null;
 		}
 
+		$fields = [
+			"summary" => isset($request->summaryEditor) ? 1 : 0,
+			"description" => isset($request->descriptionEditor) ? 1 : 0
+		];
+
 		$course = new Course;
 		$course->title = $request->title;
 		$course->subtitle = $request->subtitle;
@@ -58,6 +63,7 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->status = 0;
 		$course->slug = Str::slug($request->title, "-");
+		$course->fields = json_encode($fields);
 		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;
 		$course->version = $request->version;

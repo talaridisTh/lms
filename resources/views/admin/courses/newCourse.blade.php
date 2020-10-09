@@ -185,9 +185,14 @@
 									</div>
 								</div>
 
-
 								<div class="form-group">
-									<label for="summary">Σύνοψη</label>
+									<div class="d-flex justify-content-between">
+										<label for="summary">Σύνοψη</label>
+										<input id="summary-toggle" class="js-editors-toggle"
+											data-field="summary" type="checkbox" data-switch="bool"
+											name="summaryEditor"/>
+										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
+									</div>
 									<textarea class="form-control @error('summary') is-invalid @enderror"
 										id="summary" name="summary" rows="4" 
 										placeholder="Εισάγετε σύνοψη..."
@@ -200,7 +205,13 @@
 								</div>
 										
 								<div class="form-group">
-									<label for="description">Περιγραφή</label>
+									<div class="d-flex justify-content-between">
+										<label for="description">Περιγραφή</label>
+										<input id="description-toggle" class="js-editors-toggle"
+											data-field="description" type="checkbox" data-switch="bool"
+											name="descriptionEditor"/>
+										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+									</div>
 									<textarea class="form-control @error('description') is-invalid @enderror"
 										id="description" name="description" rows="4"
 										placeholder="Εισάγετε περιγραφή..."
