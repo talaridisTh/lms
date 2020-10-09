@@ -41,7 +41,7 @@
 				<div class="modal-body">
 					<div class="row px-3">
 						<div class="col-6">
-							<div class="card cursor-pointer">
+							<div id="section-chapter-btn" class="card cursor-pointer">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-file-document-outline	display-3"></i>
 									<h5 class="card-title mt-2">Μάθημα</h5>
@@ -76,8 +76,6 @@
 						</div>
 					</div>
 				</div>
-				<input id="store-material-id" type="text" value="" hidden>
-				<input id="store-material-priority" type="text" value="" hidden>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>

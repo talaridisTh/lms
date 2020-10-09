@@ -69,7 +69,19 @@ class MaterialController extends Controller {
 			$course = Course::find( $request->courseId );
 			CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
 
-			$course->materials()->attach( $material->id, ["priority" => ($request->priority + 1)] );
+			if ( isset($request->sectionId) ) {
+				$section = Material::find( $request->sectionId );
+				$section->chapters()->wherePivot("priority", ">", $request->priority)
+					->increment("priority");
+
+				$section->chapters()->attach($material->id, [
+					"priority" => $request->priority + 1,
+					"status" => isset($request->status) ? 1 : 0
+				]);
+			}
+			else {
+				$course->materials()->attach( $material->id, ["priority" => ($request->priority + 1)] );
+			}
 
 			return redirect("/dashboard/course/$course->slug");
 		}
@@ -129,7 +141,7 @@ class MaterialController extends Controller {
 
 	}
 
-	public function courseMaterial(Course $course, $priority) {
+	public function courseMaterial(Course $course, $priority, Material $material = null) {
 
 		$types = [
 			"Lesson" => "Μάθημα",
@@ -140,6 +152,7 @@ class MaterialController extends Controller {
 
 		$data = [
 			"course" => $course,
+			"section" => $material,
 			"priority" => $priority,
 			"media" =>  Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
 			"topics" => Topic::all(),
