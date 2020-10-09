@@ -72,6 +72,11 @@ $(".js-section-material").on("click", function() {
 	}
 
 	$("#sections-additions-modal").modal("hide");
+
+	let statusElm = newRow.getElementsByClassName("select2")[0];
+	$(statusElm).select2({
+		minimumResultsForSearch: -1,
+	});
 	
 })
 
@@ -1854,6 +1859,11 @@ $(".js-material").on( "click", function() {
 		$R('#new-announcement', utilities.redactorConfig );
 	}
 
+	let statusElm = newRow.getElementsByClassName("js-state")[0];
+	$(statusElm).select2({
+		minimumResultsForSearch: -1,
+	});
+
 	$('#add-additions-modal').modal('hide')
 
 });
@@ -1882,9 +1892,9 @@ function linkForm( type, priority) {
 							<label for="link-input">${ type }</label>
 							<input type="text" id="link-input" class="js-empty js-link form-control" placeholder="Εισάγετε link..."/>
 						</div>
-						<div class="form-group col-3">
+						<div class="form-group col-3 d-flex flex-column">
 							<label for="state-select">Κατάσταση</label>
-							<select class="js-state form-control" id="state-select">
+							<select class="js-state form-control select2" id="state-select">
 								<option value="1">Ενεργό</option>
 								<option value="0" selected>Ανενεργό</option>
 							</select>
@@ -1909,9 +1919,9 @@ function annoucementForm( priority ) {
 							<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
 						</div>
 
-						<div class="form-group col-3">
+						<div class="form-group col-3 d-flex flex-column">
 							<label for="state-select">Κατάσταση</label>
-							<select class="js-state form-control" id="state-select">
+							<select class="js-state form-control select2" id="state-select">
 								<option value="1">Ενεργό</option>
 								<option value="0" selected>Ανενεργό</option>
 							</select>
@@ -1945,9 +1955,9 @@ function sectionForm(priority) {
 				<input type="text" class="js-content form-control" placeholder="Εισάγετε περιεχόμενο..." hidden/>
 			</div>
 			<div class="form-row">
-				<div class="form-group col-8">
+				<div class="form-group col-8 d-flex flex-column">
 					<label for="state-select">Κατάσταση</label>
-					<select class="js-state form-control" id="state-select">
+					<select class="js-state form-control select2" id="state-select">
 						<option value="1">Ενεργό</option>
 						<option value="0" selected>Ανενεργό</option>
 					</select>
@@ -1965,16 +1975,17 @@ function sectionForm(priority) {
 }
 
 function createTableRow( type, priority ) {
-	let rowElm = document.createElement("tr");
-	rowElm.classList.add("extra-content-row")
-
-	let addContentRow = $("#add-content-row")[0];
-
+	
+	let addContentRow = $(".extra-content-row")[0];
 	if ( addContentRow ) {
 
 		addContentRow.remove();
 
 	}
+
+	let rowElm = document.createElement("tr");
+	rowElm.classList.add("extra-content-row")
+
 
 	if (type == "Announcement") {
 		rowElm.innerHTML = annoucementForm( priority );
