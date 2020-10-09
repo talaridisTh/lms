@@ -28,6 +28,63 @@
 
 @section('content')
 
+	<!-- additionnal content modal -->
+	<div class="modal fade" id="sections-additions-modal" tabindex="-1" aria-labelledby="sections-additions-modalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			  <div class="modal-content">
+				<div class="modal-header bg-light">
+					<h5 class="modal-title" id="sections-additions-modalLabel">Προσθήκη Υλικού</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="row px-3">
+						<div class="col-6">
+							<div class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-file-document-outline	display-3"></i>
+									<h5 class="card-title mt-2">Μάθημα</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="js-section-material card cursor-pointer" data-type="Announcement">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-comment-quote-outline display-3"></i>
+									<h5 class="card-title mt-2">Ανακοίνωση</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row px-3">
+						<div class="col-6">
+							<div class="js-section-material card cursor-pointer" data-type="Video">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-camcorder	display-3"></i>
+									<h5 class="card-title mt-2">Video</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="js-section-material card cursor-pointer" data-type="Link">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-link-variant-plus	display-3"></i>
+									<h5 class="card-title mt-2">Link</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<input id="store-material-id" type="text" value="" hidden>
+				<input id="store-material-priority" type="text" value="" hidden>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
+			</div>
+		</div>
+	</div><!-- ./additionnal content modal -->
+
 	<div class="modal fade" id="remainings-files-modal" tabindex="-1" role="dialog"
          aria-labelledby="remainings-files-modalLabel"
          aria-hidden="true">
@@ -160,7 +217,6 @@
 					</button>
 				</div>
 				<div class="modal-body">
-
 
 					<div class="row px-3">
 						<div class="col-4">

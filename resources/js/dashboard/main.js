@@ -48,7 +48,8 @@ function toastAlertDelete(text, icon = "warning") {
         title: 'Είστε σίγουρος;',
         text: text,
         icon: icon,
-        showCancelButton: true,
+		showCancelButton: true,
+		confirmButtonColor: '#ff5b5b',
         confirmButtonText: 'Ναί, διαγραφή!',
         cancelButtonText: 'Άκυρο'
     });
@@ -456,6 +457,7 @@ function removeImageHandler() {
 		title: 'Προσοχή!',
 		text: 'Η εικόνα θα αφαιρεθεί απο το Gallery.',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: `Ναι, αφαίρεση!`,
 		cancelButtonText: "Άκυρο"
 	})

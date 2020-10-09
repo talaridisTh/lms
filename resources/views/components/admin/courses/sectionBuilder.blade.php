@@ -59,12 +59,12 @@
 							</a>
 							<div class="dropdown-menu py-0">
 								<a class="activate-chapters dropdown-item my-0 py-2" href="#"
-									data-section-slug="{{ $section->slug }}">Ενεργοποιήση</a>
+									data-section-id="{{ $section->id }}">Ενεργοποιήση</a>
 
 								<div class="dropdown-divider my-0"></div>
 
 								<a class="deactivate-chapters dropdown-item my-0 py-2" href="#"
-									data-section-slug="{{ $section->slug }}">Απενεργοποίηση</a>
+									data-section-id="{{ $section->id }}">Απενεργοποίηση</a>
 							</div>
 						</div>
 
@@ -79,7 +79,7 @@
 		<div id="{{ $section->slug }}-collapse" class="collapse{{ $key == 0 ? " show" : "" }}"
 			aria-labelledby="{{ $section->slug }}" data-parent="#section-accordion">
 			<div class="card-body overflow-x-auto">
-				<table class="table mb-0" data-section-slug="{{ $section->slug }}">
+				<table class="table mb-0" data-section-id="{{ $section->id }}" data-section-slug="{{ $section->slug }}">
 					<thead>
 						<tr>
 							<th class="text-center align-middle" scope="col">
@@ -99,15 +99,23 @@
 					<tbody>
 
 						@forelse ($section->chapters()->orderBy("priority")->get() as $material)
-						<tr class="js-accordion-row row-hover" data-material-id="{{ $material->id }}">
-							<td class="text-center align-middle">
+						<tr class="js-accordion-row row-hover" data-material-id="{{ $material->id }}"
+							data-priority="{{ $material->pivot->priority }}">
+							<td class="position-relative text-center align-middle ">
 								<div class='icheck-primary d-inline'>
 									<input id='{{ $material->slug }}-chapter-checkbox'
 										class="js-chapter-checkbox" type='checkbox'
 										data-material-id="{{ $material->id }}" autocomplete='off'>
 									<label for='{{ $material->slug }}-chapter-checkbox'></label>
 								</div>
+
+								<a class='custom-primary add-material' href='#' data-section-id="{{ $section->id }}"
+									data-priority='{{ $material->pivot->priority }}' data-toggle='modal'
+									data-target='#sections-additions-modal'>
+									<i class='mdi mdi-plus-circle-outline mr-1'></i>
+								</a>
 							</td>
+
 							<td>
 								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
 								<p class='overflow-ellipsis mb-1' title="{{ $material->slug }}" style="max-width: 400px;">{{ $material->slug }}</p>
@@ -120,7 +128,7 @@
 									$status = $material->pivot->status == 0 ? "" : "checked";
 								@endphp
 
-								<input id='{{ $material->slug }}-toggle-checkbox' data-section-slug="{{ $section->slug }}"
+								<input id='{{ $material->slug }}-toggle-checkbox' data-section-id="{{ $section->id }}"
 									class="js-chapter-toggle" data-material-id='{{ $material->id }}'
 									type='checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
 								<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
@@ -128,7 +136,7 @@
 							<td class="align-middle text-center">
 								<div class='form-group mb-0'>
 									<input type='text' class='js-chapter-priority form-control text-center'
-										data-material-id='{{ $material->id }}' data-section-slug="{{ $section->slug }}"
+										data-material-id='{{ $material->id }}' data-section-id="{{ $section->id }}"
 										data-current-priority="{{ $material->pivot->priority }}"
 										value="{{ $material->pivot->priority }}" autocomplete='off'>
 								</div>
@@ -158,6 +166,17 @@
 							<td colspan="6" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
 						@endforelse
 					</tbody>
+					<thead>
+						<tr>
+							<th scope="col"></th>
+							<th class="text-center" scope="col">Title</th>
+							<th class="text-center w-10" scope="col">Κατάσταση</th>
+							<th class="text-center w-10" scope="col">Κατάταξη</th>
+							<th class="text-center w-10" scope="col">Τύπος</th>
+							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
+							<th class="text-center w-5" scope="col"></th>
+						</tr>
+					</thead>
 				</table>
 			</div><!-- ./card-body -->
 		</div><!-- ./accordion -->

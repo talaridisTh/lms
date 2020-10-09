@@ -76,6 +76,7 @@ $("#remove-all-files-btn").on("click", function() {
 		title: 'Προσοχή!',
 		text: 'Αφαίρεση όλων των αρχείων;',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: `Ναι, αφαίρεση!`,
 		cancelButtonText: `Ακύρωση`,
 	}).then((result) => {
@@ -105,6 +106,7 @@ $("#remove-all-images-btn").on("click", function() {
 		title: 'Προσοχή!',
 		text: 'Αφαίρεση όλων των εικόνων;',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: `Ναι, αφαίρεση!`,
 		cancelButtonText: `Ακύρωση`,
 	  }).then((result) => {

@@ -151,9 +151,12 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 	Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
 	Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
 	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
-	Route::post("section/{material}/remove-chapters", "Ajax\MaterialController@removeChapters");
-	Route::patch("section/{material}/toggle-chapters", "Ajax\MaterialController@toggleChapters");
-	Route::patch("section/{material}/chapters-priority", "Ajax\MaterialController@chaptersPriority");
+	
+	Route::post("section/remove-chapters", "Ajax\MaterialController@removeChapters");
+	Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
+	Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
+	Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
+	
 	Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
 
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');

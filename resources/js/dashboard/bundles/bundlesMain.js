@@ -25,6 +25,7 @@ $("#delete-bundles-btn").click( function() {
 		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? " Bundle θα διαγραφεί" : " Bundles θα διαγραφούν"}`,
 		icon: 'warning',
 		showCancelButton: true,
+		confirmButtonColor: '#ff5b5b',
 		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {

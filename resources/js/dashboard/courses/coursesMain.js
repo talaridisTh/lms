@@ -58,6 +58,7 @@ $('#delete-courses-btn').on("click", function() {
 		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? "αρχείο θα διαγραφεί" : " αρχεία θα διαγραφούν"}`,
 		icon: 'warning',
 		showCancelButton: true,
+		confirmButtonColor: '#ff5b5b',
 		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {

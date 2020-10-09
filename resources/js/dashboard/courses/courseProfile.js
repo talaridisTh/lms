@@ -20,6 +20,57 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$(".js-section-material").on("click", function() {
+
+	const modal = $("#sections-additions-modal")[0];
+	const sectionId = modal.dataset.sectionId;
+	const priority = modal.dataset.priority;
+	const type = this.dataset.type;
+
+	const selection = document.getElementsByClassName("js-section-addition")[0];
+
+	if (selection) {
+		selection.remove();
+	}
+	
+	const newRow = document.createElement("tr");
+	newRow.classList.add("js-section-addition")
+
+	const row = $(`table[data-section-id='${sectionId}'] > tbody > tr[data-priority='${priority}']`)[0];
+
+	if ( type == "Announcement" ) {
+		newRow.innerHTML = annoucementForm( priority );
+	}
+	else {
+		newRow.innerHTML = linkForm( type, priority);
+	}
+
+	newRow.appendAfter(row);
+
+	const saveBtn = newRow.getElementsByClassName("js-section-content")[0];
+	saveBtn.dataset.sectionId = sectionId;
+	saveBtn.addEventListener("click", sectionAdditionHandler);
+	
+	const cancelBtn = newRow.getElementsByClassName("js-cancel-addition")[0];
+	cancelBtn.addEventListener("click", function() {
+		this.findParent(4).remove();
+	});
+
+	
+})
+
+$("#sections-additions-modal").on("show.bs.modal", function(event) {
+
+	const btn = event.relatedTarget;
+	const sectionId = btn.dataset.sectionId;
+	const priority = btn.dataset.priority;
+
+	this.dataset.sectionId = sectionId;
+	this.dataset.priority = priority;
+
+});
+
+
 $(".js-editors-toggle").on("change", function() {
 	let editorToggles = $(".js-editors-toggle");
 	let field = {};
@@ -73,6 +124,7 @@ $("#remove-all-files-btn").on("click", function() {
 		title: 'Προσοχή!',
 		text: 'Αφαίρεση όλων των αρχείων;',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: `Ναι, αφαίρεση!`,
 		cancelButtonText: `Ακύρωση`,
 	}).then((result) => {
@@ -160,6 +212,7 @@ $("#activate-selection").on( 'click', function() {
 		html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
 		icon: 'info',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: 'Ναι, ενεργοποίηση!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
@@ -189,6 +242,7 @@ $("#deactivate-selection").on( "click", function() {
 		html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${i}</p>απο τα μαθήματα του Course.`,
 		icon: 'warning',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: 'Ναι, απενεργοποίηση!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
@@ -202,23 +256,23 @@ $("#deactivate-selection").on( "click", function() {
 
 });
 
-$("#courseDelete-btn").on( "click", function() {
-	Swal.fire({
-		title: 'Είστε σίγουρος;',
-		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonText: 'Ναι, διαγραφή!',
-		cancelButtonText: 'Άκυρο'
-	}).then( (result) => {
+// $("#courseDelete-btn").on( "click", function() {
+// 	Swal.fire({
+// 		title: 'Είστε σίγουρος;',
+// 		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
+// 		icon: 'warning',
+// 		showCancelButton: true,
+// 		confirmButtonText: 'Ναι, διαγραφή!',
+// 		cancelButtonText: 'Άκυρο'
+// 	}).then( (result) => {
 
-		if (result.value) {
+// 		if (result.value) {
 
-			$("#delete-course-form").submit();
+// 			$("#delete-course-form").submit();
 
-		}
-	})
-})
+// 		}
+// 	})
+// })
 
 let publishDate = $("#publish-date-select").daterangepicker({
 	singleDatePicker: true,
@@ -317,6 +371,7 @@ $("#remove-selected-users-btn").on( "click", function() {
 		text: `Η ενέργεια θα αφαιρέσει ${ i > 1 ? i : "έναν" } απο τους χρήστες.`,
 		icon: 'warning',
 		showCancelButton: true,
+		confirmButtonColor: '#536de6',
 		confirmButtonText: 'Ναι, αφαίρεση!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
@@ -388,6 +443,7 @@ $('#remove-selection-btn').on( "click", function() {
 			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${i} απο</p>τα περιεχόμενα του Course.`,
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -644,7 +700,7 @@ function multipleChapterDeactivateInit() {
 
 	$(".deactivate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
-		let sectionSlug = this.dataset.sectionSlug;
+		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let data = [];
 	
@@ -656,17 +712,18 @@ function multipleChapterDeactivateInit() {
 		});
 	
 		Swal.fire({
-			title: 'Ενεργοποίηση;',
+			title: 'Απενεργοποίηση;',
 			html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
 			icon: 'info',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, απενεργοποιήση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
 	
 			if (result.isConfirmed) {
 	
-				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, data, mainCnt, checkedboxes )
 	
 			}
 		})
@@ -678,7 +735,7 @@ function multipleChapterDeactivateInit() {
 function multipleChapterActivateInit() {
 	$(".activate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
-		let sectionSlug = this.dataset.sectionSlug;
+		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let data = [];
 	
@@ -694,13 +751,14 @@ function multipleChapterActivateInit() {
 			html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
 			icon: 'info',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, ενεργοποίηση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
 	
 			if (result.isConfirmed) {
 	
-				toggleChapters( sectionSlug, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, data, mainCnt, checkedboxes )
 	
 			}
 		})
@@ -722,10 +780,10 @@ function chapterPriorityInit() {
 
 		if ( event.keyCode == 13 && !isNaN( this.value) ) {
 
-			let sectionSlug = this.dataset.sectionSlug;
+			let sectionId = this.dataset.sectionId;
 
-			axios.patch(`/section/${sectionSlug}/chapters-priority`, {
-				courseId,
+			axios.patch(`/section/chapters-priority`, {
+				courseId, sectionId,
 				materialId: this.dataset.materialId,
 				priority: {
 					new: this.value,
@@ -760,10 +818,10 @@ function chapterStatusInit() {
 
 	$(".js-chapter-toggle").on("change", function() {
 
-		let sectionSlug = this.dataset.sectionSlug;
+		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
-			courseId, 
+		axios.patch(`/section/toggle-chapters`, {
+			courseId, sectionId,
 			data: [{
 				id: this.dataset.materialId,
 				status: this.checked ? 1 : 0
@@ -843,7 +901,7 @@ function multipleChapterRemoveInit() {
 	$(".js-multiple-chapter-remove").on("click", function() {
 
 		let mainCnt = this.findParent(5);
-		let sectionSlug = mainCnt.getElementsByClassName("table")[0].dataset.sectionSlug;
+		let sectionId = mainCnt.getElementsByClassName("table")[0].dataset.sectionId;
 		let checked = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let ids = [];
 
@@ -851,19 +909,18 @@ function multipleChapterRemoveInit() {
 			ids.push(checked.dataset.materialId)
 		});
 
-
-		
 		Swal.fire({
 			title: 'Είστε σίγουρος/η;',
 			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${ids.length} απο</p>τα περιεχόμενα του Course.`,
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
 			if (result.isConfirmed) {
 
-				removeChapters(sectionSlug, ids);
+				removeChapters(sectionId, ids);
 
 			}
 		})
@@ -899,7 +956,7 @@ function removeMaterialSectionBtnInit() {
 	
 	btn.on("click", function() {
 
-		let sectionSlug = this.findParent(4).dataset.sectionSlug;
+		let sectionId = this.findParent(4).dataset.sectionId;
 		let id = [this.dataset.materialId];
 
 		Swal.fire({
@@ -907,13 +964,14 @@ function removeMaterialSectionBtnInit() {
 			text: 'Το υλικό θα αφαιρεθεί απο το Course.',
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
 			
 			if (result.isConfirmed) {
 	
-				removeChapters(sectionSlug, id);
+				removeChapters(sectionId, id);
 	
 			}
 		})
@@ -1170,6 +1228,7 @@ function removeUserBtnInit() {
 			html: "<p class='mb-0'>Η ενέργεια θα αφαιρέσει έναν</p>απο τους χρήστες του Course.",
 			icon: 'warning',
 			showCancelButton: true,
+			confirmButtonColor: '#536de6',
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
@@ -1305,6 +1364,73 @@ $(".js-date-search").on( "input", function() {
 });
 // DataTables function / EventListener End
 
+function sectionAdditionHandler() {
+
+	const container = this.findParent(4);
+	const title = container.getElementsByClassName("js-title")[0];
+	const subtitle = container.getElementsByClassName("js-subtitle")[0];
+	const link = container.getElementsByClassName("js-link")[0];
+	const status = container.getElementsByClassName("js-state")[0];
+	const content = container.getElementsByClassName("js-content")[0];
+	const type = this.dataset.type;
+	const priority = this.dataset.priority;
+	const sectionId = this.dataset.sectionId;
+
+	let valid = checkEmpty( container, "js-empty" );
+
+	if ( !valid ) {
+
+		Swal.fire(
+			'Προσοχή!',
+			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
+			'info'
+		);
+
+		return
+	}
+
+	const data = new FormData();
+
+	data.append("courseId", courseId);
+	data.append("sectionId", sectionId);
+	data.append("title", title.value);
+	data.append("subtitle", subtitle.value);
+	data.append("status", status.value);
+	data.append("content", content.value);
+	data.append("type", type);
+	data.append("priority", priority);
+
+	if ( link ) {
+		data.append("link", link.value);
+	}
+
+	axios.post( "/section/add-content", data )
+		.then( res => {
+			let sectionsCnt = document.getElementsByClassName("accordion")[0];
+			sectionsCnt.innerHTML = res.data;
+
+			let sections = sectionsCnt.getElementsByClassName("collapse");
+			for (let i = 0; i < sections.length; i++ ) {
+				sections[i].classList.remove("show");
+			}
+			
+			let shownChapter = sectionsCnt.dataset.shownChapter;
+			if ( typeof shownChapter !== "undefined" ) {
+				document.getElementById(`${shownChapter}-collapse`).classList.add("show");
+			}
+			else {
+				sectionsCnt.getElementsByClassName("collapse")[0].classList.add("show");
+			}
+
+			courseMaterialsTable.ajax.reload( null, false );
+
+			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
+		})
+		.catch( (err) => {
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
+		});
+}
+
 function submitChapterBtnHandler() {
 	
 	let input = this.findParent(2).getElementsByClassName("js-chapter-input")[0];
@@ -1367,10 +1493,11 @@ function removeMaterialHandler() {
 
 	Swal.fire({
 		title: "Είστε σίγουρος/η;",
-		text: 'Το υλικό θα αφαιρεθεί απο το Course.',
+		text: 'Η ενότητα θα διαγραφεί απο το Course.',
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonText: 'Ναι, αφαίρεση!',
+		confirmButtonColor: '#ff5b5b',
+		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
 
@@ -1407,10 +1534,10 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
 }
 
-function toggleChapters( sectionSlug, data, mainCnt, checkedboxes ) {
+function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section/${sectionSlug}/toggle-chapters`, {
-		courseId, data
+	axios.patch(`/section/toggle-chapters`, {
+		courseId, sectionId, data
 	})
 	.then( res => {
 		let icon = "";
@@ -1445,10 +1572,10 @@ function toggleChapters( sectionSlug, data, mainCnt, checkedboxes ) {
 
 }
 
-function removeChapters(sectionSlug, chapterIds) {
+function removeChapters(sectionId, chapterIds) {
 
-	axios.post(`/section/${sectionSlug}/remove-chapters`, {
-		courseId, chapterIds
+	axios.post(`/section/remove-chapters`, {
+		courseId, sectionId, chapterIds
 	})
 	.then( res => {
 		let message = chapterIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${chapterIds.length} αρχεία εκτός ύλης`;
@@ -1747,7 +1874,7 @@ function linkForm( type, priority) {
 							</select>
 						</div>
 						<div class="form-group col-3 d-flex justify-content-center align-items-start" style="padding-top: 1.85rem;">
-							<button  class="js-add-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
+							<button  class="js-add-content js-section-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
 							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
 					</div>
@@ -1780,7 +1907,7 @@ function annoucementForm( priority ) {
 							<textarea class="js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..." hidden></textarea>
 						</div>
 						<div class="form-group float-right">
-							<button  class="js-add-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
+							<button  class="js-add-content js-section-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
 							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
 						</div>
 

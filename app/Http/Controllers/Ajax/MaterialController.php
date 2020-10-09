@@ -358,7 +358,9 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	public function removeChapters(Material $material, Request $request) {
+	public function removeChapters(Request $request) {
+
+		$material = Material::find($request->sectionId);
 
 		$course = Course::find( $request->courseId );
 
@@ -382,7 +384,9 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	public function toggleChapters(Material $material, Request $request) {
+	public function toggleChapters( Request $request ) {
+
+		$material = Material::find( $request->sectionId );
 		
 		foreach ($request->data as $chapter ) {
 			$material->chapters()
@@ -391,7 +395,9 @@ class MaterialController extends Controller {
 
 	}
 
-	public function chaptersPriority(Material $material, Request $request) {
+	public function chaptersPriority(Request $request) {
+
+		$material = Material::find( $request->sectionId );
 
 		$lastInOrder = $material->chapters()
 			->orderBy("priority", "desc")->first()->pivot->priority;
@@ -434,6 +440,47 @@ class MaterialController extends Controller {
 		$material->fields = $request->fields;
 		$material->save();
 		
+	}
+
+	public function addSectionContent(Request $request) {
+
+		$section = Material::find( $request->sectionId );
+		
+		$material = new Material;
+		$material->title = $request->title;
+		$material->subtitle = $request->subtitle;
+		$material->content = $request->content;
+		$material->type = $request->type;
+		$material->status = $request->status;
+		$material->slug = Str::slug($request->title, "-");
+
+		if ($request->type == "Video") {
+
+			$material->video_link = $request->video;
+			
+		} 
+		elseif ($request->type == "Link") {
+			
+			$material->link = $request->link;
+			
+		}
+
+		$material->save();
+
+		$section->chapters()->wherePivot("priority", ">", $request->priority)
+			->increment("priority");
+
+		$section->chapters()
+			->attach( $material->id, [
+				"status" => $request->status,
+				"priority" => $request->priority + 1
+			]);
+
+
+		$sections = Course::find( $request->courseId )->materials()
+			->where("type", "Section")->orderBy("priority")->get();
+
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
 }
