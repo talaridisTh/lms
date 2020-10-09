@@ -21,12 +21,19 @@ class BundleController extends Controller
 
     public function create()
     {
-        return view('admin/bundles/newBundle');
+		$data = [
+			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18)
+		];
+
+        return view('admin/bundles/newBundle')->with($data);
     }
 
-
-    public function store(BundleCourseRequest $request)
+    public function store(Request $request)
     {
+		$request->validate([
+			'title' => 'required|unique:bundles'
+		]);
+
 		if ( isset($request->publishDate) ) {
 			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
 			$status = 1;
@@ -36,9 +43,17 @@ class BundleController extends Controller
 			$status = 0;
 		}
 
+		$fields = [
+			"summary" => isset($request->summaryEditor) ? 1 : 0,
+			"description" => isset($request->descriptionEditor) ? 1 : 0
+		];
+
 		$bundle = new Bundle;
 		$bundle->title = $request->title;
 		$bundle->subtitle = $request->subtitle;
+		$bundle->summary = $request->summary;
+		$bundle->description = $request->description;
+		$bundle->fields = json_encode($fields);
 		$bundle->publish_at = $publishDate;
 		$bundle->status = $status;
 		$bundle->slug = Str::slug($request->title, "-");
