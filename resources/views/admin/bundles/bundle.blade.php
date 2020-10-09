@@ -278,7 +278,16 @@
 									<div class="row">
 							    	    <div class="col-12">
 							    	        <div class="form-group">
-							    	            <label for="summary">Σύνοψη</label>
+												<div class="d-flex justify-content-between align-items-center">
+													<label for="summary">Σύνοψη</label>
+													<input id="summary-toggle" class="js-editors-toggle"
+														data-field="summary" type="checkbox" data-switch="bool"
+														@if ( isset($fields->summary) && $fields->summary == 1)
+															checked
+														@endif
+													/>
+													<label for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
+												</div>
 												<textarea class="form-control @error('summary') is-invalid @enderror"
 													id="summary" name="summary" rows="4" placeholder="Σύνοψη Bundle..."
 												>{{ old('summary') != "" ? old('summary')
@@ -295,7 +304,16 @@
 							    	<div class="row">
 							    	    <div class="col-12">
 							    	        <div class="form-group">
-							    	            <label for="description">Περιγραφή</label>
+												<div class="d-flex justify-content-between align-items-center">
+													<label for="description">Περιγραφή</label>
+													<input id="description-toggle" class="js-editors-toggle"
+														data-field="description" type="checkbox" data-switch="bool"
+														@if ( isset($fields->description) && $fields->description == 1)
+															checked
+														@endif
+													/>
+													<label for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+												</div>
 												<textarea class="form-control @error('description') is-invalid @enderror"
 													id="description" name="description" rows="4" placeholder="Περιγραφή Bundle..."
 												>{{ old('description') != "" ? old('description')
@@ -386,31 +404,6 @@
 										<label for="publish-date-select">Published</label>
 										<input form="bundle-edit-form" type="text" class="form-control" id="publish-date-select" name="publishDate" value="{{ $publish }}" placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask" data-mask-format="00-00-0000 00:00:00" autocomplete="off">
 									</div>
-
-									<hr>
-									<div class="d-flex justify-content-between align-items-center">
-										<label class="mb-0" for="summary-toggle">Σύνοψη</label>
-										<input id="summary-toggle" class="js-editors-toggle"
-											data-field="summary" type="checkbox" data-switch="bool"
-											@if ( isset($fields->summary) && $fields->summary == 1)
-												checked
-											@endif
-										/>
-										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
-									</div>
-
-									<hr>
-									<div class="d-flex justify-content-between align-items-center">
-										<label class="mb-0" for="description-toggle">Περιγραφή</label>
-										<input id="description-toggle" class="js-editors-toggle"
-											data-field="description" type="checkbox" data-switch="bool"
-											@if ( isset($fields->description) && $fields->description == 1)
-												checked
-											@endif
-										/>
-										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
-									</div>
-
 								</div>
 							</div>
 
