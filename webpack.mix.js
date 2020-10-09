@@ -26,7 +26,7 @@ mix.js('resources/js/app.js', 'public/js')
 	.js('resources/js/dashboard/users/userProfil.js', 'public/js/dashboard/users')
 
 	.js('resources/js/dashboard/fileManager/fileManager.js', 'public/js/dashboard/fileManager')
-	
+
 	.js('resources/js/dashboard/dashboard.js', 'public/js/dashboard')
 	.js('resources/js/dashboard/newContent.js', 'public/js/dashboard')
 

@@ -3933,6 +3933,158 @@ figure > img {
   text-decoration: underline;
 }
 
+.h2-custom {
+  width: 650px;
+  height: 188px;
+  font-size: 54px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.11;
+  letter-spacing: -0.6px;
+  color: #2c2f30;
+}
+
+.h3-custom {
+  width: 508px;
+  height: 210px;
+  font-size: 36px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2c2f30;
+}
+
+.h4-custom {
+  width: 624px;
+  padding-bottom: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2c2f30;
+}
+
+.p-custom {
+  width: 491px;
+  height: 100px;
+  font-family: OpenSans;
+  font-size: 22px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.4px;
+  color: #2c2f30;
+}
+
+.span-custom {
+  width: 422px;
+  height: 95px;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #585d63;
+}
+
+.btn-custom {
+  width: 189px;
+  height: 50px;
+  border-radius: 4px;
+  background-color: #0fb4d3;
+}
+
+.btn-custom span {
+  width: 122px;
+  height: 19px;
+  font-size: 14px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.55px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.img-custom-index {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.container-oval {
+  height: 540px;
+  display: flex;
+  align-items: center;
+}
+
+.container-oval .oval {
+  width: 394px;
+  height: 382px;
+  border-radius: 100%;
+  background-color: #d8d8d8;
+}
+
+.container-oval .oval-1 {
+  right: 0;
+  top: 0;
+  width: 186px;
+  height: 180px;
+  background-color: #ebebeb;
+  border-radius: 100%;
+}
+
+.container-oval .oval-2 {
+  left: -98px;
+  top: 200px;
+  width: 148px;
+  height: 143px;
+  background-color: #ebebeb;
+  border-radius: 100%;
+}
+
+.container-oval .oval-3 {
+  left: -83px;
+  bottom: 77px;
+  width: 93px;
+  height: 90px;
+  background-color: #ebebeb;
+  border-radius: 100%;
+}
+
+.ul-custom {
+  padding: 3px;
+  width: 548px;
+  height: 149px;
+  font-family: OpenSans;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #585d63;
+}
+
+.ul-custom li {
+  list-style: none;
+  font-family: OpenSans;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  font-size: 16px;
+  padding: 5px;
+}
+
 /*!
  * icheck-bootstrap v3.0.1 (https://github.com/bantikyan/icheck-bootstrap)
  * Copyright 2018 Hovhannes Bantikyan.
