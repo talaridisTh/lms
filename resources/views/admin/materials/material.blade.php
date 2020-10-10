@@ -414,7 +414,7 @@
                                 <div class="form-row mt-2">
                                     <div class="col-md-6 d-flex justify-content-center">
                                         <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
-                                            {{isset($material) && !is_null($material->cover) ?"Αλλαγή":"Προσθηκη"}}
+                                            {{isset($material) && !is_null($material->cover) ?"Αλλαγή":"Προσθήκη"}}
                                         </button>
 
                                     </div>

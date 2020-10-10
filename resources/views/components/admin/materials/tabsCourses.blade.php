@@ -51,29 +51,29 @@
                     <option value="Normal">Normal</option>
                     <option value="Trial">Trial</option>
                 </select>
-                <table id="remaining-course-material-table" class=" table w-100 nowrap modal-table custom-center-table center-not-second js-remove-table-classes">
+                <table id="remaining-course-material-table" class=" table w-100 nowrap modal-table center-not-second js-remove-table-classes">
                     <thead>
                     <tr>
-                        <th class="text-left">
+                        <th class="text-center">
                             <div class='icheck-primary d-inline'>
                                 <input class='js-course-checkbox' type='checkbox' id='all-remainings-checkbox' autocomplete='off'>
                                 <label for='all-remainings-checkbox'></label>
                             </div>
                         </th>
-                        <th class="text-left">Τίτλος</th>
-                        <th class="text-left">Εἰσηγητής</th>
-                        <th class="text-left">Τύπος</th>
-                        <th class="text-left"></th>
+                        <th class="text-center">Τίτλος</th>
+                        <th class="text-center">Εἰσηγητής</th>
+                        <th class="text-center">Τύπος</th>
+                        <th class="text-center"></th>
                     </tr>
                     </thead>
                     <tbody class="tables-hover-effect"></tbody>
                     <tfoot>
                     <tr>
-                        <th class="text-left">Επιλογή</th>
-                        <th class="text-left">Τίτλος</th>
-                        <th class="text-left">Εἰσηγητής</th>
-                        <th class="text-left">Τύπος</th>
-                        <th class="text-left"></th>
+                        <th class="text-center">Επιλογή</th>
+                        <th class="text-center">Τίτλος</th>
+                        <th class="text-center">Εἰσηγητής</th>
+                        <th class="text-center">Τύπος</th>
+                        <th class="text-center"></th>
                     </tr>
                     </tfoot>
                 </table>

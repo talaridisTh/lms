@@ -163,7 +163,7 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
 });
 
 const addCouseModal = $("#remaining-course-material-table").DataTable({
-    // order: [[ 5, "desc" ]],
+    order: [[ 1, "desc" ]],
     processing: true,
     serverSide: true,
     ajax: {
@@ -175,11 +175,11 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
         }
     },
     columns: [
-        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-left"},
-        {data: "title", name: "title"},
-        {data: "curator", name: "curator"},
-        {data: "version", name: "version"},
-        {data: "action", name: "action"},
+        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-center align-middle"},
+        {data: "title", name: "title", className: "align-middle"},
+        {data: "curator", name: "curator", className: "text-center align-middle"},
+        {data: "version", name: "version", className: "text-center align-middle"},
+        {data: "action", name: "action", className: "text-center align-middle", searchable: false, orderable: false},
 
     ],
     language: utilities.tableLocale,
