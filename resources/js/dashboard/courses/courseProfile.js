@@ -14,6 +14,7 @@ require("../../../plugins/article-editor/plugins/reorder/reorder");
 
 import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import 'filepond/dist/filepond.min.css';
 
 //!##########################################
@@ -2347,6 +2348,7 @@ FilePond.setOptions({
 });
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
 
 let dropzone = document.getElementById("file-pond");
 const pond = FilePond.create( dropzone, {
@@ -2432,6 +2434,10 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 		$("#files-cnt").addClass("d-none");
 		$("#active-files-loading").removeClass("d-none");
 	},
+	onerror: function() {
+		$("#files-cnt").removeClass("d-none");
+		$("#active-files-loading").addClass("d-none");
+	},
     acceptedFileTypes: [
 		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
 		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -2448,4 +2454,5 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
 		"application/rtf", "application/vnd.oasis.opendocument.graphics"
 	],
+	maxFileSize: "50MB"
 });

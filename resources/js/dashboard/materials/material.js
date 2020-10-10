@@ -1,6 +1,7 @@
 import utilities from '../main';
 import * as FilePond from "filepond";
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import 'filepond/dist/filepond.min.css';
 
 let materialId = $("#material-course-table")[0].dataset.materialId;
@@ -736,6 +737,8 @@ $("#change-cover-btn").on("click", function () {
 })
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
+
 FilePond.setOptions({
     name: 'file[]',
     allowMultiple: true,
@@ -896,6 +899,10 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 		$("#files-cnt").addClass("d-none");
 		$("#active-files-loading").removeClass("d-none");
 	},
+	onerror: function() {
+		$("#files-cnt").removeClass("d-none");
+		$("#active-files-loading").addClass("d-none");
+	},
     acceptedFileTypes: [
 		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
 		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -912,6 +919,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
 		"application/rtf", "application/vnd.oasis.opendocument.graphics"
 	],
+	maxFileSize: "50MB"
 });
 
 function audioPlayerHandler() {
