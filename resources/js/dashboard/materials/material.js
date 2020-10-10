@@ -131,7 +131,7 @@ $("#add-gallery-images-btn").on("click", function() {
 //! DATATABLE INIT
 //!============================================================
 const materialCourseDatatable = $("#material-course-table").DataTable({
-    // order: [[ 5, "desc" ]],
+    order: [[ 1, "desc" ]],
     processing: true,
     serverSide: true,
     ajax: {
@@ -143,10 +143,10 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         }
     },
     columns: [
-        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-left"},
+        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-center align-middle"},
         {data: "title", name: "title"},
-        {data: "curator", name: "curator"},
-        {data: "updated_at", name: "updated_at"},
+        {data: "curator", name: "curator", className: "text-center align-middle"},
+        {data: "updated_at", name: "updated_at", className: "text-center align-middle"},
         {data: "created_at", name: "created_at", visible: false},
 
     ],
