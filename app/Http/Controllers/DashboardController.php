@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\User;
+use App\Bundle;
+use App\Material;
 use Carbon\Carbon;
+use DateTime;
+use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 
@@ -14,7 +18,47 @@ class DashboardController extends Controller
     public function index()
     {
         return view('admin.overview.overviewMain');
-    }
+	}
+	
+	public function dashboardSearch(Request $request) {
+
+		$users = User::where(function($query) use ($request) {
+
+			$query->where("last_name", "LIKE", "%$request->search%")
+				->orWhere("first_name", "LIKE", "%$request->search%")
+				->orWhere("email", "LIKE", "%$request->search%")
+				->orWhere("phone", "LIKE", "%$request->search%")->get();
+
+		})->get();
+
+		$materials = Material::where(function($query) use ($request) {
+
+			$unwatned = ["Video", "Link", "Announcement", "Section"];
+
+			$query->where("title", "LIKE", "%$request->search%")
+				->whereNotIn("type", $unwatned)->get();
+
+		})->get();
+
+
+
+		$courses = Course::where("title", "LIKE", "%$request->search%")->get();
+		$bundles = Bundle::where("title", "LIKE", "%$request->search%")->get();
+
+		$totalCount = $users->count() + $materials->count() + $courses->count() + $bundles->count();
+
+		$data = [
+			"search" => $request->search,
+			'users' => $users,
+			'materials' => $materials,
+			'courses' => $courses,
+			'bundles' => $bundles,
+			'totalCount' => $totalCount
+		];
+
+		return View("admin/searchResults")->with($data);
+
+	}
 
     public function createLink()
     {

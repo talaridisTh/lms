@@ -35,7 +35,7 @@ $(".js-global-search").on("input", function() {
 function search(value) {
 	
 	axios.post("/dashboard-search", {
-		value
+		search: value
 	})
 	.then( res => {
 

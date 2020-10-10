@@ -12,32 +12,50 @@ use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
     public function globalSearch(Request $request) {
-		// dd($request->value);
-
-		$totalCount = 0;
 
 		$users = User::where(function($query) use ($request) {
 
-			$query->where("last_name", "LIKE", "%$request->value%")
-			->orWhere("phone", "LIKE", "%$request->value%")->get();
+			$query->where("last_name", "LIKE", "%$request->search%")
+				->orWhere("first_name", "LIKE", "%$request->search%")
+				->orWhere("email", "LIKE", "%$request->search%")
+				->orWhere("phone", "LIKE", "%$request->search%")->get();
 
 		})->limit(4)->get();
 
 		$totalCount = User::where(function($query) use ($request) {
 
-			$query->where("last_name", "like", "%$request->value%")
-			->orWhere("phone", "like", "%$request->value%")->get();
+			$query->where("last_name", "LIKE", "%$request->search%")
+				->orWhere("first_name", "LIKE", "%$request->search%")
+				->orWhere("email", "LIKE", "%$request->search%")
+				->orWhere("phone", "LIKE", "%$request->search%")->get();
 
 		})->count();
-		$totalCount += Bundle::where("title", "LIKE", "%$request->value%")->count();
-		$totalCount += Course::where("title", "LIKE", "%$request->value%")->count();
-		$totalCount += Material::where("title", "LIKE", "%$request->value%")->count();
+
+		$materials = Material::where( function($query) use ($request) {
+
+			$unwatned = ["Video", "Link", "Announcement", "Section"];
+
+			$query->where("title", "LIKE", "%$request->search%")
+				->whereNotIn("type", $unwatned)->get();
+
+		})->limit(4)->get();
+
+		$totalCount += Bundle::where("title", "LIKE", "%$request->search%")->count();
+		$totalCount += Course::where("title", "LIKE", "%$request->search%")->count();
+		$totalCount += Material::where( function($query) use ($request) {
+
+			$unwatned = ["Video", "Link", "Announcement", "Section"];
+
+			$query->where("title", "LIKE", "%$request->search%")
+				->whereNotIn("type", $unwatned)->get();
+
+		})->count();
 
 		$data = [
 			'users' => $users,
-			'bundles' => Bundle::where("title", "LIKE", "%$request->value%")->limit(4)->get(),
-			'courses' => Course::where("title", "LIKE", "%$request->value%")->limit(4)->get(),
-			'materials' => Material::where("title", "LIKE", "%$request->value%")->limit(4)->get(),
+			'bundles' => Bundle::where("title", "LIKE", "%$request->search%")->limit(4)->get(),
+			'courses' => Course::where("title", "LIKE", "%$request->search%")->limit(4)->get(),
+			'materials' => $materials,
 			'totalCount' => $totalCount
 		];
 		

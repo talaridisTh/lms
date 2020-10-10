@@ -27,7 +27,7 @@ class UserSeeder extends Seeder {
             'email' => "admin@gmail.com",
             "phone"=>"6978565698",
             "profil"=>"admin profil",
-            'cover' => "http://lorempixel.com/80/80/people",
+            'cover' => "/images/avatar-placeholder.png",
             'slug' => "admin",
             'password' => Hash::make('password'),
             "password_encrypt"=>Crypt::encryptString('password'),
