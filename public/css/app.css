@@ -3973,6 +3973,17 @@ figure > img {
   color: #2c2f30;
 }
 
+.h5-custom {
+  font-size: 36px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #2c2f30;
+}
+
 .p-custom {
   width: 491px;
   height: 100px;
@@ -3988,7 +3999,6 @@ figure > img {
 
 .span-custom {
   width: 422px;
-  height: 95px;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
@@ -4063,6 +4073,59 @@ figure > img {
   border-radius: 100%;
 }
 
+.container-oval-2 {
+  height: 540px;
+  display: flex;
+  align-items: center;
+}
+
+.container-oval-2 .oval {
+  width: 394px;
+  height: 394px;
+  border-radius: 100%;
+  background-color: #d8d8d8;
+}
+
+.container-oval-2 .oval-2 {
+  left: -61px;
+  top: 342px;
+  width: 143px;
+  height: 143px;
+  background-color: #ebebeb;
+  border-radius: 100%;
+}
+
+.container-oval-2 .oval-3 {
+  left: 350px;
+  top: 126px;
+  width: 93px;
+  height: 93px;
+  background-color: #ebebeb;
+  border-radius: 100%;
+}
+
+.container-oval-3 {
+  height: 540px;
+  display: flex;
+  align-items: center;
+}
+
+.container-oval-3 .oval {
+  width: 394px;
+  height: 394px;
+  border-radius: 100%;
+  background-color: #d8d8d8;
+}
+
+.container-oval-3 .oval-2 {
+  left: -72px;
+  top: 312px;
+  width: 143px;
+  height: 143px;
+  background-color: #ebebeb;
+  border-radius: 100%;
+}
+
 .ul-custom {
   padding: 3px;
   width: 548px;
@@ -4088,6 +4151,23 @@ figure > img {
   letter-spacing: normal;
   font-size: 16px;
   padding: 5px;
+}
+
+.blue-title {
+  width: 240px;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.1;
+  letter-spacing: 0.4px;
+  color: #0fb4d3;
+}
+
+.card-shadow {
+  border-radius: 6px;
+  box-shadow: 0 8px 16px 0 rgba(96, 97, 112, 0.16), 0 2px 4px 0 rgba(40, 41, 61, 0.04);
+  background-color: #ffffff;
 }
 
 /*!

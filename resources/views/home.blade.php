@@ -30,12 +30,14 @@
         {{--row 2 --}}
         <div class="row my-5 ">
 
-            <div class="col-md-5 mt-4" >
-                <h3 class="h3-custom">Θέλεις να βάλεις τη Ρομποτική στο σχολείο σου και δεν ξέρεις από που να ξεκινήσεις;</h3>
-                    <p class="p-custom">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor
-                        nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
-                    </p>
+            <div class="col-md-5 mt-4">
+                <h3 class="h3-custom">Θέλεις να βάλεις τη Ρομποτική στο σχολείο σου και δεν ξέρεις από που να
+                    ξεκινήσεις;</h3>
+                <p class="p-custom">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet
+                    tempor
+                    nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
+                </p>
             </div>
 
             <div class="col-md-7">
@@ -50,7 +52,7 @@
         {{--row 3 --}}
         <div class="row" style="margin-top: 9rem">
 
-            <div class="col-md-5 mt-5" >
+            <div class="col-md-5 mt-5">
                 <h4 style="" class="h4-custom">Εξατομικευμένη πλατφόρμα μαθημάτων ρομποτικής</h4>
                 <p class="p-custom">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
@@ -61,7 +63,7 @@
                     <li class="li-custom"> HD Videos στα Ελληνικά</li>
                     <li class="li-custom">Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
                     <li class="li-custom">Kώδικα προγραμματισμού των ρομπότ</li>
-                    <li class="li-custom">  Αρχεία κατασκευής για τους μαθητές μέσα από την πλατφόρμα.</li>
+                    <li class="li-custom"> Αρχεία κατασκευής για τους μαθητές μέσα από την πλατφόρμα.</li>
                 </ul>
             </div>
 
@@ -86,18 +88,18 @@
             <div class="col-md-5  ">
                 <div class="container  text-center  d-flex justify-content-center"
                      style=" background: url('{{asset('images/group-32.png')}}'); background-position: right;background-repeat: no-repeat; ">
-                    <div class="container-oval   position-relative">
+                    <div class="container-oval-2 position-relative">
                         <div class="oval "></div>
-                        <div class="oval-1 position-absolute"></div>
                         <div class="oval-2 position-absolute"></div>
                         <div class="oval-3 position-absolute"></div>
                     </div>
+                    |
 
 
                 </div>
             </div>
 
-            <div class="offset-2 col-md-5 d-flex flex-column justify-content-center" >
+            <div class="offset-2 col-md-5 d-flex flex-column justify-content-center">
                 <h4 style="" class="h4-custom">Εκπαίδευση προσωπικού</h4>
                 <p class="p-custom">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
@@ -106,22 +108,19 @@
                 <ul class="ul-custom">
 
 
-
-
                     <li class="li-custom">Hands on Μαθήματα (και με φυσική παρουσία και εξ αποστάσεως)</li>
                     <li class="li-custom"> Εκπαιδευτικό υλικό</li>
                     <li class="li-custom"> Απόκτηση πιστοποίησης</li>
-                    <li class="li-custom">   Εκπαιδευτή ρομποτικής</li>
+                    <li class="li-custom"> Εκπαιδευτή ρομποτικής</li>
                 </ul>
             </div>
-
 
 
         </div>
         {{--row 5 --}}
         <div class="row" style="margin-top: 9rem">
 
-            <div class="col-md-5 mt-5 d-flex flex-column justify-content-center" >
+            <div class="col-md-5 mt-5 d-flex flex-column justify-content-center">
                 <h4 style="" class="h4-custom">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς</h4>
                 <p class="p-custom">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
@@ -132,14 +131,98 @@
             <div class="offset-2 col-md-5 ">
                 <div class="container  text-center  d-flex justify-content-center"
                      style=" background: url('{{asset('images/group-32.png')}}'); background-position: right;background-repeat: no-repeat; ">
-                    <div class="container-oval   position-relative">
+                    <div class="container-oval-3   position-relative">
                         <div class="oval "></div>
-                        <div class="oval-1 position-absolute"></div>
                         <div class="oval-2 position-absolute"></div>
-                        <div class="oval-3 position-absolute"></div>
                     </div>
 
 
+                </div>
+            </div>
+
+        </div>
+        {{--row 6 --}}
+        <div class="row" style="margin-top: 9rem">
+            <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
+            <div class="d-flex mt-3">
+                <div class="col-md-6 col-lg-4">
+
+                    <!-- Simple card -->
+                    <div class="card card-shadow d-block">
+                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
+                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
+                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+                <div class="col-md-6 col-lg-4">
+
+                    <!-- Simple card -->
+                    <div class="card card-shadow d-block">
+                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
+                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
+                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+                <div class="col-md-6 col-lg-4">
+
+                    <!-- Simple card -->
+                    <div class="card card-shadow d-block">
+                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
+                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
+                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+            </div>
+
+        </div>
+        {{--row 7 --}}
+        <div class="row" style="margin-top: 9rem">
+            <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
+            <div class="d-flex mt-3">
+                <div class="col-md-6 col-lg-4">
+
+                    <!-- Simple card -->
+                    <div class="card card-shadow d-block">
+                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
+                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
+                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+                <div class="col-md-6 col-lg-4">
+
+                    <!-- Simple card -->
+                    <div class="card card-shadow d-block">
+                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
+                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
+                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
+                </div>
+                <div class="col-md-6 col-lg-4">
+
+                    <!-- Simple card -->
+                    <div class="card card-shadow d-block">
+                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
+                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
+                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                        </div> <!-- end card-body-->
+                    </div> <!-- end card-->
                 </div>
             </div>
 
