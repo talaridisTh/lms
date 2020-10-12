@@ -887,10 +887,6 @@
 
 			</div><!-- tab-content -->
 
-
-			<div id="test" style="outline: 2px solid tomato; width: 400px; height: 200px;"></div>
-
-
 		</div>
 	</div>
 	@if ( isset($course) )
