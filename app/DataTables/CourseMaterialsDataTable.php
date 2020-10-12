@@ -70,18 +70,6 @@ class CourseMaterialsDataTable extends DataTable
 
 
 			})
-			->editColumn('updated_at', function($data) {
-
-				$updatedAt = Carbon::parse($data->updated_at)->format( "d / m / Y");
-				return "<p class='mb-1'>$updatedAt</p>";
-
-			})
-			->editColumn('created_at', function($data) {
-
-				$createdAt = Carbon::parse($data->created_at)->format( "d / m / Y");
-				return "<p class='mb-1'>$createdAt</p>";
-
-			})
 			->editColumn('status', function($data) use ($request) {
 
 				$status = $data->pivot->status == 0 ? "" : "checked";

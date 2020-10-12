@@ -90,11 +90,6 @@ class CoursesDataTable extends DataTable {
 
                 return $fullName;
 			})
-			// ->editColumn('updated_at', function ($data) {
-
-            //     return Carbon::parse( $data->updated_at)->diffForHumans();
-
-            // })
             ->editColumn('publish', function ($data) {
 
 				if ( $data->status == 1 ) {

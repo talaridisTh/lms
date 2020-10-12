@@ -516,8 +516,32 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
-		{ data: 'updated_at', name: 'updated_at',  className: "cursor-default text-center align-middle", searchable: false },
-		{ data: 'created_at', name: 'created_at', className: "cursor-default text-center align-middle", searchable: false },
+		{ 
+			data: 'updated_at',name: 'updated_at',
+			className: "cursor-default text-center align-middle", searchable: false,
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
+		{
+			data: 'created_at', name: 'created_at',
+			className: "cursor-default text-center align-middle", searchable: false,
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
 		{ data: 'btns', className: "cursor-default text-center align-middle", searchable: false, orderable: false },
 	],
 	language: utilities.tableLocale,
