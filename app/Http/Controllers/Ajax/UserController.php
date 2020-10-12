@@ -110,6 +110,7 @@ class UserController {
 //
         $user = User::find($request->user_id);
         $user->courses()->detach($request->course_id);
+        $user->watchlistCourse()->detach($request->course_id);
 
         return response()->json(['success' => 'Status change successfully.']);
     }
@@ -118,6 +119,7 @@ class UserController {
     {
         $user = User::find($request->user_id);
         $user->courses()->detach($request->course_id);
+        $user->watchlistCourse()->detach($request->course_id);
 
         return response()->json(['success' => 'Status change successfully.']);
     }

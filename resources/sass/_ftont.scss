@@ -1,6 +1,5 @@
 .h2-custom {
-    width: 650px;
-    height: 188px;
+        height: 188px;
     font-size: 54px;
     font-weight: bold;
     font-stretch: normal;
@@ -12,8 +11,6 @@
 
 
 .h3-custom {
-    width: 508px;
-    height: 210px;
     font-size: 36px;
     font-weight: bold;
     font-stretch: normal;
@@ -25,8 +22,7 @@
 
 
 .h4-custom {
-    width: 624px;
-    padding-bottom: 20px ;
+        padding-bottom: 20px ;
     font-size: 36px;
     font-weight: bold;
     font-stretch: normal;
@@ -49,8 +45,7 @@
 
 
 .p-custom {
-    width: 491px;
-    height: 100px;
+        height: 100px;
     font-family: OpenSans;
     font-size: 22px;
     font-weight: normal;
@@ -229,8 +224,6 @@
 
     }
 
-
-
 }
 
 .blue-title{
@@ -248,5 +241,12 @@
     border-radius: 6px;
     box-shadow: 0 8px 16px 0 rgba(96, 97, 112, 0.16), 0 2px 4px 0 rgba(40, 41, 61, 0.04);
     background-color: #ffffff;
+}
+
+
+@media (min-width: 600.98px) {
+    .mt-9 {
+        margin-top: 9rem
+    }
 }
 
