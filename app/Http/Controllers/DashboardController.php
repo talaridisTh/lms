@@ -40,23 +40,43 @@ class DashboardController extends Controller
 
 		})->get();
 
-
-
 		$courses = Course::where("title", "LIKE", "%$request->search%")->get();
 		$bundles = Bundle::where("title", "LIKE", "%$request->search%")->get();
 
 		$totalCount = $users->count() + $materials->count() + $courses->count() + $bundles->count();
 
-		$data = [
-			"search" => $request->search,
-			'users' => $users,
-			'materials' => $materials,
-			'courses' => $courses,
-			'bundles' => $bundles,
-			'totalCount' => $totalCount
-		];
+		if ( $users->count() == 1 && $totalCount == 1 ) {
 
-		return View("admin/searchResults")->with($data);
+			return redirect( "/dashboard/users/".$users->first()->slug );
+
+		}
+		elseif ( $materials->count() == 1 && $totalCount == 1 ) {
+
+			return redirect( "/dashboard/material/".$materials->first()->slug );
+
+		}
+		elseif ( $courses->count() == 1 && $totalCount == 1 ) {
+
+			return redirect( "/dashboard/course/".$courses->first()->slug );
+
+		}
+		elseif ( $bundles->count() == 1 && $totalCount == 1 ) {
+
+			return redirect( "/dashboard/bundle/".$bundles->first()->slug );
+			
+		}
+		else {
+			$data = [
+				"search" => $request->search,
+				'users' => $users,
+				'materials' => $materials,
+				'courses' => $courses,
+				'bundles' => $bundles,
+				'totalCount' => $totalCount
+			];
+
+			return View("admin/searchResults")->with($data);
+		}
 
 	}
 

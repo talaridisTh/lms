@@ -82,6 +82,9 @@
 							</div><!-- end tab -->
 						@else
 							<div id="{{ $keys }}" class="tab-pane{{ $assignActive ? " show active" : "" }}">
+								
+								<p class="mb-3">{{ $variable->count() }} απο {{ $totalCount }} Αποτελέσματα</p>
+								
 								<div class="row">
 									@foreach ($variable as $model)
 										<div class="col-md-6 col-lg-3">
@@ -93,7 +96,7 @@
 												</div>
 												<div class="card-body">
 													<a href="/dashboard/{{ substr($keys, 0, -1) }}/{{ $model->slug }}" class="custom-link-primary card-link text-custom">Edit</a>
-													<a href="/{{ substr($keys, 0, -1) }}/{{ $model->slug }}" class="custom-link-primary card-link text-custom">View</a>
+													<a href="/{{ substr($keys, 0, -1) }}/{{ $model->slug }}" class="custom-link-primary card-link text-custom" target="_blank">View</a>
 												</div> <!-- end card-body-->
 											</div> <!-- end card-->
 										</div><!-- end col -->
