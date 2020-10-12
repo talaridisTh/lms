@@ -91,6 +91,21 @@
 							</a>
 						</li>
 						<li class="side-nav-item">
+                            <a href="javascript: void(0);" class="side-nav-link">
+                                <i class="mdi mdi-settings"></i>
+                                <span> Settings </span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <ul class="side-nav-second-level" aria-expanded="false">
+                                <li>
+									<a href="/dashboard/home-content">
+										<i class="mdi mdi-home-edit"></i>
+										Home Page
+									</a>
+                                </li>
+                            </ul>
+                        </li>
+						<li class="side-nav-item">
 							<a href="{{route('user.index')}}" class="side-nav-link">
 								<i class="mdi mdi-account-multiple"></i>
 								<span>Χρήστες</span>

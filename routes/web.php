@@ -73,7 +73,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');
 	
 	//! Dashboard Search
-    Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
+	Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
+	
+	//! Dashboard Home Content
+	Route::get('/dashboard/home-content', 'UtilityController@index');
 
 //!======================================================
 //! 			End Dashboard Routes					|

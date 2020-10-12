@@ -857,6 +857,8 @@ function chapterPriorityInit() {
 
 				courseMaterialsTable.ajax.reload( null, false );
 			})
+
+			$('.js-chapter-priority').prop("disabled", true);
 		}
 
 	});
@@ -1353,6 +1355,8 @@ function sortInputsInit() {
 
 				$("#section-accordion").html(res.data);
 			})
+
+			$('.js-sort-input').prop("disabled", true);
 		}
 
 	});

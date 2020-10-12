@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder {
 			RoleSeeder::class,
 			TopicSeeder::class,
 			UserSeeder::class,
+			UtilitySeeder::class,
 		]);
 		
 		User::factory()->times(100)->create()
