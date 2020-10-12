@@ -28,11 +28,11 @@
 
 @section('content')
 
-	<!-- additionnal content modal -->
+	<!-- sections additionnal content modal -->
 	<div class="modal fade" id="sections-additions-modal" tabindex="-1" aria-labelledby="sections-additions-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			  <div class="modal-content">
-				<div class="modal-header bg-light">
+				<div class="modal-header modal-colored-header bg-primary">
 					<h5 class="modal-title" id="sections-additions-modalLabel">Προσθήκη Υλικού</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -208,7 +208,7 @@
 	<div class="modal fade" id="add-additions-modal" tabindex="-1" aria-labelledby="add-additions-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered modal-lg">
 			  <div class="modal-content">
-				<div class="modal-header bg-light">
+				<div class="modal-header modal-colored-header bg-primary">
 					<h5 class="modal-title" id="add-additions-modalLabel">Προσθήκη Υλικού</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>

@@ -843,9 +843,7 @@ ArticleEditor('#description', {
 let dropzone = document.getElementById("file-pond");
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
-const pond = FilePond.create( dropzone );
-
-FilePond.setOptions({
+const pond = FilePond.create( dropzone, {
 	name: 'file[]',
 	server: {
 		url: baseUrl,
@@ -865,5 +863,34 @@ FilePond.setOptions({
 	allowRemove: true,
 	allowRevert: false,
 	acceptedFileTypes: ['image/png', 'image/jpeg'],
-
+	className: "js-filepond-file-dragging"
 });
+
+const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
+
+for ( let i = 0; i < dropArea.length; i++ ) {
+	
+	dropArea[i].addEventListener("dragenter", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+		const span = label.querySelector("span");
+		
+		if (event.dataTransfer.items.length > 0) {
+			draggingArea.classList.add("limegreen");
+			label.classList.add("text-limegreen");
+			span.classList.add("text-decoration-limegreen");
+		}
+	});
+	
+	dropArea[i].addEventListener("dragleave", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+		const span = label.querySelector("span");
+		if (event.dataTransfer.items.length > 0) {
+			draggingArea.classList.remove("limegreen");
+			label.classList.remove("text-limegreen");
+			span.classList.remove("text-decoration-limegreen");
+
+		}
+	});
+}
