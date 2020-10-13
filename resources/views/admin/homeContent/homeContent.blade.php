@@ -216,7 +216,9 @@
 									<div class="col-md-6 col-lg-4">
 										<!-- Simple card -->
 										<div class="card d-block">
-											<img class="card-img-top" src="{{ $model->cover }}" alt="Card image cap">
+											<div class="embed-responsive embed-responsive-16by9">
+												<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="Card image cap">
+											</div>
 											<div class="card-body">
 												<h5 class="card-title">{{ $model->title }}</h5>
 												<p class="card-text">{{ $model->subtitle }}</p>
@@ -233,7 +235,9 @@
 									<div class="col-md-6 col-lg-4">
 										<!-- Simple card -->
 										<div class="card d-block">
-											<img class="card-img-top" src="{{ $model->cover }}" alt="Card image cap">
+											<div class="embed-responsive embed-responsive-16by9">
+												<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="Card image cap">
+											</div>
 											<div class="card-body">
 												<h5 class="card-title">{{ $model->title }}</h5>
 												<p class="card-text">{{ $model->subtitle }}</p>
@@ -250,7 +254,9 @@
 									<div class="col-md-6 col-lg-4">
 										<!-- Simple card -->
 										<div class="card d-block">
-											<img class="card-img-top" src="{{ $model->cover }}" alt="Card image cap">
+											<div class="embed-responsive embed-responsive-16by9">
+												<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="Card image cap">
+											</div>
 											<div class="card-body">
 												<h5 class="card-title">{{ $model->title }}</h5>
 												<p class="card-text">{{ $model->subtitle }}</p>

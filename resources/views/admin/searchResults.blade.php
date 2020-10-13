@@ -48,8 +48,10 @@
 										<div class="col-lg-6 col-xl-4">
 											<div class="card">
 												<div class="row no-gutters align-items-center">
-													<div class="col-md-4 text-center">
-														<img class="img-fluid" src="{{ $user->cover }}" />
+													<div class="col-md-4">
+														<div class="embed-responsive embed-responsive-16by9">
+															<img class="img-fluid" src="{{ $user->cover }}" />
+														</div>
 													</div>
 													<div class="col-md-8">
 														<div class="card-body">

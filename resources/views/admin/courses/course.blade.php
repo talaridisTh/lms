@@ -544,8 +544,8 @@
 											}
 											else {
 												$tooltip = [
-													"color" => "bg-info",
-													"icon" => "<i class='mdi mdi-24px ml-2px mdi-clock-outline'></i>",
+													"color" => "bg-info", 
+													"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>", 
 													"text" => "Scheduled"
 												];
 												$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
