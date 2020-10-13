@@ -130,10 +130,6 @@ $("#add-materials-modal").on("show.bs.modal", function(event) {
 	modal.dataset.chapter = chapter;
 })
 
-$(".under-development").on("click", function() {
-	utilities.toastAlert("info", "Under Development");
-})
-
 $("#remove-all-files-btn").on("click", function() {
 
 	let fileRow = $(".js-file-row")

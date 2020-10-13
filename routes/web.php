@@ -77,6 +77,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 
 	//! Dashboard Home Content
 	Route::get('/dashboard/home-content', 'UtilityController@index');
+	Route::post('/dashboard/home-content/update', 'UtilityController@update');
+
 
 //!======================================================
 //! 			End Dashboard Routes					|
