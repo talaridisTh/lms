@@ -534,19 +534,19 @@ $R("#summary", {
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 
 for ( let i = 0; i < dropArea.length; i++ ) {
-	
+
 	dropArea[i].addEventListener("dragenter", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 		const span = label.querySelector("span");
-		
+
 		if (event.dataTransfer.items.length > 0) {
 			draggingArea.classList.add("limegreen");
 			label.classList.add("text-limegreen");
 			span.classList.add("text-decoration-limegreen");
 		}
 	});
-	
+
 	dropArea[i].addEventListener("dragleave", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");

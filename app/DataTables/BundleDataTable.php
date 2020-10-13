@@ -32,7 +32,7 @@ class BundleDataTable extends DataTable
 
         return datatables()::of($query)
             ->addColumn('action', function($data) {
-				
+
 				return "<div class='icheck-primary d-inline'>
 							<input class='js-bundle-checkbox' data-bundle-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>

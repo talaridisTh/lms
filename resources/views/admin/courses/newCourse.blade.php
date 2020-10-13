@@ -39,7 +39,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-				
+
 					<ul class="nav nav-tabs nav-bordered mb-3">
 						<li class="nav-item">
 							<a href="#media-library" id="media-library-tab-btn"
@@ -58,7 +58,7 @@
 							</a>
 						</li>
 					</ul> <!-- end nav-->
-				
+
 					<div class="tab-content">
 						<div id="media-library" class="tab-pane show active">
 							<!-- Search -->
@@ -69,19 +69,19 @@
 									</div>
 								</div>
 							</div>
-							<div id="gallery-content" data-model="App\Course" data-id={{ isset($course) ? $course->id : "" }}>	
+							<div id="gallery-content" data-model="App\Course" data-id={{ isset($course) ? $course->id : "" }}>
 								@include('components.admin.imageGallery', ['media' => $media])
 							</div>
 						</div>
-					
+
 						<div id="upload" class="tab-pane">
-						
+
 							<input id="file-pond" type="file[]"/>
-							
-						</div>			
+
+						</div>
 					</div>
 				</div>
-			
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
@@ -106,7 +106,7 @@
 				<h4 class="page-title">{{ isset($course) ? $course->title : "Νέο Course" }}</h4>
 			</div>
 		</div>
-	</div>     
+	</div>
 	<!-- end page title -->
 
 	<div class="wrapper">
@@ -151,7 +151,7 @@
 						<div class="col-xl-9 col-lg-7 col-md-12">
 							<form id="create-course-form" action="/dashboard/courses/store"
 								method="POST" enctype="multipart/form-data" autocomplete="off">
-										
+
 								@csrf
 								@if ( isset($course) )
 									@method('PATCH')
@@ -161,8 +161,8 @@
 									<div class="form-group col-lg-6">
 										<label for="title">Τίτλος <span class="text-danger">*</span></label>
 										<input id="title" type="text" name="title"
-											class="form-control @error('title') is-invalid @enderror" 
-											value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}" 
+											class="form-control @error('title') is-invalid @enderror"
+											value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}"
 											placeholder="Εισάγετε τίτλο...">
 										@error('title')
 											<span class="invalid-feedback" role="alert">
@@ -172,10 +172,10 @@
 									</div>
 									<div class="form-group col-lg-6">
 										<label for="subtitle">Υπότιτλος</label>
-										<input id="subtitle" type="text" 
-											class="form-control @error('subtitle') is-invalid @enderror" 
-											name="subtitle" 
-											value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($course) ? $course['subtitle'] : "" ) }}" 
+										<input id="subtitle" type="text"
+											class="form-control @error('subtitle') is-invalid @enderror"
+											name="subtitle"
+											value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($course) ? $course['subtitle'] : "" ) }}"
 											placeholder="Εισάγετε υπότιτλο...">
 										@error('subtitle')
 											<span class="invalid-feedback" role="alert">
@@ -194,7 +194,7 @@
 										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
 									</div>
 									<textarea class="form-control @error('summary') is-invalid @enderror"
-										id="summary" name="summary" rows="4" 
+										id="summary" name="summary" rows="4"
 										placeholder="Εισάγετε σύνοψη..."
 										>{{ old('summary') != "" ? old('summary') : ( isset($course) ? $course['summary'] : "" ) }}</textarea>
 									@error('summary')
@@ -203,7 +203,7 @@
 										</span>
 									@enderror
 								</div>
-										
+
 								<div class="form-group">
 									<div class="d-flex justify-content-between">
 										<label for="description">Περιγραφή</label>
@@ -236,11 +236,11 @@
 								</button>
 
 							</div>
-				
+
 							<div class="card">
 								<div class="card-body">
 									<div class="form-group">
-				
+
 										<label for="version-select">Έκδοση <span class="text-danger">*</span></label>
 										<select form="create-course-form" id="version-select"
 											name="version"  data-toggle="select2" data-minimum-results-for-search="-1"
@@ -255,16 +255,16 @@
 											</span>
 										@enderror
 									</div>
-				
+
 									<hr>
-				
+
 									<div class="form-group">
 										<label for="topic">Topic</label>
 										<select form="create-course-form" id="topics-select"
 											class="select2 form-control select2-multiple"
 											name="topics[]" multiple="multiple"
 											data-toggle="select2" data-placeholder="Επιλέξτε Topics ...">
-														
+
 											@foreach ($topics as $topic)
 
 												@if ( old("topics") != "" && in_array($topic->id, old("topics")) )
@@ -278,7 +278,7 @@
 												@endif
 
 											@endforeach
-				
+
 										</select>
 									</div>
 
@@ -288,9 +288,9 @@
 										class="select2 form-control" name="curator"
 										data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή...">
 										@foreach ($instructors as $instructor)
-										
+
 											@if ( old("curator") != "" && old("curator") == $instructor->id )
-												<option value="{{ $instructor->id }}" 
+												<option value="{{ $instructor->id }}"
 													selected>
 													{{ $instructor->first_name }} {{ $instructor->last_name }}
 												</option>

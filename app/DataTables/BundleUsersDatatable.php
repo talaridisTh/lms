@@ -44,7 +44,7 @@ class BundleUsersDatatable extends DataTable
 
 			})
 			->rawColumns([ "action", "btn" ]);
-			
+
     }
 
     /**

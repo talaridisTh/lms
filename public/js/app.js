@@ -437,7 +437,7 @@ eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("window.axios = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\nwindow.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';\nwindow.Swal = __webpack_require__(/*! sweetalert2 */ \"./node_modules/sweetalert2/dist/sweetalert2.all.js\");\nwindow.$R = __webpack_require__(/*! ../plugins/redactor/redactor */ \"./resources/plugins/redactor/redactor.js\");\n\n__webpack_require__(/*! ../plugins/redactor/_plugins/alignment/alignment */ \"./resources/plugins/redactor/_plugins/alignment/alignment.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvYXBwLmpzPzZkNDAiXSwibmFtZXMiOlsid2luZG93IiwiYXhpb3MiLCJyZXF1aXJlIiwiZGVmYXVsdHMiLCJoZWFkZXJzIiwiY29tbW9uIiwiU3dhbCIsIiRSIl0sIm1hcHBpbmdzIjoiQUFBQUEsTUFBTSxDQUFDQyxLQUFQLEdBQWVDLG1CQUFPLENBQUMsNENBQUQsQ0FBdEI7QUFDQUYsTUFBTSxDQUFDQyxLQUFQLENBQWFFLFFBQWIsQ0FBc0JDLE9BQXRCLENBQThCQyxNQUE5QixDQUFxQyxrQkFBckMsSUFBMkQsZ0JBQTNEO0FBRUFMLE1BQU0sQ0FBQ00sSUFBUCxHQUFjSixtQkFBTyxDQUFDLHVFQUFELENBQXJCO0FBRUFGLE1BQU0sQ0FBQ08sRUFBUCxHQUFZTCxtQkFBTyxDQUFDLDhFQUFELENBQW5COztBQUNBQSxtQkFBTyxDQUFDLHNIQUFELENBQVAiLCJmaWxlIjoiLi9yZXNvdXJjZXMvanMvYXBwLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsid2luZG93LmF4aW9zID0gcmVxdWlyZSgnYXhpb3MnKTtcclxud2luZG93LmF4aW9zLmRlZmF1bHRzLmhlYWRlcnMuY29tbW9uWydYLVJlcXVlc3RlZC1XaXRoJ10gPSAnWE1MSHR0cFJlcXVlc3QnO1xyXG5cclxud2luZG93LlN3YWwgPSByZXF1aXJlKCdzd2VldGFsZXJ0MicpO1xyXG5cclxud2luZG93LiRSID0gcmVxdWlyZSgnLi4vcGx1Z2lucy9yZWRhY3Rvci9yZWRhY3RvcicpO1xyXG5yZXF1aXJlKCcuLi9wbHVnaW5zL3JlZGFjdG9yL19wbHVnaW5zL2FsaWdubWVudC9hbGlnbm1lbnQnKTsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/app.js\n");
+eval("window.axios = __webpack_require__(/*! axios */ \"./node_modules/axios/index.js\");\nwindow.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';\nwindow.Swal = __webpack_require__(/*! sweetalert2 */ \"./node_modules/sweetalert2/dist/sweetalert2.all.js\");\nwindow.$R = __webpack_require__(/*! ../plugins/redactor/redactor */ \"./resources/plugins/redactor/redactor.js\");\n\n__webpack_require__(/*! ../plugins/redactor/_plugins/alignment/alignment */ \"./resources/plugins/redactor/_plugins/alignment/alignment.js\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvYXBwLmpzPzZkNDAiXSwibmFtZXMiOlsid2luZG93IiwiYXhpb3MiLCJyZXF1aXJlIiwiZGVmYXVsdHMiLCJoZWFkZXJzIiwiY29tbW9uIiwiU3dhbCIsIiRSIl0sIm1hcHBpbmdzIjoiQUFBQUEsTUFBTSxDQUFDQyxLQUFQLEdBQWVDLG1CQUFPLENBQUMsNENBQUQsQ0FBdEI7QUFDQUYsTUFBTSxDQUFDQyxLQUFQLENBQWFFLFFBQWIsQ0FBc0JDLE9BQXRCLENBQThCQyxNQUE5QixDQUFxQyxrQkFBckMsSUFBMkQsZ0JBQTNEO0FBRUFMLE1BQU0sQ0FBQ00sSUFBUCxHQUFjSixtQkFBTyxDQUFDLHVFQUFELENBQXJCO0FBRUFGLE1BQU0sQ0FBQ08sRUFBUCxHQUFZTCxtQkFBTyxDQUFDLDhFQUFELENBQW5COztBQUNBQSxtQkFBTyxDQUFDLHNIQUFELENBQVAiLCJmaWxlIjoiLi9yZXNvdXJjZXMvanMvYXBwLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsid2luZG93LmF4aW9zID0gcmVxdWlyZSgnYXhpb3MnKTtcbndpbmRvdy5heGlvcy5kZWZhdWx0cy5oZWFkZXJzLmNvbW1vblsnWC1SZXF1ZXN0ZWQtV2l0aCddID0gJ1hNTEh0dHBSZXF1ZXN0Jztcblxud2luZG93LlN3YWwgPSByZXF1aXJlKCdzd2VldGFsZXJ0MicpO1xuXG53aW5kb3cuJFIgPSByZXF1aXJlKCcuLi9wbHVnaW5zL3JlZGFjdG9yL3JlZGFjdG9yJyk7XG5yZXF1aXJlKCcuLi9wbHVnaW5zL3JlZGFjdG9yL19wbHVnaW5zL2FsaWdubWVudC9hbGlnbm1lbnQnKTsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/app.js\n");
 
 /***/ }),
 
@@ -463,38 +463,50 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj){\"@bab
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+/***/ "./resources/sass/dashboard/app.scss":
+/*!*******************************************!*\
+  !*** ./resources/sass/dashboard/app.scss ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9hcHAuc2Nzcz8yZGY4Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBIiwiZmlsZSI6Ii4vcmVzb3VyY2VzL3Nhc3MvYXBwLnNjc3MuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvLyByZW1vdmVkIGJ5IGV4dHJhY3QtdGV4dC13ZWJwYWNrLXBsdWdpbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/app.scss\n");
+eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9kYXNoYm9hcmQvYXBwLnNjc3M/N2E0MSJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsImZpbGUiOiIuL3Jlc291cmNlcy9zYXNzL2Rhc2hib2FyZC9hcHAuc2Nzcy5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8vIHJlbW92ZWQgYnkgZXh0cmFjdC10ZXh0LXdlYnBhY2stcGx1Z2luIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/dashboard/app.scss\n");
 
 /***/ }),
 
-/***/ "./resources/sass/customArticleStyle.scss":
-/*!************************************************!*\
-  !*** ./resources/sass/customArticleStyle.scss ***!
-  \************************************************/
+/***/ "./resources/sass/dashboard/customArticleStyle.scss":
+/*!**********************************************************!*\
+  !*** ./resources/sass/dashboard/customArticleStyle.scss ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9jdXN0b21BcnRpY2xlU3R5bGUuc2Nzcz82OWZkIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBIiwiZmlsZSI6Ii4vcmVzb3VyY2VzL3Nhc3MvY3VzdG9tQXJ0aWNsZVN0eWxlLnNjc3MuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvLyByZW1vdmVkIGJ5IGV4dHJhY3QtdGV4dC13ZWJwYWNrLXBsdWdpbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/customArticleStyle.scss\n");
+eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9kYXNoYm9hcmQvY3VzdG9tQXJ0aWNsZVN0eWxlLnNjc3M/NTg4MCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsImZpbGUiOiIuL3Jlc291cmNlcy9zYXNzL2Rhc2hib2FyZC9jdXN0b21BcnRpY2xlU3R5bGUuc2Nzcy5qcyIsInNvdXJjZXNDb250ZW50IjpbIi8vIHJlbW92ZWQgYnkgZXh0cmFjdC10ZXh0LXdlYnBhY2stcGx1Z2luIl0sInNvdXJjZVJvb3QiOiIifQ==\n//# sourceURL=webpack-internal:///./resources/sass/dashboard/customArticleStyle.scss\n");
+
+/***/ }),
+
+/***/ "./resources/sass/index/app.scss":
+/*!***************************************!*\
+  !*** ./resources/sass/index/app.scss ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("// removed by extract-text-webpack-plugin//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvc2Fzcy9pbmRleC9hcHAuc2Nzcz9iMDM0Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBIiwiZmlsZSI6Ii4vcmVzb3VyY2VzL3Nhc3MvaW5kZXgvYXBwLnNjc3MuanMiLCJzb3VyY2VzQ29udGVudCI6WyIvLyByZW1vdmVkIGJ5IGV4dHJhY3QtdGV4dC13ZWJwYWNrLXBsdWdpbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/sass/index/app.scss\n");
 
 /***/ }),
 
 /***/ 0:
-/*!******************************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/customArticleStyle.scss ./resources/sass/app.scss ***!
-  \******************************************************************************************************/
+/*!**********************************************************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/dashboard/customArticleStyle.scss ./resources/sass/dashboard/app.scss ./resources/sass/index/app.scss ***!
+  \**********************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\sass\customArticleStyle.scss */"./resources/sass/customArticleStyle.scss");
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\sass\dashboard\customArticleStyle.scss */"./resources/sass/dashboard/customArticleStyle.scss");
+__webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\sass\dashboard\app.scss */"./resources/sass/dashboard/app.scss");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\sass\index\app.scss */"./resources/sass/index/app.scss");
 
 
 /***/ })

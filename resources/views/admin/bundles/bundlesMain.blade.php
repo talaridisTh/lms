@@ -15,9 +15,9 @@
 			</div>
 			<div class="modal-body table-cnt">
 				<form id="new-bundle-form" action="bundle/store" method="POST" enctype="multipart/form-data" class="px-3" autocomplete="off">
-					
+
 					@csrf
-					
+
 					<div class="form-group">
 						<label for="name">Όνομα</label>
 						<input id="name" type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" placeholder="Δώστε όνομα...">
@@ -95,8 +95,8 @@
 					<h4 class="page-title">Bundles</h4>
 				</div>
 			</div>
-		</div>     
-	</div>     
+		</div>
+	</div>
 	<!-- end page title -->
 
 <div class="container table-cnt content-width">
@@ -109,7 +109,7 @@
 					Νέο Bundle
 				</a>
 				<div class="btn-group mb-2">
-					<button type="button" class="btn btn-secondary dropdown-toggle" 
+					<button type="button" class="btn btn-secondary dropdown-toggle"
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
 						Επιλογές (0)
 					</button>
@@ -150,7 +150,7 @@
 @section('scripts')
 	<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 	<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
-	
+
 	<script src="{{ mix('js/dashboard/bundles/bundlesMain.js') }}"></script>
 
 	@if ( count($errors) > 0 )

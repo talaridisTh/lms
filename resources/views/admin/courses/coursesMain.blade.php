@@ -38,8 +38,8 @@
 					<h4 class="page-title">Courses</h4>
 				</div>
 			</div>
-		</div>     
-	</div>     
+		</div>
+	</div>
 	<!-- end page title -->
 
 	<!-- Modal -->
@@ -54,7 +54,7 @@
 				</div>
 				<div class="modal-body">
 					<form id="clone-form" action="courses/clone" method="POST">
-						
+
 						@csrf
 
 						<div class="form-group">
@@ -92,7 +92,7 @@
 						Νέο Course
 					</a>
 					<div class="btn-group mb-2">
-						<button id="course-bulk-action-btn" disabled type="button" 
+						<button id="course-bulk-action-btn" disabled type="button"
 							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false">
 							Επιλογές (0)
@@ -109,7 +109,7 @@
 
 			</div>
 		</div>
-		
+
 		<table id="courses-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>

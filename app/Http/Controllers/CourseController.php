@@ -67,13 +67,13 @@ class CourseController extends Controller
 		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;
 		$course->version = $request->version;
-		
+
 		$course->save();
 
 		if ( $request->topics ) {
 			$course->topics()->attach( $request->topics );
 		}
-		
+
 		return redirect( "/dashboard/course/$course->slug" );
 
     }
@@ -85,7 +85,7 @@ class CourseController extends Controller
      */
     public function show(Course $course = null, Request $request)
     {
-		
+
 		if ( is_null($course) ) {
 			$publish = "";
 		}
@@ -181,7 +181,7 @@ class CourseController extends Controller
 
         return redirect("/dashboard/courses");
 	}
-	
+
 	public function userCourse( Course $course ) {
 
 		$materials = $course->materials;

@@ -105,7 +105,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nElement.prototype.findParent 
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
 
 
 /***/ })

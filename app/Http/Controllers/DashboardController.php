@@ -19,7 +19,7 @@ class DashboardController extends Controller
     {
         return view('admin.overview.overviewMain');
 	}
-	
+
 	public function dashboardSearch(Request $request) {
 
 		$users = User::where(function($query) use ($request) {
@@ -63,7 +63,7 @@ class DashboardController extends Controller
 		elseif ( $bundles->count() == 1 && $totalCount == 1 ) {
 
 			return redirect( "/dashboard/bundle/".$bundles->first()->slug );
-			
+
 		}
 		else {
 			$data = [

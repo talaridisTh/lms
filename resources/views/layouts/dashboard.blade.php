@@ -15,7 +15,7 @@
 		<link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style" />
 		<link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
 
-		<link rel="stylesheet" href="{{ mix('css/app.css') }}">
+		<link rel="stylesheet" href="{{ mix('css/dashboard/app.css') }}">
 
 
 

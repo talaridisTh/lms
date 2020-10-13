@@ -163,9 +163,9 @@
                             	<input type="text" hidden name="courseId" value="{{ $course->id }}" />
 								<input type="text" hidden name="priority" value="{{ $priority }}" />
 								@if ( !is_null($section) )
-								
+
 									<input type="text" hidden name="sectionId" value="{{ $section->id }}" />
-									
+
 								@endif
                             @endisset
 
@@ -331,7 +331,7 @@
 
                                 <div class="form-group mb-3 wrapper-video">
                                     <label for="urlMaterial">URL video</label>
-                                    <input  title="An absolute URL (usually starts with http://)" form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
+                                    <input   form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
                                         id="urlMaterial" placeholder="vimeo-id" value="{{ old('video_link') != "" ? old('video_link')
 												: ( isset($material) ? $material->video_link : "" ) }}"  />
                                     <span class="font-16" >https://vimeo.com/</span>

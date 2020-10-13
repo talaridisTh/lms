@@ -136,7 +136,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-				
+
 					<ul class="nav nav-tabs nav-bordered mb-3">
 						<li class="nav-item">
 							<a href="#media-library" id="media-library-tab-btn"
@@ -155,7 +155,7 @@
 							</a>
 						</li>
 					</ul> <!-- end nav-->
-				
+
 					<div class="tab-content">
 						<div id="media-library" class="tab-pane show active">
 							<!-- Search -->
@@ -166,19 +166,19 @@
 									</div>
 								</div>
 							</div>
-							<div id="gallery-content" data-model="App\Course" data-id={{ isset($course) ? $course->id : "" }}>	
+							<div id="gallery-content" data-model="App\Course" data-id={{ isset($course) ? $course->id : "" }}>
 								@include('components.admin.imageGallery', ['media' => $media])
 							</div>
 						</div>
-					
+
 						<div id="upload" class="tab-pane">
-						
+
 							<input id="file-pond" type="file[]"/>
-							
-						</div>			
+
+						</div>
 					</div>
 				</div>
-			
+
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
@@ -201,7 +201,7 @@
 				<h4 class="page-title">{{ isset($course) ? $course->title : "Νέο Course" }}</h4>
 			</div>
 		</div>
-	</div>     
+	</div>
 	<!-- end page title -->
 
 	<!-- additionnal content modal -->
@@ -246,7 +246,7 @@
 					<div class="row px-3">
 
 						<div class="col-6">
-							
+
 							<div class="card cursor-pointer js-material" data-type="Section">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-wunderlist display-3"></i>
@@ -255,7 +255,7 @@
 							</div>
 
 						</div>
-					
+
 						<div class="col-6">
 							<div id="add-new-material-btn" class="card cursor-pointer">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
@@ -267,7 +267,7 @@
 						</div>
 					</div>
 
-					
+
 				</div>
 				<input id="store-material-id" type="text" value="" hidden>
 				<input id="store-material-priority" type="text" value="" hidden>
@@ -365,8 +365,8 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button id="add-remaingings-btn" 
-						data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary" 
+					<button id="add-remaingings-btn"
+						data-text="Προσθήκη Επιλογών" data-enabled-color="btn-primary"
 						data-disabled-color="btn-secondary" class="btn btn-secondary" disabled>
 						Προσθήκη Επιλογών (0)
 					</button>
@@ -419,7 +419,7 @@
 							<form id="edit-course-form"
 								action="{{ isset($course) ? route('course.update', $course->slug) : "/dashboard/courses/store" }}"
 								method="POST" enctype="multipart/form-data" autocomplete="off">
-										
+
 								@csrf
 								@if ( isset($course) )
 									@method('PATCH')
@@ -429,8 +429,8 @@
 									<div class="form-group col-lg-6">
 										<label for="title">Τίτλος <span class="text-danger">*</span></label>
 										<input id="title" type="text" name="title"
-											class="form-control @error('title') is-invalid @enderror" 
-											value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}" 
+											class="form-control @error('title') is-invalid @enderror"
+											value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}"
 											placeholder="Εισάγετε τίτλο...">
 										@error('title')
 											<span class="invalid-feedback" role="alert">
@@ -440,10 +440,10 @@
 									</div>
 									<div class="form-group col-lg-6">
 										<label for="subtitle">Υπότιτλος</label>
-										<input id="subtitle" type="text" 
-											class="form-control @error('subtitle') is-invalid @enderror" 
-											name="subtitle" 
-											value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($course) ? $course['subtitle'] : "" ) }}" 
+										<input id="subtitle" type="text"
+											class="form-control @error('subtitle') is-invalid @enderror"
+											name="subtitle"
+											value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($course) ? $course['subtitle'] : "" ) }}"
 											placeholder="Εισάγετε υπότιτλο...">
 										@error('subtitle')
 											<span class="invalid-feedback" role="alert">
@@ -466,7 +466,7 @@
 									</div>
 
 									<textarea class="form-control @error('summary') is-invalid @enderror"
-										id="summary" name="summary" rows="4" 
+										id="summary" name="summary" rows="4"
 										placeholder="Εισάγετε σύνοψη..."
 										>{{ old('summary') != "" ? old('summary') : ( isset($course) ? $course['summary'] : "" ) }}</textarea>
 									@error('summary')
@@ -475,10 +475,10 @@
 										</span>
 									@enderror
 								</div>
-										
+
 								<div class="form-group">
 									<div class="d-flex justify-content-between">
-										
+
 										<label for="description">Περιγραφή</label>
 										<input id="description-toggle" class="js-editors-toggle"
 											data-field="description" type="checkbox" data-switch="bool"
@@ -521,7 +521,7 @@
                             	    <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
                             	        @include('components/admin/filesTable', ["files" => $files])
 									</div>
-									
+
 									<!-- FilePond -->
                             	    <input id="course-file-upload" type="text">
                             	</div>
@@ -536,16 +536,16 @@
 										if ( $course->status == 1 ) {
 											if ( time() > strtotime($course->publish_at) && !is_null($course->publish_at) ) {
 												$tooltip = [
-													"color" => "bg-success", 
-													"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+													"color" => "bg-success",
+													"icon" => "<i class='h2 mdi mdi-cloud'></i>",
 													"text" => "Published"
 												];
 												$storeBtn = [ "color" => "btn-info", "text" => "Update"];
 											}
 											else {
 												$tooltip = [
-													"color" => "bg-info", 
-													"icon" => "<i class='mdi mdi-24px ml-2px mdi-clock-outline'></i>", 
+													"color" => "bg-info",
+													"icon" => "<i class='mdi mdi-24px ml-2px mdi-clock-outline'></i>",
 													"text" => "Scheduled"
 												];
 												$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
@@ -560,8 +560,8 @@
 										}
 										else {
 											$tooltip = [
-												"color" => "bg-light", 
-												"icon" => "<i class='h2 mdi mdi-cloud'></i>", 
+												"color" => "bg-light",
+												"icon" => "<i class='h2 mdi mdi-cloud'></i>",
 												"text" => "Draft"
 											];
 											$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
@@ -607,7 +607,7 @@
 								@endif
 
 							</div>
-				
+
 							<div class="card">
 								<div class="card-body">
 									<div class="form-group">
@@ -616,7 +616,7 @@
 											$normalSelected = old('verison') == "Normal" ? "selected" : ""
 											$trialSelected = old('verison') == "Trial" ? "selected" : ""
 										@endif
-				
+
 										<label for="version-select">Έκδοση <span class="text-danger">*</span></label>
 										<select form="edit-course-form" id="version-select" name="version"
 											class="custom-select2-warning select2 form-control @error('version') is-invalid @enderror"
@@ -624,7 +624,7 @@
 											@if ( !isset($course) )
 												<option value="" selected>Επιλέξτε έκδοση</option>
 											@endif
-		
+
 											<option value="Normal" {{
 												isset($normalSelected) ? $normalSelected
 													: ( isset($course) && $course->version == "Normal" ? "selected" : "" )
@@ -642,16 +642,16 @@
 											</span>
 										@enderror
 									</div>
-				
+
 									<hr>
-				
+
 									<div class="form-group">
 										<label for="topic">Topic</label>
 										<select form="edit-course-form" id="topics-select"
 											class="select2 form-control select2-multiple"
 											name="topics[]" multiple="multiple"
 											placeholder="Επιλέξτε Topics...">
-														
+
 											@foreach ($topics as $topic)
 
 												@if ( old("topics") != "" && in_array($topic->id, old("topics")) )
@@ -669,7 +669,7 @@
 												@endif
 
 											@endforeach
-				
+
 										</select>
 									</div>
 
@@ -679,14 +679,14 @@
 										class="select2 form-control" name="curator"
 										data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή...">
 										@foreach ($instructors as $instructor)
-										
+
 											@if ( old("curator") != "" && old("curator") == $instructor->id )
-												<option value="{{ $instructor->id }}" 
+												<option value="{{ $instructor->id }}"
 													selected>
 													{{ $instructor->first_name }} {{ $instructor->last_name }}
 												</option>
 											@elseif ( old("curator") == "" && isset($course) && $instructor->id == $course->user_id )
-												<option value="{{ $instructor->id }}" 
+												<option value="{{ $instructor->id }}"
 													selected>
 													{{ $instructor->first_name }} {{ $instructor->last_name }}
 												</option>
@@ -711,7 +711,7 @@
 
 								</div>
 							</div>
-				
+
 							@if ( isset($course) )
 								<!-- Cover Preview -->
 								<div class="card">
@@ -723,7 +723,7 @@
 											class="img-fluid{{ (isset($course) &&  is_null($course->cover)) ? " d-none" : "" }}"
 											alt="Cover Image" />
 										<p id="cover-status" class="text-center{{ (isset($course) &&  !is_null($course->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
-										
+
 										<div class="form-row mt-2">
                                             <div class="col-md-6 d-flex justify-content-center">
                                                 <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
@@ -737,7 +737,7 @@
                                                 </button>
                                             </div>
                                         </div>
-		
+
 									</div> <!-- end card-body -->
 								</div> <!-- end course info card -->
 							@endif
@@ -765,7 +765,7 @@
 									Επιλογές (0)
 								</button>
 								<div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
-									
+
 									<a id="remove-selection-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
 									<div class="dropdown-divider my-0"></div>
 									<div class="btn-group dropleft w-100">
@@ -782,8 +782,8 @@
 							</div>
 						</div>
 					</div>
-							
-					<table id="course-materials-list" 
+
+					<table id="course-materials-list"
 						data-course-id="{{  isset($course) ? $course['id'] : 1 }}"
 						data-course-slug="{{  isset($course) ? $course['slug'] : "" }}"
 						class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
@@ -834,7 +834,7 @@
 							</button>
 							<div class="dropdown ml-2">
 								<button class="btn btn-secondary dropdown-toggle"
-									type="button" id="active-users-bulk" data-toggle="dropdown" 
+									type="button" id="active-users-bulk" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
@@ -881,7 +881,7 @@
 					<div class="accordion" id="section-accordion">
 
 						@include('components/admin/courses/sectionBuilder', ["sections" => $sections])
-					
+
 					</div>
 				</div><!-- section-content -->
 

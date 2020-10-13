@@ -37,7 +37,7 @@ class CourseMaterialsDataTable extends DataTable
 						$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 							->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
 				})
-				
+
 				->get();
 		}
 
@@ -75,7 +75,7 @@ class CourseMaterialsDataTable extends DataTable
 				$status = $data->pivot->status == 0 ? "" : "checked";
 
 				return "<input class='js-toggle' data-course-id='$request->courseId'
-					type='checkbox' id='". $data->slug ."-toggle-checkbox' 
+					type='checkbox' id='". $data->slug ."-toggle-checkbox'
 					data-material-id='$data->id' $status data-switch='bool' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
@@ -83,9 +83,9 @@ class CourseMaterialsDataTable extends DataTable
 			->editColumn('priority', function($data) {
 
 				return "<div class='form-group'>
-							<input type='text' class='form-control text-center js-sort-input' 
-								data-material-id='$data->id' 
-								data-current-priority=".$data->pivot->priority." 
+							<input type='text' class='form-control text-center js-sort-input'
+								data-material-id='$data->id'
+								data-current-priority=".$data->pivot->priority."
 								value=".$data->pivot->priority." autocomplete='off'>
 						</div>";
 			})
@@ -106,7 +106,7 @@ class CourseMaterialsDataTable extends DataTable
 			->setRowClass(function ($data) {
 
 				if ( $data->type == "Section" ) {
-					
+
 					return 'bg-light-gray';
 
 				}

@@ -57,9 +57,9 @@ class BundleController extends Controller
 		$bundle->publish_at = $publishDate;
 		$bundle->status = $status;
 		$bundle->slug = Str::slug($request->title, "-");
-		
+
 		$bundle->save();
-		
+
 		return redirect( "/dashboard/bundle/$bundle->slug" );
     }
 
@@ -130,7 +130,7 @@ class BundleController extends Controller
     {
         //
 	}
-	
+
 	public function softDelete(Bundle $bundle)
     {
 		$bundle->delete();

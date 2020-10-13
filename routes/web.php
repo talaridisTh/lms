@@ -71,10 +71,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     //! Topic Routes
     Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
     Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');
-	
+
 	//! Dashboard Search
 	Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
-	
+
 	//! Dashboard Home Content
 	Route::get('/dashboard/home-content', 'UtilityController@index');
 
@@ -121,7 +121,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('courses/add-students', 'Ajax\CourseController@addStudents');
 	Route::patch('courses/remove-students', 'Ajax\CourseController@removeStudents');
 	Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
-	
+
 //! Dashboard Ajax Bundles Datatables
     Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');
     Route::post('bundles/bundle-courses-datatable', 'Ajax\BundleController@show');
@@ -158,12 +158,12 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 	Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
 	Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
 	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
-	
+
 	Route::post("section/remove-chapters", "Ajax\MaterialController@removeChapters");
 	Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
 	Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
 	Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
-	
+
 	Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
 
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
