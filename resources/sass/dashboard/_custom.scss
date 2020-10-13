@@ -556,13 +556,10 @@ figure > img {
 	margin-left: 2px;
 }
 
-//+-----------TA PIRAKSA  XXAXXAXAXAXA-------------
-
-//.js-filepond-file-dragging .filepond--drop-label {	//! an pas na to piraksis ksana skepsou to!
-//	border: 1px solid #404954;					//! einai js class
-//	transition: border 0.5s ease-in-out;
-//}
-//+-----------TA PIRAKSA  XXAXXAXAXAXA-------------
+.js-filepond-file-dragging .filepond--drop-label {	//! an pas na to piraksis ksana skepsou to!
+	border: 1px solid #404954;					//! einai js class
+	transition: border 0.5s ease-in-out;
+}
 
 .js-filepond-file-dragging label {
 	transition: color 0.5s ease-in-out;
@@ -570,10 +567,6 @@ figure > img {
 
 .js-filepond-file-dragging label > span {
 	transition: all 0.5s ease-in-out;
-}
-
-.text-decoration-limegreen {
-	text-decoration-color: limegreen !important;
 }
 
 .text-limegreen {
