@@ -30,25 +30,25 @@ class UtilityFactory extends Factory
 			"fifth_section" => "fifth_section",
 			"sixth_section" => json_encode([
 				"model" => "App\Material",
-				"ids" => [rand(1,15), rand(1,15), rand(1,15)]
+				"ids" => [rand(1,15), rand(1,15), rand(1,15)],
+				"status" => 1
 			]),
 			"seventh_section" => json_encode([
 				"model" => "App\Course",
-				"ids" => [rand(1,15), rand(1,15), rand(1,15)]
+				"ids" => [rand(1,15), rand(1,15), rand(1,15)],
+				"status" => 1
 			]),
 			"eighth_section" => json_encode([
 				"model" => "App\Bundle",
-				"ids" => [rand(1,15), rand(1,15), rand(1,15)]
+				"ids" => [rand(1,15), rand(1,15), rand(1,15)],
+				"status" => 1
 			]),
-			"statuses" => json_encode([
-				"first_section" => [ "status" => 1, "content" => 0 ],
+			"fields" => json_encode([
+				"first_section" => [ "status" => 1, "content" => 0 ],	//! 0 default 1 custom
 				"second_section" => [ "status" => 1, "content" => 0 ],
 				"third_section" => [ "status" => 1, "content" => 0 ],
 				"fourth_section" => [ "status" => 1, "content" => 0 ],
 				"fifth_section" => [ "status" => 1, "content" => 0 ],
-				"primary_advertisement" => 1,
-				"secondary_advertisement" => 1,
-				"tertiary_advertisement" => 1,
 			]),
 			"created_at" => "2020-10-12 17:44:42",
 			"updated_at" => "2020-10-12 17:44:42",
