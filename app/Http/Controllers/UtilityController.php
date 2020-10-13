@@ -29,7 +29,7 @@ class UtilityController extends Controller
 			"sixthSection" => $sixthSection,
 			"seventhSection" => $seventhSection,
 			"eighthSection" => $eighthSection,
-			"statuses" => json_decode($page->statuses)
+			"statuses" => json_decode($page->fields)
 		];
 
 		return view("admin/homeContent/homeContent")->with($data);

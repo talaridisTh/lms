@@ -24,7 +24,7 @@ class CreateUtilitiesTable extends Migration
 			$table->json("sixth_section")->nullable();
             $table->json("seventh_section")->nullable();
             $table->json("eighth_section")->nullable();
-            $table->json("statuses")->nullable();
+            $table->json("fields")->nullable();
             $table->timestamps();
         });
     }
