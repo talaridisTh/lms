@@ -193,7 +193,13 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('media/cover/replace', 'Ajax\MediaController@coverChange');
     Route::patch('media/cover/not-exist', 'Ajax\MediaController@coverChangeNotExist');
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
-    Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
+	Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
+	
+//! Ajax  Home Page Setting Datatables
+	Route::post('home-content/simple-materials-datatable', 'Ajax\UtilityController@simpleMaterialsDatatable');
+	Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
+	Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
+
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================

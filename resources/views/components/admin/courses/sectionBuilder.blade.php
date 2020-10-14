@@ -45,7 +45,8 @@
 					data-material-id="{{ $section->id }}" title="Delete section"></i>
 
 				<div class="dropdown">
-					<i id="{{ $section->slug }}-dropdown" class="js-section-dots ml-2 mdi mdi-dots-vertical cursor-pointer custom-primary" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+					<i id="{{ $section->slug }}-dropdown" class="js-section-dots ml-2 mdi mdi-dots-vertical cursor-pointer custom-primary"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
 					<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated py-0" aria-labelledby="{{ $section->slug }}-dropdown">
 						<a class="js-add-chapters-btn dropdown-item d-block py-2" href="#"
 							data-toggle="modal" data-chapter="{{ $section->id }}"
