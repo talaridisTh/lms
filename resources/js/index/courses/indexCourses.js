@@ -33,6 +33,25 @@ const filterTopic = async (idsTopic, userSlug) => {
     }
 }
 
+$(".js-audio-btn").click(function () {
+    let cnt = this.parentElement;
+    let audio = cnt.getElementsByClassName("js-audio")[0];
+
+    if (this.dataset.audioStatus == "paused") {
+        this.classList.remove("mdi-play-circle-outline");
+        this.classList.add("mdi-pause-circle-outline");
+        this.dataset.audioStatus = "playing";
+
+        audio.currentTime = 0;
+        audio.play();
+    } else {
+        this.classList.remove("mdi-pause-circle-outline");
+        this.classList.add("mdi-play-circle-outline");
+        this.dataset.audioStatus = "paused";
+
+        audio.pause();
+    }
+})
 
 $(".js-link-material").on("click", async function (e) {
 

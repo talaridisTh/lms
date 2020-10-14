@@ -29,6 +29,41 @@
             position: sticky;
             top: 0px;
             z-index: 999;
+
+
+        }
+
+        .tesst {
+            animation:tesst 5s ease infinite;
+            color: red;
+            font-size: 25px;
+        }
+
+        @keyframes tesst {
+            0% {
+                transform:scale(1);
+            }
+            5% {
+                transform:scale(1.25);
+            }
+            20% {
+                transform:scale(1);
+            }
+            30% {
+                transform:scale(1);
+            }
+            35% {
+                transform:scale(1.25);
+            }
+            50% {
+                transform:scale(1);
+            }
+            55% {
+                transform:scale(1.25);
+            }
+            70% {
+                transform:scale(1);
+            }
         }
 
 
@@ -164,19 +199,19 @@
 </div>
 
 
-<footer class=" footer-alt ">
+<footer class=" footer-alt border-top ">
     <div class="container" style="max-width: 1440px;">
-        <div class="row align-items-center">
+        <div class="row align-items-center mt-2">
             <div class="col-md-6">
                 <div class="row align-items-center">
                     <div class="col-md-4" style="width: 147px; height: 79px;">
                         <img src="/images/logo.png" alt="logo">
                     </div>
                     <div class=" col-md-8">
-                        <h4 class="text-left font-weight-bold font-20 mb-0" style="color: #585d63">
+                        <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
                             Θεσσαλονίκη
                         </h4>
-                        <p class="text-left d-flex flex-column font-16" style="color: #585d63">
+                        <p class="text-left d-flex flex-column font-14" style="color: #585d63">
                             <span>Παπαναστασίου 150, 54249,</span>
                             <span>Χαριλάου Τηλ. 2310 328797 - Fax 2310 328898</span>
                         </p>
@@ -197,9 +232,15 @@
     <hr class="border">
     <div class="container-fluid  mb-2" style="max-width: 1705px;">
         <div class="row align-items-center">
-            <div class="col-md-4 text-left">COPYRIGHT © 2019 IDROGIOS EDUCATION</div>
+            <div class="col-md-4 text-left">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>
             <div class="col-md-4 ">Πολιτική Απορρήτου</div>
-            <div class="col-md-4 text-right">DESIGNED & DEVELOPED BY DARKPONY</div>
+
+
+
+
+            <div class="col-md-4 text-right"><a class="footer-link nav-link text-secondary" target="_blank" href="https://www.darkpony.com">
+                    <span class="mr-1">With</span>  <div class="heart"></div> <span class="ml-1">by DARKPONY</span> </a>
+            </div>
         </div>
     </div>
 </footer>

@@ -92,6 +92,107 @@
   margin-left: 13px;
 }
 
+.heart {
+  display: inline-block;
+  background-color: red;
+  position: relative;
+  height: 8px;
+  width: 8px;
+  transform: rotate(-45deg) scale(1);
+  -webkit-animation: pulse 1s linear infinite;
+          animation: pulse 1s linear infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    transform: rotate(-45deg) scale(1);
+  }
+
+  10% {
+    transform: rotate(-45deg) scale(1.1);
+  }
+
+  20% {
+    transform: rotate(-45deg) scale(0.9);
+  }
+
+  30% {
+    transform: rotate(-45deg) scale(1.2);
+  }
+
+  40% {
+    transform: rotate(-45deg) scale(0.9);
+  }
+
+  50% {
+    transform: rotate(-45deg) scale(1.05);
+  }
+
+  60% {
+    transform: rotate(-45deg) scale(0.95);
+  }
+
+  70% {
+    transform: rotate(-45deg) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: rotate(-45deg) scale(1);
+  }
+
+  10% {
+    transform: rotate(-45deg) scale(1.1);
+  }
+
+  20% {
+    transform: rotate(-45deg) scale(0.9);
+  }
+
+  30% {
+    transform: rotate(-45deg) scale(1.2);
+  }
+
+  40% {
+    transform: rotate(-45deg) scale(0.9);
+  }
+
+  50% {
+    transform: rotate(-45deg) scale(1.05);
+  }
+
+  60% {
+    transform: rotate(-45deg) scale(0.95);
+  }
+
+  70% {
+    transform: rotate(-45deg) scale(1);
+  }
+}
+
+.heart::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: 0;
+  background-color: inherit;
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+}
+
+.heart::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -50%;
+  background-color: inherit;
+  border-radius: 50%;
+  height: 8px;
+  width: 8px;
+}
+
 .course-title:hover {
   color: #328af1 !important;
 }

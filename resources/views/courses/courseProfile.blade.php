@@ -186,7 +186,7 @@
                     @if(count($course->media->where("type","!=",0))>0)
                         <div class="accordion custom-accordion my-2" id="extra-content">
                             <div class="card mb-0">
-                                <div class="card-header p-2" id="head-extra-content">
+                                <div class="card-header p-1" id="head-extra-content">
                                     <h5 class="m-0 pl-2">
                                         <a class="custom-accordion-title d-block py-1"
                                            data-toggle="collapse" href="#collapse-extra-content"
@@ -210,14 +210,14 @@
                                                     <source src="{{ $media->rel_path }}"
                                                             type="{{ $media->file_info }}">
                                                 </audio>
-                                                <span class=" ml-3">{{$media->original_name}}</span>
+                                                <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
                                             @else
 
                                                 <div class="d-flex flex-column">
 
-                                                    <a target="_blank" class="my-1" href="{{url($media->rel_path)}}">
+                                                    <a target="_blank"  href="{{url($media->rel_path)}}">
                                                         <i class="h3 mdi {{$course->getIcon($media->ext)}}"></i>
-                                                        <span class=" ml-3">{{$media->original_name}}</span>
+                                                        <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
                                                     </a>
                                                 </div>
                                             @endif

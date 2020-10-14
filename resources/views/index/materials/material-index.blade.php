@@ -324,14 +324,14 @@
                                                     <source src="{{ $media->rel_path }}"
                                                             type="{{ $media->file_info }}">
                                                 </audio>
-                                                <span class=" ml-3">{{$media->original_name}}</span>
+                                                <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
                                             @else
 
                                                 <div class="d-flex flex-column">
 
-                                                    <a target="_blank" class="my-1" href="{{url($media->rel_path)}}">
+                                                    <a target="_blank"  href="{{url($media->rel_path)}}">
                                                         <i class="h3 mdi {{$materials->getIcon($media->ext)}}"></i>
-                                                        <span class=" ml-3">{{$media->original_name}}</span>
+                                                        <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
                                                     </a>
                                                 </div>
                                             @endif

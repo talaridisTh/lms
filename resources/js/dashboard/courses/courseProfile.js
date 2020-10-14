@@ -46,7 +46,7 @@ $(".js-section-material").on("click", function() {
 	if (selection) {
 		selection.remove();
 	}
-	
+
 	const newRow = document.createElement("tr");
 	newRow.classList.add("extra-content-row")
 
@@ -64,7 +64,7 @@ $(".js-section-material").on("click", function() {
 	const saveBtn = newRow.getElementsByClassName("js-section-content")[0];
 	saveBtn.dataset.sectionId = sectionId;
 	saveBtn.addEventListener("click", sectionAdditionHandler);
-	
+
 	const cancelBtn = newRow.getElementsByClassName("js-cancel-addition")[0];
 	cancelBtn.addEventListener("click", function() {
 		this.findParent(4).remove();
@@ -80,7 +80,7 @@ $(".js-section-material").on("click", function() {
 	$(statusElm).select2({
 		minimumResultsForSearch: -1,
 	});
-	
+
 })
 
 $("#sections-additions-modal").on("show.bs.modal", function(event) {
@@ -161,7 +161,7 @@ $(".js-remove-file").on("click", function() {
 $(".js-audio-btn").on("click", audioPlayerHandler);
 
 $("#remove-cover-btn").on("click", function() {
-	
+
 	axios.patch( "/media/remove-cover", {
 		namespace,
 		id: courseId
@@ -512,7 +512,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
-		{ 
+		{
 			data: 'updated_at',name: 'updated_at',
 			className: "cursor-default text-center align-middle", searchable: false,
 			render: function(data) {
@@ -747,14 +747,14 @@ function multipleChapterDeactivateInit() {
 		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let data = [];
-	
+
 		checkedboxes.forEach( checkbox => {
 			data.push({
 				id: checkbox.dataset.materialId,
 				status: 0
 			})
 		});
-	
+
 		Swal.fire({
 			title: 'Απενεργοποίηση;',
 			html: `<p class='mb-0'>Η ενέργεια θα απενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
@@ -764,14 +764,14 @@ function multipleChapterDeactivateInit() {
 			confirmButtonText: 'Ναι, απενεργοποιήση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
-	
+
 			if (result.isConfirmed) {
-	
+
 				toggleChapters( sectionId, data, mainCnt, checkedboxes )
-	
+
 			}
 		})
-	
+
 	});
 
 }
@@ -782,14 +782,14 @@ function multipleChapterActivateInit() {
 		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
 		let data = [];
-	
+
 		checkedboxes.forEach( checkbox => {
 			data.push({
 				id: checkbox.dataset.materialId,
 				status: 1
 			})
 		});
-	
+
 		Swal.fire({
 			title: 'Ενεργοποίηση;',
 			html: `<p class='mb-0'>Η ενέργεια θα ενεργοποιήσει ${checkedboxes.length}</p>απο τα μαθήματα του Course.`,
@@ -799,14 +799,14 @@ function multipleChapterActivateInit() {
 			confirmButtonText: 'Ναι, ενεργοποίηση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
-	
+
 			if (result.isConfirmed) {
-	
+
 				toggleChapters( sectionId, data, mainCnt, checkedboxes )
-	
+
 			}
 		})
-	
+
 	});
 }
 
@@ -842,7 +842,7 @@ function chapterPriorityInit() {
 				for (let i = 0; i < sections.length; i++ ) {
 					sections[i].classList.remove("show");
 				}
-			
+
 				let shownChapter = sectionsCnt.dataset.shownChapter;
 				if ( typeof shownChapter !== "undefined" ) {
 					document.getElementById(`${shownChapter}-collapse`).classList.add("show");
@@ -991,7 +991,7 @@ function setShownSlugInit() {
 	$(".js-chapter-title").on("click", function() {
 
 		let slug = this.dataset.materialSlug;
-	
+
 		$("#section-accordion")[0].dataset.shownChapter = slug;
 	})
 }
@@ -999,7 +999,7 @@ function setShownSlugInit() {
 function removeMaterialSectionBtnInit() {
 
 	let btn = $(".js-remove-chapter");
-	
+
 	btn.on("click", function() {
 
 		let sectionId = this.findParent(4).dataset.sectionId;
@@ -1014,11 +1014,11 @@ function removeMaterialSectionBtnInit() {
 			confirmButtonText: 'Ναι, αφαίρεση!',
 			cancelButtonText: 'Άκυρο'
 		}).then( (result) => {
-			
+
 			if (result.isConfirmed) {
-	
+
 				removeChapters(sectionId, id);
-	
+
 			}
 		})
 	})
@@ -1057,7 +1057,7 @@ function addFilesBtnInit() {
 function addCourseFiles(ids) {
 
 	axios.post("/media/add-files", {
-		namespace, 
+		namespace,
 		modelId: courseId,
 		ids
 	})
@@ -1087,7 +1087,7 @@ function addCourseFiles(ids) {
 function removeFiles(ids) {
 
 	axios.post("/media/remove-files", {
-		namespace, 
+		namespace,
 		modelId: courseId,
 		ids
 	})
@@ -1461,7 +1461,7 @@ function sectionAdditionHandler() {
 			for (let i = 0; i < sections.length; i++ ) {
 				sections[i].classList.remove("show");
 			}
-			
+
 			let shownChapter = sectionsCnt.dataset.shownChapter;
 			if ( typeof shownChapter !== "undefined" ) {
 				document.getElementById(`${shownChapter}-collapse`).classList.add("show");
@@ -1480,7 +1480,7 @@ function sectionAdditionHandler() {
 }
 
 function submitChapterBtnHandler() {
-	
+
 	let input = this.findParent(2).getElementsByClassName("js-chapter-input")[0];
 	let slug = input.dataset.materialSlug;
 	let title = input.value;
@@ -1973,7 +1973,7 @@ function sectionForm(priority) {
 	return `<td id="add-content-row" class="text-left" colspan="8">
 		<div id="additional-content-form">
 			<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
-			
+
 			<div class="form-group">
 				<label for="new-title">Τίτλος</label>
 				<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
@@ -1990,10 +1990,10 @@ function sectionForm(priority) {
 					</select>
 				</div>
 				<div class="form-group col-4 d-flex justify-content-center align-items-end">
-					
+
 					<button  class="js-add-content btn btn-primary" data-type="Section" data-priority="${ priority }">Αποθήκευση</button>
 					<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
-					
+
 				</div>
 			</div>
 
@@ -2002,7 +2002,7 @@ function sectionForm(priority) {
 }
 
 function createTableRow( type, priority ) {
-	
+
 	let addContentRow = $(".extra-content-row")[0];
 	if ( addContentRow ) {
 
@@ -2171,7 +2171,7 @@ function toggleState(data) {
 
 		for (let i = 0; i < data.length; i++) {
 			badge = $(`.js-chapter-badge[data-material-id="${data[i].id}"]`);
-	
+
 			if ( data[i].status == 1 ) {
 				badge.removeClass("badge-outline-danger");
 				badge.addClass("badge-outline-success px-1 mr-1");
@@ -2182,7 +2182,7 @@ function toggleState(data) {
 				badge.addClass("badge-outline-danger");
 				badge.text("Inactive");
 			}
-	
+
 		}
 
 		utilities.toastAlert( icon, message );
@@ -2391,7 +2391,7 @@ const pond = FilePond.create( dropzone, {
 				utilities.paginationRequest( 1, "" );
 			}
 		}
-		
+
 	},
 	acceptedFileTypes: ['image/png', 'image/jpeg'],
 } );
@@ -2488,7 +2488,7 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 
 for ( let i = 0; i < dropArea.length; i++ ) {
-	
+
 	dropArea[i].addEventListener("dragover", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
@@ -2497,7 +2497,7 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 			label.classList.add("text-limegreen");
 
 	});
-	
+
 	dropArea[i].addEventListener("dragleave", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
