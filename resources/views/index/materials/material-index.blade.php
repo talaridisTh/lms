@@ -1,6 +1,6 @@
 @extends("layouts.app")
 @php
-    $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";
+    $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";
 
     $countMaterial= $MaterialsOrderByPriority->where("type","Lesson")->count()+
     $MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
@@ -100,7 +100,8 @@
                                 height:77vh;
                                 max-width: 100%;
                                 margin: 0px auto 0;
-                                position: relative;background-image: url('{{url($materials->cover)}}')">
+                                position: relative;
+                                background-image: url('{{$materials->cover}}')">
 
                             </div>
                         @endif
@@ -490,10 +491,16 @@
 @section("script")
 
 
+
     <script src="https://unpkg.com/swiper/swiper-bundle.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
     <script src="{{ mix('js/index/materials/indexMaterials.js') }}"></script>
+
+    <script>
+
+
+    </script>
 
 
 @endsection

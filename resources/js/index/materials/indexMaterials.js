@@ -187,3 +187,6 @@ const axiosAddWitchlist = async (courseId, materialId, materialPriority = null, 
     }
 }
 
+ $(".list-material-select")[0].findParent(3).classList.add("show")
+$(".list-material-select")[0].findParent(4).children[0].children[0].classList.add("bg-list")
+

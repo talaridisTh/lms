@@ -76,6 +76,10 @@
   background: white;
 }
 
+.bg-list {
+  background: #E9EAEB !important;
+}
+
 .material-title-hover {
   background: #E9EAEB;
 }

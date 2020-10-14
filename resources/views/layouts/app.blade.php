@@ -77,42 +77,18 @@
                         </a>
                     </div>
                     @endrole
-                    <div>
-                        <div class="dropdown">
-                            <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Λογαριασμός μου
-                            </a>
 
-                            <div class="dropdown-menu" aria-labelledby="my-acount">
-                                <a href="{{route('index.profile',auth()->user()->slug)}}"
-                                   class="dropdown-item side-nav-link">
-                                    <span>Profile</span>
-                                </a>
-                                <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
-                                   class="side-nav-link dropdown-item">
-                                    <span>Αγαπημένα</span>
-                                </a>
-                                <a href="#" class="side-nav-link dropdown-item">
-                                    <span>Ιστορικό </span>
-                                </a>
-                                <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
-                                   class="side-nav-link dropdown-item">
-                                    <span>Ανακοινώσεις</span>
-                                </a>
-                                <a href="{{route('index.message')}}" class="side-nav-link dropdown-item">
-                                    <span>message</span>
-                                </a>
-                                <a href="#" class="side-nav-link dropdown-item">
-                                    <span>Logout</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
                     <div>
-                        <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
-                            <span>Μαθήματα</span>
-                        </a>
+                        @if(auth()->user()->courses()->count()>1)
+                            <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
+                                <span>Μαθήματα</span>
+                            </a>
+                        @else
+                            <a
+                                href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}" class="nav-link">
+                                <span>Μαθήματα</span>
+                            </a>
+                        @endif
                     </div>
 
 
@@ -130,6 +106,40 @@
                         </div>
                         @endrole
                     </div>
+
+                    <div>
+                        <div class="dropdown">
+                            <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Λογαριασμός μου
+                            </a>
+
+                            <div class="dropdown-menu" aria-labelledby="my-acount">
+                                <a href="{{route('index.profile',auth()->user()->slug)}}"
+                                   class="dropdown-item side-nav-link">
+                                    <span>Προφίλ </span>
+                                </a>
+                                <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
+                                   class="side-nav-link dropdown-item">
+                                    <span>Αγαπημένα</span>
+                                </a>
+                                <a href="#" class="side-nav-link dropdown-item">
+                                    <span>Ιστορικό </span>
+                                </a>
+                                <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
+                                   class="side-nav-link dropdown-item">
+                                    <span>Ανακοινώσεις</span>
+                                </a>
+                                <a href="{{route('index.message')}}" class="side-nav-link dropdown-item">
+                                    <span>Μηνύματα</span>
+                                </a>
+                                <a href="#" class="side-nav-link dropdown-item">
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                     <div>
                         <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
                            aria-expanded="false" data-toggle="tooltip" data-original-title="Έξοδος">
@@ -175,7 +185,7 @@
                 </div>
             </div>
             <div class="col-md-6 d-flex justify-content-end  ">
-                <img  class="pr-2" src="/images/facebook.png" alt="logo">
+                <img class="pr-2" src="/images/facebook.png" alt="logo">
                 <img class="pr-2" src="/images/instagram.png" alt="logo">
                 <img class="pr-2" src="/images/twitter.png" alt="logo">
                 <img class="pr-2" src="/images/youtube.png" alt="logo">

@@ -2,7 +2,7 @@
     @foreach($allCourses as $course)
         @php
             $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get();
-            $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";;
+            $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";;
         @endphp
 
 
@@ -20,7 +20,6 @@
                                  src="{{$course->cover=="empty"? "http://lorempixel.com/300/300" : url($course->cover)}}"
                                  alt="courses">
                         </a>
-                        {{--                    <p>metrio</p>--}}
                     </div>
                 </div>
 

@@ -6,7 +6,9 @@
 @endsection
 @php
 //background
-    $bgColor = !empty($course->topic)>0? $course->topics->first()->color:"";
+    $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";
+
+
 
 //count Material
     $countMaterial= $allMaterial->where("type","Lesson")->count()+
@@ -230,7 +232,7 @@
                         @php
                             $count = 0;
                         @endphp
-                        @foreach($allMaterial as $materials)
+                        @foreach($allMaterial as $key => $materials)
 
                             @php
 
@@ -249,7 +251,7 @@
                                            aria-expanded="true" aria-controls="{{$materials->slug}}-collapse">
                                         <div class="card-header d-flex align-center mb-2 head-section" id="{{$materials->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
-                                                <span class="mr-2">Ενότητα :</span>
+                                                <span class="mr-2">Ενότητα {{$key -$count+1 }} :</span>
 
                                                     {{$materials->title}}
 
