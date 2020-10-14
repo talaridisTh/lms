@@ -81,7 +81,7 @@
                             <th class="text-center">Τύπος</th>
                             <th class="text-center">Μέγεθος</th>
                             <th class="text-center w-5"></th>
-                        </tr>
+                        </tr>URL video
                     </thead>
                     <tbody class="tables-hover-effect"></tbody>
                     <tfoot>
