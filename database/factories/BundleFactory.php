@@ -38,7 +38,7 @@ class BundleFactory extends Factory
         	'subtitle' => "Subtitle of Bundle ".$counter,
 			'summary' => "Summary of Bundle ".$counter,
 			'description' => "Description of Bundle ".$counter++,
-			'cover' => $this->faker->imageUrl( 1600, 900 ),
+			'cover' => "http://placeimg.com/1900/900/any",
 			'slug' => $this->faker->slug,
 			'status' => $this->faker->numberBetween( 0, 1 ),
 			'created_at' => $date->format('Y-m-d H:i:s'),

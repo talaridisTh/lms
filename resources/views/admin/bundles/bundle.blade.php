@@ -14,6 +14,7 @@
 			background-color: #343a40;
 			position: sticky;
 			top: 70px;
+			z-index: 1000;
 		}
 		.circle-icon {
 		padding: 0.2rem 0.2rem;

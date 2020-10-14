@@ -15,6 +15,7 @@
 		background-color: #343a40;
 		position: sticky;
 		top: 70px;
+		z-index: 1000;
 	}
 	.circle-icon {
 		padding: 0.2rem 0.2rem;
@@ -61,7 +62,7 @@
 						<div class="col-6">
 							<div class="js-section-material card cursor-pointer" data-type="Video">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-camcorder	display-3"></i>
+									<i class="mdi mdi-filmstrip	display-3"></i>
 									<h5 class="card-title mt-2">Video</h5>
 								</div>
 							</div>
@@ -236,7 +237,7 @@
 						<div class="col-4">
 							<div class="card cursor-pointer js-material" data-type="Video">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-camcorder	display-3"></i>
+									<i class="mdi mdi-filmstrip	display-3"></i>
 									<h5 class="card-title mt-2">Video</h5>
 								</div>
 							</div>
@@ -249,7 +250,7 @@
 
 							<div class="card cursor-pointer js-material" data-type="Section">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-wunderlist display-3"></i>
+									<i class="mdi mdi-puzzle-outline display-3"></i>
 									<h5 class="card-title mt-2">Section</h5>
 								</div>
 							</div>
