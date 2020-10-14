@@ -8,16 +8,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
 		<meta content="Coderthemes" name="author" />
-		<!-- App favicon -->
-		<link rel="shortcut icon" href="/assets/images/favicon.ico">
-		<!-- App css -->
-		<link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css" />
-		<link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style" />
-		<link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
 
 		<link rel="stylesheet" href="{{ mix('css/dashboard/app.css') }}">
-
-
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179237450-1"></script>
@@ -92,7 +84,7 @@
 						</li>
 						<li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link">
-                                <i class="mdi mdi-settings"></i>
+                                <i class="mdi mdi-cog"></i>
                                 <span> Settings </span>
                                 <span class="menu-arrow"></span>
                             </a>
@@ -292,7 +284,7 @@
         <!-- /Right-bar -->
 		<!-- bundle -->
 		<script src="/assets/js/vendor.min.js"></script>
-		<script src="/assets/js/app.min.js"></script>
+		{{-- <script src="/assets/js/app.min.js"></script> --}}
 		<script src="{{ mix('js/app.js') }}"></script>
 		<script src="{{ mix('js/dashboard/dashboard.js') }}"></script>
 
