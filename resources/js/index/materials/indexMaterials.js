@@ -110,11 +110,15 @@ $(".js-link-material").on("click", async function (e) {
     } else {
         const {value} = await Swal.fire({
             icon: 'question',
-            text: ' Πατήστε στο ok  για να μεταφερθείτε! ',
+            html: "Mεταφερθείτε στο Link!"+"<br>"+href ,
             showCancelButton: true,
+            confirmButtonText: 'Εντάξει',
+            cancelButtonText: "Ακύρωση "
         })
         if (value) {
-            window.open(href, '_blank');
+            console.log(href)
+            window.open(href,'_target');
+
         }
     }
 

@@ -72,8 +72,7 @@ $(".js-link-material").on("click", async function (e) {
         if (value) {
             console.log(href)
             window.open(href,'_target');
-            // window.open(href, '_blank');
-            // console.log(href)
+
         }
     }
 
