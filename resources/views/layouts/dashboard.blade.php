@@ -17,8 +17,6 @@
 
 		<link rel="stylesheet" href="{{ mix('css/dashboard/app.css') }}">
 
-
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179237450-1"></script>
         <script>
