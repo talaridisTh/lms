@@ -38,7 +38,7 @@ class CourseFactory extends Factory
             'title' => "Title of Course ".$counter,
         	'subtitle' => "Subtitle of Course ".$counter,
         	'summary' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
-        	'cover' => $this->faker->imageUrl(),
+        	'cover' => $this->faker->imageUrl( 1600, 900 ),
 			'description' => "Description of Course ".$counter++." ".$this->faker->slug($nbSentences = 3, $variableNbSentences = true),
 			'user_id' => 2,
 			'slug' => $this->faker->slug,
