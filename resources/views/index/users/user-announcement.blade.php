@@ -33,11 +33,8 @@
     @php($user = auth()->user())
 
 
-    <div class="l" style="max-height: 400px">
-        @include("components.index.users.user-menu")
-    </div>
 
-    <div class="container-fluid p-5 my-3">
+    <div class="container-fluid p-5 my-3" style="height: 68vh">
             <div class="row ">
                 @forelse($announcements as $announcement)
                 <div class="col-md-6 p-3 " style="background: #fff">

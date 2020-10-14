@@ -5,16 +5,9 @@
 @endsection
 
 @section("content")
-    <div class="" style="max-height: 600px">
-        @include("components.index.users.user-menu")
-    </div>
-
 
     <div class="container my-5">
-
-
-
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column" style="height: 55vh">
 
         <h1>Courses</h1>
     @foreach($watchlistCourses as $course)
