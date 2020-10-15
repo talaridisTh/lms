@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Bundle;
 use App\Utility;
 use App\Course;
 use App\Media;
+use App\Material;
 use Illuminate\Http\Request;
 
 class UtilityController extends Controller
@@ -15,26 +17,26 @@ class UtilityController extends Controller
 
 		$temp = json_decode($page->sixth_section);
 		extract(get_object_vars($temp));		//! metatrepei tis times tou object se $model kai $ids
-		$sixthSection = $model::whereIn("id", $ids)->get();
+		$primaryRecords = $model::whereIn("id", $ids)->get();
 
 		$temp = json_decode($page->seventh_section);
 		extract(get_object_vars($temp));
-		$seventhSection = $model::whereIn("id", $ids)->get();
+		$secondaryRecords = $model::whereIn("id", $ids)->get();
 
 		$temp = json_decode($page->eighth_section);
 		extract(get_object_vars($temp));
-		$eighthSection = $model::whereIn("id", $ids)->get();
+		$tetiaryRecords = $model::whereIn("id", $ids)->get();
 
 		$data = [
 			"page" => $page,
-			"sixthSection" => $sixthSection,
-			"seventhSection" => $seventhSection,
-			"eighthSection" => $eighthSection,
+			"primaryRecords" => $primaryRecords,
+			"secondaryRecords" => $secondaryRecords,
+			"tetiaryRecords" => $tetiaryRecords,
 			"statuses" => json_decode($page->fields),
-			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
+			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18)
 		];
 
-		return view("admin/homeContent/homeContent")->with($data);
+		return view("admin/settings/homeContent")->with($data);
 		
 	}
 
