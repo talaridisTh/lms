@@ -20,13 +20,15 @@ class RoleMiddleware
     public function handle($request, Closure $next)
     {
 
-        $urlEnd = array_slice(explode('/', url()->current()), -1)[0];
-        $user = User::where("slug",$urlEnd)->firstOrFail();
+//        $urlEnd = array_slice(explode('/', url()->current()), -1)[0];
+//        $user = User::where("slug",$urlEnd)->firstOrFail();
+//
+//
+//        if($user->getRoleNames()[0]=="guest"){
+//            Auth::login($user);
+//            return $next($request);
+//        }
 
-        if($user->getRoleNames()[0]=="guest"){
-            Auth::login($user);
-            return $next($request);
-        }
 
 
 		$role = $request->user()->getRoleNames();
