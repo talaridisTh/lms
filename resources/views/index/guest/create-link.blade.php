@@ -38,12 +38,12 @@
     {{--        </form>--}}
 
     {{--    </div>--}}
-    <div class="card">
+    <div class="card w-100">
         <div class="card-body ">
 
             <div class="row">
                 <!-- start projects-->
-                <div class="col-xl-12">
+                <div class="col-xl-4">
                     <div class="pr-xl-3">
                         <h5 class="mt-0 mb-3">Projects</h5>
                         <!-- start search box -->
@@ -71,12 +71,12 @@
                                                     <div class="simplebar-content" style="padding: 0px;">
                                                         @foreach($partners as $partner)
                                                             <a href="javascript:void(0);" class="text-body">
-                                                                <div class="media  p-2">
+                                                                <div class="media bg-list-hover p-2">
                                                                     <div class="avatar-sm">
                                                                         <img src="{{$partner->cover}}" height="30" alt="">
                                                                     </div>
                                                                     <div class="media-body ml-2">
-                                                                        <h5 class="mt-0 mb-0">
+                                                                        <h5 class="mt-0 mb-0 js-instructor-link" data-user-id={{$partner->id}}>
                                                                             {{$partner->fullName}}
                                                                         </h5>
 
@@ -104,6 +104,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-xl-4 component-course"></div>
+                <div class="col-xl-4 col-lg-5 order-lg-1 order-xl-2 component-instructor"></div>
+
+{{--                background: #E9EAEB !important;--}}
+
                 <!-- end projects -->
 
 
@@ -121,7 +126,9 @@
 
 
 @section("script")
+
     <script src="/assets/js/pages/demo.form-wizard.js"></script>
+    <script src="{{ mix('js/index/guest/guest.js') }}"></script>
 @endsection
 
 

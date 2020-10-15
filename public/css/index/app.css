@@ -80,6 +80,10 @@
   background: #E9EAEB !important;
 }
 
+.bg-list-hover:hover {
+  background: #e5e5e5 !important;
+}
+
 .material-title-hover {
   background: #E9EAEB;
 }

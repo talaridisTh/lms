@@ -37,6 +37,8 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/index/courses/indexCourses.js', 'public/js/index/courses')
     .js('resources/js/index/materials/indexMaterials.js', 'public/js/index/materials')
     .js('resources/js/index/chat/message.js', 'public/js/index/chat')
+    .js('resources/js/index/guest/guest.js', 'public/js/index/guest')
+
     .sass('resources/sass/dashboard/customArticleStyle.scss', 'public/css/dashboard')
     .sass('resources/sass/dashboard/app.scss', 'public/css/dashboard')
     .sass('resources/sass/index/app.scss', 'public/css/index/')

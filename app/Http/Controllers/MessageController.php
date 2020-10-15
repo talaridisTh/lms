@@ -59,8 +59,6 @@ class MessageController extends Controller {
         $user = User::findOrFail($user);
 
 
-
-
         return view("index.chat.chat-info", compact("user"));
     }
 

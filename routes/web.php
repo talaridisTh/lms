@@ -219,7 +219,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
     Route::get("/message/info/{user}", "MessageController@info")->name("index.info");
     Route::post("/message/sent", "MessageController@sendMessage")->name("index.sendMessage");
-//! partner indexN
+//! GUEST INDEX
     Route::get("/user/link", "Index\HomeController@createLink")->name("user.link");
     Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
     Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
@@ -230,6 +230,15 @@ Route::group(['middleware' => ['auth']], function () {
         }
     })->name('link');
 });
+
+//! GUEST AJAX
+Route::post("/guest/course", "Ajax\HomeController@guestCourse")->name("guest.course");
+Route::post("/guest/instructor", "Ajax\HomeController@guestInstructor")->name("guest.instructor");
+Route::post("/guest/instructor-course", "Ajax\HomeController@guestInstructorCourse")->name("guest.instructorCourse");
+Route::post("/guest/instructor-material", "Ajax\HomeController@guestInstructorMaterial")->name("guest.instructorMaterial");
+
+
+
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ['auth', "verifyCourse"]], function () {

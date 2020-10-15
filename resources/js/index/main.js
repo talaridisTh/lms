@@ -10,7 +10,6 @@ Element.prototype.findParent = function (loops) {
     return parent;
 }, false;
 
-
 function toastAlert(icon, message) {
     Swal.fire({
         toast: 'true',
@@ -38,7 +37,6 @@ const addWhatchlist = () => {
 
     })
 }
-
 
 const addWhatchlistAxios = async (modelId, userId,model) => {
     const heart = $(".add-watchlist")[0].children[0];

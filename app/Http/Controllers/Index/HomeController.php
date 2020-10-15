@@ -35,7 +35,7 @@ class HomeController extends Controller {
         $partners = User::getPartner();
         $courses = Course::orderBy("id", 'asc')->get();
 
-        return view("create-link", compact("partners", "courses"));
+        return view("index.guest.create-link", compact("partners", "courses"));
     }
 
     public function createLinkStore(Request $request)
@@ -97,7 +97,7 @@ class HomeController extends Controller {
             }
         }
 
-        return view("view-links", compact("userCurent", "usersOnlyAdmin", "usersLeft"));
+        return view("index.guest.view-links", compact("userCurent", "usersOnlyAdmin", "usersLeft"));
     }
 
     public function left($hour)

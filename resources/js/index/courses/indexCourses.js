@@ -1,11 +1,9 @@
-import utilities from '../../index/main';
+
 
 
 utilities.addWhatchlist()
 
-
-
-
+//FILTER TOPIC
 $(".filter-topic").click(function () {
     filterTopic(this.dataset.topicId, this.findParent(1).dataset.userSlug)
 
@@ -33,52 +31,7 @@ const filterTopic = async (idsTopic, userSlug) => {
     }
 }
 
-$(".js-audio-btn").click(function () {
-    let cnt = this.parentElement;
-    let audio = cnt.getElementsByClassName("js-audio")[0];
-
-    if (this.dataset.audioStatus == "paused") {
-        this.classList.remove("mdi-play-circle-outline");
-        this.classList.add("mdi-pause-circle-outline");
-        this.dataset.audioStatus = "playing";
-
-        audio.currentTime = 0;
-        audio.play();
-    } else {
-        this.classList.remove("mdi-pause-circle-outline");
-        this.classList.add("mdi-play-circle-outline");
-        this.dataset.audioStatus = "paused";
-
-        audio.pause();
-    }
-})
-
-$(".js-link-material").on("click", async function (e) {
-
-    const href = this.href;
-    e.preventDefault()
-    console.log(e.target.tagName)
-    if (e.target.tagName === "SPAN" || e.target.tagName === "I" ) {
-        return
-
-    } else {
-        const {value} = await Swal.fire({
-            icon: 'question',
-            html: "Mεταφερθείτε στο Link!"+"<br>"+href ,
-            showCancelButton: true,
-            confirmButtonText: 'Εντάξει',
-            cancelButtonText: "Ακύρωση "
-        })
-        if (value) {
-            console.log(href)
-            window.open(href,'_target');
-
-        }
-    }
-
-
-})
-
+//WATCHLIST
 $(".material-count").on("click",  function (e) {
     event.preventDefault();
 
@@ -89,7 +42,6 @@ $(".material-count").on("click",  function (e) {
         this
     )
 
-    console.log(this)
 
 
 
@@ -146,6 +98,57 @@ const axiosAddWitchlist =async (courseId, materialId, materialPriority=null,that
         console.log(e)
     }
 }
+
+// EVENET LISTENER
+$(".js-audio-btn").click(function () {
+    let cnt = this.parentElement;
+    let audio = cnt.getElementsByClassName("js-audio")[0];
+
+    if (this.dataset.audioStatus == "paused") {
+        this.classList.remove("mdi-play-circle-outline");
+        this.classList.add("mdi-pause-circle-outline");
+        this.dataset.audioStatus = "playing";
+
+        audio.currentTime = 0;
+        audio.play();
+    } else {
+        this.classList.remove("mdi-pause-circle-outline");
+        this.classList.add("mdi-play-circle-outline");
+        this.dataset.audioStatus = "paused";
+
+        audio.pause();
+    }
+})
+
+$(".js-link-material").on("click", async function (e) {
+
+    const href = this.href;
+    e.preventDefault()
+    console.log(e.target.tagName)
+    if (e.target.tagName === "SPAN" || e.target.tagName === "I" ) {
+        return
+
+    } else {
+        const {value} = await Swal.fire({
+            icon: 'question',
+            html: "Mεταφερθείτε στο Link!"+"<br>"+href ,
+            showCancelButton: true,
+            confirmButtonText: 'Εντάξει',
+            cancelButtonText: "Ακύρωση "
+        })
+        if (value) {
+            console.log(href)
+            window.open(href,'_target');
+
+        }
+    }
+
+
+})
+
+
+
+
 
 
 
