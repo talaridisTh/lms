@@ -24,8 +24,12 @@
 							<h4 id="table-title" class="text-center">Μαθήματα</h4>
 						</div>
 						<div class="col-md-6">
-							<div class="row">
-								<label class="col-3 text-right align-self-center" for="type-select">Είδος</label>
+
+							<button id="change-category-btn" type="button" class="btn btn-warning mb-1 float-right">Αλλαγή κατηγορίας</button>
+
+
+							<div id="type-select-cnt" class="row d-none">
+								<label class="col-3 text-right align-self-center" for="type-select">Κατηγορία</label>
 								<div class="col-9 mb-1">
 									<select id="type-select" data-toggle="select2"
 										class="select2 form-control"
@@ -42,13 +46,13 @@
 					<div class="row">
 						<div class="col-md-6">
 
-							<div id="materials-card" class="js-type card h-100">
+							<div id="materials-card" class="js-category-table-cnt card h-100">
 								<div class="card-body">
 									<table id="materials-datatable" class="table w-100 js-remove-table-classes">
 										<thead>
 											<tr>
 												<th class="text-center">Τίτλος</th>
-												<th class="text-center"></th>
+												<th class="text-center w-5"></th>
 											</tr>
 										</thead>
 										<tbody class="tables-hover-effect"></tbody>
@@ -62,14 +66,14 @@
 								</div>
 							</div>
 
-							<div id="courses-card" class="js-type card h-100 d-none">
+							<div id="courses-card" class="js-category-table-cnt card h-100 d-none">
 								<div class="card-body">
 									<table id="courses-datatable" class="table w-100 js-remove-table-classes">
 										<thead>
 											<tr>
 												<th class="text-center">Τίτλος</th>
 												<th class="text-center">Topics</th>
-												<th class="text-center"></th>
+												<th class="text-center w-5"></th>
 											</tr>
 										</thead>
 										<tbody class="tables-hover-effect"></tbody>
@@ -84,13 +88,13 @@
 								</div>
 							</div>
 
-							<div id="bundles-card" class="js-type card h-100 d-none">
+							<div id="bundles-card" class="js-category-table-cnt card h-100 d-none">
 								<div class="card-body">
 									<table id="bundles-datatable" class="table w-100 js-remove-table-classes">
 										<thead>
 											<tr>
 												<th class="text-center">Τίτλος</th>
-												<th class="text-center"></th>
+												<th class="text-center w-5"></th>
 											</tr>
 										</thead>
 										<tbody class="tables-hover-effect"></tbody>
@@ -106,31 +110,32 @@
 						</div><!-- ./left col -->
 
 						<div class="col-md-6">
-
-							<div id="primary-banner-selection" class="js-banner-selection card h-100">
-								<div class="card-body">
+							<div id="primary-banner-selection" class="js-banner-selection-cnt card h-100">
+								<div class="card-body" data-namespace="{{ get_class($primaryRecords[0]) }}">
 									@forelse ($primaryRecords as $model)
-										<div class="callout callout-success">
+										<div class="js-active-banner callout callout-success"
+											data-model-id="{{ $model->id }}">
 											<div class="d-flex justify-content-between mb-1">
 												<h5>{{ $model->title }}</h5>
-												<button class="close"><span>×</span></button>
+												<button class="js-remove-callout close"><span>×</span></button>
 											</div>
 											<p>{{ $model->subtitle }}</p>
 										</div>
 									@empty
-										<div class="callout callout-danger">
-											<div class="d-flex justify-content-between mb-1">
-												<h5>Δεν επιλέχθηκαν Banners</h5>
-											</div>
-										</div>
 									@endforelse
+									<div class="js-empty-callout callout callout-danger{{ !$tetiaryRecords->isEmpty() ? " d-none" : "" }}">
+										<div class="d-flex justify-content-center mb-1">
+											<h5>Δεν επιλέχθηκαν Banners</h5>
+										</div>
+									</div>
 								</div>
 							</div>
 
-							<div id="secondary-banner-selection" class="js-banner-selection card h-100 d-none">
-								<div class="card-body">
+							<div id="secondary-banner-selection" class="js-banner-selection-cnt card h-100 d-none">
+								<div class="card-body" data-namespace="{{ get_class($secondaryRecords[0]) }}">
 									@forelse ($secondaryRecords as $model)
-										<div class="callout callout-success">
+										<div class="js-active-banner callout callout-success"
+											data-model-id="{{ $model->id }}">
 											<div class="d-flex justify-content-between mb-1">
 												<h5>{{ $model->title }}</h5>
 												<button class="close"><span>×</span></button>
@@ -138,19 +143,20 @@
 											<p>{{ $model->subtitle }}</p>
 										</div>
 									@empty
-										<div class="callout callout-danger">
-											<div class="d-flex justify-content-between mb-1">
-												<h5>Δεν επιλέχθηκαν Banners</h5>
-											</div>
-										</div>
 									@endforelse
+									<div class="js-empty-callout callout callout-danger{{ !$secondaryRecords->isEmpty() ? " d-none" : "" }}">
+										<div class="d-flex justify-content-center mb-1">
+											<h5>Δεν επιλέχθηκαν Banners</h5>
+										</div>
+									</div>
 								</div>
 							</div>
 
-							<div id="tetiary-banner-selection" class="js-banner-selection card h-100 d-none">
-								<div class="card-body">
+							<div id="tetiary-banner-selection" class="js-banner-selection-cnt card h-100 d-none">
+								<div class="card-body" data-namespace="{{ get_class($tetiaryRecords[0]) }}">
 									@forelse ($tetiaryRecords as $model)
-										<div class="callout callout-success">
+										<div class="js-active-banner callout callout-success"
+											data-model-id="{{ $model->id }}">
 											<div class="d-flex justify-content-between mb-1">
 												<h5>{{ $model->title }}</h5>
 												<button class="close"><span>×</span></button>
@@ -158,12 +164,12 @@
 											<p>{{ $model->subtitle }}</p>
 										</div>
 									@empty
-										<div class="callout callout-danger">
-											<div class="d-flex justify-content-between mb-1">
-												<h5>Δεν επιλέχθηκαν Banners</h5>
-											</div>
-										</div>
 									@endforelse
+									<div class="js-empty-callout callout callout-danger{{ !$tetiaryRecords->isEmpty() ? " d-none" : "" }}">
+										<div class="d-flex justify-content-center mb-1">
+											<h5>Δεν επιλέχθηκαν Banners</h5>
+										</div>
+									</div>
 								</div>
 							</div>
 
@@ -172,7 +178,7 @@
 
 				</div>
 				<div class="modal-footer">
-				  	<button type="button" class="btn btn-primary">Save changes</button>
+				  	<button id="save-banners-btn" type="button" class="btn btn-primary">Αποθήκευση</button>
 				  	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
@@ -462,7 +468,8 @@
 					<div class="mb-3 d-flex justify-content-end">
 						<button class="btn btn-primary" data-toggle="modal"
 							data-target="#edit-banners-modal" data-importance="primary"
-							data-type="{{ $primaryRecords[0]->getTable() }}">Αλλαγή</button>
+							data-type="{{ $primaryRecords[0]->getTable() }}"
+							data-modal-title="Banners 1">Αλλαγή</button>
 					</div>
 
 					<div class="row">
@@ -488,7 +495,8 @@
 					<div class="mb-3 d-flex justify-content-end">
 						<button class="btn btn-primary" data-toggle="modal"
 							data-target="#edit-banners-modal" data-importance="secondary"
-							data-type="{{ $secondaryRecords[0]->getTable() }}">Αλλαγή</button>
+							data-type="{{ $secondaryRecords[0]->getTable() }}"
+							data-modal-title="Banners 2">Αλλαγή</button>
 					</div>
 
 					<div class="row">
@@ -514,7 +522,8 @@
 					<div class="mb-3 d-flex justify-content-end">
 						<button class="btn btn-primary" data-toggle="modal"
 							data-target="#edit-banners-modal" data-importance="tetiary"
-							data-type="{{ $tetiaryRecords[0]->getTable() }}">Αλλαγή</button>
+							data-type="{{ $tetiaryRecords[0]->getTable() }}"
+							data-modal-title="Banners 3">Αλλαγή</button>
 					</div>
 
 					<div class="row">
