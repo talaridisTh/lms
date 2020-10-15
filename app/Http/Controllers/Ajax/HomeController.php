@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Material;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class HomeController extends Controller
 {
@@ -38,6 +39,7 @@ class HomeController extends Controller
 
         return view("index.guest.guest-instructor-course", compact('courses'));
     }
+
     public function guestInstructorMaterial(Request $request)
     {
 
@@ -48,5 +50,35 @@ class HomeController extends Controller
 
 
         return view("index.guest.guest-instructor-material", compact('materials'));
+    }
+
+    public function createGuestUser(Request $request)
+    {
+
+
+        $partner = User::findOrFail($request->userId);
+        $guestEmail = "";
+
+        static $counter = 0;
+
+
+
+        $user = User::create([
+            "first_name"=>$partner->first_name.'-guest',
+            "slug"=>Str::slug($partner->last_name, '-'),
+            "last_name"=>$partner->last_name.'-guest',
+            "email"=>$partner->email.rand(1,9999),
+            "phone"=>$partner->phone,
+            "cover"=>$partner->cover,
+            "password"=>"password",
+
+        ])->assignRole("guest");
+
+        $user->courses()->sync($request->courseId);
+        $user->courses()->update(["status"=>1]);
+
+        $user->materials()->sync($request->materialId);
+        $user->materials()->update(["status"=>1]);
+
     }
 }

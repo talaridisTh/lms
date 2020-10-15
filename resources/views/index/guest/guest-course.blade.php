@@ -2,12 +2,20 @@
     <h5 class="mt-0 mb-3">Projects</h5>
     <!-- start search box -->
     <div class="app-search">
-        <form>
-            <div class="form-group position-relative">
-                <input type="text" class="form-control" placeholder="search by name...">
+        <div class="row">
+            <div class="form-group position-relative col-md-6">
+                <form>
+
+                    <input type="text" class="form-control" placeholder="search by name...">
+
+                </form>
                 <span class="mdi mdi-magnify search-icon"></span>
             </div>
-        </form>
+            <div class="col-md-6 text-right">
+                <div class="btn btn-primary js-submit-guest">Δημιουργία</div>
+            </div>
+        </div>
+
     </div>
     <!-- end search box -->
 
@@ -28,8 +36,9 @@
 
                                             <div class="pb-2">
 
-                                                <div  class="pretty p-icon p-round p-jelly ">
-                                                    <input class="input-course" data-course-id="{{$course->id}}"  type="checkbox"/>
+                                                <div class="pretty p-icon p-round p-jelly ">
+                                                    <input class="input-course" data-course-id="{{$course->id}}"
+                                                           type="checkbox"/>
                                                     <div class="state p-primary ">
                                                         <i class="icon mdi font-16 mdi-check"></i>
                                                         <label class="font-16">{{$course->title}}</label>
@@ -53,10 +62,13 @@
                                                             @if($key<=9)
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
-                                                                        <input class="input-materials" data-material-id="{{$material->id}}" type="checkbox"/>
+                                                                        <input class="input-materials"
+                                                                               data-material-id="{{$material->id}}"
+                                                                               type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon mdi font-16 mdi-check"></i>
-                                                                            <label class="font-16">{{$material->title}}</label>
+                                                                            <label
+                                                                                class="font-16">{{$material->title}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -68,10 +80,13 @@
                                                             @if($key>=10 && $key<20)
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
-                                                                        <input class="input-materials" data-material-id="{{$material->id}}"  type="checkbox"/>
+                                                                        <input class="input-materials"
+                                                                               data-material-id="{{$material->id}}"
+                                                                               type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon font-16 mdi mdi-check"></i>
-                                                                            <label class="font-16">{{$material->title}}</label>
+                                                                            <label
+                                                                                class="font-16">{{$material->title}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -83,10 +98,13 @@
                                                             @if($key>=20)
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
-                                                                        <input class="input-materials" data-material-id="{{$material->id}}"  type="checkbox"/>
+                                                                        <input class="input-materials"
+                                                                               data-material-id="{{$material->id}}"
+                                                                               type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon font-16 mdi mdi-check"></i>
-                                                                            <label class="font-16">{{$material->title}}</label>
+                                                                            <label
+                                                                                class="font-16">{{$material->title}}</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>

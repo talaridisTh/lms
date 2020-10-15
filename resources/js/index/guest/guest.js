@@ -41,9 +41,12 @@ const axiosGuestCourse = async (userId) => {
             document.querySelector(".component-course").innerHTML = data
             let inputCourse = document.querySelectorAll(".input-course");
             let inputMaterial = document.querySelectorAll(".input-materials");
+            let btnGuest = document.querySelector(".js-submit-guest")
+
 
             onClickInputCourse(inputCourse)
             onClickInputMaterial(inputMaterial)
+            onBtnGuest(btnGuest, userId)
         }
 
     } catch (e) {
@@ -115,3 +118,32 @@ const axiosMaterialInstructor = async (materialId) => {
     }
 }
 
+
+const onBtnGuest = (btn, userId) => {
+
+    btn.addEventListener("click", () => {
+        let checkedCourses = document.querySelectorAll(".input-course:checked");
+        let checkedMaterials = document.querySelectorAll(".input-materials:checked");
+
+
+        axiosCreateGuestUser(userId, checkedCourses, checkedMaterials)
+    })
+}
+
+const axiosCreateGuestUser = async (userId, courses, materials) => {
+
+    let courseId  = []
+    let materialId  = []
+
+    courses.forEach(course =>courseId.push(course.dataset.courseId))
+    materials.forEach(material =>materialId.push(material.dataset.materialId))
+
+
+    try {
+        const {status} = await axios.post("/guest/create/guest-user", {
+            userId, courseId, materialId
+        })
+    } catch (e) {
+        console.log(e)
+    }
+}

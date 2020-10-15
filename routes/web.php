@@ -194,7 +194,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('media/cover/not-exist', 'Ajax\MediaController@coverChangeNotExist');
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
 	Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
-	
+
 //! Ajax  Home Page Setting Datatables
 	Route::post('home-content/simple-materials-datatable', 'Ajax\UtilityController@simpleMaterialsDatatable');
 	Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
@@ -242,6 +242,7 @@ Route::post("/guest/course", "Ajax\HomeController@guestCourse")->name("guest.cou
 Route::post("/guest/instructor", "Ajax\HomeController@guestInstructor")->name("guest.instructor");
 Route::post("/guest/instructor-course", "Ajax\HomeController@guestInstructorCourse")->name("guest.instructorCourse");
 Route::post("/guest/instructor-material", "Ajax\HomeController@guestInstructorMaterial")->name("guest.instructorMaterial");
+Route::post("/guest/create/guest-user", "Ajax\HomeController@createGuestUser")->name("guest.createGuestUser");
 
 
 
