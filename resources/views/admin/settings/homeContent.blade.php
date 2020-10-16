@@ -110,8 +110,10 @@
 						</div><!-- ./left col -->
 
 						<div class="col-md-6">
-							<div id="primary-banner-selection" class="js-banner-selection-cnt card h-100">
-								<div class="card-body" data-namespace="{{ get_class($primaryRecords[0]) }}">
+							<div id="primary-banner-selection" data-namespace={{ get_class($primaryRecords[0]) }}
+								data-table="{{ $primaryRecords[0]->getTable() }}"
+								class="js-banner-selection-cnt card h-100">
+								<div class="card-body">
 									@forelse ($primaryRecords as $model)
 										<div class="js-active-banner callout callout-success"
 											data-model-id="{{ $model->id }}">
@@ -131,14 +133,15 @@
 								</div>
 							</div>
 
-							<div id="secondary-banner-selection" class="js-banner-selection-cnt card h-100 d-none">
-								<div class="card-body" data-namespace="{{ get_class($secondaryRecords[0]) }}">
+							<div id="secondary-banner-selection" data-table="{{ $secondaryRecords[0]->getTable() }}"
+								data-namespace={{ get_class($secondaryRecords[0]) }} class="js-banner-selection-cnt card h-100 d-none">
+								<div class="card-body">
 									@forelse ($secondaryRecords as $model)
 										<div class="js-active-banner callout callout-success"
 											data-model-id="{{ $model->id }}">
 											<div class="d-flex justify-content-between mb-1">
 												<h5>{{ $model->title }}</h5>
-												<button class="close"><span>×</span></button>
+												<button class="js-remove-callout close"><span>×</span></button>
 											</div>
 											<p>{{ $model->subtitle }}</p>
 										</div>
@@ -152,14 +155,15 @@
 								</div>
 							</div>
 
-							<div id="tetiary-banner-selection" class="js-banner-selection-cnt card h-100 d-none">
-								<div class="card-body" data-namespace="{{ get_class($tetiaryRecords[0]) }}">
+							<div id="tetiary-banner-selection" data-table="{{ $tetiaryRecords[0]->getTable() }}"
+								data-namespace={{ get_class($tetiaryRecords[0]) }} class="js-banner-selection-cnt card h-100 d-none">
+								<div class="card-body">
 									@forelse ($tetiaryRecords as $model)
 										<div class="js-active-banner callout callout-success"
 											data-model-id="{{ $model->id }}">
 											<div class="d-flex justify-content-between mb-1">
 												<h5>{{ $model->title }}</h5>
-												<button class="close"><span>×</span></button>
+												<button class="js-remove-callout close"><span>×</span></button>
 											</div>
 											<p>{{ $model->subtitle }}</p>
 										</div>
@@ -465,20 +469,19 @@
 			<div class="tab-content">
 				<div id="primary-content" class="tab-pane show active">
 
-					<div class="mb-3 d-flex justify-content-end">
-						<button class="btn btn-primary" data-toggle="modal"
-							data-target="#edit-banners-modal" data-importance="primary"
-							data-type="{{ $primaryRecords[0]->getTable() }}"
-							data-modal-title="Banners 1">Αλλαγή</button>
+					<div class="mb-0 d-flex justify-content-end">
+						<input type="checkbox" id="{{ $primaryRecords[0]->getTable() }}-switch"
+							{{ $bannerStatuses['primary'] == 1 ? "checked" : ""}} data-switch="bool"/>
+						<label for="{{ $primaryRecords[0]->getTable() }}-switch" data-on-label="On" data-off-label="Off"></label>
 					</div>
 
-					<div class="row">
+					<div id="primary-banners-row" class="row">
 						@foreach ($primaryRecords as $model)
 							<div class="col-md-6 col-lg-4">
 								<!-- Simple card -->
 								<div class="card d-block">
 									<div class="embed-responsive embed-responsive-16by9">
-										<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="Card image cap">
+										<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
 									</div>
 									<div class="card-body">
 										<h5 class="card-title">{{ $model->title }}</h5>
@@ -490,22 +493,29 @@
 						@endforeach
 					</div>
 
-				</div>
-				<div id="secondary-content" class="tab-pane">
 					<div class="mb-3 d-flex justify-content-end">
 						<button class="btn btn-primary" data-toggle="modal"
-							data-target="#edit-banners-modal" data-importance="secondary"
-							data-type="{{ $secondaryRecords[0]->getTable() }}"
-							data-modal-title="Banners 2">Αλλαγή</button>
+							data-target="#edit-banners-modal" data-importance="primary"
+							data-table="{{ $primaryRecords[0]->getTable() }}"
+							data-modal-title="Banners 1">Αλλαγή</button>
 					</div>
 
-					<div class="row">
+				</div>
+				<div id="secondary-content" class="tab-pane">
+
+					<div class="mb-0 d-flex justify-content-end">
+						<input type="checkbox" id="{{ $secondaryRecords[0]->getTable() }}-switch"
+							{{ $bannerStatuses['secondary'] == 1 ? "checked" : ""}} data-switch="bool"/>
+						<label for="{{ $secondaryRecords[0]->getTable() }}-switch" data-on-label="On" data-off-label="Off"></label>
+					</div>
+
+					<div id="secondary-banners-row" class="row">
 						@foreach ($secondaryRecords as $model)
 							<div class="col-md-6 col-lg-4">
 								<!-- Simple card -->
 								<div class="card d-block">
 									<div class="embed-responsive embed-responsive-16by9">
-										<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="Card image cap">
+										<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
 									</div>
 									<div class="card-body">
 										<h5 class="card-title">{{ $model->title }}</h5>
@@ -516,23 +526,30 @@
 							</div><!-- end col -->
 						@endforeach
 					</div>
+
+					<div class="mb-0 d-flex justify-content-end">
+						<button class="btn btn-primary" data-toggle="modal"
+							data-target="#edit-banners-modal" data-importance="secondary"
+							data-table="{{ $secondaryRecords[0]->getTable() }}"
+							data-modal-title="Banners 2">Αλλαγή</button>
+					</div>
+
 				</div>
 				<div id="tertiary-content" class="tab-pane">
 
-					<div class="mb-3 d-flex justify-content-end">
-						<button class="btn btn-primary" data-toggle="modal"
-							data-target="#edit-banners-modal" data-importance="tetiary"
-							data-type="{{ $tetiaryRecords[0]->getTable() }}"
-							data-modal-title="Banners 3">Αλλαγή</button>
+					<div class="mb-1 d-flex justify-content-end">
+						<input type="checkbox" id="{{ $tetiaryRecords[0]->getTable() }}-switch"
+							{{ $bannerStatuses['tetiary'] == 1 ? "checked" : ""}} data-switch="bool"/>
+						<label for="{{ $tetiaryRecords[0]->getTable() }}-switch" data-on-label="On" data-off-label="Off"></label>
 					</div>
 
-					<div class="row">
+					<div id="tetiary-banners-row" class="row">
 						@foreach ($tetiaryRecords as $model)
 							<div class="col-md-6 col-lg-4">
 								<!-- Simple card -->
 								<div class="card d-block">
 									<div class="embed-responsive embed-responsive-16by9">
-										<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="Card image cap">
+										<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
 									</div>
 									<div class="card-body">
 										<h5 class="card-title">{{ $model->title }}</h5>
@@ -543,6 +560,14 @@
 							</div><!-- end col -->
 						@endforeach
 					</div>
+
+					<div class="mb-3 d-flex justify-content-end">
+						<button class="btn btn-primary" data-toggle="modal"
+							data-target="#edit-banners-modal" data-importance="tetiary"
+							data-table="{{ $tetiaryRecords[0]->getTable() }}"
+							data-modal-title="Banners 3">Αλλαγή</button>
+					</div>
+
 				</div>
 			</div>
 

@@ -25,8 +25,8 @@ class SimpleBundlesDataTable extends DataTable
 		->addColumn('action', function($data) {
 
 			return "<i class='js-add-bundle-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
-				data-model='App\Bundle' data-model-id='$data->id' data-model-cover='$data->cover'
-				data-model-title='$data->title' data-model-subtitle='$data->subtitle'></i>";
+				data-model-id='$data->id' data-model-title='$data->title'
+				data-model-subtitle='$data->subtitle'></i>";
 
 		})
 		->rawColumns(["action"]);

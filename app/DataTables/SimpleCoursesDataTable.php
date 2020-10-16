@@ -25,8 +25,8 @@ class SimpleCoursesDataTable extends DataTable
 			->addColumn('action', function($data) {
 
 				return "<i class='js-add-course-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
-					data-model='App\Course' data-model-id='$data->id' data-model-cover='$data->cover'
-					data-model-title='$data->title' data-model-subtitle='$data->subtitle'></i>";
+					data-model-id='$data->id' data-model-title='$data->title'
+					data-model-subtitle='$data->subtitle'></i>";
 
 			})
 			->editColumn('topics', function ($data) {

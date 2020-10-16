@@ -140,12 +140,21 @@ function addBundleBannerInit() {
 //!					EventListeners					#
 //!##################################################
 
+$("#save-banners-btn").on("click", function() {
+
+	const data = setDefaultBanners( this.dataset.importance );
+	const importance = this.dataset.importance;
+
+	updateBannerData( importance, data )
+
+})
+
 $("#edit-banners-modal").on("hide.bs.modal", resetBannersModalHandler);
 
 $("#change-category-btn").on("click", function() {
 
 	const importance = this.dataset.importance;
-	const type = this.dataset.type;
+	const table = this.dataset.table;
 
 	Swal.fire({
 		title: 'Είστε σίγουρος/η;',
@@ -160,7 +169,7 @@ $("#change-category-btn").on("click", function() {
 		if (result.isConfirmed) {
 			this.classList.add("d-none");
 			$("#type-select-cnt").removeClass("d-none");
-			$("#type-select").val(type);
+			$("#type-select").val(table);
 			$("#type-select").attr("data-importance", importance);
 			$("#type-select").trigger("change");
 		}
@@ -168,34 +177,30 @@ $("#change-category-btn").on("click", function() {
 
 })
 
-$(".js-remove-callout").on("click", function() {
-
-	const mainCnt = this.findParent(3);
-	this.findParent(2).classList.add("d-none");
-	const activeChildren = mainCnt.querySelectorAll(".callout:not(.d-none)");
-
-	if (activeChildren.length == 0) {
-		mainCnt.getElementsByClassName("js-empty-callout")[0]
-			.classList.remove("d-none");
-	}
-})
+//? an mpei me jQuery den boleuei stin afairesi tou event argotera
+const test = document.getElementsByClassName("js-remove-callout");
+for ( let i = 0; i < test.length; i++ ) {
+	test[i].addEventListener("click", hideCalloutHandler);
+}
 
 $("#edit-banners-modal").on("show.bs.modal", function(event) {
 	const button = event.relatedTarget;
-	const type = button.dataset.type;
-	const modalTitle = button.dataset.modalTitle
-	const importance = button.dataset.importance
-	const title = type == "materials" 
-		? "Μαθήματα" : capitalizeFirst(type);
+	const table = button.dataset.table;
+	const modalTitle = button.dataset.modalTitle;
+	const importance = button.dataset.importance;
+	const title = table == "materials"
+		? "Μαθήματα" : capitalizeFirst(table);
 
 	$("#table-title").text(title);
 	$("#edit-banners-modalLabel").text(modalTitle);
 	$(".js-category-table-cnt").addClass("d-none");
 	$(".js-banner-selection-cnt").addClass("d-none");
-	$(`#${type}-card`).removeClass("d-none");
+	$(`#${table}-card`).removeClass("d-none");
 	$(`#${importance}-banner-selection`).removeClass("d-none");
 	$("#change-category-btn").attr("data-importance", importance);
-	$("#change-category-btn").attr("data-type", type);
+	$("#change-category-btn").attr("data-table", table);
+	$("#save-banners-btn").attr("data-importance", importance);
+	$("#save-banners-btn").attr("data-table", table);
 })
 
 $("#image-search").on("input", utilities.searchHandler);
@@ -208,6 +213,19 @@ $("#type-select").on("change", function() {
 
 	const importance = this.dataset.importance;
 	const selectionCnt = $(`#${importance}-banner-selection`);
+	let namespace;
+
+	if (this.value == "materials") {
+		namespace = "App\\Material";
+	}
+	else if (this.value == "courses") {
+		namespace = "App\\Course";
+	}
+	else {
+		namespace = "App\\Bundle";
+	}
+
+	selectionCnt.attr("data-namespace", namespace);
 
 	$(".js-category-table-cnt").addClass("d-none");
 	$(`#${this.value}-card`).removeClass("d-none");
@@ -243,6 +261,7 @@ function createSelectedCallout(id, title, subtitle, cover) {
 		<p>${ subtitle }</p>`;
 
 	const closeBtn = newCallout.getElementsByClassName("close")[0];
+	closeBtn.classList.add("js-remove-callout");
 	closeBtn.addEventListener("click", removeNewlySelectedHandler);
 	
 	return newCallout;
@@ -254,6 +273,22 @@ function clearCallouts( container ) {
 	container.find(".js-selected-banner").remove();
 	container.find(".js-empty-callout").removeClass("d-none");
 
+}
+
+function updateBannerData( importance, data ) {
+
+	axios.patch( "/home-content/banners-update", {
+		importance, data
+	})
+	.then( res => {
+		$(`#${importance}-banners-row`).html(res.data);
+		$("#edit-banners-modal").modal("hide");
+		utilities.toastAlert("success", "Τα Banners άλλαξαν.")
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
 }
 
 //!###########################################
@@ -287,9 +322,6 @@ function addBannerHandler() {
 			return false;
 		}
 	}
-	const title = this.dataset.modelTitle;
-	const subtitle = this.dataset.modelSubtitle;
-	const cover = this.dataset.modelCover;
 	if ( children.length > 2 ) {
 		Swal.fire({
 			icon: 'info',
@@ -299,6 +331,10 @@ function addBannerHandler() {
 		})
 		return false;
 	}
+
+	const title = this.dataset.modelTitle;
+	const subtitle = this.dataset.modelSubtitle;
+	const cover = this.dataset.modelCover;
 	emptyCallout.classList.add("d-none");
 	const newCallout = createSelectedCallout(id, title, subtitle, cover);
 	
@@ -335,5 +371,55 @@ function resetBannersModalHandler() {
 		}
 
 	}
+
+}
+
+function hideCalloutHandler() {
+	const mainCnt = this.findParent(3);
+	this.findParent(2).classList.add("d-none");
+	const activeChildren = mainCnt.querySelectorAll(".callout:not(.d-none)");
+
+	if (activeChildren.length == 0) {
+		mainCnt.getElementsByClassName("js-empty-callout")[0]
+			.classList.remove("d-none");
+	}
+}
+
+function setDefaultBanners( importance ) {
+
+	const container = $(`#${importance}-banner-selection`);
+	const activeBanners = container.find(".callout:not(.d-none)");
+	const removedBanners = container.find(".d-none:not(.js-empty-callout)");
+	const table = container.data("table");
+	const namespace = container.data("namespace");
+	const statusInput = $(`#${table}-switch`); //!checked i oxi
+	let data = {};
+
+	let closeBtn;
+	let ids = [];
+
+	for ( let i = 0; i < activeBanners.length; i++ ) {
+		activeBanners[i].classList.add("js-active-banner", "callout-success");
+		activeBanners[i].classList.remove("js-selected-banner", "callout-warning");
+		closeBtn = activeBanners[i].getElementsByTagName("button")[0];
+
+		closeBtn.removeEventListener("click", removeNewlySelectedHandler);
+		closeBtn.removeEventListener("click", hideCalloutHandler);
+
+		closeBtn.addEventListener("click", hideCalloutHandler);
+
+		ids.push(activeBanners[i].dataset.modelId);
+
+	}
+
+	removedBanners.remove();
+	
+	data.model = namespace;
+	data.ids = ids;
+	data.status = statusInput.checked ? 1 : 0;
+
+	data = JSON.stringify(data);
+
+	return data;
 
 }

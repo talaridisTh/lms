@@ -200,6 +200,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 	Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
 	Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
 
+//! Dashboard Home Banner Update
+	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
