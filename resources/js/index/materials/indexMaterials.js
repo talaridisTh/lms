@@ -104,20 +104,20 @@ $(".js-link-material").on("click", async function (e) {
     const href = this.href;
     e.preventDefault()
     console.log(e.target.tagName)
-    if (e.target.tagName === "SPAN" || e.target.tagName === "I" ) {
+    if (e.target.tagName === "SPAN" || e.target.tagName === "I") {
         return
 
     } else {
         const {value} = await Swal.fire({
             icon: 'question',
-            html: "Mεταφερθείτε στο Link!"+"<br>"+href ,
+            html: "Mεταφερθείτε στο Link!" + "<br>" + href,
             showCancelButton: true,
             confirmButtonText: 'Εντάξει',
             cancelButtonText: "Ακύρωση "
         })
         if (value) {
             console.log(href)
-            window.open(href,'_target');
+            window.open(href, '_target');
 
         }
     }
@@ -191,6 +191,22 @@ const axiosAddWitchlist = async (courseId, materialId, materialPriority = null, 
     }
 }
 
- $(".list-material-select")[0].findParent(3).classList.add("show")
+$(".list-material-select")[0].findParent(3).classList.add("show")
+
 $(".list-material-select")[0].findParent(4).children[0].children[0].classList.add("bg-list")
+
+
+document.querySelectorAll('.section-list').forEach(sectionList=>{
+    if(!sectionList.children.length){
+        console.log(sectionList.findParent(4).remove())
+    }else{
+
+    }
+
+
+})
+document.querySelectorAll(".section").forEach((section,idx)=>{
+
+    console.log(section.findChild(5).innerHTML = `Ενότητα ${idx+1}: &nbsp `)
+})
 

@@ -74,9 +74,13 @@
                 <div class="col-md-12">
                     <div class="row align-items-center text-center ">
 
+
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
-                            <img class=" avatar-image rounded-circle" src="{{($course->cover)}}" alt="course-logo">
+                            @if($course->cover)
+                                <img class=" avatar-image rounded-circle" src="{{($course->cover)}}" alt="course-logo">
+                            @endif
                         </div>
+
 
                         <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
@@ -105,11 +109,16 @@
                                 <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
                                     <span>Η τελευταία προσθήκη</span>
                                     @if(count($allMaterial))
+                                        @if(!$lastMaterial)
                                         <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>
+                                        @endif
+
                                 </div>
                                 <div class="box-button-subtitle text-light text-center">
+                                    @if(!$lastMaterial)
                                     <p class="font-16">{{$lastMaterial->last()->title}}</p>
                                     <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
+
                                     <a class="text-white"
                                        href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
                                         <button class="bghover color-topic-second  border  btn btn-secontary ">
@@ -117,23 +126,24 @@
                                         </button>
                                     </a>
                                     @endif
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div> <!-- end row top banner -->
-{{--//---------to ekana sxolio na t ftiaksw //--}}
-{{--            <div class="row p-2 box-material-down  color-topic-second" style="background:{{$bgColor}}">--}}
-{{--                <div--}}
-{{--                    class="col-md-12 col-xl-4 px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">--}}
-{{--                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>--}}
-{{--                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textExtra}}  </span>--}}
-{{--                    @foreach($topics as $topic)--}}
-{{--                        <span class="topic-title  border px-2">{{$topic}}</span>--}}
-{{--                    @endforeach--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            {{--//---------to ekana sxolio na t ftiaksw //--}}
+            {{--            <div class="row p-2 box-material-down  color-topic-second" style="background:{{$bgColor}}">--}}
+            {{--                <div--}}
+            {{--                    class="col-md-12 col-xl-4 px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">--}}
+            {{--                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>--}}
+            {{--                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textExtra}}  </span>--}}
+            {{--                    @foreach($topics as $topic)--}}
+            {{--                        <span class="topic-title  border px-2">{{$topic}}</span>--}}
+            {{--                    @endforeach--}}
+            {{--                </div>--}}
+            {{--            </div>--}}
 
         </div> <!-- end container banner -->
 

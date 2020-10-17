@@ -16,9 +16,11 @@
                             <h4 style="background:{{$topic->color}} " class="color-topic-second  font-12 box-title">{{$topic->title}}</h4>
                         @endforeach
                         <a href="{{route('index.userCourse',$course->slug)}}">
+                            @if($course->cover)
                             <img style=" object-fit: cover;" height="100" width="100" class="rounded-circle my-3"
-                                 src="{{$course->cover=="empty"? "http://lorempixel.com/300/300" : url($course->cover)}}"
+                                 src="{{$course->cover}}"
                                  alt="courses">
+                            @endif
                         </a>
                     </div>
                 </div>

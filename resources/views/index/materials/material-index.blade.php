@@ -102,8 +102,8 @@
                                 margin: 0px auto 0;
                                 position: relative;
                                 background-image: url('{{$materials->cover}}')">
-
                             </div>
+
                         @endif
 
                     </div>
@@ -190,7 +190,7 @@
                 <div class="col-md-8 ">
 
 
-{{--                    @include("components.index.user-info")--}}
+                    {{--                    @include("components.index.user-info")--}}
 
                     @include("components.index.announcements")
 
@@ -228,9 +228,11 @@
                         <div class="col-md-12   border d-flex justify-content-between"
                              style="border-radius: 8px; padding: 9px;background-color: #E9EAEB ;">
                             <div class="col-md-2 d-flex align-items-center">
+                                @if($course->cover)
                                 <img height="40" width="40" class="rounded-circle"
-                                     src="{{$course->cover=="empty"? "http://lorempixel.com/300/300":url($course->cover)}}"
+                                     src="{{$course->cover}}"
                                      alt="">
+                                @endif
                             </div>
                             <div class="col-md-10 ">
                                 <a class="d-flex  justify-content-center flex-column"
@@ -329,9 +331,10 @@
 
                                                 <div class="d-flex flex-column">
 
-                                                    <a target="_blank"  href="{{url($media->rel_path)}}">
+                                                    <a target="_blank" href="{{url($media->rel_path)}}">
                                                         <i class="h3 mdi {{$materials->getIcon($media->ext)}}"></i>
-                                                        <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
+                                                        <span
+                                                            class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
                                                     </a>
                                                 </div>
                                             @endif
@@ -345,7 +348,7 @@
 
                     <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="my-2 p-0">
                         @php
-                        $count = 0;
+                            $count = 0;
                         @endphp
                         @foreach($MaterialsOrderByPriority as $key=> $material)
 
@@ -364,27 +367,30 @@
                             @endphp
                             @if($material->type==="Section")
                                 @php --$count; @endphp
-                                <div class="accordion" id="{{$material->slug}}">
+                                <div class="accordion section" id="{{$material->slug}}">
                                     <div class="card mb-0">
                                         <a class="custom-accordion-title d-block "
                                            data-toggle="collapse" href="#{{$material->slug}}-collapse"
                                            aria-expanded="true" aria-controls="{{$material->slug}}-collapse">
-                                        <div class="card-header d-flex align-center head-section " id="{{$material->slug}}-head">
-                                            <h5 class="w-100 m-0 d-flex align-center">
-                                                <span class="mr-2">Ενότητα {{$key -$count+1 }} :</span>
+                                            <div class="card-header d-flex align-center head-section "
+                                                 id="{{$material->slug}}-head">
+                                                <h5 class="w-100 m-0 d-flex align-center">
+                                                    <span class="mr-2">Ενότητα {{$key -$count+1 }} :</span>
 
                                                     {{$material->title}}
 
-                                            </h5>
-                                            <i class="font-14 mdi mdi-chevron-down"></i>
-                                        </div>
+                                                </h5>
+                                                <i class="font-14 mdi mdi-chevron-down"></i>
+                                            </div>
                                         </a>
                                         <div id="{{$material->slug}}-collapse" class="collapse "
                                              aria-labelledby="{{$material->slug}}-head"
                                              data-parent="#{{$material->slug}}">
                                             <div class="p-0 card-body">
-
+                                                <ul data-course-id="{{$course->id}}" style="max-height: 800px"
+                                                    class="my-2 p-0 section-list">
                                                 @foreach($material->chapters->where("type", "!=", "Announcement")  as   $chapter)
+                                                    @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
 
                                                     @php
                                                         $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
@@ -392,8 +398,7 @@
                                                             $hover=  isset($active)? "data-hover='hover'" :'';
                                                          $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$chapter->pivot->priority;
                                                     @endphp
-                                                    <ul data-course-id="{{$course->id}}" style="max-height: 800px"
-                                                        class="my-2 p-0">
+
                                                         <li data-material-id="{{$chapter->id}}"
                                                             data-material-priority="{{$chapter->pivot->priority}}"
                                                             class="list-group-item list-material  my-2 {{$chapter->title==$materials->title? "list-material-select border-orange":"border"}}  ">
@@ -429,8 +434,10 @@
                                                                 </div>
                                                             </a>
                                                         </li>
-                                                    </ul>
+
+                                                    @endif
                                                 @endforeach
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
