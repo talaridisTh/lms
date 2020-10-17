@@ -22,8 +22,7 @@
                 <div class="row">
                     <div class="col-md-12 p-0 pr-2">
                         <h4> </h4>
-                        <p class=""> {!! $course->curator->profil !!}
-                        </p>
+                        <p class=""> {!! $course->curator->profil !!} </p>
                     </div>
                     <div class="col-md-3"></div>
                 </div>

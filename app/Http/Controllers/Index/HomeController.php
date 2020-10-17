@@ -114,8 +114,24 @@ class HomeController extends Controller {
     public function test()
     {
 
+        $user=User::find(4);
 
 
+//        dd($user->courses()->materials()->whereIn("id",1));
+
+
+
+
+        foreach ($user->courses()->get() as $course){
+
+
+            $statusCourse = $course->materials->whereIn("id",[4,72]);
+            dd($statusCourse);
+
+//            $statusCourse->pivot->status=0;
+//            $statusCourse->save();
+        }
+//
 
     }
 

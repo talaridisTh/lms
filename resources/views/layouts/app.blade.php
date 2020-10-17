@@ -201,7 +201,7 @@
 </div>
 
 
-<footer class=" footer-alt border-top ">
+<footer class=" footer-alt border-top bg-light">
     <div class="container" style="max-width: 1440px;">
         <div class="row align-items-center mt-2">
             <div class="col-md-6">
@@ -231,7 +231,7 @@
 
         </div>
     </div>
-    <hr class="border">
+    <hr class="border" style="opacity: 0.4">
     <div class="container-fluid  mb-2" style="max-width: 1705px;">
         <div class="row align-items-center">
             <div class="col-md-4 text-left">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>

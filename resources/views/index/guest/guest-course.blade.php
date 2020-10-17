@@ -64,6 +64,7 @@
                                                                     <div class="pretty p-icon p-round p-jelly ">
                                                                         <input class="input-materials"
                                                                                data-material-id="{{$material->id}}"
+                                                                               data-course-id="{{$course->id}}"
                                                                                type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon mdi font-16 mdi-check"></i>
@@ -82,6 +83,7 @@
                                                                     <div class="pretty p-icon p-round p-jelly ">
                                                                         <input class="input-materials"
                                                                                data-material-id="{{$material->id}}"
+                                                                               data-course-id="{{$course->id}}"
                                                                                type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon font-16 mdi mdi-check"></i>
@@ -100,6 +102,7 @@
                                                                     <div class="pretty p-icon p-round p-jelly ">
                                                                         <input class="input-materials"
                                                                                data-material-id="{{$material->id}}"
+                                                                               data-course-id="{{$course->id}}"
                                                                                type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon font-16 mdi mdi-check"></i>

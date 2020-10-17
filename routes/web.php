@@ -246,11 +246,17 @@ Route::post("/guest/create/guest-user", "Ajax\HomeController@createGuestUser")->
 
 
 
+Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("guest.tempLink");
+
+
+
 //!######################################################
 //!					middleware				            #
-Route::group(['middleware' => ['auth', "verifyCourse"]], function () {
-//! Course
+
+Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
     Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
+
+//! Course
     Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
 //! Material index  ajax
     Route::patch('/add-watchlist/course', 'Index\CourseController@watchlistCourse')->name('index.watchlist.course');

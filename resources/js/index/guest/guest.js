@@ -136,7 +136,7 @@ const axiosCreateGuestUser = async (userId, courses, materials) => {
     let materialId  = []
 
     courses.forEach(course =>courseId.push(course.dataset.courseId))
-    materials.forEach(material =>materialId.push(material.dataset.materialId))
+    materials.forEach(material =>materialId.push({"material":material.dataset.materialId,"courses":material.dataset.courseId}))
 
 
     try {

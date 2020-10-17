@@ -86,14 +86,19 @@ class User extends Authenticatable {
         return $this->hasMany(Message::class, "to","id");
     }
 
+//
+//    public function guest()
+//    {
+//
+//
+//        return $this->belongsToMany('App\User', 'guest_user', 'user_id')
+//            ->withTimestamps()
+//            ->withPivot("user_link",'id');
+//    }
 
     public function guest()
     {
-
-
-        return $this->belongsToMany('App\Course', 'guest_course', 'user_id', 'course_id')
-            ->withTimestamps()
-            ->withPivot("user_link",'id');
+        return $this->belongsToMany('App\User', 'guest_user', 'partner_id',"user_id")->withPivot("user_link");
     }
 
 

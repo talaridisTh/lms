@@ -1,4 +1,4 @@
-
+import utilities from '../../index/main';
 
 
 utilities.addWhatchlist()
@@ -146,6 +146,22 @@ $(".js-link-material").on("click", async function (e) {
 
 })
 
+
+$(".section-list")
+
+document.querySelectorAll('.section-list').forEach(sectionList=>{
+    if(!sectionList.children.length){
+        console.log(sectionList.findParent(4).remove())
+    }else{
+
+    }
+
+
+})
+document.querySelectorAll(".section").forEach((section,idx)=>{
+
+    console.log(section.findChild(5).innerHTML = `Ενότητα ${idx+1}: &nbsp `)
+})
 
 
 
