@@ -14,18 +14,22 @@ class UtilityController extends Controller
     public function index() {
 
 		$page = Utility::where("title", "Home page")->first();
+		$bannerStatuses = [];
 
 		$temp = json_decode($page->sixth_section);
-		extract(get_object_vars($temp));		//! metatrepei tis times tou object se $model kai $ids
+		extract( get_object_vars($temp) );		//! metatrepei tis times tou object se $model kai $ids
 		$primaryRecords = $model::whereIn("id", $ids)->get();
+		$bannerStatuses["primary"] = $status;
 
 		$temp = json_decode($page->seventh_section);
-		extract(get_object_vars($temp));
+		extract( get_object_vars($temp) );
 		$secondaryRecords = $model::whereIn("id", $ids)->get();
+		$bannerStatuses["secondary"] = $status;
 
 		$temp = json_decode($page->eighth_section);
-		extract(get_object_vars($temp));
+		extract( get_object_vars($temp) );
 		$tetiaryRecords = $model::whereIn("id", $ids)->get();
+		$bannerStatuses["tetiary"] = $status;
 
 		$data = [
 			"page" => $page,
@@ -33,6 +37,7 @@ class UtilityController extends Controller
 			"secondaryRecords" => $secondaryRecords,
 			"tetiaryRecords" => $tetiaryRecords,
 			"statuses" => json_decode($page->fields),
+			"bannerStatuses" => $bannerStatuses,
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18)
 		];
 

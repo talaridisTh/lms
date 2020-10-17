@@ -122,7 +122,14 @@
 
 							<div id="upload" class="tab-pane">
 
-								<input id="file-pond" type="file[]"/>
+								<input id="file-pond" class="mb-0" type="file[]"/>
+								<p class="text-right mb-2">
+									<small>
+										<strong>
+											Το πεδίο δέχεται αρχεία: .jpg, .png.
+										</strong>
+									</small>
+								</p>
 
 							</div>
 						</div>

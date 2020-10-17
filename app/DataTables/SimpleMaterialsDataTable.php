@@ -19,7 +19,7 @@ class SimpleMaterialsDataTable extends DataTable
      */
     public function dataTable($query)
     {
-		$query = Material::select("id", "title", "slug")->where( function($query) {
+		$query = Material::select("id", "title", "subtitle", "cover")->where( function($query) {
 			$query->where("type", "Lesson")
 				->where("status", 1)->get();
 		})->get();
@@ -27,7 +27,9 @@ class SimpleMaterialsDataTable extends DataTable
         return datatables()::of($query)
 			->addColumn('action', function($data) {
 
-				return "<i class='p-2 font-20 mdi mdi-plus-circle-outline'></i>";
+				return "<i class='js-add-material-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
+					data-model-id='$data->id' data-model-title='$data->title'
+					data-model-subtitle='$data->subtitle'></i>";
 
 			})
 			->rawColumns(["action"]);

@@ -23,6 +23,29 @@ class UtilityController extends Controller
 		return $datatable->render('simple.bundles.datatable');
 	}
 
+	public function updateBanners(Request $request) {
+
+		$page = Utility::where("title", "Home page")->first();
+
+		if ($request->importance == "primary") {
+			$page->sixth_section = $request->data;
+		}
+		elseif ($request->importance == "secondary") {
+			$page->seventh_section = $request->data;
+		}
+		elseif ($request->importance == "tetiary") {
+			$page->eighth_section = $request->data;
+		}
+		$page->save();
+
+		$bannersData = json_decode($request->data);
+		extract( get_object_vars($bannersData) );
+
+		$models = $model::whereIn("id", $ids)->get();
+
+		return view("components/admin/settings/homeEditCardsBuilder", ['models' => $models]);
+	}
+
     /**
      * Display a listing of the resource.
      *

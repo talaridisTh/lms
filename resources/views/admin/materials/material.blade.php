@@ -50,7 +50,15 @@
                         </div>
                     </div>
                     <div id="upload" class="tab-pane">
-                        <input id="file-pond" type="file[]" />
+						<input id="file-pond" class="mb-0" type="file[]" />
+						<p class="text-right mb-2">
+							<small>
+								<strong>
+									Το πεδίο δέχεται αρχεία: .jpg, .png.
+								</strong>
+							</small>
+						</p>
+						
                     </div>
                 </div>
             </div>
@@ -271,11 +279,19 @@
                                 data-model-id="{{ $material->id }}">
                                 @include('components/admin/modelGallery', ["gallery" => $gallery])
                             </div>
-                            <input id="material-img-upload" type="text">
-                        </div>
+							<input id="material-img-upload" class="mb-0" type="text">
+							
+						</div>
+						<p class="text-right mb-2">
+							<small>
+								<strong>
+									Το πεδίο δέχεται αρχεία: .jpg, .png.
+								</strong>
+							</small>
+						</p>
 
                         <h5>Βοηθητικά Αρχεία</h5>
-                        <div class="bg-light mb-3">
+                        <div class="bg-light">
                             <div class="pt-2 px-2">
                                 <button id="file-library-btn" class="btn btn-primary m-1" data-toggle="modal"
                                     data-target="#remainings-files-modal">
@@ -292,8 +308,15 @@
                             <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
                                 @include('components/admin/filesTable', ["files" => $files])
                             </div>
-                            <input id="material-file-upload" type="text">
-                        </div>
+                            <input id="material-file-upload" class="mb-0" type="text">
+						</div>
+						<p class="text-right mb-3">
+							<small>
+								<strong>
+									Το πεδίο δέχεται αρχεία: .doc, .odt, .rtf, .xls, .odp, .zip, .mp3, .pdf.
+								</strong>
+							</small>
+						</p>
                         @endisset
                     </div><!-- ./form inputs -->
 
