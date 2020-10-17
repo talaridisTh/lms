@@ -367,8 +367,8 @@
                             @endphp
                             @if($material->type==="Section")
                                 @php --$count; @endphp
-                                <div class="accordion section" id="{{$material->slug}}">
-                                    <div class="card mb-0">
+                                <div class="accordion section mt-2" id="{{$material->slug}}">
+                                    <div class="card mb-0 bg-transparent">
                                         <a class="custom-accordion-title d-block "
                                            data-toggle="collapse" href="#{{$material->slug}}-collapse"
                                            aria-expanded="true" aria-controls="{{$material->slug}}-collapse">
@@ -401,7 +401,7 @@
 
                                                         <li data-material-id="{{$chapter->id}}"
                                                             data-material-priority="{{$chapter->pivot->priority}}"
-                                                            class="list-group-item list-material  my-2 {{$chapter->title==$materials->title? "list-material-select border-orange":"border"}}  ">
+                                                            class="list-group-item list-material  m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                             <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                                href="{{$link}}">
                                                                 <div class="col-md-2 ">
