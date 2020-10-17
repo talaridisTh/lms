@@ -1,7 +1,8 @@
 @foreach ($models as $model)
 	<div class="col-md-6 col-lg-4">
 		<!-- Simple card -->
-		<div class="card d-block">
+		<div class="js-banner card d-block" data-model-id="{{ $model->id }}"
+			data-namespace="{{ get_class($model) }}">
 			<div class="embed-responsive embed-responsive-16by9">
 				<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
 			</div>

@@ -26,22 +26,20 @@ class UtilityController extends Controller
 	public function updateBanners(Request $request) {
 
 		$page = Utility::where("title", "Home page")->first();
-
-		if ($request->importance == "primary") {
-			$page->sixth_section = $request->data;
-		}
-		elseif ($request->importance == "secondary") {
-			$page->seventh_section = $request->data;
-		}
-		elseif ($request->importance == "tetiary") {
-			$page->eighth_section = $request->data;
-		}
+		$page->banners = $request->updatedData;
 		$page->save();
+		
+		$models = [];
 
-		$bannersData = json_decode($request->data);
-		extract( get_object_vars($bannersData) );
+		foreach ( $request->selectedBanners["models"] as $model ) {
+			$namespace = key((array)$model);
+			$id = current((array)$model);
 
-		$models = $model::whereIn("id", $ids)->get();
+			$temp = $namespace::find( $id );
+
+			array_push($models, $temp);
+
+		}
 
 		return view("components/admin/settings/homeEditCardsBuilder", ['models' => $models]);
 	}

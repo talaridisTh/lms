@@ -142,10 +142,11 @@ function addBundleBannerInit() {
 
 $("#save-banners-btn").on("click", function() {
 
-	const data = setDefaultBanners( this.dataset.importance );
 	const importance = this.dataset.importance;
+	const newBanners = setDefaultBanners( importance );
+	const bannerJson = bannerJsonBuilder(importance, newBanners);
 
-	updateBannerData( importance, data )
+	updateBannerData( importance, bannerJson, newBanners );
 
 })
 
@@ -178,29 +179,20 @@ $("#change-category-btn").on("click", function() {
 })
 
 //? an mpei me jQuery den boleuei stin afairesi tou event argotera
-const test = document.getElementsByClassName("js-remove-callout");
-for ( let i = 0; i < test.length; i++ ) {
-	test[i].addEventListener("click", hideCalloutHandler);
+const removeCallout = document.getElementsByClassName("js-remove-callout");
+for ( let i = 0; i < removeCallout.length; i++ ) {
+	removeCallout[i].addEventListener("click", hideCalloutHandler);
 }
 
 $("#edit-banners-modal").on("show.bs.modal", function(event) {
 	const button = event.relatedTarget;
-	const table = button.dataset.table;
 	const modalTitle = button.dataset.modalTitle;
 	const importance = button.dataset.importance;
-	const title = table == "materials"
-		? "Μαθήματα" : capitalizeFirst(table);
 
-	$("#table-title").text(title);
 	$("#edit-banners-modalLabel").text(modalTitle);
-	$(".js-category-table-cnt").addClass("d-none");
 	$(".js-banner-selection-cnt").addClass("d-none");
-	$(`#${table}-card`).removeClass("d-none");
 	$(`#${importance}-banner-selection`).removeClass("d-none");
-	$("#change-category-btn").attr("data-importance", importance);
-	$("#change-category-btn").attr("data-table", table);
 	$("#save-banners-btn").attr("data-importance", importance);
-	$("#save-banners-btn").attr("data-table", table);
 })
 
 $("#image-search").on("input", utilities.searchHandler);
@@ -247,12 +239,12 @@ function capitalizeFirst(string) {
 
 }
 
-function createSelectedCallout(id, title, subtitle, cover) {
+function createSelectedCallout(id, title, subtitle, namespace) {
 	
 	const newCallout = document.createElement("div");
 	newCallout.classList.add("js-selected-banner", "callout", "callout-warning");
 	newCallout.dataset.modelId = id;
-	newCallout.dataset.modelCover = cover;
+	newCallout.dataset.namespace = namespace;
 
 	newCallout.innerHTML = `<div class="d-flex justify-content-between mb-1">
 			<h5>${ title }</h5>
@@ -275,10 +267,10 @@ function clearCallouts( container ) {
 
 }
 
-function updateBannerData( importance, data ) {
+function updateBannerData( importance, updatedData, selectedBanners ) {
 
 	axios.patch( "/home-content/banners-update", {
-		importance, data
+		importance, updatedData, selectedBanners
 	})
 	.then( res => {
 		$(`#${importance}-banners-row`).html(res.data);
@@ -315,14 +307,15 @@ function addBannerHandler() {
 	const children = container.querySelectorAll(".callout:not(.d-none)");
 	const emptyCallout = container.getElementsByClassName("js-empty-callout")[0];
 	const id = this.dataset.modelId;
+	const namespace = this.dataset.namespace;
 	
 	for ( let i = 0; i < children.length; i++ ) {
-		if (children[i].dataset.modelId == id) {
+		if (children[i].dataset.modelId == id && children[i].dataset.namespace == namespace) {
 			utilities.toastAlert("warning", "Το Banner είναι ήδη επιλεγμένο...")
 			return false;
 		}
 	}
-	if ( children.length > 2 ) {
+	if ( children.length > 10 ) {
 		Swal.fire({
 			icon: 'info',
 			title: 'Προσοχή!',
@@ -334,9 +327,8 @@ function addBannerHandler() {
 
 	const title = this.dataset.modelTitle;
 	const subtitle = this.dataset.modelSubtitle;
-	const cover = this.dataset.modelCover;
 	emptyCallout.classList.add("d-none");
-	const newCallout = createSelectedCallout(id, title, subtitle, cover);
+	const newCallout = createSelectedCallout(id, title, subtitle, namespace);
 	
 	container.append( newCallout );
 }
@@ -344,9 +336,6 @@ function addBannerHandler() {
 function resetBannersModalHandler() {
 	const categories = $(".js-banner-selection-cnt");
 	let activeBanners, selectedBanners;
-
-	$("#type-select-cnt").addClass("d-none");
-	$("#change-category-btn").removeClass("d-none");
 
 	for( let i = 0; i < categories.length; i++ ) {
 
@@ -390,36 +379,70 @@ function setDefaultBanners( importance ) {
 	const container = $(`#${importance}-banner-selection`);
 	const activeBanners = container.find(".callout:not(.d-none)");
 	const removedBanners = container.find(".d-none:not(.js-empty-callout)");
-	const table = container.data("table");
-	const namespace = container.data("namespace");
-	const statusInput = $(`#${table}-switch`); //!checked i oxi
-	let data = {};
+	const statusInput = $(`#${importance}-banners-switch`)[0]; //!checked i oxi
+	let data = {
+		models: [],
+		status: statusInput.checked ? 1 : 0
+	};
 
-	let closeBtn;
-	let ids = [];
+	let closeBtn, namespace, id, temp = {};
 
 	for ( let i = 0; i < activeBanners.length; i++ ) {
+		namespace = activeBanners[i].dataset.namespace;
+		id = activeBanners[i].dataset.modelId;
+
 		activeBanners[i].classList.add("js-active-banner", "callout-success");
 		activeBanners[i].classList.remove("js-selected-banner", "callout-warning");
-		closeBtn = activeBanners[i].getElementsByTagName("button")[0];
 
+		closeBtn = activeBanners[i].getElementsByTagName("button")[0];
 		closeBtn.removeEventListener("click", removeNewlySelectedHandler);
 		closeBtn.removeEventListener("click", hideCalloutHandler);
-
 		closeBtn.addEventListener("click", hideCalloutHandler);
 
-		ids.push(activeBanners[i].dataset.modelId);
-
+		temp = {};
+		temp[namespace] = id;
+		data.models.push(temp);
 	}
 
 	removedBanners.remove();
-	
-	data.model = namespace;
-	data.ids = ids;
-	data.status = statusInput.checked ? 1 : 0;
+
+	return data;
+
+}
+
+function bannerJsonBuilder( editedSection, selected ) {
+
+	const bannerCnt = document.getElementsByClassName("js-banner-cnt");
+	let data = {}, namespace, id, section, banner,
+		status, temp = {};
+
+	for ( let i = 0; i < bannerCnt.length; i++ ) {
+		section = bannerCnt[i].dataset.importance;
+		status = document.getElementById(`${section}-banners-switch`);
+		data[section] = {
+			models: [],
+			status: status.checked ? 1 : 0
+		}
+
+		if ( section === editedSection ) {
+			data[section] = { ...data[section], ...selected };
+			continue;
+		}
+
+		banner = bannerCnt[i].getElementsByClassName("js-banner");
+		for ( let j = 0; j < banner.length; j++ ) {
+			namespace = banner[j].dataset.namespace;
+			id = banner[j].dataset.modelId;
+
+			temp = {};
+			temp[namespace] = id;
+			data[section].models.push(temp);
+		}
+
+	}
 
 	data = JSON.stringify(data);
 
-	return data;
+	return data
 
 }

@@ -14,30 +14,30 @@ class UtilityController extends Controller
     public function index() {
 
 		$page = Utility::where("title", "Home page")->first();
-		$bannerStatuses = [];
 
-		$temp = json_decode($page->sixth_section);
-		extract( get_object_vars($temp) );		//! metatrepei tis times tou object se $model kai $ids
-		$primaryRecords = $model::whereIn("id", $ids)->get();
-		$bannerStatuses["primary"] = $status;
+		$bannersData = json_decode($page->banners);
 
-		$temp = json_decode($page->seventh_section);
-		extract( get_object_vars($temp) );
-		$secondaryRecords = $model::whereIn("id", $ids)->get();
-		$bannerStatuses["secondary"] = $status;
+		$banners = (object)[];
+		
+		foreach ($bannersData as $section => $values) {
+			$banners->{ $section } = (object)[];
+			$banners->{ $section }->models = [];
 
-		$temp = json_decode($page->eighth_section);
-		extract( get_object_vars($temp) );
-		$tetiaryRecords = $model::whereIn("id", $ids)->get();
-		$bannerStatuses["tetiary"] = $status;
+			foreach($values->models as $model) {
+
+				$namespace = key((array)$model);
+				$id = current((array)$model);
+				
+				$value = $namespace::find( $id );
+				array_push($banners->{ $section }->models, $value);
+			}
+			$banners->{ $section }->status = $values->status;
+		}
 
 		$data = [
 			"page" => $page,
-			"primaryRecords" => $primaryRecords,
-			"secondaryRecords" => $secondaryRecords,
-			"tetiaryRecords" => $tetiaryRecords,
+			"banners" => $banners,
 			"statuses" => json_decode($page->fields),
-			"bannerStatuses" => $bannerStatuses,
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18)
 		];
 

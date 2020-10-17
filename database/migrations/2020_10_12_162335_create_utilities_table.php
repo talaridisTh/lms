@@ -16,14 +16,9 @@ class CreateUtilitiesTable extends Migration
         Schema::create('utilities', function (Blueprint $table) {
             $table->id();
             $table->string("title");
-            $table->text("first_section")->nullable();
-            $table->text("second_section")->nullable();
-            $table->text("third_section")->nullable();
-            $table->text("fourth_section")->nullable();
-			$table->text("fifth_section")->nullable();
-			$table->json("sixth_section")->nullable();
-            $table->json("seventh_section")->nullable();
-            $table->json("eighth_section")->nullable();
+            $table->text("primary_editor")->nullable();
+            $table->text("secondary_editor")->nullable();
+            $table->text("banners")->nullable();
             $table->json("fields")->nullable();
             $table->timestamps();
         });
