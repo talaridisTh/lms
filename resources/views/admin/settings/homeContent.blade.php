@@ -21,14 +21,14 @@
 
 					<div class="row">
 						<div class="col-md-6">
-							<h4 id="table-title" class="text-center">Μαθήματα</h4>
+							<h4 id="table-title" class="text-center">Courses</h4>
 						</div>
 						<div class="col-md-6">
 							<div id="type-select-cnt" class="row">
 								<label class="col-3 text-right align-self-center" for="type-select">Κατηγορία</label>
 								<div class="col-9 mb-1">
 									<select id="type-select" data-toggle="select2"
-										class="select2 form-control"
+										class="select2 form-control" autocomplete="off"
 										data-minimum-results-for-search="-1">
 										<option value="courses" selected>Courses</option>
 										<option value="materials">Μαθήματα</option>
@@ -42,7 +42,7 @@
 					<div class="row">
 						<div class="col-md-6">
 
-							<div id="courses-card" class="js-category-table-cnt card h-100 d-none">
+							<div id="courses-card" class="js-category-table-cnt card h-100">
 								<div class="card-body">
 									<table id="courses-datatable" class="table w-100 js-remove-table-classes">
 										<thead>
@@ -84,7 +84,7 @@
 								</div>
 							</div>
 
-							<div id="materials-card" class="js-category-table-cnt card h-100">
+							<div id="materials-card" class="js-category-table-cnt card h-100 d-none">
 								<div class="card-body">
 									<table id="materials-datatable" class="table w-100 js-remove-table-classes">
 										<thead>
@@ -110,7 +110,7 @@
 						<div class="col-md-6">
 							@foreach ($banners as $section => $values)
 								<div id="{{ $section }}-banner-selection" class="js-banner-selection-cnt card h-100">
-									<div class="card-body">
+									<div class="card-body height-883px overflow-y-auto">
 										@foreach ($values->models as $model)
 											<div class="js-active-banner callout callout-success"
 												data-model-id="{{ $model->id }}" data-namespace="{{ get_class($model) }}">
@@ -224,27 +224,100 @@
 
 			<ul class="nav nav-tabs nav-bordered mb-3">
 				<li class="nav-item">
-					<a href="#first-section" id="first-section-tab-btn"
-						data-toggle="tab" aria-expanded="false" class="nav-link active">
-						Section 1
+					<a href="#carousel-section" id="carousel-section-tab-btn"
+						data-toggle="tab" aria-expanded="true" class="nav-link active">
+						Carousel
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#second-section" id="second-section-tab-btn"
-						data-toggle="tab" aria-expanded="true" class="nav-link">
-						Section 2
+					<a href="#editor-section" id="editor-section-tab-btn"
+						data-toggle="tab" aria-expanded="false" class="nav-link">
+						Editors
 					</a>
 				</li>
 			</ul><!-- ./tabs -->
 
-			<form id="home-form" action="/dashboard/home-content/update" method="post" autocomplete="off">
-				@csrf
-				<input type="text" name="title" value="{{ $page->title }}" hidden />
-				<div class="tab-content">
-					<div id="first-section" class="tab-pane show active">
+			<div class="tab-content">
+
+				<div id="carousel-section" class="tab-pane show active">
+					<div class="accordion" id="carousel-accordion">
+						@php
+							$counter = 1;
+						@endphp
+						@foreach ($banners as $section => $values)
+							<div class="mb-0">
+								<div class="card-header d-flex justify-content-between align-items-center" id="{{ $section }}-heading">
+									
+									<h5 class="m-0 flex-grow-1">
+										<a class="custom-accordion-title d-block pt-2 pb-2"
+											data-toggle="collapse" href="#{{ $section }}-collapse"
+											aria-expanded="true" aria-controls="{{ $section }}-collapse">
+											{{ ucfirst($section) }}
+										</a>
+									</h5>
+									
+									<div class="tools-cnt pl-4 pr-1 h3 d-flex align-items-center">
+										<i class="px-1 mr-2 mdi mdi-square-edit-outline custom-muted cursor-pointer"
+											data-toggle="modal" data-target="#edit-banners-modal" data-importance="{{ $section }}"
+											data-modal-title="Carousel {{ $counter }}" title="Edit carousel"></i>
+
+										<input type="checkbox" id="{{ $section }}-banners-switch" autocomplete="off"
+											{{ $values->status == 1 ? "checked" : ""}}
+											class="js-carousel-switch" data-switch="bool"/>
+										<label for="{{ $section }}-banners-switch" class="mb-0" data-on-label="On" data-off-label="Off"></label>
+									</div>
+
+								</div>
+								<div id="{{ $section }}-collapse" class="collapse{{ $counter++ == 1 ? " show" : "" }}"
+									aria-labelledby="{{ $section }}-heading" data-parent="#carousel-accordion">
+									
+									<div id="{{ $section }}-banners-row" class="js-banner-cnt row pt-3" data-importance="{{ $section }}">
+										@foreach ($values->models as $model)
+
+											@php
+												$modelType = substr($model->getTable(), 0, -1);
+												$previewURL = "#";
+
+												if ( $modelType == "course" ) {
+													$previewURL = "/courses/course/$model->slug";
+												}
+												elseif ( $modelType == "material" ) {
+													$previewURL = "/material/$model->slug";
+												}
+											@endphp
+
+											<div class="col-md-6 col-lg-4 col-xl-3">
+												<!-- Simple card -->
+												<div class="js-banner card d-block" data-model-id="{{ $model->id }}"
+													data-namespace="{{ get_class($model) }}">
+													<div class="embed-responsive embed-responsive-16by9">
+														<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
+													</div>
+													<div class="card-body">
+														<h5 class="card-title">{{ $model->title }}</h5>
+														<p class="card-text height-65px overflow-y-hidden">{{ $model->subtitle }}</p>
+														<a href="/dashboard/{{ $modelType }}/{{ $model->slug }}"
+															class="custom-link-primary mr-3" target="_blank">Edit</a>
+														<a href="{{ $previewURL }}" class="custom-link-primary" target="_blank">View</a>
+													</div> <!-- end card-body-->
+												</div> <!-- end card-->
+											</div><!-- end col -->
+										@endforeach
+									</div>
+
+								</div>
+							</div>
+						@endforeach
+					</div>
+				</div>
+				<div id="editor-section" class="tab-pane">
+					<form id="home-form" action="/dashboard/home-content/update" method="post" autocomplete="off">
+						@csrf
+						<input type="text" name="title" value="{{ $page->title }}" hidden />
+
 						<div class="form-group">
 							<div class="d-flex justify-content-between">
-								<label class="mb-0" for="first-section-textarea">Section 1</label>
+								<label class="mb-0" for="first-section-textarea">Primary</label>
 								<div class="d-flex mb-1">
 									<div class="custom-control custom-radio custom-control-inline">
 										<input id="first-section-default" class="custom-control-input"
@@ -266,11 +339,10 @@
 							<textarea class="form-control" id="first-section-textarea"
 								name="firstSectionContent" rows="5">{{ $page->primary_editor }}</textarea>
 						</div>
-					</div>
-					<div id="second-section" class="tab-pane">
+
 						<div class="form-group">
 							<div class="d-flex justify-content-between">
-								<label class="mb-0" for="second-section-textarea">Section 2</label>
+								<label class="mb-0" for="second-section-textarea">Secondary</label>
 								<div class="d-flex mb-1">
 									<div class="custom-control custom-radio custom-control-inline">
 										<input id="second-section-default" class="custom-control-input"
@@ -292,70 +364,13 @@
 							<textarea class="form-control" id="second-section-textarea"
 								name="secondSectionContent" rows="5">{{ $page->secondary_editor }}</textarea>
 						</div>
+					</form>
+
+					<div class="mb-3 d-flex justify-content-end">
+						<button form="home-form" type="submit" class="btn btn-primary">Αποθήκευση</button>
 					</div>
-
-				</div><!-- ./tab-content -->
-			</form>
-
-			<div class="mb-3 d-flex justify-content-end">
-				<button form="home-form" type="submit" class="btn btn-primary">Αποθήκευση</button>
-			</div>
-				
-			@php
-				$counter = 1;
-			@endphp
-			<ul class="nav nav-tabs nav-bordered my-3">
-				@foreach ($banners as $section => $values)
-					<li class="nav-item">
-						<a href="#{{ $section }}-content" id="primary-content-tab-btn"
-							data-toggle="tab" aria-expanded="false" class="nav-link{{ $counter == 1 ? " active" : "" }}">
-							Carousel {{ $counter++ }}
-						</a>
-					</li>
-				@endforeach
-			</ul><!-- ./tabs -->
-				
-			<div class="tab-content">
-
-				@php
-					$counter = 1;
-				@endphp
-				@foreach ($banners as $section => $values)
-					<div id="{{ $section }}-content" class="tab-pane{{ $counter === 1 ? " show active" : "" }}">
-						<div class="mb-0 d-flex justify-content-end">
-							<input type="checkbox" id="{{ $section }}-banners-switch" autocomplete="off"
-								{{ $values->status == 1 ? "checked" : ""}}
-								class="js-carousel-switch" data-switch="bool"/>
-							<label for="{{ $section }}-banners-switch" data-on-label="On" data-off-label="Off"></label>
-						</div>
-						<div id="{{ $section }}-banners-row" class="js-banner-cnt row"
-							data-importance="{{ $section }}">
-							@foreach ($values->models as $model)
-								<div class="col-md-6 col-lg-4">
-									<!-- Simple card -->
-									<div class="js-banner card d-block" data-model-id="{{ $model->id }}"
-										data-namespace="{{ get_class($model) }}">
-										<div class="embed-responsive embed-responsive-16by9">
-											<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
-										</div>
-										<div class="card-body">
-											<h5 class="card-title">{{ $model->title }}</h5>
-											<p class="card-text">{{ $model->subtitle }}</p>
-											<a href="javascript: void(0);" class="btn btn-primary">Button</a>
-										</div> <!-- end card-body-->
-									</div> <!-- end card-->
-								</div><!-- end col -->
-							@endforeach
-						</div>
-						<div class="mb-3 d-flex justify-content-end">
-							<button class="btn btn-primary" data-toggle="modal"
-								data-target="#edit-banners-modal" data-importance="{{ $section }}"
-								data-modal-title="Carousel {{ $counter++ }}">Αλλαγή</button>
-						</div>
-					</div>
-				@endforeach
-			</div>
-
+				</div>
+			</div><!-- ./tab-content -->
 		</div>
 	</div>
 @endsection

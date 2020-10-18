@@ -1,5 +1,16 @@
 @foreach ($models as $model)
-	<div class="col-md-6 col-lg-4">
+	@php
+		$modelType = substr($model->getTable(), 0, -1);
+		$previewURL = "#";
+
+		if ( $modelType == "course" ) {
+			$previewURL = "/courses/course/$model->slug";
+		}
+		elseif ( $modelType == "material" ) {
+			$previewURL = "/material/$model->slug";
+		}
+	@endphp
+	<div class="col-md-6 col-lg-4 col-xl-3">
 		<!-- Simple card -->
 		<div class="js-banner card d-block" data-model-id="{{ $model->id }}"
 			data-namespace="{{ get_class($model) }}">
@@ -8,8 +19,10 @@
 			</div>
 			<div class="card-body">
 				<h5 class="card-title">{{ $model->title }}</h5>
-				<p class="card-text">{{ $model->subtitle }}</p>
-				<a href="javascript: void(0);" class="btn btn-primary">Button</a>
+				<p class="card-text height-65px overflow-y-hidden">{{ $model->subtitle }}</p>
+				<a href="/dashboard/{{ $modelType }}/{{ $model->slug }}"
+					class="custom-link-primary mr-3" target="_blank">Edit</a>
+				<a href="{{ $previewURL }}" class="custom-link-primary" target="_blank">View</a>
 			</div> <!-- end card-body-->
 		</div> <!-- end card-->
 	</div><!-- end col -->

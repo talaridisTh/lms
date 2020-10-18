@@ -358,6 +358,13 @@ select.is-invalid {
     color: #ff5b5b;
 }
 
+.custom-muted {
+	color: #83919f;
+}
+
+.custom-muted:hover {
+	color: #99a4b2;
+}
 
 //! Redactor Classes for Images
 figure.image-left {
@@ -548,6 +555,10 @@ figure.image-center {
 	overflow-x: auto;
 }
 
+.overflow-y-auto {
+	overflow-y: auto;
+}
+
 figure > img {
 	width: 100%;
 	height: auto;
@@ -606,4 +617,16 @@ figure > img {
 
 .callout.callout-primary {
 	border-left-color: #536de6;
+}
+
+.height-883px {
+	height: 883px;
+}
+
+.height-65px {
+	height: 65px !important;
+}
+
+.overflow-y-hidden {
+	overflow-y: hidden;
 }
