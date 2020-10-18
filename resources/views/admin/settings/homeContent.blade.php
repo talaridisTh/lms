@@ -322,25 +322,28 @@
 							<div class="d-flex justify-content-between">
 								<label class="mb-0" for="first-section-textarea">Primary</label>
 								<div class="d-flex mb-1">
+
 									<div class="custom-control custom-radio custom-control-inline">
 										<input id="first-section-default" class="custom-control-input"
-											type="radio" name="firstSection" value="0"
+											type="radio" name="primaryContent" value="0"
 											{{ $statuses->primary_editor->content == 0 ? " checked" : "" }}/>
 										<label class="custom-control-label" for="first-section-default">Default</label>
 									</div>
+
 									<div class="custom-control custom-radio custom-control-inline">
-										<input type="radio" id="first-section-custom" name="firstSection"
+										<input type="radio" id="first-section-custom" name="primaryContent"
 											class="custom-control-input" value="1"
 											{{ $statuses->primary_editor->content == 1 ? " checked" : "" }}>
 										<label class="custom-control-label" for="first-section-custom">Custom</label>
 									</div>
-									<input type="checkbox" id="first-section-switch" data-switch="bool" name="firstSectionStatus"
+
+									<input type="checkbox" id="first-section-switch" data-switch="bool" name="primaryContentStatus"
 										{{ $statuses->primary_editor->status == 1 ? " checked" : ""}}/>
 									<label class="mb-0" for="first-section-switch" data-on-label="On" data-off-label="Off"></label>
 								</div>
 							</div>
 							<textarea class="form-control" id="first-section-textarea"
-								name="firstSectionContent" rows="5">{{ $page->primary_editor }}</textarea>
+								name="primaryEditor" rows="5">{{ $page->primary_editor }}</textarea>
 						</div>
 
 						<div class="form-group">
@@ -349,23 +352,23 @@
 								<div class="d-flex mb-1">
 									<div class="custom-control custom-radio custom-control-inline">
 										<input id="second-section-default" class="custom-control-input"
-											type="radio" name="secondSection" value="0"
+											type="radio" name="secondaryContent" value="0"
 											{{ $statuses->secondary_editor->content == 0 ? " checked" : "" }}/>
 										<label class="custom-control-label" for="second-section-default">Default</label>
 									</div>
 									<div class="custom-control custom-radio custom-control-inline">
 										<input type="radio" id="second-section-custom"
-											name="secondSection" class="custom-control-input" value="1"
+											name="secondaryContent" class="custom-control-input" value="1"
 											{{ $statuses->secondary_editor->content == 1 ? " checked" : "" }}>
 										<label class="custom-control-label" for="second-section-custom">Custom</label>
 									</div>
-									<input type="checkbox" id="second-section-switch" data-switch="bool" name="secondSectionStatus"
+									<input type="checkbox" id="second-section-switch" data-switch="bool" name="secondaryContentStatus"
 										{{ $statuses->secondary_editor->status == 1 ? " checked" : ""}}/>
 									<label class="mb-0" for="second-section-switch" data-on-label="On" data-off-label="Off"></label>
 								</div>
 							</div>
 							<textarea class="form-control" id="second-section-textarea"
-								name="secondSectionContent" rows="5">{{ $page->secondary_editor }}</textarea>
+								name="secondaryEditor" rows="5">{{ $page->secondary_editor }}</textarea>
 						</div>
 					</form>
 

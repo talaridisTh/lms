@@ -48,33 +48,19 @@ class UtilityController extends Controller
 	public function update(Request $request) {
 
 		$page = Utility::where("title", $request->title)->first();
-		$page->first_section = $request->firstSectionContent;
-		$page->second_section = $request->secondSectionContent;
-		$page->third_section = $request->thirdSectionContent;
-		$page->fourth_section = $request->fourthSectionContent;
-		$page->fifth_section = $request->fifthSectionContent;
+		$page->primary_editor = $request->primaryEditor;
+		$page->secondary_editor = $request->secondaryEditor;
+
 
 		$fields = json_encode([
-			"first_section" => [
-				"status" => isset($request->firstSectionStatus) ? 1 : 0,
-				"content" => $request->firstSection		//! 0 default 1 custom
+			"primary_editor" => [
+				"status" => isset($request->primaryContentStatus) ? 1 : 0,
+				"content" => $request->primaryContent		//! 0 default 1 custom
 			],
-			"second_section" => [
-				"status" => isset($request->secondSectionStatus) ? 1 : 0,
-				"content" => $request->secondSection
+			"secondary_editor" => [
+				"status" => isset($request->secondaryContentStatus) ? 1 : 0,
+				"content" => $request->secondaryContent
 			],
-			"third_section" => [
-				"status" => isset($request->thirdSectionStatus) ? 1 : 0,
-				"content" => $request->thirdSection
-			],
-			"fourth_section" => [
-				"status" => isset($request->fourthSectionStatus) ? 1 : 0,
-				"content" => $request->fourthSection
-			],
-			"fifth_section" => [
-				"status" => isset($request->fifthSectionStatus) ? 1 : 0,
-				"content" => $request->fifthSection
-			]
 		]);
 
 		$page->fields = $fields;
