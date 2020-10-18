@@ -31,6 +31,10 @@ class UtilityController extends Controller
 		
 		$models = [];
 
+		if ( $request->selectedBanners === false ) {
+			return;
+		}
+
 		foreach ( $request->selectedBanners["models"] as $model ) {
 			$namespace = key((array)$model);
 			$id = current((array)$model);

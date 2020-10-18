@@ -27,9 +27,6 @@ utilities.articleConfig.plugins = ['mediaLibrary', 'reorder'];
 
 ArticleEditor("#first-section-textarea", utilities.articleConfig);
 ArticleEditor("#second-section-textarea", utilities.articleConfig);
-ArticleEditor("#third-section-textarea", utilities.articleConfig);
-ArticleEditor("#fourth-section-textarea", utilities.articleConfig);
-ArticleEditor("#fifth-section-textarea", utilities.articleConfig);
 
 //!##########################################
 //!					DataTables				#
@@ -50,14 +47,6 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         {data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false},
     ],
     language: utilities.tableLocale,
-    fnInitComplete: function (oSettings, json) {
-        // let lenthSelection = $("select[name='topics-datatable_length']");
-        // lenthSelection.addClass("select2");
-
-        // lenthSelection.select2({
-        //     minimumResultsForSearch: -1,
-        // });
-    },
     drawCallback: function () {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         $(".js-remove-table-classes > thead > tr > th").removeClass("d-none cursor-pointer js-updated-at js-colspan");
@@ -139,6 +128,29 @@ function addBundleBannerInit() {
 //!##################################################
 //!					EventListeners					#
 //!##################################################
+
+$(".js-carousel-switch").on("change", function() {
+	
+	const bannersData = bannerJsonBuilder();
+
+
+	axios.patch( "/home-content/banners-update", {
+		updatedData: bannersData,
+		selectedBanners: false
+	})
+	.then( res => {
+		if ( this.checked ){
+			utilities.toastAlert("success", "Το Carousel ενεργοποιήθηκε.");
+		}
+		else {
+			utilities.toastAlert("info", "Το Carousel απενεργοποιήθηκε...");
+		}
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+})
 
 $("#save-banners-btn").on("click", function() {
 
@@ -270,7 +282,7 @@ function clearCallouts( container ) {
 function updateBannerData( importance, updatedData, selectedBanners ) {
 
 	axios.patch( "/home-content/banners-update", {
-		importance, updatedData, selectedBanners
+		updatedData, selectedBanners
 	})
 	.then( res => {
 		$(`#${importance}-banners-row`).html(res.data);
@@ -410,7 +422,7 @@ function setDefaultBanners( importance ) {
 
 }
 
-function bannerJsonBuilder( editedSection, selected ) {
+function bannerJsonBuilder( editedSection = false, selected = false ) {
 
 	const bannerCnt = document.getElementsByClassName("js-banner-cnt");
 	let data = {}, namespace, id, section, banner,

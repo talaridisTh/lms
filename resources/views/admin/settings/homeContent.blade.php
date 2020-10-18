@@ -30,8 +30,8 @@
 									<select id="type-select" data-toggle="select2"
 										class="select2 form-control"
 										data-minimum-results-for-search="-1">
-										<option value="materials" selected>Μαθήματα</option>
-										<option value="courses">Courses</option>
+										<option value="courses" selected>Courses</option>
+										<option value="materials">Μαθήματα</option>
 										<option value="bundles">Bundles</option>
 									</select>
 								</div>
@@ -41,26 +41,6 @@
 
 					<div class="row">
 						<div class="col-md-6">
-
-							<div id="materials-card" class="js-category-table-cnt card h-100">
-								<div class="card-body">
-									<table id="materials-datatable" class="table w-100 js-remove-table-classes">
-										<thead>
-											<tr>
-												<th class="text-center">Τίτλος</th>
-												<th class="text-center w-5"></th>
-											</tr>
-										</thead>
-										<tbody class="tables-hover-effect"></tbody>
-										<tfoot>
-											<tr>
-												<th class="text-center">Τίτλος</th>
-												<th class="text-center"></th>
-											</tr>
-										</tfoot>
-									</table>
-								</div>
-							</div>
 
 							<div id="courses-card" class="js-category-table-cnt card h-100 d-none">
 								<div class="card-body">
@@ -103,7 +83,29 @@
 									</table>
 								</div>
 							</div>
+
+							<div id="materials-card" class="js-category-table-cnt card h-100">
+								<div class="card-body">
+									<table id="materials-datatable" class="table w-100 js-remove-table-classes">
+										<thead>
+											<tr>
+												<th class="text-center">Τίτλος</th>
+												<th class="text-center w-5"></th>
+											</tr>
+										</thead>
+										<tbody class="tables-hover-effect"></tbody>
+										<tfoot>
+											<tr>
+												<th class="text-center">Τίτλος</th>
+												<th class="text-center"></th>
+											</tr>
+										</tfoot>
+									</table>
+								</div>
+							</div>
+							
 						</div><!-- ./left col -->
+
 
 						<div class="col-md-6">
 							@foreach ($banners as $section => $values)
@@ -322,7 +324,8 @@
 					<div id="{{ $section }}-content" class="tab-pane{{ $counter === 1 ? " show active" : "" }}">
 						<div class="mb-0 d-flex justify-content-end">
 							<input type="checkbox" id="{{ $section }}-banners-switch" autocomplete="off"
-								{{ $values->status == 1 ? "checked" : ""}} data-switch="bool"/>
+								{{ $values->status == 1 ? "checked" : ""}}
+								class="js-carousel-switch" data-switch="bool"/>
 							<label for="{{ $section }}-banners-switch" data-on-label="On" data-off-label="Off"></label>
 						</div>
 						<div id="{{ $section }}-banners-row" class="js-banner-cnt row"
