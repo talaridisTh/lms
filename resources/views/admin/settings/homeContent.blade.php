@@ -295,7 +295,10 @@
 													</div>
 													<div class="card-body">
 														<h5 class="card-title">{{ $model->title }}</h5>
-														<p class="card-text height-65px overflow-y-hidden">{{ $model->subtitle }}</p>
+														<p class="js-overflow-check card-text height-65px overflow-y-hidden mb-0">{{ $model->subtitle }}</p>
+														<div class="d-flex justify-content-end mt-1 mb-2">
+															<a href="#" class="js-show-more invisible custom-muted font-weight-700">Περισσότερα...</a>
+														</div>
 														<a href="/dashboard/{{ $modelType }}/{{ $model->slug }}"
 															class="custom-link-primary mr-3" target="_blank">Edit</a>
 														<a href="{{ $previewURL }}" class="custom-link-primary" target="_blank">View</a>

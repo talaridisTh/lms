@@ -287,6 +287,8 @@ function updateBannerData( importance, updatedData, selectedBanners ) {
 	.then( res => {
 		$(`#${importance}-banners-row`).html(res.data);
 		$("#edit-banners-modal").modal("hide");
+		showOverflowBtn();
+		overflowBtnInit();
 		utilities.toastAlert("success", "Τα Banners άλλαξαν.")
 	})
 	.catch( err => {
@@ -298,6 +300,19 @@ function updateBannerData( importance, updatedData, selectedBanners ) {
 //!###########################################
 //!					Eventhandlers			 #
 //!###########################################
+
+function showMoreBtnHandler() {
+	const container = this.findParent(2);
+	const subtitle = container.getElementsByClassName("js-overflow-check")[0];
+	subtitle.classList.toggle("height-auto");
+	
+	if ( subtitle.classList.contains("height-auto") ) {
+			this.textContent = "Λιγότερα...";
+	}
+	else {
+		this.textContent = "Περισσότερα...";
+	}
+}
 
 function removeNewlySelectedHandler() {
 
@@ -457,4 +472,33 @@ function bannerJsonBuilder( editedSection = false, selected = false ) {
 
 	return data
 
+}
+
+function showOverflowBtn() {
+	const subText = document.getElementsByClassName("js-overflow-check");
+	let button = "";
+	
+	for ( let i = 0; i < subText.length; i++ ) {
+		if ( overflowCheck(subText[i]) ){
+			button = subText[i].parentElement.getElementsByClassName("js-show-more")[0];
+			
+			button.classList.remove("invisible");
+		}
+	}
+};
+showOverflowBtn();
+
+function overflowBtnInit() {
+
+	const button = $(".js-show-more");
+
+	button.off("click", showMoreBtnHandler);
+	button.on("click", showMoreBtnHandler );
+
+};
+overflowBtnInit();
+
+
+function overflowCheck(element) {
+	return element.scrollHeight > element.clientHeight;
 }

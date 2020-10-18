@@ -3713,11 +3713,19 @@ figure > img {
 }
 
 .height-65px {
-  height: 65px !important;
+  height: 65px;
 }
 
 .overflow-y-hidden {
   overflow-y: hidden;
+}
+
+.height-auto {
+  height: auto !important;
+}
+
+.font-weight-700 {
+  font-weight: 700;
 }
 
 /*
