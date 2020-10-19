@@ -58,7 +58,7 @@
 								</strong>
 							</small>
 						</p>
-						
+
                     </div>
                 </div>
             </div>
@@ -280,7 +280,7 @@
                                 @include('components/admin/modelGallery', ["gallery" => $gallery])
                             </div>
 							<input id="material-img-upload" class="js-filepond-file-dragging mb-0" type="text">
-							
+
 						</div>
 						<p class="text-right mb-2">
 							<small>
@@ -352,12 +352,17 @@
                                 </div>
                                 <hr>
 
+
+
+
                                 <div class="form-group mb-3 wrapper-video">
                                     <label for="urlMaterial">URL video</label>
                                     <input   form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
                                         id="urlMaterial" placeholder="vimeo-id" value="{{ old('video_link') != "" ? old('video_link')
 												: ( isset($material) ? $material->video_link : "" ) }}"  />
-                                    <span class="font-16" >https://vimeo.com/</span>
+                                    <div class="input-group-prepend">
+                                        <span style="top: 29px ; left: 0" class="input-group-text px-1 " id="basic-addon1">https://vimeo.com/</span>
+                                    </div>
 
                                 </div>
                                 <hr>
