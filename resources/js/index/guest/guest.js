@@ -1,3 +1,7 @@
+
+
+
+
 import utilities from '../../index/main';
 
 let instructors = document.querySelectorAll(".js-instructor-link");

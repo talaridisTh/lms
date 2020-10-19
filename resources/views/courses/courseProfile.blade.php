@@ -258,9 +258,10 @@
                                         <div class="card-header d-flex align-center mt-2  head-section"
                                              id="{{$materials->slug}}-head">
                                             <h5 class="w-100 m-0 d-flex align-center">
-                                                <span class="section-name"
+                                                <span class="section-name d-flex align-items-center"
                                                       class="mr-2">Ενότητα {{$key -$count+1 }} :</span>
-                                                {{$materials->title}}
+                                                <span class="d-flex align-items-center"> {{$materials->title}}</span>
+
                                             </h5>
                                             <i class="mdi mdi-chevron-down accordion-arrow"></i>
                                         </div>

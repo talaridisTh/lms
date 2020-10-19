@@ -1,3 +1,6 @@
+
+
+
 Element.prototype.findParent = function (loops) {
     let parent = this;
 
@@ -457,13 +460,13 @@ function changeCoverRequest(namespace, id, url) {
             .then(res => {
 				let img = $("#cover-image")[0];
 				let removeBtnCnt = $("#remove-cover-btn").parent();
-				
+
 				img.src = `${baseUrl}/${url}`;
 				img.classList.remove("d-none");
 
 				$("#change-cover-btn").text("Αλλαγή");
 				$("#cover-status").addClass("d-none");
-				
+
 				removeBtnCnt.removeClass("d-none");
 				removeBtnCnt.addClass("d-flex");
 
@@ -535,10 +538,10 @@ function removeImages( ids ) {
 		namespace, modelId, ids
 	})
 	.then( res => {
-		
+
 		let gallery = $("#gallery-cnt");
 		gallery.html(res.data);
-		
+
 		let closeBtns = gallery.find(".js-remove-image");
 		closeBtns.on("click", removeImageHandler);
 

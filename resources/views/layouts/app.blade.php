@@ -231,7 +231,7 @@
 
         </div>
     </div>
-    <hr class="border" style="opacity: 0.4">
+    <hr class="border mt-2" style="opacity: 0.4;" >
     <div class="container-fluid  mb-2" style="max-width: 1705px;">
         <div class="row align-items-center">
             <div class="col-md-4 text-left">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>

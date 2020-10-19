@@ -194,7 +194,7 @@
                             @endphp
 
                             <div class="col-md-6 col-lg-4">
-                                <!-- Simple card -->
+                                <!-- Simple card -->opacity: 0.4
                                 <div class="card card-shadow d-block">
                                     <img class="card-img-top" src="{{$model->cover}}" alt="Card image cap">
                                     <div class="card-body">
