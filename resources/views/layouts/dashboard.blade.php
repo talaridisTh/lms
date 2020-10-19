@@ -183,15 +183,9 @@
 									</div>
 
 									<!-- item-->
-									<a href="javascript:void(0);" class="dropdown-item notify-item">
+									<a href="/dashboard/users/{{ Auth::user()->slug }}" class="dropdown-item notify-item">
 										<i class="mdi mdi-account-circle mr-1"></i>
 										<span>My Account</span>
-									</a>
-
-									<!-- item-->
-									<a href="javascript:void(0);" class="dropdown-item notify-item">
-										<i class="mdi mdi-account-edit mr-1"></i>
-										<span>Settings</span>
 									</a>
 
 									<!-- item-->

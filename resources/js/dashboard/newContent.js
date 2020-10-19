@@ -187,7 +187,8 @@ ArticleEditor('#description', {
 
 FilePond.setOptions({
     name: 'file[]',
-    allowMultiple: true,
+	allowMultiple: true,
+	labelIdle: "Drag & Drop your files or Browse"
 });
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
@@ -209,3 +210,25 @@ const pond = FilePond.create( dropzone, {
 	},
 	acceptedFileTypes: ['image/png', 'image/jpeg'],
 } );
+
+const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
+for ( let i = 0; i < dropArea.length; i++ ) {
+
+	dropArea[i].addEventListener("dragover", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+			draggingArea.classList.add("limegreen");
+			label.classList.add("text-limegreen");
+
+	});
+
+	dropArea[i].addEventListener("dragleave", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+			draggingArea.classList.remove("limegreen");
+			label.classList.remove("text-limegreen");
+
+	});
+}

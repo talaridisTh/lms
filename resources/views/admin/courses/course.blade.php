@@ -174,7 +174,7 @@
 
 						<div id="upload" class="tab-pane">
 
-							<input id="file-pond" class="mb-0" type="file[]"/>
+							<input id="file-pond" class="js-filepond-file-dragging mb-0" type="file[]"/>
 							<p class="text-right mb-2">
 								<small>
 									<strong>
@@ -531,7 +531,7 @@
 									</div>
 
 									<!-- FilePond -->
-									<input id="course-file-upload" class="mb-0" type="text">
+									<input id="course-file-upload" class="js-filepond-file-dragging mb-0" type="text">
                             	</div>
 								<p class="text-right mb-2">
 									<small>

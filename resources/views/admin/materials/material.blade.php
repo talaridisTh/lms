@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div id="upload" class="tab-pane">
-						<input id="file-pond" class="mb-0" type="file[]" />
+						<input id="file-pond" class="js-filepond-file-dragging mb-0" type="file[]" />
 						<p class="text-right mb-2">
 							<small>
 								<strong>
@@ -279,7 +279,7 @@
                                 data-model-id="{{ $material->id }}">
                                 @include('components/admin/modelGallery', ["gallery" => $gallery])
                             </div>
-							<input id="material-img-upload" class="mb-0" type="text">
+							<input id="material-img-upload" class="js-filepond-file-dragging mb-0" type="text">
 							
 						</div>
 						<p class="text-right mb-2">
@@ -308,7 +308,7 @@
                             <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
                                 @include('components/admin/filesTable', ["files" => $files])
                             </div>
-                            <input id="material-file-upload" class="mb-0" type="text">
+                            <input id="material-file-upload" class="js-filepond-file-dragging mb-0" type="text">
 						</div>
 						<p class="text-right mb-3">
 							<small>

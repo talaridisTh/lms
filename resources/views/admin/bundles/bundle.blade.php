@@ -122,7 +122,7 @@
 
 							<div id="upload" class="tab-pane">
 
-								<input id="file-pond" class="mb-0" type="file[]"/>
+								<input id="file-pond" class="js-filepond-file-dragging mb-0" type="file[]"/>
 								<p class="text-right mb-2">
 									<small>
 										<strong>

@@ -65,7 +65,7 @@
 
 						<div id="upload" class="tab-pane">
 
-							<input id="file-pond" type="file[]"/>
+							<input id="file-pond" class="js-filepond-file-dragging" type="file[]"/>
 
 						</div>
 					</div>

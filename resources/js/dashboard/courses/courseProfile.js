@@ -2486,7 +2486,6 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 });
 
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
-
 for ( let i = 0; i < dropArea.length; i++ ) {
 
 	dropArea[i].addEventListener("dragover", function(event) {
