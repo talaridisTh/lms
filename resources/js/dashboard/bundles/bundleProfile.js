@@ -888,4 +888,13 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 		label.classList.remove("text-limegreen");
 
 	});
+
+	dropArea[i].addEventListener("mouseleave", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+		draggingArea.classList.remove("limegreen");
+		label.classList.remove("text-limegreen");
+
+	});
 }

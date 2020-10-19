@@ -39,7 +39,7 @@ class MaterialFactory extends Factory
         return [
             'title' => "Title of ". $type ." ". $counter ,
 			'subtitle' => "Subtitle of ". $type ." ". $counter ,
-			'cover' => "http://placeimg.com/1600/900/any",
+			'cover' => "http://placeimg.com/1600/700/any",
 			'description' => "Description of Lesson ".$counter ,
 			'content' => "Content of Lesson ".$counter++ ,
 			'status' => rand( 0, 1 ),

@@ -96,13 +96,13 @@
 						</li>
 						<li class="side-nav-item">
 							<a href="/dashboard/courses" class="side-nav-link">
-								<i class="mdi mdi-label-multiple"></i>
+								<i class="uil uil-books"></i>
 								<span>Courses</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
 							<a href="/dashboard/bundles" class="side-nav-link">
-								<i class="mdi mdi-package-variant"></i>
+								<i class="mdi mdi-chart-bubble"></i>
 								<span>Bundles</span>
 							</a>
 						</li>
@@ -116,7 +116,7 @@
 
                         <li class="side-nav-item">
                             <a href="{{route('media.index')}}" class="side-nav-link">
-                                <i class="mdi mdi-chart-bubble"></i>
+                                <i class="mdi mdi-package-variant"></i>
                                 <span>File Manager</span>
                             </a>
                         </li>

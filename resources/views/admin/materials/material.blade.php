@@ -313,7 +313,7 @@
 						<p class="text-right mb-3">
 							<small>
 								<strong>
-									Το πεδίο δέχεται αρχεία: .doc, .odt, .rtf, .xls, .odp, .zip, .mp3, .pdf.
+									Το πεδίο δέχεται αρχεία: .doc, .odt, .rtf, .xls, .odp, .zip, .rar., .mp3, .pdf, .ev3, .sb3, .html.
 								</strong>
 							</small>
 						</p>

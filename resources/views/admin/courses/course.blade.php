@@ -244,7 +244,7 @@
 						<div class="col-4">
 							<div class="card cursor-pointer js-material" data-type="Video">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-filmstrip	display-3"></i>
+									<i class="uil uil-film	display-3"></i>
 									<h5 class="card-title mt-2">Video</h5>
 								</div>
 							</div>
@@ -536,7 +536,7 @@
 								<p class="text-right mb-2">
 									<small>
 										<strong>
-											Το πεδίο δέχεται αρχεία: .doc, .odt, .rtf, .xls, .odp, .zip, .mp3, .pdf.
+											Το πεδίο δέχεται αρχεία: .doc, .odt, .rtf, .xls, .odp, .zip, .rar., .mp3, .pdf, .ev3, .sb3, .html.
 										</strong>
 									</small>
 								</p>

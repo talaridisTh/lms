@@ -2480,8 +2480,40 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 		"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
 		"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
 		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
-		"application/rtf", "application/vnd.oasis.opendocument.graphics"
+		"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
 	],
+	fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
+		
+		const allowed = [
+			"application/octet-stream", "application/x-zip-compressed", "application/pdf",
+			"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+			"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+			"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+			"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+			"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+			"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+			"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+			"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+			"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+			"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+			"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+			"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
+		];
+
+		// Do custom type detection here and return with promise
+		const extension = source.name.split(".").pop();
+
+		if ( allowed.includes(type) ) {
+			resolve(type);
+		}
+		else if (extension === "ev3" || extension === "rar" || extension === "sb3") {
+			type = "application/octet-stream";
+			resolve(type);
+		}
+
+		reject(type);
+    }),
 	maxFileSize: "50MB"
 });
 
@@ -2498,6 +2530,15 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 	});
 
 	dropArea[i].addEventListener("dragleave", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+			draggingArea.classList.remove("limegreen");
+			label.classList.remove("text-limegreen");
+
+	});
+
+	dropArea[i].addEventListener("mouseleave", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 
