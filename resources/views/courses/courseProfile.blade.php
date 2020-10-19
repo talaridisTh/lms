@@ -8,12 +8,17 @@
     //background
         $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";
 
-
-
     //count Material
         $countMaterial= $allMaterial->where("type","Lesson")->count()+
         $allMaterial->where("type","Section")->map(function ($chapter){
-            return count($chapter->chapters->where("type","Lesson"));
+           $countSingleChapter =  $chapter->chapters->map(function($singleChapter){
+                  if($singleChapter->getOriginal('pivot_status')==1){
+                        return $singleChapter;
+                  }
+            })->reject(function ($name) {
+                return empty($name);
+            });
+            return count($countSingleChapter->where("type","Lesson"));
         })->first();
         $textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
 
@@ -21,14 +26,16 @@
     //count extra
         $countExtra= $allMaterial->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
         $allMaterial->where("type","Section")->map(function ($chapter){
-            return count($chapter->chapters->where("type","!=","Lesson")->where("type","!=","Announcement"));
+              $countSingleExtraChapter =  $chapter->chapters->map(function($singleExtraChapter){
+                  if($singleExtraChapter->getOriginal('pivot_status')==1){
+                        return $singleExtraChapter;
+                  }
+            })->reject(function ($name) {
+                return empty($name);
+            });
+            return count($countSingleExtraChapter->where("type","!=","Lesson")->where("type","!=","Announcement"));
         })->first();
         $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
-
-
-
-
-
 
 
 @endphp
@@ -110,21 +117,21 @@
                                     <span>Η τελευταία προσθήκη</span>
                                     @if(count($allMaterial))
                                         @if(!$lastMaterial)
-                                        <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>
+                                            <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>
                                         @endif
 
                                 </div>
                                 <div class="box-button-subtitle text-light text-center">
                                     @if(!$lastMaterial)
-                                    <p class="font-16">{{$lastMaterial->last()->title}}</p>
-                                    <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
+                                        <p class="font-16">{{$lastMaterial->last()->title}}</p>
+                                        <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
 
-                                    <a class="text-white"
-                                       href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
-                                        <button class="bghover color-topic-second  border  btn btn-secontary ">
-                                            Δες το μάθημα
-                                        </button>
-                                    </a>
+                                        <a class="text-white"
+                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
+                                            <button class="bghover color-topic-second  border  btn btn-secontary ">
+                                                Δες το μάθημα
+                                            </button>
+                                        </a>
                                     @endif
                                     @endif
                                 </div>
@@ -133,17 +140,17 @@
                     </div>
                 </div>
             </div> <!-- end row top banner -->
-            {{--//---------to ekana sxolio na t ftiaksw //--}}
-            {{--            <div class="row p-2 box-material-down  color-topic-second" style="background:{{$bgColor}}">--}}
-            {{--                <div--}}
-            {{--                    class="col-md-12 col-xl-4 px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">--}}
-            {{--                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>--}}
-            {{--                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textExtra}}  </span>--}}
-            {{--                    @foreach($topics as $topic)--}}
-            {{--                        <span class="topic-title  border px-2">{{$topic}}</span>--}}
-            {{--                    @endforeach--}}
-            {{--                </div>--}}
-            {{--            </div>--}}
+
+            <div class="row p-2 box-material-down  color-topic-second" style="background:{{$bgColor}}">
+                <div
+                    class="col-md-12 col-xl-4 px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>
+                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textExtra}}  </span>
+                    @foreach($topics as $topic)
+                        <span class="topic-title  border px-2">{{$topic}}</span>
+                    @endforeach
+                </div>
+            </div>
 
         </div> <!-- end container banner -->
 
@@ -267,7 +274,7 @@
                                          data-parent="#{{$materials->slug}}">
                                         <div class="p-0 card-body">
                                             <ul class="section-list p-0" data-course-id="{{$course->id}}"
-                                               class="my-2 p-0"><!-- list chapter -->
+                                                class="my-2 p-0"><!-- list chapter -->
 
                                                 @foreach($materials->chapters->where("type", "!=", "Announcement") as $chapter)  {{--foreach gia na bri ta chapter--}}
 

@@ -352,9 +352,6 @@
                                 </div>
                                 <hr>
 
-
-
-
                                 <div class="form-group mb-3 wrapper-video">
                                     <label for="urlMaterial">URL video</label>
                                     <input   form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
