@@ -8,6 +8,7 @@ use App\Material;
 use App\Role;
 use App\Topic;
 use App\User;
+use App\Utility;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -26,7 +27,15 @@ class HomeController extends Controller {
     public function index(Material $material)
     {
 
-        return view('home', compact($material));
+
+       $arrayBanners = get_object_vars( json_decode(Utility::first()->banners));
+
+           $bannersPrimary =$arrayBanners["primary"]->models;
+            $bannersSecondary =$arrayBanners["secondary"]->models;
+
+
+
+        return view('home', compact('material',"bannersPrimary","bannersSecondary","arrayBanners"));
     }
 
     public function createLink()

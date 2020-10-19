@@ -79,7 +79,7 @@
             <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2 px-lg-2 px-xl-5"
                  style="background:{{$bgColor}}"> <!-- row top banner -->
                 <div class="col-md-12">
-                    <div class="row align-items-center text-center ">
+                    <div class="row align-items-center text-center  ">
 
 
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
@@ -109,34 +109,31 @@
                                 </button>
                             </div>
                         </div>
+{{--                        <div class="col-md-12 mt-md-2 col-lg-4 col-xl-3">--}}
+{{--                            <div class="box-last-material p-2 color-topic-second ">--}}
+{{--                                <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>--}}
+{{--                                <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">--}}
+{{--                                    <span>Η τελευταία προσθήκη</span>--}}
+{{--                                    @if(count($allMaterial))--}}
 
-                        <div class="col-md-12 mt-md-2 col-lg-4 col-xl-3">
-                            <div class="box-last-material p-2 color-topic-second ">
-                                <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>
-                                <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">
-                                    <span>Η τελευταία προσθήκη</span>
-                                    @if(count($allMaterial))
-                                        @if(!$lastMaterial)
-                                            <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>
-                                        @endif
+{{--                                        <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>--}}
 
-                                </div>
-                                <div class="box-button-subtitle text-light text-center">
-                                    @if(!$lastMaterial)
-                                        <p class="font-16">{{$lastMaterial->last()->title}}</p>
-                                        <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>
 
-                                        <a class="text-white"
-                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">
-                                            <button class="bghover color-topic-second  border  btn btn-secontary ">
-                                                Δες το μάθημα
-                                            </button>
-                                        </a>
-                                    @endif
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
+{{--                                </div>--}}
+{{--                                <div class="box-button-subtitle text-light text-center">--}}
+{{--                                        <p class="font-16">{{$lastMaterial->last()->title}}</p>--}}
+{{--                                        <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>--}}
+
+{{--                                        <a class="text-white"--}}
+{{--                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">--}}
+{{--                                            <button class="bghover color-topic-second  border  btn btn-secontary ">--}}
+{{--                                                Δες το μάθημα--}}
+{{--                                            </button>--}}
+{{--                                        </a>--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
                     </div>
                 </div>
             </div> <!-- end row top banner -->

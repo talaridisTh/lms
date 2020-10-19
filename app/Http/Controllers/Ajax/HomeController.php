@@ -76,7 +76,6 @@ class HomeController extends Controller {
             $material = Material::findOrFail($data["material"]);
             $course->materials->where("id",$material->id)->first()->pivot->update(["status" => 1]);
 
-            max-width: 1440px;
         }
 
 

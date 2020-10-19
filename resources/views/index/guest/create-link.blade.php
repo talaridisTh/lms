@@ -76,7 +76,7 @@
                                                                         <img src="{{$partner->cover}}" height="30" alt="">
                                                                     </div>
                                                                     <div class="media-body ml-2">
-                                                                        <h5 class="mt-0 mb-0 js-instructor-link" data-user-id={{$partner->id}}>
+                                                                        <h5 class="mt-0 mb-0 js-instructor-link"  data-user-slug={{$partner->slug}} data-user-id={{$partner->id}} >
                                                                             {{$partner->fullName}}
                                                                         </h5>
 

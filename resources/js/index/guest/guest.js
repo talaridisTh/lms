@@ -11,7 +11,7 @@ instructors.forEach((instructor, idx) => {
 
         this.findParent(2).classList.add("bg-list")
 
-        axiosGuestCourse(this.dataset.userId)
+        axiosGuestCourse(this.dataset.userId , this.dataset.userSlug)
         axiosInstructor(this.dataset.userId)
 
     })
@@ -31,7 +31,7 @@ const axiosInstructor = async (userId) => {
     }
 }
 
-const axiosGuestCourse = async (userId) => {
+const axiosGuestCourse = async (userId,userSlug) => {
     try {
         const {data, status} = await axios.post("/guest/course", {
             userId
@@ -46,7 +46,7 @@ const axiosGuestCourse = async (userId) => {
 
             onClickInputCourse(inputCourse)
             onClickInputMaterial(inputMaterial)
-            onBtnGuest(btnGuest, userId)
+            onBtnGuest(btnGuest, userId,userSlug)
         }
 
     } catch (e) {
@@ -119,18 +119,18 @@ const axiosMaterialInstructor = async (materialId) => {
 }
 
 
-const onBtnGuest = (btn, userId) => {
+const onBtnGuest = (btn, userId,userSlug) => {
 
     btn.addEventListener("click", () => {
         let checkedCourses = document.querySelectorAll(".input-course:checked");
         let checkedMaterials = document.querySelectorAll(".input-materials:checked");
 
 
-        axiosCreateGuestUser(userId, checkedCourses, checkedMaterials)
+        axiosCreateGuestUser(userId, checkedCourses, checkedMaterials,userSlug)
     })
 }
 
-const axiosCreateGuestUser = async (userId, courses, materials) => {
+const axiosCreateGuestUser = async (userId, courses, materials,userSlug) => {
 
     let courseId  = []
     let materialId  = []
@@ -138,11 +138,15 @@ const axiosCreateGuestUser = async (userId, courses, materials) => {
     courses.forEach(course =>courseId.push(course.dataset.courseId))
     materials.forEach(material =>materialId.push({"material":material.dataset.materialId,"courses":material.dataset.courseId}))
 
-
     try {
         const {status} = await axios.post("/guest/create/guest-user", {
             userId, courseId, materialId
         })
+        if (status===200){
+
+            document.querySelector(".guest-link").innerHTML = `<a href ="${window.location.origin}/guest/temp/link/${userSlug}"> link</a>`
+
+        }
     } catch (e) {
         console.log(e)
     }

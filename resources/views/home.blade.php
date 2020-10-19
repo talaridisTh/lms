@@ -83,7 +83,7 @@
 
         </div>
         {{--row 4 --}}
-        <div class="row mt-9" >
+        <div class="row mt-9">
 
             <div class="col-lg-5 d-none d-lg-block ">
                 <div class="container  text-center  d-flex justify-content-center"
@@ -118,7 +118,7 @@
 
         </div>
         {{--row 5 --}}
-        <div class="row  mt-9" >
+        <div class="row  mt-9">
 
             <div class="col-lg-5  mt d-flex flex-column justify-content-center">
                 <h4 style="" class="h4-custom">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς</h4>
@@ -141,93 +141,79 @@
             </div>
 
         </div>
-        {{--row 6 --}}
-        <div class="row" style="margin-top: 9rem">
-            <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-            <div class="d-flex flex-wrap mt-3">
-                <div class="col-md-6 col-lg-4">
+        {{--       AUTA EDW THA ALLAKSOUN -}}
+                {{--row 6 --}}
+        @if($arrayBanners["primary"]->status==1)
+            <div class="row" style="margin-top: 9rem">
+                <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
+                <div class="d-flex flex-wrap mt-3">
 
-                    <!-- Simple card -->
-                    <div class="card card-shadow d-block">
-                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
-                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
-                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
-                        </div> <!-- end card-body-->
-                    </div> <!-- end card-->
-                </div>
-                <div class="col-md-6 col-lg-4">
+                    @foreach($bannersPrimary as $key => $banner)
 
-                    <!-- Simple card -->
-                    <div class="card card-shadow d-block">
-                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
-                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
-                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
-                        </div> <!-- end card-body-->
-                    </div> <!-- end card-->
-                </div>
-                <div class="col-md-6 col-lg-4">
+                        @php
+                            $bannerArray = (array) $banner;
+                            $bannerValue = key ( $bannerArray);
+                            $bannerKey =array_values ($bannerArray);
+                            $model =   $bannerValue::findOrFail($bannerKey)->first();
+                        @endphp
 
-                    <!-- Simple card -->
-                    <div class="card card-shadow d-block">
-                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
-                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
-                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
-                        </div> <!-- end card-body-->
-                    </div> <!-- end card-->
+                        <div class="col-md-6 col-lg-4">
+                            <!-- Simple card -->
+                            <div class="card card-shadow d-block">
+                                <img class="card-img-top" src="{{$model->cover}}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title blue-title d-flex flex-column"><span>{{$model->title}}</span>
+                                        Το πρώτο μου Ρομπότ</h5>
+                                    <p class="card-text span-custom">{{$model->description}}</p>
+                                    <a href="javascript: void(0);"
+                                       class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card-->
+                        </div>
+
+                    @endforeach
+
+
                 </div>
+
             </div>
+        @endif
+            {{--row 7 --}}
 
-        </div>
-        {{--row 7 --}}
-        <div class="row" style="margin-top: 9rem">
-            <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-            <div class="d-flex flex-wrap mt-3">
-                <div class="col-md-6 col-lg-4">
+            @if($arrayBanners["secondary"]->status==1)
+                <div class="row" style="margin-top: 9rem">
+                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
+                    <div class="d-flex flex-wrap mt-3">
+                        @foreach($bannersSecondary as $key => $banner)
 
-                    <!-- Simple card -->
-                    <div class="card card-shadow d-block">
-                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
-                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
-                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
-                        </div> <!-- end card-body-->
-                    </div> <!-- end card-->
+                            @php
+                                $bannerArray = (array) $banner;
+                                $bannerValue = key ( $bannerArray);
+                                $bannerKey =array_values ($bannerArray);
+                                $model =   $bannerValue::findOrFail($bannerKey)->first();
+                            @endphp
+
+                            <div class="col-md-6 col-lg-4">
+                                <!-- Simple card -->
+                                <div class="card card-shadow d-block">
+                                    <img class="card-img-top" src="{{$model->cover}}" alt="Card image cap">
+                                    <div class="card-body">
+                                        <h5 class="card-title blue-title d-flex flex-column">
+                                            <span>{{$model->title}}</span> Το
+                                            πρώτο μου Ρομπότ</h5>
+                                        <p class="card-text span-custom">{{$model->description}}</p>
+                                        <a href="javascript: void(0);"
+                                           class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div>
+
+                        @endforeach
+
+                    </div>
+
                 </div>
-                <div class="col-md-6 col-lg-4">
-
-                    <!-- Simple card -->
-                    <div class="card card-shadow d-block">
-                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
-                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
-                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
-                        </div> <!-- end card-body-->
-                    </div> <!-- end card-->
-                </div>
-                <div class="col-md-6 col-lg-4">
-
-                    <!-- Simple card -->
-                    <div class="card card-shadow d-block">
-                        <img class="card-img-top" src="assets/images/small/small-1.jpg" alt="Card image cap">
-                        <div class="card-body">
-                            <h5 class="card-title blue-title d-flex flex-column"><span>Μάθημα 1.</span> Το πρώτο μου Ρομπότ</h5>
-                            <p class="card-text span-custom ">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie. Mauris malesuada nisi sit amet augue accumsan tincidunt. </p>
-                            <a href="javascript: void(0);" class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
-                        </div> <!-- end card-body-->
-                    </div> <!-- end card-->
-                </div>
-            </div>
-
-        </div>
-
+            @endif
 
     </div>
 @endsection

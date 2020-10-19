@@ -248,8 +248,7 @@ Route::post("/guest/create/guest-user", "Ajax\HomeController@createGuestUser")->
 
 
 
-Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("guest.tempLink");
-
+Route::get("/guest/temp/link/{id}", "Ajax\HomeController@tempLink")->name("guest.tempLink");
 
 
 //!######################################################
