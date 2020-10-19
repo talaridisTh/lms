@@ -100,69 +100,79 @@
 					<tbody>
 
 						@forelse ($section->chapters()->orderBy("priority")->get() as $material)
-						<tr class="js-accordion-row row-hover" data-material-id="{{ $material->id }}"
-							data-priority="{{ $material->pivot->priority }}">
-							<td class="position-relative text-center align-middle ">
-								<div class='icheck-primary d-inline'>
-									<input id='{{ $material->slug }}-chapter-checkbox'
-										class="js-chapter-checkbox" type='checkbox'
-										data-material-id="{{ $material->id }}" autocomplete='off'>
-									<label for='{{ $material->slug }}-chapter-checkbox'></label>
-								</div>
 
-								<a class='custom-primary add-material' href='#' data-section-id="{{ $section->id }}"
-									data-priority='{{ $material->pivot->priority }}' data-toggle='modal'
-									data-target='#sections-additions-modal'>
-									<i class='mdi mdi-plus-circle-outline mr-1'></i>
-								</a>
-							</td>
+							@php
+								if ( $material->status == 1 ) {
+									$badge = "";
+								}
+								else {
+									$badge = "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
+								}
+							@endphp
 
-							<td>
-								<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>
-								<p class='overflow-ellipsis mb-1' title="{{ $material->slug }}" style="max-width: 400px;">{{ $material->slug }}</p>
-								<a href='/dashboard/material/{{ $material->slug }}' class='custom-link-primary'>Edit</a>
-								<span class='mx-2'>|</span>
-								<a href='#' class='custom-link-primary'>View</a>
-							</td>
-							<td class="align-middle text-center">
-								@php
-									$status = $material->pivot->status == 0 ? "" : "checked";
-								@endphp
+							<tr class="js-accordion-row row-hover" data-material-id="{{ $material->id }}"
+								data-priority="{{ $material->pivot->priority }}">
+								<td class="position-relative text-center align-middle ">
+									<div class='icheck-primary d-inline'>
+										<input id='{{ $material->slug }}-chapter-checkbox'
+											class="js-chapter-checkbox" type='checkbox'
+											data-material-id="{{ $material->id }}" autocomplete='off'>
+										<label for='{{ $material->slug }}-chapter-checkbox'></label>
+									</div>
 
-								<input id='{{ $material->slug }}-toggle-checkbox' data-section-id="{{ $section->id }}"
-									class="js-chapter-toggle" data-material-id='{{ $material->id }}'
-									type='checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
-								<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
-							</td>
-							<td class="align-middle text-center">
-								<div class='form-group mb-0'>
-									<input type='text' class='js-chapter-priority form-control text-center'
-										data-material-id='{{ $material->id }}' data-section-id="{{ $section->id }}"
-										data-current-priority="{{ $material->pivot->priority }}"
-										value="{{ $material->pivot->priority }}" autocomplete='off'>
-								</div>
-							</td>
-							<td class="align-middle text-center">{{ $material->type}}</td>
-							<td class="text-center align-middle">
-								@php
-									if ( !is_null($material->updated_at) ) {
-										$date = date_create($material->updated_at);
-										$dayMonthYear = date_format($date, "d-m-Y");
-										$hour = date_format($date, "H:i");
-									}
-									else {
-										$dayMonthYear ="";
-										$hour ="";
-									}
-								@endphp
-								<p class='js-date mb-0 mt-1'>{{ $dayMonthYear }}</p>
-								<p class='js-time mb-0'>{{ $hour }}</p>
-							</td>
-							<td class="align-middle text-center">
-								<i class="js-remove-chapter h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
-									data-material-id="{{ $material->id }}"></i>
-							</td>
-						</tr>
+									<a class='custom-primary add-material' href='#' data-section-id="{{ $section->id }}"
+										data-priority='{{ $material->pivot->priority }}' data-toggle='modal'
+										data-target='#sections-additions-modal'>
+										<i class='mdi mdi-plus-circle-outline mr-1'></i>
+									</a>
+								</td>
+
+								<td>
+									<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>{!! $badge !!}
+									<p class='overflow-ellipsis mb-1' title="{{ $material->slug }}" style="max-width: 400px;">{{ $material->slug }}</p>
+									<a href='/dashboard/material/{{ $material->slug }}' class='custom-link-primary'>Edit</a>
+									<span class='mx-2'>|</span>
+									<a href='#' class='custom-link-primary'>View</a>
+								</td>
+								<td class="align-middle text-center">
+									@php
+										$status = $material->pivot->status == 0 ? "" : "checked";
+									@endphp
+
+									<input id='{{ $material->slug }}-toggle-checkbox' data-section-id="{{ $section->id }}"
+										class="js-chapter-toggle" data-material-id='{{ $material->id }}'
+										type='checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
+									<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
+								</td>
+								<td class="align-middle text-center">
+									<div class='form-group mb-0'>
+										<input type='text' class='js-chapter-priority form-control text-center'
+											data-material-id='{{ $material->id }}' data-section-id="{{ $section->id }}"
+											data-current-priority="{{ $material->pivot->priority }}"
+											value="{{ $material->pivot->priority }}" autocomplete='off'>
+									</div>
+								</td>
+								<td class="align-middle text-center">{{ $material->type}}</td>
+								<td class="text-center align-middle">
+									@php
+										if ( !is_null($material->updated_at) ) {
+											$date = date_create($material->updated_at);
+											$dayMonthYear = date_format($date, "d-m-Y");
+											$hour = date_format($date, "H:i");
+										}
+										else {
+											$dayMonthYear ="";
+											$hour ="";
+										}
+									@endphp
+									<p class='js-date mb-0 mt-1'>{{ $dayMonthYear }}</p>
+									<p class='js-time mb-0'>{{ $hour }}</p>
+								</td>
+								<td class="align-middle text-center">
+									<i class="js-remove-chapter h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
+										data-material-id="{{ $material->id }}"></i>
+								</td>
+							</tr>
 						@empty
 							<td colspan="6" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
 						@endforelse

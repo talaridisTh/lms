@@ -56,7 +56,14 @@ class CourseMaterialsDataTable extends DataTable
 
 				if ($data->type != "Section") {
 
-					return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+					if ( $data->status == 1 ) {
+						$badge = "";
+					}
+					else {
+						$badge = "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
+					}
+
+					return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title </a>$badge
 							<p class='mb-1'>$data->slug</p>
 							<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
@@ -64,7 +71,7 @@ class CourseMaterialsDataTable extends DataTable
 
 				}
 				else {
-					return "<h4>$data->title</h4>";
+					return "<h4>$data->title</h4><p class='mb-0'>Σύνολο υλικού: ".$data->chapters()->count()."</p>";
 				}
 
 
