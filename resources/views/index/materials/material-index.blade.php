@@ -346,7 +346,7 @@
                         </div>
                     @endif
 
-                    <ul data-course-id="{{$course->id}}" style="max-height: 800px" class="my-2 p-0">
+                    <ul data-course-id="{{$course->id}}"  class="my-2 p-0">
                         @php
                             $count = 0;
                         @endphp

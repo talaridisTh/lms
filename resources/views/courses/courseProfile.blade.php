@@ -267,7 +267,7 @@
                                          data-parent="#{{$materials->slug}}">
                                         <div class="p-0 card-body">
                                             <ul class="section-list p-0" data-course-id="{{$course->id}}"
-                                                style="max-height: 800px" class="my-2 p-0"><!-- list chapter -->
+                                               class="my-2 p-0"><!-- list chapter -->
 
                                                 @foreach($materials->chapters->where("type", "!=", "Announcement") as $chapter)  {{--foreach gia na bri ta chapter--}}
 
