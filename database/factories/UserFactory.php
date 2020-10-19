@@ -31,7 +31,7 @@ class UserFactory extends Factory
     	$mins = rand(0, 59);
     	$secs = rand(0, 59);
 		$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
-		
+
         return [
             'first_name' => $this->faker->firstName,
         	'last_name' => $this->faker->lastName,
@@ -39,7 +39,7 @@ class UserFactory extends Factory
         	'phone' => 69 . $this->faker->numberBetween(3, 9) . $this->faker->randomNumber(7, false),
         	'profil' => $this->faker->sentence,
         	'cover' => "/images/avatar-placeholder.png",
-        	"slug" => Str::slug($this->faker->firstName, "-"),
+        	"slug" => Str::slug($this->faker->firstName, "-").Str::slug($this->faker->firstName, "-"),
         	'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         	'password_encrypt' => Crypt::encryptString('password'), // password
         	'status' => $this->faker->numberBetween(0, 1),
