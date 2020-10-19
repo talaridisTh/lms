@@ -6,10 +6,12 @@ use App\Course;
 use App\User;
 use App\Bundle;
 use App\Material;
+use App\Role;
 use Carbon\Carbon;
 use DateTime;
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
 class DashboardController extends Controller
@@ -17,7 +19,41 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('admin.overview.overviewMain');
+		$totalLessons = Material::where( function($query) {
+			$query->where("type", "Lesson")
+				->where("status", 1)->get();
+		})->count();
+
+		$totalCourses = Course::all()->count();
+
+		$totalBundles = Bundle::where("status", 1)->count();
+
+		$totalStudents = Role::find(4)->users()->where("status", 1)->count();
+
+		// $topCourses = DB::table("course_user")
+		// 	->join("courses", "course_id", "=", "courses.id")
+		// 	->join("model_has_roles", "course_user.user_id", "=", "model_has_roles.model_id")
+		// 	->where("model_has_roles.role_id", 4)
+		// 	->select(
+		// 		"courses.title",
+		// 		DB::raw('COUNT(model_has_roles.model_id) as students')
+		// 	)
+		// 	->groupBy("courses.title")
+		// 	->orderBy("students", "desc")
+		// 	->limit(5)
+		// 	->get();
+
+		// dd($topCourses);
+
+		$data = [
+			'totalLessons' => $totalLessons,
+			'totalCourses' => $totalCourses,
+			'totalBundles' => $totalBundles,
+			'totalStudents' => $totalStudents,
+		];
+		// dd($totalLessons);
+
+        return view('admin.overview.overviewMain')->with($data);
 	}
 
 	public function dashboardSearch(Request $request) {
