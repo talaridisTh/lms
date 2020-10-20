@@ -7,20 +7,20 @@ import utilities from '../main';
 //!				EventListeners				#
 //!##########################################
 
-$("#new-gradient-checkbox").on("change", function() {
-	let modal = $("#add-topic-modal");
-	let gpicker = modal.find(".gpickr");
-	let gInput = $("#gradient-input");
+// $("#new-gradient-checkbox").on("change", function() {
+// 	let modal = $("#add-topic-modal");
+// 	let gpicker = modal.find(".gpickr");
+// 	let gInput = $("#gradient-input");
 
-	if ( this.checked ) {
-		gpicker.css("display", "inline-flex");
-		gInput.prop("disabled", false);
-	}
-	else {
-		gpicker.css("display", "none");
-		gInput.prop("disabled", true);
-	}
-})
+// 	if ( this.checked ) {
+// 		gpicker.css("display", "inline-flex");
+// 		gInput.prop("disabled", false);
+// 	}
+// 	else {
+// 		gpicker.css("display", "none");
+// 		gInput.prop("disabled", true);
+// 	}
+// })
 
 $("#save-edit-gradient").on( "click", function() {
 	let topicId = $("#topic-id").val();
@@ -38,6 +38,10 @@ $("#save-edit-gradient").on( "click", function() {
 		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 });
+
+$("#add-topic-modal").on("show.bs.modal", function() {
+	gpickr.setGradient("linear-gradient(315deg, #ff4e00 0%, #ec8505 74%)");
+})
 
 $("#color-modal").on("show.bs.modal", function(event) {
 	let button = $(event.relatedTarget);
@@ -301,12 +305,13 @@ function resetBulk(bulkBtn, checkbox) {
 //!##############################################
 
 const gpickr = new GPickr({
-	el: '#new-topic-gradient'
-
+	el: '#new-topic-gradient',
+	stops: []
 })
 
 gpickr.on('change', instance => {
 
+	console.log(instance.getGradient());
 	$("#gradient-input").val( instance.getGradient() )
 
 });

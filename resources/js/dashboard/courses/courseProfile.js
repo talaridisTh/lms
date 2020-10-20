@@ -572,6 +572,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		chapterPriorityInit();
 		multipleChapterActivateInit();
 		multipleChapterDeactivateInit();
+		showSectionBtnInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -738,6 +739,14 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		addFilesBtnInit();
     }
 })
+
+function showSectionBtnInit() {
+
+	$(".js-section").on("click", function() {
+		$("#sections-tab-btn").tab("show");
+		$(`#${this.dataset.slug}-collapse`).collapse("show");
+	})
+}
 
 function multipleChapterDeactivateInit() {
 	// deactivate-chapters
@@ -1537,15 +1546,28 @@ function editChapterBtnHandler() {
 
 function removeMaterialHandler() {
 
-	let id = this.dataset.materialId;
+	const id = this.dataset.materialId;
+	const type = this.dataset.materialType;
+	let text, confirmButtonColor, confirmButtonText;
+
+	if ( type === "Section" ) {
+		text = 'Η ενότητα θα διαγραφεί απο το Course.';
+		confirmButtonColor = '#ff5b5b';
+		confirmButtonText = 'Ναι, διαγραφή!';
+	}
+	else {
+		text = 'Το υλικό θα αφαιρεθεί απο το Course.';
+		confirmButtonColor = '#536de6';
+		confirmButtonText = 'Ναι, αφαίρεση!';
+	}
 
 	Swal.fire({
 		title: "Είστε σίγουρος/η;",
-		text: 'Η ενότητα θα διαγραφεί απο το Course.',
+		text,
 		icon: 'warning',
 		showCancelButton: true,
-		confirmButtonColor: '#ff5b5b',
-		confirmButtonText: 'Ναι, διαγραφή!',
+		confirmButtonColor,
+		confirmButtonText,
 		cancelButtonText: 'Άκυρο'
 	}).then( (result) => {
 

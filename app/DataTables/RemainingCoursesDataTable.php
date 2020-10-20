@@ -22,7 +22,8 @@ class RemainingCoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-			$query = Course::whereNotIn( 'id', 
+			$query = Course::where("status", 1)
+				->whereNotIn( 'id', 
 					function($subquery) use ( $request ){
 						$subquery->select('course_id')
 							->from('bundle_course')

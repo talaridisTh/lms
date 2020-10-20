@@ -24,7 +24,7 @@ class UserFactory extends Factory
      */
     public function definition()
     {
-		$year = rand(2015, 2020);
+		$year = rand(2018, 2020);
     	$month = rand(1, 12);
     	$day = rand(1, 31);
     	$hours = rand(0, 23);

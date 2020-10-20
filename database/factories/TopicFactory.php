@@ -35,7 +35,8 @@ class TopicFactory extends Factory
 
         return [
             'title' => "Topic Title ". $counter++,
-        	'slug' => $this->faker->slug,
+			'slug' => $this->faker->slug,
+			'color' => "linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)",
         	'created_at' => $date->format('Y-m-d H:i:s'),
 			'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
         ];

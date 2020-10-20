@@ -87,11 +87,24 @@ $("#remove-selected-users-btn").on("click", function() {
 	let pickUsers = $(".js-active-user-checkbox:checked");
 	let ids = [];
 
-	for (let i = 0; i < pickUsers.length; i++) {
+	for (var i = 0; i < pickUsers.length; i++) {
 		ids.push(pickUsers[i].dataset.userId);
 	}
 
-	removeUsers(ids);
+	Swal.fire({
+		title: "Είστε σίγουρος/η;",
+		text: `Η ενέργεια θα αφαιρέσει ${i} απο τους χρήστες του Bundle.`,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#536de6',
+		confirmButtonText: 'Ναι, αφαίρεση!',
+		cancelButtonText: 'Άκυρο'
+	}).then( (result) => {
+		if (result.isConfirmed) {
+			removeUsers(ids);
+		}
+	})
+	
 
 });
 
@@ -214,6 +227,7 @@ $('#add-courses-btn').on( "click", function() {
 			ids.push(checkboxes[i].dataset.courseId);
 		}
 		postCourseIds( ids );
+		$("#remaining-courses-modal").modal("hide");
 	}
 });
 
@@ -227,10 +241,23 @@ $('#remove-selected-courses-btn').on( "click", function() {
 		return;
 	}
 	else {
-		for ( let i = 0; i < checkboxes.length; i++ ) {
+		for ( var i = 0; i < checkboxes.length; i++ ) {
 			ids.push( checkboxes[i].dataset.courseId );
 		}
-		removeCourses(ids);
+
+		Swal.fire({
+			title: "Είστε σίγουρος/η;",
+			html: `<p class="mb-0">Η ενέργεια θα αφαιρέσει ${i} Course(s)</p>απο το Bundle.`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#536de6',
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+			if (result.isConfirmed) {
+				removeCourses(ids);
+			}
+		})
 	}
 });
 
@@ -259,8 +286,35 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		{ data: 'curator', name: 'curator', className: "align-middle text-center cursor-default" },
 		{ data: 'topics', name: 'topics', className: "align-middle cursor-default" },
 		{ data: 'version', name: 'version', className: "align-middle text-center cursor-default" },
-		{ data: 'updated_at', name: 'updated_at',  className: "align-middle text-center cursor-default" },
-		{ data: 'created_at', name: 'created_at', className: "align-middle text-center cursor-default" },
+		{
+			data: 'updated_at',
+			name: 'updated_at',
+			className: "align-middle text-center cursor-default",
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
+		{
+			data: 'created_at',
+			name: 'created_at',
+			className: "align-middle text-center cursor-default",
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
+		{ data: 'btns', className: "align-middle text-center", searchable: false, orderable: false }
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -278,6 +332,7 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
 		activeCoursesCheckboxToggle();
+		removeCourseBtnInit();
 		utilities.resetBulk(  $("#courses-bulk"), $("#main-active-courses-checkbox") );
 	},
 
@@ -332,6 +387,28 @@ $("#active-course-type-slt").on( "change", function() {
 });
 
 //! Event Initializers!
+function removeCourseBtnInit() {
+
+	$(".js-remove-course").on("click", function() {
+
+		const id = this.dataset.courseId;
+
+		Swal.fire({
+			title: "Είστε σίγουρος/η;",
+			text: `Η ενέργεια θα αφαιρέσει ένα απο τα Courses.`,
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#536de6',
+			confirmButtonText: 'Ναι, αφαίρεση!',
+			cancelButtonText: 'Άκυρο'
+		}).then( (result) => {
+			if (result.isConfirmed) {
+				removeCourses([id]);
+			}
+		})
+	})
+}
+
 function activeCoursesCheckboxToggle() {
 
 	let mainCheckbox = $('#main-active-courses-checkbox')[0];
@@ -466,6 +543,8 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 function addcourse() {
 	$('.js-add-course-btn').on( "click", function() {
 
+		$('.js-add-course-btn').prop("disabled", true);
+
 		const courseId = [this.dataset.courseId];
 
 		postCourseIds( courseId );
@@ -536,10 +615,11 @@ function postCourseIds( courseIds ) {
 	})
 	.then( (res) => {
 		let message = courseIds.length == 1 ? "1 Course προστέθηκε" : `${courseIds.length} Course προστέθηκαν`;
-		utilities.toastAlert( 'success', message );
-
+		
 		bundleCoursesTable.ajax.reload();
 		remainingCoursesTable.ajax.reload();
+
+		utilities.toastAlert( 'success', message );
 	})
 	.catch( (err) => {
 		console.log(err);
@@ -625,9 +705,9 @@ const remainingUsersTable = $("#remaining-users-table").DataTable({
 function addUserBtnInit() {
 	let addBtn = $(".js-add-user-btn");
 
-	addBtn.off();
 	addBtn.on("click", function() {
 
+		addBtn.prop("disabled", true);
 		addUserBundle( [this.dataset.userId] );
 
 	});

@@ -69,7 +69,7 @@
 									</div>
 								</div>
 							</div>
-							<div id="gallery-content" data-model="App\Course" data-id={{ isset($course) ? $course->id : "" }}>
+							<div id="gallery-content">
 								@include('components.admin.imageGallery', ['media' => $media])
 							</div>
 						</div>
