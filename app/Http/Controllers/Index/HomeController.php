@@ -123,23 +123,8 @@ class HomeController extends Controller {
     public function test()
     {
 
-        $user=User::find(4);
+        dd(auth()->user()->getRoleNames()[0]=="admin");
 
-
-//        dd($user->courses()->materials()->whereIn("id",1));
-
-
-
-
-        foreach ($user->courses()->get() as $course){
-
-
-            $statusCourse = $course->materials->whereIn("id",[4,72]);
-            dd($statusCourse);
-
-//            $statusCourse->pivot->status=0;
-//            $statusCourse->save();
-        }
 //
 
     }

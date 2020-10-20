@@ -16,7 +16,7 @@
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
     <link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style"/>
     <link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style"/>
-{{--//pretty-checkbox/--}}
+    {{--//pretty-checkbox/--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 
 
@@ -36,35 +36,35 @@
         }
 
         .tesst {
-            animation:tesst 5s ease infinite;
+            animation: tesst 5s ease infinite;
             color: red;
             font-size: 25px;
         }
 
         @keyframes tesst {
             0% {
-                transform:scale(1);
+                transform: scale(1);
             }
             5% {
-                transform:scale(1.25);
+                transform: scale(1.25);
             }
             20% {
-                transform:scale(1);
+                transform: scale(1);
             }
             30% {
-                transform:scale(1);
+                transform: scale(1);
             }
             35% {
-                transform:scale(1.25);
+                transform: scale(1.25);
             }
             50% {
-                transform:scale(1);
+                transform: scale(1);
             }
             55% {
-                transform:scale(1.25);
+                transform: scale(1.25);
             }
             70% {
-                transform:scale(1);
+                transform: scale(1);
             }
         }
 
@@ -81,17 +81,29 @@
 
         <div class="row">
             <div class="col-3">
-                <a href="{{route('home')}}" class="topnav-logo">
+
+
+                @if(Auth::check())
+                <a  href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
                 		    <span class=" stopnav-logo-lg">
+
                 		        <img class="m-2" height="60"
                                      src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
                                      alt="">
                 		    </span>
-                    <span class="topnav-logo-sm">
-{{--                		        <img class="m-2" height="100" src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png" alt="" height="33">--}}
-                		    </span>
                 </a>
+                @else
+                    <a  href="{{route('home')}}" class="topnav-logo">
+                		    <span class=" stopnav-logo-lg">
+
+                		        <img class="m-2" height="60"
+                                     src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
+                                     alt="">
+                		    </span>
+                    </a>
+                @endif
             </div>
+
             <div class="topbar-right-menu col-9 d-flex align-items-center justify-content-end h5">
 
                 @if( !Auth::check() )
@@ -106,6 +118,7 @@
                         </a>
                     </div>
                 @else
+                    @unlessrole('guest')
                     @role("admin")
 
                     <div>
@@ -122,7 +135,8 @@
                             </a>
                         @else
                             <a
-                                href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}" class="nav-link">
+                                href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}"
+                                class="nav-link">
                                 <span>Μαθήματα</span>
                             </a>
                         @endif
@@ -176,7 +190,7 @@
                             </div>
                         </div>
                     </div>
-
+                    @endunlessrole
                     <div>
                         <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
                            aria-expanded="false" data-toggle="tooltip" data-original-title="Έξοδος">
@@ -186,6 +200,8 @@
                 @endif
 
             </div>
+
+
         </div>
 
     </div>
@@ -231,17 +247,18 @@
 
         </div>
     </div>
-    <hr class="border mt-2" style="opacity: 0.4;" >
+    <hr class="border mt-2" style="opacity: 0.4;">
     <div class="container-fluid  mb-2" style="max-width: 1705px;">
         <div class="row align-items-center">
             <div class="col-md-4 text-left">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>
             <div class="col-md-4 ">Πολιτική Απορρήτου</div>
 
 
-
-
-            <div class="col-md-4 text-right"><a class="footer-link nav-link text-secondary" target="_blank" href="https://www.darkpony.com">
-                    <span class="mr-1">With</span>  <div class="heart"></div> <span class="ml-1">by DARKPONY</span> </a>
+            <div class="col-md-4 text-right"><a class="footer-link nav-link text-secondary" target="_blank"
+                                                href="https://www.darkpony.com">
+                    <span class="mr-1">With</span>
+                    <div class="heart"></div>
+                    <span class="ml-1">by DARKPONY</span> </a>
             </div>
         </div>
     </div>

@@ -48,6 +48,7 @@
 
     <section class=" d-flex wrapper flex-column">
         <!-- start page title -->
+        @unlessrole('guest')
         <div class=" ml-5 content-width">
             <div class="row">
                 <div class="col-12">
@@ -67,6 +68,7 @@
                 </div>
             </div>
         </div>
+        @endunlessrole
         <!-- end page title -->
         @role("admin")
 
@@ -143,7 +145,7 @@
                                 $hover=  isset($active)? "bg-white" :""
                             @endphp
 
-
+                            @unlessrole('guest')
                             <div class="watchlist  d-flex justify-content-end align-items-center ml-2 "
                                  style=" margin-right: -0.7rem;">
                                 <button
@@ -164,6 +166,7 @@
                                         class="font-16">{{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                                 </button>
                             </div>
+                            @endunlessrole
 
                         </div>
                         <div class="col-md-2 d-flex justify-content-start">

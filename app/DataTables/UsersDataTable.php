@@ -2,11 +2,11 @@
 
 namespace App\DataTables;
 
-use App\Role;
 use App\User;
 use http\Env\Request;
 use Illuminate\Support\Facades\DB;
 use PhpParser\Node\Stmt\DeclareDeclare;
+use Spatie\Permission\Contracts\Role;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Column;
@@ -29,20 +29,24 @@ class UsersDataTable extends DataTable {
         {
 
 
-            $data = User::with(["roles","courses"])->get();
+
+            $data = User::with(["roles", "courses"])->whereHas(
+            'roles', function ($q) {
+            $q->where('name', "!=", 'guest');
+        }
+        )->get();
 
 
 //            $data = User::with("courses")->get();
-
         } else
         {
             $data = User::whereBetween('users.created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
-                ->with(["roles","courses"])->select("users.*");
+                ->with(["roles", "courses"])->select("users.*");
         }
 
         return DataTables::of($data)
             ->addColumn('roles', function (User $user) {
-                return $user->roles->map(function($role) {
+                return $user->roles->map(function ($role) {
                     return $role->name;
                 })->implode(', ');
             })
@@ -54,20 +58,19 @@ class UsersDataTable extends DataTable {
 						</div>";
             })
             ->addColumn('courses', function (User $user) {
-                return $user->courses->map(function($course) {
+                return $user->courses->map(function ($course) {
                     return $course->title;
                 })->implode(', ');
             })
             ->editColumn('status', function ($data) {
-                $status = $data->status == 0 ? "": "checked";
+                $status = $data->status == 0 ? "" : "checked";
 
                 return "<input  class='toggle-class' data-user-checked='$status' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
-
             ->editColumn('last_name', function ($data) {
 
-                return  "<p>$data->last_name</p>
+                return "<p>$data->last_name</p>
 						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
 						<a href='#' class='custom-link-primary'>View</a>";

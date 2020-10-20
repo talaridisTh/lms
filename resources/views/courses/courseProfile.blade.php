@@ -41,7 +41,9 @@
 @endphp
 @section("content")
 
+
     <div class="content-page"><!-- breadcrumb -->
+        @unlessrole("guest")
         <div class=" ml-5 content-width">
             <div class="row">
                 <div class="col-12">
@@ -60,6 +62,7 @@
                 </div>
             </div>
         </div><!-- end breadcrumb -->
+        @endunlessrole
 
 
     @role("admin") <!-- ribbon -->
@@ -99,6 +102,7 @@
                                        style="background:white">Έναρξη
                                     </a>
                                 @endif
+                                    @unlessrole("guest")
                                 <button
                                     data-model="course" data-model-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
                                     class=" my-2 my-sm-0 color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary ">
@@ -107,6 +111,7 @@
                                     </i>
                                     <span>{{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                                 </button>
+                                    @endunlessrole
                             </div>
                         </div>
 {{--                        <div class="col-md-12 mt-md-2 col-lg-4 col-xl-3">--}}
