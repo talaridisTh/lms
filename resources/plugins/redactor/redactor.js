@@ -1,13 +1,14 @@
 /*
     Redactor
-    Version 3.4.3
-    Updated: Semtember 18, 2020
+    Version 3.4.4
+    Updated: October 6, 2020
 
     http://imperavi.com/redactor/
 
     Copyright (c) 2009-2020, Imperavi Ltd.
     License: http://imperavi.com/redactor/license/
 */
+if (typeof CodeMirror === 'undefined') { var CodeMirror = null; }
 (function() {
 var Ajax = {};
 
@@ -72,7 +73,7 @@ AjaxRequest.prototype = {
     },
     isComplete: function()
     {
-        return !(this.xhr.status < 200 || this.xhr.status >= 300 && this.xhr.status !== 304);
+        return !(this.xhr.status < 200 || (this.xhr.status >= 300 && this.xhr.status !== 304));
     },
     send: function()
     {
@@ -134,7 +135,7 @@ var Dom = function(selector, context)
 
 Dom.ready = function(fn)
 {
-    if (document.readyState != 'loading') fn();
+    if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
 };
 
@@ -454,7 +455,7 @@ Dom.prototype = {
     {
         if (name === undefined)
         {
-            var reDataAttr = /^data\-(.+)$/;
+            var reDataAttr = /^data-(.+)$/;
             var attrs = this.get().attributes;
 
             var data = {};
@@ -1334,7 +1335,7 @@ var $R = function(selector, options)
 
 // Globals
 $R.app = [];
-$R.version = '3.4.3';
+$R.version = '3.4.4';
 $R.options = {};
 $R.modules = {};
 $R.services = {};
@@ -1767,10 +1768,10 @@ $R.opts = {
     inlineTags: ['a', 'span', 'strong', 'strike', 'b', 'u', 'em', 'i', 'code', 'del', 'ins', 'samp', 'kbd', 'sup', 'sub', 'mark', 'var', 'cite', 'small', 'abbr'],
     blockTags: ['pre', 'ul', 'ol', 'li', 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',  'dl', 'dt', 'dd', 'div', 'table', 'tbody', 'thead', 'tfoot', 'tr', 'th', 'td', 'blockquote', 'output', 'figcaption', 'figure', 'address', 'section', 'header', 'footer', 'aside', 'article', 'iframe'],
     regex: {
-        youtube: /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube\.com\S*[^\w\-\s])([\w\-]{11})(?=[^\w\-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/gi,
-        vimeo: /(http|https)?:\/\/(?:www.|player.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:\/[a-zA-Z0-9_-]+)?/gi,
+        youtube: /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube\.com\S*[^\w-\s])([\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:['"][^<>]*>|<\/a>))[?=&+%\w.-]*/gi,
+        vimeo: /(http|https)?:\/\/(?:www.|player.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)(?:\/[a-zA-Z0-9_-]+)?/gi,
         imageurl: /((https?|www)[^\s]+\.)(jpe?g|png|gif)(\?[^\s-]+)?/gi,
-        url: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gi
+        url: /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/gi
     },
     input: true,
     zindex: false,
@@ -2250,11 +2251,12 @@ App.prototype = {
     callMessageHandler: function(instance, name, args)
     {
         var arr = name.split('.');
+        var value;
         if (arr.length === 1)
         {
             if (typeof instance['on' + name] === 'function')
             {
-                instance['on' + name].apply(instance, args);
+                value = instance['on' + name].apply(instance, args);
             }
         }
         else
@@ -2264,20 +2266,28 @@ App.prototype = {
             var func = this.utils.checkProperty(instance, arr);
             if (typeof func === 'function')
             {
-                func.apply(instance, args);
+                value = func.apply(instance, args);
             }
         }
+
+        return value;
     },
     broadcast: function(name)
     {
         var args = [].slice.call(arguments, 1);
+        var returned;
         for (var moduleName in this.instances)
         {
-            this.callMessageHandler(this.instances[moduleName], name, args);
+            var value = this.callMessageHandler(this.instances[moduleName], name, args);
+            if (typeof value !== 'undefined') {
+                returned = value;
+            }
         }
 
         // callback
-        return this.callback.trigger(name, args);
+        var cval = this.callback.trigger(name, args);
+
+        return (typeof returned !== 'undefined') ? returned : cval;
     },
 
     // callback
@@ -2840,6 +2850,7 @@ $R.add('service', 'callback', {
                 for (var i = 0; i < obj[key].length; i++)
                 {
                     value = obj[key][i].apply(this.app, args);
+
                 }
             }
         }
@@ -3892,7 +3903,7 @@ $R.add('service', 'selection', {
 
         var inlines = this.getInlines({ all: true });
         var textNodes = this.getNodes({ textnodes: true, inline: false });
-        var selected = this.getText().replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+        var selected = this.getText().replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
         var finalNodes = [];
 
         if (textNodes.length !== 0)
@@ -4196,19 +4207,19 @@ $R.add('service', 'selection', {
             nodes = this.utils.getChildNodes($editor);
         }
         // single node
-        else if (node == endNode)
+        else if (node === endNode)
         {
             nodes = [node];
         }
         else
         {
-            while (node && node != endNode)
+            while (node && node !== endNode)
             {
                 nodes.push(node = this._getNextNode(node));
             }
 
             node = range.startContainer;
-            while (node && node != range.commonAncestorContainer)
+            while (node && node !== range.commonAncestorContainer)
             {
                 nodes.unshift(node);
                 node = node.parentNode;
@@ -5622,13 +5633,24 @@ $R.add('service', 'cleaner', {
 
         // sanitize
         var $wrapper = this.utils.buildWrapper(html);
-        $wrapper.find('img, svg, details').removeAttr('onload onerror ontoggle');
+        $wrapper.find('a, b, i, img, svg, details').removeAttr('onload onerror ontoggle onwheel onmouseover oncopy');
+        $wrapper.find('a').each(function(node) {
+            var $node = $R.dom(node);
+            var href = $node.attr('href');
+            if (href && href.search(/^data|javascript:/i) !== -1) {
+                $node.attr('href', '');
+            }
+        });
+
         var imageattrs = ['alt', 'title', 'src', 'class', 'width', 'height', 'srcset', 'style', 'usemap'];
         $wrapper.find('img').each(function(node) {
             if (node.attributes.length > 0) {
                 var attrs = node.attributes;
                 for (var i = attrs.length - 1; i >= 0; i--) {
-                    if (attrs[i].name.search(/^data\-/) === -1 && imageattrs.indexOf(attrs[i].name) === -1) {
+                    var remove = ((attrs[i].name.search(/^data-/) === -1 && imageattrs.indexOf(attrs[i].name) === -1)
+                    || (attrs[i].name === 'src' && attrs[i].value.search(/^data|javascript:/i) !== -1));
+
+                    if (remove) {
                         node.removeAttribute(attrs[i].name);
                     }
                 }
@@ -5737,7 +5759,7 @@ $R.add('service', 'cleaner', {
         html = this.removeTags(html, deniedTags);
 
         // remove doctype tag
-        html = html.replace(new RegExp("<\!doctype([\\s\\S]+?)>", 'gi'), '');
+        html = html.replace(new RegExp("<!doctype([\\s\\S]+?)>", 'gi'), '');
 
         // remove style tag
         html = html.replace(new RegExp("<style([\\s\\S]+?)</style>", 'gi'), '');
@@ -5818,7 +5840,7 @@ $R.add('service', 'cleaner', {
         {
             var attrs = node.attributes;
             for (var i = attrs.length - 1; i >= 0; i--) {
-                if (node.attributes[0].name !== 'class') {
+                if (node.attributes[i].name !== 'class') {
                     node.removeAttribute(attrs[i].name);
                 }
             }
@@ -6694,6 +6716,10 @@ $R.add('class', 'cleaner.figure', {
         $wrapper.find('[data-redactor-tag]').each(function(node) {
             var $node = $R.dom(node);
             $node.removeAttr('data-redactor-tag');
+            if (node.attributes.length !== 0) {
+                if (node.lastChild && node.lastChild.tagName === 'BR') $R.dom(node.lastChild).remove();
+                return;
+            }
 
             if (this.utils.isEmptyHtml($node.html())) {
                 $node.unwrap();
@@ -7070,7 +7096,7 @@ $R.add('service', 'offset', {
         var nodeStack = [node], foundStart = false, stop = false;
         while (!stop && (node = nodeStack.pop()))
         {
-            if (node.nodeType == 3)
+            if (node.nodeType === 3)
             {
                 var nextCharIndex = charIndex + node.length;
 
@@ -9255,7 +9281,7 @@ $R.add('service', 'inline', {
     },
     _convertToStrike: function(inlines)
     {
-        var selected = this.selection.getText().replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+        var selected = this.selection.getText().replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
 
         for (var i = 0; i < inlines.length; i++)
         {
@@ -9303,7 +9329,7 @@ $R.add('service', 'inline', {
         {
              nodes.push(node);
 
-        }.bind(this));
+        });
 
         // span convertable
         $editor.find('.redactor-convertable-apply').each(function(node)
@@ -9726,7 +9752,7 @@ $R.add('service', 'autoparser', {
             text = (text.search('%') === -1) ? decodeURIComponent(text) : text;
 
             // escaping url
-            var regexp = '(' + href.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&") + regexB + ')';
+            var regexp = '(' + href.replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&") + regexB + ')';
             var classstr = ' class="redactor-autoparser-object"';
 
             obj[regexp] = '<a href="' + linkProtocol + href.trim() + '"' + target + classstr + '>' + text.trim() + '</a>';
@@ -12170,7 +12196,8 @@ $R.add('module', 'toolbar', {
             this.toolbarModule.stop();
         }
 
-        // stop dropdowns
+        // stop dropdowns & tooltips
+        $R.dom('.re-button-tooltip-' + this.uuid).remove();
         $R.dom('.redactor-dropdown-' + this.uuid).remove();
     },
 
@@ -13111,7 +13138,7 @@ $R.add('module', 'link', {
     _insertSingle: function(links, data)
     {
         var inline = this.selection.getInline();
-        if (links.length === 1 && (links[0].textContext === this.selection.getText()) || (inline && inline.tagName === 'A'))
+        if (links.length === 1 && ((links[0].textContext === this.selection.getText()) || (inline && inline.tagName === 'A')))
         {
             var $link = $R.create('link.component', this.app, links[0]);
 
@@ -14203,7 +14230,7 @@ $R.add('module', 'input', {
             return;
         }
         // tab or cmd + ]
-        else if (key === this.keycodes.TAB || e.metaKey && key === 221)
+        else if (key === this.keycodes.TAB || (e.metaKey && key === 221))
         {
             return $R.create('input.tab', this.app, e, key);
         }
@@ -14839,11 +14866,18 @@ $R.add('class', 'input.delete', {
         var dataPrev = this.inspector.parse(prev);
         var isPrevBlock = (prev.tagName === 'P' || prev.tagName === 'DIV');
 
-        // figure/code or table
-        if (isStart && dataPrev.isComponentEditable())
+        // figure/code
+        if (isStart && dataPrev.isComponentType('code'))
         {
             e.preventDefault();
             this.component.remove(prev, false);
+            return;
+        }
+        // table
+        else if (isStart && dataPrev.isComponentType('table'))
+        {
+            e.preventDefault();
+            this.caret.setEnd(prev);
             return;
         }
         // component
@@ -16412,7 +16446,7 @@ $R.add('module', 'image', {
         var data = this.inspector.parse(current);
         var $img = $R.dom(current).closest('img');
 
-        if (!data.isFigcaption() && data.isComponentType('image') || $img.length !== 0)
+        if ((!data.isFigcaption() && data.isComponentType('image')) || $img.length !== 0)
         {
             var node = ($img.length !== 0) ? $img.get() : data.getComponent();
             var buttons = {
@@ -17735,7 +17769,7 @@ $R.add('module', 'buffer', {
         var key = e.which;
         var ctrl = e.ctrlKey || e.metaKey;
 
-        return (ctrl && (key === 90 && e.shiftKey || key === 89 && !e.shiftKey) && !e.altKey);
+        return (ctrl && ((key === 90 && e.shiftKey) || (key === 89 && !e.shiftKey)) && !e.altKey);
     },
     _setUndo: function()
     {
@@ -18494,6 +18528,7 @@ $R.add('class', 'widget.component', {
     }
 });
 
+    var Redactor = $R;
     window.Redactor = window.$R = $R;
 
     // Data attribute load
