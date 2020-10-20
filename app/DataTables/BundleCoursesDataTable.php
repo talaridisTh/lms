@@ -45,7 +45,25 @@ class BundleCoursesDataTable extends DataTable {
 					<input class='js-course-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
                     <label for='$data->slug'></label>
 				</div>");
-            })
+			})
+			->editColumn('title', function($data) {
+
+
+
+				if ( $data->status == 1 ) {
+					$badge = "";
+				}
+				else {
+					$badge = "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
+				}
+
+				return "<a href='/dashboard/course/$data->slug' class='h5 custom-link-primary'>$data->title </a>$badge
+						<p class='mb-1'>$data->slug</p>
+						<a href='/dashboard/course/$data->slug' class='custom-link-primary'>Edit</a>
+						<span class='mx-2'>|</span>
+						<a href='#' class='custom-link-primary'>View</a>";
+
+			})
             ->editColumn('curator', function ($data) {
 
                 if ($data->curator)
@@ -67,16 +85,13 @@ class BundleCoursesDataTable extends DataTable {
                 }
 
                 return implode(", ", $topics);
-            })
-            ->editColumn('updated_at', function ($data) {
+			})
+			->addColumn("btns", function($data) {
 
-                return Carbon::parse($data->updated_at)->format("d / m / Y");
-            })
-            ->editColumn('created_at', function ($data) {
-
-                return Carbon::parse($data->created_at)->format("d / m / Y");
-            })
-            ->rawColumns(['action'])
+				return "<i class='js-remove-course h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer'
+					data-course-id='$data->id'></i>";
+			})
+            ->rawColumns(['action', 'title', 'btns'])
             ->setRowAttr(['data-course-id' => function ($data) {
 
                 return $data->id;

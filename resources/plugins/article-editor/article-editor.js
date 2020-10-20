@@ -1,7 +1,7 @@
 /*
     Article Editor JS
-    Version 2.1.2
-    Updated: September 18, 2020
+    Version 2.1.3
+    Updated: October 6, 2020
 
     http://imperavi.com/article/
 
@@ -1080,7 +1080,7 @@ $ARX.ajax = Ajax;
 $ARX.instances = [];
 $ARX.namespace = 'article-editor';
 $ARX.prefix = 'arx';
-$ARX.version = '2.1.2';
+$ARX.version = '2.1.3';
 $ARX.settings = {};
 $ARX.lang = {};
 $ARX._mixins = {};
@@ -4110,7 +4110,7 @@ ArticleEditor.add('module', 'content', {
         html = this.app.utils.wrap(html, function($w) {
             $w.find('[src]').each(this._sanitizeSrc);
             $w.find('a').each(this._sanitizeHref);
-            $w.find('svg,img,details').each(this._sanitizeEvents);
+            $w.find('a,b,i,svg,img,details').each(this._sanitizeEvents);
         }.bind(this));
 
         return html;
@@ -4808,7 +4808,7 @@ ArticleEditor.add('module', 'content', {
         }
     },
     _sanitizeEvents: function($node) {
-        $node.removeAttr('onload onerror ontoggle');
+        $node.removeAttr('onload onerror ontoggle onwheel onmouseover oncopy');
     },
 
     // encode
@@ -6131,7 +6131,14 @@ ArticleEditor.add('module', 'block', {
     },
     _setCaret: function(caret) {
         if (this.instance.isEditable()) {
-            if (caret) this.app.caret.set(this.$block, caret);
+            if (caret) {
+                var $target = this.$block;
+                if (this.instance.getType() === 'list' && (caret === 'start' || caret === 'end')) {
+                    $target = (caret === 'start') ? this.$block.find('li').first() : this.$block.find('li').last();
+                }
+
+                this.app.caret.set($target, caret);
+            }
         }
         else {
             this.app.scroll.save();
@@ -8955,6 +8962,9 @@ ArticleEditor.add('module', 'cleaner', {
         // remove denied tags
         html = this.app.content.removeTags(html, this.opts.tags.denied);
 
+        // remove comments
+        html = this.app.content.removeComments(html);
+
         // remove style & script tag
         html = this.app.content.removeTagsWithContent(html, ['script', 'style']);
 
@@ -10338,7 +10348,6 @@ ArticleEditor.add('module', 'inline', {
     },
     formatCollapsed: function() {
         var node;
-        var nodes = [];
         var inline = this.app.selection.getInline();
         var $inline = this.dom(inline);
         var tags = this._getParamsTags();
@@ -10347,7 +10356,7 @@ ArticleEditor.add('module', 'inline', {
 
         // 1) not inline
         if (!inline) {
-            node = this._insertInline(nodes, this.params.tag, caret);
+            node = this._insertInline(this.params.tag, caret);
         }
         else {
             // 2) inline is empty
@@ -10376,16 +10385,12 @@ ArticleEditor.add('module', 'inline', {
                 }
                 // 3.2) has a different tag
                 else {
-                    node = this._insertInline(nodes, this.params.tag, caret);
+                    node = this._insertInline(this.params.tag, caret);
                 }
             }
         }
 
-        if (node) {
-            nodes = [node];
-        }
-
-        return nodes;
+        return (node) ? node : [];
     },
     formatUncollapsed: function() {
 
@@ -10475,8 +10480,7 @@ ArticleEditor.add('module', 'inline', {
         return (selected.search(new RegExp(this.app.utils.escapeRegExp(text))) !== -1);
     },
     _insertInline: function(nodes, tag, caret) {
-        var inserted = this.app.insertion.insertNode(document.createElement(tag), (caret) ? caret : 'start');
-        return [inserted];
+        return this.app.insertion.insertNode(document.createElement(tag), (caret) ? caret : 'start');
     },
     _convertTags: function(tag, instance) {
         if (this.params.tag !== tag) {
@@ -13197,7 +13201,7 @@ ArticleEditor.add('module', 'image', {
 
             // broadcast
             this.app.broadcast('image.change', response[key]);
-            this.app.broadcast('image.upload', { image: instance, data: response[key] });
+            this.app.broadcast('image.upload', { instance: instance, data: response[key] });
             return;
         }
     },
@@ -13228,7 +13232,7 @@ ArticleEditor.add('module', 'image', {
             this.app.block.add({ instance: instance });
 
             // broadcast
-            this.app.broadcast('image.upload', { image: instance, data: response[key] });
+            this.app.broadcast('image.upload', { instance: instance, data: response[key] });
 
             this.$last = instance.getBlock();
             this.imageslen++;

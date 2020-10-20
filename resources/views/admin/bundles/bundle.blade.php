@@ -489,6 +489,7 @@
 								<th class="text-center">Έκδοση</th>
 								<th class="text-center">Τελ. Ανανέωση</th>
 								<th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center"></th>
 							</tr>
 						</thead>
 						<tbody class="tables-hover-effect"></tbody>
@@ -501,6 +502,7 @@
 								<th class="text-center">Έκδοση</th>
 								<th class="text-center">Τελ. Ανανέωση</th>
 								<th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center"></th>
 							</tr>
 						</tfoot>
 					</table>

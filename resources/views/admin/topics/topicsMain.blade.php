@@ -108,7 +108,7 @@
 							@enderror
 						</div>
 
-						<div class="form-group my-2">
+						{{-- <div class="form-group my-2">
 							<div class="d-flex align-items-center">
 								<!-- Bool Switch-->
 								<label for="new-gradient-checkbox" class="mr-3 mb-0">Gradient: </label>
@@ -116,9 +116,9 @@
 								<label for="new-gradient-checkbox" class="mb-0" data-on-label="On" data-off-label="Off"></label>
 
 							</div>
-						</div>
+						</div> --}}
 
-						<input id="gradient-input" class="form-control" type="text" name="gradient" value="radial-gradient(circle at right, rgba(66, 68, 90, 1) 0%,rgba(32, 182, 221, 1) 100%)" hidden />
+						<input id="gradient-input" class="form-control" type="text" name="gradient" value="linear-gradient(315deg, #ff4e00 0%, #ec8505 74%)" hidden />
 
 					</form>
 					<div id="new-topic-gradient"></div>

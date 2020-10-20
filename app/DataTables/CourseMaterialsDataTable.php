@@ -71,11 +71,9 @@ class CourseMaterialsDataTable extends DataTable
 
 				}
 				else {
-					return "<h4>$data->title</h4><p class='mb-0'>Σύνολο υλικού: ".$data->chapters()->count()."</p>";
+					return "<h4 class='js-section cursor-pointer'
+						data-slug='$data->slug'>$data->title</h4><p class='mb-0'>Σύνολο υλικού: ".$data->chapters()->count()."</p>";
 				}
-
-
-
 			})
 			->editColumn('status', function($data) use ($request) {
 
@@ -102,7 +100,7 @@ class CourseMaterialsDataTable extends DataTable
 			->addColumn("btns", function($data) {
 
 				return "<i class='js-remove-material h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer'
-					data-material-id='$data->id'></i>";
+					data-material-id='$data->id' data-material-type='$data->type'></i>";
 			})
 			->rawColumns(
 				[
