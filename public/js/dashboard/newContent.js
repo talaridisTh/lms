@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -220,7 +220,7 @@ eval("ArticleEditor.add('plugin', 'reorder', {\n  defaults: {\n    icon: '<svg h
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /*!****************************************************!*\
   !*** multi ./resources/js/dashboard/newContent.js ***!
   \****************************************************/
