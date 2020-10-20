@@ -77,16 +77,62 @@
 				</div> <!-- end col-->
 			</div><!-- end row-->
 			
+
+
+			
 			<div class="row">
 				<div class="col-lg-6 col-xl-4">
-					<h4 class="page-title text-center">Δημοφιλέστερα Courses</h4>
-					<canvas id="top-courses" width="400" height="300"></canvas>
+					
+					<div class="card h-100">
+						<div class="card-body d-flex flex-column justify-content-center align-items-center">
+							<h4 class="page-title text-center mb-3">Δημοφιλέστερα Courses</h4>
+					
+							<div class="" style="width:400px; height: 300px;">
+								<canvas id="top-courses" width="400" height="300"></canvas>
+							
+							</div>
+						</div>
+					</div>
+					
 
 					@foreach ($topCourses as $course)
 						<span class="js-top-courses" data-title="{{ $course->title }}"
 							data-students="{{ $course->students }}"></span>
 					@endforeach
 				</div>
+				<div class="col-lg-6 col-xl-8">
+
+					<div class="card h-100">
+						<div class="card-body">
+							<h4 class="page-title text-center mb-3">Τελευταία Courses</h4>
+							<table class="table table-hover table-centered mb-0">
+								<thead>
+									<tr>
+										<th>Τίτλος</th>
+										<th>Εισηγητής</th>
+										<th>Ημ. Δημιουργίας</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($latestCourses as $course)
+										<tr>
+											<td>{{ $course->title }}</td>
+											<td>{{ $course->curator->last_name }} {{ $course->curator->first_name }}</td>
+											<td>{{ $course->created_at->diffForHumans() }}</td>
+											
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+					
+																	
+					
+				</div>
+			</div>
+
+			<div class="row">
 				<div class="col-lg-6 col-xl-4">
 					<h4 class="page-title text-center">Δημοφιλέστερα Bundles</h4>
 					<canvas id="top-bundles" width="400" height="300"></canvas>
@@ -95,13 +141,6 @@
 						<span class="js-top-bundles" data-title="{{ $bundle->title }}"
 							data-students="{{ $bundle->students }}"></span>
 					@endforeach
-					
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-6 col-xl-4">
-
 				</div>
 				<div class="col-lg-6 col-xl-4">
 

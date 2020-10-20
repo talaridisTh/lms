@@ -84,7 +84,10 @@ class DashboardController extends Controller
 			->orderBy("students", "desc")
 			->limit(5)
 			->get();
-		// dd($topCourses);
+
+		$latestCourses = Course::where('user_id', "!=", 2)
+			->orderBy("created_at", "desc")->limit(5)->get();
+
 
 		$data = [
 			'totalLessons' => $totalLessons,
@@ -93,6 +96,7 @@ class DashboardController extends Controller
 			'totalStudents' => $totalStudents,
 			'topCourses' => $topCourses,
 			'topBundles' => $topBundles,
+			'latestCourses' => $latestCourses,
 		];
 		// dd($totalLessons);
 
