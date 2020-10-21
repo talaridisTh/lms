@@ -52,6 +52,7 @@ class UserController extends Controller {
     public function store(UserCreateRequest $request)
     {
         //
+
         $user = new User();
         $data = collect($request)->except("sendMail", "roles", "password_confirmation")->all();
 //        $data['password'] = Hash::make("password");

@@ -25,18 +25,12 @@ const axiosInstructor = async (userId,userSlug) => {
 
         if (status == 200) {
             document.querySelector(".component-instructor").innerHTML = data
-            onPreview(userId, $(".input-course:checked"), "course")
-            onPreview(userId, $(".input-materials:checked"), "material")
 
-            let url =`${window.location.origin}/guest/temp/link/${userSlug}`
-            let btnCopy = `<button class="copyBtn btn badge badge-success font-16" data-text=${url} >
-                                <i class="mdi mdi-content-copy"></i>
-                            </button>`
+            let componentCourseLength = $(".component-instructor-course")
+            let componentMaterialLength = $(".component-instructor-material")
 
-            console.log($(".guest-link")[0].innerHTML=`<div>${btnCopy} <a href ="${url}"> ${url}</a></div>`)
-            // document.querySelector(".guest-link").innerHTML = `<a href ="${window.location.origin}/guest/temp/link/${userSlug}"> link</a>`
-
-            copy();
+            onPreview(userId, $(".input-course:checked"), "course",userSlug)
+            onPreview(userId, $(".input-materials:checked"), "material",userSlug)
 
         }
 
@@ -86,7 +80,7 @@ const onClickInputMaterial = (inputs, userId) => {
 
 }
 
-const onPreview = (userId, modelInput, model) => {
+const onPreview = (userId, modelInput, model,userSlug) => {
     let courseId = [];
 
     let checkedCourses = modelInput;
@@ -98,7 +92,7 @@ const onPreview = (userId, modelInput, model) => {
             }
 
         }
-        axiosMaterialInstructor(courseId, userId)
+        axiosMaterialInstructor(courseId,userSlug)
     } else {
         for (let i = 0; i < checkedCourses.length; i++) {
             if (!courseId.includes(checkedCourses[i].dataset.courseId)) {
@@ -130,15 +124,28 @@ const axiosCourseInstructor = async (courseId, userId) => {
     }
 }
 
-const axiosMaterialInstructor = async (materialId) => {
+const axiosMaterialInstructor = async (materialId,userSlug) => {
     try {
         const {data, status} = await axios.post("/guest/instructor-material", {
             materialId
         })
 
         if (status === 200) {
-
             document.querySelector(".component-instructor-material").innerHTML = data
+
+            let componentCourseLength = $(".component-instructor-course")
+            let componentMaterialLength = $(".component-instructor-material")
+
+            let url =`${window.location.origin}/guest/temp/link/${userSlug}`
+            let btnCopy = `<button class="copyBtn btn badge badge-success font-16" data-text=${url} >
+                                <i class="mdi mdi-content-copy"></i>
+                            </button>`
+
+                if (componentCourseLength[0].childElementCount ||componentMaterialLength[0].childElementCount){
+                    $(".guest-link")[0].innerHTML=`<div>${btnCopy} <a href ="${url}"> ${url}</a></div>`
+                    copy();
+                }
+
         }
     } catch (e) {
 

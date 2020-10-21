@@ -76,6 +76,7 @@ class HomeController extends Controller {
     public function createGuestUser(Request $request)
     {
 
+        dd($request->all());
         $partner = User::findOrFail($request->userId);
         static $counter = 0;
         if (!User::where("first_name", $partner->first_name . '-guest')->exists())
@@ -97,11 +98,13 @@ class HomeController extends Controller {
         $partner->guest()->detach($user);
         $partner->guest()->attach($user->id, ['user_link' => "/guest/temp/link/" . $user->slug]);
         foreach ($request->materialId as $data)
-        {
-            $course = Course::findOrFail($data["courses"]);
-            $material = Material::findOrFail($data["material"]);
-            $course->materials->where("id", $material->id)->first()->pivot->update(["status" => 1]);
-        }
+//        {
+//            $course = Course::findOrFail($data["courses"]);
+//            $material = Material::findOrFail($data["material"]);
+//            $course->materials->where("id", $material->id)->first()->pivot->update(["guest_status" => 1]);
+//        }
+
+
         $user->courses()->sync($request->courseId);
         $user->courses()->update(["status" => 1]);
 //

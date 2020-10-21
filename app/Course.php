@@ -39,7 +39,7 @@ class Course extends Model {
     public function materials()
     {
 
-        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'publish_at');
+        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'publish_at',"guest_status");
     }
 
     public function bundles()

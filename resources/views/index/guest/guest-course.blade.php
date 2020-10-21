@@ -72,7 +72,7 @@
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
                                                                         <input
-                                                                            {{$material->pivot->status?"checked":""}}
+                                                                            {{$material->pivot->guest_status?"checked":""}}
                                                                             class="input-materials"
                                                                             data-material-id="{{$material->id}}"
                                                                             data-course-id="{{$course->id}}"

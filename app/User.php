@@ -96,11 +96,20 @@ class User extends Authenticatable {
 //            ->withPivot("user_link",'id');
 //    }
 
+
+
+
     public function guest()
     {
         return $this->belongsToMany('App\User', 'guest_user', 'partner_id',"user_id")->withPivot("user_link");
     }
 
+
+    public function GuestMaterials()
+    {
+
+        return $this->belongsToMany(Material::class);
+    }
 
 
     public function role()
