@@ -12,11 +12,11 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
         datasets: [{
             data: topCoursesData.students,
             backgroundColor: [
-				'rgba(83, 109, 230, 1)',
-				'rgba(16, 196, 105, 1)',
-				'rgba(249, 200, 81, 1)',
-				'rgba(255, 91, 91, 1)',
-				'rgba(2, 168, 181, 1)'
+				'rgba(83, 109, 230, 0.8)',
+				'rgba(16, 196, 105, 0.8)',
+				'rgba(249, 200, 81, 0.8)',
+				'rgba(255, 91, 91, 0.8)',
+				'rgba(2, 168, 181, 0.8)'
 			],
             borderColor: "#fff",
             borderWidth: 1
@@ -59,11 +59,11 @@ const topBundlesChart = new Chart(topBundlesCanvas, {
         datasets: [{
             data: topBundlesData.students,
             backgroundColor: [
-				'rgba(83, 109, 230, 1)',
-				'rgba(16, 196, 105, 1)',
-				'rgba(249, 200, 81, 1)',
-				'rgba(255, 91, 91, 1)',
-				'rgba(2, 168, 181, 1)'
+				'rgba(83, 109, 230, 0.8)',
+				'rgba(16, 196, 105, 0.8)',
+				'rgba(249, 200, 81, 0.8)',
+				'rgba(255, 91, 91, 0.8)',
+				'rgba(2, 168, 181, 0.8)'
 			],
             borderColor: "#fff",
             borderWidth: 1
@@ -177,11 +177,11 @@ const topicStatsChart = new Chart(topicStatsCanvas, {
         datasets: [{
             data: topic.count,
             backgroundColor: [
-				'rgba(83, 109, 230, 1)',
-				'rgba(16, 196, 105, 1)',
-				'rgba(249, 200, 81, 1)',
-				'rgba(255, 91, 91, 1)',
-				'rgba(2, 168, 181, 1)'
+				'rgba(83, 109, 230, 0.8)',
+				'rgba(16, 196, 105, 0.8)',
+				'rgba(249, 200, 81, 0.8)',
+				'rgba(255, 91, 91, 0.8)',
+				'rgba(2, 168, 181, 0.8)'
 			],
             borderColor: "#fff",
             borderWidth: 1

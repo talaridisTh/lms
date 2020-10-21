@@ -126,6 +126,9 @@ class CourseMaterialsDataTable extends DataTable
 						return  $data->id;
 
 					},
+					"data-priority" => function($data) {
+						return $data->pivot->priority;
+					},
 					'data-material-slug' => function($data) {
 
 						return $data->slug;

@@ -21,7 +21,26 @@ import 'filepond/dist/filepond.min.css';
 //! 			EventListerners				#
 //!##########################################
 
+$("#new-content-btn").on("click", function() {
+	const rows = $("#course-materials-list > tbody > tr");
+	const firstRowPriority = rows[0].dataset.priority;
 
+	const priorityInput = $("#store-material-priority");
+
+	$("#add-additions-modal").modal("show");
+
+	if ( typeof firstRowPriority === "undefined" ) {
+		priorityInput.val(0);
+	}
+	else {
+		priorityInput.val(rows[rows.length - 1].dataset.priority);
+	}
+
+	$("#store-material-id").val(0);
+
+	console.log(firstRowPriority);
+	console.log(rows[rows.length - 1].dataset.priority);
+})
 
 $("#section-chapter-btn").on("click", function() {
 
@@ -40,7 +59,6 @@ $(".js-section-material").on("click", function() {
 	const priority = modal.dataset.priority;
 	const type = this.dataset.type;
 
-	// const selection = document.getElementsByClassName("js-section-addition")[0];
 	const selection = document.getElementsByClassName("extra-content-row")[0];
 
 	if (selection) {
@@ -275,24 +293,6 @@ $("#deactivate-selection").on( "click", function() {
 	})
 
 });
-
-// $("#courseDelete-btn").on( "click", function() {
-// 	Swal.fire({
-// 		title: 'Είστε σίγουρος;',
-// 		text: "Η ενέργεια θα είναι μη αναστρέψιμη!",
-// 		icon: 'warning',
-// 		showCancelButton: true,
-// 		confirmButtonText: 'Ναι, διαγραφή!',
-// 		cancelButtonText: 'Άκυρο'
-// 	}).then( (result) => {
-
-// 		if (result.value) {
-
-// 			$("#delete-course-form").submit();
-
-// 		}
-// 	})
-// })
 
 let publishDate = $("#publish-date-select").daterangepicker({
 	singleDatePicker: true,
@@ -1889,20 +1889,14 @@ $("#add-additions-modal").on("show.bs.modal", function(event) {
 $(".js-material").on( "click", function() {
 	let id = $("#store-material-id").val();
 	let priority = $("#store-material-priority").val();
-	let rows = $("#course-materials-list > tbody > tr");
 	let type = this.dataset.type;
-	let newRow = "";
-	let rowId = "";
+	let rows = $("#course-materials-list > tbody > tr");
 
-	for ( let i = 0; i < rows.length; i++ ) {
-		rowId = rows[i].dataset.materialId;
+	const selectedRow = findMaterialRow(rows, id);
+	const newRow = createTableRow( type, priority );
 
-		if ( id == rowId ) {
-			newRow = createTableRow( type, priority );
-			newRow.appendAfter( rows[i] );
-			break;
-		}
-	}
+	newRow.appendAfter( selectedRow );
+
 
 	if ( type == "Announcement" ) {
 		$R('#new-announcement', utilities.redactorConfig );
@@ -1916,6 +1910,22 @@ $(".js-material").on( "click", function() {
 	$('#add-additions-modal').modal('hide')
 
 });
+
+function findMaterialRow(rows, id = false) {
+
+	let rowId = 0;
+
+	for ( let i = 0; i < rows.length; i++ ) {
+		rowId = rows[i].dataset.materialId;
+
+		if ( id == rowId ) {
+			
+			return rows[i];
+		}
+	}
+
+	return rows[rows.length - 1];
+}
 
 function linkForm( type, priority) {
 
@@ -2113,6 +2123,7 @@ function addContent() {
 			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
 		})
 		.catch( (err) => {
+			console.log(err);
 			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
 		});
 
