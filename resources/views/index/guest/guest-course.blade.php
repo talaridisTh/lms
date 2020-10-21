@@ -1,5 +1,5 @@
 <div class="pr-xl-3">
-    <h5 class="mt-0 mb-3">Projects</h5>
+    <h5 class="mt-0 mb-3">Courses</h5>
     <!-- start search box -->
     <div class="app-search">
         <div class="row">
@@ -32,12 +32,20 @@
                                  style="height: auto; overflow: hidden scroll;">
                                 <div class="simplebar-content d-flex flex-column" style="padding: 0px;">
                                     <div class="accordion" id="custom-accordion-one">
+
+
                                         @foreach($courses as $course)
+
+                                            @php
+                                                $checked = $courseGuest->contains('title',$course->title)?"checked" : "";
+                                            @endphp
 
                                             <div class="pb-2">
 
+
                                                 <div class="pretty p-icon p-round p-jelly ">
-                                                    <input class="input-course" data-course-id="{{$course->id}}"
+                                                    <input {{$checked}} class="input-course"
+                                                           data-course-id="{{$course->id}}"
                                                            type="checkbox"/>
                                                     <div class="state p-primary ">
                                                         <i class="icon mdi font-16 mdi-check"></i>

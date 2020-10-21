@@ -15,10 +15,24 @@ class HomeController extends Controller {
     //
     public function guestCourse(Request $request)
     {
+        $partnerName  = User::findOrFail($request->userId)->first_name;
+        $guestUser = User::whereFirstName($partnerName."-guest")->first();
+
+//        $courseGuest = $guestUser->courses->first();
+//
+//        $courses = User::findOrFail($request->userId)->courses->first()->title;
+//        $containsAllValues = in_array($courses, $courseGuest);
+
+        $courseGuest = $guestUser->courses;
 
         $courses = User::findOrFail($request->userId)->courses;
+//        $containsAllValues = in_array($courses, $courseGuest);
 
-        return view("index.guest.guest-course", compact('courses'));
+//        dd($courseGuest->contains('title',$courses));
+
+
+
+        return view("index.guest.guest-course", compact('courses',"courseGuest"));
     }
 
     public function guestInstructor(Request $request)
@@ -30,6 +44,7 @@ class HomeController extends Controller {
 
     public function guestInstructorCourse(Request $request)
     {
+
 
         $courses = Course::findOrFail($request->courseId);
 
@@ -47,10 +62,9 @@ class HomeController extends Controller {
     public function createGuestUser(Request $request)
     {
 
-
-
         $partner = User::findOrFail($request->userId);
         static $counter = 0;
+
         if (!User::where("first_name", $partner->first_name . '-guest')->exists())
         {
 
@@ -70,6 +84,7 @@ class HomeController extends Controller {
 
         $partner->guest()->detach($user);
         $partner->guest()->attach($user->id, ['user_link' => "/guest/temp/link/" . $user->slug]);
+
 
         foreach ($request->materialId as $data){
             $course = Course::findOrFail($data["courses"]);
