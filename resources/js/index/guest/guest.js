@@ -48,7 +48,7 @@ const axiosGuestCourse = async (userId,userSlug) => {
             let btnGuest = document.querySelector(".js-submit-guest")
 
 
-            onClickInputCourse(inputCourse)
+            onClickInputCourse(inputCourse,userId)
             onClickInputMaterial(inputMaterial)
             onBtnGuest(btnGuest, userId,userSlug)
         }
@@ -58,24 +58,48 @@ const axiosGuestCourse = async (userId,userSlug) => {
     }
 }
 
-const onClickInputCourse = (inputs) => {
-    let courseId = []
-    inputs.forEach((input, idx) => {
-        input.addEventListener("click", async function () {
-            if (!courseId.includes(this.dataset.courseId)) {
-                courseId.push(this.dataset.courseId)
-            } else {
-                courseId = courseId.filter(item => item !== this.dataset.courseId)
+const onClickInputCourse = (inputs,userId) => {
+
+
+
+    let checkedCourses = $(".input-course");
+
+    checkedCourses.change(function (){
+        let courseId = [];
+
+        let test = $(".input-course:checked");
+
+        for (let i=0; i<test.length; i++){
+            if (!courseId.includes(test[i].dataset.courseId)) {
+                courseId.push(test[i].dataset.courseId)
             }
 
-            axiosCourseInstructor(courseId)
+        }
 
-        })
+        console.log(courseId)
+
+
     })
+
+
+
+    // inputs.forEach((input, idx) => {
+    //     input.addEventListener("click", async function () {
+    //         if (!courseId.includes(this.dataset.courseId)) {
+    //             courseId.push(this.dataset.courseId)
+    //         } else {
+    //             courseId = courseId.filter(item => item !== this.dataset.courseId)
+    //         }
+    //
+    //         axiosCourseInstructor(courseId,userId)
+    //
+    //     })
+    // })
 }
 
 const onClickInputMaterial = (inputs) => {
     let materialId = []
+
     inputs.forEach((input, idx) => {
         input.addEventListener("click", async function () {
             if (!materialId.includes(this.dataset.materialId)) {
@@ -90,10 +114,11 @@ const onClickInputMaterial = (inputs) => {
     })
 }
 
-const axiosCourseInstructor = async (courseId) => {
+const axiosCourseInstructor = async (courseId,userId) => {
     try {
         const {data, status} = await axios.post("/guest/instructor-course", {
-            courseId
+            courseId,
+            userId
         })
 
         if (status === 200) {
@@ -106,7 +131,6 @@ const axiosCourseInstructor = async (courseId) => {
 }
 
 const axiosMaterialInstructor = async (materialId) => {
-    console.log("")
     try {
         const {data, status} = await axios.post("/guest/instructor-material", {
             materialId

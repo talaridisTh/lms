@@ -37,14 +37,15 @@
                                         @foreach($courses as $course)
 
                                             @php
-                                                $checked = $courseGuest->contains('title',$course->title)?"checked" : "";
+                                                if (!empty($courseGuest)){
+                                                         $checked = $courseGuest->contains('title',$course->title)?"checked" : "";
+                                                    }
                                             @endphp
 
                                             <div class="pb-2">
 
-
                                                 <div class="pretty p-icon p-round p-jelly ">
-                                                    <input {{$checked}} class="input-course"
+                                                    <input {{!empty($checked)?$checked :"" }} class="input-course"
                                                            data-course-id="{{$course->id}}"
                                                            type="checkbox"/>
                                                     <div class="state p-primary ">
@@ -70,10 +71,12 @@
                                                             @if($key<=9)
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
-                                                                        <input class="input-materials"
-                                                                               data-material-id="{{$material->id}}"
-                                                                               data-course-id="{{$course->id}}"
-                                                                               type="checkbox"/>
+                                                                        <input
+                                                                            {{$material->pivot->status?"checked":""}}
+                                                                            class="input-materials"
+                                                                            data-material-id="{{$material->id}}"
+                                                                            data-course-id="{{$course->id}}"
+                                                                            type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon mdi font-16 mdi-check"></i>
                                                                             <label
@@ -87,12 +90,14 @@
                                                     <div class="p-2">
                                                         @foreach($course->materials as $key=> $material)
                                                             @if($key>=10 && $key<20)
-                                                                card-header d-flex align-center mt-2  head-section                                                   <div class="pb-1 ff">
+                                                                <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
-                                                                        <input class="input-materials"
-                                                                               data-material-id="{{$material->id}}"
-                                                                               data-course-id="{{$course->id}}"
-                                                                               type="checkbox"/>
+                                                                        <input
+                                                                            {{$material->pivot->status?"checked":""}}
+                                                                            class="input-materials"
+                                                                            data-material-id="{{$material->id}}"
+                                                                            data-course-id="{{$course->id}}"
+                                                                            type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon font-16 mdi mdi-check"></i>
                                                                             <label
@@ -108,10 +113,12 @@
                                                             @if($key>=20)
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
-                                                                        <input class="input-materials"
-                                                                               data-material-id="{{$material->id}}"
-                                                                               data-course-id="{{$course->id}}"
-                                                                               type="checkbox"/>
+                                                                        <input
+                                                                            {{$material->pivot->status?"checked":""}}
+                                                                            class="input-materials"
+                                                                            data-material-id="{{$material->id}}"
+                                                                            data-course-id="{{$course->id}}"
+                                                                            type="checkbox"/>
                                                                         <div class="state p-info ">
                                                                             <i class="icon font-16 mdi mdi-check"></i>
                                                                             <label

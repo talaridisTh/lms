@@ -15,24 +15,19 @@ class HomeController extends Controller {
     //
     public function guestCourse(Request $request)
     {
-        $partnerName  = User::findOrFail($request->userId)->first_name;
-        $guestUser = User::whereFirstName($partnerName."-guest")->first();
 
-//        $courseGuest = $guestUser->courses->first();
-//
-//        $courses = User::findOrFail($request->userId)->courses->first()->title;
-//        $containsAllValues = in_array($courses, $courseGuest);
-
-        $courseGuest = $guestUser->courses;
-
+        $partnerName = User::findOrFail($request->userId)->first_name;
+        $guestUser = User::whereFirstName($partnerName . "-guest")->first();
         $courses = User::findOrFail($request->userId)->courses;
-//        $containsAllValues = in_array($courses, $courseGuest);
 
-//        dd($courseGuest->contains('title',$courses));
+        if ($guestUser)
+        {
+            $courseGuest = $guestUser->courses;
 
+            return view("index.guest.guest-course", compact('courses', "courseGuest"));
+        }
 
-
-        return view("index.guest.guest-course", compact('courses',"courseGuest"));
+        return view("index.guest.guest-course", compact('courses'));
     }
 
     public function guestInstructor(Request $request)
@@ -46,7 +41,16 @@ class HomeController extends Controller {
     {
 
 
+//        $partnerName = User::findOrFail($request->userId)->first_name;
+//        $guestUser = User::whereFirstName($partnerName . "-guest")->first();
         $courses = Course::findOrFail($request->courseId);
+//
+//        if ($guestUser)
+//        {
+//            $courseGuest = $guestUser->courses;
+//
+//            return view("index.guest.guest-instructor-course", compact('courses', "courseGuest"));
+//        }
 
         return view("index.guest.guest-instructor-course", compact('courses'));
     }
@@ -64,7 +68,6 @@ class HomeController extends Controller {
 
         $partner = User::findOrFail($request->userId);
         static $counter = 0;
-
         if (!User::where("first_name", $partner->first_name . '-guest')->exists())
         {
 
@@ -81,31 +84,22 @@ class HomeController extends Controller {
         {
             $user = User::where("first_name", $partner->first_name . '-guest')->first();
         }
-
         $partner->guest()->detach($user);
         $partner->guest()->attach($user->id, ['user_link' => "/guest/temp/link/" . $user->slug]);
-
-
-        foreach ($request->materialId as $data){
+        foreach ($request->materialId as $data)
+        {
             $course = Course::findOrFail($data["courses"]);
             $material = Material::findOrFail($data["material"]);
-            $course->materials->where("id",$material->id)->first()->pivot->update(["status" => 1]);
-
+            $course->materials->where("id", $material->id)->first()->pivot->update(["status" => 1]);
         }
-
-
         $user->courses()->sync($request->courseId);
         $user->courses()->update(["status" => 1]);
-
 //
 //        foreach ($user->courses()->get() as $course){
 //            $statusCourse = $course->materials->whereIn("id",72)->first();
 //            $statusCourse->pivot->status=0;
 //            $statusCourse->save();
 //        }
-
-
-
 //        $user->materials()->sync($request->materialId);
 //        $user->materials()->update(["status" => 1]);
     }
