@@ -151,7 +151,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bab
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\index\materials\indexMaterials.js */"./resources/js/index/materials/indexMaterials.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\lmsdemo - HEAD\resources\js\index\materials\indexMaterials.js */"./resources/js/index/materials/indexMaterials.js");
 
 
 /***/ })

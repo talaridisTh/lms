@@ -117,7 +117,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mai
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\topics\topicsMain.js */"./resources/js/dashboard/topics/topicsMain.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\lmsdemo - HEAD\resources\js\dashboard\topics\topicsMain.js */"./resources/js/dashboard/topics/topicsMain.js");
 
 
 /***/ })
