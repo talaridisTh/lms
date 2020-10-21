@@ -23,8 +23,6 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
         }]
     },
     options: {
-		// rotation: 20,
-		cutoutPercentage: 60,
 		legend: {
 			position: "bottom",
 			labels: {
@@ -67,18 +65,11 @@ const topBundlesChart = new Chart(topBundlesCanvas, {
 				'rgba(255, 91, 91, 1)',
 				'rgba(2, 168, 181, 1)'
 			],
-            borderColor: "#fff"/* [
-                'rgba(112, 135, 235, 1)',
-                'rgba(43, 238, 140, 1)',
-                'rgba(250, 215, 127, 1)',
-                'rgba(255, 102, 102, 1)',
-                'rgba(2, 203, 217, 1)'
-            ] */,
+            borderColor: "#fff",
             borderWidth: 1
         }]
     },
     options: {
-		// maintainAspectRatio: false,
 		cutoutPercentage: 60,
 		legend: {
 			position: "bottom",
@@ -123,11 +114,6 @@ for( let i = 0; i < newStudentsData.length; i++ ) {
 	students.unshift( newStudentsData[i].students );
 
 }
-
-//red rgb(255, 91, 91
-//green rgb(16, 196, 105)
-//light - blue rgb(81, 157, 255)
-//dark - blue rgb(83, 109, 230)
 
 const newStudentsChart = new Chart(newStudentsCanvas, {
     type: 'line',
@@ -178,3 +164,62 @@ const newStudentsChart = new Chart(newStudentsCanvas, {
 		}
 	}
 });
+
+const topicStatsCanvas = document.getElementById("courses-per-topic");
+const topicStats = JSON.parse(topicStatsCanvas.dataset.topicStats);
+const topic = titleCountSeparator(topicStats);
+
+const topicStatsChart = new Chart(topicStatsCanvas, {
+	type: 'polarArea',
+	position: "bottom",
+    data: {
+        labels: topic.title,
+        datasets: [{
+            data: topic.count,
+            backgroundColor: [
+				'rgba(83, 109, 230, 1)',
+				'rgba(16, 196, 105, 1)',
+				'rgba(249, 200, 81, 1)',
+				'rgba(255, 91, 91, 1)',
+				'rgba(2, 168, 181, 1)'
+			],
+            borderColor: "#fff",
+            borderWidth: 1
+        }]
+    },
+    options: {
+		legend: {
+			position: "bottom",
+			labels: {
+				fontColor: "#a5b3c0",
+				fontFamily: "Open Sans, sans-serif"
+
+			}
+		},
+		scale: {
+			pointLabels: {
+
+			},
+			ticks:{
+				backdropColor: "#37404a",
+				fontColor: "#8391a2",
+				fontFamily: "Open Sans, sans-serif"
+			},
+			gridLines: {
+				color: "#464f5b"
+			}
+		},
+    }
+});
+
+function titleCountSeparator( arrayData ) {
+	const title = [];
+	const count = [];
+
+	for ( let i = 0; i < arrayData.length; i++ ) {
+		title.push(arrayData[i].title);
+		count.push(arrayData[i].count);
+	}
+
+	return { title, count }
+}

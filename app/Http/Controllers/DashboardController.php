@@ -7,6 +7,7 @@ use App\User;
 use App\Bundle;
 use App\Material;
 use App\Role;
+use App\Topic;
 use Carbon\Carbon;
 use DateTime;
 use Facade\FlareClient\View;
@@ -83,6 +84,13 @@ class DashboardController extends Controller
 			->groupBy("users.last_name", "users.first_name")->orderBy("courses", "desc")
 			->limit(5)->get();
 
+		$coursesPerTopic = DB::table("topics")
+			->join("topicables", "topics.id", "=", "topicables.topic_id")
+			->where("topicable_type", "App\Course")
+			->selectRaw("topics.title, COUNT(*) as count")
+			->groupBy("topics.title")->orderBy("count", "desc")->limit(5)
+			->get();
+
 		$data = [
 			'totalLessons' => $totalLessons,
 			'totalCourses' => $totalCourses,
@@ -93,6 +101,7 @@ class DashboardController extends Controller
 			'usersPerMonth' => json_encode($usersPerMonth),
 			'latestCourses' => $latestCourses,
 			'topInstructors' => $topInstructors,
+			'coursesPerTopic' => json_encode($coursesPerTopic),
 		];
 
         return view('admin.overview.overviewMain')->with($data);
