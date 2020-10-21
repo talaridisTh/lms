@@ -87,7 +87,7 @@
                                                     <div class="p-2">
                                                         @foreach($course->materials as $key=> $material)
                                                             @if($key>=10 && $key<20)
-                                                                <div class="pb-1 ff">
+                                                                card-header d-flex align-center mt-2  head-section                                                   <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
                                                                         <input class="input-materials"
                                                                                data-material-id="{{$material->id}}"

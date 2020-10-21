@@ -235,7 +235,7 @@
                         </div>
                     @endif
 
-                    <ul data-course-id="{{$course->id}}" class="m-0 p-0"> <!-- list material -->
+                    <ul data-course-id="{{$course->id}}" class="m-0 p-0 single-section-material"> <!-- list material -->
 
                         @php
                             $count = 0;  //count material
@@ -255,7 +255,7 @@
                                 --$count;//den metraei count an einai section
                             @endphp
 
-                            <div class="accordion section" id="{{$materials->slug}}"> <!-- list section -->
+                            <div class="accordion section mb-2" id="{{$materials->slug}}"> <!-- list section -->
                                 <div class="card mb-0 bg-transparent">
                                     <a class="custom-accordion-title d-block "
                                        data-toggle="collapse" href="#{{$materials->slug}}-collapse"
@@ -292,7 +292,7 @@
 
                                                 <li data-material-id="{{$chapter->id}}"
                                                     data-material-priority="{{$chapter->pivot->priority}}"
-                                                    class="list-group-item list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
+                                                    class="list-group-item border-r-0 list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                     <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                        href="{{$link}}">
                                                         <div class="col-md-2 ">

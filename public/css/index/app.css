@@ -18,6 +18,22 @@
   height: 80px;
 }
 
+.border-r-0 {
+  border-radius: 0 !important;
+}
+
+.section-list .list-group-item:first-child {
+  border-radius: 0 !important;
+}
+
+.single-section-material .list-group-item:last-child {
+  border-radius: 0 !important;
+}
+
+.single-section-material .list-group-item:first-child {
+  border-radius: 0 !important;
+}
+
 .borderBlue {
   border: solid 4px blue;
 }

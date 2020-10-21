@@ -349,7 +349,7 @@
                         </div>
                     @endif
 
-                    <ul data-course-id="{{$course->id}}"  class="my-2 p-0">
+                    <ul data-course-id="{{$course->id}}"  class="my-2 p-0 single-section-material">
                         @php
                             $count = 0;
                         @endphp
@@ -391,7 +391,7 @@
                                              data-parent="#{{$material->slug}}">
                                             <div class="p-0 card-body">
                                                 <ul data-course-id="{{$course->id}}" style="max-height: 800px"
-                                                    class="my-2 p-0 section-list">
+                                                    class="my-2 p-0 section-list ">
                                                 @foreach($material->chapters->where("type", "!=", "Announcement")  as   $chapter)
                                                     @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
 
@@ -404,7 +404,7 @@
 
                                                         <li data-material-id="{{$chapter->id}}"
                                                             data-material-priority="{{$chapter->pivot->priority}}"
-                                                            class="list-group-item list-material  m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
+                                                            class="list-group-item list-material border-r-0  m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                             <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                                href="{{$link}}">
                                                                 <div class="col-md-2 ">
