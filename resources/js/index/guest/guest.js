@@ -1,7 +1,3 @@
-
-
-
-
 import utilities from '../../index/main';
 
 let instructors = document.querySelectorAll(".js-instructor-link");
@@ -15,7 +11,7 @@ instructors.forEach((instructor, idx) => {
 
         this.findParent(2).classList.add("bg-list")
 
-        axiosGuestCourse(this.dataset.userId , this.dataset.userSlug)
+        axiosGuestCourse(this.dataset.userId, this.dataset.userSlug)
         axiosInstructor(this.dataset.userId)
 
     })
@@ -28,6 +24,9 @@ const axiosInstructor = async (userId) => {
 
         if (status == 200) {
             document.querySelector(".component-instructor").innerHTML = data
+            onPreview(userId, $(".input-course:checked"), "course")
+            onPreview(userId, $(".input-materials:checked"), "material")
+
         }
 
     } catch (e) {
@@ -35,7 +34,7 @@ const axiosInstructor = async (userId) => {
     }
 }
 
-const axiosGuestCourse = async (userId,userSlug) => {
+const axiosGuestCourse = async (userId, userSlug) => {
     try {
         const {data, status} = await axios.post("/guest/course", {
             userId
@@ -43,14 +42,14 @@ const axiosGuestCourse = async (userId,userSlug) => {
 
         if (status == 200) {
             document.querySelector(".component-course").innerHTML = data
-            let inputCourse = document.querySelectorAll(".input-course");
-            let inputMaterial = document.querySelectorAll(".input-materials");
+            let inputCourse = $(".input-course");
+            let inputMaterial = $(".input-materials");
             let btnGuest = document.querySelector(".js-submit-guest")
 
 
-            onClickInputCourse(inputCourse,userId)
-            onClickInputMaterial(inputMaterial)
-            onBtnGuest(btnGuest, userId,userSlug)
+            onClickInputCourse(inputCourse, userId)
+            onClickInputMaterial(inputMaterial, userId)
+            onBtnGuest(btnGuest, userId, userSlug)
         }
 
     } catch (e) {
@@ -58,63 +57,55 @@ const axiosGuestCourse = async (userId,userSlug) => {
     }
 }
 
-const onClickInputCourse = (inputs,userId) => {
+const onClickInputCourse = (inputs, userId) => {
+    inputs.change(function () {
+
+        onPreview(userId, $(".input-course:checked"), "course")
+
+    })
+
+}
 
 
+const onClickInputMaterial = (inputs, userId) => {
 
-    let checkedCourses = $(".input-course");
+    inputs.change(function () {
+        onPreview(userId, $(".input-materials:checked"), "material")
+    })
 
-    checkedCourses.change(function (){
-        let courseId = [];
+}
 
-        let test = $(".input-course:checked");
+const onPreview = (userId, modelInput, model) => {
+    console.log(model)
+    let courseId = [];
 
-        for (let i=0; i<test.length; i++){
-            if (!courseId.includes(test[i].dataset.courseId)) {
-                courseId.push(test[i].dataset.courseId)
+    let checkedCourses = modelInput;
+    console.log(checkedCourses)
+
+    if (model === "material") {
+        for (let i = 0; i < checkedCourses.length; i++) {
+            if (!courseId.includes(checkedCourses[i].dataset.materialId)) {
+                courseId.push(checkedCourses[i].dataset.materialId)
+            }
+
+        }
+        axiosMaterialInstructor(courseId, userId)
+    } else {
+        for (let i = 0; i < checkedCourses.length; i++) {
+            if (!courseId.includes(checkedCourses[i].dataset.courseId)) {
+                courseId.push(checkedCourses[i].dataset.courseId)
             }
 
         }
 
-        console.log(courseId)
+        axiosCourseInstructor(courseId, userId)
+    }
 
 
-    })
-
-
-
-    // inputs.forEach((input, idx) => {
-    //     input.addEventListener("click", async function () {
-    //         if (!courseId.includes(this.dataset.courseId)) {
-    //             courseId.push(this.dataset.courseId)
-    //         } else {
-    //             courseId = courseId.filter(item => item !== this.dataset.courseId)
-    //         }
-    //
-    //         axiosCourseInstructor(courseId,userId)
-    //
-    //     })
-    // })
 }
 
-const onClickInputMaterial = (inputs) => {
-    let materialId = []
 
-    inputs.forEach((input, idx) => {
-        input.addEventListener("click", async function () {
-            if (!materialId.includes(this.dataset.materialId)) {
-                materialId.push(this.dataset.materialId)
-            } else {
-                materialId = materialId.filter(item => item !== this.dataset.materialId)
-            }
-
-            axiosMaterialInstructor(materialId)
-
-        })
-    })
-}
-
-const axiosCourseInstructor = async (courseId,userId) => {
+const axiosCourseInstructor = async (courseId, userId) => {
     try {
         const {data, status} = await axios.post("/guest/instructor-course", {
             courseId,
@@ -147,30 +138,33 @@ const axiosMaterialInstructor = async (materialId) => {
 }
 
 
-const onBtnGuest = (btn, userId,userSlug) => {
+const onBtnGuest = (btn, userId, userSlug) => {
 
     btn.addEventListener("click", () => {
         let checkedCourses = document.querySelectorAll(".input-course:checked");
         let checkedMaterials = document.querySelectorAll(".input-materials:checked");
 
 
-        axiosCreateGuestUser(userId, checkedCourses, checkedMaterials,userSlug)
+        axiosCreateGuestUser(userId, checkedCourses, checkedMaterials, userSlug)
     })
 }
 
-const axiosCreateGuestUser = async (userId, courses, materials,userSlug) => {
+const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
 
-    let courseId  = []
-    let materialId  = []
+    let courseId = []
+    let materialId = []
 
-    courses.forEach(course =>courseId.push(course.dataset.courseId))
-    materials.forEach(material =>materialId.push({"material":material.dataset.materialId,"courses":material.dataset.courseId}))
+    courses.forEach(course => courseId.push(course.dataset.courseId))
+    materials.forEach(material => materialId.push({
+        "material": material.dataset.materialId,
+        "courses": material.dataset.courseId
+    }))
 
     try {
         const {status} = await axios.post("/guest/create/guest-user", {
             userId, courseId, materialId
         })
-        if (status===200){
+        if (status === 200) {
 
             document.querySelector(".guest-link").innerHTML = `<a href ="${window.location.origin}/guest/temp/link/${userSlug}"> link</a>`
 

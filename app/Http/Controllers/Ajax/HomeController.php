@@ -32,7 +32,17 @@ class HomeController extends Controller {
 
     public function guestInstructor(Request $request)
     {
+//        $partnerName = User::findOrFail($request->userId)->first_name;
+//        $guestUser = User::whereFirstName($partnerName . "-guest")->first();
         $instructor = User::findOrFail($request->userId);
+//        if ($guestUser)
+//        {
+//            $courseGuest = $guestUser->courses;
+//
+//            return view("index.guest.guest-instructor", compact('instructor', "courseGuest"));
+//        }
+
+
 
         return view("index.guest.guest-instructor", compact('instructor'));
     }
