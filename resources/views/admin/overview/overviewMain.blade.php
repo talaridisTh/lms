@@ -86,8 +86,8 @@
 				</div>
 			</div>
 
-			<div class="row mb-3">
-				<div class="col-lg-6 col-xl-4">
+			<div class="row">
+				<div class="col-lg-6 col-xl-4 mb-3">
 					
 					<div class="card h-100">
 						<div class="pb-0 card-body d-flex flex-column justify-content-start align-items-center">
@@ -106,7 +106,7 @@
 							data-students="{{ $course->students }}"></span>
 					@endforeach
 				</div>
-				<div class="col-lg-6 col-xl-8">
+				<div class="col-lg-6 col-xl-8 mb-3">
 
 					<div class="card h-100">
 						<div class="pb-0 card-body">
@@ -154,9 +154,23 @@
 				</div>
 			</div>
 
-			<div class="row mb-3">
+			<div class="row">
 
-				<div class="col-lg-6 col-xl-4">
+				<div class="col-lg-6 col-xl-4 mb-3">
+					<div class="card h-100">
+						<div class="pb-0 card-body d-flex flex-column justify-content-start align-items-center">
+							<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Courses ανα topic</h5>
+
+							<div style="height: 300px;">
+								<canvas id="courses-per-topic" width="400" height="300" data-topic-stats="{{ $coursesPerTopic }}"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="col-lg-6 col-xl-4 mb-3">
 					<div class="card h-100">
 						<div class="pb-0 card-body">
 							<h5 class="card-title text-center mb-3">Δραστηριότητα Εισηγητών</h5>
@@ -170,7 +184,7 @@
 								<tbody>
 									@foreach ($topInstructors as $users)
 										<tr>
-											<td>{{ $users->last_name }} {{ $users->last_name }}</td>
+											<td>{{ $users->last_name }} {{ $users->first_name }}</td>
 											<td class="text-center">{{ $users->courses }}</td>
 										</tr>
 									@endforeach
@@ -180,12 +194,12 @@
 					</div><!-- ./card -->
 				</div>
 
-				<div class="col-lg-6 col-xl-4">
+				<div class="col-lg-6 col-xl-4 mb-3">
 					<div class="card h-100">
 						<div class="pb-0 card-body d-flex flex-column justify-content-start align-items-center">
 							<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Δημοφιλέστερα Bundles</h5>
 
-							<div style="width:400px; height: 300px;">
+							<div style="height: 300px;">
 								<canvas id="top-bundles" width="400" height="300"></canvas>
 							</div>
 						</div>
@@ -196,6 +210,18 @@
 							data-students="{{ $bundle->students }}"></span>
 					@endforeach
 				</div>
+
+				{{-- <div class="col-lg-6 col-xl-4">
+					<div class="card h-100">
+						<div class="pb-0 card-body d-flex flex-column justify-content-start align-items-center">
+							<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Courses ανα topic</h5>
+
+							<div style="width:400px; height: 300px;">
+								<canvas id="courses-per-topic" width="400" height="300" data-topic-stats="{{ $coursesPerTopic }}"></canvas>
+							</div>
+						</div>
+					</div>
+				</div> --}}
 				
 			</div>
 
