@@ -277,8 +277,8 @@
 
 
 				</div>
-				<input id="store-material-id" type="text" value="" hidden>
-				<input id="store-material-priority" type="text" value="" hidden>
+				<input id="store-material-id" type="text" value="" hidden autocomplete="off"/>
+				<input id="store-material-priority" type="text" value="" hidden autocomplete="off"/>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
@@ -767,12 +767,47 @@
 						<div class="col-sm-1">
 						</div>
 						<div class="col-sm-11 d-flex justify-content-end">
-							<button id="material-modal-shown-btn" type="button"
-								class="btn btn-primary" data-toggle="modal"
+
+
+
+							<div class="dropdown">
+
+								<button type="button" class="btn btn-primary dropdown-toggle"
+									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									<i class="mdi mdi-plus-circle mr-2"></i>
+									Προσθήκη
+								</button>
+
+								<div class="dropdown-menu dropdown-menu-right py-0">
+									<div class="dropdown-divider my-0"></div>
+									<a id="material-modal-shown-btn" href="#" class="dropdown-item py-2"
+										data-toggle="modal" data-target="#add-materials-modal"
+										data-chapter="main">
+										<i class="mdi mdi-archive mr-2"></i>
+											Απο το αρχείο
+										</a>
+									<div class="dropdown-divider my-0"></div>
+									<a id="new-content-btn" href="#" class="dropdown-item py-2"
+										data-toggle="modal" data-target="#add-additions-modal">
+										<i class="mdi mdi-content-save mr-2"></i>
+										Νέο Υλικό
+									</a>
+								</div>
+							</div>
+
+							{{-- <button id="material-modal-shown-btn" type="button"
+								class="btn btn-primary d-none" data-toggle="modal"
 								data-target="#add-materials-modal"  data-chapter="main">
 								<i class="mdi mdi-plus-circle mr-2"></i>
 								Προσθήκη Υλικού
-							</button>
+							</button> --}}
+
+
+
+
+
+
+
 							<div class="dropdown ml-2">
 								<button id="active-material-bulk" class="btn btn-secondary dropdown-toggle"
 									type="button" data-toggle="dropdown" data-text="Επιλογές"
