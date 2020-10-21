@@ -5,7 +5,7 @@ const topCoursesData = categoryStudentsCountBuilder( topCourses );
 const topCoursesCanvas = document.getElementById("top-courses");
 
 const topCoursesChart = new Chart(topCoursesCanvas, {
-	type: 'doughnut',
+	type: 'polarArea',
 	position: "bottom",
     data: {
         labels: topCoursesData.titles,
@@ -18,23 +18,32 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
 				'rgba(255, 91, 91, 1)',
 				'rgba(2, 168, 181, 1)'
 			],
-            borderColor: "#fff"/* [
-                'rgba(112, 135, 235, 1)',
-                'rgba(43, 238, 140, 1)',
-                'rgba(250, 215, 127, 1)',
-                'rgba(255, 102, 102, 1)',
-                'rgba(2, 203, 217, 1)'
-            ] */,
+            borderColor: "#fff",
             borderWidth: 1
         }]
     },
     options: {
+		// rotation: 20,
 		cutoutPercentage: 60,
 		legend: {
 			position: "bottom",
 			labels: {
-				fontColor: "#a5b3c0"
+				fontColor: "#a5b3c0",
+				fontFamily: "Open Sans, sans-serif"
 
+			}
+		},
+		scale: {
+			pointLabels: {
+
+			},
+			ticks:{
+				backdropColor: "#37404a",
+				fontColor: "#8391a2",
+				fontFamily: "Open Sans, sans-serif"
+			},
+			gridLines: {
+				color: "#464f5b"
 			}
 		},
     }
@@ -69,11 +78,13 @@ const topBundlesChart = new Chart(topBundlesCanvas, {
         }]
     },
     options: {
+		// maintainAspectRatio: false,
 		cutoutPercentage: 60,
 		legend: {
 			position: "bottom",
 			labels: {
-				fontColor: "#a5b3c0"
+				fontColor: "#a5b3c0",
+				fontFamily: "Open Sans, sans-serif"
 
 			}
 		},		
@@ -94,3 +105,76 @@ function categoryStudentsCountBuilder( element ) {
 
 	}
 };
+
+const newStudentsCanvas = document.getElementById("new-students-per-month");
+const newStudentsData = JSON.parse(newStudentsCanvas.dataset.data);
+
+const tempMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+
+const months = []
+const students = [];
+let index = 0;
+
+for( let i = 0; i < newStudentsData.length; i++ ) {
+
+	index = newStudentsData[i].month - 1;
+
+	months.unshift( tempMonths[ index ] )
+	students.unshift( newStudentsData[i].students );
+
+}
+
+//red rgb(255, 91, 91
+//green rgb(16, 196, 105)
+//light - blue rgb(81, 157, 255)
+//dark - blue rgb(83, 109, 230)
+
+const newStudentsChart = new Chart(newStudentsCanvas, {
+    type: 'line',
+    data: {
+		labels: months,
+		datasets: [{
+			label: "Νέοι Μαθητές",
+			data: students,
+			lineTension: 0,
+			borderColor: "rgb(83, 109, 230)",
+			backgroundColor: "rgba(83, 109, 230, 0.1)",
+			pointRadius: 5,
+			pointBackgroundColor: "rgb(83, 109, 230)",
+		}]
+	},
+	options: {
+		maintainAspectRatio: false,
+		legend: {
+			labels: {
+				fontColor: "#8391a2",
+				fontFamily: "Open Sans, sans-serif"
+			}
+		},
+		scales: {
+			xAxes: [{
+				ticks: {
+					fontColor: "#8391a2",
+					fontFamily: "Open Sans, sans-serif"
+				},
+				gridLines: {
+					color: "#464f5b"
+				}
+			}],
+			
+			yAxes: [{
+				ticks: {
+					fontColor: "#8391a2",
+					fontFamily: "Open Sans, sans-serif"
+				},
+				gridLines: {
+					color: "#464f5b"
+				}
+			}],
+			scaleLabel: {
+				fontColor: "#8391a2",
+				fontFamily: "Open Sans, sans-serif"
+			}
+		}
+	}
+});

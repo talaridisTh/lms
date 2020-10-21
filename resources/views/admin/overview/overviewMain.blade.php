@@ -77,35 +77,126 @@
 				</div> <!-- end col-->
 			</div><!-- end row-->
 			
-			<div class="row">
+			<div class="card">
+				<div class="pb-0 card-body">
+					<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Νέοι μαθητές ανα μήνα</h5>
+					<div>
+						<canvas id="new-students-per-month" width="400" height="200" data-data="{{ $usersPerMonth }}"></canvas>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-3">
 				<div class="col-lg-6 col-xl-4">
-					<h4 class="page-title text-center">Δημοφιλέστερα Courses</h4>
-					<canvas id="top-courses" width="400" height="300"></canvas>
+					
+					<div class="card h-100">
+						<div class="pb-0 card-body d-flex flex-column justify-content-start align-items-center">
+							<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Δημοφιλέστερα Courses</h5>
+					
+							<div style="width:400px; height: 300px;">
+								<canvas id="top-courses" width="400" height="300"></canvas>
+							
+							</div>
+						</div>
+					</div>
+					
 
 					@foreach ($topCourses as $course)
 						<span class="js-top-courses" data-title="{{ $course->title }}"
 							data-students="{{ $course->students }}"></span>
 					@endforeach
 				</div>
+				<div class="col-lg-6 col-xl-8">
+
+					<div class="card h-100">
+						<div class="pb-0 card-body">
+							<h5 class="card-title text-center mb-3">Πρόσφατα Courses</h5>
+							<table class="table table-hover table-centered mb-0">
+								<thead>
+									<tr>
+										<th class="text-center">Τίτλος</th>
+										<th class="text-center">Εισηγητής</th>
+									</tr>
+								</thead>
+								<tbody>
+									@php
+										$now = new DateTime("now");
+									@endphp
+										@foreach ($latestCourses as $course)
+										<tr>
+											@php
+												$date2 = new DateTime($course->created_at);
+												$interval = $now->diff($date2);
+
+												if ($interval->d < 7 && $interval->m === 0) {
+													$badgeStyle = "badge-success-lighten";
+												}
+												elseif ($interval->d > 7 && $interval->d < 31 && $interval->m === 0) {
+													$badgeStyle = "badge-warning-lighten";
+												}
+												else {
+													$badgeStyle = "badge-danger-lighten";
+												}
+											@endphp
+											<td>
+												{{ $course->title }}
+												<span class="ml-2 badge {{ $badgeStyle }} badge-pill">
+													{{ $course->created_at->diffForHumans() }}
+												</span>
+											</td>
+											<td>{{ $course->curator->last_name }} {{ $course->curator->first_name }}</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div><!-- ./card -->
+				</div>
+			</div>
+
+			<div class="row mb-3">
+
 				<div class="col-lg-6 col-xl-4">
-					<h4 class="page-title text-center">Δημοφιλέστερα Bundles</h4>
-					<canvas id="top-bundles" width="400" height="300"></canvas>
+					<div class="card h-100">
+						<div class="pb-0 card-body">
+							<h5 class="card-title text-center mb-3">Δραστηριότητα Εισηγητών</h5>
+							<table class="table table-hover table-centered mb-0">
+								<thead>
+									<tr>
+										<th class="text-center">Ονοματεπώνυμο</th>
+										<th class="text-center">Courses</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($topInstructors as $users)
+										<tr>
+											<td>{{ $users->last_name }} {{ $users->last_name }}</td>
+											<td class="text-center">{{ $users->courses }}</td>
+										</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div><!-- ./card -->
+				</div>
+
+				<div class="col-lg-6 col-xl-4">
+					<div class="card h-100">
+						<div class="pb-0 card-body d-flex flex-column justify-content-start align-items-center">
+							<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Δημοφιλέστερα Bundles</h5>
+
+							<div style="width:400px; height: 300px;">
+								<canvas id="top-bundles" width="400" height="300"></canvas>
+							</div>
+						</div>
+					</div>
 
 					@foreach ($topBundles as $bundle)
 						<span class="js-top-bundles" data-title="{{ $bundle->title }}"
 							data-students="{{ $bundle->students }}"></span>
 					@endforeach
-					
 				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-lg-6 col-xl-4">
-
-				</div>
-				<div class="col-lg-6 col-xl-4">
-
-				</div>
+				
 			</div>
 
 

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Course;
+use App\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
@@ -40,7 +41,9 @@ class CourseFactory extends Factory
         	'summary' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
         	'cover' => "http://placeimg.com/1600/700/any",
 			'description' => "Description of Course ".$counter++." ".$this->faker->slug($nbSentences = 3, $variableNbSentences = true),
-			'user_id' => 2,
+			'user_id' => function() {
+				return Role::find(2)->users()->get()->random()->id;
+			},
 			'slug' => $this->faker->slug,
 			'status' => $status,
 			'version' => $this->faker->numberBetween( 0 , 1 ) == 0 ? "Trial" : "Normal",

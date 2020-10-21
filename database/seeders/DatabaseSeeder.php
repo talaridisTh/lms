@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder {
 			UtilitySeeder::class,
 		]);
 		
-		User::factory()->times(100)->create()
+		User::factory()->times(500)->create()
 			->each( function($user) {
         		$user->roles()->attach( rand( 2, 4 ) );
 			});

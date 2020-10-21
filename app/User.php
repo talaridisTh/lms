@@ -305,11 +305,11 @@ class User extends Authenticatable {
 
     }
 
-    public function getCreatedAtAttribute($value)
-    {
-        $carbonDate = new Carbon($value);
-        return $carbonDate->diffForHumans();
-    }
+    // public function getCreatedAtAttribute($value)
+    // {
+    //     $carbonDate = new Carbon($value);
+    //     return $carbonDate->diffForHumans();
+    // }
     public function getUpdatedAtAttribute($value)
     {
         $carbonDate = new Carbon($value);
