@@ -7,7 +7,8 @@
         <div class="mt-3">
             <hr class="">
             <h4 class="mt-3 mb-1"><strong><i class="uil uil-globe"></i>Link</strong></h4>
-            <a href="" class="guest-link"></a>
+
+            <span class="guest-link"></span>
 
             <p class="mt-3 mb-2"><strong></strong></p>
             <h4>Courses</h4>

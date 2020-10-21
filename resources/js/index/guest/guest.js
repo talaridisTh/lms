@@ -12,11 +12,12 @@ instructors.forEach((instructor, idx) => {
         this.findParent(2).classList.add("bg-list")
 
         axiosGuestCourse(this.dataset.userId, this.dataset.userSlug)
-        axiosInstructor(this.dataset.userId)
+        axiosInstructor(this.dataset.userId, this.dataset.userSlug)
 
     })
 })
-const axiosInstructor = async (userId) => {
+
+const axiosInstructor = async (userId,userSlug) => {
     try {
         const {data, status} = await axios.post("/guest/instructor", {
             userId
@@ -26,6 +27,16 @@ const axiosInstructor = async (userId) => {
             document.querySelector(".component-instructor").innerHTML = data
             onPreview(userId, $(".input-course:checked"), "course")
             onPreview(userId, $(".input-materials:checked"), "material")
+
+            let url =`${window.location.origin}/guest/temp/link/${userSlug}`
+            let btnCopy = `<button class="copyBtn btn badge badge-success font-16" data-text=${url} >
+                                <i class="mdi mdi-content-copy"></i>
+                            </button>`
+
+            console.log($(".guest-link")[0].innerHTML=`<div>${btnCopy} <a href ="${url}"> ${url}</a></div>`)
+            // document.querySelector(".guest-link").innerHTML = `<a href ="${window.location.origin}/guest/temp/link/${userSlug}"> link</a>`
+
+            copy();
 
         }
 
@@ -76,11 +87,9 @@ const onClickInputMaterial = (inputs, userId) => {
 }
 
 const onPreview = (userId, modelInput, model) => {
-    console.log(model)
     let courseId = [];
 
     let checkedCourses = modelInput;
-    console.log(checkedCourses)
 
     if (model === "material") {
         for (let i = 0; i < checkedCourses.length; i++) {
@@ -173,3 +182,46 @@ const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
         console.log(e)
     }
 }
+
+
+
+const copy = ()=>{
+    const btn = document.querySelector('.copyBtn');
+
+
+    btn.addEventListener('click', e => {
+        const input = document.createElement('input');
+        input.value = btn.dataset.text;
+        console.log(btn.dataset.text)
+        document.body.appendChild(input);
+        input.select();
+        if (document.execCommand('copy')) {
+            btn.disabled = true
+            btn.classList.remove("badge-success")
+            btn.classList.add("badge-secondary")
+
+
+            sweetAlert("Το url αντιγράφηκε " , 'success')
+            document.body.removeChild(input);
+        }
+    });
+
+
+    let sweetAlert = (title, icon) => {
+        Swal.fire({
+            toast: 'true',
+            position: 'top-end',
+            icon: icon,
+            title: title,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+
+    }
+
+
+}
+
+
+// data-text="{{$u->pivot->user_link}}
