@@ -6,13 +6,20 @@ import utilities from '../main';
 //! EventListeners
 //!==================
 
-$("#submit-form-btn").click( function() {
+$("#select-all-bundles").on("change", function() {
+	const minorCheckboxes = $(".js-bundle-checkbox");
+	const bulkBtn = $("#bundle-bult-btn")[0];
+
+	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
+})
+
+$("#submit-form-btn").on("click", function() {
 	
 	$("#new-bundle-form").submit()
 
 });
 
-$("#delete-bundles-btn").click( function() {
+$("#delete-bundles-btn").on("click", function() {
 	let checkedBoxes = $(".js-bundle-checkbox:checked");
 	let ids = [];
 
@@ -22,7 +29,10 @@ $("#delete-bundles-btn").click( function() {
 
 	Swal.fire({
 		title: 'Είστε σίγουρος;',
-		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? " Bundle θα διαγραφεί" : " Bundles θα διαγραφούν"}`,
+		// text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? " Bundle θα διαγραφεί" : " Bundles θα διαγραφούν"}`,
+		html: checkedBoxes.length == 1 
+			? "<p class='mb-0'>Το Bundle θα διαγραφεί.</p>Η ενέργεια θα είναι μη αναστρέψιμη!"
+			: `<p class="mb-0">${ids.length} Bundles θα διαγραφούν.</p>Η ενέργεια θα είναι μη αναστρέψιμη!`,
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#ff5b5b',
@@ -37,7 +47,7 @@ $("#delete-bundles-btn").click( function() {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
 
-				utilities.toastAlert( "success", message );
+				utilities.toastAlert( "info", message );
 
 				bundlesDatatable.ajax.reload();
 			})
@@ -103,8 +113,21 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 
 		activeToggleInit();
+		checkboxChangeInit();
+		utilities.resetBulk($("#bundle-bult-btn"), $("#select-all-bundles"));
 	}
 })
+
+function checkboxChangeInit(){
+
+	let minorCheckboxes = $(".js-bundle-checkbox");
+	let mainCheckbox = $("#select-all-bundles")[0];
+	let bulkBtn = $("#bundle-bult-btn")[0];
+
+	minorCheckboxes.on("change", function() {
+		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn);
+	})
+}
 
 function activeToggleInit() {
 
