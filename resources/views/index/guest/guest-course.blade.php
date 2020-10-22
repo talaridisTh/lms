@@ -67,7 +67,7 @@
                                                  aria-labelledby="headingFour-{{$course->id}}"
                                                  data-parent="#custom-accordion-one">
                                                 <div class="card-body d-flex pt-0">
-                                                    <div class="p-2">
+                                                    <div class="guest-material p-2">
                                                         @foreach($course->materials->where("type","!=","Section")->where("type","!=","Announcement") as $key=> $material)
                                                             @php
 
@@ -98,7 +98,7 @@
                                                             @endif
                                                         @endforeach
                                                     </div>
-                                                    <div class="p-2">
+                                                    <div class=" guest-materialp-2">
 
                                                         @foreach($course->materials->where("type","!=","Section")->where("type","!=","Announcement") as $key=> $material)
 

@@ -55,6 +55,7 @@ const axiosGuestCourse = async (userId, userSlug) => {
             onClickInputCourse(inputCourse, userId)
             onClickInputMaterial(inputMaterial, userId)
             onBtnGuest(btnGuest, userId, userSlug)
+            onSelectAllMaterial(inputCourse,userSlug)
         }
 
     } catch (e) {
@@ -82,6 +83,7 @@ const onClickInputMaterial = (inputs, userId) => {
 
 const onPreview = (userId, modelInput, model,userSlug) => {
     let courseId = [];
+
 
     let checkedCourses = modelInput;
 
@@ -200,6 +202,46 @@ const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
     }
 }
 
+
+$(".input-course").on("click",function (){
+    console.log(this);
+})
+
+const onSelectAllMaterial=(inputsMaterial,userSlug)=>{
+    inputsMaterial.on("change",function (){
+        if(this.checked){
+            let materialId = []
+            let containerOfMaterial= this.findParent(2).nextElementSibling.findChild(1).children;
+            containerOfMaterial.forEach(material=>{
+              material.children.forEach(input=>{
+                    if (input){
+                        input.findChild(2).checked = true;
+                        materialId.push(input.findChild(2).dataset.materialId)
+
+                    }
+                    })
+            })
+            axiosMaterialInstructor(materialId,userSlug)
+
+
+        }
+        else{
+            let materialId = []
+            let containerOfMaterial= this.findParent(2).nextElementSibling.findChild(1).children;
+            containerOfMaterial.forEach(material=>{
+                material.children.forEach(input=>{
+                    if (input){
+                        input.findChild(2).checked = false;
+
+                    }
+                })
+            })
+            axiosMaterialInstructor(materialId,userSlug)
+            console.log(materialId)
+
+        }
+    })
+}
 
 
 const copy = ()=>{
