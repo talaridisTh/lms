@@ -44,7 +44,7 @@ class DashboardController extends Controller
 			->where("users.status", 1)
 			->whereBetween("users.created_at", $dateRange)
 			->selectRaw("MONTH(created_at) as month, COUNT(*) as students")
-			->groupBy("month")->get();
+			->groupBy("month")->orderBy("month")->get();
 
 		$topCourses = DB::table("course_user")
 			->join("courses", "course_id", "=", "courses.id")

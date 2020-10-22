@@ -36,11 +36,13 @@ class FilesDataTable extends DataTable
 			->addColumn('action', function($data) {
 				return "<button type='button' class='btn btn-primary js-add-file-btn' data-file-id='$data->id'>Προσθήκη</button>";
 			})
-			->editColumn("ext", function($data) {
+			->editColumn("original_name", function($data) {
+
 				$icons = [
-					"mp3" => "mdi-music-clef-treble",
-                    "pdf" => "mdi-file-pdf-outline text-danger",
-        			"odg" => "mdi-file-pdf text-danger",
+					"ev3" => "mdi-robot-industrial",
+					"pdf" => "mdi-file-pdf-outline text-danger",
+					"html" => "mdi-language-html5 text-danger",
+					"odg" => "mdi-file-pdf text-danger",
 					"doc" => "mdi-file-document-outline text-teal",
 					"odt" => "mdi-file-document-outline text-teal",
 					"rtf" => "mdi-file-document-outline text-teal",
@@ -48,7 +50,53 @@ class FilesDataTable extends DataTable
 					"ods" => "mdi-file-table-box text-success",
 					"pp" => "mdi-file-powerpoint-outline text-orange",
 					"odp" => "mdi-file-powerpoint-outline text-orange",
+					"sb3" => "mdi-cat text-orange",
 					"zip" => "mdi-folder-zip-outline text-warning",
+					"rar" => "mdi-folder-zip-outline text-warning",
+				];
+
+				foreach ($icons as $type => $icon) {
+					if ( fnmatch("$type*", $data->ext ) && $data->ext != "mp3") {
+						$label = "<i class='my-1 h3 mdi $icon' title='$data->ext'></i>";
+						break;
+					}
+					elseif ( $data->ext === "mp3" ) {
+						$label = "
+							<i class='js-audio-btn my-1 h3 mdi mdi-play-circle-outline cursor-pointer' data-audio-status='paused'></i>
+							<audio class='js-audio'>
+								<source src='$data->rel_path' type='$data->file_info'>
+							</audio>
+						";
+						break;
+					}
+				}
+				return "
+					<div class='d-flex'>
+						$label
+						<div class='d-inline'>
+							<a href='$data->rel_path' class='mb-0 ml-2 custom-link-primary' download>$data->original_name</a>
+							<p class='mb-0 ml-2'>$data->name.$data->ext</p>
+						</div>
+					</div>
+				";
+			})
+			->editColumn("ext", function($data) {
+				$icons = [
+					"mp3" => "mdi-music-clef-treble",
+					"ev3" => "mdi-robot-industrial",
+					"pdf" => "mdi-file-pdf-outline text-danger",
+					"html" => "mdi-language-html5 text-danger",
+					"odg" => "mdi-file-pdf text-danger",
+					"doc" => "mdi-file-document-outline text-teal",
+					"odt" => "mdi-file-document-outline text-teal",
+					"rtf" => "mdi-file-document-outline text-teal",
+					"xl" => "mdi-file-table-box text-success",
+					"ods" => "mdi-file-table-box text-success",
+					"pp" => "mdi-file-powerpoint-outline text-orange",
+					"odp" => "mdi-file-powerpoint-outline text-orange",
+					"sb3" => "mdi-cat text-orange",
+					"zip" => "mdi-folder-zip-outline text-warning",
+					"rar" => "mdi-folder-zip-outline text-warning",
 				];
 
 				foreach( $icons as $type => $icon ) {
@@ -63,7 +111,7 @@ class FilesDataTable extends DataTable
 				return number_format($data->size / 1000000, 2, ",", ".") ."MB";
 
 			})
-			->rawColumns(['action', 'ext']);
+			->rawColumns(['action', 'original_name', 'ext']);
     }
 
     /**

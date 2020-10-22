@@ -3,7 +3,9 @@
 	@php
 		$icons = [
 			"mp3" => "mdi-music-clef-treble",
+			"ev3" => "mdi-robot-industrial",
 			"pdf" => "mdi-file-pdf-outline text-danger",
+			"html" => "mdi-language-html5 text-danger",
 			"odg" => "mdi-file-pdf text-danger",
 			"doc" => "mdi-file-document-outline text-teal",
 			"odt" => "mdi-file-document-outline text-teal",
@@ -12,7 +14,9 @@
 			"ods" => "mdi-file-table-box text-success",
 			"pp" => "mdi-file-powerpoint-outline text-orange",
 			"odp" => "mdi-file-powerpoint-outline text-orange",
+			"sb3" => "mdi-cat text-orange",
 			"zip" => "mdi-folder-zip-outline text-warning",
+			"rar" => "mdi-folder-zip-outline text-warning",
 		]
 	@endphp
 
@@ -42,7 +46,7 @@
 								@elseif ( $file->ext == "mp3" )
 
 									<i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>
-									<audio class="js-audio">
+									<audio preload="auto" class="js-audio">
 										<source src="{{ $file->rel_path }}" type="{{ $file->file_info }}">
 									</audio>
 									@break

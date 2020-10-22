@@ -5,7 +5,7 @@ const topCoursesData = categoryStudentsCountBuilder( topCourses );
 const topCoursesCanvas = document.getElementById("top-courses");
 
 const topCoursesChart = new Chart(topCoursesCanvas, {
-	type: 'polarArea',
+	type: 'doughnut',
 	position: "bottom",
     data: {
         labels: topCoursesData.titles,
@@ -23,6 +23,7 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
         }]
     },
     options: {
+		cutoutPercentage: 50,
 		legend: {
 			position: "bottom",
 			labels: {
@@ -30,22 +31,10 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
 				fontFamily: "Open Sans, sans-serif"
 
 			}
-		},
-		scale: {
-			pointLabels: {
-
-			},
-			ticks:{
-				backdropColor: "#37404a",
-				fontColor: "#8391a2",
-				fontFamily: "Open Sans, sans-serif"
-			},
-			gridLines: {
-				color: "#464f5b"
-			}
-		},
+		},		
     }
 });
+
 
 const topBundles = document.getElementsByClassName("js-top-bundles");
 const topBundlesData = categoryStudentsCountBuilder( topBundles );
@@ -70,7 +59,7 @@ const topBundlesChart = new Chart(topBundlesCanvas, {
         }]
     },
     options: {
-		cutoutPercentage: 60,
+		cutoutPercentage: 50,
 		legend: {
 			position: "bottom",
 			labels: {
@@ -98,22 +87,35 @@ function categoryStudentsCountBuilder( element ) {
 };
 
 const newStudentsCanvas = document.getElementById("new-students-per-month");
-const newStudentsData = JSON.parse(newStudentsCanvas.dataset.data);
+let newStudentsData = JSON.parse(newStudentsCanvas.dataset.data);
+const currentMonth = new Date().getMonth();
+const refMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
-const tempMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+for ( let i = 0; i < refMonths.length; i++ ) {
+
+	if ( newStudentsData[i].month === i + 1 ) {
+		newStudentsData[i].month = refMonths[i];
+	}
+	else {
+		newStudentsData.splice( i, 0, {
+			month: refMonths[i],
+			students: 0
+		});
+	}
+}
+
+const moveMonths = newStudentsData.splice( currentMonth + 1);
+newStudentsData = moveMonths.concat(newStudentsData)
 
 const months = []
 const students = [];
-let index = 0;
 
-for( let i = 0; i < newStudentsData.length; i++ ) {
 
-	index = newStudentsData[i].month - 1;
-
-	months.unshift( tempMonths[ index ] )
-	students.unshift( newStudentsData[i].students );
-
+for ( let i = 0; i < newStudentsData.length; i++ ) {
+	months.push(newStudentsData[i].month);
+	students.push(newStudentsData[i].students);
 }
+
 
 const newStudentsChart = new Chart(newStudentsCanvas, {
     type: 'line',
@@ -151,7 +153,8 @@ const newStudentsChart = new Chart(newStudentsCanvas, {
 			yAxes: [{
 				ticks: {
 					fontColor: "#8391a2",
-					fontFamily: "Open Sans, sans-serif"
+					fontFamily: "Open Sans, sans-serif",
+					stepSize: 1
 				},
 				gridLines: {
 					color: "#464f5b"
@@ -170,7 +173,7 @@ const topicStats = JSON.parse(topicStatsCanvas.dataset.topicStats);
 const topic = titleCountSeparator(topicStats);
 
 const topicStatsChart = new Chart(topicStatsCanvas, {
-	type: 'polarArea',
+	type: 'doughnut',
 	position: "bottom",
     data: {
         labels: topic.title,
@@ -188,25 +191,13 @@ const topicStatsChart = new Chart(topicStatsCanvas, {
         }]
     },
     options: {
+		cutoutPercentage: 50,
 		legend: {
 			position: "bottom",
 			labels: {
 				fontColor: "#a5b3c0",
 				fontFamily: "Open Sans, sans-serif"
 
-			}
-		},
-		scale: {
-			pointLabels: {
-
-			},
-			ticks:{
-				backdropColor: "#37404a",
-				fontColor: "#8391a2",
-				fontFamily: "Open Sans, sans-serif"
-			},
-			gridLines: {
-				color: "#464f5b"
 			}
 		},
     }
