@@ -86,16 +86,16 @@
                     <thead>
                         <tr>
                             <th class="text-center">Όνομα</th>
-                            <th class="text-center">Τύπος</th>
+                            {{-- <th class="text-center">Τύπος</th> --}}
                             <th class="text-center">Μέγεθος</th>
                             <th class="text-center w-5"></th>
-                        </tr>URL video
+                        </tr>
                     </thead>
                     <tbody class="tables-hover-effect"></tbody>
                     <tfoot>
                         <tr>
                             <th class="text-center">Όνομα</th>
-                            <th class="text-center">Τύπος</th>
+                            {{-- <th class="text-center">Τύπος</th> --}}
                             <th class="text-center">Μέγεθος</th>
                             <th class="text-center"></th>
                         </tr>

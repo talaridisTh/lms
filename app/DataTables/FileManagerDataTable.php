@@ -34,7 +34,7 @@ class FileManagerDataTable extends DataTable
 							data-toggle='modal' data-target='#edit-file-modal' data-caption='' data-description=''
 							data-file-id='$data->id'
 						>$data->original_name</a>
-							<p>$data->name</p>";
+							<p>$data->name.$data->ext</p>";
 				}
 
 				return "
@@ -43,7 +43,7 @@ class FileManagerDataTable extends DataTable
 						data-description='$details->description' data-toggle='modal'
 						data-file-id='$data->id' data-target='#edit-file-modal'
 					>$data->original_name</a>
-						<p>$data->name</p>";
+						<p>$data->name.$data->ext</p>";
 			})
 			->editColumn("type", function($data) {
 				$type = explode( "/", $data->file_info );
@@ -53,7 +53,10 @@ class FileManagerDataTable extends DataTable
 
 				$icons = [
 					"mp3" => "mdi-music-clef-treble",
+					"ev3" => "mdi-robot-industrial",
 					"pdf" => "mdi-file-pdf-outline text-danger",
+					"html" => "mdi-language-html5 text-danger",
+					"odg" => "mdi-file-pdf text-danger",
 					"doc" => "mdi-file-document-outline text-teal",
 					"odt" => "mdi-file-document-outline text-teal",
 					"rtf" => "mdi-file-document-outline text-teal",
@@ -61,7 +64,9 @@ class FileManagerDataTable extends DataTable
 					"ods" => "mdi-file-table-box text-success",
 					"pp" => "mdi-file-powerpoint-outline text-orange",
 					"odp" => "mdi-file-powerpoint-outline text-orange",
+					"sb3" => "mdi-cat text-orange",
 					"zip" => "mdi-folder-zip-outline text-warning",
+					"rar" => "mdi-folder-zip-outline text-warning",
 				];
 
 				
@@ -74,7 +79,7 @@ class FileManagerDataTable extends DataTable
 				}
 				}
 
-				return "<img class='img-fluid' style='max-width: 120px;' src='".url($data->thumbnail_path)."' alt='$data->original_name' />";
+				return "<img class='img-fluid' style='max-width: 120px;' src='$data->thumbnail_path' alt='$data->original_name' />";
 
 			})
 			->editColumn("size", function($data) {
