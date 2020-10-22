@@ -354,8 +354,7 @@
                             $count = 0;
                         @endphp
                         @foreach($MaterialsOrderByPriority as $key=> $material)
-
-
+                            @if($material->pivot->course_id==$course->id)
                             @php
                                 $active =  auth()->user()->witchlist()->where('material_id',$material->id)->where('course_id',$course->id)->first();
                                 $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$count;
@@ -486,6 +485,7 @@
                                 </li>
                             @endif
 
+                            @endif
                         @endforeach
                     </ul>
 

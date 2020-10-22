@@ -1,4 +1,5 @@
 <div class="pr-xl-3">
+
     <h5 class="mt-0 mb-3">Courses</h5>
     <!-- start search box -->
     <div class="app-search">
@@ -67,12 +68,22 @@
                                                  data-parent="#custom-accordion-one">
                                                 <div class="card-body d-flex pt-0">
                                                     <div class="p-2">
-                                                        @foreach($course->materials as $key=> $material)
-                                                            @if($key<=9)
+                                                        @foreach($course->materials->where("type","!=","Section")->where("type","!=","Announcement") as $key=> $material)
+                                                            @php
+
+                                                                if (!empty($materialGuest)){
+                                                                    $materialGuest=$guestUser->guestMaterial()->wherePivot("course_id",$course->id)->get();
+                                                                   $checked = $materialGuest->contains('title',$material->title)?"checked" : "";
+                                                                   }
+                                                            @endphp
+
+
+                                                            @if($key<=5)
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
+
                                                                         <input
-                                                                            {{$material->pivot->guest_status?"checked":""}}
+                                                                            {{!empty($checked)?$checked :"" }}
                                                                             class="input-materials"
                                                                             data-material-id="{{$material->id}}"
                                                                             data-course-id="{{$course->id}}"
@@ -88,12 +99,22 @@
                                                         @endforeach
                                                     </div>
                                                     <div class="p-2">
-                                                        @foreach($course->materials as $key=> $material)
-                                                            @if($key>=10 && $key<20)
+
+                                                        @foreach($course->materials->where("type","!=","Section")->where("type","!=","Announcement") as $key=> $material)
+
+                                                            @php
+                                                                if (!empty($materialGuest)){
+                                                                $materialGuest=$guestUser->guestMaterial()->wherePivot("course_id",$course->id)->get();
+
+                                                                         $checked = $materialGuest->contains('title',$material->title)?"checked" : "";
+                                                                    }
+                                                            @endphp
+
+                                                            @if($key>=5 && $key<10)
                                                                 <div class="pb-1 ff">
                                                                     <div class="pretty p-icon p-round p-jelly ">
                                                                         <input
-                                                                            {{$material->pivot->status?"checked":""}}
+                                                                            {{!empty($checked)?$checked :"" }}
                                                                             class="input-materials"
                                                                             data-material-id="{{$material->id}}"
                                                                             data-course-id="{{$course->id}}"
@@ -108,27 +129,35 @@
                                                             @endif
                                                         @endforeach
                                                     </div>
-                                                    <div class="p-2">
-                                                        @foreach($course->materials as $key=> $material)
-                                                            @if($key>=20)
-                                                                <div class="pb-1 ff">
-                                                                    <div class="pretty p-icon p-round p-jelly ">
-                                                                        <input
-                                                                            {{$material->pivot->status?"checked":""}}
-                                                                            class="input-materials"
-                                                                            data-material-id="{{$material->id}}"
-                                                                            data-course-id="{{$course->id}}"
-                                                                            type="checkbox"/>
-                                                                        <div class="state p-info ">
-                                                                            <i class="icon font-16 mdi mdi-check"></i>
-                                                                            <label
-                                                                                class="font-16">{{$material->title}}</label>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
+{{--                                                    <div class="p-2">--}}
+{{--                                                        @foreach($course->materials->where("type","!=","Section")->where("type","!=","Announcement") as $key=> $material)--}}
+
+{{--                                                            @php--}}
+{{--                                                                if (!empty($materialGuest)){--}}
+{{--                                                                   $materialGuest=$guestUser->guestMaterial()->wherePivot("course_id",$course->id)->get();--}}
+{{--                                                                   $checked = $materialGuest->contains('title',$material->title)?"checked" : "";--}}
+{{--                                                                   }--}}
+{{--                                                            @endphp--}}
+
+{{--                                                            @if($key>=20)--}}
+{{--                                                                <div class="pb-1 ff">--}}
+{{--                                                                    <div class="pretty p-icon p-round p-jelly ">--}}
+{{--                                                                        <input--}}
+{{--                                                                            {{!empty($checked)?$checked :"" }}--}}
+{{--                                                                            class="input-materials"--}}
+{{--                                                                            data-material-id="{{$material->id}}"--}}
+{{--                                                                            data-course-id="{{$course->id}}"--}}
+{{--                                                                            type="checkbox"/>--}}
+{{--                                                                        <div class="state p-info ">--}}
+{{--                                                                            <i class="icon font-16 mdi mdi-check"></i>--}}
+{{--                                                                            <label--}}
+{{--                                                                                class="font-16">{{$material->title}}</label>--}}
+{{--                                                                        </div>--}}
+{{--                                                                    </div>--}}
+{{--                                                                </div>--}}
+{{--                                                            @endif--}}
+{{--                                                        @endforeach--}}
+{{--                                                    </div>--}}
 
                                                 </div>
 

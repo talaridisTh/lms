@@ -171,18 +171,28 @@ const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
     let materialId = []
 
     courses.forEach(course => courseId.push(course.dataset.courseId))
+    // materials.forEach(material => materialId.push( material.dataset.materialId))
+
+
+
+    /*json!*/
     materials.forEach(material => materialId.push({
         "material": material.dataset.materialId,
         "courses": material.dataset.courseId
     }))
+
 
     try {
         const {status} = await axios.post("/guest/create/guest-user", {
             userId, courseId, materialId
         })
         if (status === 200) {
+            let url = `${window.location.origin}/guest/temp/link/${userSlug}`
+            let btnCopy = `<button class="copyBtn btn badge badge-success font-16" data-text=${url} >
+                                <i class="mdi mdi-content-copy"></i>
+                            </button>`
 
-            document.querySelector(".guest-link").innerHTML = `<a href ="${window.location.origin}/guest/temp/link/${userSlug}"> link</a>`
+            document.querySelector(".guest-link").innerHTML = `<div>${btnCopy}<a href ="${url}"> ${url}</a></div>`
 
         }
     } catch (e) {
@@ -230,5 +240,3 @@ const copy = ()=>{
 
 }
 
-
-// data-text="{{$u->pivot->user_link}}

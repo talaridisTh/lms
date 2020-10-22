@@ -17,6 +17,7 @@ class CreateGuestMaterialTable extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
+            $table->foreignId('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }

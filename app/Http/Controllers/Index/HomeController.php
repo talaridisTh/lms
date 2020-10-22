@@ -34,14 +34,7 @@ class HomeController extends Controller {
         return view('home', compact('material', "bannersPrimary", "bannersSecondary", "arrayBanners"));
     }
 
-    public function createLink()
-    {
 
-        $partners = User::getPartner();
-        $courses = Course::orderBy("id", 'asc')->get();
-
-        return view("index.guest.create-link", compact("partners", "courses"));
-    }
 
     public function createLinkStore(Request $request)
     {

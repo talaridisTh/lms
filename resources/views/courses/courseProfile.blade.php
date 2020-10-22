@@ -243,6 +243,7 @@
 
                         @foreach($allMaterial as $key => $materials)
 
+
                             @php
                                 $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
                                 $activeClass = isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$count; //ean to exei dei bazi tik allis arithmo
@@ -341,6 +342,7 @@
                                     class="list-group-item list-material border ">
                                     <a class="d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
+                                        @unlessrole("guest")
                                         <div class="col-md-2 mr-2 ">
                                             <div>
                                             <span {{$hover}} class="material-count">
@@ -348,6 +350,8 @@
                                             </span>
                                             </div>
                                         </div>
+                                        @endunlessrole
+
                                         <div class="col-md-8 d-flex flex-column">
                                             <h3 style="border-radius: 5px"
                                                 class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold"> {!! $materials->title!!}</h3>

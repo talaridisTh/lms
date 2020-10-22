@@ -4,40 +4,7 @@
 @endsection
 
 @section("content")
-    {{--    <div class="container">--}}
-    {{--        <form action="{{route('user.linkStore')}}" method='post'>--}}
-    {{--            @csrf--}}
-    {{--        <div class="input-group mb-3">--}}
-    {{--            <div class="input-group-prepend">--}}
-    {{--                <label class="input-group-text" for="inputGroupSelect01">Καθηγητης</label>--}}
-    {{--            </div>--}}
-    {{--            <select name="user_id" class="custom-select" id="inputGroupSelect01">--}}
-    {{--                @role("admin")--}}
-    {{--                <option selected>Choose...</option>--}}
-    {{--                @foreach($partners as $partner)--}}
-    {{--                <option value="{{$partner->id}}">{{$partner->fullName}}</option>--}}
-    {{--                @endforeach--}}
-    {{--                @endrole--}}
-    {{--                @hasanyrole('instructor|partner')--}}
-    {{--                    <option value="{{auth()->user()->slug}}">{{auth()->user()->fullName}}</option>--}}
-    {{--                @endrole--}}
-    {{--            </select>--}}
-    {{--        </div>--}}
-    {{--        <div class="input-group mb-3">--}}
-    {{--            <div class="input-group-prepend">--}}
-    {{--                <label class="input-group-text" for="inputGroupSelect01">Course</label>--}}
-    {{--            </div>--}}
-    {{--            <select name="course_id"  class="custom-select" id="inputGroupSelect01">--}}
-    {{--                <option selected>Choose...</option>--}}
-    {{--                @foreach($courses as $course)--}}
-    {{--                    <option value="{{$course->id}}">{{$course->title}}</option>--}}
-    {{--                @endforeach--}}
-    {{--            </select>--}}
-    {{--        </div>--}}
-    {{--            <input type="submit"  value="Δημιουργία Link" class="btn btn-primary">--}}
-    {{--        </form>--}}
 
-    {{--    </div>--}}
     <div class="card w-100">
         <div class="card-body ">
 
@@ -70,13 +37,17 @@
                                                      style="height: auto; overflow: hidden scroll;">
                                                     <div class="simplebar-content" style="padding: 0px;">
                                                         @foreach($partners as $partner)
+
                                                             <a href="javascript:void(0);" class="text-body">
                                                                 <div class="media bg-list-hover p-2">
                                                                     <div class="avatar-sm">
                                                                         <img src="{{$partner->cover}}" height="30" alt="">
                                                                     </div>
                                                                     <div class="media-body ml-2">
-                                                                        <h5 class="mt-0 mb-0 js-instructor-link"  data-user-slug={{$partner->slug}} data-user-id={{$partner->id}} >
+
+                                                                        <h5 class="mt-0 mb-0 js-instructor-link"
+                                                                            data-user-slug="{{\Str::slug($partner->first_name.$partner->last_name, '-')}}"
+                                                                            data-user-id={{$partner->id}} >
                                                                             {{$partner->fullName}}
                                                                         </h5>
 

@@ -13,8 +13,22 @@ use Illuminate\Support\Str;
 class HomeController extends Controller {
 
     //
+    public function createLink()
+    {
+
+        $partners = User::getPartner();
+        $courses = Course::orderBy("id", 'asc')->get();
+//        $guestSlug = Str::slug($partners->first_name.$partners->last_name, '-');
+//        dd($guestSlug);
+
+
+        return view("index.guest.create-link", compact("partners", "courses"));
+    }
+
+
     public function guestCourse(Request $request)
     {
+
 
         $partnerName = User::findOrFail($request->userId)->first_name;
         $guestUser = User::whereFirstName($partnerName . "-guest")->first();
@@ -22,9 +36,12 @@ class HomeController extends Controller {
 
         if ($guestUser)
         {
-            $courseGuest = $guestUser->courses;
 
-            return view("index.guest.guest-course", compact('courses', "courseGuest"));
+            $courseGuest = $guestUser->courses;
+            $materialGuest = $guestUser->guestMaterial;
+
+
+            return view("index.guest.guest-course", compact('courses', "courseGuest", "materialGuest","guestUser"));
         }
 
         return view("index.guest.guest-course", compact('courses'));
@@ -32,17 +49,8 @@ class HomeController extends Controller {
 
     public function guestInstructor(Request $request)
     {
-//        $partnerName = User::findOrFail($request->userId)->first_name;
-//        $guestUser = User::whereFirstName($partnerName . "-guest")->first();
+
         $instructor = User::findOrFail($request->userId);
-//        if ($guestUser)
-//        {
-//            $courseGuest = $guestUser->courses;
-//
-//            return view("index.guest.guest-instructor", compact('instructor', "courseGuest"));
-//        }
-
-
 
         return view("index.guest.guest-instructor", compact('instructor'));
     }
@@ -50,17 +58,7 @@ class HomeController extends Controller {
     public function guestInstructorCourse(Request $request)
     {
 
-
-//        $partnerName = User::findOrFail($request->userId)->first_name;
-//        $guestUser = User::whereFirstName($partnerName . "-guest")->first();
         $courses = Course::findOrFail($request->courseId);
-//
-//        if ($guestUser)
-//        {
-//            $courseGuest = $guestUser->courses;
-//
-//            return view("index.guest.guest-instructor-course", compact('courses', "courseGuest"));
-//        }
 
         return view("index.guest.guest-instructor-course", compact('courses'));
     }
@@ -76,7 +74,7 @@ class HomeController extends Controller {
     public function createGuestUser(Request $request)
     {
 
-        dd($request->all());
+//        dd($request->all());
         $partner = User::findOrFail($request->userId);
         static $counter = 0;
         if (!User::where("first_name", $partner->first_name . '-guest')->exists())
@@ -84,7 +82,7 @@ class HomeController extends Controller {
 
             $user = User::create([
                 "first_name" => $partner->first_name . '-guest',
-                "slug" => Str::slug($partner->last_name, '-'),
+                "slug" => Str::slug($partner->first_name.$partner->last_name, '-'),
                 "last_name" => $partner->last_name . '-guest',
                 "email" => $partner->email . rand(1, 9999),
                 "phone" => $partner->phone,
@@ -95,26 +93,23 @@ class HomeController extends Controller {
         {
             $user = User::where("first_name", $partner->first_name . '-guest')->first();
         }
+
         $partner->guest()->detach($user);
         $partner->guest()->attach($user->id, ['user_link' => "/guest/temp/link/" . $user->slug]);
+
+        $user->guestMaterial()->detach();
         foreach ($request->materialId as $data)
-//        {
-//            $course = Course::findOrFail($data["courses"]);
-//            $material = Material::findOrFail($data["material"]);
-//            $course->materials->where("id", $material->id)->first()->pivot->update(["guest_status" => 1]);
-//        }
+        {
+            $user->guestMaterial()->attach($data["material"],["course_id"=>$data["courses"]]);
+
+        }
 
 
-        $user->courses()->sync($request->courseId);
         $user->courses()->update(["status" => 1]);
-//
-//        foreach ($user->courses()->get() as $course){
-//            $statusCourse = $course->materials->whereIn("id",72)->first();
-//            $statusCourse->pivot->status=0;
-//            $statusCourse->save();
-//        }
-//        $user->materials()->sync($request->materialId);
-//        $user->materials()->update(["status" => 1]);
+        $user->courses()->sync($request->courseId);
+
+
+//        $user->guestMaterial()->sync([$request->materialId => ['course_id' => 2]]);
     }
 
     public function tempLink($user)

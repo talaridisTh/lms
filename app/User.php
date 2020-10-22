@@ -105,10 +105,10 @@ class User extends Authenticatable {
     }
 
 
-    public function GuestMaterials()
+    public function guestMaterial()
     {
 
-        return $this->belongsToMany(Material::class);
+        return $this->belongsToMany(Material::class,"guest_material","user_id","material_id")->withPivot("course_id");
     }
 
 

@@ -228,7 +228,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/message/info/{user}", "MessageController@info")->name("index.info");
     Route::post("/message/sent", "MessageController@sendMessage")->name("index.sendMessage");
 //! GUEST INDEX
-    Route::get("/user/link", "Index\HomeController@createLink")->name("user.link");
+    Route::get("/user/link", "Ajax\HomeController@createLink")->name("user.link");
     Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
     Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
     Route::get('/partner-links', function (Request $request) {
