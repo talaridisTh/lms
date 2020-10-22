@@ -283,7 +283,7 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false, width: "5%" },
 		{ data: 'title', name: 'title', className: "align-middle cursor-default" },
-		{ data: 'curator', name: 'curator', className: "align-middle text-center cursor-default" },
+		{ data: 'curator', name: 'curator', className: "align-middle cursor-default" },
 		{ data: 'topics', name: 'topics', className: "align-middle cursor-default" },
 		{ data: 'version', name: 'version', className: "align-middle text-center cursor-default" },
 		{
@@ -436,8 +436,7 @@ const bundleUsersTable = $("#bundle-users-table").DataTable({
 	},
 	columns: [
 		{data: 'action', name:'action', orderable: false, searchable: false, className: "align-middle text-center"},
-		{data: 'last_name', name: 'last_name', className: "align-middle text-center cursor-default"},
-		{data: 'first_name', name: 'first_name', className: "align-middle text-center cursor-default"},
+		{data: 'last_name', name: 'last_name', className: "align-middle cursor-default"},
 		{data: 'email', name: 'email', className: "align-middle text-center cursor-default"},
 		{data: 'phone', name: 'phone', className: "align-middle text-center cursor-default"},
 		{data: 'btn', name: 'btn', orderable: false, searchable: false, className: "align-middle text-center"}
@@ -683,8 +682,7 @@ const remainingUsersTable = $("#remaining-users-table").DataTable({
 	},
 	columns: [
 		{data: 'action', name:'action', orderable: false, searchable: false, className: "align-middle text-center"},
-		{data: 'last_name', name: 'last_name', className: "align-middle text-center cursor-default"},
-		{data: 'first_name', name: 'first_name', className: "align-middle text-center cursor-default"},
+		{data: 'last_name', name: 'last_name', className: "align-middle cursor-default"},
 		{data: 'email', name: 'email', className: "align-middle text-center cursor-default"},
 		{data: 'phone', name: 'phone', className: "align-middle text-center cursor-default"},
 		{data: 'btn', name: 'btn', orderable: false, searchable: false, className: "align-middle text-center"}

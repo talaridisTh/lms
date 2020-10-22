@@ -29,7 +29,6 @@ $("#delete-bundles-btn").on("click", function() {
 
 	Swal.fire({
 		title: 'Είστε σίγουρος;',
-		// text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? " Bundle θα διαγραφεί" : " Bundles θα διαγραφούν"}`,
 		html: checkedBoxes.length == 1 
 			? "<p class='mb-0'>Το Bundle θα διαγραφεί.</p>Η ενέργεια θα είναι μη αναστρέψιμη!"
 			: `<p class="mb-0">${ids.length} Bundles θα διαγραφούν.</p>Η ενέργεια θα είναι μη αναστρέψιμη!`,
