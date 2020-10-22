@@ -23,6 +23,7 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
         }]
     },
     options: {
+		cutoutPercentage: 50,
 		legend: {
 			position: "bottom",
 			labels: {
@@ -30,9 +31,10 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
 				fontFamily: "Open Sans, sans-serif"
 
 			}
-		},
+		},		
     }
 });
+
 
 const topBundles = document.getElementsByClassName("js-top-bundles");
 const topBundlesData = categoryStudentsCountBuilder( topBundles );
@@ -57,6 +59,7 @@ const topBundlesChart = new Chart(topBundlesCanvas, {
         }]
     },
     options: {
+		cutoutPercentage: 50,
 		legend: {
 			position: "bottom",
 			labels: {
@@ -107,12 +110,12 @@ newStudentsData = moveMonths.concat(newStudentsData)
 const months = []
 const students = [];
 
-for( let i = 0; i < newStudentsData.length; i++ ) {
 
-	months.push( newStudentsData[i].month )
-	students.push( newStudentsData[i].students );
-
+for ( let i = 0; i < newStudentsData.length; i++ ) {
+	months.push(newStudentsData[i].month);
+	students.push(newStudentsData[i].students);
 }
+
 
 const newStudentsChart = new Chart(newStudentsCanvas, {
     type: 'line',
@@ -150,7 +153,8 @@ const newStudentsChart = new Chart(newStudentsCanvas, {
 			yAxes: [{
 				ticks: {
 					fontColor: "#8391a2",
-					fontFamily: "Open Sans, sans-serif"
+					fontFamily: "Open Sans, sans-serif",
+					stepSize: 1
 				},
 				gridLines: {
 					color: "#464f5b"
@@ -187,6 +191,7 @@ const topicStatsChart = new Chart(topicStatsCanvas, {
         }]
     },
     options: {
+		cutoutPercentage: 50,
 		legend: {
 			position: "bottom",
 			labels: {
