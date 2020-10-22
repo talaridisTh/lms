@@ -26,6 +26,10 @@ AddCourseUsersDataTable extends DataTable
 
 		$query = DB::table('users')
 			->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
+			->where("users.status", 1)
+			// ->where( function($subquery) {
+			// 	$subquery->where("users.status", 1)->get();
+			// })
 			->whereIn('model_has_roles.role_id', [ 2, 4 ])
 			->whereNotIn('users.id', function($subquery) use ($request) {
 
@@ -36,14 +40,9 @@ AddCourseUsersDataTable extends DataTable
 
 			})
 			->select(
-				'users.id as userId',
-				'first_name',
-				'last_name',
-				'email',
-				'phone',
-				'slug',
-				'model_has_roles.role_id')
-			->get();
+				'users.id as userId', 'first_name', 'last_name', 'email_verified_at',
+				'email', 'phone', 'slug', 'model_has_roles.role_id'
+			)->get();
 
 
 
@@ -61,6 +60,17 @@ AddCourseUsersDataTable extends DataTable
 						</div>";
 
 			})
+			->editColumn("last_name", function($data) {
+				$badge = "";
+
+				if ( is_null($data->email_verified_at) ) {
+					$badge .= "<span class='badge badge-outline-warning badge-pill ml-3'>Unverified</span>";
+				}
+
+				return "
+					<span>$data->last_name $data->first_name</span>$badge
+				";
+			})
             ->addColumn('addBtn', function($data) {
 
 				return "<button type='button' class='js-add-user-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
@@ -71,7 +81,7 @@ AddCourseUsersDataTable extends DataTable
 				return $data->role_id == 2 ? "Εισηγητής" : "Μαθητής";
 
 			})
-			->rawColumns(['action', 'addBtn'])
+			->rawColumns(['action', 'last_name', 'addBtn'])
 			->setRowAttr([ 'data-user-id' => function($data) {
 
 				return  $data->userId;

@@ -636,12 +636,12 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', width: "5%", className: "text-center", orderable: false, searchable: false},
-		{data: 'last_name', name: 'last_name', className: "text-left cursor-default" },
-		{data: 'first_name', name: 'first_name', className: "text-left cursor-default" },
-		{data: 'email', name: 'email', className: "text-left cursor-default" },
-		{data: 'phone', name: 'phone', className: "cursor-default" },
-		{data: 'role', name: 'role', className: "cursor-default" },
+		{data: 'action', width: "5%", className: "text-center align-middle", orderable: false, searchable: false},
+		{data: 'last_name', name: 'last_name', className: "text-left align-middle cursor-default" },
+		// {data: 'first_name', name: 'first_name', className: "text-left cursor-default" },
+		{data: 'email', name: 'email', className: "text-left align-middle cursor-default" },
+		{data: 'phone', name: 'phone', className: "align-middle cursor-default" },
+		{data: 'role', name: 'role', className: "cursor-default align-middle" },
 		{data: 'btn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
@@ -683,7 +683,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
 		{data: 'last_name', name: 'last_name', className: "text-left cursor-pointer js-user-link" },
-		{data: 'first_name', name: 'first_name', className: "text-left cursor-pointer js-user-link" },
+		// {data: 'first_name', name: 'first_name', className: "text-left cursor-pointer js-user-link" },
 		{data: 'email', name: 'email', className: "text-left cursor-pointer js-user-link" },
 		{data: 'phone', name: 'phone', className: "cursor-pointer js-user-link" },
 		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
@@ -1147,7 +1147,7 @@ $("#active-user-roles").on( "change", function () {
 	let label = $("#select2-active-user-roles-container")[0];
 	utilities.filterStyle( label, this.value )
 
-	courseUsersDatatable.columns(5).search( this.value ).draw();
+	courseUsersDatatable.columns(4).search( this.value ).draw();
 
 });
 
