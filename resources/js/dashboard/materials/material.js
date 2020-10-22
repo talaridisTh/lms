@@ -219,8 +219,15 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 
 		addFilesBtnInit();
+		tableAudioBtnInit();
     }
 })
+
+function tableAudioBtnInit() {
+
+	$(".js-audio-btn").off("click", audioPlayerHandler)
+	$(".js-audio-btn").on("click", audioPlayerHandler);
+}
 
 function addFilesBtnInit() {
 	let btns = $(".js-add-file-btn");
@@ -854,9 +861,6 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 				removeBtns.on("click", function() {
 					removeFiles( [this.dataset.fileId] );
 				});
-
-				let audioPlayerBtns = container.find(".js-audio-btn");
-				audioPlayerBtns.on("click", audioPlayerHandler)
 
 				$("#remove-all-files-btn").removeClass("d-none");
 				remainingFilesTable.ajax.reload(null, false);

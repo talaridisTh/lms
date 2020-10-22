@@ -46,7 +46,7 @@
 								@elseif ( $file->ext == "mp3" )
 
 									<i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline cursor-pointer" data-audio-status="paused"></i>
-									<audio class="js-audio">
+									<audio preload="auto" class="js-audio">
 										<source src="{{ $file->rel_path }}" type="{{ $file->file_info }}">
 									</audio>
 									@break
