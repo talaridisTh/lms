@@ -12,7 +12,7 @@
 		<link rel="stylesheet" href="{{ mix("css/index/logIn.css") }}">
     </head>
 
-    <body class="pb-0"'>
+    <body class="pb-0">
 
         <div class="auth-column">
             <!--Auth fluid left content -->

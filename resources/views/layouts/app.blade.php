@@ -15,13 +15,17 @@
         href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
         rel="stylesheet">
     <link href="/assets/css/icons.min.css" rel="stylesheet" type="text/css"/>
+
+
     <link href="/assets/css/app-modern.min.css" rel="stylesheet" type="text/css" id="light-style"/>
     <link href="/assets/css/app-modern-dark.min.css" rel="stylesheet" type="text/css" id="dark-style"/>
     {{--//pretty-checkbox/--}}
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
 
 
     <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">
+
     @yield("style")
 
     <style>
