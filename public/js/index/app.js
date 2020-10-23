@@ -149,7 +149,7 @@ eval("try {\n  window.Popper = __webpack_require__(/*! popper.js */ \"./node_mod
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\lmsdemo - HEAD\resources\js\index\app.js */"./resources/js/index/app.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\index\app.js */"./resources/js/index/app.js");
 
 
 /***/ })

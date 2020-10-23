@@ -93,7 +93,7 @@ const refMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"
 
 for ( let i = 0; i < refMonths.length; i++ ) {
 
-	if ( newStudentsData[i].month === i + 1 ) {
+	if ( newStudentsData[i].month === i + 1 && typeof newStudentsData[i].month != "undefined" ) {
 		newStudentsData[i].month = refMonths[i];
 	}
 	else {
