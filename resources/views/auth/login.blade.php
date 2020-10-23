@@ -53,6 +53,9 @@
 									type="password" name="password" required="" id="password" placeholder="Enter your password">
 							</div>
 
+
+
+
                             <div class="form-group mb-3">
                                 <div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
