@@ -83,9 +83,8 @@
 
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
-    <script src="/assets/js/vendor/dataTables.checkboxes.min.js"></script>
 
-    <script src="{{ mix('js/index/account/account.js') }}"></script>
+    <script src="{{ mix('js/index/favourites/favourites.js') }}"></script>
 
     </script>
 

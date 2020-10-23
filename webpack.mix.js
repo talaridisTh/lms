@@ -40,7 +40,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/index/chat/message.js', 'public/js/index/chat')
     .js('resources/js/index/guest/guest.js', 'public/js/index/guest')
 
-    .js('resources/js/index/account/account.js', 'public/js/index/account')
+    .js('resources/js/index/favourites/favourites.js', 'public/js/index/favourites')
 
 
 

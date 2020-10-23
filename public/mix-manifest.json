@@ -19,10 +19,10 @@
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=96faad0ab5e4e346f461",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=f479c9cb226a69c7e391",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=39eaadcfcfffd39c3768",
-    "/js/index/account/account.js": "/js/index/account/account.js?id=5346f5fe2252216836f3",
     "/js/index/app.js": "/js/index/app.js?id=351b15f05fe26b0b5fd1",
     "/js/index/chat/message.js": "/js/index/chat/message.js?id=73e11e6d1c6cfd50df1d",
     "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=2633c7ac7e95389c8c87",
+    "/js/index/favourites/favourites.js": "/js/index/favourites/favourites.js?id=014d576a46679eb78ab0",
     "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=e684777e8c1e417e6f69",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=ff32fd5d6d1bada9f3d6"
 }
