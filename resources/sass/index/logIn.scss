@@ -3,19 +3,20 @@
 @import "../../theme/scss/custom/plugins/icons/unicons";
 @import '../../theme/scss/open_sans';
 
-@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
+@import "../../bootstrap-4.5.3/scss/bootstrap.scss";
 
 
 
-.custom-h4 {
+.custom-h4 {///////////////////
 	font-size: 1.125rem;
 }
 
-.font-weight-700 {
+.font-weight-700 {/////////////////////
 	font-weight: 700;
 }
 
-.color-gray {
+.color-gray {/////////////////
 	color: #6c757d;
 }
 
@@ -48,7 +49,6 @@
 }
 
 .form-labels {
-	font-family: "Open Sans",sans-serif;
 	font-size: .875rem;
 	font-weight: 600;
 	line-height: 1.5;
@@ -72,11 +72,15 @@
 	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.custom-form-control:focus {
+	border-color: rgb(189, 189, 189);
+}
+
 .custom-font-small {
 	font-size: 0.875rem;
 }
 
-.custom-font-muted {
+.custom-font-muted {//////////
 	color: #98a6ad;
 }
 
@@ -108,19 +112,15 @@
 	text-decoration: none !important;
 }
 
-.custom-muted:hover {
+.custom-link-muted {
+	color: #99a4b2;
+	text-decoration: none !important;
+}
+
+.custom-link-muted:hover {
 	color: #83919f;
 }
 
-.custom-btn-info {
-	font-size: 0.9rem;
-	font-weight: 400;
-	color: white;
-	background-color: #35b8e0 !important;
-	box-shadow: 0 0 0 rgba(53,184,224,.5) !important;
-}
-
-.custom-btn-info:hover {
-	color: white !important;
-	background-color: #2c9fc2 !important;
+.h7 {
+	font-size: 0.9rem !important;
 }
