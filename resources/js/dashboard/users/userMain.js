@@ -37,22 +37,22 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         {data: "roles", name: "roles", className: "js-link cursor-pointer role-user"},
         {data: "email", name: "email", className: "js-link cursor-pointer"},
         {data: 'status', name: 'status', orderable: false},
-        {data: 'created_at', name: 'created_at',orderData: [ 10],visible:false},
-        // {
-		// 	data: 'created_at',
-		// 	name: 'users.created_at',
-		// 	orderData: [9],
-		// 	className: "text-center",
-		// 	render: function(data) {
-		// 		let date = new Date(data);
-		// 		let day = date.toLocaleDateString().replace( /[/]/g, "-");
-		// 		let hours = `${date.getHours()}`.padStart(2, "0");
-		// 		let minutes = `${date.getMinutes()}`.padStart(2, "0");
-        //
-		// 		let time = `${hours}:${minutes}`;
-		// 		return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
-		// 	}
-		// },
+        // {data: 'created_at', name: 'created_at',orderData: [ 10],visible:false},
+        {
+			data: 'created_at',
+			name: 'users.created_at',
+			orderData: [9],
+			className: "text-center",
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
         {data: 'courses', name: 'courses', orderable: false, visible: false},
         {data: 'id', name: 'id',visible: false},
     ],
