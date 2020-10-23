@@ -62,7 +62,7 @@
 							</div>
 							
                             <div class="form-group mb-0 text-center">
-                                <button class="btn btn-primary btn-block" type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                                <button class="btn btn-block custom-btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
                             </div>
                         </form>
                         <!-- end form-->

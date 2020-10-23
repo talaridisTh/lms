@@ -40830,3 +40830,16 @@ a.text-dark:focus {
   color: #83919f;
 }
 
+.custom-btn-info {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: white;
+  background-color: #35b8e0 !important;
+  box-shadow: 0 0 0 rgba(53, 184, 224, 0.5) !important;
+}
+
+.custom-btn-info:hover {
+  color: white !important;
+  background-color: #2c9fc2 !important;
+}
+
