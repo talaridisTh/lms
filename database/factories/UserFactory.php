@@ -45,7 +45,7 @@ class UserFactory extends Factory
         	'status' => $this->faker->numberBetween(0, 1),
         	'remember_token' => Str::random(10),
         	'created_at' => $date->format('Y-m-d H:i:s'),
-        	'email_verified_at' => $date->addMinutes(rand(5, 180))->format('Y-m-d H:i:s'),
+        	'email_verified_at' => rand(1, 4) === 4 ? null : $date->addMinutes(rand(5, 180))->format('Y-m-d H:i:s'),
         	'updated_at' => $date->addWeeks(rand(1, 12))->subSeconds(rand(36000, 136000))->format('Y-m-d H:i:s')
         ];
     }

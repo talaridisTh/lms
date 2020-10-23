@@ -106,7 +106,6 @@
 							
 						</div><!-- ./left col -->
 
-
 						<div class="col-md-6">
 							@foreach ($banners as $section => $values)
 								<div id="{{ $section }}-banner-selection" class="js-banner-selection-cnt card h-100">
@@ -158,16 +157,14 @@
 						<li class="nav-item">
 							<a href="#media-library" id="media-library-tab-btn"
 								data-toggle="tab" aria-expanded="false"
-								class="nav-link active"
-							>
+								class="nav-link active">
 								Media Library
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="#upload" id="upload-tab-btn"
 								data-toggle="tab" aria-expanded="true"
-								class="nav-link"
-							>
+								class="nav-link">
 								Upload
 							</a>
 						</li>
@@ -271,7 +268,8 @@
 								<div id="{{ $section }}-collapse" class="collapse{{ $counter++ == 1 ? " show" : "" }}"
 									aria-labelledby="{{ $section }}-heading" data-parent="#carousel-accordion">
 									
-									<div id="{{ $section }}-banners-row" class="js-banner-cnt row pt-3" data-importance="{{ $section }}">
+									<div id="{{ $section }}-banners-row" class="js-banner-cnt row pt-3"
+										data-plugin="dragula" data-importance="{{ $section }}">
 										@foreach ($values->models as $model)
 
 											@php
@@ -384,6 +382,7 @@
 @section('scripts')
 	<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 	<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+	{{-- <script src="/assets/js/dragula.js"></script> --}}
 
 	<script src="{{ mix("js/dashboard/settings/home-page.js") }}"></script>
 	

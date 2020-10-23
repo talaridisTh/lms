@@ -80,32 +80,6 @@ class FilesDataTable extends DataTable
 					</div>
 				";
 			})
-			->editColumn("ext", function($data) {
-				$icons = [
-					"mp3" => "mdi-music-clef-treble",
-					"ev3" => "mdi-robot-industrial",
-					"pdf" => "mdi-file-pdf-outline text-danger",
-					"html" => "mdi-language-html5 text-danger",
-					"odg" => "mdi-file-pdf text-danger",
-					"doc" => "mdi-file-document-outline text-teal",
-					"odt" => "mdi-file-document-outline text-teal",
-					"rtf" => "mdi-file-document-outline text-teal",
-					"xl" => "mdi-file-table-box text-success",
-					"ods" => "mdi-file-table-box text-success",
-					"pp" => "mdi-file-powerpoint-outline text-orange",
-					"odp" => "mdi-file-powerpoint-outline text-orange",
-					"sb3" => "mdi-cat text-orange",
-					"zip" => "mdi-folder-zip-outline text-warning",
-					"rar" => "mdi-folder-zip-outline text-warning",
-				];
-
-				foreach( $icons as $type => $icon ) {
-					if ( fnmatch("$type*", $data->ext ) ) {
-						return "<i class='h3 mdi {{ $icon }}' title='{{ $data->ext }}'></i>";
-					}
-				}
-
-			})
 			->editColumn("size", function($data) {
 
 				return number_format($data->size / 1000000, 2, ",", ".") ."MB";

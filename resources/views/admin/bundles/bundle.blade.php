@@ -47,7 +47,6 @@
 										</div>
 									</th>
 									<th class="text-center">Επώνυμο</th>
-									<th class="text-center">Όνομα</th>
 									<th class="text-center">Email</th>
 									<th class="text-center">Τηλέφωνο</th>
 									<th class="text-center w-5"></th>
@@ -58,7 +57,6 @@
 								<tr>
 									<th class="text-center"></th>
 									<th class="text-center">Επώνυμο</th>
-									<th class="text-center">Όνομα</th>
 									<th class="text-center">Email</th>
 									<th class="text-center">Τηλέφωνο</th>
 									<th class="text-center"></th>
@@ -540,8 +538,7 @@
 										<label for='main-active-users-checkbox'></label>
 									</div>
 								</th>
-								<th class="text-center">Επώνυμο</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Ονοματεπώνυμο</th>
 								<th class="text-center">Email</th>
 								<th class="text-center">Τηλέφωνο</th>
 								<th class="text-center"></th>
@@ -551,8 +548,7 @@
 						<tfoot>
 							<tr>
 								<th class="text-center"></th>
-								<th class="text-center">Επώνυμο</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Ονοματεπώνυμο</th>
 								<th class="text-center">Email</th>
 								<th class="text-center">Τηλέφωνο</th>
 								<th class="text-center"></th>

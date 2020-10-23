@@ -35,6 +35,26 @@ class BundleUsersDatatable extends DataTable
 						</div>";
 
 			})
+			->editColumn("last_name", function($data) {
+
+				$badge = "";
+
+				if ( is_null($data->email_verified_at) ) {
+					$badge .= "<span class='badge badge-outline-warning badge-pill ml-3'>Unverified</span>";
+				}
+
+				if ( $data->status === 0 ) {
+					$badge .= "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
+				}
+
+				return "
+					<span>$data->last_name $data->first_name</span>$badge
+					<div class='mt-1'>
+						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
+					</div>
+				";
+
+			})
 			->addColumn("btn", function($data) {
 
 				return "
@@ -43,7 +63,7 @@ class BundleUsersDatatable extends DataTable
 					";
 
 			})
-			->rawColumns([ "action", "btn" ]);
+			->rawColumns([ "action", "last_name", "btn" ]);
 
     }
 

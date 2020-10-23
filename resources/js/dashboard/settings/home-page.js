@@ -4,6 +4,9 @@
 import utilities from '../main';
 import ArticleEditor from "../../../plugins/article-editor/article-editor"
 require("../../../plugins/article-editor/plugins/reorder/reorder");
+import dragula from "../../../theme/js/vendor/dragula.min.js";
+
+// require("../../../theme/js/vendor/dragula.min.js");
 
 // Create a plugin
 ArticleEditor.add('plugin', 'mediaLibrary', {
@@ -502,3 +505,32 @@ overflowBtnInit();
 function overflowCheck(element) {
 	return element.scrollHeight > element.clientHeight;
 }
+
+function updateBanners( updatedData ) {
+	axios.patch( "/home-content/banners-update", {
+		updatedData,
+		selectedBanners: false
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+}
+
+
+
+
+
+
+
+const primaryContainerRow = document.getElementById("primary-banners-row");
+const secondaryContainerRow = document.getElementById("secondary-banners-row");
+
+dragula( [primaryContainerRow, secondaryContainerRow], {
+
+}).on("drop", function() {
+
+	const bannersData = bannerJsonBuilder();
+
+	updateBanners( bannersData );
+})

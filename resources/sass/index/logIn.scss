@@ -1,0 +1,126 @@
+@import "../../theme/scss/custom/plugins/icons/dripicons";
+@import "../../theme/scss/custom/plugins/icons/materialdesignicons";
+@import "../../theme/scss/custom/plugins/icons/unicons";
+@import '../../theme/scss/open_sans';
+
+@import '~bootstrap/scss/bootstrap';
+
+
+
+.custom-h4 {
+	font-size: 1.125rem;
+}
+
+.font-weight-700 {
+	font-weight: 700;
+}
+
+.color-gray {
+	color: #6c757d;
+}
+
+.auth-column {
+    position: relative;
+    display: none;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: row;
+    align-items: stretch;
+    background: url("/images/bg-auth.jpg") center;
+	background-size: cover;
+	font-family: 'Open Sans', sans-serif;
+}
+
+.form-cnt {
+	max-width: 480px;
+	border-radius: 0;
+	z-index: 2;
+	padding: 3rem 2rem;
+	background-color: white;
+	position: relative;
+	width: 100%;
+}
+
+.log-in-logo {
+    margin-bottom: 2rem;
+	position: absolute;
+	top: 3rem;
+}
+
+.form-labels {
+	font-family: "Open Sans",sans-serif;
+	font-size: .875rem;
+	font-weight: 600;
+	line-height: 1.5;
+	color: #6c757d;
+	text-align: left;
+}
+
+.custom-form-control {
+	display: block;
+	width: 100%;
+	height: calc(2.2125rem + 2px);
+	padding: .45rem .9rem;
+	font-size: .875rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #6c757d;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #dee2e6;
+	border-radius: .25rem;
+	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.custom-font-small {
+	font-size: 0.875rem;
+}
+
+.custom-font-muted {
+	color: #98a6ad;
+}
+
+.fade-out {
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(255,255,255,.4);
+}
+
+.centered-form-cnt {
+	min-width: 100vw;
+	min-height: 100vh;
+	align-items: stretch;
+    background: url("/images/bg-auth.jpg") center;
+	background-size: cover;
+}
+
+@media screen and (min-width: 1000px) {
+    .auth-column {
+        display: flex;
+	}
+	.centered-form-cnt {
+		display: none;
+	}
+}
+
+.custom-muted {
+	color: #99a4b2;
+	text-decoration: none !important;
+}
+
+.custom-muted:hover {
+	color: #83919f;
+}
+
+.custom-btn-info {
+	font-size: 0.9rem;
+	font-weight: 400;
+	color: white;
+	background-color: #35b8e0 !important;
+	box-shadow: 0 0 0 rgba(53,184,224,.5) !important;
+}
+
+.custom-btn-info:hover {
+	color: white !important;
+	background-color: #2c9fc2 !important;
+}

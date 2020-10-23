@@ -304,8 +304,7 @@
 										<label for='add-user-checkbox'></label>
 									</div>
 								</th>
-								<th class="text-center">Επώνυμο</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Ονοματεπώνυμο</th>
 								<th class="text-center">Email</th>
 								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
@@ -316,8 +315,7 @@
 						<tfoot>
 							<tr>
 								<th class="text-center"></th>
-								<th class="text-center">Επώνυμο</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Ονοματεπώνυμο</th>
 								<th class="text-center">Email</th>
 								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
@@ -421,7 +419,7 @@
 
 			<div class="tab-content">
 
-				<div id="settings" class="tab-pane show active mb-3">
+				<div id="settings" class="tab-pane mb-3 show active">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
 							<form id="edit-course-form"
@@ -904,8 +902,7 @@
 										<label for='select-all-active-users'></label>
 									</div>
 								</th>
-								<th class="text-center">Επώνυμο</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Ονοματεπώνυμο</th>
 								<th class="text-center">Email</th>
 								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
@@ -916,8 +913,7 @@
 						<tfoot>
 							<tr>
 								<th class="text-center"></th>
-								<th class="text-center">Επώνυμο</th>
-								<th class="text-center">Όνομα</th>
+								<th class="text-center">Ονοματεπώνυμο</th>
 								<th class="text-center">Email</th>
 								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
