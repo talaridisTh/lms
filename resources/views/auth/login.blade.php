@@ -28,8 +28,8 @@
                         </div>
 
                         <!-- title-->
-                        <h4 class="custom-h4 color-gray mt-0 font-weight-700">Sign In</h4>
-                        <p class="custom-font-small custom-font-muted mb-4">Enter your email address and password to access account.</p>
+                        <h5 class="text-muted font-weight-bold mt-0">Sign In</h5>
+                        <p class="custom-font-small custom-muted mb-4">Enter your email address and password to access account.</p>
 
                         <!-- form -->
 						<form method="POST" action="{{ route('login') }}">
@@ -37,14 +37,14 @@
 							@csrf
 
                             <div class="form-group">
-                                <label class="form-labels" for="emailaddress">Email address</label>
+                                <label class="form-labels" for="email">Email address</label>
 								<input class="custom-form-control @error('email') is-invalid @enderror"
-									type="email" id="emailaddress" name="email" value="{{ old('email') }}" required="" placeholder="Enter your email">
+									type="email" id="email" name="email" value="{{ old('email') }}" required="" placeholder="Enter your email">
 							</div>
 
                             <div class="form-group">
 								@if (Route::has('password.request'))
-                                    <a class="custom-muted float-right" href="{{ route('password.request') }}" tabindex="-1">
+                                    <a class="custom-link-muted float-right" href="{{ route('password.request') }}" tabindex="-1">
                                         <small>{{ __('Forgot Your Password?') }}</small>
                                     </a>
                                 @endif
@@ -53,19 +53,16 @@
 									type="password" name="password" required="" id="password" placeholder="Enter your password">
 							</div>
 
-
-
-
                             <div class="form-group mb-3">
                                 <div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
-										id="checkbox-signin" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="custom-control-label form-labels" for="checkbox-signin">Remember me</label>
+										id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <label class="custom-control-label form-labels" for="remember">Remember me</label>
                                 </div>
 							</div>
 
                             <div class="form-group mb-0 text-center">
-                                <button class="btn btn-block custom-btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                                <button class="h7 btn btn-block btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
                             </div>
                         </form>
                         <!-- end form-->
@@ -93,39 +90,40 @@
 						 <h4 class="custom-h4 color-gray mt-0 font-weight-700">Sign In</h4>
 						 <p class="custom-font-small custom-font-muted mb-4">Enter your email address and password to access account.</p>
 
-						<form method="POST" action="{{ route('login') }}">
+						 <form method="POST" action="{{ route('login') }}">
 
 							@csrf
 
                             <div class="form-group">
-                                <label class="form-labels" for="emailaddress">Email address</label>
+                                <label class="form-labels" for="sm-email">Email address</label>
 								<input class="custom-form-control @error('email') is-invalid @enderror"
-									type="email" id="emailaddress" name="email" value="{{ old('email') }}" required="" placeholder="Enter your email">
+									type="email" id="sm-email" name="email" value="{{ old('email') }}" required="" placeholder="Enter your email">
 							</div>
 
                             <div class="form-group">
 								@if (Route::has('password.request'))
-                                    <a class="custom-muted float-right" href="{{ route('password.request') }}" tabindex="-1">
+                                    <a class="custom-link-muted float-right" href="{{ route('password.request') }}" tabindex="-1">
                                         <small>{{ __('Forgot Your Password?') }}</small>
                                     </a>
                                 @endif
-                                <label class="form-labels" for="password">Password</label>
+                                <label class="form-labels" for="sm-password">Password</label>
 								<input class="custom-form-control @error('password') is-invalid @enderror"
-									type="password" name="password" required="" id="password" placeholder="Enter your password">
+									type="password" name="password" required="" id="sm-password" placeholder="Enter your password">
 							</div>
 
                             <div class="form-group mb-3">
                                 <div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
-										id="checkbox-signin" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="custom-control-label form-labels" for="checkbox-signin">Remember me</label>
+										id="sm-remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <label class="custom-control-label form-labels" for="sm-remember">Remember me</label>
                                 </div>
 							</div>
 
                             <div class="form-group mb-0 text-center">
-                                <button class="btn custom-btn-info btn-block" type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                                <button class="h7 btn btn-block btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
                             </div>
                         </form>
+                        <!-- end form-->
 					</div>
 				</div>
 			</div>
