@@ -223,8 +223,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/{user}/profile/announcements', 'Index\UserController@ShowAnnouncements')->name('index.profile.announcements');
     Route::get('/{user}/profile/watchlist', 'Index\UserController@watchlist')->name('index.profile.watchlist');
 // -----Datatable//Watchlist
-    Route::post('/watchlist-datatable', 'index\UserController@watchlistDatatable')->name("datatable.watchlist");
-    Route::post('/watchlist-datatable/material', 'index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
+    Route::post('/watchlist-datatable', 'Index\UserController@watchlistDatatable')->name("datatable.watchlist");
+    Route::post('/watchlist-datatable/material', 'Index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
 
 
 
