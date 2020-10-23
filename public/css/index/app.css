@@ -22,6 +22,10 @@
   border-radius: 0 !important;
 }
 
+.w-10 {
+  width: 10% !important;
+}
+
 .section-list .list-group-item:first-child {
   border-radius: 0 !important;
 }

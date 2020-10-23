@@ -17,7 +17,7 @@ instructors.forEach((instructor, idx) => {
     })
 })
 
-const axiosInstructor = async (userId,userSlug) => {
+const axiosInstructor = async (userId, userSlug) => {
     try {
         const {data, status} = await axios.post("/guest/instructor", {
             userId
@@ -29,8 +29,8 @@ const axiosInstructor = async (userId,userSlug) => {
             let componentCourseLength = $(".component-instructor-course")
             let componentMaterialLength = $(".component-instructor-material")
 
-            onPreview(userId, $(".input-course:checked"), "course",userSlug)
-            onPreview(userId, $(".input-materials:checked"), "material",userSlug)
+            onPreview(userId, $(".input-course:checked"), "course", userSlug)
+            onPreview(userId, $(".input-materials:checked"), "material", userSlug)
 
         }
 
@@ -55,7 +55,7 @@ const axiosGuestCourse = async (userId, userSlug) => {
             onClickInputCourse(inputCourse, userId)
             onClickInputMaterial(inputMaterial, userId)
             onBtnGuest(btnGuest, userId, userSlug)
-            onSelectAllMaterial(inputCourse,userSlug)
+            onSelectAllMaterial(inputCourse, userSlug)
         }
 
     } catch (e) {
@@ -81,7 +81,7 @@ const onClickInputMaterial = (inputs, userId) => {
 
 }
 
-const onPreview = (userId, modelInput, model,userSlug) => {
+const onPreview = (userId, modelInput, model, userSlug) => {
     let courseId = [];
 
 
@@ -94,7 +94,7 @@ const onPreview = (userId, modelInput, model,userSlug) => {
             }
 
         }
-        axiosMaterialInstructor(courseId,userSlug)
+        axiosMaterialInstructor(courseId, userSlug)
     } else {
         for (let i = 0; i < checkedCourses.length; i++) {
             if (!courseId.includes(checkedCourses[i].dataset.courseId)) {
@@ -126,7 +126,7 @@ const axiosCourseInstructor = async (courseId, userId) => {
     }
 }
 
-const axiosMaterialInstructor = async (materialId,userSlug) => {
+const axiosMaterialInstructor = async (materialId, userSlug) => {
     try {
         const {data, status} = await axios.post("/guest/instructor-material", {
             materialId
@@ -138,15 +138,15 @@ const axiosMaterialInstructor = async (materialId,userSlug) => {
             let componentCourseLength = $(".component-instructor-course")
             let componentMaterialLength = $(".component-instructor-material")
 
-            let url =`${window.location.origin}/guest/temp/link/${userSlug}`
+            let url = `${window.location.origin}/guest/temp/link/${userSlug}`
             let btnCopy = `<button class="copyBtn btn badge badge-success font-16" data-text=${url} >
                                 <i class="mdi mdi-content-copy"></i>
                             </button>`
 
-                if (componentCourseLength[0].childElementCount ||componentMaterialLength[0].childElementCount){
-                    $(".guest-link")[0].innerHTML=`<div>${btnCopy} <a href ="${url}"> ${url}</a></div>`
-                    copy();
-                }
+            if (componentCourseLength[0].childElementCount || componentMaterialLength[0].childElementCount) {
+                $(".guest-link")[0].innerHTML = `<div>${btnCopy} <a href ="${url}"> ${url}</a></div>`
+                copy();
+            }
 
         }
     } catch (e) {
@@ -176,7 +176,6 @@ const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
     // materials.forEach(material => materialId.push( material.dataset.materialId))
 
 
-
     /*json!*/
     materials.forEach(material => materialId.push({
         "material": material.dataset.materialId,
@@ -203,40 +202,33 @@ const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
 }
 
 
-$(".input-course").on("click",function (){
-    console.log(this);
-})
-
-const onSelectAllMaterial=(inputsMaterial,userSlug)=>{
-    inputsMaterial.on("change",function (){
-        if(this.checked){
+const onSelectAllMaterial = (inputsMaterial, userSlug) => {
+    inputsMaterial.on("change", function () {
+        if (this.checked) {
             let materialId = []
-            let containerOfMaterial= this.findParent(2).nextElementSibling.findChild(1).children;
-            containerOfMaterial.forEach(material=>{
-              material.children.forEach(input=>{
-                    if (input){
+            let containerOfMaterial = this.findParent(2).nextElementSibling.findChild(1).children;
+            containerOfMaterial.forEach(material => {
+                material.children.forEach(input => {
+                    if (input) {
                         input.findChild(2).checked = true;
                         materialId.push(input.findChild(2).dataset.materialId)
 
                     }
-                    })
+                })
             })
-            axiosMaterialInstructor(materialId,userSlug)
-
-
-        }
-        else{
+            axiosMaterialInstructor(materialId, userSlug)
+        } else {
             let materialId = []
-            let containerOfMaterial= this.findParent(2).nextElementSibling.findChild(1).children;
-            containerOfMaterial.forEach(material=>{
-                material.children.forEach(input=>{
-                    if (input){
+            let containerOfMaterial = this.findParent(2).nextElementSibling.findChild(1).children;
+            containerOfMaterial.forEach(material => {
+                material.children.forEach(input => {
+                    if (input) {
                         input.findChild(2).checked = false;
 
                     }
                 })
             })
-            axiosMaterialInstructor(materialId,userSlug)
+            axiosMaterialInstructor(materialId, userSlug)
             console.log(materialId)
 
         }
@@ -244,7 +236,7 @@ const onSelectAllMaterial=(inputsMaterial,userSlug)=>{
 }
 
 
-const copy = ()=>{
+const copy = () => {
     const btn = document.querySelector('.copyBtn');
 
 
@@ -260,7 +252,7 @@ const copy = ()=>{
             btn.classList.add("badge-secondary")
 
 
-            sweetAlert("Το url αντιγράφηκε " , 'success')
+            sweetAlert("Το url αντιγράφηκε ", 'success')
             document.body.removeChild(input);
         }
     });

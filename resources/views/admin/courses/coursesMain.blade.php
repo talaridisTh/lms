@@ -2,7 +2,7 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-{{--  --}}
+
 	<style>
 
 		.content-page {

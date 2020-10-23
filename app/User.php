@@ -58,12 +58,12 @@ class User extends Authenticatable {
     public function watchlistMaterial() {
 
 
-        return $this->morphedByMany(Material::class, 'watchlistable');
+        return $this->morphedByMany(Material::class, 'watchlistable')->withPivot("created_at")->withTimestamps();
 
     }
     public function watchlistCourse() {
 
-        return $this->morphedByMany(Course::class, 'watchlistable');
+        return $this->morphedByMany(Course::class, 'watchlistable')->withPivot("created_at")->withTimestamps();
 
     }
 

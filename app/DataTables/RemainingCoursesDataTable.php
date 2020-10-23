@@ -12,8 +12,8 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class RemainingCoursesDataTable extends DataTable
-{
+class RemainingCoursesDataTable extends DataTable {
+
     /**
      * Build DataTable class.
      *
@@ -22,55 +22,51 @@ class RemainingCoursesDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-			$query = Course::where("status", 1)
-				->whereNotIn( 'id', 
-					function($subquery) use ( $request ){
-						$subquery->select('course_id')
-							->from('bundle_course')
-							->where('bundle_id', $request->bundleId)
-							->get();
-					})->get();
+        $query = Course::where("status", 1)
+            ->whereNotIn('id',
+                function ($subquery) use ($request) {
+                    $subquery->select('course_id')
+                        ->from('bundle_course')
+                        ->where('bundle_id', $request->bundleId)
+                        ->get();
+                })->get();
 
         return datatables()::of($query)
-			->addColumn('action', function($data) {
+            ->addColumn('action', function ($data) {
 
-				return "<div class='icheck-primary d-inline ml-2'>
+                return "<div class='icheck-primary d-inline ml-2'>
 							<input class='js-remainings-checkbox' data-course-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
+            })
+            ->editColumn('curator', function ($data) {
 
-			})
-			->editColumn('curator', function($data) {
+                if ($data->curator)
+                {
+                    $fullName = $data->curator->first_name . " " . $data->curator->last_name;
+                } else
+                {
+                    $fullName = "";
+                }
 
-				if ( $data->curator ) {
-					$fullName = $data->curator->first_name ." ". $data->curator->last_name;
-				}
-				else {
-					$fullName = "";
-				}
+                return $fullName;
+            })
+            ->editColumn('topics', function ($data) {
 
-				return $fullName;
+                $topics = [];
+                foreach ($data->topics as $topic)
+                {
+                    array_push($topics, $topic['title']);
+                }
 
-			})
-			
-			->editColumn('topics', function( $data ) {
+                return implode(", ", $topics);
+            })
+            ->addColumn('addBtn', function ($data) {
 
-				$topics = [];
-
-				foreach ( $data->topics as $topic ) {
-					array_push($topics, $topic['title']);
-				}
-
-				return implode(", ", $topics);
-
-			})
-			->addColumn('addBtn', function($data) {
-
-				return "<button type='button' class='btn btn-primary js-add-course-btn' data-course-id='$data->id'>Προσθήκη</button>";
-
-			})
-			->setRowClass('last-column-p-10')
-			->rawColumns(['action', 'addBtn']);
+                return "<button type='button' class='btn btn-primary js-add-course-btn' data-course-id='$data->id'>Προσθήκη</button>";
+            })
+            ->setRowClass('last-column-p-10')
+            ->rawColumns(['action', 'addBtn']);
     }
 
     /**
@@ -92,18 +88,18 @@ class RemainingCoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('remainingcoursesdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('remainingcoursesdatatable-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -115,10 +111,10 @@ class RemainingCoursesDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('id'),
             Column::make('add your columns'),
             Column::make('created_at'),
@@ -135,4 +131,5 @@ class RemainingCoursesDataTable extends DataTable
     {
         return 'RemainingCourses_' . date('YmdHis');
     }
+
 }

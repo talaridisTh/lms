@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\DataTables\WatchlistCourseDatatable;
+use App\DataTables\WatchlistMaterialDatatable;
 use App\Http\Controllers\Controller;
 use App\Mail\NewUserNotification;
 use App\User;
@@ -13,6 +15,18 @@ use Illuminate\Support\Facades\Mail;
 class UserController extends Controller {
 
     //
+    public function watchlistDatatable(WatchlistCourseDatatable $datatable)
+    {
+        return $datatable->render('watchlist.datatable');
+
+    }
+    public function watchlistMaterialDatatable(WatchlistMaterialDatatable $datatable)
+    {
+        return $datatable->render('watchlistMaterial.datatable');
+
+    }
+
+
     public function index()
     {
 

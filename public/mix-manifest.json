@@ -2,7 +2,7 @@
     "/js/app.js": "/js/app.js?id=74e34e9cb65aa3ba2f46",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=3fdf6a04d6ee18c3997a",
     "/css/dashboard/app.css": "/css/dashboard/app.css?id=d0d80827911cf8708098",
-    "/css/index/app.css": "/css/index/app.css?id=b28f12bc29e26e209dd5",
+    "/css/index/app.css": "/css/index/app.css?id=a6f1948fa20f6b6b5d21",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=5ab879daa82c9f95c93e",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=8597fe56fdb528327a1c",
     "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=5058dabc74d256ad9df5",
@@ -18,8 +18,9 @@
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=96faad0ab5e4e346f461",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=6753e11f6490c5e30c03",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=1725ab2bba214ad31698",
+    "/js/index/account/account.js": "/js/index/account/account.js?id=5346f5fe2252216836f3",
     "/js/index/chat/message.js": "/js/index/chat/message.js?id=73e11e6d1c6cfd50df1d",
     "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=2633c7ac7e95389c8c87",
-    "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=3250bb227644a14efc60",
+    "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=e684777e8c1e417e6f69",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=ff32fd5d6d1bada9f3d6"
 }

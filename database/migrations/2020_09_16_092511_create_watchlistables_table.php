@@ -17,6 +17,8 @@ class CreateWatchlistablesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('watchlistable_id');
             $table->string('watchlistable_type', 50);
+            $table->timestamps();
+
         });
     }
 

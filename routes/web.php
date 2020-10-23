@@ -222,6 +222,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/{user}/profile/update', 'Index\UserController@update')->name('index.profile.update');
     Route::get('/{user}/profile/announcements', 'Index\UserController@ShowAnnouncements')->name('index.profile.announcements');
     Route::get('/{user}/profile/watchlist', 'Index\UserController@watchlist')->name('index.profile.watchlist');
+// -----Datatable//Watchlist
+    Route::post('/watchlist-datatable', 'index\UserController@watchlistDatatable')->name("datatable.watchlist");
+    Route::post('/watchlist-datatable/material', 'index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
+
+
+
+
 //meessage
     Route::get("/message/", "MessageController@index")->name("index.message");
     Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
@@ -237,6 +244,9 @@ Route::group(['middleware' => ['auth']], function () {
             abort(401);
         }
     })->name('link');
+
+
+
 });
 
 //! GUEST AJAX
