@@ -255,11 +255,12 @@
             <div class="col-md-4 ">Πολιτική Απορρήτου</div>
 
 
-            <div class="col-md-4 text-right"><a class="footer-link nav-link text-secondary" target="_blank"
-                                                href="https://www.darkpony.com">
+            <div class="col-md-4 text-right">
+                <a class="footer-link nav-link text-secondary" target="_blank"  href="https://www.darkpony.com">
                     <span class="mr-1">With</span>
                     <div class="heart"></div>
-                    <span class="ml-1">by DARKPONY</span> </a>
+                    <span class="ml-1">by DARKPONY</span>
+                </a>
             </div>
         </div>
     </div>

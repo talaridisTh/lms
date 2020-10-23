@@ -30,14 +30,15 @@ class UsersDataTable extends DataTable {
 
 
 
-//            $data = User::with(["roles", "courses"])->whereHas(
-//            'roles', function ($q) {
-//            $q->where('name', "!=", 'guest');
-//        }
-//        )->get();
+            $data = User::with(["roles", "courses"])->whereHas(
+            'roles', function ($q) {
+            $q->where('name', "!=", 'guest');
+        }
+        )->get();
 
 
-            $data = User::with("courses")->get();
+
+//            $data = User::with("courses")->get();
         } else
         {
             $data = User::whereBetween('users.created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])

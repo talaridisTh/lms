@@ -39,13 +39,12 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/index/materials/indexMaterials.js', 'public/js/index/materials')
     .js('resources/js/index/chat/message.js', 'public/js/index/chat')
     .js('resources/js/index/guest/guest.js', 'public/js/index/guest')
-<<<<<<< HEAD
+
     .js('resources/js/index/account/account.js', 'public/js/index/account')
 
-=======
-	
+
+
     .js('resources/js/index/app.js', 'public/js/index')
->>>>>>> 84d53004e586637fce199f57b859b161a8f33738
     .sass('resources/sass/dashboard/customArticleStyle.scss', 'public/css/dashboard')
     .sass('resources/sass/dashboard/app.scss', 'public/css/dashboard')
     .sass('resources/sass/index/app.scss', 'public/css/index/')

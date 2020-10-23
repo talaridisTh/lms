@@ -52,7 +52,7 @@
 								<input class="custom-form-control @error('password') is-invalid @enderror"
 									type="password" name="password" required="" id="password" placeholder="Enter your password">
 							</div>
-							
+
                             <div class="form-group mb-3">
                                 <div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
@@ -60,7 +60,7 @@
                                     <label class="custom-control-label form-labels" for="checkbox-signin">Remember me</label>
                                 </div>
 							</div>
-							
+
                             <div class="form-group mb-0 text-center">
                                 <button class="btn btn-block custom-btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
                             </div>
@@ -76,7 +76,7 @@
 			</div>
 			<div class="fade-out"></div>
 		</div>
-		
+
 		<div class="centered-form-cnt">
 			<div class="fade-out d-flex justify-content-center align-items-center">
 				<div class="log-in-logo text-center text-lg-left">
@@ -89,7 +89,7 @@
 						 <!-- title-->
 						 <h4 class="custom-h4 color-gray mt-0 font-weight-700">Sign In</h4>
 						 <p class="custom-font-small custom-font-muted mb-4">Enter your email address and password to access account.</p>
- 
+
 						<form method="POST" action="{{ route('login') }}">
 
 							@csrf
@@ -110,7 +110,7 @@
 								<input class="custom-form-control @error('password') is-invalid @enderror"
 									type="password" name="password" required="" id="password" placeholder="Enter your password">
 							</div>
-							
+
                             <div class="form-group mb-3">
                                 <div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
@@ -118,7 +118,7 @@
                                     <label class="custom-control-label form-labels" for="checkbox-signin">Remember me</label>
                                 </div>
 							</div>
-							
+
                             <div class="form-group mb-0 text-center">
                                 <button class="btn custom-btn-info btn-block" type="submit"><i class="mdi mdi-login"></i> Log In </button>
                             </div>
@@ -127,7 +127,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 
 		<script src="{{ mix("js/index/app.js") }}"></script>
     </body>
