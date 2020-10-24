@@ -731,6 +731,9 @@ const axiosMultipleUpdate = async (courseIds, materialId) => {
 
 //! DROPOZONE
 //!============================================================
+$("#image-search").on("input", utilities.searchHandler);
+
+$(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
 
 $(".js-add-image").on("click", utilities.imageHandler);
 

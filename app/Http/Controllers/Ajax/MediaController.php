@@ -127,10 +127,8 @@ class MediaController extends Controller
 			'title' => 'required'
 		]);
 
-		// dd($error);
-
 		$details = Media::find($request->id)->mediaDetails;
-
+		
 		if ( !$details ) {
 			$details = new MediaDetails();
 			$details->media_id = $request->id;

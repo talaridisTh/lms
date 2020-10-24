@@ -13,6 +13,13 @@ let timer = 0;
 //!				EventListeners			#
 //!######################################
 
+$("#image-light-room").on("show.bs.modal", function(event) {
+	const button = event.relatedTarget;
+	const imgTag = this.getElementsByTagName("img")[0];
+
+	imgTag.src = button.dataset.source;
+})
+
 $("#save-details-btn").on("click", function() {
 
 	let form = $("#store-file-details-form")[0];
@@ -76,7 +83,6 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 		// { data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
 		{ data: "image", className: "text-center cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
-		{ data: "type", name: "type", className: "align-middle text-center", width: "5%", searchable: false },
 		{ data: "ext", name: "ext", className: "align-middle text-center cursor-default"},
 		{ data: "size", name: "size", className: "align-middle text-center cursor-default" },
 	],

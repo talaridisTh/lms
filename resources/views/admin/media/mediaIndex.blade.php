@@ -2,12 +2,25 @@
 @extends('layouts.dashboard')
 
 @section('css')
-<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-
+	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+	<style>
+		#image-light-room .modal-content {
+			max-width: 700px;
+			height: auto;
+		}
+	</style>
 @endsection
 
 @section('content')
 
+	<!-- Modal -->
+	<div class="modal fade" id="image-light-room" tabindex="-1" role="dialog" aria-labelledby="image-light-roomLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-xl modal-dialog-centered justify-content-center" role="document">
+			<div class="modal-content">
+				<img src="" alt="">
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal -->
 	<div class="modal fade" id="edit-file-modal" tabindex="-1" role="dialog" aria-labelledby="edit-file-modalLabel" aria-hidden="true">
@@ -107,7 +120,6 @@
 							<th class="text-center"></th>
 							<th class="text-center">Όνομα</th>
 							<th class="text-center">Τύπος</th>
-							<th class="text-center">Επέκταση</th>
 							<th class="text-center">Μέγεθος</th>
 						</tr>
 					</thead>
@@ -117,7 +129,6 @@
 							<th class="text-center"></th>
 							<th class="text-center">Όνομα</th>
 							<th class="text-center">Τύπος</th>
-							<th class="text-center">Επέκταση</th>
 							<th class="text-center">Μέγεθος</th>
 						</tr>
 					</tfoot>

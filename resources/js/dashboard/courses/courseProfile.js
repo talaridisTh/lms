@@ -24,7 +24,6 @@ import 'filepond/dist/filepond.min.css';
 $("#new-content-btn").on("click", function() {
 	const rows = $("#course-materials-list > tbody > tr");
 	const firstRowPriority = rows[0].dataset.priority;
-
 	const priorityInput = $("#store-material-priority");
 
 	$("#add-additions-modal").modal("show");
@@ -38,8 +37,6 @@ $("#new-content-btn").on("click", function() {
 
 	$("#store-material-id").val(0);
 
-	console.log(firstRowPriority);
-	console.log(rows[rows.length - 1].dataset.priority);
 })
 
 $("#section-chapter-btn").on("click", function() {

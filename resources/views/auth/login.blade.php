@@ -9,7 +9,7 @@
 		<meta name="description" content="ΥΔΡΟΓΕΙΟΣ EDUCATION">
 
 		<!-- App css -->
-		<link rel="stylesheet" href="{{ mix("css/index/logIn.css") }}">
+		<link rel="stylesheet" href="{{ mix("css/index/app.css") }}">
     </head>
 
     <body class="pb-0">

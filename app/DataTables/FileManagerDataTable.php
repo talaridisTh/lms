@@ -20,34 +20,49 @@ class FileManagerDataTable extends DataTable
     public function dataTable($query)
     {
 
-		$query = Media::with('mediaDetails');
+		$query = Media::with('mediaDetails')->get();
 
         return datatables()::of($query)
-
 			->editColumn("original_name", function($data) {
 
 				$details = $data->mediaDetails;
+				$view = "";
+
+				if ( $data->type == 0 ) {
+					$view = "<a href='#' class='js-view-image custom-link-primary'
+						data-toggle='modal' data-target='#image-light-room' data-source='$data->rel_path'>View</a>
+						<span class='mx-2'>|</span>";
+				}
 
 				if ( !$details ) {
 					return "
-						<a href='#' class='h5 custom-link-primary' data-title='' data-subtitle=''
-							data-toggle='modal' data-target='#edit-file-modal' data-caption='' data-description=''
-							data-file-id='$data->id'
-						>$data->original_name</a>
-							<p>$data->name.$data->ext</p>";
+						<a href='#' class='h5 custom-link-primary' data-toggle='modal'
+							data-target='#edit-file-modal' data-file-id='$data->id'>
+							$data->original_name
+						</a>
+						<p>$data->name.$data->ext</p>
+						<a href='#' class='custom-link-primary' data-toggle='modal' 
+							data-target='#edit-file-modal' data-file-id='$data->id'>Details</a>
+						<span class='mx-2'>|</span>
+						$view
+						<a href='$data->rel_path' class='custom-link-primary' download>Download</a>";
 				}
 
 				return "
 					<a href='#' class='h5 custom-link-primary' data-title='$details->title'
 						data-subtitle='$details->subtitle' data-caption='$details->caption'
 						data-description='$details->description' data-toggle='modal'
-						data-file-id='$data->id' data-target='#edit-file-modal'
-					>$data->original_name</a>
-						<p>$data->name.$data->ext</p>";
-			})
-			->editColumn("type", function($data) {
-				$type = explode( "/", $data->file_info );
-				return ucfirst( $type[0] );
+						data-file-id='$data->id' data-target='#edit-file-modal'>
+						$details->title
+					</a>
+					<p>$data->name.$data->ext</p>
+					<a href='#' class='custom-link-primary' data-toggle='modal' 
+						data-target='#edit-file-modal' data-file-id='$data->id'
+						data-title='$details->title' data-subtitle='$details->subtitle'
+						data-caption='$details->caption' data-description='$details->description'>Details</a>
+					<span class='mx-2'>|</span>
+					$view
+					<a href='$data->rel_path' class='custom-link-primary' download>Download</a>";
 			})
 			->addColumn('image', function($data) {
 
@@ -69,14 +84,12 @@ class FileManagerDataTable extends DataTable
 					"rar" => "mdi-folder-zip-outline text-warning",
 				];
 
-				
-
 				if ( is_null($data->thumbnail_path) ) {
 					foreach( $icons as $type => $icon ) {
 						if ( fnmatch("$type*", $data->ext ) ) {
 							return "<i class='h3 mdi {{ $icon }}' style='font-size: 105px;' title='{{ $data->ext }}'></i>";
 						}
-				}
+					}
 				}
 
 				return "<img class='img-fluid' style='max-width: 120px;' src='$data->thumbnail_path' alt='$data->original_name' />";

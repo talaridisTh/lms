@@ -1,2 +1,9 @@
-@import	'./custom';
+//! Icons
+@import "../../theme/scss/custom/plugins/icons/dripicons";
+@import "../../theme/scss/custom/plugins/icons/materialdesignicons";
+@import "../../theme/scss/custom/plugins/icons/unicons";
 
+//! Theme
+@import "../../theme/scss/app-modern.scss";
+
+@import	'./custom';
