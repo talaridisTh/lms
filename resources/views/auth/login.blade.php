@@ -28,8 +28,8 @@
                         </div>
 
                         <!-- title-->
-                        <h5 class="text-muted font-weight-bold mt-0">Sign In</h5>
-                        <p class="custom-font-small custom-muted mb-4">Enter your email address and password to access account.</p>
+                        <h4 class="mt-0">Sign In</h4>
+                        <p class="text-muted mb-4">Enter your email address and password to access account.</p>
 
                         <!-- form -->
 						<form method="POST" action="{{ route('login') }}">
@@ -37,8 +37,8 @@
 							@csrf
 
                             <div class="form-group">
-                                <label class="form-labels" for="email">Email address</label>
-								<input class="custom-form-control @error('email') is-invalid @enderror"
+                                <label for="email">Email address</label>
+								<input class="form-control @error('email') is-invalid @enderror"
 									type="email" id="email" name="email" value="{{ old('email') }}" required="" placeholder="Enter your email">
 							</div>
 
@@ -48,8 +48,8 @@
                                         <small>{{ __('Forgot Your Password?') }}</small>
                                     </a>
                                 @endif
-                                <label class="form-labels" for="password">Password</label>
-								<input class="custom-form-control @error('password') is-invalid @enderror"
+                                <label for="password">Password</label>
+								<input class="form-control @error('password') is-invalid @enderror"
 									type="password" name="password" required="" id="password" placeholder="Enter your password">
 							</div>
 
@@ -57,12 +57,12 @@
                                 <div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
 										id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="custom-control-label form-labels" for="remember">Remember me</label>
+                                    <label class="custom-control-label" for="remember">Remember me</label>
                                 </div>
 							</div>
 
                             <div class="form-group mb-0 text-center">
-                                <button class="h7 btn btn-block btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                                <button class="btn btn-block btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
                             </div>
                         </form>
                         <!-- end form-->
@@ -87,16 +87,16 @@
 				<div class="card">
 					<div class="card-body">
 						 <!-- title-->
-						 <h4 class="custom-h4 color-gray mt-0 font-weight-700">Sign In</h4>
-						 <p class="custom-font-small custom-font-muted mb-4">Enter your email address and password to access account.</p>
+						 <h4 class="mt-0">Sign In</h4>
+						 <p class="text-muted mb-4">Enter your email address and password to access account.</p>
 
 						 <form method="POST" action="{{ route('login') }}">
 
 							@csrf
 
                             <div class="form-group">
-                                <label class="form-labels" for="sm-email">Email address</label>
-								<input class="custom-form-control @error('email') is-invalid @enderror"
+                                <label for="sm-email">Email address</label>
+								<input class="form-control @error('email') is-invalid @enderror"
 									type="email" id="sm-email" name="email" value="{{ old('email') }}" required="" placeholder="Enter your email">
 							</div>
 
@@ -106,8 +106,8 @@
                                         <small>{{ __('Forgot Your Password?') }}</small>
                                     </a>
                                 @endif
-                                <label class="form-labels" for="sm-password">Password</label>
-								<input class="custom-form-control @error('password') is-invalid @enderror"
+                                <label for="sm-password">Password</label>
+								<input class="form-control @error('password') is-invalid @enderror"
 									type="password" name="password" required="" id="sm-password" placeholder="Enter your password">
 							</div>
 
@@ -115,12 +115,12 @@
                                 <div class="custom-control custom-checkbox">
 									<input type="checkbox" class="custom-control-input"
 										id="sm-remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                                    <label class="custom-control-label form-labels" for="sm-remember">Remember me</label>
+                                    <label class="custom-control-label" for="sm-remember">Remember me</label>
                                 </div>
 							</div>
 
                             <div class="form-group mb-0 text-center">
-                                <button class="h7 btn btn-block btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
+                                <button class="btn btn-block btn-info " type="submit"><i class="mdi mdi-login"></i> Log In </button>
                             </div>
                         </form>
                         <!-- end form-->

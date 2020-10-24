@@ -1,24 +1,8 @@
 @import "../../theme/scss/custom/plugins/icons/dripicons";
 @import "../../theme/scss/custom/plugins/icons/materialdesignicons";
 @import "../../theme/scss/custom/plugins/icons/unicons";
-@import '../../theme/scss/open_sans';
 
-// @import '~bootstrap/scss/bootstrap';
-@import "../../bootstrap-4.5.3/scss/bootstrap.scss";
-
-
-
-.custom-h4 {///////////////////
-	font-size: 1.125rem;
-}
-
-.font-weight-700 {/////////////////////
-	font-weight: 700;
-}
-
-.color-gray {/////////////////
-	color: #6c757d;
-}
+@import "../../theme/scss/app-modern.scss";
 
 .auth-column {
     position: relative;
@@ -46,42 +30,6 @@
     margin-bottom: 2rem;
 	position: absolute;
 	top: 3rem;
-}
-
-.form-labels {
-	font-size: .875rem;
-	font-weight: 600;
-	line-height: 1.5;
-	color: #6c757d;
-	text-align: left;
-}
-
-.custom-form-control {
-	display: block;
-	width: 100%;
-	height: calc(2.2125rem + 2px);
-	padding: .45rem .9rem;
-	font-size: .875rem;
-	font-weight: 400;
-	line-height: 1.5;
-	color: #6c757d;
-	background-color: #fff;
-	background-clip: padding-box;
-	border: 1px solid #dee2e6;
-	border-radius: .25rem;
-	transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-}
-
-.custom-form-control:focus {
-	border-color: rgb(189, 189, 189);
-}
-
-.custom-font-small {
-	font-size: 0.875rem;
-}
-
-.custom-font-muted {//////////
-	color: #98a6ad;
 }
 
 .fade-out {
@@ -119,8 +67,4 @@
 
 .custom-link-muted:hover {
 	color: #83919f;
-}
-
-.h7 {
-	font-size: 0.9rem !important;
 }
