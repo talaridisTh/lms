@@ -5,6 +5,8 @@ const namespace = "App\\Course";
 const courseSlug = $("#course-materials-list")[0].dataset.courseSlug
 const baseUrl = window.location.origin;
 
+let timer = 0;
+
 //!######################################
 //! 				Imports				#
 //!######################################
@@ -2402,7 +2404,8 @@ FilePond.setOptions({
     name: 'file[]',
 	allowMultiple: true,
 	className: "js-filepond-file-dragging",
-	labelIdle: "Drag & Drop your files or Browse"
+	labelIdle: "Drag & Drop your files or Browse",
+	allowRevert: false
 });
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
@@ -2420,6 +2423,39 @@ const pond = FilePond.create( dropzone, {
 			onload: function(data) {
 				utilities.paginationRequest( 1, "" );
 			}
+		}
+
+	},
+	onprocessfile: function (error, data) {
+		
+		if ( pond.status === 2 ) {
+
+			clearTimeout(timer);
+			let files = pond.getFiles();
+
+			for (let i = 0; i < files.length; i++ ) {
+
+				if ( files[i].status === 5 ) {
+					timer = setTimeout(function() {
+						pond.removeFile(files[i]);
+					}, ( i + 1 ) * 500);
+				}
+
+			}
+		}
+
+	},
+	onprocessfiles: function() {
+
+		let files = pond.getFiles();
+
+		for (let i = 0; i < files.length; i++ ) {
+
+			timer = setTimeout(function() {
+				pond.removeFile(files[i]);
+				
+			}, ( i + 1 ) * 500);
+			
 		}
 
 	},
@@ -2463,12 +2499,24 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 	},
     onprocessfile: function (error, data) {
 
-		// setTimeout(function() {
-		// 	materialFilePond.removeFile(data.file);
-		// }, 2000);
+		if ( courseFilePond.status === 2 ) {
 
-		$("#files-cnt").removeClass("d-none");
-		$("#active-files-loading").addClass("d-none");
+			clearTimeout(timer);
+			let files = courseFilePond.getFiles();
+
+			for (let i = 0; i < files.length; i++ ) {
+
+				if ( files[i].status === 5 ) {
+					timer = setTimeout(function() {
+						courseFilePond.removeFile(files[i]);
+					}, ( i + 1 ) * 500);
+				}
+
+			}
+			$("#files-cnt").removeClass("d-none");
+			$("#active-files-loading").addClass("d-none");
+		}
+		
 	},
 	onprocessfileabort: function() {
 		$("#files-cnt").removeClass("d-none");
@@ -2476,65 +2524,28 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 	},
 	onprocessfiles: function() {
 
-		// let instance = materialFilePond.getFiles()
+		let files = courseFilePond.getFiles();
 
-		// for (let i = 0; i < instance.length; i++ ) {
+		for (let i = 0; i < files.length; i++ ) {
 
-		// 	setTimeout(function() {
-		// 		materialFilePond.removeFile(instance[i].file);
+			timer = setTimeout(function() {
+				courseFilePond.removeFile(files[i]);
+				
+			}, ( i + 1 ) * 500);
+			
+		}
 
-		// 	}, i * 1000);
-
-		// }
-
-	},
-	oninitfile: function(file) {
-		$("#files-cnt").addClass("d-none");
-		$("#active-files-loading").removeClass("d-none");
-	},
-	onerror: function() {
 		$("#files-cnt").removeClass("d-none");
 		$("#active-files-loading").addClass("d-none");
+
 	},
-    acceptedFileTypes: [
-		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
-		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-		"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
-		"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
-		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-		"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
-		"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
-		"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-		"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-		"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-		"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-		"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
-		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
-		"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
-	],
+    acceptedFileTypes: utilities.ALLOWEDTYPES,
 	fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
 		
-		const allowed = [
-			"application/octet-stream", "application/x-zip-compressed", "application/pdf",
-			"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-			"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
-			"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
-			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-			"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
-			"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
-			"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-			"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-			"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-			"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-			"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
-			"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
-			"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
-		];
-
 		// Do custom type detection here and return with promise
 		const extension = source.name.split(".").pop();
 
-		if ( allowed.includes(type) ) {
+		if ( utilities.ALLOWEDTYPES.includes(type) ) {
 			resolve(type);
 		}
 		else if (extension === "ev3" || extension === "rar" || extension === "sb3") {
@@ -2568,7 +2579,7 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 
 	});
 
-	dropArea[i].addEventListener("mouseleave", function(event) {
+	dropArea[i].addEventListener("drop", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 

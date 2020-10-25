@@ -16,6 +16,25 @@ use App\DataTables\FilesDataTable;
 
 class MediaController extends Controller
 {
+
+	private $allowedTypes = [
+		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
+		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+		"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+		"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+		"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+		"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+		"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+		"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+		"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+		"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+		"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+		"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+		"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html", "image/png",
+		"image/jpeg"
+	];
+
     /**
      * Display a listing of the resource.
      *
@@ -218,18 +237,9 @@ class MediaController extends Controller
 
 	}
 
-	public function editorImages ( Request $request ) {
-
-		// dd();
-		//! model Sended with request	etc. App\Course - App\Bundle
-		//! an telika den xrisimopoih8ei o pivot na afere8i kai apo
-		//! ta js arxeia
-		// $namespace = $request->namespace;
-
-		// $model = $namespace::find($request->id);
+	public function uploadImages ( Request $request ) {
 
 		$allowedTypes = ["image/png", "image/jpeg"];
-		$date = date('Y.m');
 		$files = [];
 
 		foreach ( $request->file as $key => $image ) {
@@ -237,46 +247,9 @@ class MediaController extends Controller
 				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
 					if ( $image->getSize() <= 50000000 ) { // 50MB
 
-						$temp = explode(".", $image->getClientOriginalName());
-						$arrayName = (array_diff( $temp, [$image->getClientOriginalExtension()] ));
-						$originalName = implode( ".", $arrayName );
-						$name =  Str::slug( implode("-", $arrayName ), "-" );
+						$media = $this->storeImage($image);
 
-						$count = Media::where( "original_name", $originalName)->count();
-
-						if ( $count > 0 ) {
-							$name = $name.( $count + 1 );
-							$fullname = $name.".".$image->getClientOriginalExtension();
-						}
-						else {
-							$fullname = "$name.".$image->getClientOriginalExtension();
-						}
-
-						$media = new Media;
-						$media->original_name = $originalName;
-						$media->name = $name;
-						$media->rel_path = "/storage/images/$date/$fullname";
-						$media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
-						$media->ext = $image->getClientOriginalExtension();
-						$media->file_info = $image->getClientMimeType();
-						$media->size = $image->getSize();
-						$media->width = Image::make( $image )->width();
-						$media->height = Image::make( $image )->height();
-						$media->save();
-
-						 //git $model->media()->attach( $media->id, [ "usage" => 1 ] );
-
-						$image->storeAs("public/images/$date", $fullname);
-
-						if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
-							Storage::disk("local")->makeDirectory("public/thumbnails/$date");
-
-						}
-
-						Image::make( $image )->fit( 215, 215)
-							->save( storage_path("/app/public/thumbnails/$date/$fullname") );
-
-						$files["file-". $key] = [
+						$files["file-". $media->id] = [
 							"url" => $media->rel_path,
 							"id" => $media->id
 						];
@@ -291,56 +264,15 @@ class MediaController extends Controller
 
 		$model = $request->namespace::find($request->id);
 		$file = $request->file;
-
-		$allowedTypes = [
-			"application/octet-stream", "application/x-zip-compressed", "application/pdf",
-			"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-			"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
-			"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
-			"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-			"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
-			"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
-			"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-			"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-			"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-			"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-			"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
-			"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
-			"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
-		];
 		
-		$date = date('Y.m');
+		//! afairei ta antistixa arxeia
+		$allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
 
 		if ( $file->isValid() ) {
 			if ( in_array($file->getClientMimeType(), $allowedTypes) ) {
 				if ( $file->getSize() <= 50000000 ) { // 50MB
 
-					$temp = explode(".", $file->getClientOriginalName());
-					$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
-					$originalName = implode( ".", $arrayName );
-					$name =  Str::slug( implode("-", $arrayName ), "-" );
-
-					$count = Media::where( "original_name", $originalName)->count();
-
-					if ( $count > 0 ) {
-						$name = $name.( $count + 1 );
-						$fullname = $name.".".$file->getClientOriginalExtension();
-					}
-					else {
-						$fullname = "$name.".$file->getClientOriginalExtension();
-					}
-
-					$media = new Media;
-					$media->original_name = $originalName;
-					$media->name = $name;
-					$media->type = 1;
-					$media->rel_path = "/storage/files/$date/$fullname";
-					$media->ext = $file->getClientOriginalExtension();
-					$media->file_info = $file->getClientMimeType();
-					$media->size = $file->getSize();
-					$media->save();
-
-					$file->storeAs("public/files/$date", $fullname);
+					$media = $this->storeFile($file);
 
 					$model->media()->attach( $media->id, [ "usage" => 3 ] );
 
@@ -364,11 +296,103 @@ class MediaController extends Controller
 
 	}
 
-	public function coverChangeNotExist(Request $request) {
+	public function generalUpload(Request $request) {
 
-        dd($request->all());
+		$file = $request->file;
 
+		$fileTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
+		$imageTypes = ["image/png", "image/jpeg"];
 
+		if ( $file->isValid() ) {
+			if ( $file->getSize() <= 50000000 ) { // 50MB
+				if ( in_array($file->getClientMimeType(), $imageTypes) ) {
+
+					$this->storeImage($file);
+
+				}		//! elegxei arxeia na MIN mpi mesa se else
+				elseif ( in_array($file->getClientMimeType(), $fileTypes) ) {
+
+					$this->storeFile($file);
+
+				}
+			}
+		}
+	}
+
+	private function fileName($file) {
+		$temp = explode(".", $file->getClientOriginalName());
+		$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
+		$originalName = implode( ".", $arrayName );
+		$name =  Str::slug( implode("-", $arrayName ), "-" );
+
+		$count = Media::where( "original_name", $originalName)->count();
+
+		if ( $count > 0 ) {
+			$name = $name.( $count + 1 );
+			$fullname = $name.".".$file->getClientOriginalExtension();
+		}
+		else {
+			$fullname = "$name.".$file->getClientOriginalExtension();
+		}
+
+		return (object)[
+			"name" => $name,
+			"originalName" => $originalName,
+			"fullname" => $fullname,
+		];
+	}
+
+	private function storeImage($image) {
+		
+		$date = date('Y.m');
+		$name = $this->fileName($image);
+
+		$media = new Media;
+		$media->original_name = $name->originalName;
+		$media->name = $name->name;
+		$media->rel_path = "/storage/images/$date/$name->fullname";
+		$media->thumbnail_path = "/storage/thumbnails/$date/$name->fullname";
+		$media->ext = $image->getClientOriginalExtension();
+		$media->file_info = $image->getClientMimeType();
+		$media->size = $image->getSize();
+		$media->width = Image::make( $image )->width();
+		$media->height = Image::make( $image )->height();
+
+		$media->save();
+
+		$image->storeAs("public/images/$date", $name->fullname);
+
+		if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
+			Storage::disk("local")->makeDirectory("public/thumbnails/$date");
+		}
+
+		Image::make( $image )->fit( 215, 215)
+			->save( storage_path("/app/public/thumbnails/$date/$name->fullname") );
+
+		return (object)[
+			"id" => $media->id,
+			"rel_path" => $media->rel_path
+		];
+	}
+
+	private function storeFile($file) {
+
+		$date = date('Y.m');
+		$name = $this->fileName($file);
+
+		$media = new Media;
+		$media->original_name = $name->originalName;
+		$media->name = $name->name;
+		$media->type = 1;
+		$media->rel_path = "/storage/files/$date/$name->fullname";
+		$media->ext = $file->getClientOriginalExtension();
+		$media->file_info = $file->getClientMimeType();
+		$media->size = $file->getSize();
+		$media->save();
+
+		$file->storeAs("public/files/$date", $name->fullname);
+
+		return $media;
 	}
 
 

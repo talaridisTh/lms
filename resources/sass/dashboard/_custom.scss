@@ -1,3 +1,18 @@
+.font-40 {
+	font-size: 40px;
+}
+
+.font-70 {
+	font-size: 70px;
+}
+
+.font-100 {
+	font-size: 100px;
+}
+
+.font-120 {
+	font-size: 120px;
+}
 
 .custom-center-table td {
     padding: 1.30rem 0.95rem 0.3rem;
@@ -296,6 +311,21 @@ select.is-invalid {
     color: #536de6 !important;
 }
 
+.custom-link-muted {
+	color: #8391a2;
+}
+
+.custom-link-muted:hover {
+	color: white;
+}
+
+.custom-gray-link {
+	color: white;
+}
+
+.custom-gray-link:hover {
+	color: #8391a2;
+}
 
 .image-dropzone {
     border: 2px dashed #47515d;
@@ -638,3 +668,73 @@ figure > img {
 .font-weight-700 {
 	font-weight: 700;
 }
+
+//!##################################
+//!		Full Page Drag n Drop		#
+//!##################################
+
+.left-5 {
+	left: 5%;
+	top: 68px;
+}
+
+.left-25 {
+	left: 25%;
+	transform: translateX(-25%);
+	top: 30px;
+}
+
+.absolute-centered {
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.right-25 {
+	right: 25%;
+	transform: translateX(35%);
+	top: 30px;
+}
+
+.right-5 {
+	right: 5%;
+	top: 68px;
+}
+
+#page-drag-drop-overlay {
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	display: none;
+	opacity: 0;
+	margin: 0;
+	padding: 0;
+	width: calc(100vw - 18px);
+	height: 100vh;
+	border: 3px dashed white;
+	background-color: rgba(0, 0, 0, 0.705);
+	z-index: 1020;
+	color: white;
+	transition: opacity 0.3s ease-in-out;
+	pointer-events: none;
+}
+
+#icons-cnt {
+	position: relative;
+	height: 136px;
+	width: 200px;
+	transition: width 0.3s ease-in-out;
+}
+
+.flex-opacity {
+	display: flex !important;
+	opacity: 1 !important;
+}
+
+.w-350px {
+	width: 350px !important;
+}
+//!##################################
+//!		./Full Page Drag n Drop		#
+//!##################################

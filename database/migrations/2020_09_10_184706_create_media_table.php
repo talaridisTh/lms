@@ -39,7 +39,7 @@ class CreateMediaTable extends Migration
 
             $table->text('details')->nullable(); // a json object with misc. details about this media. usable on videos and oembed results
 
-            // $table->nullableTimestamps(); // created_at, updated_at
+            $table->timestamps(); // created_at, updated_at
         });
     }
 

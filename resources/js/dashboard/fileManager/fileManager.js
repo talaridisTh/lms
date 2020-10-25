@@ -2,11 +2,16 @@
 //!					Imports				#
 //!######################################
 import utilities from "../main";
+import * as FilePond from "filepond";
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import 'filepond/dist/filepond.min.css';
 
 //!######################################
 //!				Global Variables		#
 //!######################################
 
+const baseUrl = window.location.origin;
 let timer = 0;
 
 //!######################################
@@ -78,13 +83,25 @@ $(".custom-tabs").on( "click", function() {
 });
 
 const fileManagerDatatable = $("#file-manager-datatable").DataTable({
-	order: [ 1, "asc" ],
+	order: [ 4, "desc" ],
 	columns: [
-		// { data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
 		{ data: "image", className: "text-center cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
 		{ data: "ext", name: "ext", className: "align-middle text-center cursor-default"},
 		{ data: "size", name: "size", className: "align-middle text-center cursor-default" },
+		{
+			data: 'created_at', name: 'created_at',
+			className: "cursor-default text-center align-middle", searchable: false,
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
 	],
 	processing: true,
 	serverSide: true,
@@ -177,7 +194,7 @@ let filter = document.getElementById("ext-table-filter")
 lengthLabel.appendChild( filter );
 
 $("#ext-table-filter").select2({
-	minimumResultsForSearch: -1
+
 });
 
 $("#ext-table-filter").on("change", function() {
@@ -185,5 +202,127 @@ $("#ext-table-filter").on("change", function() {
 	let label = $("#select2-ext-table-filter-container")[0];
 
 	utilities.filterStyle( label, this.value );
-	fileManagerDatatable.column(3).search( this.value ).draw();
+	fileManagerDatatable.column(2).search( this.value ).draw();
 });
+
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
+
+const dropzone = document.getElementById("file-pond");
+utilities.ALLOWEDTYPES.push('image/png', 'image/jpeg')
+const pond = FilePond.create(dropzone, {
+	instantUpload: false,
+	dropOnElement: false,
+	dropOnPage: true,
+	allowMultiple: true,
+	allowRevert: false,
+	labelIdle: "Drag & Drop your files or Browse",
+    server: {
+        url: baseUrl,
+        process: {
+            url: '/file-manager/upload',
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+            },
+        },
+	},
+	onprocessfile: function (error, data) {
+		
+		if ( pond.status === 2 ) {
+
+			clearTimeout(timer);
+			let files = pond.getFiles();
+
+			for (let i = 0; i < files.length; i++ ) {
+
+				if ( files[i].status === 5 ) {
+					timer = setTimeout(function() {
+						pond.removeFile(files[i]);
+					}, ( i + 1 ) * 500);
+				}
+
+			}
+			fileManagerDatatable.ajax.reload( null, false );
+		}
+
+	},
+	onprocessfiles: function() {
+
+		let files = pond.getFiles();
+
+		for (let i = 0; i < files.length; i++ ) {
+
+			timer = setTimeout(function() {
+				pond.removeFile(files[i]);
+				
+			}, ( i + 1 ) * 500);
+			
+		}
+
+		fileManagerDatatable.ajax.reload( null, false );
+	},
+	acceptedFileTypes: utilities.ALLOWEDTYPES,
+	fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
+		
+		// Do custom type detection here and return with promise
+		const extension = source.name.split(".").pop();
+
+		if ( utilities.ALLOWEDTYPES.includes(type) ) {
+			resolve(type);
+		}
+		else if (extension === "ev3" || extension === "rar" || extension === "sb3") {
+			type = "application/octet-stream";
+			resolve(type);
+		}
+
+		reject(type);
+    }),
+});
+
+$("#upload-file-modal").on("show.bs.modal", function() {
+	const body = document.getElementsByTagName("body")[0];
+	
+	removeBodyListeners(body);
+});
+
+$("#upload-file-modal").on("hide.bs.modal", function() {
+	const body = document.getElementsByTagName("body")[0];
+	
+	removeBodyListeners(body);
+	addBodyListeners(body);
+})
+
+const body = document.getElementsByTagName("body")[0];
+body.addEventListener("dragover", dragOverlayHandler);
+body.addEventListener("dragleave", leaveOverlayHandler);
+body.addEventListener("drop", dropOverlayHandler);
+
+function dragOverlayHandler() {
+	$("#page-drag-drop-overlay").addClass("flex-opacity");
+	$("#icons-cnt").addClass("w-350px");
+}
+
+function removeBodyListeners( body ) {
+	body.removeEventListener("dragover", dragOverlayHandler);
+	body.removeEventListener("dragleave", leaveOverlayHandler);
+	body.removeEventListener("drop", dropOverlayHandler);
+}
+
+function addBodyListeners( body ) {
+	body.addEventListener("dragover", dragOverlayHandler);
+	body.addEventListener("dragleave", leaveOverlayHandler);
+	body.addEventListener("drop", dropOverlayHandler);
+}
+
+function leaveOverlayHandler() {
+	$("#page-drag-drop-overlay").removeClass("flex-opacity");
+	$("#icons-cnt").removeClass("w-350px");
+}
+
+function dropOverlayHandler() {
+	$("#page-drag-drop-overlay").removeClass("flex-opacity");
+	$("#icons-cnt").removeClass("w-350px");
+
+	$("#upload-file-modal").modal("show");
+	removeBodyListeners( this );
+}

@@ -8,10 +8,63 @@
 			max-width: 700px;
 			height: auto;
 		}
+		#page-drag-drop-overlay {
+			/* box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+			position: absolute;
+			width: calc(100vw - 18px);
+			height: 100vh;
+			border: 3px dashed green;
+			background-color: rgba(0, 39, 3, 0.199);
+			z-index: 1020; */
+		}
 	</style>
 @endsection
 
 @section('content')
+
+<div id="page-drag-drop-overlay" class="d-flex flex-column justify-content-center align-items-center">
+	<div id="icons-cnt" class="mb-0">
+		<i class="left-5 font-40 position-absolute mdi mdi-folder-zip-outline"></i>
+		<i class="left-25 font-70 position-absolute mdi mdi-file-pdf-outline"></i>
+		<i class="absolute-centered font-100 position-absolute mdi mdi-language-html5"></i>
+		<i class="right-25 font-70 position-absolute mdi mdi-file-document-outline"></i>
+		<i class="right-5 font-40 position-absolute mdi mdi-music"></i>
+	</div>
+	<p class="h1 mt-0">Drop to upload your files</p>
+</div>
+
+	<!-- Upload Modal -->
+	<div class="modal fade" id="upload-file-modal" tabindex="-1" role="dialog" aria-labelledby="upload-file-modalLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h5 id="upload-file-modalLabel" class="modal-title">Upload</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<input id="file-pond" class="mb-0" type="file" name="file" />
+					<p class="text-right mb-2 ">
+						<small>
+							<strong>
+								Το πεδίο δέχεται αρχεία: .doc, .odt, .rtf, .xls, .odp, .zip, .rar., .mp3, .pdf, .ev3, .sb3, .html, .jpg, .png.
+							</strong>
+						</small>
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button id="save-details-btn" class="btn btn-primary">
+						<i class="mdi mdi-content-save mr-1"></i>
+						Αποθήκευση
+					</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal -->
 	<div class="modal fade" id="image-light-room" tabindex="-1" role="dialog" aria-labelledby="image-light-roomLabel" aria-hidden="true">
@@ -96,14 +149,14 @@
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
 				<div class="text-sm-right sticky-btns mb-2">
-					<a href="#" class="btn btn-primary">
+					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#upload-file-modal">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Upload
 					</a>
-					<button type="button" class="custom-tabs btn btn-light" data-custom-tab="list-view">
+					<button type="button" class="d-none custom-tabs btn btn-light" data-custom-tab="list-view">
 						<i class="mdi mdi-format-list-bulleted-square"></i>
 					</button>
-					<button type="button" class="custom-tabs btn btn-dark" data-custom-tab="grid-view">
+					<button type="button" class="d-none custom-tabs btn btn-dark" data-custom-tab="grid-view">
 						<i class="mdi mdi-view-grid-outline"></i>
 					</button>
 
@@ -121,6 +174,7 @@
 							<th class="text-center">Όνομα</th>
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
+							<th class="text-center">Ημ. Δημιουργίας</th>
 						</tr>
 					</thead>
 					<tbody class="tables-hover-effect"></tbody>
@@ -130,6 +184,7 @@
 							<th class="text-center">Όνομα</th>
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
+							<th class="text-center">Ημ. Δημιουργίας</th>
 						</tr>
 					</tfoot>
 				</table>
@@ -155,16 +210,10 @@
 
 
 	<select id="ext-table-filter" class="ml-1 select2 form-control">
-		<option value="" selected>Όλες οι Επεκτάσεις</option>
-		@php $exts = [] @endphp
+		<option value="" selected>Όλοι οι Τύποι</option>
 
-		@foreach ( $files as $file )
-			@if ( in_array( $file->ext, $exts) )
-				@continue
-			@endif
-
-			@php array_push($exts, $file->ext) @endphp
-			<option value="{{ $file->ext }}">{{ $file->ext }}</option>
+		@foreach ( $extensions as $extension )
+			<option value="{{ $extension->ext }}">{{ $extension->ext }}</option>
 		@endforeach
 	</select>
 

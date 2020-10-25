@@ -1,6 +1,3 @@
-
-
-
 Element.prototype.findParent = function (loops) {
     let parent = this;
 
@@ -27,6 +24,22 @@ Element.prototype.appendAfter = function (element) {
 
 const baseUrl = window.location.origin;
 var timer = 0;
+export const ALLOWEDTYPES = [
+	"application/octet-stream", "application/x-zip-compressed", "application/pdf",
+	"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+	"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+	"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+	"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+	"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+	"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+	"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+	"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+	"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+	"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+	"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+	"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
+];
 
 //!##########################################
 //!				Configurations				#
@@ -601,6 +614,7 @@ export default {
 	resetGalleryBtns,
 	removeImageHandler,
 	removeImages,
-	articleConfig
+	articleConfig,
+	ALLOWEDTYPES
 }
 

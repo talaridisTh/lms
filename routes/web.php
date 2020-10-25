@@ -176,7 +176,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::delete('topics/destroy/{ids}', 'Ajax\TopicController@destroy');
     Route::patch('topics/change/color', 'Ajax\TopicController@changeColor');
 //! Dashboard File Manager Datatable
-    Route::post('/file-manager', 'Ajax\MediaController@fileManagerTable');
+	Route::post('/file-manager', 'Ajax\MediaController@fileManagerTable');
+	
+	Route::post('/file-manager/upload', 'Ajax\MediaController@generalUpload');
+
 //! Dashboard Course - Materials Datatable
     Route::post('media/remaining-files', 'Ajax\MediaController@remainingFilesTable');
 //! Dashboard File Manager
@@ -188,10 +191,9 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post("dashboard-search", "Ajax\DashboardController@globalSearch");
 //! Ajax Upload Files
     Route::post('materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages');
-    Route::post('media/upload-images', 'Ajax\MediaController@editorImages');
+    Route::post('media/upload-images', 'Ajax\MediaController@uploadImages');
     Route::post('media/files-upload', 'Ajax\MediaController@fileUpload');
     Route::patch('media/cover/replace', 'Ajax\MediaController@coverChange');
-    Route::patch('media/cover/not-exist', 'Ajax\MediaController@coverChangeNotExist');
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
 	Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
 
