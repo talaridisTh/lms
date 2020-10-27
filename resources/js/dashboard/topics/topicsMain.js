@@ -311,7 +311,6 @@ const gpickr = new GPickr({
 
 gpickr.on('change', instance => {
 
-	console.log(instance.getGradient());
 	$("#gradient-input").val( instance.getGradient() )
 
 });
