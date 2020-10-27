@@ -45,7 +45,7 @@
 
                                             <div class="pb-2">
 
-                                                <div class="pretty p-icon p-round p-jelly ">
+                                                <div class="pretty p-icon p-round p-jelly   ">
                                                     <input {{!empty($checked)?$checked :"" }} class="input-course"
                                                            data-course-id="{{$course->id}}"
                                                            type="checkbox"/>
