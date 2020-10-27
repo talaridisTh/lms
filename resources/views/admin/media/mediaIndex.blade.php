@@ -24,16 +24,17 @@
 
 @section('content')
 
-<div id="page-drag-drop-overlay" class="d-flex flex-column justify-content-center align-items-center">
-	<div id="icons-cnt" class="mb-0">
-		<i class="left-5 font-40 position-absolute mdi mdi-folder-zip-outline"></i>
-		<i class="left-25 font-70 position-absolute mdi mdi-file-pdf-outline"></i>
-		<i class="absolute-centered font-100 position-absolute mdi mdi-language-html5"></i>
-		<i class="right-25 font-70 position-absolute mdi mdi-file-document-outline"></i>
-		<i class="right-5 font-40 position-absolute mdi mdi-music"></i>
+	<!-- Full Page Drag n Drop Overlay -->
+	<div id="page-drag-drop-overlay" class="d-flex flex-column justify-content-center align-items-center">
+		<div id="icons-cnt" class="mb-0">
+			<i class="left-5 font-40 position-absolute mdi mdi-folder-zip-outline"></i>
+			<i class="left-25 font-70 position-absolute mdi mdi-file-pdf-outline"></i>
+			<i class="absolute-centered font-100 position-absolute mdi mdi-language-html5"></i>
+			<i class="right-25 font-70 position-absolute mdi mdi-file-document-outline"></i>
+			<i class="right-5 font-40 position-absolute mdi mdi-music"></i>
+		</div>
+		<p class="h1 mt-0">Drop to upload your files</p>
 	</div>
-	<p class="h1 mt-0">Drop to upload your files</p>
-</div>
 
 	<!-- Upload Modal -->
 	<div class="modal fade" id="upload-file-modal" tabindex="-1" role="dialog" aria-labelledby="upload-file-modalLabel" aria-hidden="true">
@@ -46,7 +47,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<input id="file-pond" class="mb-0" type="file" name="file" />
+					<input id="file-pond" class="js-filepond-file-dragging mb-0" type="file" name="file" />
 					<p class="text-right mb-2 ">
 						<small>
 							<strong>

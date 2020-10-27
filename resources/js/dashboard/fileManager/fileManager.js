@@ -326,3 +326,34 @@ function dropOverlayHandler() {
 	$("#upload-file-modal").modal("show");
 	removeBodyListeners( this );
 }
+
+const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
+for ( let i = 0; i < dropArea.length; i++ ) {
+
+	dropArea[i].addEventListener("dragover", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+			draggingArea.classList.add("limegreen");
+			label.classList.add("text-limegreen");
+
+	});
+
+	dropArea[i].addEventListener("dragleave", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+			draggingArea.classList.remove("limegreen");
+			label.classList.remove("text-limegreen");
+
+	});
+
+	dropArea[i].addEventListener("drop", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+			draggingArea.classList.remove("limegreen");
+			label.classList.remove("text-limegreen");
+
+	});
+}
