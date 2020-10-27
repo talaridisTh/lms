@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Course;
+use App\DataTables\HistoryCourseDatatable;
+use App\DataTables\HistoryMaterialDatatable;
 use App\DataTables\WatchlistCourseDatatable;
 use App\DataTables\WatchlistMaterialDatatable;
 use App\Http\Controllers\Controller;
@@ -25,6 +28,17 @@ class UserController extends Controller {
         return $datatable->render('watchlistMaterial.datatable');
 
     }
+    public function historyCourseDatatable(HistoryCourseDatatable $datatable)
+    {
+        return $datatable->render('historyCourse.datatable');
+
+    }
+    public function historyMaterialDatatable(HistoryMaterialDatatable $datatable)
+    {
+        return $datatable->render('historyMaterial.datatable');
+
+    }
+
 
 
     public function index()
@@ -61,13 +75,29 @@ class UserController extends Controller {
             })->flatten(1)]);
     }
 
-    public function watchlist(User $user)
+    public function watchlist()
     {
 
-        $watchlistCourses = $user->watchlistCourse()->get();
-        $watchlistMaterials = $user->watchlistMaterial()->get();
+        return view("index.users.user-watchlist");
 
-        return view("index.users.user-watchlist",compact("watchlistCourses","watchlistMaterials"));
+    }
+
+    public function history()
+    {
+
+
+        $data = auth()->user()->witchlist;
+
+        $courseIds = $data->map(function ($course){
+            return $course->pivot->course_id;
+        });
+
+        $courses = $courseIds->unique()->map(function ($course){
+            return Course::findOrFaIL($course);
+        });
+
+
+        return view("index.users.user-history",compact("courses"));
 
     }
 

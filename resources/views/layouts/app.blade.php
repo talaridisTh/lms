@@ -173,7 +173,8 @@
                                    class="side-nav-link dropdown-item">
                                     <span>Αγαπημένα</span>
                                 </a>
-                                <a href="#" class="side-nav-link dropdown-item">
+                                <a href="{{route('index.profile.history',auth()->user()->slug)}}"
+                                   class="side-nav-link dropdown-item">
                                     <span>Ιστορικό </span>
                                 </a>
                                 <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"

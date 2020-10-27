@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -142,14 +142,14 @@ eval("try {\n  window.Popper = __webpack_require__(/*! popper.js */ \"./node_mod
 
 /***/ }),
 
-/***/ 21:
+/***/ 23:
 /*!*****************************************!*\
   !*** multi ./resources/js/index/app.js ***!
   \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\index\app.js */"./resources/js/index/app.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\index\app.js */"./resources/js/index/app.js");
 
 
 /***/ })

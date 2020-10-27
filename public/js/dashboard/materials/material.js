@@ -227,7 +227,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _bab
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\dashboard\materials\material.js */"./resources/js/dashboard/materials/material.js");
 
 
 /***/ })

@@ -57,9 +57,14 @@ class Material extends Model {
         return $this->morphToMany('App\User', 'watchlistable');
     }
 
+//    public function witchlist()
+//    {
+//        return $this->hasMany(Witchlist::class);
+//    }
+
     public function witchlist()
     {
-        return $this->hasMany(Witchlist::class);
+        return $this->belongsToMany(Course::class,'witchlist',"material_id","course_id" );
     }
 
     public function getRouteKeyName()

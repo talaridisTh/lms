@@ -16,6 +16,15 @@
     z-index: 999;
 }
 
+.table-cnt > .dataTables_wrapper > .row:nth-child(2) {
+    overflow-x: auto !important;
+}
+
+
+#calendar {
+    width: 1300px;
+    margin: 40px auto;
+}
 
 .box-material {
     height: 80px

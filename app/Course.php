@@ -54,6 +54,9 @@ class Course extends Model {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
+
+
+
     public function getRouteKeyName()
     {
         return "slug";

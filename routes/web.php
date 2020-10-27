@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -71,15 +70,11 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     //! Topic Routes
     Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
     Route::post('/dashboard/topics/store', 'TopicController@store')->name('topic.store');
-
-	//! Dashboard Search
-	Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
-
-	//! Dashboard Home Content
-	Route::get('/dashboard/home-content', 'UtilityController@index');
-	Route::post('/dashboard/home-content/update', 'UtilityController@update');
-
-
+    //! Dashboard Search
+    Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
+    //! Dashboard Home Content
+    Route::get('/dashboard/home-content', 'UtilityController@index');
+    Route::post('/dashboard/home-content/update', 'UtilityController@update');
 //!======================================================
 //! 			End Dashboard Routes					|
 //!======================================================
@@ -121,9 +116,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('courses/add-materials', 'Ajax\CourseController@addMaterials');
     Route::patch('courses/remove-materials', 'Ajax\CourseController@removeMaterials');
     Route::patch('courses/add-students', 'Ajax\CourseController@addStudents');
-	Route::patch('courses/remove-students', 'Ajax\CourseController@removeStudents');
-	Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
-
+    Route::patch('courses/remove-students', 'Ajax\CourseController@removeStudents');
+    Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
 //! Dashboard Ajax Bundles Datatables
     Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');
     Route::post('bundles/bundle-courses-datatable', 'Ajax\BundleController@show');
@@ -136,9 +130,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('bundles/add-courses', 'Ajax\BundleController@addCourses');
     Route::patch('bundles/remove-courses', 'Ajax\BundleController@removeCourses');
     Route::post('bundles/remove-users', 'Ajax\BundleController@removeUsers');
-	Route::post('bundles/add-users', 'Ajax\BundleController@addUsers');
-	Route::patch('bundle/{bundle}/toggle-editors', 'Ajax\BundleController@toggleEditors');
-
+    Route::post('bundles/add-users', 'Ajax\BundleController@addUsers');
+    Route::patch('bundle/{bundle}/toggle-editors', 'Ajax\BundleController@toggleEditors');
 //! Dashboard Ajax Materials Datatables
     Route::post('materials/materials-datatable', 'Ajax\MaterialController@index');
     Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");
@@ -157,17 +150,14 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourseMultiple');
     Route::post('/materials/cover/upload', 'Ajax\MaterialController@coverUpload')->name('user.cover.upload');
     Route::post('materials/gallery-upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
-	Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
-	Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
-	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
-
-	Route::post("section/remove-chapters", "Ajax\MaterialController@removeChapters");
-	Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
-	Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
-	Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
-
-	Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
-
+    Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
+    Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
+    Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
+    Route::post("section/remove-chapters", "Ajax\MaterialController@removeChapters");
+    Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
+    Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
+    Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
+    Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
 // Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables
     Route::post('topics/topics-datatable', 'Ajax\TopicController@index');
@@ -176,10 +166,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::delete('topics/destroy/{ids}', 'Ajax\TopicController@destroy');
     Route::patch('topics/change/color', 'Ajax\TopicController@changeColor');
 //! Dashboard File Manager Datatable
-	Route::post('/file-manager', 'Ajax\MediaController@fileManagerTable');
-	
-	Route::post('/file-manager/upload', 'Ajax\MediaController@generalUpload');
-
+    Route::post('/file-manager', 'Ajax\MediaController@fileManagerTable');
+    Route::post('/file-manager/upload', 'Ajax\MediaController@generalUpload');
 //! Dashboard Course - Materials Datatable
     Route::post('media/remaining-files', 'Ajax\MediaController@remainingFilesTable');
 //! Dashboard File Manager
@@ -195,15 +183,13 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('media/files-upload', 'Ajax\MediaController@fileUpload');
     Route::patch('media/cover/replace', 'Ajax\MediaController@coverChange');
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
-	Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
-
+    Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
 //! Ajax  Home Page Setting Datatables
-	Route::post('home-content/simple-materials-datatable', 'Ajax\UtilityController@simpleMaterialsDatatable');
-	Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
-	Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
-
+    Route::post('home-content/simple-materials-datatable', 'Ajax\UtilityController@simpleMaterialsDatatable');
+    Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
+    Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
 //! Dashboard Home Banner Update
-	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+    Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
@@ -224,13 +210,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::patch('/{user}/profile/update', 'Index\UserController@update')->name('index.profile.update');
     Route::get('/{user}/profile/announcements', 'Index\UserController@ShowAnnouncements')->name('index.profile.announcements');
     Route::get('/{user}/profile/watchlist', 'Index\UserController@watchlist')->name('index.profile.watchlist');
+    Route::get('/{user}/profile/history', 'Index\UserController@history')->name('index.profile.history');
 // -----Datatable//Watchlist
     Route::post('/watchlist-datatable', 'Index\UserController@watchlistDatatable')->name("datatable.watchlist");
     Route::post('/watchlist-datatable/material', 'Index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
-
-
-
-
+    Route::post('/history-datatable', 'Index\UserController@historyDatatable')->name("datatable.history");
+    Route::post('/history-datatable/material', 'Index\UserController@historyMaterialDatatable')->name("datatable.historyMaterial");
 //meessage
     Route::get("/message/", "MessageController@index")->name("index.message");
     Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
@@ -246,29 +231,18 @@ Route::group(['middleware' => ['auth']], function () {
             abort(401);
         }
     })->name('link');
-
-
-
 });
-
 //! GUEST AJAX
 Route::post("/guest/course", "Ajax\HomeController@guestCourse")->name("guest.course");
 Route::post("/guest/instructor", "Ajax\HomeController@guestInstructor")->name("guest.instructor");
 Route::post("/guest/instructor-course", "Ajax\HomeController@guestInstructorCourse")->name("guest.instructorCourse");
 Route::post("/guest/instructor-material", "Ajax\HomeController@guestInstructorMaterial")->name("guest.instructorMaterial");
 Route::post("/guest/create/guest-user", "Ajax\HomeController@createGuestUser")->name("guest.createGuestUser");
-
-
-
 Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("guest.tempLink");
-
-
 //!######################################################
 //!					middleware				            #
-
 Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
     Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
-
 //! Course
     Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
 //! Material index  ajax
@@ -279,7 +253,6 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 //! Material index  ajax
     Route::patch('/add-watchlist/material', 'Index\MaterialController@watchlistMaterial')->name('index.watchlist.material');
     Route::patch('/add-witchlist/material', 'Index\MaterialController@addWitchlist');
-
 });
 
 

@@ -41,6 +41,8 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/index/guest/guest.js', 'public/js/index/guest')
 
     .js('resources/js/index/favourites/favourites.js', 'public/js/index/favourites')
+    .js('resources/js/index/history/history.js', 'public/js/index/history')
+    .js('resources/js/index/announcement/announcement.js', 'public/js/index/announcement')
 
 
 

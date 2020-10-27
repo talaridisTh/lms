@@ -3629,6 +3629,10 @@ figure.image-center {
   border-right: 1px solid #aab8c5;
 }
 
+.card-5 {
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+}
+
 .custom-select2-warning.is-invalid + span > span > span {
   border: 1px solid #ff5b5b !important;
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff5b5b' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23ff5b5b' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
@@ -22801,7 +22805,7 @@ body[data-leftbar-theme=dark] .side-nav .side-nav-forth-level li.active > a {
 @font-face {
   font-family: "dripicons-v2";
   src: url(/fonts/dripicons-v2.eot?7e12564e72400735ae5b671780f6a9f7);
-  src: url(/fonts/dripicons-v2.eot?7e12564e72400735ae5b671780f6a9f7) format("embedded-opentype"), url(/fonts/dripicons-v2.woff?11fc83ae11617015f2fcde2065fb34d3) format("woff"), url(/fonts/dripicons-v2.ttf?cf09c981aeaa8736810133ab1148e4a3) format("truetype"), url(/fonts/dripicons-v2.svg?835984438066bd8944a7692e331152a7) format("svg");
+  src: url(/fonts/dripicons-v2.eot?7e12564e72400735ae5b671780f6a9f7) format("embedded-opentype"), url(/fonts/dripicons-v2.woff?11fc83ae11617015f2fcde2065fb34d3) format("woff"), url(/fonts/dripicons-v2.ttf?cf09c981aeaa8736810133ab1148e4a3) format("truetype"), url(/fonts/dripicons-v2.svg?0253a9a5e15b217b18ade085c5390ef5) format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -46118,7 +46122,7 @@ body[data-leftbar-theme=dark] .side-nav .side-nav-forth-level li.active > a {
 @font-face {
   font-family: "unicons";
   src: url(/fonts/unicons.eot?3784cfb8c04da1ada02fe097669b5938);
-  src: url(/fonts/unicons.eot?3784cfb8c04da1ada02fe097669b5938) format("embedded-opentype"), url(/fonts/unicons.woff2?97a1976675c3bf28c2665812f39a4fd9) format("woff2"), url(/fonts/unicons.woff?d6933f98004d884499efc048591b9ef5) format("woff"), url(/fonts/unicons.ttf?80985b4fc088ff15f21b958b36499515) format("truetype"), url(/fonts/unicons.svg?f662f67f2447591050ede20b359cd044) format("svg");
+  src: url(/fonts/unicons.eot?3784cfb8c04da1ada02fe097669b5938) format("embedded-opentype"), url(/fonts/unicons.woff2?97a1976675c3bf28c2665812f39a4fd9) format("woff2"), url(/fonts/unicons.woff?d6933f98004d884499efc048591b9ef5) format("woff"), url(/fonts/unicons.ttf?80985b4fc088ff15f21b958b36499515) format("truetype"), url(/fonts/unicons.svg?05e73a5e69c877d24fe9fd64c5d5cb0f) format("svg");
   font-weight: normal;
   font-style: normal;
 }

@@ -530,7 +530,11 @@ figure.image-center {
 .border-right-gray {
 	border-right: 1px solid #aab8c5;
 }
-//edw
+
+
+.card-5 {
+    box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
 
 .custom-select2-warning.is-invalid + span > span > span {
 	border: 1px solid #ff5b5b !important;

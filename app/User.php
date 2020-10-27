@@ -137,7 +137,7 @@ class User extends Authenticatable {
 
     public function witchlist()
     {
-        return $this->belongsToMany(User::class,'witchlist', 'user_id', 'material_id'  );
+        return $this->belongsToMany(User::class,'witchlist', 'user_id', 'material_id'  )->withPivot("course_id");
     }
 
 
@@ -299,8 +299,6 @@ class User extends Authenticatable {
 
 
     }
-
-
 
     // $user->fullName  // Onoma Epitheto
     public function getFullNameAttribute()
