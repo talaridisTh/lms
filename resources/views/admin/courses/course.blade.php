@@ -2,7 +2,7 @@
 
 @section('css')
 <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-<link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet">
+{{-- <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"> --}}
 
 <style>
 	.content-page {
@@ -98,11 +98,10 @@
                 <div class="modal-body">
 
                     <table id="remaining-files-datatable"
-                           class="table w-100 nowrap center-not-second js-remove-table-classes">
+                           class="table w-100 nowrap center-not-second modal-table js-remove-table-classes">
                         <thead>
                         <tr>
                             <th class="text-center">Όνομα</th>
-                            <th class="text-center">Τύπος</th>
                             <th class="text-center">Μέγεθος</th>
                             <th class="text-center w-5"></th>
                         </tr>
@@ -111,7 +110,6 @@
                         <tfoot>
                         <tr>
                             <th class="text-center">Όνομα</th>
-                            <th class="text-center">Τύπος</th>
                             <th class="text-center">Μέγεθος</th>
                             <th class="text-center"></th>
                         </tr>
@@ -766,10 +764,7 @@
 						</div>
 						<div class="col-sm-11 d-flex justify-content-end">
 
-
-
 							<div class="dropdown">
-
 								<button type="button" class="btn btn-primary dropdown-toggle"
 									data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									<i class="mdi mdi-plus-circle mr-2"></i>
@@ -792,19 +787,6 @@
 									</a>
 								</div>
 							</div>
-
-							{{-- <button id="material-modal-shown-btn" type="button"
-								class="btn btn-primary d-none" data-toggle="modal"
-								data-target="#add-materials-modal"  data-chapter="main">
-								<i class="mdi mdi-plus-circle mr-2"></i>
-								Προσθήκη Υλικού
-							</button> --}}
-
-
-
-
-
-
 
 							<div class="dropdown ml-2">
 								<button id="active-material-bulk" class="btn btn-secondary dropdown-toggle"

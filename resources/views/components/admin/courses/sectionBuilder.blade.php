@@ -1,6 +1,4 @@
-
-@if($sections)
-@foreach ($sections as $key => $section)
+@forelse ($sections as $key => $section)
 
 	@php
 		$status = [
@@ -192,6 +190,12 @@
 			</div><!-- ./card-body -->
 		</div><!-- ./accordion -->
 	</div>
-
-@endforeach
-@endif
+@empty
+	<div class="no-sections">
+		<div class="callout callout-danger">
+			<div class="d-flex justify-content-center mb-1">
+				<h5>Το Course δεν περιέχει Sections</h5>
+			</div>
+		</div>
+	</div>
+@endforelse
