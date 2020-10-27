@@ -57,10 +57,6 @@
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button id="save-details-btn" class="btn btn-primary">
-						<i class="mdi mdi-content-save mr-1"></i>
-						Αποθήκευση
-					</button>
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
 			</div>
