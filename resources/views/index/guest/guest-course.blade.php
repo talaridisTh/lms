@@ -98,7 +98,7 @@
                                                             @endif
                                                         @endforeach
                                                     </div>
-                                                    <div class=" guest-materialp-2">
+                                                    <div class=" guest-material p-2">
 
                                                         @foreach($course->materials->where("type","!=","Section")->where("type","!=","Announcement") as $key=> $material)
 
