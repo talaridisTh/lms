@@ -188,6 +188,7 @@ const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
             userId, courseId, materialId
         })
         if (status === 200) {
+
             let url = `${window.location.origin}/guest/temp/link/${userSlug}`
             let btnCopy = `<button class="copyBtn btn badge badge-success font-16" data-text=${url} >
                                 <i class="mdi mdi-content-copy"></i>
@@ -195,7 +196,10 @@ const axiosCreateGuestUser = async (userId, courses, materials, userSlug) => {
 
             document.querySelector(".guest-link").innerHTML = `<div>${btnCopy}<a href ="${url}"> ${url}</a></div>`
 
+
+
         }
+
     } catch (e) {
         console.log(e)
     }

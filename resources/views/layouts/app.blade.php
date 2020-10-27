@@ -81,6 +81,7 @@
         <div class="row">
             <div class="col-3">
 
+                {{ session()->get( 'data' ) }}
 
                 @if(Auth::check())
                 <a  href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
