@@ -26,8 +26,35 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         {data: "title", name: "title" },
         {data: "status", name: "status", className: "align-middle text-center"},
         {data: "type", name: "type", className: "align-middle text-center"},
-        {data: "updated_at", name: "updated_at", className: "align-middle text-center"},
-        {data: "created_at", name: "created_at", className: "align-middle text-center",  orderData: [ 7]},
+        {
+			data: 'updated_at',
+			name: 'updated_at',
+			className: "align-middle text-center cursor-default",
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
+        {
+			data: "created_at",
+			name: "created_at",
+			className: "align-middle text-center", 
+			orderData: [7],
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
         {data: "courses", name: "courses", className: "align-middle text-center", orderable: false,visible:false},
         {data: "id", name: "id",visible: false},
     ],
