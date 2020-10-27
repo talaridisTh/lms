@@ -14,6 +14,7 @@ import 'filepond/dist/filepond.min.css';
 //! 			Global Variables				#
 //!##############################################
 const baseUrl = window.location.origin;
+const contentType = $(".page-title")[0].textContent.replace("Νέο", "");
 
 //!##############################################
 //! 				EventListeners				#
@@ -24,11 +25,13 @@ $(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
 
 $(".tab-link").on("show.bs.tab", function(event) {
 	event.preventDefault();
-	Swal.fire(
-		'Προσοχή',
-		'<p class="mb-0">Θα πρέπει να αποθηκεύσετε το Course</p>για να συνεχίσετε!',
-		'info'
-	);
+
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		html: `<p class="mb-0">Θα πρέπει να αποθηκεύσετε το ${contentType}</p>για να συνεχίσετε!`,
+		confirmButtonColor: '#536de6'
+	});
 })
 
 //!##############################################
