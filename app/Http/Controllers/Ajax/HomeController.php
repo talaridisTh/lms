@@ -115,21 +115,14 @@ class HomeController extends Controller {
     public function tempLink($user)
     {
 
-
         $urlEnd = array_slice(explode('/', url()->current()), - 1)[0];
         $user = User::where("slug", $urlEnd)->firstOrFail();
         if ($user->getRoleNames()[0] == "guest")
         {
             Auth::login($user);
 
-//            return Redirect::route('clients.show, $id');
 
-            if(url()->previous()=="//localhost:3000/home"){
-                return redirect(route("index.courses", $urlEnd))->with( ['data' =>"test"]);
-            }else{
-
-                return redirect(route("index.courses", $urlEnd));
-            }
+            return redirect(route("index.courses", $urlEnd));
         } else
         {
             abort(404);

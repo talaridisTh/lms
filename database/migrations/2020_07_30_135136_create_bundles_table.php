@@ -18,7 +18,7 @@ class CreateBundlesTable extends Migration
             $table->string('title')->index();
             $table->string('subtitle')->nullable();
             $table->text('summary')->nullable();
-            $table->string('cover', 50)->nullable();
+            $table->string('cover')->nullable();
             $table->text('description')->nullable();
             $table->string('slug', 100);
 			$table->unsignedTinyInteger('status');

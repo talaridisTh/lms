@@ -1,6 +1,27 @@
 @extends('layouts.app')
 
+<style>
+    .crop-height {
+        /* max-width: 1200px; /* native or declared width of img src (if known) */
+        max-height: 250px;
+        overflow: hidden; }
 
+    img.scale {
+        /* corrects small inline gap at bottom of containing div */
+        display: block;
+        width: 100%; /* corrects obscure Firefox bug */
+        max-width: 100%;
+        /* just in case, to force correct aspect ratio */
+        height: auto !important;
+        display: block; /* corrects small inline gap at bottom of containing div */
+        width: 100% /* corrects obscure Firefox bug */
+        max-width: 100%;
+
+        height: auto !important;
+
+        -ms-interpolation-mode: bicubic;
+
+</style>
 @section('content')
     <div class="container-fluid mb-5" style="max-width: 1400px">
         {{--row 1 --}}
@@ -159,14 +180,18 @@
 
                         <div class="col-md-6 col-lg-4">
                             <!-- Simple card -->
-                            <div class="card card-shadow d-block">
-                                <img class="card-img-top" src="{{$model->cover}}" alt="Card image cap">
+                            <div class="card card-shadow d-block" style="height: 50vh">
+                                <div class="crop-height">
+                                <img  class="card-img-top  scale" height="250"  src="{{$model->cover}}" alt="Card image cap">
+                                </div>
                                 <div class="card-body">
                                     <h5 class="card-title blue-title d-flex flex-column"><span>{{$model->title}}</span>
                                         Το πρώτο μου Ρομπότ</h5>
-                                    <p class="card-text span-custom">{{$model->description}}</p>
-                                    <a href="javascript: void(0);"
-                                       class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                                    <p class="card-text span-custom ">
+                                        {!! Str::limit( $model->description , 300, ' (...)')!!}
+
+                                    </p>
+
                                 </div> <!-- end card-body-->
                             </div> <!-- end card-->
                         </div>
@@ -195,15 +220,17 @@
 
                             <div class="col-md-6 col-lg-4">
                                 <!-- Simple card -->opacity: 0.4
-                                <div class="card card-shadow d-block">
+                                <div class="card card-shadow d-block" style="height: 50vh">
                                     <img class="card-img-top" src="{{$model->cover}}" alt="Card image cap">
                                     <div class="card-body">
                                         <h5 class="card-title blue-title d-flex flex-column">
                                             <span>{{$model->title}}</span> Το
                                             πρώτο μου Ρομπότ</h5>
-                                        <p class="card-text span-custom">{{$model->description}}</p>
-                                        <a href="javascript: void(0);"
-                                           class="btn-custom btn btn-outline-info btn-lg text-light">Button</a>
+                                        <p class="card-text span-custom">
+                                            {!! Str::limit( $model->description , 300, ' (...)')!!}
+
+                                        </p>
+
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
                             </div>
