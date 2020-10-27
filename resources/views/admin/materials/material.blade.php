@@ -82,11 +82,10 @@
             <div class="modal-body">
 
                 <table id="remaining-files-datatable"
-                    class="table w-100 nowrap center-not-second js-remove-table-classes">
+                    class="table w-100 nowrap center-not-second modal-table js-remove-table-classes">
                     <thead>
                         <tr>
                             <th class="text-center">Όνομα</th>
-                            {{-- <th class="text-center">Τύπος</th> --}}
                             <th class="text-center">Μέγεθος</th>
                             <th class="text-center w-5"></th>
                         </tr>
@@ -95,7 +94,6 @@
                     <tfoot>
                         <tr>
                             <th class="text-center">Όνομα</th>
-                            {{-- <th class="text-center">Τύπος</th> --}}
                             <th class="text-center">Μέγεθος</th>
                             <th class="text-center"></th>
                         </tr>

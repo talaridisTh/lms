@@ -727,8 +727,7 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     },
     columns: [
         {data: "original_name", name: "original_name"},
-        {data: "ext", name: "ext", className:"text-center"},
-        {data: "size", name: "size", className:"text-center"},
+        {data: "size", name: "size", className:"text-center align-middle"},
         {data: "action", className:"text-center", searchable: false, orderable: false},
     ],
     language: utilities.tableLocale,
