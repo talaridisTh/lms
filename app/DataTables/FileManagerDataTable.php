@@ -30,39 +30,46 @@ class FileManagerDataTable extends DataTable
 
 				if ( $data->type == 0 ) {
 					$view = "<a href='#' class='js-view-image custom-link-primary'
-						data-toggle='modal' data-target='#image-light-room' data-source='$data->rel_path'>View</a>
+						data-toggle='modal' data-target='#image-light-room'
+						data-source='$data->rel_path' draggable='false'>View</a>
 						<span class='mx-2'>|</span>";
 				}
 
 				if ( !$details ) {
 					return "
 						<a href='#' class='h5 custom-link-primary' data-toggle='modal'
-							data-target='#edit-file-modal' data-file-id='$data->id'>
+							data-target='#edit-file-modal' data-file-id='$data->id'
+							draggable='false'>
 							$data->original_name
 						</a>
 						<p>$data->name.$data->ext</p>
 						<a href='#' class='custom-link-primary' data-toggle='modal' 
-							data-target='#edit-file-modal' data-file-id='$data->id'>Details</a>
+							data-target='#edit-file-modal' data-file-id='$data->id'
+							draggable='false'>Details</a>
 						<span class='mx-2'>|</span>
 						$view
-						<a href='$data->rel_path' class='custom-link-primary' download>Download</a>";
+						<a href='$data->rel_path' class='custom-link-primary'
+							draggable='false' download>Download</a>";
 				}
 
 				return "
 					<a href='#' class='h5 custom-link-primary' data-title='$details->title'
 						data-subtitle='$details->subtitle' data-caption='$details->caption'
 						data-description='$details->description' data-toggle='modal'
-						data-file-id='$data->id' data-target='#edit-file-modal'>
+						data-file-id='$data->id' data-target='#edit-file-modal'
+						draggabla='false'>
 						$details->title
 					</a>
 					<p>$data->name.$data->ext</p>
 					<a href='#' class='custom-link-primary' data-toggle='modal' 
 						data-target='#edit-file-modal' data-file-id='$data->id'
 						data-title='$details->title' data-subtitle='$details->subtitle'
-						data-caption='$details->caption' data-description='$details->description'>Details</a>
+						data-caption='$details->caption' data-description='$details->description'
+						draggable='false'>Details</a>
 					<span class='mx-2'>|</span>
 					$view
-					<a href='$data->rel_path' class='custom-link-primary' download>Download</a>";
+					<a href='$data->rel_path' class='custom-link-primary'
+						draggalbe='false' download>Download</a>";
 			})
 			->addColumn('image', function($data) {
 

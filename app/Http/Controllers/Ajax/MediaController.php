@@ -376,7 +376,7 @@ class MediaController extends Controller
 			Storage::disk("local")->makeDirectory("public/thumbnails/$date");
 		}
 
-		Image::make( $image )->fit( 800, 450)
+		Image::make( $image )->fit( 250, 250)
 			->save( storage_path("/app/public/thumbnails/$date/$name->fullname") );
 
 		return (object)[
