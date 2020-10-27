@@ -771,7 +771,7 @@
 									Προσθήκη
 								</button>
 
-								<div class="dropdown-menu dropdown-menu-right py-0">
+								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
 									<div class="dropdown-divider my-0"></div>
 									<a id="material-modal-shown-btn" href="#" class="dropdown-item py-2"
 										data-toggle="modal" data-target="#add-materials-modal"
@@ -794,7 +794,7 @@
 									aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
-								<div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
+								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
 
 									<a id="remove-selection-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
 									<div class="dropdown-divider my-0"></div>
@@ -868,7 +868,7 @@
 									aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
-								<div class="dropdown-menu dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
+								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
 									<a id="remove-selected-users-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
 								</div>
 							</div>

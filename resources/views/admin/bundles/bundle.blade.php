@@ -465,7 +465,7 @@
 								<button id="courses-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="courses-bulk">
+								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right" aria-labelledby="courses-bulk">
 									<a id="remove-selected-courses-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
 								</div>
 							</div>
@@ -522,7 +522,7 @@
 								<button id="users-bulk" class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
-								<div class="dropdown-menu dropdown-menu-right" aria-labelledby="users-bulk">
+								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right" aria-labelledby="users-bulk">
 									<a id="remove-selected-users-btn" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
 								</div>
 							</div>

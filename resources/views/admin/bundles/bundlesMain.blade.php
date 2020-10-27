@@ -39,7 +39,7 @@
 						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
 						Επιλογές (0)
 					</button>
-					<div class="dropdown-menu">
+					<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right">
 						<a id="delete-bundles-btn" class="dropdown-item" href="#">Διαγραφή</a>
 					</div>
 				</div>
