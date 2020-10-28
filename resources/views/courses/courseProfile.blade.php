@@ -94,7 +94,7 @@
 
                         <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
                             <h2 class="display-4 text-light">{{$course->title}}</h2>
-                            <p class="text-light my-4">{{$course->subtitle}}</p>
+                            <p class="text-light my-4 text-left">{{$course->subtitle}}</p>
                             <div class="button-course-fav my-sm-2">
                                 @if(count($allMaterial))
                                     <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
@@ -102,7 +102,7 @@
                                        style="background:white">Έναρξη
                                     </a>
                                 @endif
-                                    @unlessrole("guest")
+                                @unlessrole("guest")
                                 <button
                                     data-model="course" data-model-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
                                     class=" my-2 my-sm-0 color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary ">
@@ -111,45 +111,46 @@
                                     </i>
                                     <span>{{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
                                 </button>
-                                    @endunlessrole
+                                @endunlessrole
                             </div>
                         </div>
-{{--                        <div class="col-md-12 mt-md-2 col-lg-4 col-xl-3">--}}
-{{--                            <div class="box-last-material p-2 color-topic-second ">--}}
-{{--                                <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>--}}
-{{--                                <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">--}}
-{{--                                    <span>Η τελευταία προσθήκη</span>--}}
-{{--                                    @if(count($allMaterial))--}}
 
-{{--                                        <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>--}}
+                        {{--                        <div class="col-md-12 mt-md-2 col-lg-4 col-xl-3">--}}
+                        {{--                            <div class="box-last-material p-2 color-topic-second ">--}}
+                        {{--                                <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>--}}
+                        {{--                                <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">--}}
+                        {{--                                    <span>Η τελευταία προσθήκη</span>--}}
+                        {{--                                    @if(count($allMaterial))--}}
+
+                        {{--                                        <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>--}}
 
 
-{{--                                </div>--}}
-{{--                                <div class="box-button-subtitle text-light text-center">--}}
-{{--                                        <p class="font-16">{{$lastMaterial->last()->title}}</p>--}}
-{{--                                        <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>--}}
+                        {{--                                </div>--}}
+                        {{--                                <div class="box-button-subtitle text-light text-center">--}}
+                        {{--                                        <p class="font-16">{{$lastMaterial->last()->title}}</p>--}}
+                        {{--                                        <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>--}}
 
-{{--                                        <a class="text-white"--}}
-{{--                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">--}}
-{{--                                            <button class="bghover color-topic-second  border  btn btn-secontary ">--}}
-{{--                                                Δες το μάθημα--}}
-{{--                                            </button>--}}
-{{--                                        </a>--}}
-{{--                                    @endif--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
+                        {{--                                        <a class="text-white"--}}
+                        {{--                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">--}}
+                        {{--                                            <button class="bghover color-topic-second  border  btn btn-secontary ">--}}
+                        {{--                                                Δες το μάθημα--}}
+                        {{--                                            </button>--}}
+                        {{--                                        </a>--}}
+                        {{--                                    @endif--}}
+                        {{--                                </div>--}}
+                        {{--                            </div>--}}
+                        {{--                        </div>--}}
                     </div>
                 </div>
             </div> <!-- end row top banner -->
 
             <div class="row p-2 box-material-down  color-topic-second" style="background:{{$bgColor}}">
                 <div
-                    class="col-md-12 col-xl-4 px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">
+                    class="col-md-12 col-xl-5  px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>
                     <span><i class="mdi mdi-book-open-page-variant"></i> {{$textExtra}}  </span>
                     @foreach($topics as $topic)
-                        <span class="topic-title  border px-2">{{$topic}}</span>
+                        <span class="topic-title d-none d-sm-block  border px-2">{{$topic}}</span>
                     @endforeach
                 </div>
             </div>
@@ -302,7 +303,7 @@
                                                             <i style="margin:-8px;"
                                                                class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                                             @else
-                                                                <div class="col-md-2 mt-1 mr-2 ">
+                                                                <div class="col-sm-2 col-1 mt-1 mr-2 ">
                                                                                 <span {{$hover}} style="margin:-20px;"
                                                                                       class="material-count">
                                                                                     {!! $activeClass!!}
@@ -311,14 +312,14 @@
                                                             @endif
 
                                                         </div>
-                                                        <div class="col-md-8 js-alert d-flex flex-column  ">
+                                                        <div class="col-sm-8 col-9 js-alert d-flex flex-column  ">
                                                             <h3 style="border-radius: 5px"
                                                                 class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
                                                             </h3>
                                                             <span style="word-break: break-all"
                                                                   class="font-12 text-dark">{!! $chapter->subtitle !!}</span>
                                                         </div>
-                                                        <div class="col-md-2 js-alert">
+                                                        <div class="col-sm-2 col-1 js-alert">
                                                         <span class="">
                                                             <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i> {{--bazei to icon anti gia to type--}}
                                                         </span>
@@ -343,7 +344,7 @@
                                     <a class="d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         @unlessrole("guest")
-                                        <div class="col-md-2 mr-2 ">
+                                        <div class="col-sm-2 mr-2 col-1 ">
                                             <div>
                                             <span {{$hover}} class="material-count">
                                                 <span>{!! $activeClass !!}</span>
@@ -352,13 +353,13 @@
                                         </div>
                                         @endunlessrole
 
-                                        <div class="col-md-8 d-flex flex-column">
+                                        <div class="col-sm-8 align-items-center col-10 d-flex flex-column">
                                             <h3 style="border-radius: 5px"
                                                 class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold"> {!! $materials->title!!}</h3>
                                             <span style="word-break: break-all"
                                                   class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
                                         </div>
-                                        <div class="col-md-2 p-0">
+                                        <div class="col-sm-2 col-1 p-0">
                                             <i class=" font-24 text-black {{App\Material::getType($materials->type)}}"></i>
                                         </div>
                                     </a>

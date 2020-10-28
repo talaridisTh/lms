@@ -75,195 +75,201 @@
       data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
 <!-- Topbar Start -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<div id="wrapper-custom">
+    <div id="header-custom" class="sticky-front p-0">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
 
 
-    @if(Auth::check())
+            @if(Auth::check())
 
-        <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
+                <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
                 		    <span class=" stopnav-logo-lg">
 
                 		        <img class="m-2" height="60"
                                      src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
                                      alt="">
                 		    </span>
-        </a>
-    @else
-        <a href="{{route('home')}}" class="topnav-logo">
-                		    <span class=" stopnav-logo-lg">
-
-                		        <img class="m-2" height="60"
-                                     src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
-                                     alt="">
-                		    </span>
-        </a>
-
-        @endif
-
-
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-        <ul class="navbar-nav text-right">
-            @if( !Auth::check() )
-                <div>
-                    <a class="nav-link" href="/login" role="button" aria-haspopup="true" aria-expanded="false">
-                        Log In
-                    </a>
-                </div>
-                <div>
-                    <a class="nav-link" href="/register" role="button" aria-haspopup="true" aria-expanded="false">
-                        Register
-                    </a>
-                </div>
+                </a>
             @else
-                @unlessrole('guest')
-                @role("admin")
+                <a href="{{route('home')}}" class="topnav-logo">
+                		    <span class=" stopnav-logo-lg">
 
-                <div>
-                    <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true" aria-expanded="false">
-                        Dashboard
-                    </a>
-                </div>
-                @endrole
+                		        <img class="m-2" height="60"
+                                     src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
+                                     alt="">
+                		    </span>
+                </a>
 
-                <div>
-                    @if(auth()->user()->courses()->count()>1)
-                        <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
-                            <span>Μαθήματα</span>
-                        </a>
-                    @else
-                        <a
-                            href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}"
-                            class="nav-link">
-                            <span>Μαθήματα</span>
-                        </a>
-                    @endif
-                </div>
-
-
-                <div>
-                    @role("admin")
-                    <div class="dropdown">
-                        <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Guest links
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{route('user.showLinks')}}">All links</a>
-                            <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
-                        </div>
-                    </div>
-                    @endrole
-                </div>
-
-                <div>
-                    <div class="dropdown">
-                        <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Λογαριασμός μου
-                        </a>
-
-                        <div class="dropdown-menu" aria-labelledby="my-acount">
-                            <a href="{{route('index.profile',auth()->user()->slug)}}"
-                               class="dropdown-item side-nav-link">
-                                <span>Προφίλ </span>
-                            </a>
-                            <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
-                               class="side-nav-link dropdown-item">
-                                <span>Αγαπημένα</span>
-                            </a>
-                            <a href="{{route('index.profile.history',auth()->user()->slug)}}"
-                               class="side-nav-link dropdown-item">
-                                <span>Ιστορικό </span>
-                            </a>
-                            <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
-                               class="side-nav-link dropdown-item">
-                                <span>Ανακοινώσεις</span>
-                            </a>
-                            <a href="{{route('index.message')}}" class="side-nav-link dropdown-item">
-                                <span>Μηνύματα</span>
-                            </a>
-                            <a href="#" class="side-nav-link dropdown-item">
-                                <span>Logout</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                @endunlessrole
-                <div>
-                    <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
-                       aria-expanded="false" data-toggle="tooltip" data-original-title="Έξοδος">
-
-                        <span class="d-lg-none">Έξοδος</span>
-                        <i class=" font-18 mdi mdi-logout"></i>
-                    </a>
-                </div>
             @endif
 
-        </ul>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                <ul class="navbar-nav text-right font-16 font-weight-bold">
+                    @if( !Auth::check() )
+                        <div>
+                            <a class="nav-link" href="/login" role="button" aria-haspopup="true" aria-expanded="false">
+                                Log In
+                            </a>
+                        </div>
+                        <div>
+                            <a class="nav-link" href="/register" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Register
+                            </a>
+                        </div>
+                    @else
+                        @unlessrole('guest')
+                        @role("admin")
+
+                        <div>
+                            <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Dashboard
+                            </a>
+                        </div>
+                        @endrole
+
+                        <div>
+                            @if(auth()->user()->courses()->count()>1)
+                                <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
+                                    <span>Μαθήματα</span>
+                                </a>
+                            @else
+                                <a
+                                    href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}"
+                                    class="nav-link">
+                                    <span>Μαθήματα</span>
+                                </a>
+                            @endif
+                        </div>
+
+
+                        <div>
+                            @role("admin")
+                            <div class="dropdown">
+                                <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Guest links
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="{{route('user.showLinks')}}">All links</a>
+                                    <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
+                                </div>
+                            </div>
+                            @endrole
+                        </div>
+
+                        <div>
+                            <div class="dropdown">
+                                <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Λογαριασμός μου
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="my-acount">
+                                    <a href="{{route('index.profile',auth()->user()->slug)}}"
+                                       class="dropdown-item side-nav-link">
+                                        <span>Προφίλ </span>
+                                    </a>
+                                    <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
+                                       class="side-nav-link dropdown-item">
+                                        <span>Αγαπημένα</span>
+                                    </a>
+                                    <a href="{{route('index.profile.history',auth()->user()->slug)}}"
+                                       class="side-nav-link dropdown-item">
+                                        <span>Ιστορικό </span>
+                                    </a>
+                                    <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
+                                       class="side-nav-link dropdown-item">
+                                        <span>Ανακοινώσεις</span>
+                                    </a>
+                                    <a href="{{route('index.message')}}" class="side-nav-link dropdown-item">
+                                        <span>Μηνύματα</span>
+                                    </a>
+                                    <a href="#" class="side-nav-link dropdown-item">
+                                        <span>Logout</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @endunlessrole
+                        <div>
+                            <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
+                               aria-expanded="false" data-toggle="tooltip" data-original-title="Έξοδος">
+
+                                <span class="d-lg-none">Έξοδος</span>
+                                <i class=" font-18 mdi mdi-logout"></i>
+                            </a>
+                        </div>
+                    @endif
+
+                </ul>
+            </div>
+
+        </nav>
+        <!-- end Topbar -->
+    </div>
+
+
+    <!-- Begin page -->
+    <div id="content-custom" style="min-height: 69vh;">
+        @yield('content')
+    </div>
+
+
+    <footer class="footer-alt border-top bg-light pb-0">
+        <div class="container" style="max-width: 1440px;">
+            <div class="row align-items-center mt-2">
+                <div class="col-md-6">
+                    <div class="row align-items-center">
+                        <div class="col-md-4" style="width: 147px; height: 79px;">
+                            <img src="/images/logo.png" alt="logo">
+                        </div>
+                        <div class=" col-md-8">
+                            <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
+                                Θεσσαλονίκη
+                            </h4>
+                            <p class="text-left d-flex flex-column font-14" style="color: #585d63">
+                                <span>Παπαναστασίου 150, 54249,</span>
+                                <span>Χαριλάου Τηλ. 2310 328797 - Fax 2310 328898</span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6 d-flex justify-content-end  ">
+                    <img class="pr-2" src="/images/facebook.png" alt="logo">
+                    <img class="pr-2" src="/images/instagram.png" alt="logo">
+                    <img class="pr-2" src="/images/twitter.png" alt="logo">
+                    <img class="pr-2" src="/images/youtube.png" alt="logo">
+                    <img class="pr-2" src="/images/linked-in.png" alt="logo">
+                </div>
+
+            </div>
         </div>
-
-</nav>
-<!-- end Topbar -->
-
-
-<!-- Begin page -->
-<div class="wrapper">
-
-    @yield('content')
-
-</div>
+        <hr class="border mt-2" style="opacity: 0.4;">
+        <div class="container-fluid  mb-2" style="max-width: 1705px;">
+            <div class="row align-items-center">
+                <div class="col-sm-6  col-md-4">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>
+                <div class="col-sm-6 col-md-4">Πολιτική Απορρήτου</div>
 
 
-<footer class=" footer-alt border-top bg-light">
-    <div class="container" style="max-width: 1440px;">
-        <div class="row align-items-center mt-2">
-            <div class="col-md-6">
-                <div class="row align-items-center">
-                    <div class="col-md-4" style="width: 147px; height: 79px;">
-                        <img src="/images/logo.png" alt="logo">
-                    </div>
-                    <div class=" col-md-8">
-                        <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
-                            Θεσσαλονίκη
-                        </h4>
-                        <p class="text-left d-flex flex-column font-14" style="color: #585d63">
-                            <span>Παπαναστασίου 150, 54249,</span>
-                            <span>Χαριλάου Τηλ. 2310 328797 - Fax 2310 328898</span>
-                        </p>
-                    </div>
-
+                <div class="col-sm-12 col-md-4 text-center">
+                    <a class="footer-link  text-secondary" target="_blank" href="https://www.darkpony.com">
+                        <span class="mr-1">With</span>
+                        <div class="heart"></div>
+                        <span class="ml-1">by DARKPONY</span>
+                    </a>
                 </div>
             </div>
-            <div class="col-md-6 d-flex justify-content-end  ">
-                <img class="pr-2" src="/images/facebook.png" alt="logo">
-                <img class="pr-2" src="/images/instagram.png" alt="logo">
-                <img class="pr-2" src="/images/twitter.png" alt="logo">
-                <img class="pr-2" src="/images/youtube.png" alt="logo">
-                <img class="pr-2" src="/images/linked-in.png" alt="logo">
-            </div>
-
         </div>
-    </div>
-    <hr class="border mt-2" style="opacity: 0.4;">
-    <div class="container-fluid  mb-2" style="max-width: 1705px;">
-        <div class="row align-items-center">
-            <div class="col-sm-6  col-md-4">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>
-            <div class="col-sm-6 col-md-4">Πολιτική Απορρήτου</div>
+    </footer>
 
-
-            <div class="col-sm-12 col-md-4 text-center">
-                <a class="footer-link  text-secondary" target="_blank" href="https://www.darkpony.com">
-                    <span class="mr-1">With</span>
-                    <div class="heart"></div>
-                    <span class="ml-1">by DARKPONY</span>
-                </a>
-            </div>
-        </div>
-    </div>
-</footer>
+</div>
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST">
     @csrf

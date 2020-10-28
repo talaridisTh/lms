@@ -4,7 +4,8 @@
     .crop-height {
         /* max-width: 1200px; /* native or declared width of img src (if known) */
         max-height: 250px;
-        overflow: hidden; }
+        overflow: hidden;
+    }
 
     img.scale {
         /* corrects small inline gap at bottom of containing div */
@@ -14,12 +15,13 @@
         /* just in case, to force correct aspect ratio */
         height: auto !important;
         display: block; /* corrects small inline gap at bottom of containing div */
-        width: 100% /* corrects obscure Firefox bug */
+        width: 100%;
         max-width: 100%;
 
         height: auto !important;
 
         -ms-interpolation-mode: bicubic;
+    }
 
 </style>
 @section('content')
@@ -182,7 +184,8 @@
                             <!-- Simple card -->
                             <div class="card card-shadow d-block" style="height: 50vh">
                                 <div class="crop-height">
-                                <img  class="card-img-top  scale" height="250"  src="{{$model->cover}}" alt="Card image cap">
+                                    <img class="card-img-top  scale"  src="{{$model->cover}}"
+                                         alt="Card image cap">
                                 </div>
                                 <div class="card-body">
                                     <h5 class="card-title blue-title d-flex flex-column"><span>{{$model->title}}</span>
@@ -203,44 +206,47 @@
 
             </div>
         @endif
-            {{--row 7 --}}
+        {{--row 7 --}}
 
-            @if($arrayBanners["secondary"]->status==1)
-                <div class="row" style="margin-top: 9rem">
-                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-                    <div class="d-flex flex-wrap mt-3">
-                        @foreach($bannersSecondary as $key => $banner)
+        @if($arrayBanners["secondary"]->status==1)
+            <div class="row" style="margin-top: 9rem">
+                <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
+                <div class="d-flex flex-wrap mt-3">
+                    @foreach($bannersSecondary as $key => $banner)
 
-                            @php
-                                $bannerArray = (array) $banner;
-                                $bannerValue = key ( $bannerArray);
-                                $bannerKey =array_values ($bannerArray);
-                                $model =   $bannerValue::findOrFail($bannerKey)->first();
-                            @endphp
+                        @php
+                            $bannerArray = (array) $banner;
+                            $bannerValue = key ( $bannerArray);
+                            $bannerKey =array_values ($bannerArray);
+                            $model =   $bannerValue::findOrFail($bannerKey)->first();
+                        @endphp
 
-                            <div class="col-md-6 col-lg-4">
-                                <!-- Simple card -->opacity: 0.4
-                                <div class="card card-shadow d-block" style="height: 50vh">
-                                    <img class="card-img-top" src="{{$model->cover}}" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h5 class="card-title blue-title d-flex flex-column">
-                                            <span>{{$model->title}}</span> Το
-                                            πρώτο μου Ρομπότ</h5>
-                                        <p class="card-text span-custom">
-                                            {!! Str::limit( $model->description , 300, ' (...)')!!}
+                        <div class="col-md-6 col-lg-4">
+                            <!-- Simple card -->
+                            <div class="card card-shadow d-block" style="height: 50vh">
+                                <div class="crop-height">
+                                    <img class="card-img-top  scale"  src="{{$model->cover}}"
+                                         alt="Card image cap">
+                                </div>
+                                <div class="card-body">
+                                    <h5 class="card-title blue-title d-flex flex-column">
+                                        <span>{{$model->title}}</span> Το
+                                        πρώτο μου Ρομπότ</h5>
+                                    <p class="card-text span-custom">
+                                        {!! Str::limit( $model->description , 300, ' (...)')!!}
 
-                                        </p>
+                                    </p>
 
-                                    </div> <!-- end card-body-->
-                                </div> <!-- end card-->
-                            </div>
+                                </div> <!-- end card-body-->
+                            </div> <!-- end card-->
+                        </div>
 
-                        @endforeach
-
-                    </div>
+                    @endforeach
 
                 </div>
-            @endif
+
+            </div>
+        @endif
 
     </div>
 @endsection

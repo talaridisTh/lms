@@ -6,10 +6,8 @@
 
 @section("content")
 
-    <div class="content-page pt-3 mt-1" style="background:#F7F8FC;">
 
-        <div class="content">
-            <div class="container-xl " style="width: 1450px">
+            <div class="container-xl " style="width: 1450px ;">
                 <div class="row">
                     <h3 class="m-2">Μαθήματα</h3>
                     @if(empty(!$arrayTopics))
@@ -45,8 +43,6 @@
                     @include("components.index.courses.filter-courses")
                 </div>
             </div>
-        </div>
-    </div>
 
 
 
