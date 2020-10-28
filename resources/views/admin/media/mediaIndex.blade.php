@@ -57,10 +57,6 @@
 					</p>
 				</div>
 				<div class="modal-footer">
-					<button id="save-details-btn" class="btn btn-primary">
-						<i class="mdi mdi-content-save mr-1"></i>
-						Αποθήκευση
-					</button>
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
 			</div>
@@ -71,7 +67,7 @@
 	<div class="modal fade" id="image-light-room" tabindex="-1" role="dialog" aria-labelledby="image-light-roomLabel" aria-hidden="true">
 		<div class="modal-dialog  modal-xl modal-dialog-centered justify-content-center" role="document">
 			<div class="modal-content">
-				<img src="" alt="">
+				<img src="" alt="" draggable="false">
 			</div>
 		</div>
 	</div>
@@ -82,7 +78,8 @@
 			<div class="modal-content">
 				<div class="modal-header modal-colored-header bg-primary">
 					<h5 class="modal-title" id="edit-file-modalLabel">Επεξεργασία Αρχείου</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close" draggable="false">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -135,8 +132,8 @@
 				<div class="page-title-box">
 					<div class="page-title-right">
 						<ol class="breadcrumb m-0">
-							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
-							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary" draggable="false">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary" draggable="false">Dashboard</a></li>
 							<li class="breadcrumb-item active">File Manager</li>
 						</ol>
 					</div>
@@ -150,14 +147,17 @@
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
 				<div class="text-sm-right sticky-btns mb-2">
-					<a href="#" class="btn btn-primary" data-toggle="modal" data-target="#upload-file-modal">
+					<a href="#" class="btn btn-primary user-select-auto" data-toggle="modal"
+						draggable="false" data-target="#upload-file-modal">
 						<i class="mdi mdi-plus-circle mr-2"></i>
 						Upload
 					</a>
-					<button type="button" class="d-none custom-tabs btn btn-light" data-custom-tab="list-view">
+					<button type="button" class="d-none custom-tabs btn btn-light"
+						draggable="false" data-custom-tab="list-view">
 						<i class="mdi mdi-format-list-bulleted-square"></i>
 					</button>
-					<button type="button" class="d-none custom-tabs btn btn-dark" data-custom-tab="grid-view">
+					<button type="button" class="d-none custom-tabs btn btn-dark"
+						draggable="false" data-custom-tab="grid-view">
 						<i class="mdi mdi-view-grid-outline"></i>
 					</button>
 

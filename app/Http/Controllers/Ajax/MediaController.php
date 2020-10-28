@@ -13,6 +13,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use App\DataTables\FilesDataTable;
+use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller
 {
@@ -43,10 +44,19 @@ class MediaController extends Controller
     public function index( Request $request ) {
 
 		if ( $request->search ) {
-			$media = Media::where("type", 0)
-				->where("name", "like", "%$request->search%")
-				->orderBy("id", "desc")
+			// $media = Media::where("type", 0)
+			// 	->where("name", "like", "%$request->search%")
+			// 	->orderBy("id", "desc")
+			// 	->paginate(18);
+
+			$media = DB::table("media")
+				->leftJoin("media_details", "media.id", "=", "media_details.media_id")
+				->where("media.type", 0)
+				->where("media.name", "LIKE", "%$request->search%")
+				->orWhere("media_details.title", "LIKE", "%$request->search%")
+				->orderBy("media.id", "desc")
 				->paginate(18);
+
 		}
 		else {
 			$media = Media::where("type", 0)->orderBy("id", "desc")->paginate(18);
@@ -366,7 +376,7 @@ class MediaController extends Controller
 			Storage::disk("local")->makeDirectory("public/thumbnails/$date");
 		}
 
-		Image::make( $image )->fit( 215, 215)
+		Image::make( $image )->fit( 250, 250)
 			->save( storage_path("/app/public/thumbnails/$date/$name->fullname") );
 
 		return (object)[

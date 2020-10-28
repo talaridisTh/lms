@@ -127,6 +127,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_paginate > .pagination > li > a").attr("draggable", "false");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
 		// activeToggleInit();

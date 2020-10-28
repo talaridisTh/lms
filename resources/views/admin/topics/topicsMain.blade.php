@@ -149,7 +149,7 @@
 							aria-haspopup="true" aria-expanded="false">
 							Επιλογές (0)
 						</button>
-						<div class="dropdown-menu">
+						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right">
 							<a id="delete-topics-btn" class="dropdown-item" href="#">Διαγραφή</a>
 						</div>
 					</div>

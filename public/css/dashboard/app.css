@@ -3827,6 +3827,13 @@ figure > img {
   width: 350px !important;
 }
 
+.user-select-auto {
+  -webkit-user-select: auto !important;
+  -moz-user-select: auto !important;
+  -ms-user-select: auto !important;
+  user-select: auto !important;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0

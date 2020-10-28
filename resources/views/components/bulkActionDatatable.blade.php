@@ -1,15 +1,10 @@
-<style>
-    .dropdown-menu-animated.show {
-        left: -35px !important;
-    }
-</style>
-<div class="btn-group mb-2 mr-3">
+<div class="btn-group mb-2">
     <button id="course-bulk-action-btn" disabled type="button" class="btn btn-secondary dropdown-toggle"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Επιλογές (0)
     </button>
 
-    <div class="dropdown-menu dropdown-menu-animated" style="left: -80px!important;">
+    <div class="dropdown-menu dropdown-menu-animated dropdown-menu-right" style="left: -80px!important;">
         <div class="btn-group dropleft">
             <div class="dropdown-divider"></div>
             <button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"

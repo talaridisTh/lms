@@ -72,14 +72,6 @@ class MaterialsDataTable extends DataTable {
                 return "<input data-status='$data->status'  class='js-toggle' data-material-id='$data->id' type='checkbox' id='" . $data->slug . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
 					<label for='" . $data->slug . "-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
             })
-            ->editColumn('created_at', function ($data) {
-
-                return Carbon::parse($data->created_at)->diffForHumans();
-            })
-            ->editColumn('updated_at', function ($data) {
-
-                return Carbon::parse($data->updated_at)->diffForHumans();
-            })
             ->rawColumns(['action', 'status', "courses", "title"])
             ->setRowAttr(['data-material-id' => function ($data) {
 

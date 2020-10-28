@@ -39,7 +39,7 @@
 				</div>
             </div>
         </div>
-        @include("components.filterDatatableMaterial")
+        
 		<table id="materials-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
@@ -79,7 +79,7 @@
 		</table>
     </div>
 
-
+	@include("components.filterDatatableMaterial")
 @endsection
 
 @section('scripts')

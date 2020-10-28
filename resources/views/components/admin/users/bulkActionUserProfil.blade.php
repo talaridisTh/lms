@@ -13,7 +13,7 @@
                 data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">  Επιλογές (0)
         </button>
-        <div class="dropdown-menu">
+        <div class="dropdown-menu dropdown-menu-animated dropdown-menu-right">
             <a class="dropdown-item js-chexbox-delete" href="#">Διαγραφή επιλεγμένων</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Export</a>

@@ -44,23 +44,23 @@
 
     </head>
 
-	<body class="loading right-bar-enabled" data-layout-config='{"leftSideBarTheme":"default","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":true, "showRightSidebarOnStart": true }'>
+	<body class="loading right-bar-enabled" draggable="false" data-layout-config='{"leftSideBarTheme":"default","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":true, "showRightSidebarOnStart": true }'>
 		<!-- Begin page -->
 		<div class="wrapper">
 			<!-- ========== Left Sidebar Start ========== -->
 			<div class="left-side-menu">
 				<!-- LOGO -->
-				<a href="{{route('home')}}" class="logo text-center logo-light">
+				<a href="{{route('home')}}" class="logo text-center logo-light" draggable="false">
 					<span class="logo-lg">
-						<img src="/assets/images/preview-lightbox-logo.png" alt="">
+						<img src="/assets/images/preview-lightbox-logo.png" alt="" draggable="false">
 					</span>
 					<span class="logo-sm">
-						<img src="/assets/images/preview-lightbox-logo.png" alt="" height="16">
+						<img src="/assets/images/preview-lightbox-logo.png" alt="" height="16" draggable="false">
 					</span>
 				</a>
 
 				<!-- LOGO -->
-				<a href="{{route('home')}}" class="logo text-center logo-dark">
+				<a href="{{route('home')}}" class="logo text-center logo-dark" draggable="false">
 					<span class="logo-lg">
 						<img src="/assets/images/preview-lightbox-logo.png" alt="">
 					</span>
@@ -77,51 +77,51 @@
 						<li class="side-nav-title side-nav-item">Menu</li>
 
 						<li class="side-nav-item">
-							<a href="/dashboard" class="side-nav-link">
+							<a href="/dashboard" class="side-nav-link" draggable="false">
 								<i class="mdi mdi-speedometer"></i>
 								<span>Overview</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
-							<a href="{{route('user.index')}}" class="side-nav-link">
+							<a href="{{route('user.index')}}" class="side-nav-link" draggable="false">
 								<i class="mdi mdi-account-multiple"></i>
 								<span>Χρήστες</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
-							<a href="/dashboard/materials" class="side-nav-link">
+							<a href="/dashboard/materials" class="side-nav-link" draggable="false">
 								<i class="mdi mdi-book-open-page-variant"></i>
 								<span>Μαθήματα</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
-							<a href="/dashboard/courses" class="side-nav-link">
+							<a href="/dashboard/courses" class="side-nav-link" draggable="false">
 								<i class="uil uil-books"></i>
 								<span>Courses</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
-							<a href="/dashboard/bundles" class="side-nav-link">
+							<a href="/dashboard/bundles" class="side-nav-link" draggable="false">
 								<i class="mdi mdi-chart-bubble"></i>
 								<span>Bundles</span>
 							</a>
 						</li>
 
 						<li class="side-nav-item">
-							<a href="/dashboard/topics" class="side-nav-link">
+							<a href="/dashboard/topics" class="side-nav-link" draggable="false">
 								<i class="mdi mdi-tag"></i>
 								<span>Topics</span>
 							</a>
 						</li>
 
                         <li class="side-nav-item">
-                            <a href="{{route('media.index')}}" class="side-nav-link">
+                            <a href="{{route('media.index')}}" class="side-nav-link" draggable="false">
                                 <i class="mdi mdi-package-variant"></i>
                                 <span>File Manager</span>
                             </a>
                         </li>
 						<li class="side-nav-item">
-                            <a href="javascript: void(0);" class="side-nav-link">
+                            <a href="javascript: void(0);" class="side-nav-link" draggable="false">
                                 <i class="mdi mdi-cog"></i>
                                 <span> Settings </span>
                                 <span class="menu-arrow"></span>
@@ -167,9 +167,9 @@
 
 							<li class="dropdown notification-list">
 								<a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-									aria-expanded="false">
+									aria-expanded="false" draggable="false">
 									<span class="account-user-avatar">
-										<img src="{{ Auth::user()->cover }}" alt="user-image" class="rounded-circle">
+										<img src="{{ Auth::user()->cover }}" alt="user-image" class="rounded-circle" draggable="false">
 									</span>
 									<span>
 										<span class="account-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
@@ -183,13 +183,13 @@
 									</div>
 
 									<!-- item-->
-									<a href="/dashboard/users/{{ Auth::user()->slug }}" class="dropdown-item notify-item">
+									<a href="/dashboard/users/{{ Auth::user()->slug }}" class="dropdown-item notify-item" draggable="false">
 										<i class="mdi mdi-account-circle mr-1"></i>
 										<span>My Account</span>
 									</a>
 
 									<!-- item-->
-									<a id="logout-btn" href="#" class="dropdown-item notify-item">
+									<a id="logout-btn" href="#" class="dropdown-item notify-item" draggable="false">
 										<i class="mdi mdi-logout mr-1"></i>
 										<span>Logout</span>
 									</a>
@@ -208,7 +208,7 @@
 									<input id="top-search" class="js-global-search form-control dropdown-toggle" name="search" type="text" placeholder="Search...">
 									<span class="mdi mdi-magnify search-icon"></span>
 									<div class="input-group-append">
-										<button class="btn btn-primary" type="submit">Search</button>
+										<button class="btn btn-primary" type="submit" draggable="false">Search</button>
 									</div>
 								</div>
 							</form>
@@ -248,9 +248,9 @@
 							</div>
 							<div class="col-md-6">
 								<div class="text-md-right footer-links d-none d-md-block">
-									<a href="javascript: void(0);">About</a>
-									<a href="javascript: void(0);">Support</a>
-									<a href="javascript: void(0);">Contact Us</a>
+									<a href="javascript: void(0);" draggable="false">About</a>
+									<a href="javascript: void(0);" draggable="false">Support</a>
+									<a href="javascript: void(0);" draggable="false">Contact Us</a>
 								</div>
 							</div>
 						</div>

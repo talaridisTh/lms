@@ -7,6 +7,6 @@
         aria-haspopup="true" aria-expanded="false" disabled>
     Επιλογές (0)
 </button>
-<div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right" aria-labelledby="dropdownMenuButton">
     <a id="js-multiple-delete" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
 </div>
