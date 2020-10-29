@@ -107,7 +107,6 @@
 						</div><!-- ./left col -->
 
 						<div class="col-md-6">
-							{{-- @dd($banners) --}}
 							@foreach ($banners as $section => $values)
 								<div id="{{ $section }}-banner-selection" class="js-banner-selection-cnt card h-100">
 									<div class="card-body height-883px overflow-y-auto">
