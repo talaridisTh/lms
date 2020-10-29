@@ -62,6 +62,7 @@ $("#delete-bundles-btn").on("click", function() {
 
 const bundlesDatatable = $("#bundle-table").DataTable({
 	order: [ 3, "desc" ],
+	searchDelay: "1000",
 	columns: [
 		{ data: "action", name: "action", className: "align-middle text-center", width: "5%", orderable: false, searchable: false },
 		{ data: "title", name: "title", className: "cursor-default"},

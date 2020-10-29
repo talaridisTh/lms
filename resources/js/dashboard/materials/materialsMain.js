@@ -6,7 +6,8 @@ let dataRange = $("#daterange")
 //! INIT DATATABLE
 //!============================================================
 const materialsDatatable = $("#materials-datatable").DataTable({
-    order: [[ 7, "desc" ]],
+	order: [[ 7, "desc" ]],
+	searchDelay: "1000",
     processing: true,
     serverSide: true,
     ajax: {

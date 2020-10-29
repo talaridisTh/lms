@@ -117,7 +117,8 @@ $("#delete-topics-btn").on( "click", function () {
 //! 				Datatables				#
 //!##########################################
 const topicsDatatable = $("#topics-datatable").DataTable({
-    order: [1, "desc"],
+	order: [1, "desc"],
+	searchDelay: "1000",
     processing: true,
     serverSide: true,
     ajax: {

@@ -84,6 +84,7 @@ $(".custom-tabs").on( "click", function() {
 
 const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	order: [ 4, "desc" ],
+	searchDelay: "1000",
 	columns: [
 		{ data: "image", className: "text-center cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
