@@ -108,7 +108,7 @@ $(".tab-link").on("show.bs.tab", function (event) {
 //! DATATABLES INIT
 //!============================================================
 const courses = $(".course-materials-list").DataTable({
-
+	searchDelay: "1000",
     processing: true,
     serverSide: true,
     ajax: {

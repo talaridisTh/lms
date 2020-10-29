@@ -266,6 +266,7 @@ $('#remove-selected-courses-btn').on( "click", function() {
 //! Datatables
 const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 	order: [3, "desc"],
+	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -424,6 +425,7 @@ function activeCoursesCheckboxToggle() {
 
 const bundleUsersTable = $("#bundle-users-table").DataTable({
 	order: [1, "asc"],
+	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -495,6 +497,7 @@ function activeUsersCheckboxesInit() {
 
 const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 	order: [1, "asc"],
+	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -670,6 +673,7 @@ function removeUsers( users ) {
 
 const remainingUsersTable = $("#remaining-users-table").DataTable({
 	order: [1, "asc"],
+	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	ajax: {

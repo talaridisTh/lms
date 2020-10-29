@@ -133,7 +133,8 @@ $("#add-gallery-images-btn").on("click", function() {
 //! DATATABLE INIT
 //!============================================================
 const materialCourseDatatable = $("#material-course-table").DataTable({
-    order: [[ 1, "desc" ]],
+	order: [[ 1, "desc" ]],
+	searchDelay: "1000",
     processing: true,
     serverSide: true,
     ajax: {
@@ -165,7 +166,8 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
 });
 
 const addCouseModal = $("#remaining-course-material-table").DataTable({
-    order: [[ 1, "desc" ]],
+	order: [[ 1, "desc" ]],
+	searchDelay: "1000",
     processing: true,
     serverSide: true,
     ajax: {
@@ -199,7 +201,8 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
 })
 
 const remainingFilesTable = $("#remaining-files-datatable").DataTable({
-    order: [ 0, "asc" ],
+	order: [ 0, "asc" ],
+	searchDelay: "1000",
     processing: true,
     serverSide: true,
     ajax: {

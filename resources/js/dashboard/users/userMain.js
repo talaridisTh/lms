@@ -8,7 +8,8 @@ let dataRange = $("#daterange")
 //!##################################################
 const tables = $("#scroll-horizontal-datatable").DataTable({
     // caseInsensitive: false,
-    order: [9, "desc"],
+	order: [9, "desc"],
+	searchDelay: "1000",
     processing: true,
     serverSide: true,
     ajax: {
