@@ -14,8 +14,8 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CourseInsideMaterialsDataTable extends DataTable
-{
+class CourseInsideMaterialsDataTable extends DataTable {
+
     /**
      * Build DataTable class.
      *
@@ -25,9 +25,9 @@ class CourseInsideMaterialsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 
-        if( $request->materialId){
-
-            $query = Material::find($request->materialId)->courses()->with("topics")->get();
+        if ($request->materialId != 0)
+        {
+            $query = Material::find($request->materialId)->courses()->with("curator")->get();
         }
 
         return datatables()::of($query)
@@ -39,56 +39,52 @@ class CourseInsideMaterialsDataTable extends DataTable
             })
             ->addColumn('topics', function ($data) {
 
-                $collection =  $data->topics->map(function($top){
-                    return $top->title ;
+                $collection = $data->topics->map(function ($top) {
+                    return $top->title;
                 });
 
                 return $collection->implode(", ");
-
             })
-            ->editColumn('title', function($data) {
+            ->editColumn('title', function ($data) {
 
-
-                $collection =  $data->topics->map(function($top){
-                    return $top->title ;
+                $collection = $data->topics->map(function ($top) {
+                    return $top->title;
                 });
-
-                $colec= $collection->implode(", ");
+                $colec = $collection->implode(", ");
 
                 return "<a href='/dashboard/course/$data->slug' data-topic='$colec' class='h5 custom-link-primary'>$data->title</a>
 						<p class='mb-1'>$data->slug</p>
 						<a href='/dashboard/course/$data->slug' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
 						<a href='#' class='custom-link-primary'>View</a>";
-
             })
             ->addColumn('humans', function ($data) {
 
                 return $data->created_at->diffForHumans();
-
             })
             ->addColumn('active', function ($data) {
 
                 return $data->status;
-
             })
             ->editColumn('curator', function ($data) {
 
-                return  User::find($data->user_id)->fullName;
+                if ($data->user !== null)
+                {
+                    return User::find($data->user_id);
+                }
 
+                return "-";
             })
             ->editColumn('updated_at', function ($data) {
 
                 return $data->updated_at->diffForHumans();
-
             })
-            ->rawColumns(["checkbox","topics","title","active"])
+            ->rawColumns(["checkbox", "topics", "title", "active"])
             ->setRowAttr([
                 'data-course-id' => function ($data) {
                     return $data->id;
                 }
             ]);
-
     }
 
     /**
@@ -153,4 +149,5 @@ class CourseInsideMaterialsDataTable extends DataTable
     {
         return 'CourseInsideMaterials_' . date('YmdHis');
     }
+
 }

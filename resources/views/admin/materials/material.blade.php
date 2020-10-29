@@ -399,18 +399,18 @@
                                         if ( old("instructors") != "" && in_array($instructor->id, old("instructors")) )
                                         {
 
-                                        echo "<option value='$instructor->id' selected>$instructor->fullName</option>";
+                                        echo "<option value='$instructor->id' selected>$instructor->last_name $instructor->first_name</option>";
                                         continue;
 
                                         }
                                         elseif ( old("instructors") == "" && isset($material) &&
                                         in_array($instructor->id, $activeInstructors) ) {
 
-                                        echo "<option value='$instructor->id' selected>$instructor->fullName</option>";
+                                        echo "<option value='$instructor->id' selected>$instructor->last_name $instructor->first_name</option>";
                                         continue;
 
                                         }
-                                        echo "<option value='$instructor->id'>$instructor->fullName</option>";
+                                        echo "<option value='$instructor->id'>$instructor->last_name $instructor->first_name</option>";
                                         }
                                         @endphp
                                     </select>

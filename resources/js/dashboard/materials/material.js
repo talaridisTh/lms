@@ -43,7 +43,7 @@ $(".js-editors-toggle").on("change", function() {
 })
 
 $("#remove-cover-btn").on("click", function() {
-	
+
 	axios.patch( "/media/remove-cover", {
 		namespace,
 		id: materialId
@@ -245,7 +245,7 @@ function addFilesBtnInit() {
 function addMaterialFiles(ids) {
 
 	axios.post("/media/add-files", {
-		namespace, 
+		namespace,
 		modelId: materialId,
 		ids
 	})
@@ -275,7 +275,7 @@ function addMaterialFiles(ids) {
 function removeFiles(ids) {
 
 	axios.post("/media/remove-files", {
-		namespace, 
+		namespace,
 		modelId: materialId,
 		ids
 	})
@@ -849,9 +849,9 @@ const materialPond = FilePond.create(materialImgUpload, {
 
 			timer = setTimeout(function() {
 				materialPond.removeFile(files[i]);
-				
+
 			}, ( i + 1 ) * 500);
-			
+
 		}
 		$("#gallery-cnt").removeClass("d-none");
 		$("#active-gallery-loading").addClass("d-none");
@@ -925,9 +925,9 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 			timer = setTimeout(function() {
 				materialFilePond.removeFile(files[i]);
-				
+
 			}, ( i + 1 ) * 500);
-			
+
 		}
 
 	},
@@ -1013,7 +1013,7 @@ dragula( [dragArea], {
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 
 for ( let i = 0; i < dropArea.length; i++ ) {
-	
+
 	dropArea[i].addEventListener("dragover", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
@@ -1022,7 +1022,7 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 		label.classList.add("text-limegreen");
 
 	});
-	
+
 	dropArea[i].addEventListener("dragleave", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");

@@ -9,7 +9,7 @@
 		@include("components.admin.materials.bulkActionCouseInsideMaterial")
 	</div>
 </div>
-<table id="material-course-table" data-material-id="{{isset($material)? $material->id:null}}"  class="table w-100 nowrap center-not-second ">
+<table id="material-course-table" data-material-id="{{isset($material)? $material->id:0}}"  class="table w-100 nowrap center-not-second ">
     <thead>
     <tr>
         <th class="text-left ">
