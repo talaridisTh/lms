@@ -36,11 +36,9 @@ class BundleController extends Controller
 
 		if ( isset($request->publishDate) ) {
 			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
-			$status = 1;
 		}
 		else {
 			$publishDate = null;
-			$status = 0;
 		}
 
 		$fields = [
@@ -55,7 +53,7 @@ class BundleController extends Controller
 		$bundle->description = $request->description;
 		$bundle->fields = json_encode($fields);
 		$bundle->publish_at = $publishDate;
-		$bundle->status = $status;
+		$bundle->status = 0;
 		$bundle->slug = Str::slug($request->title, "-");
 
 		$bundle->save();
