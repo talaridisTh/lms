@@ -6,8 +6,6 @@ import ArticleEditor from "../../../plugins/article-editor/article-editor"
 require("../../../plugins/article-editor/plugins/reorder/reorder");
 import dragula from "../../../theme/js/vendor/dragula.min.js";
 
-// require("../../../theme/js/vendor/dragula.min.js");
-
 // Create a plugin
 ArticleEditor.add('plugin', 'mediaLibrary', {
     start: function() {
@@ -27,6 +25,43 @@ ArticleEditor.add('plugin', 'mediaLibrary', {
 });
 
 utilities.articleConfig.plugins = ['mediaLibrary', 'reorder'];
+
+utilities.articleConfig.custom = {
+	css: [
+		"/css/index/app.css",
+		"/css/customArticleStyle.css",
+	]
+}
+
+utilities.articleConfig.snippets = {
+	"mysnippet": {
+		"name": "Robot",
+		"html": `
+			<div class="row">
+				<div class="col-lg-5 col-md-7 d-flex align-items-center">
+					<div>
+						<h2 class="h2-custom text-center text-sm-left">Βάλτε τώρα τη Ρομποτική στο σχολείο σας</h2>
+						<div class="d-flex flex-column mt-0 mb-3">
+							<p class="font-16 mb-1 text-center text-sm-left">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και προγραμματισμού για παιδιά.</p>
+							<p class="font-16 mb-0 text-center text-sm-left">Μπες στο δίκτυο συνεργατών. Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</p>
+						</div>
+						<button class="btn-custom btn btn-info">
+							ΑΙΤΗΜΑ ΓΙΑ DEMO
+						</button>
+					</div>
+				</div>
+				<div class="col-lg-7 col-md-5 d-none d-md-block">
+					<figure>
+						<img style="background: url('/images/group-33.png'); background-position: right; " class="img-custom-index img-fluid" src="/images/vector-smart-object.png" alt="vector-smart-object">
+					</figure>
+				</div>
+			</div>
+		`
+	},
+}
+
+
+
 
 ArticleEditor("#first-section-textarea", utilities.articleConfig);
 ArticleEditor("#second-section-textarea", utilities.articleConfig);
