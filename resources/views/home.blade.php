@@ -166,7 +166,7 @@
         </div>
         {{--       AUTA EDW THA ALLAKSOUN -}}
                 {{--row 6 --}}
-        @isset($arrayBanners)
+        <div>
         @if($arrayBanners["primary"]->status==1)
             <div class="row" style="margin-top: 9rem">
                 <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
@@ -192,8 +192,7 @@
                                     <h5 class="card-title blue-title d-flex flex-column"><span>{{$model->title}}</span>
                                         Το πρώτο μου Ρομπότ</h5>
                                     <p class="card-text span-custom ">
-                                        {!! Str::limit( $model->description , 300, ' (...)')!!}
-
+                                        {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
                                     </p>
 
                                 </div> <!-- end card-body-->
@@ -208,7 +207,9 @@
             </div>
         @endif
         {{--row 7 --}}
+        </div>
 
+        <div>
         @if($arrayBanners["secondary"]->status==1)
             <div class="row" style="margin-top: 9rem">
                 <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
@@ -220,6 +221,7 @@
                             $bannerValue = key ( $bannerArray);
                             $bannerKey =array_values ($bannerArray);
                             $model =   $bannerValue::findOrFail($bannerKey)->first();
+
                         @endphp
 
                         <div class="col-md-6 col-lg-4">
@@ -234,8 +236,7 @@
                                         <span>{{$model->title}}</span> Το
                                         πρώτο μου Ρομπότ</h5>
                                     <p class="card-text span-custom">
-                                        {!! Str::limit( $model->description , 300, ' (...)')!!}
-
+                                        {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
                                     </p>
 
                                 </div> <!-- end card-body-->
@@ -248,7 +249,7 @@
 
             </div>
         @endif
-        @endisset
+        </div>
 
     </div>
 @endsection

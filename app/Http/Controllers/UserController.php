@@ -53,6 +53,7 @@ class UserController extends Controller {
     {
         //
 
+
         $user = new User();
         $data = collect($request)->except("sendMail", "roles", "password_confirmation")->all();
 //        $data['password'] = Hash::make("password");
@@ -76,7 +77,7 @@ class UserController extends Controller {
 
         }
 
-       $request->cover? $data["cover"] = $request->cover:$data["cover"]="https://via.placeholder.com/150";
+       $request->avatar? $data["avatar"] = $request->avatar:$data["avatar"]="https://via.placeholder.com/150";
 
 
         $currentUser = $user->create($data)->assignRole($request->roles);
@@ -96,7 +97,7 @@ class UserController extends Controller {
     public function update(UserUpdateRequest $request, User $user)
     {
         //
-        $user->update($request->except('roles', 'password', 'cover', 'password_confirmation', "status", "sendMail"));
+        $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));
         $data = collect($request)->except("sendMail")->all();
         $user->syncRoles($request->roles);
 
@@ -113,11 +114,11 @@ class UserController extends Controller {
             $user->update(['password_encrypt' => Crypt::encryptString($request->password)]);
             $user->update(['password' => Hash::make(request("password"))]);
         }
-        if ($request->cover)
+        if ($request->avatar)
         {
 
 
-            $user->update(['cover' => $request->cover]);
+            $user->update(['avatar' => $request->avatar]);
 
 
 

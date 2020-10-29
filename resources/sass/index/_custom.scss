@@ -811,9 +811,30 @@ b[role="presentation"] {
 
 
 }
-//.avatar-image{
-//    object-fit: cover;
-//    border-radius:50%;
-//    width: 270px;
-//    height: 270px;
-//}
+
+ .crop-height {
+     /* max-width: 1200px; /* native or declared width of img src (if known) */
+     max-height: 250px;
+     overflow: hidden;
+ }
+
+img.scale {
+    /* corrects small inline gap at bottom of containing div */
+    display: block;
+    width: 100%; /* corrects obscure Firefox bug */
+    max-width: 100%;
+    /* just in case, to force correct aspect ratio */
+    height: auto !important;
+    display: block; /* corrects small inline gap at bottom of containing div */
+    width: 100%;
+    max-width: 100%;
+
+    height: auto !important;
+
+    -ms-interpolation-mode: bicubic;
+}
+
+
+
+
+

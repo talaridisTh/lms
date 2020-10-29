@@ -273,7 +273,7 @@
                                          alt="Cover Image">
 
 
-                                    <input hidden id="custom-file" name="cover">
+                                    <input hidden id="custom-file" name="avatar">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">{{isset($user)?"Αλλαγή Cover":"Προσθηκη Cover"}}</a>
