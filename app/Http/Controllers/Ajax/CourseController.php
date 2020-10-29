@@ -99,11 +99,6 @@ class CourseController extends Controller
 
 	public function toggleStatus(Request $request) {
 
-		// $date = date("Y-m-d");
-		// $time = date("H:i");
-		// $dateTime = date("Y-m-d H:i:s");
-		// dd($dateTime);
-
 		$course = Course::find($request->courseId);
 
 		if ( !$course->publish_at && $request->status == 1 ) {
@@ -111,7 +106,6 @@ class CourseController extends Controller
 		}
 
 		$course->status = $request->status == 1 ? 1 : 0;
-		// $course->publish_at = $request->status == 1 ? date("Y-m-d H:i:s") : null;
 		$course->timestamps  = false;
 		$course->save();
 

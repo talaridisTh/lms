@@ -137,7 +137,7 @@ function activeToggleInit() {
 
 		axios.patch( `/bundles/status`, {
 			bundleId: this.dataset.bundleId,
-			state: this.checked ? 1 : 0
+			status: this.checked ? 1 : 0
 		})
 		.then( (res) => {
 			let row = this.findParent(2);
