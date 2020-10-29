@@ -162,13 +162,15 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
 		Illuminate\View\ViewServiceProvider::class,
-		
+
         /*
 		* Package Service Providers...
 		*/
-		
+
 		Yajra\DataTables\DataTablesServiceProvider::class,
 		Intervention\Image\ImageServiceProvider::class,
+        Chatify\ChatifyServiceProvider::class,
+
         /*
          * Application Service Providers...
          */
@@ -230,7 +232,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 		'Datatables' => Yajra\Datatables\Facades\Datatables::class,
-		'Image' => Intervention\Image\Facades\Image::class
+		'Image' => Intervention\Image\Facades\Image::class,
+        'Chatify' => Chatify\Facades\ChatifyMessenger::class,
+
     ],
 
 ];

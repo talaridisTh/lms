@@ -31,9 +31,12 @@ class UserFactory extends Factory
     	$mins = rand(0, 59);
     	$secs = rand(0, 59);
 		$date = Carbon::create($year, $month, $day, $hours, $mins, $secs);
+		$name = $this->faker->firstName;
 
         return [
-            'first_name' => $this->faker->firstName,
+
+            'first_name' => $name,
+            'name' => $name,
         	'last_name' => $this->faker->lastName,
         	'email' => $this->faker->unique()->safeEmail,
         	'phone' => 69 . $this->faker->numberBetween(3, 9) . $this->faker->randomNumber(7, false),

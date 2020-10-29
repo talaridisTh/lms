@@ -187,7 +187,7 @@
                                        class="side-nav-link dropdown-item">
                                         <span>Ανακοινώσεις</span>
                                     </a>
-                                    <a href="{{route('index.message')}}" class="side-nav-link dropdown-item">
+                                    <a href="/message" class="side-nav-link dropdown-item">
                                         <span>Μηνύματα</span>
                                     </a>
                                     <a href="#" class="side-nav-link dropdown-item">

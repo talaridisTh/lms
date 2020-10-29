@@ -16,7 +16,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
-        "pusher/pusher-php-server": "^4.1",
+        "munafio/chatify": "^1.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-directory-cleanup": "^1.6",
         "spatie/laravel-permission": "^3.13",

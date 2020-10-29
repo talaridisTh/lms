@@ -216,11 +216,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/watchlist-datatable/material', 'Index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
     Route::post('/history-datatable', 'Index\UserController@historyDatatable')->name("datatable.history");
     Route::post('/history-datatable/material', 'Index\UserController@historyMaterialDatatable')->name("datatable.historyMaterial");
-//meessage
-    Route::get("/message/", "MessageController@index")->name("index.message");
-    Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
-    Route::get("/message/info/{user}", "MessageController@info")->name("index.info");
-    Route::post("/message/sent", "MessageController@sendMessage")->name("index.sendMessage");
+////meessage   MIN TO SVISEIS AKOMA !!!!
+//    Route::get("/message/", "MessageController@index")->name("index.message");
+//    Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
+//    Route::get("/message/info/{user}", "MessageController@info")->name("index.info");
+//    Route::post("/message/sent", "MessageController@sendMessage")->name("index.sendMessage");
 //! GUEST INDEX
     Route::get("/user/link", "Ajax\HomeController@createLink")->name("user.link");
     Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
