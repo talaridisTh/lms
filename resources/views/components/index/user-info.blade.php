@@ -1,8 +1,9 @@
+@isset($course->curator)
 <div class="background-material mb-3">
     <div class="col-md-12">
         <div class="row justify-content-between p-2 " >
             <div class="col-md-6"><span class="font-weight-bold text-black">Εισηγητής </span>|
-                {{$course->curator->first_name}}
+                {{isset($course->curator->first_name)}}
             </div>
             <div class="col-md-6 text-right">
                 <i class="{{$course->curator->facebook_link?"mdi cursor-pointer h3 mdi-facebook":""}}"></i>
@@ -30,3 +31,4 @@
         </div>
     </div>
 </div>
+@endisset

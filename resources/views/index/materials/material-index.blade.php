@@ -171,24 +171,24 @@
                             "idHeader"=>$materials->slug."-header-summary",
                             "href"=>$materials->slug."-href-summary",
                             "title"=>"Σχετικά με το μάθημα",
-                            "body"=>$materials->summary,
-                             "fields"=>json_decode($materials->fields)->summary
+                            "body"=>isset($materials->summary)?$materials->summary:"",
+                             "fields"=>isset($materials->fields)?json_decode($materials->fields)->summary:""
                             ])
                     @include("components.index.collapse-menu",
                             ["idAccordion"=>$materials->slug."-accordion-description" ,
                             "idHeader"=>$materials->slug."-header-description",
                             "href"=>$materials->slug."-href-description",
                             "title"=>"Περίληψη",
-                            "body"=>$materials->description,
-                             "fields"=>json_decode($materials->fields)->description
+                                  "body"=>isset($materials->description)?$materials->description:"",
+                             "fields"=>isset($materials->fields)?json_decode($materials->fields)->description:""
                             ])
                     @include("components.index.collapse-menu",
                             ["idAccordion"=>$materials->slug."-accordion-content" ,
                             "idHeader"=>$materials->slug."-header-content",
                             "href"=>$materials->slug."-href-content",
                             "title"=>"Περιγραφή",
-                            "body"=>$materials->content,
-                             "fields"=>json_decode($materials->fields)->content
+                               "body"=>isset($materials->content)?$materials->content:"",
+                             "fields"=>isset($materials->fields)?json_decode($materials->fields)->content:""
 
                             ])
 

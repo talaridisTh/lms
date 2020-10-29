@@ -6,6 +6,9 @@
 @endsection
 @php
     //background
+
+
+
         $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";
 
     //count Material

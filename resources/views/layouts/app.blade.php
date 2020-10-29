@@ -134,11 +134,11 @@
                         @endrole
 
                         <div>
-                            @if(auth()->user()->courses()->count()>1)
+                            @if(auth()->user()->courses()->count()>1 )
                                 <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
                                     <span>Μαθήματα</span>
                                 </a>
-                            @else
+                            @elseif(auth()->user()->courses()->count()==1 )
                                 <a
                                     href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}"
                                     class="nav-link">
