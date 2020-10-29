@@ -73,7 +73,7 @@ return [
     */
     'user_avatar' => [
         'folder' => 'users-avatar',
-        'default' => 'avatar.png',
+        'default' => 'avatar-placeholder.png',
     ],
 
     /*

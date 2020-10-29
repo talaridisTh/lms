@@ -92,7 +92,7 @@ class MessagesController extends Controller
     /**
      * This method to make a links for the attachments
      * to be downloadable.
-     *
+     *c
      * @param string $fileName
      * @return void
      */

@@ -15,7 +15,7 @@
     </div>
 
     <div class="mt-3 text-center">
-        <img src="{{$user->cover}}" alt="shreyu"
+        <img src="{{$user->avatar}}" alt="shreyu"
              class="img-thumbnail avatar-lg rounded-circle"/>
         <h4>{{$user->fullName}}</h4>
         <button class="btn btn-primary btn-sm mt-1"><i class='uil uil-envelope-add mr-1'></i>Send

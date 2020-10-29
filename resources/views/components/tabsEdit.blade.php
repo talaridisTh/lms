@@ -269,7 +269,7 @@
                                 </div>
                                 <div class="card-body">
 
-                                    <img id="cover-image" src="{{ url(isset($user)? $user->cover:"" ) }}" hidden class="img-fluid"
+                                    <img id="cover-image" src="{{ url(isset($user)? $user->avatar:"" ) }}" hidden class="img-fluid"
                                          alt="Cover Image">
 
 

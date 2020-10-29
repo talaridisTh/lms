@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('css')
-	
+
 @endsection
 
 @section('content')
@@ -50,7 +50,7 @@
 												<div class="row no-gutters align-items-center">
 													<div class="col-md-4">
 														<div class="embed-responsive embed-responsive-16by9">
-															<img class="img-fluid" src="{{ $user->cover }}" />
+															<img class="img-fluid" src="{{ $user->avatar }}" />
 														</div>
 													</div>
 													<div class="col-md-8">
@@ -84,9 +84,9 @@
 							</div><!-- end tab -->
 						@else
 							<div id="{{ $keys }}" class="tab-pane{{ $assignActive ? " show active" : "" }}">
-								
+
 								<p class="mb-3">{{ $variable->count() }} απο {{ $totalCount }} Αποτελέσματα</p>
-								
+
 								<div class="row">
 									@foreach ($variable as $model)
 										<div class="col-md-6 col-lg-3">
@@ -113,9 +113,9 @@
 			</div><!-- end tab-content -->
 		</div><!-- end content -->
 	</div><!-- end wrapper -->
-	
+
 @endsection
 
 @section('scripts')
-	
+
 @endsection

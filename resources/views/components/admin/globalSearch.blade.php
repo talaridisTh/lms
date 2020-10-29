@@ -12,7 +12,7 @@
 			@foreach ($users as $user)
 				<a href="/dashboard/users/{{ $user->slug }}" class="dropdown-item notify-item">
 					<div class="media">
-						<img class="d-flex mr-2 rounded-circle" src="{{ $user->cover }}" alt="User avatar" width="32" height="32">
+						<img class="d-flex mr-2 rounded-circle" src="{{ $user->avatar }}" alt="User avatar" width="32" height="32">
 						<div class="media-body">
 							<h5 class="m-0 font-14">{{ $user->last_name }} {{ $user->first_name }}</h5>
 							<span class="search-text-ellipsis font-12 mb-0">{{ $user->email }}</span>
@@ -88,7 +88,7 @@
 			{{ $count }} απο τα {{ $totalCount }} αποτελέσματα
 		</span>
 	</div>
-@else 
+@else
 <div class="row mx-0">
 	<span class="py-2 d-block text-center mx-auto font-16">
 		<i class="mdi mdi-magnify mr-1"></i>

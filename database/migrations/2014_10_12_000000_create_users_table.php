@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->bigInteger('phone');
             $table->text('profil')->nullable();
-            $table->string('cover')->nullable();
+            $table->string('avatar')->nullable();
             $table->string('facebook_link')->unique()->nullable();
             $table->string('instagram_link')->unique()->nullable();
             $table->string('linkedin_link')->unique()->nullable();
