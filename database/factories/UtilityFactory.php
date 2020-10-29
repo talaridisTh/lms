@@ -23,28 +23,38 @@ class UtilityFactory extends Factory
     {
         return [
 			'title' => "Home page",
-			"primary_editor" => "primary editor",
-			"secondary_editor" => "secondary editor",
+			"primary_editor" => "",
+			"secondary_editor" => "",
+			// "banners" => json_encode([
+			// 	"primary" => [
+			// 		"models" => [
+			// 			["App\Material" => rand(1,10)],
+			// 			["App\Course" => rand(1,10)],
+			// 			["App\Material" => rand(1,10)],
+			// 			["App\Bundle" => rand(1,10)],
+			// 			["App\Material" => rand(1,10)]
+			// 		],
+			// 		"status" => 1
+			// 	],
+			// 	"secondary" => [
+			// 		"models" => [
+			// 			["App\Material" => rand(1,10)],
+			// 			["App\Course" => rand(1,10)],
+			// 			["App\Material" => rand(1,10)],
+			// 			["App\Bundle" => rand(1,10)],
+			// 			["App\Material" => rand(1,10)]
+			// 		],
+			// 		"status" => 1
+			// 	],
+			// ]),
 			"banners" => json_encode([
 				"primary" => [
-					"models" => [
-						["App\Material" => rand(1,10)],
-						["App\Course" => rand(1,10)],
-						["App\Material" => rand(1,10)],
-						["App\Bundle" => rand(1,10)],
-						["App\Material" => rand(1,10)]
-					],
-					"status" => 1
+					"models" => [],
+					"status" => 0
 				],
 				"secondary" => [
-					"models" => [
-						["App\Material" => rand(1,10)],
-						["App\Course" => rand(1,10)],
-						["App\Material" => rand(1,10)],
-						["App\Bundle" => rand(1,10)],
-						["App\Material" => rand(1,10)]
-					],
-					"status" => 1
+					"models" => [],
+					"status" => 0
 				],
 			]),
 			"fields" => json_encode([

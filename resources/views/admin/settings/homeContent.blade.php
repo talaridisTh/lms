@@ -110,16 +110,18 @@
 							@foreach ($banners as $section => $values)
 								<div id="{{ $section }}-banner-selection" class="js-banner-selection-cnt card h-100">
 									<div class="card-body height-883px overflow-y-auto">
-										@foreach ($values->models as $model)
-											<div class="js-active-banner callout callout-success"
-												data-model-id="{{ $model->id }}" data-namespace="{{ get_class($model) }}">
-												<div class="d-flex justify-content-between mb-1">
-													<h5>{{ $model->title }}</h5>
-													<button class="js-remove-callout close"><span>×</span></button>
+										@if ( !empty($values->models) )
+											@foreach ($values->models as $model)
+												<div class="js-active-banner callout callout-success"
+													data-model-id="{{ $model->id }}" data-namespace="{{ get_class($model) }}">
+													<div class="d-flex justify-content-between mb-1">
+														<h5>{{ $model->title }}</h5>
+														<button class="js-remove-callout close"><span>×</span></button>
+													</div>
+													<p>{{ $model->subtitle }}</p>
 												</div>
-												<p>{{ $model->subtitle }}</p>
-											</div>
-										@endforeach
+											@endforeach
+										@endif
 										<div class="js-empty-callout callout callout-danger{{ !empty($values->models) ? " d-none" : "" }}">
 											<div class="d-flex justify-content-center mb-1">
 												<h5>Δεν επιλέχθηκαν Banners</h5>
@@ -259,7 +261,7 @@
 											data-modal-title="Carousel {{ $counter }}" title="Edit carousel"></i>
 
 										<input type="checkbox" id="{{ $section }}-banners-switch" autocomplete="off"
-											{{ $values->status == 1 ? "checked" : ""}}
+											{{ !empty($values->status) && $values->status == 1 ? "checked" : ""}}
 											class="js-carousel-switch" data-switch="bool"/>
 										<label for="{{ $section }}-banners-switch" class="mb-0" data-on-label="On" data-off-label="Off"></label>
 									</div>
@@ -270,40 +272,49 @@
 									
 									<div id="{{ $section }}-banners-row" class="js-banner-cnt row pt-3"
 										data-plugin="dragula" data-importance="{{ $section }}">
-										@foreach ($values->models as $model)
+										@if ( !empty($values->models) )
+											@foreach ($values->models as $model)
 
-											@php
-												$modelType = substr($model->getTable(), 0, -1);
-												$previewURL = "#";
+												@php
+													$modelType = substr($model->getTable(), 0, -1);
+													$previewURL = "#";
 
-												if ( $modelType == "course" ) {
-													$previewURL = "/courses/course/$model->slug";
-												}
-												elseif ( $modelType == "material" ) {
-													$previewURL = "/material/$model->slug";
-												}
-											@endphp
+													if ( $modelType == "course" ) {
+														$previewURL = "/courses/course/$model->slug";
+													}
+													elseif ( $modelType == "material" ) {
+														$previewURL = "/material/$model->slug";
+													}
+												@endphp
 
-											<div class="col-md-6 col-lg-4 col-xl-3">
-												<!-- Simple card -->
-												<div class="js-banner card d-block" data-model-id="{{ $model->id }}"
-													data-namespace="{{ get_class($model) }}">
-													<div class="embed-responsive embed-responsive-16by9">
-														<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
-													</div>
-													<div class="card-body">
-														<h5 class="card-title">{{ $model->title }}</h5>
-														<p class="js-overflow-check card-text height-65px overflow-y-hidden mb-0">{{ $model->subtitle }}</p>
-														<div class="d-flex justify-content-end mt-1 mb-2">
-															<a href="#" class="js-show-more invisible custom-muted font-weight-700">Περισσότερα...</a>
+												<div class="col-md-6 col-lg-4 col-xl-3">
+													<!-- Simple card -->
+													<div class="js-banner card d-block" data-model-id="{{ $model->id }}"
+														data-namespace="{{ get_class($model) }}">
+														<div class="embed-responsive embed-responsive-16by9">
+															<img class="card-img-top embed-responsive-item" src="{{ $model->cover }}" alt="{{ $model->title }}">
 														</div>
-														<a href="/dashboard/{{ $modelType }}/{{ $model->slug }}"
-															class="custom-link-primary mr-3" target="_blank">Edit</a>
-														<a href="{{ $previewURL }}" class="custom-link-primary" target="_blank">View</a>
-													</div> <!-- end card-body-->
-												</div> <!-- end card-->
-											</div><!-- end col -->
-										@endforeach
+														<div class="card-body">
+															<h5 class="card-title">{{ $model->title }}</h5>
+															<p class="js-overflow-check card-text height-65px overflow-y-hidden mb-0">{{ $model->subtitle }}</p>
+															<div class="d-flex justify-content-end mt-1 mb-2">
+																<a href="#" class="js-show-more invisible custom-muted font-weight-700">Περισσότερα...</a>
+															</div>
+															<a href="/dashboard/{{ $modelType }}/{{ $model->slug }}"
+																class="custom-link-primary mr-3" target="_blank">Edit</a>
+															<a href="{{ $previewURL }}" class="custom-link-primary" target="_blank">View</a>
+														</div> <!-- end card-body-->
+													</div> <!-- end card-->
+												</div><!-- end col -->
+											@endforeach
+										@else
+											<div class="callout callout-danger mx-auto w-75">
+												<div class="d-flex justify-content-center mb-1">
+													<h5>Δεν επιλέχθηκαν Banners</h5>
+												</div>
+											</div>
+										@endif
+										
 									</div>
 
 								</div>
@@ -314,7 +325,7 @@
 				<div id="editor-section" class="tab-pane">
 					<form id="home-form" action="/dashboard/home-content/update" method="post" autocomplete="off">
 						@csrf
-						<input type="text" name="title" value="{{ $page->title }}" hidden />
+						<input type="text" name="title" value="Home page" hidden />
 
 						<div class="form-group">
 							<div class="d-flex justify-content-between">
@@ -341,7 +352,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" id="first-section-textarea"
-								name="primaryEditor" rows="5">{{ $page->primary_editor }}</textarea>
+								name="primaryEditor" rows="5">{{ !empty($page->primary_editor) ? $page->primary_editor : "" }}</textarea>
 						</div>
 
 						<div class="form-group">
@@ -366,7 +377,7 @@
 								</div>
 							</div>
 							<textarea class="form-control" id="second-section-textarea"
-								name="secondaryEditor" rows="5">{{ $page->secondary_editor }}</textarea>
+								name="secondaryEditor" rows="5">{{  !empty($page->secondary_editor) ? $page->secondary_editor : ""}}</textarea>
 						</div>
 					</form>
 
