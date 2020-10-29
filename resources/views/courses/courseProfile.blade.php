@@ -66,7 +66,7 @@
 
 
     @role("admin") <!-- ribbon -->
-        <div class="card ribbon-box" style="background-color: transparent">
+        <div class="card d-lg-none d-xl-block ribbon-box" style="background-color: transparent">
             <div class="card-body py-0">
                 <div class="p-1 bg-secondary " style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
                     <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}">
@@ -87,7 +87,7 @@
 
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
                             @if($course->cover)
-                                <img class=" avatar-image rounded-circle" src="{{($course->cover)}}" alt="course-logo">
+                                <img class="sm-image avatar-image rounded-circle" src="{{($course->cover)}}" alt="course-logo">
                             @endif
                         </div>
 

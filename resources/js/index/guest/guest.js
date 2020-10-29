@@ -77,12 +77,15 @@ const onClickInputMaterial = (inputs, userId) => {
 
     inputs.change(function () {
         onPreview(userId, $(".input-materials:checked"), "material")
+
     })
+
 
 }
 
 const onPreview = (userId, modelInput, model, userSlug) => {
     let courseId = [];
+
 
 
     let checkedCourses = modelInput;
@@ -102,6 +105,7 @@ const onPreview = (userId, modelInput, model, userSlug) => {
             }
 
         }
+
 
         axiosCourseInstructor(courseId, userId)
     }
