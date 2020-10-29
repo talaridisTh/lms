@@ -1,7 +1,6 @@
 {
-    "/js/app.js": "/js/app.js?id=0c6e68fec00fecc09c8d",
+    "/js/app.js": "/js/app.js?id=aba3ae74e89bb03f70c8",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=3fdf6a04d6ee18c3997a",
-<<<<<<< HEAD
     "/css/dashboard/app.css": "/css/dashboard/app.css?id=e4fb6c4064e4b0d945d0",
     "/css/index/app.css": "/css/index/app.css?id=c7288430614004dbbc08",
     "/css/index/logIn.css": "/css/index/logIn.css?id=eabf3bce51038675f616",
@@ -16,7 +15,7 @@
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=2ae1055a560bd3037f1c",
     "/js/dashboard/newContent.js": "/js/dashboard/newContent.js?id=6a661c2657cd260fd02c",
     "/js/dashboard/overview/overview.js": "/js/dashboard/overview/overview.js?id=a72477372b8a24f41107",
-    "/js/dashboard/settings/home-page.js": "/js/dashboard/settings/home-page.js?id=e95c676c082ea1958bc4",
+    "/js/dashboard/settings/home-page.js": "/js/dashboard/settings/home-page.js?id=84e096f5426c2d7db195",
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=1a738a750d03c000498c",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=234eab836154eb98bc51",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=32b9d348fd5fee024cd9",
@@ -28,32 +27,4 @@
     "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=e057a9be4329c7f8f383",
     "/js/index/history/history.js": "/js/index/history/history.js?id=8818f10a8e046fb4c011",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=bcf8c7b4d74bbc1e123c"
-=======
-    "/css/dashboard/app.css": "/css/dashboard/app.css?id=c7ba6a5a7ccfaaffe18b",
-    "/css/index/app.css": "/css/index/app.css?id=f17113e0684c4879d257",
-    "/css/index/logIn.css": "/css/index/logIn.css?id=cccee6919dcb6902258d",
-    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=f14fd9a4e54653f520de",
-    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=1bfea9ea23f12e7e6953",
-    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=019d79dfcc4fc3e6efca",
-    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=a952d63361086bf776d3",
-    "/js/dashboard/dashboard.js": "/js/dashboard/dashboard.js?id=4faacb69710520fc54b5",
-    "/js/dashboard/fileManager/fileManager.js": "/js/dashboard/fileManager/fileManager.js?id=91d8f7bbd3e7f53d06ee",
-    "/js/dashboard/main.js": "/js/dashboard/main.js?id=760aac11a88e29880bca",
-    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=3152e826a57bddbc4177",
-    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=09c16cdc4dfd3bfa4002",
-    "/js/dashboard/newContent.js": "/js/dashboard/newContent.js?id=9989d2633bc4bdbe213f",
-    "/js/dashboard/overview/overview.js": "/js/dashboard/overview/overview.js?id=9f6166a0333e91bbf746",
-    "/js/dashboard/settings/home-page.js": "/js/dashboard/settings/home-page.js?id=da20d8a7dac7ab37da63",
-    "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=7abd0363544d5949a147",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=a97e156834cf78b9719a",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=22fed9ab163d39812183",
-    "/js/index/announcement/announcement.js": "/js/index/announcement/announcement.js?id=3cd1e4d54edc6e214380",
-    "/js/index/app.js": "/js/index/app.js?id=c9b8fd9b220198960357",
-    "/js/index/chat/message.js": "/js/index/chat/message.js?id=14926e7fc81312e0f1df",
-    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=c3cc052313f994967b18",
-    "/js/index/favourites/favourites.js": "/js/index/favourites/favourites.js?id=c85254c436fa98966f60",
-    "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=2bbf3a1f41d6a7591ea6",
-    "/js/index/history/history.js": "/js/index/history/history.js?id=ccccee78e0ec055cc81b",
-    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=20c13809f768feb7c78d"
->>>>>>> 8ccaf9eeebfeb188460b90f58ba3d0eeb2dac21d
 }
