@@ -7,7 +7,7 @@
 
 <select id="userFilterMaterialCourses">
     <option value="">Όλοι οι εισηγητές</option>
-    @foreach(App\User::getInstructor() as $instructor)
+    @foreach($instructors as $instructor)
         <option value="{{$instructor->fullName}}">{{$instructor->fullName}}</option>
     @endforeach
 </select>

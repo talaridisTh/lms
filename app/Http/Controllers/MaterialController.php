@@ -33,7 +33,7 @@ class MaterialController extends Controller {
     public function create()
     {
         $topics = Topic::all();
-        $instructors = User::getInstructor();
+        $instructors = Role::find(2)->users;
         $courses = Course::all();
         $types = Material::all()->unique('type');
 

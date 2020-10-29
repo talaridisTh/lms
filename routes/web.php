@@ -33,7 +33,7 @@ Route::get("/test", "Index\HomeController@test")->name("user.test");
 //! Dashboard routes
 //!######################################################
 //!					middleware				            #
-Route::group(['middleware' => ['auth', "role:admin"]], function () {
+Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes

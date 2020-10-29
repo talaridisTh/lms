@@ -27,6 +27,7 @@ class HomeController extends Controller {
     public function index(Material $material)
     {
 
+
         $arrayBanners = get_object_vars(json_decode(Utility::first()->banners));
         $bannersPrimary = $arrayBanners["primary"]->models;
         $bannersSecondary = $arrayBanners["secondary"]->models;
