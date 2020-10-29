@@ -28,6 +28,10 @@ class HomeController extends Controller {
     {
 
 
+        if(empty(Utility::first())){
+            return view('home');
+        }
+
         $arrayBanners = get_object_vars(json_decode(Utility::first()->banners));
         $bannersPrimary = $arrayBanners["primary"]->models;
         $bannersSecondary = $arrayBanners["secondary"]->models;

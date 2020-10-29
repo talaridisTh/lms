@@ -11,15 +11,15 @@ class AddAvatarToUsers extends Migration
      *
      * @return void
      */
-    public function up()
-    {
-        Schema::table('users', function (Blueprint $table) {
-            // if not exist, add the new column
-            if (!Schema::hasColumn('users', 'avatar')) {
-                $table->string('avatar')->default(config('chatify.user_avatar.default'))->after('email');
-            }           
-        });
-    }
+//    public function up()
+//    {
+//        Schema::table('users', function (Blueprint $table) {
+//            // if not exist, add the new column
+//            if (!Schema::hasColumn('users', 'avatar')) {
+//                $table->string('avatar')->default(config('chatify.user_avatar.default'))->after('email')->nullable();
+//            }
+//        });
+//    }
 
     /**
      * Reverse the migrations.

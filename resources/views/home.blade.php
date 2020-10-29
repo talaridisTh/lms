@@ -166,6 +166,7 @@
         </div>
         {{--       AUTA EDW THA ALLAKSOUN -}}
                 {{--row 6 --}}
+        @isset($arrayBanners)
         @if($arrayBanners["primary"]->status==1)
             <div class="row" style="margin-top: 9rem">
                 <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
@@ -247,6 +248,7 @@
 
             </div>
         @endif
+        @endisset
 
     </div>
 @endsection
