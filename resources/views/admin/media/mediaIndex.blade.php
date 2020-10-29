@@ -4,21 +4,17 @@
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 	<style>
-		#image-light-room .modal-content {
-			max-width: 700px;
+
+		.modal-content {
+			display: block;
+			width: auto;
+		}
+
+		#image-light-room img {
+			width: 100%;
 			height: auto;
 		}
-		#page-drag-drop-overlay {
-			/* box-sizing: border-box;
-			margin: 0;
-			padding: 0;
-			position: absolute;
-			width: calc(100vw - 18px);
-			height: 100vh;
-			border: 3px dashed green;
-			background-color: rgba(0, 39, 3, 0.199);
-			z-index: 1020; */
-		}
+
 	</style>
 @endsection
 
