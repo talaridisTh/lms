@@ -259,8 +259,10 @@ const filterButton = function (attr, column, table, tableId) {
     $(attr).detach().appendTo(tableId)
 
 
+
     $(attr).on('change', function () {
         table.columns(column).search(this.value).draw();
+
 
     });
 }
