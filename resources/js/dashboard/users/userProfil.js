@@ -9,6 +9,8 @@ import 'filepond/dist/filepond.min.css';
 const userId = $(".course-materials-list")[0].dataset.id
 const userSlug = $(".course-materials-list")[0].dataset.slug
 const baseUrl = window.location.origin;
+const namespace = "App\\User";
+let timer = 0;
 
 //! GLOBAL METHOD AND EVENT LISTENER
 //!============================================================
@@ -404,10 +406,10 @@ $('#material-modal-shown-btn').click(() => {
 
 //! DROPOZONE
 //!============================================================
-$(".js-add-image").on("click", function () {
-    $("#cover-image").removeAttr('hidden')
-    $("#delete-cover-btn").removeAttr('hidden')
-});
+// $(".js-add-image").on("click", function () {
+//     $("#cover-image").removeClass('d-none')
+//     // $("#delete-cover-btn").removeAttr('hidden')
+// });
 
 $(".js-add-image").on("click", utilities.imageHandler);
 
@@ -418,12 +420,58 @@ $("#change-cover-btn").on("click", function () {
     $("#gallery-modal").modal('show');
 })
 
-$("#delete-cover-btn").on("click", function () {
-    console.log("S")
 
-    $("#cover-image").attr('hidden', true)
-    $("#delete-cover-btn").attr('hidden', true)
-})
+
+
+
+
+$("#remove-cover-btn").on("click", function() {
+
+	if ( !userId ) {
+
+		let cnt = this.parentElement;
+
+		$("#cover-image").addClass("d-none");
+		$("#change-cover-btn").text("Προσθήκη")
+		$("#custom-file").val("");
+
+		cnt.classList.remove("d-flex");
+		cnt.classList.add("d-none");
+
+		return;
+	}
+
+	axios.patch( "/media/remove-cover", {
+		namespace,
+		id: userId
+	})
+	.then( res => {
+
+		let cnt = this.parentElement;
+
+		$("#cover-image").addClass("d-none");
+		$("#change-cover-btn").text("Προσθήκη")
+
+		cnt.classList.remove("d-flex");
+		cnt.classList.add("d-none");
+
+	})
+	.catch( err => {
+		console.log(err);
+	})
+});
+
+
+
+
+
+
+
+// $("#delete-cover-btn").on("click", function () {
+
+//     $("#cover-image").addClass('d-none')
+//     $("#delete-cover-btn").attr('hidden', true)
+// })
 
 
 let dropzone = document.getElementById("file-pond");
@@ -431,9 +479,6 @@ let dropzone = document.getElementById("file-pond");
 FilePond.registerPlugin(FilePondPluginFileValidateType);
 const pond = FilePond.create(dropzone, {
     name: 'file[]',
-    data: {
-        param: 'test'
-	},
     server: {
         url: baseUrl,
         process: {
@@ -443,28 +488,43 @@ const pond = FilePond.create(dropzone, {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
             },
             onload: function (data) {
-
-            },
-
-
+				utilities.paginationRequest( 1, "" );
+            }
         },
+	},
+	onprocessfile: function (error, data) {
+		
+		if ( pond.status === 2 ) {
 
-    },
+			clearTimeout(timer);
+			let files = pond.getFiles();
+
+			for (let i = 0; i < files.length; i++ ) {
+
+				if ( files[i].status === 5 ) {
+					timer = setTimeout(function() {
+						pond.removeFile(files[i]);
+					}, ( i + 1 ) * 500);
+				}
+
+			}
+		}
+
+	},
     onprocessfiles: function (data) {
 
-        utilities.paginationRequest(1, "");
-        $("#upload-tab-btn").removeClass("active")
-        $("#upload").removeClass("active")
-        $("#media-library-tab-btn").addClass("active")
-        $("#media-library").addClass("show active")
+        let files = pond.getFiles();
+
+		for (let i = 0; i < files.length; i++ ) {
+
+			timer = setTimeout(function() {
+				pond.removeFile(files[i]);
+				
+			}, ( i + 1 ) * 500);
+			
+		}
 
     },
-
-    onupdatefiles: function (file) {
-        utilities.toastAlert("success", `${file.length} εικόνα ανέβηκαν`)
-
-    },
-
     allowMultiple: true,
     allowRemove: false,
     allowRevert: false,

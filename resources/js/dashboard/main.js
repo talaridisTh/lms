@@ -450,7 +450,7 @@ function paginationRequest(activePage, search) {
 
             for (let i = 0; i < addBtns.length; i++) {
                 addBtns[i].removeEventListener("click", imageHandler);
-                addBtns[i].addEventListener("click", imageHandler);
+				addBtns[i].addEventListener("click", imageHandler);
             }
 
             for (let i = 0; i < pagination.length; i++) {
@@ -461,8 +461,15 @@ function paginationRequest(activePage, search) {
 }
 
 function changeCoverRequest(namespace, id, url) {
-    if (namespace == "App\\User" || namespace == "App\\Material" && !id) {
-        $("#cover-image")[0].src = `${baseUrl}/${url}`;
+	if ( typeof id === "undefined" && namespace == "App\\User" ) {
+		let img = $("#cover-image")[0];
+		let removeBtnCnt = $("#remove-cover-btn").parent();
+
+		img.src = `${url}`;
+		img.classList.remove("d-none");
+
+		removeBtnCnt.removeClass("d-none");
+		removeBtnCnt.addClass("d-flex");
 
         $("#custom-file")[0].value = `${url}`;
 

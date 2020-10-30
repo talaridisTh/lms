@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('name', 50)->nullable(); // na min svisti xriazete gia to message system
             $table->string('last_name', 50);
             $table->string('email')->unique();
-            $table->string('avatar')->default(config('chatify.user_avatar.default'))->nullable();
+            $table->string('avatar')->nullable();
             $table->string('messenger_color')->default('#2180f3');
             $table->boolean('dark_mode')->default(0);
             $table->boolean('active_status')->default(0);

@@ -77,19 +77,11 @@ class UserController extends Controller {
 
         }
 
-       $request->avatar? $data["avatar"] = $request->avatar:$data["avatar"]="https://via.placeholder.com/150";
+       $request->avatar? $data["avatar"] = $request->avatar:$data["avatar"]="/images/avatar-placeholder.png";
 
 
         $currentUser = $user->create($data)->assignRole($request->roles);
 
-
-//        foreach ($request->input('media', []) as $index => $file)
-//        {
-//            //Media Library should now attach file previously uploaded by Dropzone (prior to the post form being submitted) to the post
-//            $currentUser->addMedia(storage_path("app/" . $file))
-//                ->usingName($request->input('media_original_name', [])[$index]) //get the media original name at the same index as the media item
-//                ->toMediaCollection("users");
-//        }
 
         return redirect()->back()->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
     }

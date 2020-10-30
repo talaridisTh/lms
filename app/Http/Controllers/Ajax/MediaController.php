@@ -123,7 +123,13 @@ class MediaController extends Controller
 
 		$model = $request->namespace::find( $request->id );
 
-		$model->cover = null;
+		if ( $request->namespace === "App\\User" ) {
+			$model->avatar = null;
+		}
+		else {
+			$model->cover = null;
+		}
+		
 		$model->save();
 
 	}
@@ -301,7 +307,13 @@ class MediaController extends Controller
 		$namespace = $request->namespace;
 		$id = $request->id;
 		$model = $namespace::find( $id );
-		$model->cover = $request->url;
+
+		if ( $namespace === "App\\User" ) {
+			$model->avatar = $request->url;
+		}
+		else {
+			$model->cover = $request->url;
+		}
 		$model->save();
 
 	}
