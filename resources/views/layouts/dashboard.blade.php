@@ -169,7 +169,7 @@
 								<a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 									aria-expanded="false" draggable="false">
 									<span class="account-user-avatar">
-										<img src="{{ Auth::user()->cover }}" alt="user-image" class="rounded-circle" draggable="false">
+										<img src="{{ Auth::user()->avatar }}" alt="user-image" class="rounded-circle" draggable="false">
 									</span>
 									<span>
 										<span class="account-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
