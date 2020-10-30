@@ -9,7 +9,7 @@
 
 
 
-        $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";
+        $bgColor = $course->topics->count() > 0 ? $course->topics->first()->color : "";
 
     //count Material
         $countMaterial= $allMaterial->where("type","Lesson")->count()+
