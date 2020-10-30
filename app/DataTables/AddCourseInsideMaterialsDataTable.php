@@ -39,6 +39,10 @@ class AddCourseInsideMaterialsDataTable extends DataTable
             })
             ->addColumn('curator', function ($data) {
 
+				if ( is_null($data->user_id) ) {
+					return "-";
+				}
+
                 return User::find($data->user_id)->fullName;
             })
             ->addColumn('action', function ($data) {
