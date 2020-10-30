@@ -1,7 +1,45 @@
 import utilities from '../../index/main';
+import Swiper from "swiper";
 
 
 utilities.addWhatchlist()
+
+//! announcements-swiper
+//!============================================================
+// var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
+//     // Optional parameters
+//
+//
+//     // If we need pagination
+//     pagination: {
+//         el: '.swiper-pagination-announcements',
+//         draggable: true,
+//     },
+//     fadeEffect: {
+//         crossFade: true
+//     },
+//
+//     // Navigation arrows
+//     navigation: {
+//         nextEl: '.swiper-button-next-announcements',
+//         prevEl: '.swiper-button-prev-announcements',
+//     },
+//
+//     // And if we need scrollbar
+//     scrollbar: {
+//         el: '.swiper-scrollbar-announcements',
+//     },
+//     keyboard: {
+//         enabled: true,
+//         onlyInViewport: false,
+//     },
+// })
+// $('#announcements-modal').on('shown.bs.modal', function (e) {
+//     swiperAnnouncements.update();
+//     var $invoker = $(e.relatedTarget);
+//     swiperAnnouncements.slideTo($invoker.data('slider'));
+//     swiperAnnouncements.update();
+// });
 
 //FILTER TOPIC
 $(".filter-topic").click(function () {

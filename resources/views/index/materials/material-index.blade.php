@@ -3,19 +3,19 @@
     $bgColor = $course->topics->count() > 0 ? $course->topics->first()->color : "";
 
 
-$countMaterial= $MaterialsOrderByPriority->where("type","Lesson")->count()+
-$MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
-return count($chapter->chapters->where("type","Lesson"));
-})->first();
-$textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
+    $countMaterial= $MaterialsOrderByPriority->where("type","Lesson")->count()+
+    $MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
+    return count($chapter->chapters->where("type","Lesson"));
+    })->first();
+    $textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
 
 
-//count extra
-$countExtra= $MaterialsOrderByPriority->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
-$MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
-return count($chapter->chapters->where("type","!=","Lesson")->where("type","!=","Announcement"));
-})->first();
-$textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
+    //count extra
+    $countExtra= $MaterialsOrderByPriority->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
+    $MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
+    return count($chapter->chapters->where("type","!=","Lesson")->where("type","!=","Announcement"));
+    })->first();
+    $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
 
 
 @endphp
@@ -97,7 +97,8 @@ $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$coun
                             </div>
                         @else
 
-                            <div class="custom-background" style="background-image: url('{{$materials->cover}}')">"></div>
+                            <div class="custom-background" style="background-image: url('{{$materials->cover}}')">">
+                            </div>
 
                         @endif
 
@@ -128,8 +129,9 @@ $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$coun
                                 @endphp
 
                                 @unlessrole('guest')
-                                <div class="watchlist  d-flex justify-content-center justify-content-md-end align-items-center ml-2 "
-                                     style=" margin-right: -0.7rem;">
+                                <div
+                                    class="watchlist  d-flex justify-content-center justify-content-md-end align-items-center ml-2 "
+                                    style=" margin-right: -0.7rem;">
                                     <button
                                         data-course-id="{{$course->id}}"
                                         data-material-id="{{$materials->id}}"

@@ -88,7 +88,8 @@
 
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
                             @if($course->cover)
-                                <img class="sm-image avatar-image rounded-circle" src="{{($course->cover)}}" alt="course-logo">
+                                <img class="sm-image avatar-image rounded-circle" src="{{($course->cover)}}"
+                                     alt="course-logo">
                             @endif
                         </div>
 
@@ -245,7 +246,6 @@
 
                         @foreach($allMaterial as $key => $materials)
 
-
                             @php
                                 $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
                                 $activeClass = isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$count; //ean to exei dei bazi tik allis arithmo
@@ -269,7 +269,6 @@
                                                 <span class="section-name d-flex align-items-center"
                                                       class="mr-2">Ενότητα {{$key -$count+1 }} :</span>
                                                 <span class="d-flex align-items-center"> {{$materials->title}}</span>
-
                                             </h5>
                                             <i class="mdi mdi-chevron-down accordion-arrow"></i>
                                         </div>
@@ -281,20 +280,21 @@
                                         <div class="p-0 card-body">
                                             <ul class="section-list p-0" data-course-id="{{$course->id}}"
                                                 class="my-2 p-0"><!-- list chapter -->
-
+                                                @php $countChapter = 0 @endphp
                                                 @foreach($materials->chapters->where("type", "!=", "Announcement") as $chapter)  {{--foreach gia na bri ta chapter--}}
 
                                                 @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
 
                                                 @php
+
                                                     $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
                                                     $link = route('index.material.show',[$course->slug,$chapter->slug]); //orizi route
                                                     $hover=  isset($active)? "data-hover='hover'" :''; //bazei dataset hover ean to exei dei
-                                                    $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$chapter->pivot->priority; //ean to exei dei bazi tik allis arithmo
+                                                    $activeClassMaterial=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$countChapter; //ean to exei dei bazi tik allis arithmo
                                                 @endphp
 
                                                 <li data-material-id="{{$chapter->id}}"
-                                                    data-material-priority="{{$chapter->pivot->priority}}"
+                                                    data-material-priority="{{$activeClassMaterial}}"
                                                     class="list-group-item border-r-0 list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                     <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                        href="{{$link}}">
@@ -305,10 +305,10 @@
                                                                class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                                             @else
                                                                 <div class="col-sm-2 col-1 mt-1 mr-2 ">
-                                                                                <span {{$hover}} style="margin:-20px;"
-                                                                                      class="material-count">
-                                                                                    {!! $activeClass!!}
-                                                                                </span>
+                                                                    <span {{$hover}} style="margin:-20px;"
+                                                                          class="material-count">
+                                                                     {!! $activeClassMaterial!!}
+                                                                    </span>
                                                                 </div>
                                                             @endif
 
@@ -340,7 +340,7 @@
                             @else
 
                                 <li data-material-id="{{$materials->id}}"
-                                    data-material-priority="{{$count+1}}"
+                                    data-material-priority="{{$activeClass}}"
                                     class="list-group-item list-material border ">
                                     <a class="d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">

@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('messenger_color')->default('#2180f3');
             $table->boolean('dark_mode')->default(0);
             $table->boolean('active_status')->default(0);
-            $table->bigInteger('phone');
+            $table->text('phone');
             $table->text('profil')->nullable();
             $table->string('facebook_link')->unique()->nullable();
             $table->string('instagram_link')->unique()->nullable();
