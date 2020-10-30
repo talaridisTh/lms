@@ -13,7 +13,7 @@
 
 <div class="table-responsive">
     @include("components.admin.users.bulkActionUserProfil")
-    <table data-id="{{isset($user)? $user['id']:""}} " data-slug="{{isset($user)? $user['slug']:""}} "
+    <table data-id="{{isset($user)? $user['id']:""}}" data-slug="{{isset($user)? $user['slug']:""}} "
            class="course-materials-list table w-100 nowrap custom-center-table ">
         <thead>
         <tr>

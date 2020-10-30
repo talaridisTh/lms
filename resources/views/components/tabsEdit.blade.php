@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        <div id="gallery-content" data-model="App\User" data-id={{ isset($user)? $user->id:"" }}>
+                        <div id="gallery-content" data-model="App\User" {{ isset($user)? "data-id=$user->id" : "" }} data-type="avatar">
                             @include('components.admin.imageGallery', ['media' => $media])
                         </div>
 
@@ -267,23 +267,24 @@
                                     <h4 class="card-title mb-0">Cover</h4>
 
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body text-center">
 
-                                    <img id="cover-image" src="{{ url(isset($user)? $user->avatar:"" ) }}" hidden class="img-fluid"
+									<img id="cover-image" src="{{ isset($user)? $user->avatar:""  }}"
+										class="img-fluid{{ !isset($user) || is_null($user->avatar) ? " d-none" : "" }}"
                                          alt="Cover Image">
 
 
                                     <input hidden id="custom-file" name="avatar">
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <a id="change-cover-btn" class="btn btn-primary btn-block mt-3">{{isset($user)?"Αλλαγή Cover":"Προσθηκη Cover"}}</a>
-
+                                            <a id="change-cover-btn" class="text-white btn btn-primary btn-block mt-3">
+												{{ isset($user) && !is_null($user->avatar) ? "Αλλαγή" : "Προσθηκη" }}
+											</a>
                                         </div>
-                                        <div class="col-md-6">
-                                            <a id="delete-cover-btn" hidden class="btn btn-danger btn-block mt-3">
+                                        <div class="{{ isset($user) && !is_null($user->avatar) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+                                            <a id="remove-cover-btn" class="text-white btn btn-danger btn-block mt-3">
                                                 Αφαίρεση
                                             </a>
-
                                         </div>
 
                                     </div>
