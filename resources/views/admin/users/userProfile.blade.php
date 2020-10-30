@@ -105,8 +105,6 @@
             </div>
             <!-- end row-->
         </div> <!-- End Content -->
-
-t
     </div> <!-- content-page -->
 
 @endsection
