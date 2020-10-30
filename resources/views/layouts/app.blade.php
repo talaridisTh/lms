@@ -72,7 +72,7 @@
 </head>
 
 <body style=" font-family: 'Open Sans' " class="loading" data-layout="detached"
-      data-layout-config='{"leftSidebarCondensed":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+      data-layout-config='{"leftSidebarCondensed":false,"darkMode":true, "showRightSidebarOnStart": true}'>
 
 <!-- Topbar Start -->
 <div id="wrapper-custom">
@@ -213,12 +213,12 @@
 
 
     <!-- Begin page -->
-    <div id="content-custom" style="min-height: 69vh;">
+    <div id="content-custom" style="min-height: 73vh;">
         @yield('content')
     </div>
 
 
-    <footer class="footer-alt border-top bg-light pb-0">
+    <footer class="footer-alt border-top bg-light pb-0" style="    margin-bottom: -6px;">
         <div class="container" style="max-width: 1440px;">
             <div class="row align-items-center mt-2">
                 <div class="col-md-6">
