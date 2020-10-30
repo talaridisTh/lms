@@ -28,7 +28,6 @@ class UserUpdateRequest extends FormRequest {
             'last_name' => ['required', 'string', 'max:255',"min:5"],
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required'],
-            'profil' => 'required|max:1000',
             'password' => ['confirmed'],
 //            'cover' => 'required|max:2048',
             'roles' => 'required'
