@@ -76,6 +76,11 @@ class UserController extends Controller {
             $data["password"] = Hash::make($request->password);
 
         }
+        $data["phone"]  = (int)$request->phone;
+
+
+
+
 
        $request->avatar? $data["avatar"] = $request->avatar:$data["avatar"]="/images/avatar-placeholder.png";
 
@@ -89,6 +94,7 @@ class UserController extends Controller {
     public function update(UserUpdateRequest $request, User $user)
     {
         //
+
         $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));
         $data = collect($request)->except("sendMail")->all();
         $user->syncRoles($request->roles);

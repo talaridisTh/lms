@@ -24,12 +24,11 @@ class UserUpdateRequest extends FormRequest {
     public function rules()
     {
         return [
-            'first_name' => ['required', 'string', 'max:255',"min:5"],
-            'last_name' => ['required', 'string', 'max:255',"min:5"],
+            'first_name' => ['required', 'string', 'max:255',"min:3"],
+            'last_name' => ['required', 'string', 'max:255',"min:3"],
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required'],
             'password' => ['confirmed'],
-//            'cover' => 'required|max:2048',
             'roles' => 'required'
         ];
     }
