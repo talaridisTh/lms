@@ -2,7 +2,7 @@
     @foreach($allCourses as $course)
         @php
             $allMaterial = $course->materials()->orderBy("priority")->wherePivotIn("status",[1])->get();
-            $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";;
+             $bgColor = $course->topics->count() > 0 ? $course->topics->first()->color : "";
         @endphp
 
 
@@ -12,7 +12,7 @@
             <div class="row mr-3" style="background: white;">
                 <div class="col-md-4  p-1">
                     <div class="defalt-color-topic course-box p-1 d-flex flex-column justify-content-between align-items-center"
-                         style="background:{{$bgColor}}">
+                         style="background:{{$bgColor}} ; height: 200px">
                         @foreach($course->topics as $topic)
                             <h4 style="background:{{$topic->color}} " class="color-topic-second  font-12 box-title">{{$topic->title}}</h4>
                         @endforeach

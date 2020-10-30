@@ -1,20 +1,21 @@
 @extends("layouts.app")
 @php
-    $bgColor = !empty($course->topics)>0? $course->topics->first()->color:"";
+    $bgColor = $course->topics->count() > 0 ? $course->topics->first()->color : "";
 
-    $countMaterial= $MaterialsOrderByPriority->where("type","Lesson")->count()+
-    $MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
-        return count($chapter->chapters->where("type","Lesson"));
-    })->first();
-    $textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
+
+$countMaterial= $MaterialsOrderByPriority->where("type","Lesson")->count()+
+$MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
+return count($chapter->chapters->where("type","Lesson"));
+})->first();
+$textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
 
 
 //count extra
-    $countExtra= $MaterialsOrderByPriority->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
-    $MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
-        return count($chapter->chapters->where("type","!=","Lesson")->where("type","!=","Announcement"));
-    })->first();
-    $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
+$countExtra= $MaterialsOrderByPriority->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
+$MaterialsOrderByPriority->where("type","Section")->map(function ($chapter){
+return count($chapter->chapters->where("type","!=","Lesson")->where("type","!=","Announcement"));
+})->first();
+$textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
 
 
 @endphp

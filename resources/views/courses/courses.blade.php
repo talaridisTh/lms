@@ -12,8 +12,7 @@
                     <h3 class="m-2">Μαθήματα</h3>
                     @if(empty(!$arrayTopics))
                         <div class="col-md-12 ">
-                            <div id="topic-filter" class="p-2 rounded text-dark"
-                            >
+                            <div id="topic-filter" class="p-2 rounded text-dark">
                                 <div class="container">
                                     <ul data-user-slug="{{auth()->user()->slug}}"
                                         class="d-flex topic-link justify-content-around">
@@ -30,6 +29,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
+
                             </div>
                         </div>
                     @else

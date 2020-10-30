@@ -7,8 +7,6 @@
 @php
     //background
 
-
-
         $bgColor = $course->topics->count() > 0 ? $course->topics->first()->color : "";
 
     //count Material
