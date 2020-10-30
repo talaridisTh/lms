@@ -9,3 +9,5 @@ require('../plugins/redactor/_plugins/alignment/alignment');
 
 require('../theme/js/app');
 // require('../theme/js/vendor');
+
+

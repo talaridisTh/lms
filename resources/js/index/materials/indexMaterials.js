@@ -8,8 +8,6 @@ utilities.addWhatchlist()
 //!============================================================
 var swiper = new Swiper('.swiper-container', {
     // Optional parameters
-
-
     // If we need pagination
     pagination: {
         el: '.swiper-pagination',
@@ -41,9 +39,9 @@ $('#bs-example-modal-lg').on('shown.bs.modal', function (e) {
     swiper.slideTo($invoker.data('slider'));
     swiper.update();
 });
+
 //! announcements-swiper
 //!============================================================
-
 var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
     // Optional parameters
 

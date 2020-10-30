@@ -1,28 +1,29 @@
 @extends('layouts.app')
-
 <style>
-    .crop-height {
-        /* max-width: 1200px; /* native or declared width of img src (if known) */
-        max-height: 250px;
-        overflow: hidden;
-    }
-
-    img.scale {
-        /* corrects small inline gap at bottom of containing div */
-        display: block;
-        width: 100%; /* corrects obscure Firefox bug */
-        max-width: 100%;
-        /* just in case, to force correct aspect ratio */
-        height: auto !important;
-        display: block; /* corrects small inline gap at bottom of containing div */
+    .swiper-container {
         width: 100%;
-        max-width: 100%;
-
-        height: auto !important;
-
-        -ms-interpolation-mode: bicubic;
+        height: 100%;
     }
 
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
 </style>
 @section('content')
     <div class="container-fluid mb-5" style="max-width: 1400px">
@@ -82,7 +83,6 @@
                     sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
                 </p>
                 <ul class="ul-custom">
-
                     <li class="li-custom"> HD Videos στα Ελληνικά</li>
                     <li class="li-custom">Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
                     <li class="li-custom">Kώδικα προγραμματισμού των ρομπότ</li>
@@ -99,8 +99,6 @@
                         <div class="oval-2 position-absolute"></div>
                         <div class="oval-3 position-absolute"></div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -116,9 +114,6 @@
                         <div class="oval-2 position-absolute"></div>
                         <div class="oval-3 position-absolute"></div>
                     </div>
-                    |
-
-
                 </div>
             </div>
 
@@ -129,8 +124,6 @@
                     sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
                 </p>
                 <ul class="ul-custom">
-
-
                     <li class="li-custom">Hands on Μαθήματα (και με φυσική παρουσία και εξ αποστάσεως)</li>
                     <li class="li-custom"> Εκπαιδευτικό υλικό</li>
                     <li class="li-custom"> Απόκτηση πιστοποίησης</li>
@@ -158,8 +151,6 @@
                         <div class="oval "></div>
                         <div class="oval-2 position-absolute"></div>
                     </div>
-
-
                 </div>
             </div>
 
@@ -167,89 +158,96 @@
         {{--       AUTA EDW THA ALLAKSOUN -}}
                 {{--row 6 --}}
         <div>
-        @if($arrayBanners["primary"]->status==1)
-            <div class="row" style="margin-top: 9rem">
-                <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-                <div class="d-flex flex-wrap mt-3">
+            @if($arrayBanners["primary"]->status==1)
+                <div class="row" style="margin-top: 9rem">
+                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
+                    <div class="swiper-container primary-slide">
+                        <div class="swiper-wrapper">
+                            @foreach($bannersSecondary as $key => $banner)
+                                @php
+                                    $bannerArray = (array) $banner;
+                                    $bannerValue = key ( $bannerArray);
+                                    $bannerKey =array_values ($bannerArray);
+                                    $model =   $bannerValue::findOrFail($bannerKey)->first();
 
-                    @foreach($bannersPrimary as $key => $banner)
+                                @endphp
+                                <div class="swiper-slide ">
+                                    <!-- Simple card -->
+                                    <div class="card card-shadow d-block" style="height: 50vh">
+                                        <div class="crop-height">
+                                            <img class="card-img-top  scale" src="{{$model->cover}}"
+                                                 alt="Card image cap">
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title blue-title d-flex flex-column">
+                                                <span>{{$model->title}}</span> Το
+                                                πρώτο μου Ρομπότ</h5>
+                                            <p class="card-text span-custom">
+                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
+                                            </p>
+                                        </div> <!-- end card-body-->
+                                    </div> <!-- end card-->
 
-                        @php
-                            $bannerArray = (array) $banner;
-                            $bannerValue = key ( $bannerArray);
-                            $bannerKey =array_values ($bannerArray);
-                            $model =   $bannerValue::findOrFail($bannerKey)->first();
-                        @endphp
-
-                        <div class="col-md-6 col-lg-4">
-                            <!-- Simple card -->
-                            <div class="card card-shadow d-block" style="height: 50vh">
-                                <div class="crop-height">
-                                    <img class="card-img-top  scale"  src="{{$model->cover}}"
-                                         alt="Card image cap">
                                 </div>
-                                <div class="card-body">
-                                    <h5 class="card-title blue-title d-flex flex-column"><span>{{$model->title}}</span>
-                                        Το πρώτο μου Ρομπότ</h5>
-                                    <p class="card-text span-custom ">
-                                        {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
-                                    </p>
-
-                                </div> <!-- end card-body-->
-                            </div> <!-- end card-->
+                            @endforeach
                         </div>
-
-                    @endforeach
-
-
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-scrollbar"></div>
+                    </div>
                 </div>
-
-            </div>
-        @endif
-        {{--row 7 --}}
+            @endif
+            {{--row 7 --}}
         </div>
 
         <div>
-        @if($arrayBanners["secondary"]->status==1)
-            <div class="row" style="margin-top: 9rem">
-                <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-                <div class="d-flex flex-wrap mt-3">
-                    @foreach($bannersSecondary as $key => $banner)
+            @if($arrayBanners["secondary"]->status==1)
+                <div class="row" style="margin-top: 9rem">
+                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
+                        <div class="swiper-container secondary-slide">
+                            <div class="swiper-wrapper">
+                                @foreach($bannersSecondary as $key => $banner)
+                                    @php
+                                        $bannerArray = (array) $banner;
+                                        $bannerValue = key ( $bannerArray);
+                                        $bannerKey =array_values ($bannerArray);
+                                        $model =   $bannerValue::findOrFail($bannerKey)->first();
 
-                        @php
-                            $bannerArray = (array) $banner;
-                            $bannerValue = key ( $bannerArray);
-                            $bannerKey =array_values ($bannerArray);
-                            $model =   $bannerValue::findOrFail($bannerKey)->first();
+                                    @endphp
+                                    <div class="swiper-slide ">
+                                            <!-- Simple card -->
+                                            <div class="card card-shadow d-block" style="height: 50vh">
+                                                <div class="crop-height">
+                                                    <img class="card-img-top  scale" src="{{$model->cover}}"
+                                                         alt="Card image cap">
+                                                </div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title blue-title d-flex flex-column">
+                                                        <span>{{$model->title}}</span> Το
+                                                        πρώτο μου Ρομπότ</h5>
+                                                    <p class="card-text span-custom">
+                                                        {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
+                                                    </p>
+                                                </div> <!-- end card-body-->
+                                            </div> <!-- end card-->
 
-                        @endphp
-
-                        <div class="col-md-6 col-lg-4">
-                            <!-- Simple card -->
-                            <div class="card card-shadow d-block" style="height: 50vh">
-                                <div class="crop-height">
-                                    <img class="card-img-top  scale"  src="{{$model->cover}}"
-                                         alt="Card image cap">
-                                </div>
-                                <div class="card-body">
-                                    <h5 class="card-title blue-title d-flex flex-column">
-                                        <span>{{$model->title}}</span> Το
-                                        πρώτο μου Ρομπότ</h5>
-                                    <p class="card-text span-custom">
-                                        {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
-                                    </p>
-
-                                </div> <!-- end card-body-->
-                            </div> <!-- end card-->
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                            <div class="swiper-scrollbar"></div>
                         </div>
-
-                    @endforeach
-
                 </div>
-
-            </div>
-        @endif
+            @endif
         </div>
 
     </div>
+@endsection
+
+@section("script")
+
+    <script src="{{ mix('js/index/index.js') }}"></script>
 @endsection
