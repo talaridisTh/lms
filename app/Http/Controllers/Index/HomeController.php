@@ -27,19 +27,18 @@ class HomeController extends Controller {
     public function index(Material $material)
     {
 
-
-//        if(empty(Utility::first())){
-//            return view('home');
-//        }
-
         $arrayBanners = get_object_vars(json_decode(Utility::first()->banners));
         $bannersPrimary = $arrayBanners["primary"]->models;
         $bannersSecondary = $arrayBanners["secondary"]->models;
+        $chart = [
+            "courses" => Course::all()->count(),
+            'material' => Material::all()->count(),
+            'user' => User::all()->count(),
+        ];
 
-        return view('home', compact('material', "bannersPrimary", "bannersSecondary", "arrayBanners"));
+
+        return view('home', compact('material', "bannersPrimary", "bannersSecondary", "arrayBanners",'chart'));
     }
-
-
 
     public function createLinkStore(Request $request)
     {

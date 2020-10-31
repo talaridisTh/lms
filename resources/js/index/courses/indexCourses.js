@@ -1,45 +1,45 @@
 import utilities from '../../index/main';
-import Swiper from "swiper";
-
+import Swiper from 'swiper/bundle';
+import 'swiper/swiper-bundle.css';
 
 utilities.addWhatchlist()
 
 //! announcements-swiper
 //!============================================================
-// var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
-//     // Optional parameters
-//
-//
-//     // If we need pagination
-//     pagination: {
-//         el: '.swiper-pagination-announcements',
-//         draggable: true,
-//     },
-//     fadeEffect: {
-//         crossFade: true
-//     },
-//
-//     // Navigation arrows
-//     navigation: {
-//         nextEl: '.swiper-button-next-announcements',
-//         prevEl: '.swiper-button-prev-announcements',
-//     },
-//
-//     // And if we need scrollbar
-//     scrollbar: {
-//         el: '.swiper-scrollbar-announcements',
-//     },
-//     keyboard: {
-//         enabled: true,
-//         onlyInViewport: false,
-//     },
-// })
-// $('#announcements-modal').on('shown.bs.modal', function (e) {
-//     swiperAnnouncements.update();
-//     var $invoker = $(e.relatedTarget);
-//     swiperAnnouncements.slideTo($invoker.data('slider'));
-//     swiperAnnouncements.update();
-// });
+var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
+    // Optional parameters
+
+
+    // If we need pagination
+    pagination: {
+        el: '.swiper-pagination-announcements',
+        draggable: true,
+    },
+    fadeEffect: {
+        crossFade: true
+    },
+
+    // Navigation arrows
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+        el: '.swiper-scrollbar-announcements',
+    },
+    keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+    },
+})
+$('#announcements-modal').on('shown.bs.modal', function (e) {
+    swiperAnnouncements.update();
+    var $invoker = $(e.relatedTarget);
+    swiperAnnouncements.slideTo($invoker.data('slider'));
+    swiperAnnouncements.update();
+});
 
 //FILTER TOPIC
 $(".filter-topic").click(function () {
@@ -66,12 +66,54 @@ const filterTopic = async (idsTopic, userSlug) => {
         $('.content-filter').html($(res.data).find(".filter-data")
             .addClass('w-100 flex-wrap'))
 
+        handlerCountMaterial()
+
     }
+
 }
 
+function handlerCountMaterial() {
+    let materialCount = 0
+    let extraMaterialCount = 0
+    document.querySelectorAll('.all-material').forEach(material => {
+        materialCount += parseInt(material.innerHTML.replace("Μαθήματα : ", ""));
+
+    })
+
+    document.querySelectorAll('.all-extra-material').forEach(material => {
+        extraMaterialCount += parseInt(material.innerHTML.replace("Βοηθητικά Αρχεία :", ""));
+
+    })
+
+    $(".cnt-count-material")[0].innerHTML = `
+
+
+            <div class="offset-4 col-md-4 offset-4 d-flex justify-content-around ">
+
+                <div class="text-center">
+                    <i class="mdi font-24 mdi-book-open-page-variant"></i>
+                    <p>${materialCount}</p>
+                    <p>Μαθήματα</p>
+                </div>
+
+                <div class="text-center">
+                     <i class="uil font-24 uil-books"></i>
+                    <p>${extraMaterialCount}</p>
+                    <p>Βοηθητικά Αρχεία</p>
+                </div>
+
+            </div>
+
+        `
+}
+
+// handlerCountMaterial()
+
 //WATCHLIST
-$(".material-count").on("click",  function (e) {
+$(".material-count").on("click", function (e) {
     event.preventDefault();
+
+    console.log("work")
 
     axiosAddWitchlist(
         this.findParent(5).dataset.courseId,
@@ -79,8 +121,6 @@ $(".material-count").on("click",  function (e) {
         this.findParent(4).dataset.materialPriority,
         this
     )
-
-
 
 
 }).on('mouseenter', function () {
@@ -100,14 +140,14 @@ $(".material-count").on("click",  function (e) {
 
 });
 
-$(".js-watchlist-btn").on("click",function () {
+$(".js-watchlist-btn").on("click", function () {
 
 
-    axiosAddWitchlist(this.dataset.courseId,this.dataset.materialId,null,this)
+    axiosAddWitchlist(this.dataset.courseId, this.dataset.materialId, null, this)
 })
 
-const axiosAddWitchlist =async (courseId, materialId, materialPriority=null,that) => {
-    const btnWatchlist  = $(".js-watchlist-btn")[0];
+const axiosAddWitchlist = async (courseId, materialId, materialPriority = null, that) => {
+    const btnWatchlist = $(".js-watchlist-btn")[0];
     try {
         const {data} = await axios.patch(`/add-witchlist/material`, {
             courseId,
@@ -115,7 +155,7 @@ const axiosAddWitchlist =async (courseId, materialId, materialPriority=null,that
         })
         if (data === "remove") {
             that.innerHTML = `${materialPriority}`
-            if (!materialPriority){
+            if (!materialPriority) {
                 btnWatchlist.innerHTML = "<span class='font-16'>Το έχω δει</span>"
                 btnWatchlist.style.backgroundColor = null
                 btnWatchlist.classList.remove("bg-white")
@@ -163,20 +203,20 @@ $(".js-link-material").on("click", async function (e) {
     const href = this.href;
     e.preventDefault()
     console.log(e.target.tagName)
-    if (e.target.tagName === "SPAN" || e.target.tagName === "I" ) {
+    if (e.target.tagName === "SPAN" || e.target.tagName === "I") {
         return
 
     } else {
         const {value} = await Swal.fire({
             icon: 'question',
-            html: "Mεταφερθείτε στο Link!"+"<br>"+href ,
+            html: "Mεταφερθείτε στο Link!" + "<br>" + href,
             showCancelButton: true,
             confirmButtonText: 'Εντάξει',
             cancelButtonText: "Ακύρωση "
         })
         if (value) {
             console.log(href)
-            window.open(href,'_target');
+            window.open(href, '_target');
 
         }
     }
@@ -184,21 +224,18 @@ $(".js-link-material").on("click", async function (e) {
 
 })
 
-
-$(".section-list")
-
-document.querySelectorAll('.section-list').forEach(sectionList=>{
-    if(!sectionList.children.length){
+document.querySelectorAll('.section-list').forEach(sectionList => {
+    if (!sectionList.children.length) {
         console.log(sectionList.findParent(4).remove())
-    }else{
+    } else {
 
     }
 
 
 })
-document.querySelectorAll(".section").forEach((section,idx)=>{
+document.querySelectorAll(".section").forEach((section, idx) => {
 
-    console.log(section.findChild(5).innerHTML = `Ενότητα ${idx+1}: &nbsp `)
+    console.log(section.findChild(5).innerHTML = `Ενότητα ${idx + 1}: &nbsp `)
 })
 
 

@@ -24,11 +24,27 @@
         -webkit-align-items: center;
         align-items: center;
     }
+
+    .count-number {
+        font-weight: bold;
+        line-height: 80px;
+        text-align: center;
+        font-size: 60px;
+        font-weight: 700;
+    }
+
+    .line {
+        border-bottom: chocolate 3px solid;
+        margin: auto;
+    }
+
+
 </style>
+
 @section('content')
     <div class="container-fluid mb-5" style="max-width: 1400px">
         {{--row 1 --}}
-        <div class="row mt-5">
+        <div class="row ">
 
             <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
                 <h2 class="h2-custom">Βάλτε τωρα τη Ρομποτική στο σχολείο σας</h2>
@@ -44,14 +60,34 @@
             <div class="col-lg-7 col-md-5  d-none d-md-block">
                 <div class="container text-center">
                     <img
-                        style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; "
-                        class="img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
+                        style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
+                        class="img-custom-index img-fluid"  src="{{asset('images/vector-smart-object.png')}}"
                         alt="vector-smart-object">
                 </div>
             </div>
 
         </div>
         {{--row 2 --}}
+        <div class="row justify-content-center  mt-3">
+            <div class="col-md-3 text-center mr-5">
+                <div class="count-number-1 count-number" data-start="0" data-end="{{$chart["courses"]}}"></div>
+                <div class="line w-50 text-center"></div>
+                <h3>Courses</h3>
+            </div>
+            <div class="col-md-3 text-center mr-5">
+                <div class="count-number-2 count-number" data-start="0" data-end="{{$chart["material"]}}"></div>
+                <div class="line w-50 text-center"></div>
+                <h3>Μαθήματα</h3>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="count-number-3 count-number" data-start="0" data-end="{{$chart["user"]}}"></div>
+                <div class="line w-50 text-center"></div>
+                <h3>Καθηγητές </h3>
+            </div>
+
+
+        </div>
+        {{--row 3 --}}
         <div class="row my-5 ">
 
             <div class="col-lg-5 col-md-12 mt-4">
@@ -73,7 +109,7 @@
             </div>
 
         </div>
-        {{--row 3 --}}
+        {{--row 4 --}}
         <div class="row mt-9">
 
             <div class="col-lg-5 mt-5">
@@ -103,7 +139,7 @@
             </div>
 
         </div>
-        {{--row 4 --}}
+        {{--row 5 --}}
         <div class="row mt-9">
 
             <div class="col-lg-5 d-none d-lg-block ">
@@ -133,7 +169,7 @@
 
 
         </div>
-        {{--row 5 --}}
+        {{--row 6 --}}
         <div class="row  mt-9">
 
             <div class="col-lg-5  mt d-flex flex-column justify-content-center">
@@ -156,7 +192,7 @@
 
         </div>
         {{--       AUTA EDW THA ALLAKSOUN -}}
-                {{--row 6 --}}
+                {{--row 7 --}}
         <div>
             @if($arrayBanners["primary"]->status==1)
                 <div class="row" style="margin-top: 9rem">
@@ -205,41 +241,41 @@
             @if($arrayBanners["secondary"]->status==1)
                 <div class="row" style="margin-top: 9rem">
                     <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-                        <div class="swiper-container secondary-slide">
-                            <div class="swiper-wrapper">
-                                @foreach($bannersSecondary as $key => $banner)
-                                    @php
-                                        $bannerArray = (array) $banner;
-                                        $bannerValue = key ( $bannerArray);
-                                        $bannerKey =array_values ($bannerArray);
-                                        $model =   $bannerValue::findOrFail($bannerKey)->first();
+                    <div class="swiper-container secondary-slide">
+                        <div class="swiper-wrapper">
+                            @foreach($bannersSecondary as $key => $banner)
+                                @php
+                                    $bannerArray = (array) $banner;
+                                    $bannerValue = key ( $bannerArray);
+                                    $bannerKey =array_values ($bannerArray);
+                                    $model =   $bannerValue::findOrFail($bannerKey)->first();
 
-                                    @endphp
-                                    <div class="swiper-slide ">
-                                            <!-- Simple card -->
-                                            <div class="card card-shadow d-block" style="height: 50vh">
-                                                <div class="crop-height">
-                                                    <img class="card-img-top  scale" src="{{$model->cover}}"
-                                                         alt="Card image cap">
-                                                </div>
-                                                <div class="card-body">
-                                                    <h5 class="card-title blue-title d-flex flex-column">
-                                                        <span>{{$model->title}}</span> Το
-                                                        πρώτο μου Ρομπότ</h5>
-                                                    <p class="card-text span-custom">
-                                                        {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
-                                                    </p>
-                                                </div> <!-- end card-body-->
-                                            </div> <!-- end card-->
+                                @endphp
+                                <div class="swiper-slide ">
+                                    <!-- Simple card -->
+                                    <div class="card card-shadow d-block" style="height: 50vh">
+                                        <div class="crop-height">
+                                            <img class="card-img-top  scale" src="{{$model->cover}}"
+                                                 alt="Card image cap">
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title blue-title d-flex flex-column">
+                                                <span>{{$model->title}}</span> Το
+                                                πρώτο μου Ρομπότ</h5>
+                                            <p class="card-text span-custom">
+                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
+                                            </p>
+                                        </div> <!-- end card-body-->
+                                    </div> <!-- end card-->
 
-                                    </div>
-                                @endforeach
-                            </div>
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-scrollbar"></div>
+                                </div>
+                            @endforeach
                         </div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-scrollbar"></div>
+                    </div>
                 </div>
             @endif
         </div>

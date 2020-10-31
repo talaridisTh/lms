@@ -43,27 +43,27 @@
 @section("content")
 
 
-    <div class="content-page"><!-- breadcrumb -->
-        @unlessrole("guest")
-        <div class=" ml-5 content-width">
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box ">
-                        <div class="page-title-left">
-                            <ol class="breadcrumb p-1 m-0">
-                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"
-                                                               class="text-secondary">Courses</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"
-                                                               class="text-black">{{$course->title}}</a></li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!-- end breadcrumb -->
-        @endunlessrole
+    <div class="content-page mt-1"><!-- breadcrumb -->
+{{--        @unlessrole("guest")--}}
+{{--        <div class=" ml-5 content-width">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-12">--}}
+{{--                    <div class="page-title-box ">--}}
+{{--                        <div class="page-title-left">--}}
+{{--                            <ol class="breadcrumb p-1 m-0">--}}
+{{--                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"--}}
+{{--                                                               class="text-secondary">Courses</a></li>--}}
+{{--                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"--}}
+{{--                                                               class="text-black">{{$course->title}}</a></li>--}}
+{{--                            </ol>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div><!-- end breadcrumb -->--}}
+{{--        @endunlessrole--}}
 
 
     @role("admin") <!-- ribbon -->
@@ -88,7 +88,7 @@
 
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
                             @if($course->cover)
-                                <img class="sm-image avatar-image rounded-circle" src="{{($course->cover)}}"
+                                <img height="200" width="200" class=" avatar-image rounded-circle" src="{{($course->cover)}}"
                                      alt="course-logo">
                             @endif
                         </div>
@@ -162,7 +162,7 @@
         <div class="container-fluid my-3" style="max-width: 1423px"> <!--  container info -->
 
             <div class="row ">
-                <div class="col-md-8 {{empty($course->description)?"d-none":""}}">
+                <div class="col-lg-8 {{empty($course->description)?"d-none":""}}">
                     @include("components.index.user-info")
                     <div class="row ">
 
@@ -193,7 +193,7 @@
                     </div>
                 </div>
 
-                <div class="{{!empty($course->description)?"col-md-4 pl-3":"offset-2 col-md-8 offset-2 text-left" }}">
+                <div class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block ":"offset-2 col-md-8 offset-2 text-left" }}">
                     @if(count($course->media->where("type","!=",0))>0)
                         <div class="accordion custom-accordion my-2" id="extra-content">
                             <div class="card mb-0">
@@ -238,7 +238,7 @@
                         </div>
                     @endif
 
-                    <ul data-course-id="{{$course->id}}" class="m-0 p-0 single-section-material"> <!-- list material -->
+                    <ul data-course-id="{{$course->id}}" class="w-600 m-0 p-0 single-section-material"> <!-- list material -->
 
                         @php
                             $count = 0;  //count material
@@ -298,7 +298,7 @@
                                                     class="list-group-item border-r-0 list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                     <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                        href="{{$link}}">
-                                                        <div class="col-md-2 ">
+                                                        <div class="col-lg-2 col-1 ml-1 ">
 
                                                             @if($chapter->title==$materials->title) {{--blepw to current chapter --}}
                                                             <i style="margin:-8px;"
@@ -313,14 +313,14 @@
                                                             @endif
 
                                                         </div>
-                                                        <div class="col-sm-8 col-9 js-alert d-flex flex-column  ">
+                                                        <div class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
                                                             <h3 style="border-radius: 5px"
                                                                 class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
                                                             </h3>
                                                             <span style="word-break: break-all"
                                                                   class="font-12 text-dark">{!! $chapter->subtitle !!}</span>
                                                         </div>
-                                                        <div class="col-sm-2 col-1 js-alert">
+                                                        <div class="col-lg-2 col-1 js-alert">
                                                         <span class="">
                                                             <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i> {{--bazei to icon anti gia to type--}}
                                                         </span>
@@ -345,7 +345,7 @@
                                     <a class="d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         @unlessrole("guest")
-                                        <div class="col-sm-2 mr-2 col-1 ">
+                                        <div class="col-lg-2 mr-2 col-1 ">
                                             <div>
                                             <span {{$hover}} class="material-count">
                                                 <span>{!! $activeClass !!}</span>
@@ -354,13 +354,13 @@
                                         </div>
                                         @endunlessrole
 
-                                        <div class="col-sm-8 align-items-center col-10 d-flex flex-column">
+                                        <div class="col-lg-8 align-items-center col-10 d-flex flex-column">
                                             <h3 style="border-radius: 5px"
                                                 class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold"> {!! $materials->title!!}</h3>
                                             <span style="word-break: break-all"
                                                   class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
                                         </div>
-                                        <div class="col-sm-2 col-1 p-0">
+                                        <div class="col-lg-2 col-1 p-0  js-alert">
                                             <i class=" font-24 text-black {{App\Material::getType($materials->type)}}"></i>
                                         </div>
                                     </a>

@@ -218,7 +218,7 @@
     </div>
 
 
-    <footer class="footer-alt border-top bg-light pb-0" style="    margin-bottom: -6px;">
+    <footer class="footer-alt border-top bg-light pb-0" style="    margin-bottom: -19px;">
         <div class="container" style="max-width: 1440px;">
             <div class="row align-items-center mt-2">
                 <div class="col-md-6">
@@ -249,7 +249,7 @@
             </div>
         </div>
         <hr class="border mt-2" style="opacity: 0.4;">
-        <div class="container-fluid  mb-2" style="max-width: 1705px;">
+        <div class="container-fluid  pb-2" style="max-width: 1705px;">
             <div class="row align-items-center">
                 <div class="col-sm-6  col-md-4">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>
                 <div class="col-sm-6 col-md-4">Πολιτική Απορρήτου</div>

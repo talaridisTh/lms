@@ -161,7 +161,7 @@
 
         <div class="container  w-100  p-sm-3 p-lg-2 my-3" style="max-width: 1423px">
             <div class="row ">
-                <div class="col-md-8 ">
+                <div class="col-lg-8 ">
 
 
                     {{--                    @include("components.index.user-info")--}}
@@ -197,7 +197,7 @@
 
 
                 </div>
-                <div class="col-md-4 pl-3">
+                <div class="col-lg-4 pl-3">
                     <div class="row hover-yellow px-2">
                         <div class="col-md-12   border d-flex justify-content-between"
                              style="border-radius: 8px; padding: 9px;background-color: #E9EAEB ;">
@@ -320,7 +320,7 @@
                         </div>
                     @endif
 
-                    <ul data-course-id="{{$course->id}}" class="my-2 p-0 single-section-material">
+                    <ul data-course-id="{{$course->id}}" class="w-600 my-2 p-0 single-section-material">
                         @php
                             $count = 0;
                         @endphp
@@ -363,22 +363,23 @@
                                                 <div class="p-0 card-body">
                                                     <ul data-course-id="{{$course->id}}" style="max-height: 800px"
                                                         class="my-2 p-0 section-list ">
+                                                        @php $countChapter = 0 @endphp
                                                         @foreach($material->chapters->where("type", "!=", "Announcement")  as   $chapter)
                                                             @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
 
                                                             @php
                                                                 $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
                                                                  $link = route('index.material.show',[$course->slug,$chapter->slug]);
-                                                                    $hover=  isset($active)? "data-hover='hover'" :'';
-                                                                 $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$chapter->pivot->priority;
+                                                                 $hover=  isset($active)? "data-hover='hover'" :'';
+                                                                 $activeClassMaterial=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$countChapter;
                                                             @endphp
 
                                                             <li data-material-id="{{$chapter->id}}"
-                                                                data-material-priority="{{$chapter->pivot->priority}}"
+                                                                data-material-priority="{{$countChapter}}"
                                                                 class="list-group-item list-material border-r-0  m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                                 <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                                    href="{{$link}}">
-                                                                    <div class="col-md-2 ">
+                                                                    <div class="col-lg-2 col-1 ml-1  ">
                                                                         @if($chapter->title==$materials->title)
                                                                             <i style="margin:-8px;"
                                                                                class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
@@ -387,13 +388,13 @@
                                                 <span {{$hover}} style="margin:-20px;"
                                                       class="material-count">
                                                     {{--edw tha mpei to active class--}}
-                                                    {!! $activeClass!!}
+                                                    {!! $activeClassMaterial!!}
                                                 </span>
                                                                             </div>
 
                                                                         @endif
                                                                     </div>
-                                                                    <div class="col-md-8 js-alert d-flex flex-column  ">
+                                                                    <div class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
                                                                         <h3 style="border-radius: 5px"
                                                                             class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
                                                                         </h3>
@@ -401,7 +402,7 @@
                                                                     font-12 text-dark">    {!! $chapter->subtitle !!}</span>
                                                                     </div>
 
-                                                                    <div class="col-md-2 js-alert">
+                                                                    <div class="col-lg-2 col-1 js-alert">
                                                         <span class="">
                                                             <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i>
                                                         </span>
@@ -419,18 +420,18 @@
 
                                 @else
                                     <li data-material-id="{{$material->id}}"
-                                        data-material-priority="{{$material->pivot->priority}}"
+                                        data-material-priority="{{++$countChapter}}"
                                         class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                         <a class="d-flex align-items-center {{
                             $material->type=="Link"?"js-link-material":""}}"
                                            href="{{$link}}">
-                                            <div class="col-sm-2 mr-2 col-1  ">
+                                            <div class="col-lg-2 mr-2 col-1  ">
                                                 @if($material->title==$materials->title)
                                                     <i style="margin:-8px;"
 
                                                        class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                                 @else
-                                                    <div class="col-md-2 mt-1 mr-2 ">
+                                                    <div class="col-lg-2 mr-2 col-1 ">
                                                 <span {{$hover}} style="margin:-20px;"
                                                       class="material-count">
                                                        {!! $activeClass !!}
@@ -439,7 +440,7 @@
 
                                                 @endif
                                             </div>
-                                            <div class="col-sm-8 align-items-center col-10 d-flex flex-column ">
+                                            <div class="col-lg-8 align-items-center col-10 d-flex flex-column ">
                                                 <h3 style="border-radius: 5px"
                                                     class="font-16 mt-1 text-black font-weight-bold">   {!! $material->title !!}
                                                 </h3>
@@ -447,7 +448,7 @@
 {{--                                        {{$material->title==$materials->title? "":""}}--}}
                                                     font-12 text-dark">    {!! $material->subtitle !!}</span>
                                             </div>
-                                            <div class="col-sm-2 col-1 p-0 js-alert">
+                                            <div class="col-lg-2 col-1 p-0 js-alert">
                                         <span class="">
                                             <i class=" font-24 text-black {{App\Material::getType($material->type)}}"></i>
                                         </span>
