@@ -40,7 +40,6 @@
             top: 0px;
             z-index: 1999;
         }
-
     </style>
 @endsection
 
@@ -56,8 +55,8 @@
                     <div class="page-title-box">
                         <div class="page-title-left">
                             <ol class="breadcrumb p-1 m-0">
-                                <li class="breadcrumb-item"><a href="{{route('home')}}"
-                                                               class="text-secondary">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>
+                                </li>
                                 <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"
                                                                class="text-secondary">Courses</a></li>
                                 <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"
@@ -123,25 +122,22 @@
                             </div>
                             <div class="col-md-8 ">
                                 @php
-                                    $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first();
-                                    $text=  isset($active)?"Δεν το έχω δει":"Το έχω δει";
-                                    $hover=  isset($active)? "bg-white" :""
+                                    $active = auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first();
+                                    $text= isset($active)?"Δεν το έχω δει":"Το έχω δει";
+                                    $hover= isset($active)? "bg-white" :""
                                 @endphp
 
                                 @unlessrole('guest')
                                 <div
                                     class="watchlist  d-flex justify-content-center justify-content-md-end align-items-center ml-2 "
                                     style=" margin-right: -0.7rem;">
-                                    <button
-                                        data-course-id="{{$course->id}}"
-                                        data-material-id="{{$materials->id}}"
-                                        class="js-watchlist-btn px-3 py-1 color-topic-second mr-2 {{$hover}}  bghover text-white border btn-outline-secondary">
+                                    <button data-course-id="{{$course->id}}" data-material-id="{{$materials->id}}"
+                                            class="js-watchlist-btn px-3 py-1 color-topic-second mr-2 {{$hover}}  bghover text-white border btn-outline-secondary">
                                         <span class="{{$active?"text-dark":""}} font-16">{{$text}}</span>
                                     </button>
-                                    <button
-                                        data-model="material" data-model-id="{{$materials->id}}"
-                                        data-user-id="{{auth()->id()}}"
-                                        class="px-3 py-1 color-topic-second add-watchlist   bghover text-white border btn-outline-secondary">
+                                    <button data-model="material" data-model-id="{{$materials->id}}"
+                                            data-user-id="{{auth()->id()}}"
+                                            class="px-3 py-1 color-topic-second add-watchlist   bghover text-white border btn-outline-secondary">
                                         <i class="font-16
                                      {{!count(auth()->user()->watchlistMaterial->whereIn("title",$materials->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}
                                             ">
@@ -164,36 +160,36 @@
                 <div class="col-lg-8 ">
 
 
-                    {{--                    @include("components.index.user-info")--}}
+                    {{-- @include("components.index.user-info")--}}
 
                     @include("components.index.announcements")
 
 
                     @include("components.index.collapse-menu",
-                            ["idAccordion"=>$materials->slug."-accordion-summary" ,
-                            "idHeader"=>$materials->slug."-header-summary",
-                            "href"=>$materials->slug."-href-summary",
-                            "title"=>"Σχετικά με το μάθημα",
-                            "body"=>isset($materials->summary)?$materials->summary:"",
-                             "fields"=>isset($materials->fields)?json_decode($materials->fields)->summary:""
-                            ])
+                    ["idAccordion"=>$materials->slug."-accordion-summary" ,
+                    "idHeader"=>$materials->slug."-header-summary",
+                    "href"=>$materials->slug."-href-summary",
+                    "title"=>"Σχετικά με το μάθημα",
+                    "body"=>isset($materials->summary)?$materials->summary:"",
+                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->summary:""
+                    ])
                     @include("components.index.collapse-menu",
-                            ["idAccordion"=>$materials->slug."-accordion-description" ,
-                            "idHeader"=>$materials->slug."-header-description",
-                            "href"=>$materials->slug."-href-description",
-                            "title"=>"Περίληψη",
-                                  "body"=>isset($materials->description)?$materials->description:"",
-                             "fields"=>isset($materials->fields)?json_decode($materials->fields)->description:""
-                            ])
+                    ["idAccordion"=>$materials->slug."-accordion-description" ,
+                    "idHeader"=>$materials->slug."-header-description",
+                    "href"=>$materials->slug."-href-description",
+                    "title"=>"Περίληψη",
+                    "body"=>isset($materials->description)?$materials->description:"",
+                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->description:""
+                    ])
                     @include("components.index.collapse-menu",
-                            ["idAccordion"=>$materials->slug."-accordion-content" ,
-                            "idHeader"=>$materials->slug."-header-content",
-                            "href"=>$materials->slug."-href-content",
-                            "title"=>"Περιγραφή",
-                               "body"=>isset($materials->content)?$materials->content:"",
-                             "fields"=>isset($materials->fields)?json_decode($materials->fields)->content:""
+                    ["idAccordion"=>$materials->slug."-accordion-content" ,
+                    "idHeader"=>$materials->slug."-header-content",
+                    "href"=>$materials->slug."-href-content",
+                    "title"=>"Περιγραφή",
+                    "body"=>isset($materials->content)?$materials->content:"",
+                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->content:""
 
-                            ])
+                    ])
 
 
                 </div>
@@ -203,9 +199,7 @@
                              style="border-radius: 8px; padding: 9px;background-color: #E9EAEB ;">
                             <div class="col-md-2 d-flex align-items-center">
                                 @if($course->cover)
-                                    <img height="40" width="40" class="rounded-circle"
-                                         src="{{$course->cover}}"
-                                         alt="">
+                                    <img height="40" width="40" class="rounded-circle" src="{{$course->cover}}" alt="">
                                 @endif
                             </div>
                             <div class="col-md-10 ">
@@ -214,9 +208,8 @@
                                     <span
                                         class="font-18  text-center text-black font-weight-bold">{{$course->title}}</span>
                                     <div class="d-flex justify-content-around">
-                                        {{--                                        <span class="font-12 text-primary">Μέτριο</span>--}}
-                                        <span
-                                            class="font-14 text-black">{{$textMaterial}}</span>
+                                        {{-- <span class="font-12 text-primary">Μέτριο</span>--}}
+                                        <span class="font-14 text-black">{{$textMaterial}}</span>
 
                                     </div>
                                 </a>
@@ -246,8 +239,7 @@
                                                         @foreach($materials->media->where("type","!=",1) as $media)
                                                             <div class="swiper-slide">
                                                                 <img class="d-block img-fluid"
-                                                                     src="{{url($media->rel_path)}}"
-                                                                     alt="First slide">
+                                                                     src="{{url($media->rel_path)}}" alt="First slide">
                                                             </div>
                                                         @endforeach
 
@@ -278,18 +270,16 @@
                             <div class="card mb-0">
                                 <div class="card-header p-2" id="head-extra-content">
                                     <h5 class="m-0 pl-2">
-                                        <a class="custom-accordion-title d-block py-1"
-                                           data-toggle="collapse" href="#collapse-extra-content"
-                                           aria-expanded="true" aria-controls="collapse-extra-content">
-                                            Βοηθητικά Αρχεία<i
-                                                class="mdi mdi-chevron-down accordion-arrow"></i>
+                                        <a class="custom-accordion-title d-block py-1" data-toggle="collapse"
+                                           href="#collapse-extra-content" aria-expanded="true"
+                                           aria-controls="collapse-extra-content">
+                                            Βοηθητικά Αρχεία<i class="mdi mdi-chevron-down accordion-arrow"></i>
                                         </a>
                                     </h5>
                                 </div>
 
                                 <div id="collapse-extra-content" class="collapse show"
-                                     aria-labelledby="head-extra-content"
-                                     data-parent="#extra-content">
+                                     aria-labelledby="head-extra-content" data-parent="#extra-content">
                                     <div class="card-body" style="padding: 30px">
                                         @foreach($materials->media->where("type","!=",0) as $media)
                                             @if($media->ext=="mp3")
@@ -297,8 +287,7 @@
                                                 <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
                                                    data-audio-status="paused"></i>
                                                 <audio class="js-audio">
-                                                    <source src="{{ $media->rel_path }}"
-                                                            type="{{ $media->file_info }}">
+                                                    <source src="{{ $media->rel_path }}" type="{{ $media->file_info }}">
                                                 </audio>
                                                 <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
                                             @else
@@ -323,18 +312,20 @@
                     <ul data-course-id="{{$course->id}}" class="w-600 my-2 p-0 single-section-material">
                         @php
                             $count = 0;
+                            $countIfNotSection = 0
                         @endphp
                         @foreach($MaterialsOrderByPriority as $key=> $material)
                             @if($material->pivot->course_id==$course->id)
                                 @php
-                                    $active =  auth()->user()->witchlist()->where('material_id',$material->id)->where('course_id',$course->id)->first();
-                                    $activeClass=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$count;
-                                    $hover=  isset($active)? "data-hover='hover'" :'';
+                                    $material->type==="Section"?"":++$countIfNotSection;
+                                    $active = auth()->user()->witchlist()->where('material_id',$material->id)->where('course_id',$course->id)->first();
+                                    $activeClass= isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$countIfNotSection;
+                                    $hover= isset($active)? "data-hover='hover'" :'';
                                     $link = route('index.material.show',[$course->slug,$material->slug]);
                                     if ($material->type=="link"){
-                                        $link = $material->video_link;
+                                    $link = $material->video_link;
                                     }elseif ($material->type=="Section"){
-                                        $link ="";
+                                    $link ="";
 
                                     }
                                 @endphp
@@ -342,15 +333,15 @@
                                     @php --$count; @endphp
                                     <div class="accordion section mt-2" id="{{$material->slug}}">
                                         <div class="card mb-0 bg-transparent">
-                                            <a class="custom-accordion-title d-block "
-                                               data-toggle="collapse" href="#{{$material->slug}}-collapse"
-                                               aria-expanded="true" aria-controls="{{$material->slug}}-collapse">
+                                            <a class="custom-accordion-title d-block " data-toggle="collapse"
+                                               href="#{{$material->slug}}-collapse" aria-expanded="true"
+                                               aria-controls="{{$material->slug}}-collapse">
                                                 <div class="card-header d-flex align-center head-section "
                                                      id="{{$material->slug}}-head">
                                                     <h5 class="w-100 m-0 d-flex align-center">
                                                         <span class="mr-2 d-flex align-items-center">Ενότητα {{$key -$count+1 }} :</span>
                                                         <span
-                                                            class="d-flex align-items-center">        {{$material->title}}</span>
+                                                            class="d-flex align-items-center"> {{$material->title}}</span>
 
 
                                                     </h5>
@@ -364,18 +355,18 @@
                                                     <ul data-course-id="{{$course->id}}" style="max-height: 800px"
                                                         class="my-2 p-0 section-list ">
                                                         @php $countChapter = 0 @endphp
-                                                        @foreach($material->chapters->where("type", "!=", "Announcement")  as   $chapter)
-                                                            @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
+                                                        @foreach($material->chapters->where("type", "!=", "Announcement") as $key=> $chapter)
+                                                            @if($chapter->getOriginal('pivot_status')==1) {{--emganizei ta chapter me status 1 --}}
 
                                                             @php
-                                                                $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
-                                                                 $link = route('index.material.show',[$course->slug,$chapter->slug]);
-                                                                 $hover=  isset($active)? "data-hover='hover'" :'';
-                                                                 $activeClassMaterial=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$countChapter;
+                                                                $active = auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first();
+                                                                $link = route('index.material.show',[$course->slug,$chapter->slug]);
+                                                                $hover= isset($active)? "data-hover='hover'" :'';
+                                                                $activeClassMaterial= isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$countChapter;
                                                             @endphp
 
                                                             <li data-material-id="{{$chapter->id}}"
-                                                                data-material-priority="{{$countChapter}}"
+                                                                data-material-priority="{{$key+1}}"
                                                                 class="list-group-item list-material border-r-0  m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                                 <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                                    href="{{$link}}">
@@ -385,27 +376,28 @@
                                                                                class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                                                         @else
                                                                             <div class="col-md-2 mt-1 mr-2 ">
-                                                <span {{$hover}} style="margin:-20px;"
-                                                      class="material-count">
-                                                    {{--edw tha mpei to active class--}}
-                                                    {!! $activeClassMaterial!!}
-                                                </span>
+                                                                                <span {{$hover}} style="margin:-20px;"
+                                                                                      class="material-count">
+                                                                                    {{--edw tha mpei to active class--}}
+                                                                                    {!! $activeClassMaterial!!}
+                                                                                </span>
                                                                             </div>
 
                                                                         @endif
                                                                     </div>
-                                                                    <div class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
+                                                                    <div
+                                                                        class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
                                                                         <h3 style="border-radius: 5px"
-                                                                            class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
+                                                                            class="font-16 mt-1 text-black font-weight-bold"> {!! $chapter->title !!}
                                                                         </h3>
                                                                         <span style="word-break: break-all" class="
-                                                                    font-12 text-dark">    {!! $chapter->subtitle !!}</span>
+                                                                    font-12 text-dark"> {!! $chapter->subtitle !!}</span>
                                                                     </div>
 
                                                                     <div class="col-lg-2 col-1 js-alert">
-                                                        <span class="">
-                                                            <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i>
-                                                        </span>
+                                                                        <span class="">
+                                                                            <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i>
+                                                                        </span>
                                                                     </div>
                                                                 </a>
                                                             </li>
@@ -421,38 +413,35 @@
                                 @else
 
                                     <li data-material-id="{{$material->id}}"
-                                        data-material-priority="{{++$countChapter}}"
+                                        data-material-priority="{{$countIfNotSection}}"
                                         class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">
                                         <a class="d-flex align-items-center {{
-                            $material->type=="Link"?"js-link-material":""}}"
-                                           href="{{$link}}">
+                                             $material->type=="Link"?"js-link-material":""}}" href="{{$link}}">
                                             <div class="col-lg-2 mr-2 col-1  ">
                                                 @if($material->title==$materials->title)
                                                     <i style="margin:-8px;"
-
                                                        class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
                                                 @else
                                                     <div class="col-lg-2 mr-2 col-1 ">
-                                                <span {{$hover}} style="margin:-20px;"
-                                                      class="material-count">
-                                                       {!! $activeClass !!}
-                                                </span>
+                                    <span {{$hover}} style="margin:-20px;" class="material-count">
+                                        {!! $activeClass !!}
+                                    </span>
                                                     </div>
 
                                                 @endif
                                             </div>
                                             <div class="col-lg-8 align-items-center col-10 d-flex flex-column ">
                                                 <h3 style="border-radius: 5px"
-                                                    class="font-16 mt-1 text-black font-weight-bold">   {!! $material->title !!}
+                                                    class="font-16 mt-1 text-black font-weight-bold"> {!! $material->title !!}
                                                 </h3>
                                                 <span style="word-break: break-all" class="
 {{--                                        {{$material->title==$materials->title? "":""}}--}}
-                                                    font-12 text-dark">    {!! $material->subtitle !!}</span>
+                                                    font-12 text-dark"> {!! $material->subtitle !!}</span>
                                             </div>
                                             <div class="col-lg-2 col-1 p-0 js-alert">
-                                        <span class="">
-                                            <i class=" font-24 text-black {{App\Material::getType($material->type)}}"></i>
-                                        </span>
+                                <span class="">
+                                    <i class=" font-24 text-black {{App\Material::getType($material->type)}}"></i>
+                                </span>
                                             </div>
                                         </a>
                                     </li>

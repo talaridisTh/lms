@@ -242,15 +242,18 @@
 
                         @php
                             $count = 0;  //count material
+                            $countIfNotSection = 0
                         @endphp
 
                         @foreach($allMaterial as $key => $materials)
 
                             @php
+                                $materials->type==="Section"?"":++$countIfNotSection;
                                 $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
-                                $activeClass = isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$count; //ean to exei dei bazi tik allis arithmo
+                                $activeClass = isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$countIfNotSection; //ean to exei dei bazi tik allis arithmo
                                 $hover = isset($active)? "data-hover='hover'" :''; //bazei dataset hover ean to exei dei
                             @endphp
+
 
                             @if($materials->type==="Section"  ) {{--elenxi an to mathima einai section--}}
 
@@ -280,8 +283,8 @@
                                         <div class="p-0 card-body">
                                             <ul class="section-list p-0" data-course-id="{{$course->id}}"
                                                 class="my-2 p-0"><!-- list chapter -->
-                                                @php $countChapter = 0 @endphp
-                                                @foreach($materials->chapters->where("type", "!=", "Announcement") as $chapter)  {{--foreach gia na bri ta chapter--}}
+                                                @php $countChapter = 0;  @endphp
+                                                @foreach($materials->chapters->where("type", "!=", "Announcement") as $key => $chapter)  {{--foreach gia na bri ta chapter--}}
 
                                                 @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
 
@@ -294,7 +297,7 @@
                                                 @endphp
 
                                                 <li data-material-id="{{$chapter->id}}"
-                                                    data-material-priority="{{$activeClassMaterial}}"
+                                                    data-material-priority="{{$key+1}}"
                                                     class="list-group-item border-r-0 list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                     <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                        href="{{$link}}">
@@ -340,7 +343,7 @@
                             @else
 
                                 <li data-material-id="{{$materials->id}}"
-                                    data-material-priority="{{$activeClass}}"
+                                    data-material-priority="{{$countIfNotSection}}"
                                     class="list-group-item list-material border ">
                                     <a class="d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
@@ -348,7 +351,7 @@
                                         <div class="col-lg-2 mr-2 col-1 ">
                                             <div>
                                             <span {{$hover}} class="material-count">
-                                                <span>{!! $activeClass !!}</span>
+                                                <span>{!! $activeClass!!}</span>
                                             </span>
                                             </div>
                                         </div>
