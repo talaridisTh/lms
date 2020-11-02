@@ -86,12 +86,16 @@ class MaterialController extends Controller {
     public function addWitchlist(Request $request)
     {
 
+
         $user = auth()->user();
+
         $watchlist = $user
             ->witchlist()
             ->where('material_id', $request->materialId)
             ->where('course_id', $request->courseId)
             ->first();
+
+
         if (isset($watchlist))
         {
 

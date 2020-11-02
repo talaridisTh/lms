@@ -113,7 +113,6 @@ function handlerCountMaterial() {
 $(".material-count").on("click", function (e) {
     event.preventDefault();
 
-    console.log("work")
 
     axiosAddWitchlist(
         this.findParent(5).dataset.courseId,
@@ -121,6 +120,7 @@ $(".material-count").on("click", function (e) {
         this.findParent(4).dataset.materialPriority,
         this
     )
+
 
 
 }).on('mouseenter', function () {
@@ -133,7 +133,6 @@ $(".material-count").on("click", function (e) {
     setTimeout(() => {
         if (!this.dataset.hover) {
 
-            console.log(this)
             this.innerHTML = `${this.findParent(4).dataset.materialPriority}`
         }
     }, 150)
@@ -147,12 +146,17 @@ $(".js-watchlist-btn").on("click", function () {
 })
 
 const axiosAddWitchlist = async (courseId, materialId, materialPriority = null, that) => {
+    // console.log(courseId)
+    // console.log(materialId)
+    // console.log(materialPriority)
+    // console.log(that)
     const btnWatchlist = $(".js-watchlist-btn")[0];
     try {
         const {data} = await axios.patch(`/add-witchlist/material`, {
             courseId,
             materialId
         })
+        console.log(data)
         if (data === "remove") {
             that.innerHTML = `${materialPriority}`
             if (!materialPriority) {
@@ -202,8 +206,8 @@ $(".js-link-material").on("click", async function (e) {
 
     const href = this.href;
     e.preventDefault()
-    console.log(e.target.tagName)
     if (e.target.tagName === "SPAN" || e.target.tagName === "I") {
+        console.log(e.target)
         return
 
     } else {

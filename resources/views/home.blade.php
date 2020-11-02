@@ -67,6 +67,7 @@
             </div>
 
         </div>
+      @if($chart["courses"] >0 && $chart["material"]>0 && $chart["user"]>0 )
         {{--row 2 --}}
         <div class="row justify-content-center  mt-3">
             <div class="col-md-3 text-center mr-5">
@@ -86,7 +87,9 @@
             </div>
 
 
+
         </div>
+        @endif
         {{--row 3 --}}
         <div class="row my-5 ">
 

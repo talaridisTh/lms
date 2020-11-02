@@ -96,6 +96,7 @@ class CourseController extends Controller {
     public function watchlistCourse(Request $request)
     {
 
+
         $watchlist = User::findOrFail($request->userId)
             ->watchlistCourse()->where('watchlistable_id', $request->modelId)->first();
         if (isset($watchlist))

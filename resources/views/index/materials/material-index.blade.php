@@ -419,6 +419,7 @@
                                     </div>
 
                                 @else
+
                                     <li data-material-id="{{$material->id}}"
                                         data-material-priority="{{++$countChapter}}"
                                         class="list-group-item list-material  my-2 {{$material->title==$materials->title? "list-material-select border-orange":"border"}}  ">

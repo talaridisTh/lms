@@ -137,7 +137,8 @@ class User extends Authenticatable {
 
     public function witchlist()
     {
-        return $this->belongsToMany(User::class,'witchlist', 'user_id', 'material_id'  )->withPivot("course_id");
+
+        return $this->belongsToMany(Material::class,'witchlist', 'user_id', 'material_id'  )->withPivot("course_id");
     }
 
 

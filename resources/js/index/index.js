@@ -60,7 +60,7 @@ function animateValue($obj, start, end, duration) {
         current += increment;
         $obj.text(current);
         if (current == end) {
-            $obj.text($obj.text()+'+');
+            // $obj.text($obj.text()+'+');
             clearInterval(timer);
         }
     }, stepTime);
@@ -73,7 +73,7 @@ for (let i = 1; i <=$('.count-number').length ; i++) {
         end = $number.attr('data-end')*1;
 
 
-    animateValue($number, start, end, 2000);
+    animateValue($number, start, end, 500);
 }
 
 
