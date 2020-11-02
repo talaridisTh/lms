@@ -164,7 +164,7 @@ const newStudentsChart = new Chart(newStudentsCanvas, {
 				ticks: {
 					fontColor: "#8391a2",
 					fontFamily: "Open Sans, sans-serif",
-					stepSize: 1
+					stepSize: 2
 				},
 				gridLines: {
 					color: "#464f5b"
