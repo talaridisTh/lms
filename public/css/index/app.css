@@ -49141,17 +49141,9 @@ b[role=presentation] {
   height: 100%;
 }
 
-.box-material-down {
-  background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
-  border-top: 1px solid white;
-  border-bottom-right-radius: 8px;
-  border-bottom-left-radius: 8px;
-}
-
 .box-material-up {
   background: #E0A228;
-  border-top-right-radius: 8px;
-  border-top-left-radius: 8px;
+  border-radius: 8px;
   background-image: linear-gradient(315deg, #ff4e00 0%, #ec8505 74%);
 }
 
@@ -49576,8 +49568,21 @@ img.scale {
   padding: 7.5rem !important;
 }
 
+.text-hover-underline:hover {
+  text-decoration: underline;
+}
+
+.scale-up {
+  transform: scale(1);
+  transition: all 0.5s ease;
+}
+
+.scale-up:hover {
+  transform: scale(1.1);
+}
+
 .bg-opacity {
-  background: black;
+  background: #b04706;
   opacity: 0.8;
 }
 

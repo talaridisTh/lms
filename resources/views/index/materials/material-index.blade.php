@@ -46,29 +46,29 @@
 @section("content")
 
 
-    <section class=" d-flex wrapper flex-column">
+    <section class=" d-flex wrapper flex-column mt-2">
         <!-- start page title -->
-        @unlessrole('guest')
-        <div class=" ml-5 content-width">
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box">
-                        <div class="page-title-left">
-                            <ol class="breadcrumb p-1 m-0">
-                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>
-                                </li>
-                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"
-                                                               class="text-secondary">Courses</a></li>
-                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"
-                                                               class="text-secondary">{{$course->title}}</a></li>
-                                <li class="breadcrumb-item  text-black">{{$materials->title}}</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endunlessrole
+{{--        @unlessrole('guest')--}}
+{{--        <div class=" ml-5 content-width">--}}
+{{--            <div class="row">--}}
+{{--                <div class="col-12">--}}
+{{--                    <div class="page-title-box">--}}
+{{--                        <div class="page-title-left">--}}
+{{--                            <ol class="breadcrumb p-1 m-0">--}}
+{{--                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>--}}
+{{--                                </li>--}}
+{{--                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"--}}
+{{--                                                               class="text-secondary">Courses</a></li>--}}
+{{--                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"--}}
+{{--                                                               class="text-secondary">{{$course->title}}</a></li>--}}
+{{--                                <li class="breadcrumb-item  text-black">{{$materials->title}}</li>--}}
+{{--                            </ol>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        @endunlessrole--}}
         <!-- end page title -->
         @role("admin")
 

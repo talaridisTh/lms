@@ -42,7 +42,7 @@
 @section("content")
     <div class="container-xl mb-3 mt-2" style="max-width: 1600px"> <!-- container banner -->
 
-        <div class="row defalt-color-topic box-material-up  pt-4 pb-2" style="background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)"> <!-- row top banner -->
+        <div class="row defalt-color-topic box-material-up  pt-4" style="background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)"> <!-- row top banner -->
             <div class="col-md-12">
                 <div class="row align-items-center text-center justify-content-center ">
                     <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
@@ -59,14 +59,14 @@
                             <div class="container">
                                 <ul data-user-slug="{{auth()->user()->slug}}"
                                     class="d-flex topic-link justify-content-around p-2 my-auto">
-                                    <li class="filter-topic" data-topic-id="reset">
-                                        <a href="#"> <span class="text-dark">Όλα </span></a>
+                                    <li class="filter-topic scale-up" data-topic-id="reset">
+                                        <a href="#"> <span class="text-light ">Όλα </span></a>
                                     </li>
 
                                     @foreach($arrayTopics as $key => $topic)
-                                        <li class="filter-topic " data-topic-id="{{$key}}">
+                                        <li class="filter-topic scale-up " data-topic-id="{{$key}}">
                                             <a href="#">
-                                                <span>{{$topic}}</span>
+                                                <span class="text-light ">{{$topic}}</span>
                                             </a>
                                         </li>
                                     @endforeach

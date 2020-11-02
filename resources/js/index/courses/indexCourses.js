@@ -107,7 +107,10 @@ function handlerCountMaterial() {
         `
 }
 
-// handlerCountMaterial()
+if(window.location.pathname =="/courses/admin"){
+
+handlerCountMaterial()
+}
 
 //WATCHLIST
 $(".material-count").on("click", function (e) {
