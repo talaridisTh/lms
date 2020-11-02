@@ -1821,8 +1821,8 @@ function createRoleSelect( id = "" ) {
 
 axios.post("/materials/material-types")
 	.then( (res) => {
-		let activeMaterials = createTopicSelect( res, "selected-materials-types" );
-		let remainingMaterials = createTopicSelect( res, "remaining-materials-types" );
+		let activeMaterials = createTypeSelect( res, "selected-materials-types" );
+		let remainingMaterials = createTypeSelect( res, "remaining-materials-types" );
 
 		courseMaterialListLength.append( activeMaterials );
 		$("#remaining-materials-table_length > label")[0].append( remainingMaterials );
@@ -1857,7 +1857,7 @@ axios.post("/materials/material-types")
 		console.log(err);
 	})
 
-function createTopicSelect( res, id = "" ) {
+function createTypeSelect( res, id = "" ) {
 	const selectElm = document.createElement("select");
 	let data = res.data;
 	let options = "<option value=''>Όλοι οι τύποι</option>";
@@ -2169,7 +2169,7 @@ function createDateElm( id ) {
 
 	let input = document.createElement("input");
 
-	input.classList.add("form-control", "date", "d-inline-block", "ml-1", "js-date-search");
+	input.classList.add("form-control", "date", "d-inline-block", "ml-0", "js-date-search");
 	input.id = id;
 	input.dataset.toggle = "date-picker";
 	input.dataset.cancelClass = "btn-secondary";
