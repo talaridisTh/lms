@@ -86,7 +86,9 @@ class DashboardController extends Controller
 
 		$coursesPerTopic = DB::table("topics")
 			->join("topicables", "topics.id", "=", "topicables.topic_id")
+			->join("courses", "topicables.topicable_id", "=", "courses.id")
 			->where("topicable_type", "App\Course")
+			->where("courses.status", 1)
 			->selectRaw("topics.title, COUNT(*) as count")
 			->groupBy("topics.title")->orderBy("count", "desc")->limit(5)
 			->get();
