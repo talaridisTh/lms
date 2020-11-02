@@ -2,7 +2,6 @@
 
 @section('css')
 <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-{{-- <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet"> --}}
 
 <style>
 	.content-page {
@@ -22,6 +21,10 @@
 	}
 	.custom-accordion-title {
 		color:#b2bcc5;
+	}
+
+	#course-materials-list_length > label > span:last-child {
+		margin-right: 2px;
 	}
 
 </style>

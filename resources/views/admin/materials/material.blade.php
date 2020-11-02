@@ -322,9 +322,9 @@
 
                         <!-- Βuttons -->
                         <div class="sticky py-3">
-                            <button id="store-material-btn" class="btn btn-primary" type="submit"
+                            <button id="store-material-btn" class="btn {{isset($material)? "btn-info":"btn-primary"}}" type="submit"
                                 form="material-create">
-                                {{isset($material)? "Ενημέρωση":"Δημιουργια"}}
+                                {{isset($material)? "Update":"Save"}}
                             </button>
                             @if(isset($material) && count($material->courses)>0 && $material->type != "Link" &&
                             $material->type != "Announcement" )
