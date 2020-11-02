@@ -70,9 +70,9 @@ class DashboardController extends Controller
 			->groupBy("bundles.title")->orderBy("students", "desc")
 			->limit(5)->get();
 
-		$latestCourses = Course::where('user_id', "!=", 2)
-			->orderBy("created_at", "desc")->limit(5)->get();
-
+		$recentCourses = Course::orderBy("created_at", "desc")
+		 	->where('user_id', "!=", 2)->orWhere("user_id", null)->limit(5)->get();
+		
 		$topInstructors = DB::table("course_user")
 			->join("users", "user_id", "=", "users.id")
 			->join("model_has_roles", "course_user.user_id", "=", "model_has_roles.model_id")
@@ -99,7 +99,7 @@ class DashboardController extends Controller
 			'topCourses' => $topCourses,
 			'topBundles' => $topBundles,
 			'usersPerMonth' => json_encode($usersPerMonth),
-			'latestCourses' => $latestCourses,
+			'recentCourses' => $recentCourses,
 			'topInstructors' => $topInstructors,
 			'coursesPerTopic' => json_encode($coursesPerTopic),
 		];

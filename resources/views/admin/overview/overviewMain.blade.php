@@ -122,7 +122,7 @@
 									@php
 										$now = new DateTime("now");
 									@endphp
-										@foreach ($latestCourses as $course)
+										@foreach ($recentCourses as $course)
 										<tr>
 											@php
 												$date2 = new DateTime($course->created_at);
@@ -144,7 +144,13 @@
 													{{ $course->created_at->diffForHumans() }}
 												</span>
 											</td>
-											<td>{{ $course->curator->last_name }} {{ $course->curator->first_name }}</td>
+											<td>
+												@if ( is_null($course->user_id) )
+													<p class="text-center mb-0">-</p>	
+												@else
+													{{ $course->curator->last_name }} {{ $course->curator->first_name }}
+												@endif
+											</td>
 										</tr>
 									@endforeach
 								</tbody>
