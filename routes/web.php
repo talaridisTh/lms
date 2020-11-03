@@ -74,7 +74,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
     //! Dashboard Home Content
     Route::get('/dashboard/home-content', 'UtilityController@index');
-    Route::post('/dashboard/home-content/update', 'UtilityController@update');
+	Route::post('/dashboard/home-content/update', 'UtilityController@update');
+	
+    Route::get('/dashboard/general-settings', 'OptionController@index');
+    Route::post('/dashboard/general-settings/update', 'OptionController@update');
 //!======================================================
 //! 			End Dashboard Routes					|
 //!======================================================

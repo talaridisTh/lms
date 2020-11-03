@@ -104,7 +104,7 @@ eval("//!##########################################\n//!\t\t\t\tGlobal Variables
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\dashboard\dashboard.js */"./resources/js/dashboard/dashboard.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\dashboard.js */"./resources/js/dashboard/dashboard.js");
 
 
 /***/ })

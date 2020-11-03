@@ -31,6 +31,7 @@ mix.js('resources/js/app.js', 'public/js')
 	.js('resources/js/dashboard/dashboard.js', 'public/js/dashboard')
 	.js('resources/js/dashboard/newContent.js', 'public/js/dashboard')
 
+	.js('resources/js/dashboard/settings/general-settings.js', 'public/js/dashboard/settings')
 	.js('resources/js/dashboard/settings/home-page.js', 'public/js/dashboard/settings')
 
 	.js('resources/js/dashboard/main.js', 'public/js/dashboard/')
