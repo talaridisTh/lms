@@ -46,13 +46,13 @@
             <div class="col-md-12">
                 <div class="row align-items-center text-center justify-content-center ">
                     <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
-                        <h2 class="display-4 text-light">Title of Course 2</h2>
+                        <h2 class="display-4 text-light">Lorem ipsum dolor sit amet, </h2>
                         <p class="text-light my-4 text-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda doloremque dolorum explicabo ipsa maxime tenetur voluptatem? Blanditiis cupiditate doloremque, excepturi inventore magni pariatur quibusdam quidem suscipit. Aliquid incidunt ipsum sunt?</p>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-12 col-xl-12 border-top  px-md-5 d-flex bg-opacity  justify-content-between text-light">
+            <div class="col-md-12 col-xl-12 border-top box-material-down  px-md-5 d-flex bg-opacity  justify-content-between text-light">
                 @if(empty(!$arrayTopics))
                     <div class="col-md-12 ">
                         <div id="topic-filter" class=" rounded text-dark">
