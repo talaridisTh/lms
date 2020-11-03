@@ -311,6 +311,10 @@ class MediaController extends Controller
 		if ( $namespace === "App\\User" ) {
 			$model->avatar = $request->url;
 		}
+		elseif ( $namespace === "App\\Option") {
+			$model = $namespace::where("name", "logo")->first();
+			$model->value = $request->url;
+		}
 		else {
 			$model->cover = $request->url;
 		}

@@ -127,6 +127,12 @@
                                 <span class="menu-arrow"></span>
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
+								<li>
+									<a href="/dashboard/general-settings">
+										<i class="mdi mdi-progress-wrench"></i>
+										General
+									</a>
+                                </li>
                                 <li>
 									<a href="/dashboard/home-content">
 										<i class="mdi mdi-home-edit"></i>

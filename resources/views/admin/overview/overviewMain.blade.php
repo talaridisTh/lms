@@ -89,7 +89,7 @@
 				<div class="col-lg-6 col-xl-4 mb-3">
 					
 					<div class="card h-100">
-						<div class="pb-0 card-body {{ $topCourses->isEmpty() ? "d-none " : "" }}flex-column justify-content-start align-items-center">
+						<div class="pb-0 card-body {{ $topCourses->isEmpty() ? "d-none " : "d-flex " }}flex-column justify-content-start align-items-center">
 							<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Δημοφιλέστερα Courses</h5>
 					
 							<div style="width:400px; height: 300px;">
