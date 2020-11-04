@@ -77,8 +77,8 @@
 			</div><!-- end row-->
 			
 			<div class="card">
-				<div class="pb-0 card-body">
-					<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Νέοι μαθητές ανα μήνα</h5>
+				<div class="pb-2 card-body">
+					<h5 class="card-title text-center mb-3">Μαθητές ανα μήνα</h5>
 					<div>
 						<canvas id="new-students-per-month" width="400" height="200" data-data="{{ $usersPerMonth }}"></canvas>
 					</div>
