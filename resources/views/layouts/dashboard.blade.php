@@ -129,16 +129,34 @@
                             <ul class="side-nav-second-level" aria-expanded="false">
 								<li>
 									<a href="/dashboard/general-settings">
-										<i class="mdi mdi-progress-wrench"></i>
+										<i class="font-16 mdi mdi-progress-wrench"></i>
 										General
 									</a>
                                 </li>
                                 <li>
 									<a href="/dashboard/home-content">
-										<i class="mdi mdi-home-edit"></i>
+										<i class="font-16 mdi mdi-home-edit"></i>
 										Home Page
 									</a>
-                                </li>
+								</li>
+								<li>
+									<a href="/dashboard/options/terms">
+										<i class="font-16 mdi mdi-file-document-edit-outline"></i>
+										Terms of Use
+									</a>
+								</li>
+								<li>
+									<a href="/dashboard/options/privacyPolicy">
+										<i class="font-16 mdi mdi-file-document-multiple-outline"></i>
+										Privacy Policy
+									</a>
+								</li>
+								<li>
+									<a href="/dashboard/options/cookiePolicy">
+										<i class="font-16 mdi mdi-cookie"></i>
+										Cookie Policy
+									</a>
+								</li>
                             </ul>
                         </li>
 					</ul>

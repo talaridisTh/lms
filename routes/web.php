@@ -77,7 +77,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 	Route::post('/dashboard/home-content/update', 'UtilityController@update');
 	
     Route::get('/dashboard/general-settings', 'OptionController@index');
-    Route::post('/dashboard/general-settings/update', 'OptionController@update');
+	Route::post('/dashboard/general-settings/update', 'OptionController@update');
+	
+    Route::get('/dashboard/options/{option:name}', 'OptionController@editPolicies');
+    Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
 //!======================================================
 //! 			End Dashboard Routes					|
 //!======================================================

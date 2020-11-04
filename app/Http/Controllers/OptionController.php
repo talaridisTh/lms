@@ -64,4 +64,18 @@ class OptionController extends Controller
 		
 		return redirect( "/dashboard/general-settings" );
 	}
+
+	public function editPolicies(Option $option) {
+
+		return view("admin/settings/editPolicies")->with(["option" => $option]);
+
+	}
+
+	public function updatePolicies(Request $request, Option $option) {
+
+		$option->value = $request->content;
+		$option->save();
+
+		return view("admin/settings/editPolicies")->with(["option" => $option]);
+	}
 }
