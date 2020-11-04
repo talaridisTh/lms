@@ -3834,6 +3834,11 @@ figure > img {
   user-select: auto !important;
 }
 
+.custom-pill-primary.badge-outline-primary {
+  border-color: #519dff;
+  color: #519dff;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0
