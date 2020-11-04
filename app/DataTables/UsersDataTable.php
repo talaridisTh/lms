@@ -67,7 +67,7 @@ class UsersDataTable extends DataTable {
                 $status = $data->status == 0 ? "" : "checked";
                 $statusToggle = $data->status == 0 ? 0 : 1;
 
-                return "<input  class='toggle-class' data-user-checked='$statusToggle' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
+                return "<input  class='toggle-class' data-user-checked='$statusToggle' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='success' autocomplete='off'/>
 					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
             })
             ->editColumn('last_name', function ($data) {

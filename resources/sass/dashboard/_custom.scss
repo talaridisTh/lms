@@ -743,10 +743,14 @@ figure > img {
 //!		./Full Page Drag n Drop		#
 //!##################################
 
-
 .user-select-auto {
 	-webkit-user-select: auto !important;
 	-moz-user-select: auto !important;
 	-ms-user-select: auto !important;
 	user-select: auto !important;
+}
+
+.custom-pill-primary.badge-outline-primary {
+	border-color: #519dff ;
+	color: #519dff ;
 }

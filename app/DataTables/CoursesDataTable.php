@@ -94,10 +94,10 @@ class CoursesDataTable extends DataTable {
 
 				if ( $data->status == 1 ) {
 					if ( time() > strtotime($data->publish_at) && !is_null($data->publish_at) ) {
-						$status = ["icon" => "badge-outline-primary", "text" => "Published"];
+						$status = ["icon" => "badge-outline-success", "text" => "Published"];
 					}
 					else {
-						$status = ["icon" => "badge-outline-dark", "text" => "Scheduled"];
+						$status = ["icon" => "custom-pill-primary badge-outline-primary", "text" => "Scheduled"];
 					}
 				}
 				else {

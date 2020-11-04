@@ -287,7 +287,7 @@
 												<div class="d-flex justify-content-between align-items-center">
 													<label for="summary">Σύνοψη</label>
 													<input id="summary-toggle" class="js-editors-toggle"
-														data-field="summary" type="checkbox" data-switch="bool"
+														data-field="summary" type="checkbox" data-switch="success"
 														@if ( isset($fields->summary) && $fields->summary == 1)
 															checked
 														@endif
@@ -313,7 +313,7 @@
 												<div class="d-flex justify-content-between align-items-center">
 													<label for="description">Περιγραφή</label>
 													<input id="description-toggle" class="js-editors-toggle"
-														data-field="description" type="checkbox" data-switch="bool"
+														data-field="description" type="checkbox" data-switch="success"
 														@if ( isset($fields->description) && $fields->description == 1)
 															checked
 														@endif

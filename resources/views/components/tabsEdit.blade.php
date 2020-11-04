@@ -246,7 +246,7 @@
                                 </div>
                                 <div class="col-5 text-right">
                                     <input name="status" type="checkbox" id="activeMaterial"
-                                           data-switch="bool"
+                                           data-switch="success"
                                     @if(isset($user))
                                         {{$user->status==1? 'checked':""}}
                                         @endif
