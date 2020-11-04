@@ -13,20 +13,19 @@ class OptionComposer {
     public function compose(View $view)
     {
 
+//        $test =  get_object_vars(json_decode(Option::whereName("contactInfo")->first()!=null ?  Option::whereName("contactInfo")->first()->value:"{}" ));
+//        dd($test["city"]!=null?$test["city"]:"");
         $option = [
-            "title" => Option::whereName("title")->first()->value,
-            "copyright" => Option::whereName("copyright")->first()->value,
-            "logo" => Option::whereName("logo")->first()->value,
-            "description" => Option::whereName("description")->first()->value,
-            "terms" => Option::whereName("terms")->first()->value,
-            "privacyPolicy" => Option::whereName("privacyPolicy")->first()->value,
-            "cookiePolicy" => Option::whereName("cookiePolicy")->first()->value,
-            "contactInfo" => get_object_vars(json_decode(Option::whereName("contactInfo")->first()->value)),
-            "social" => get_object_vars(json_decode(Option::whereName("social")->first()->value)),
+            "title" => Option::whereName("title")->first() ? Option::whereName("title")->first()->value : "",
+            "copyright" => Option::whereName("copyright")->first() ? Option::whereName("copyright")->first()->value : "",
+            "logo" => Option::whereName("logo")->first() ? Option::whereName("logo")->first()->value : "",
+            "description" => Option::whereName("description")->first() ? Option::whereName("description")->first()->value : "",
+            "terms" => Option::whereName("terms")->first() ? Option::whereName("terms")->first()->value : "",
+            "privacyPolicy" => Option::whereName("privacyPolicy")->first() ? Option::whereName("privacyPolicy")->first()->value : "",
+            "cookiePolicy" => Option::whereName("cookiePolicy")->first() ? Option::whereName("cookiePolicy")->first()->value : "",
+            "contactInfo" => get_object_vars(json_decode(Option::whereName("contactInfo")->first() != null ? Option::whereName("contactInfo")->first()->value : "{}")),
+            "social" => get_object_vars(json_decode(Option::whereName("contactInfo")->first() != null ? Option::whereName("contactInfo")->first()->value : "{}")),
         ];
-
-
-
         $view->with('option', $option);
     }
 

@@ -225,26 +225,39 @@
                 <div class="col-md-6">
                     <div class="row align-items-center">
                         <div class="col-md-4" style="width: 147px; height: 79px;">
-                            <img src=""{{$option['logo']}}"" alt="logo">
+                           	<span class=" stop nav-logo-lg">
+                                 <img class="m-2" height="60"
+                                      src="{{$option['logo']}}"
+                                      alt="">
+                	        </span>
                         </div>
                         <div class=" col-md-8">
                             <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
-                                {{$option["contactInfo"]["city"]}}
+
+                                {{$option["contactInfo"]["city"]!=null?$option["contactInfo"]["city"]:""}}
                             </h4>
                             <p class="text-left d-flex flex-column font-14" style="color: #585d63">
-                                <span>{{$option["contactInfo"]["address"]}}, {{$option["contactInfo"]["zipCode"]}},</span>
-                                <span>{{$option["contactInfo"]["email"]}} {{$option["contactInfo"]["phone"]}} - {{$option["contactInfo"]["fax"]}}</span>
+                                <span>
+                                    {{$option["contactInfo"]["address"]!=null?$option["contactInfo"]["address"].",":""}}
+                                    {{$option["contactInfo"]["zipCode"]!=null?$option["contactInfo"]["zipCode"].",":""}},
+                                </span>
+                                <span>
+                                    {{$option["contactInfo"]["email"]!=null?$option["contactInfo"]["email"]:""}}
+                                    {{$option["contactInfo"]["phone"]!=null?$option["contactInfo"]["phone"]:""}} -
+                                    {{$option["contactInfo"]["fax"]!=null?$option["contactInfo"]["fax"]:""}}
+                                </span>
                             </p>
                         </div>
 
                     </div>
                 </div>
+
                 <div class="col-md-6 d-flex justify-content-end  ">
-                    <img class="pr-2" src="{{$option["social"]["facebook"]}}" alt="logo">
-                    <img class="pr-2" src="{{$option["social"]["instagram"]}}" alt="logo">
-                    <img class="pr-2" src="{{$option["social"]["twitter"]}}" alt="logo">
-                    <img class="pr-2" src="{{$option["social"]["youtube"]}}" alt="logo">
-                    <img class="pr-2" src="{{$option["social"]["linkedIn"]}}" alt="logo">
+{{--                    <img class="pr-2" src="{{$option["social"]?$option["facebook"]:""}}" alt="logo">--}}
+{{--                    <img class="pr-2" src="{{$option["social"]?$option["instagram"]:""}}" alt="logo">--}}
+{{--                    <img class="pr-2" src="{{$option["social"]?$option["twitter"]:""}}" alt="logo">--}}
+{{--                    <img class="pr-2" src="{{$option["social"]?$option["youtube"]:""}}" alt="logo">--}}
+{{--                    <img class="pr-2" src="{{$option["social"]?$option["linkedIn"]:""}}" alt="logo">--}}
                 </div>
 
             </div>
