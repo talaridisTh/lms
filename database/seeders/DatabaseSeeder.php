@@ -9,6 +9,10 @@ use App\Role;
 use App\Topic;
 use App\Bundle;
 use App\Section;
+use App\Utility;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 use Database\Seeders\MessageSeeder;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
@@ -24,61 +28,24 @@ class DatabaseSeeder extends Seeder {
 
     public function run()
     {
-
-//        live
-
         $this->call([
             RoleSeeder::class,
-            UserSeeder::class,
-            UtilitySeeder::class,
-        ]);
+		]);
+		
+		Utility::factory()->create();
 
-
-//        // local
-//        $this->call([
-//			RoleSeeder::class,
-//			TopicSeeder::class,
-//			UserSeeder::class,
-//			UtilitySeeder::class,
-//		]);
-//
-//		User::factory()->times(500)->create()
-//			->each( function($user) {
-//        		$user->roles()->attach( rand( 2, 4 ) );
-//			});
-//
-//		Material::factory()->times(80)->create()
-//			->each( function($material) {
-//
-//				$material->users()->attach( Role::find(2)->users()->select("id")->get()->random()->id);
-//
-//				if ( $material->type == "Section" ) {
-//					for ( $i = 0; $i < 5; $i++ ) {
-//						$material->chapters()->attach( rand(1, 80), ["priority" =>  $i + 1]);
-//					}
-//				}
-//			});
-//
-//		Course::factory()->times(30)->create()
-//			->each( function($course) {
-//				$course->topics()->attach( Topic::all()->random()->id);
-//				for ( $i = 0; $i < 20; $i++) {
-//					$course->users()->attach(User::where('id', '!=', 1)->get()->random()->id);
-//
-//					$course->materials()->attach( rand(1, 80), ["priority" => $i + 1]);
-//
-//				}
-//			});
-//
-//		Bundle::factory()->times(15)->create()
-//			->each( function($bundle) {
-//				for( $i = 0; $i < 5; $i++ ) {
-//					$bundle->courses()->attach(Course::all()->random()->id);
-//				}
-//				for ( $i = 0; $i < 20; $i++ ) {
-//					$bundle->users()->attach(Role::find(4)->users()->select("id")->get()->random()->id);
-//				}
-//			});
-
+		User::create([
+            'first_name' => "admin",
+            'last_name' => "admin",
+            'email' => "admin@gmail.com",
+            "phone" => "6978565698",
+            "profil" => "admin profil",
+            'avatar' => "/images/avatar-placeholder.png",
+            'slug' => "admin",
+            'password' => Hash::make('password'),
+            "password_encrypt" => Crypt::encryptString('password'),
+            'status' => 1,
+            'remember_token' => Str::random(10),
+        ])->assignRole("admin");
 	}
 }
