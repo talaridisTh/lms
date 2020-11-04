@@ -13,13 +13,13 @@
                 </nav>
             </nav>
             {{-- Search input --}}
-            <input type="text" class="messenger-search" placeholder="Search" />
+            <input type="text" class="messenger-search" placeholder="Αναζήτηση" />
             {{-- Tabs --}}
             <div class="messenger-listView-tabs">
                 <a href="#" @if($route == 'user') class="active-tab" @endif data-view="users">
                     <span class="far fa-user"></span> Συνομιλίες</a>
-                <a href="#" @if($route == 'group') class="active-tab" @endif data-view="groups">
-                    <span class="fas fa-users"></span>Ομαδικες Συνομιλίες</a>
+{{--                <a href="#" @if($route == 'group') class="active-tab" @endif data-view="groups">--}}
+{{--                    <span class="fas fa-users"></span>Ομαδικες Συνομιλίες</a>--}}
             </div>
         </div>
         {{-- tabs and lists --}}

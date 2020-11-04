@@ -239,11 +239,11 @@
                             <p class="text-left d-flex flex-column font-14" style="color: #585d63">
                                 <span>
                                     {{$option["contactInfo"]["address"]!=null?$option["contactInfo"]["address"].",":""}}
-                                    {{$option["contactInfo"]["zipCode"]!=null?$option["contactInfo"]["zipCode"].",":""}},
+                                    {{$option["contactInfo"]["zipCode"]!=null?$option["contactInfo"]["zipCode"].",":""}}
                                 </span>
                                 <span>
                                     {{$option["contactInfo"]["email"]!=null?$option["contactInfo"]["email"]:""}}
-                                    {{$option["contactInfo"]["phone"]!=null?$option["contactInfo"]["phone"]:""}} -
+                                    {{$option["contactInfo"]["phone"]!=null?$option["contactInfo"]["phone"]:""}}
                                     {{$option["contactInfo"]["fax"]!=null?$option["contactInfo"]["fax"]:""}}
                                 </span>
                             </p>
@@ -252,12 +252,14 @@
                     </div>
                 </div>
 
+                @php
+                $socials = ["facebook","instagram","twitter","youtube","linkedIn"]
+                @endphp
                 <div class="col-md-6 d-flex justify-content-end  ">
-{{--                    <img class="pr-2" src="{{$option["social"]?$option["facebook"]:""}}" alt="logo">--}}
-{{--                    <img class="pr-2" src="{{$option["social"]?$option["instagram"]:""}}" alt="logo">--}}
-{{--                    <img class="pr-2" src="{{$option["social"]?$option["twitter"]:""}}" alt="logo">--}}
-{{--                    <img class="pr-2" src="{{$option["social"]?$option["youtube"]:""}}" alt="logo">--}}
-{{--                    <img class="pr-2" src="{{$option["social"]?$option["linkedIn"]:""}}" alt="logo">--}}
+                    @foreach($socials as $social)
+                        {{$option["social"]["$social"]}}
+                    @endforeach
+
                 </div>
 
             </div>

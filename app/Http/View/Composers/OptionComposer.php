@@ -24,8 +24,9 @@ class OptionComposer {
             "privacyPolicy" => Option::whereName("privacyPolicy")->first() ? Option::whereName("privacyPolicy")->first()->value : "",
             "cookiePolicy" => Option::whereName("cookiePolicy")->first() ? Option::whereName("cookiePolicy")->first()->value : "",
             "contactInfo" => get_object_vars(json_decode(Option::whereName("contactInfo")->first() != null ? Option::whereName("contactInfo")->first()->value : "{}")),
-            "social" => get_object_vars(json_decode(Option::whereName("contactInfo")->first() != null ? Option::whereName("contactInfo")->first()->value : "{}")),
+            "social" => get_object_vars(json_decode(Option::whereName("social")->first() != null ? Option::whereName("social")->first()->value : "{}")),
         ];
+
         $view->with('option', $option);
     }
 
