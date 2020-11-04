@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Index;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Material;
+use App\Option;
 use App\Role;
 use App\Topic;
 use App\User;
@@ -35,6 +36,9 @@ class HomeController extends Controller {
             'material' => Material::all()->count(),
             'user' => User::all()->count(),
         ];
+
+
+
 
 
         return view('home', compact('material', "bannersPrimary", "bannersSecondary", "arrayBanners",'chart'));

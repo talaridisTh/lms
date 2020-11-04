@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\OptionComposer;
 use App\Http\View\Composers\RoleComposer;
+use App\Option;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -29,9 +31,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer(["admin.users.*","admin.users.userCreate"],RoleComposer::class);
+        View::composer(['layouts.app',"home"],OptionComposer::class);
 
-		Carbon::setLocale(env('LOCALE', 'el_GR'));
-		
+        Carbon::setLocale(env('LOCALE', 'el_GR'));
+
 		Paginator::useBootstrap();
     }
 }

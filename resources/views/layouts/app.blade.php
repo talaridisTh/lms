@@ -75,21 +75,22 @@
       data-layout-config='{"leftSidebarCondensed":false,"darkMode":true, "showRightSidebarOnStart": true}'>
 
 <!-- Topbar Start -->
+
 <div id="wrapper-custom">
     <div id="header-custom" class="sticky-front p-0">
         <nav class="navbar navbar-expand-lg navbar-light bg-light ">
 
             @if(Auth::check())
                 <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
-                	<span class=" stopnav-logo-lg">
+                	<span class=" stop nav-logo-lg">
                 	 <img class="m-2" height="60"
-                          src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
+                          src="{{$option['logo']}}"
                           alt="">
                 	</span>
                 </a>
             @else
                 <a href="{{route('home')}}" class="topnav-logo">
-                	<span class=" stopnav-logo-lg">
+                	<span class=" sto pnav-logo-lg">
                 	<img class="m-2" height="60"
                          src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
                          alt="">
@@ -224,26 +225,26 @@
                 <div class="col-md-6">
                     <div class="row align-items-center">
                         <div class="col-md-4" style="width: 147px; height: 79px;">
-                            <img src="/images/logo.png" alt="logo">
+                            <img src=""{{$option['logo']}}"" alt="logo">
                         </div>
                         <div class=" col-md-8">
                             <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
-                                Θεσσαλονίκη
+                                {{$option["contactInfo"]["city"]}}
                             </h4>
                             <p class="text-left d-flex flex-column font-14" style="color: #585d63">
-                                <span>Παπαναστασίου 150, 54249,</span>
-                                <span>Χαριλάου Τηλ. 2310 328797 - Fax 2310 328898</span>
+                                <span>{{$option["contactInfo"]["address"]}}, {{$option["contactInfo"]["zipCode"]}},</span>
+                                <span>{{$option["contactInfo"]["email"]}} {{$option["contactInfo"]["phone"]}} - {{$option["contactInfo"]["fax"]}}</span>
                             </p>
                         </div>
 
                     </div>
                 </div>
                 <div class="col-md-6 d-flex justify-content-end  ">
-                    <img class="pr-2" src="/images/facebook.png" alt="logo">
-                    <img class="pr-2" src="/images/instagram.png" alt="logo">
-                    <img class="pr-2" src="/images/twitter.png" alt="logo">
-                    <img class="pr-2" src="/images/youtube.png" alt="logo">
-                    <img class="pr-2" src="/images/linked-in.png" alt="logo">
+                    <img class="pr-2" src="{{$option["social"]["facebook"]}}" alt="logo">
+                    <img class="pr-2" src="{{$option["social"]["instagram"]}}" alt="logo">
+                    <img class="pr-2" src="{{$option["social"]["twitter"]}}" alt="logo">
+                    <img class="pr-2" src="{{$option["social"]["youtube"]}}" alt="logo">
+                    <img class="pr-2" src="{{$option["social"]["linkedIn"]}}" alt="logo">
                 </div>
 
             </div>
@@ -251,7 +252,7 @@
         <hr class="border mt-2" style="opacity: 0.4;">
         <div class="container-fluid  pb-2" style="max-width: 1705px;">
             <div class="row align-items-center">
-                <div class="col-sm-6  col-md-4">COPYRIGHT © {{ now()->year }} IDROGIOS EDUCATION</div>
+                <div class="col-sm-6  col-md-4">{{$option["copyright"]}}</div>
                 <div class="col-sm-6 col-md-4">Πολιτική Απορρήτου</div>
 
 
