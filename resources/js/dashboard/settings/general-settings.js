@@ -110,35 +110,3 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 
 	});
 }
-
-const redactorConf = {
-	buttons: [
-		'html', 'undo', 'redo', 'format',
-		'bold', 'underline', 'italic', 'deleted',
-		'sup', 'sub', 'lists', 'file', 'link'
-	],
-	style: false,
-	plugins: ["mediaLibrary", 'alignment'],
-	minHeight: '150px',
-	imageResizable: true,
-	imagePosition : {
-        "left": "image-left",
-        "right": "image-right",
-        "center": "image-center text-center"
-	},
-	imageFloatMargin: '20px',
-	imageUpload: "/media/upload-images",
-
-	callbacks: {
-        upload: {
-            beforeSend: function(xhr)
-            {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-            }
-        }
-    }
-}
-
-$R("#terms", redactorConf);
-
-$R("#privacy", redactorConf);

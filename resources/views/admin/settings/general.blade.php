@@ -188,20 +188,6 @@
 							</div>
 						</div>
 
-						<div class="card">
-							<h4 class="card-header">Terms of Use & Privacy Policy</h4>
-							<div class="card-body">
-								<div class="form-group">
-									<label for="terms">Terms of Use</label>
-									<textarea class="form-control" id="terms" rows="3" name="terms">{{ $terms->value }}</textarea>
-								</div>
-								<div class="form-group">
-									<label for="privacy">Privacy Policy</label>
-									<textarea class="form-control" id="privacy" name="privacyPolicy" rows="3">{{ $privacyPolicy->value }}</textarea>
-								</div>
-							</div>
-						</div>
-
 					</form>
 				</div><!-- ./col -->
 

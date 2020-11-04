@@ -21,7 +21,7 @@ class CourseController extends Controller
     {
 		$topics = Topic::all();
 
-        return view('admin/courses/coursesMain')->withTopics( $topics );
+        return view('admin/courses/coursesMain')->with(["topics" => $topics]);
     }
 
 
