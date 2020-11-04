@@ -34,7 +34,7 @@ class HomeController extends Controller {
         $chart = [
             "courses" => Course::all()->count(),
             'material' => Material::all()->count(),
-            'user' => User::all()->count(),
+            'user' => Role::find(2)->users->count(),
         ];
 
 
