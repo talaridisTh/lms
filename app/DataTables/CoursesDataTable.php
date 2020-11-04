@@ -65,7 +65,7 @@ class CoursesDataTable extends DataTable {
 
                 $status = $data->status == 0 ? "" : "checked";
 
-                return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $status data-switch='bool' autocomplete='off'/>
+                return "<input class='js-toggle' data-course-id='$data->id' type='checkbox' id='$data->slug-toggle-checkbox' $status data-switch='success' autocomplete='off'/>
 					<label for='$data->slug-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
             })
             ->editColumn('topics', function ($data) {
