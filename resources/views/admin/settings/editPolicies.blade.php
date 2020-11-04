@@ -96,7 +96,8 @@
 			'bold', 'underline', 'italic', 'deleted',
 			'sup', 'sub', 'lists', 'file', 'link'
 		],
-		minHeight: '1000px',
+		minHeight: '400px',
+		toolbarFixed: false
 	})
 </script>
 	
