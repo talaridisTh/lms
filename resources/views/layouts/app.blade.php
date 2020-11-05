@@ -218,48 +218,47 @@
         @yield('content')
     </div>
 
+    @php
+            $contactInfo = json_decode( $option["contactInfo"]);
+            $socialMedia = json_decode( $option["social"]);
+            $socials = ["facebook","instagram","twitter","youtube","linkedIn"];
+    @endphp
 
     <footer class="footer-alt border-top bg-light pb-0" style="    margin-bottom: -19px;">
         <div class="container" style="max-width: 1440px;">
             <div class="row align-items-center mt-2">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="row align-items-center">
-                        <div class="col-md-4" style="width: 147px; height: 79px;">
+                        <div class="col-md-4 d-flex" style="width: 147px; height: 79px;">
                            	<span class=" stop nav-logo-lg">
                                  <img class="m-2" height="60"
                                       src="{{$option['logo']}}"
                                       alt="">
                 	        </span>
+                            <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
+                                        {{isset($contactInfo->city)?$contactInfo->city:""}}
+                                    <p class="text-left d-flex flex-column font-14" style="color: #585d63">
+                                        <span>
+                                            {{isset($contactInfo->address)?$contactInfo->address.",":""}}
+                                            {{isset($contactInfo->zipCode)?$contactInfo->zipCode.",":""}}
+                                        </span>
+                                        <span>
+                                            {{isset($contactInfo->email)?$contactInfo->email:""}}
+                                            {{isset($contactInfo->phone)?$contactInfo->phone:""}}
+                                            {{isset($contactInfo->fax)?$contactInfo->fax:""}}
+                                        </span>
+                                    </p>
+                            </h4>
                         </div>
                         <div class=" col-md-8">
-                            <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
-
-                                {{$option["contactInfo"]["city"]!=0  ?$option["contactInfo"]["city"]:""}}
-                            </h4>
-                            <p class="text-left d-flex flex-column font-14" style="color: #585d63">
-                                <span>
-                                    {{$option["contactInfo"]["address"]!=null?$option["contactInfo"]["address"].",":""}}
-                                    {{$option["contactInfo"]["zipCode"]!=null?$option["contactInfo"]["zipCode"].",":""}}
-                                </span>
-                                <span>
-                                    {{$option["contactInfo"]["email"]!=null?$option["contactInfo"]["email"]:""}}
-                                    {{$option["contactInfo"]["phone"]!=null?$option["contactInfo"]["phone"]:""}}
-                                    {{$option["contactInfo"]["fax"]!=null?$option["contactInfo"]["fax"]:""}}
-                                </span>
-                            </p>
+                            <div class="d-flex justify-content-end  ">
+                                @foreach($socials as $social)
+                                    <img  src="{{asset('images/facebook.png')}}" alt="">
+{{--                                    <img src="{{isset($socialMedia["$social"])? $socialMedia["$social"] : "" }}">--}}
+                                @endforeach
+                            </div>
                         </div>
-
                     </div>
-                </div>
-
-                @php
-                $socials = ["facebook","instagram","twitter","youtube","linkedIn"]
-                @endphp
-                <div class="col-md-6 d-flex justify-content-end  ">
-                    @foreach($socials as $social)
-                        {{$option["social"]["$social"]}}
-                    @endforeach
-
                 </div>
 
             </div>
