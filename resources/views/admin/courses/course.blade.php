@@ -254,26 +254,33 @@
 
 					<div class="row px-3">
 
-						<div class="col-6">
+						<div class="col-4">
+							<div class="card cursor-pointer js-material" data-type="PDF">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-file-pdf-outline display-3"></i>
+									<h5 class="card-title mt-2">PDF</h5>
+								</div>
+							</div>
+						</div>
 
+						<div class="col-4">
 							<div class="card cursor-pointer js-material" data-type="Section">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-puzzle-outline display-3"></i>
 									<h5 class="card-title mt-2">Section</h5>
 								</div>
 							</div>
-
 						</div>
 
-						<div class="col-6">
+						<div class="col-4">
 							<div id="add-new-material-btn" class="card cursor-pointer">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-file-document-outline	display-3"></i>
 									<h5 class="card-title mt-2">Μάθημα</h5>
 								</div>
 							</div>
-
 						</div>
+
 					</div>
 
 
@@ -391,14 +398,14 @@
 				<li class="nav-item">
 					<a href="#settings" id="setting-tab-btn"
 						data-toggle="tab" aria-expanded="false"
-						class="nav-link active">
+						class="nav-link ">
 						Ρυθμίσεις
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="#materials" id="materials-tab-btn"
 						data-toggle="tab" aria-expanded="true"
-						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
+						class="active nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
 						Υλικό
 					</a>
 				</li>
@@ -420,7 +427,7 @@
 
 			<div class="tab-content">
 
-				<div id="settings" class="tab-pane mb-3 show active">
+				<div id="settings" class="tab-pane mb-3">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
 							<form id="edit-course-form"
@@ -760,7 +767,7 @@
 					</div>
 				</div><!-- settings tab-pane -->
 
-				<div id="materials" class="tab-pane table-cnt mb-3">
+				<div id="materials" class="tab-pane table-cnt mb-3 show active">
 
 					<div class="row my-3">
 						<div class="col-sm-1">
@@ -937,5 +944,4 @@
 <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
 
 <script src="{{ mix('js/dashboard/courses/courseProfile.js') }}"></script>
-
 @endsection

@@ -54,14 +54,19 @@ class CourseMaterialsDataTable extends DataTable
 			})
 			->editColumn('title', function($data) {
 
-				if ($data->type != "Section") {
+				if ( $data->status == 1 ) {
+					$badge = "";
+				}
+				else {
+					$badge = "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
+				}
 
-					if ( $data->status == 1 ) {
-						$badge = "";
-					}
-					else {
-						$badge = "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
-					}
+				if ($data->type === "PDF") {
+					return "<a href='#' class='h5 custom-link-primary'>$data->title </a>$badge
+							<p class='mb-1'>$data->slug</p>
+							<a href='#' class='custom-link-primary'>View</a>";
+				}
+				else if ($data->type != "Section") {
 
 					return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title </a>$badge
 							<p class='mb-1'>$data->slug</p>
@@ -71,7 +76,7 @@ class CourseMaterialsDataTable extends DataTable
 
 				}
 				else {
-					return "<h4 class='js-section cursor-pointer'
+					return "<h4 class='js-section cursor-pointer mt-0'
 						data-slug='$data->slug'>$data->title</h4><p class='mb-0'>Σύνολο υλικού: ".$data->chapters()->count()."</p>";
 				}
 			})

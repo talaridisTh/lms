@@ -1928,105 +1928,156 @@ function findMaterialRow(rows, id = false) {
 function linkForm( type, priority) {
 
 	return `<td id="add-content-row" class="text-left" colspan="8">
-				<div id="additional-content-form">
-					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο ${ type }</h3>
-					<div class="form-row">
-						<div class="form-group col-6">
-							<label for="new-title">Τίτλος</label>
-							<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
-							<div class="invalid-feedback">
-        						Παρακαλώ εισάγετε τίτλο.
-							</div>
-						</div>
-						<div class="form-group col-6">
-							<label for="new-subtitle">Υπότιτλος</label>
-							<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..."/>
-							<input type="text" id="new-content" class="js-content form-control" placeholder="Εισάγετε περιεχόμενο..." hidden/>
-						</div>
-					</div>
-					<div class="form-row">
-						<div class="form-group col-6">
-							<label for="link-input">${ type }</label>
-							<input type="text" id="link-input" class="js-empty js-link form-control" placeholder="Εισάγετε link..."/>
-						</div>
-						<div class="form-group col-3 d-flex flex-column">
-							<label for="state-select">Κατάσταση</label>
-							<select class="js-state form-control select2" id="state-select">
-								<option value="1">Ενεργό</option>
-								<option value="0" selected>Ανενεργό</option>
-							</select>
-						</div>
-						<div class="form-group col-3 d-flex justify-content-center align-items-start" style="padding-top: 1.85rem;">
-							<button  class="js-add-content js-section-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
-							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
-						</div>
+		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο ${ type }</h3>
+		<form id="additional-content-form">
+			<div class="form-row">
+				<div class="form-group col-6">
+					<label for="new-title">Τίτλος</label>
+					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+					<div class="invalid-feedback">
+						Παρακαλώ εισάγετε τίτλο.
 					</div>
 				</div>
-			</td>`;
+				<div class="form-group col-6">
+					<label for="new-subtitle">Υπότιτλος</label>
+					<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" name="subtitle" placeholder="Εισάγετε υπότιτλο..."/>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-group col-9">
+					<label>${ type }</label>
+					<input type="text"class="js-empty form-control" name="video" ${ type === "Video" ? "" : "hidden"} placeholder="Εισάγετε video link..."/>
+					<input type="text"class="js-empty form-control" name="link" ${ type === "Video" ? "hidden" : ""} placeholder="Εισάγετε link..."/>
+				</div>
+				<div class="form-group col-3 d-flex flex-column">
+					<label for="state-select">Κατάσταση</label>
+					<select class="js-state form-control select2" id="state-select" name="status">
+						<option value="1">Ενεργό</option>
+						<option value="0" selected>Ανενεργό</option>
+					</select>
+				</div>
+			</div>
+			<input type="text" name="content" hidden/>
+		</form>
+		<div class="form-group d-flex justify-content-end">
+			<button  class="js-add-content js-section-content btn btn-primary" data-type="${ type }" data-priority="${ priority }">Αποθήκευση</button>
+			<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
+		</div>
+	</td>`;
 }
 
 function annoucementForm( priority ) {
 
 	return `<td id="add-content-row" class="text-left" colspan="8">
-				<div id="additional-content-form">
-					<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέα Ανακοίνωση</h3>
-					<div class="form-row">
-						<div class="form-group col-9">
-							<label for="new-title">Τίτλος</label>
-							<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
-						</div>
-
-						<div class="form-group col-3 d-flex flex-column">
-							<label for="state-select">Κατάσταση</label>
-							<select class="js-state form-control select2" id="state-select">
-								<option value="1">Ενεργό</option>
-								<option value="0" selected>Ανενεργό</option>
-							</select>
-						</div>
-					</div>
-						<div class="form-group">
-							<label for="new-announcement">Ανακοίνωση</label>
-							<textarea id="new-announcement" class="js-empty js-content form-control" placeholder="Εισάγετε ανακοίνωση..."></textarea>
-							<textarea class="js-subtitle form-control" placeholder="Εισάγετε ανακοίνωση..." hidden></textarea>
-						</div>
-						<div class="form-group float-right">
-							<button  class="js-add-content js-section-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
-							<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
-						</div>
-
+		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέα Ανακοίνωση</h3>
+		<form id="additional-content-form">
+			<div class="form-row">
+				<div class="form-group col-9">
+					<label for="new-title">Τίτλος</label>
+					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
 				</div>
-			</td>`
+				<div class="form-group col-3 d-flex flex-column">
+					<label for="state-select">Κατάσταση</label>
+					<select class="js-state form-control select2" id="state-select" name="status">
+						<option value="1">Ενεργό</option>
+						<option value="0" selected>Ανενεργό</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="new-announcement">Ανακοίνωση</label>
+				<textarea id="new-announcement" class="js-empty js-content form-control" name="content" placeholder="Εισάγετε ανακοίνωση..."></textarea>
+			</div>
+			<input type="text" name="video" hidden/>
+			<input type="text" name="link" hidden/>
+			<input type="text" name="subtitle" hidden/>
+		</form>
+		<div class="form-group float-right">
+			<button  class="js-add-content js-section-content btn btn-primary" data-type="Announcement" data-priority="${ priority }">Αποθήκευση</button>
+			<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
+		</div>
+	</td>`;
 }
 
 function sectionForm(priority) {
 
 	return `<td id="add-content-row" class="text-left" colspan="8">
-		<div id="additional-content-form">
-			<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
 
-			<div class="form-group">
-				<label for="new-title">Τίτλος</label>
-				<input type="text" id="new-title" class="js-empty js-title form-control" placeholder="Εισάγετε τίτλο..." />
-
-				<input type="text" class="js-subtitle form-control" placeholder="Εισάγετε υπότιτλο..." hidden/>
-				<input type="text" class="js-content form-control" placeholder="Εισάγετε περιεχόμενο..." hidden/>
-			</div>
+		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
+		<form id="additional-content-form">
 			<div class="form-row">
-				<div class="form-group col-8 d-flex flex-column">
+				<div class="form-group col-9">
+					<label for="new-title">Τίτλος</label>
+					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+				</div>
+				<div class="form-group col-3 d-flex flex-column">
 					<label for="state-select">Κατάσταση</label>
-					<select class="js-state form-control select2" id="state-select">
+					<select class="js-state form-control select2" id="state-select" name="status">
 						<option value="1">Ενεργό</option>
 						<option value="0" selected>Ανενεργό</option>
 					</select>
 				</div>
-				<div class="form-group col-4 d-flex justify-content-center align-items-end">
+			</div>
+			<input type="text" name="video" hidden/>
+			<input type="text" name="link" hidden/>
+			<input type="text" name="subtitle" hidden>
+			<input type="text" name="content" hidden>
+		</form>
+		<div class="form-group d-flex justify-content-end">
+			<button  class="js-add-content btn btn-primary" data-type="Section" data-priority="${ priority }">Αποθήκευση</button>
+			<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
+		</div>
+	</td>`;
+}
 
-					<button  class="js-add-content btn btn-primary" data-type="Section" data-priority="${ priority }">Αποθήκευση</button>
-					<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
+function pdfForm(priority) {
 
+	return `<td id="add-content-row" class="text-left" colspan="8">
+		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο PDF</h3>
+		<form id="additional-content-form">
+			<div class="form-row">
+				<div class="form-group col-5">
+					<label for="new-title">Τίτλος</label>
+					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+					<div class="invalid-feedback">
+						Παρακαλώ εισάγετε τίτλο.
+					</div>
+				</div>
+				<div class="form-group col-5">
+					<label for="new-subtitle">Υπότιτλος</label>
+					<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" name="subtitle" placeholder="Εισάγετε υπότιτλο..."/>
+					<input type="text" id="new-content" class="js-content form-control" name="content" placeholder="Εισάγετε περιεχόμενο..." hidden/>
+				</div>
+				<div class="form-group col-2 d-flex flex-column">
+					<label for="state-select">Κατάσταση</label>
+					<select class="js-state form-control select2" id="state-select" name="status">
+						<option value="1">Ενεργό</option>
+						<option value="0" selected>Ανενεργό</option>
+					</select>
 				</div>
 			</div>
-
+			<div class="form-row">
+				<div class="form-group col-8">
+					<label for="pdf-description">Περιγραφή</label>
+					<textarea class="form-control" id="pdf-description" name="summary" style="height: 100%;" placeholder="Εισάγετε περιγραφή"></textarea>
+				</div>
+				<div class="form-group col-4">
+					<label class="d-inline-block" for="pdf-upload" style="width: 100%;">Αρχείο PDF</label>
+					<label for="pdf-upload" class="custom-file-upload">
+						<i class="mdi mdi-cloud-upload-outline"></i>
+						<p class="font-16">Drop file here or click to upload.</p>
+						<input id="pdf-upload" class="custom-file-upload-input cursor-pointer js-empty" type="file" name="file" autocomplete="off"/>
+					</label>
+				</div>
+			</div>
+			<input type="text" class="js-empty form-control" name="video" hidden placeholder="Εισάγετε link..."/>
+			<input type="text" class="js-empty form-control" name="link" hidden placeholder="Εισάγετε link..."/>
+		</form>
+		<div class="form-row justify-content-end">
+			<div class="form-group col-3 d-flex justify-content-end align-items-start" style="padding-top: 1.85rem;">
+				<button  class="js-add-content js-section-content btn btn-primary" data-type="PDF" data-priority="${ priority }">Αποθήκευση</button>
+				<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
+			</div>
 		</div>
 	</td>`;
 }
@@ -2049,6 +2100,9 @@ function createTableRow( type, priority ) {
 	}
 	else if ( type == "Section" ) {
 		rowElm.innerHTML = sectionForm( priority );
+	}
+	else if ( type === "PDF" ) {
+		rowElm.innerHTML = pdfForm( priority );
 	}
 	else {
 		rowElm.innerHTML = linkForm( type, priority);
@@ -2074,40 +2128,27 @@ function cancelAddition() {
 }
 
 function addContent() {
-	let container = this.findParent(3);
-	let priority = this.dataset.priority;
-	let type = this.dataset.type;
-	let title = container.getElementsByClassName("js-title")[0];
-	let subtitle = container.getElementsByClassName("js-subtitle")[0];
-	let content = container.getElementsByClassName("js-content")[0];
-	let link = container.getElementsByClassName("js-link")[0];
-	let state = container.getElementsByClassName("js-state")[0];
-	let valid = checkEmpty( container, "js-empty" );
+	const form = document.getElementById("additional-content-form");
+	const priority = this.dataset.priority;
+	const type = this.dataset.type;
+	// let valid = checkEmpty( container, "js-empty" );
 
-	if ( !valid ) {
+	// if ( !valid ) {
 
-		Swal.fire(
-			'Προσοχή!',
-			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
-			'info'
-		);
+	// 	Swal.fire(
+	// 		'Προσοχή!',
+	// 		'Παρακαλώ συμπληρώστε όλα τα πεδία.',
+	// 		'info'
+	// 	);
 
-		return
-	}
+	// 	return
+	// }
 
-	let data = new FormData();
+	let data = new FormData(form);
 
 	data.append( "courseId", courseId );
-	data.append( "title", title.value );
-	data.append( "subtitle", subtitle.value );
-	data.append( "content", content.value );
 	data.append( "priority", priority );
 	data.append( "type", type );
-	data.append( "state", state.value );
-
-	if ( link ) {
-		data.append( `${ type.toLowerCase() }`, link.value );
-	}
 
 	axios.post( "/materials/add-additionnal-content",
 		data
