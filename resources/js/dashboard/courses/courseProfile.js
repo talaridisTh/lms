@@ -1892,7 +1892,7 @@ function findMaterialRow(rows, id = false) {
 
 function linkForm( type, priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο ${ type }</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
@@ -1933,7 +1933,7 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέα Ανακοίνωση</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
@@ -1966,7 +1966,7 @@ function annoucementForm( priority ) {
 
 function sectionForm(priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
 		<form id="additional-content-form">
@@ -1997,7 +1997,7 @@ function sectionForm(priority) {
 
 function pdfForm(priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο PDF</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
@@ -2031,7 +2031,7 @@ function pdfForm(priority) {
 					<label for="pdf-upload" class="custom-file-upload">
 						<i class="mdi mdi-cloud-upload-outline"></i>
 						<p class="font-16">Drop file here or click to upload.</p>
-						<input id="pdf-upload" class="custom-file-upload-input cursor-pointer js-empty" type="file" name="file" autocomplete="off"/>
+						<input id="pdf-upload" class="custom-file-upload-input js-file-input cursor-pointer js-empty" type="file" name="file" autocomplete="off"/>
 					</label>
 				</div>
 			</div>
@@ -2081,9 +2081,16 @@ function cancelAddition() {
 
 	const additionRow = document.getElementsByClassName("extra-content-row")[0];
 	const saveBtn = additionRow.getElementsByClassName("js-add-content")[0];
+	const dropzone = additionRow.getElementsByClassName("js-file-input")[0];
 
 	saveBtn.removeEventListener( "click", addContent );
 	this.removeEventListener( "click", cancelAddition );
+
+	if (dropzone) {
+		dropzone.removeEventListener("dragover", additionsDragOverHandler);
+		dropzone.removeEventListener("dragleave", removeColorHandler);
+		dropzone.removeEventListener("drop", removeColorHandler);
+	}
 
 	additionRow.remove();
 }
@@ -2130,20 +2137,34 @@ function addContent() {
 }
 
 function mainAdditionEventInit(row) {
-	let saveBtn = row.getElementsByClassName("js-add-content")[0];
-	let cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
+	const saveBtn = row.getElementsByClassName("js-add-content")[0];
+	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
+	const dropzone = row.getElementsByClassName("js-file-input")[0];
 
 	saveBtn.addEventListener("click", addContent);
+
 	cancelBtn.addEventListener("click", cancelAddition );
+
+	if (dropzone) {
+		dropzone.addEventListener("dragover", additionsDragOverHandler);
+		dropzone.addEventListener("dragleave", removeColorHandler);
+		dropzone.addEventListener("drop", removeColorHandler);
+	}
 }
 
 function sectionAdditionEventInit(row, sectionId) {
 	const saveBtn = row.getElementsByClassName("js-section-content")[0];
+	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
+	const dropzone = row.getElementsByClassName("js-file-input")[0];
+
 	saveBtn.dataset.sectionId = sectionId;
 	saveBtn.addEventListener("click", sectionAdditionHandler);
 
-	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
 	cancelBtn.addEventListener("click", removeSectionAdditionHandler);
+
+	dropzone.addEventListener("dragover", additionsDragOverHandler);
+	dropzone.addEventListener("dragleave", removeColorHandler);
+	dropzone.addEventListener("drop", removeColorHandler);
 }
 
 function removeSectionAdditionHandler() {
@@ -2586,6 +2607,16 @@ const courseFilePond = FilePond.create(courseFileUpload, {
     }),
 	maxFileSize: "50MB"
 });
+
+function additionsDragOverHandler() {
+	const label = this.parentElement;
+	label.classList.add("lime-green");
+}
+
+function removeColorHandler() {
+	const label = this.parentElement;
+	label.classList.remove("lime-green");
+}
 
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 for ( let i = 0; i < dropArea.length; i++ ) {
