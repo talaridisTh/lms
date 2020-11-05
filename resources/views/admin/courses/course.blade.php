@@ -398,14 +398,14 @@
 				<li class="nav-item">
 					<a href="#settings" id="setting-tab-btn"
 						data-toggle="tab" aria-expanded="false"
-						class="nav-link ">
+						class="nav-link active">
 						Ρυθμίσεις
 					</a>
 				</li>
 				<li class="nav-item">
 					<a href="#materials" id="materials-tab-btn"
 						data-toggle="tab" aria-expanded="true"
-						class="active nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
+						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
 						Υλικό
 					</a>
 				</li>
@@ -427,7 +427,7 @@
 
 			<div class="tab-content">
 
-				<div id="settings" class="tab-pane mb-3">
+				<div id="settings" class="tab-pane mb-3 show active">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
 							<form id="edit-course-form"
@@ -767,7 +767,7 @@
 					</div>
 				</div><!-- settings tab-pane -->
 
-				<div id="materials" class="tab-pane table-cnt mb-3 show active">
+				<div id="materials" class="tab-pane table-cnt mb-3">
 
 					<div class="row my-3">
 						<div class="col-sm-1">
