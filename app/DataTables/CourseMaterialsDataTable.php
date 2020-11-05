@@ -62,9 +62,9 @@ class CourseMaterialsDataTable extends DataTable
 				}
 
 				if ($data->type === "PDF") {
-					return "<a href='#' class='h5 custom-link-primary'>$data->title </a>$badge
+					return "<a href='/dashboard/view-pdf/$data->id' class='h5 custom-link-primary'>$data->title </a>$badge
 							<p class='mb-1'>$data->slug</p>
-							<a href='#' class='custom-link-primary'>View</a>";
+							<a href='/dashboard/view-pdf/$data->id' class='custom-link-primary'>View</a>";
 				}
 				else if ($data->type != "Section") {
 
