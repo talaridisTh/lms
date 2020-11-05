@@ -65,7 +65,9 @@ class OptionController extends Controller
 		return redirect( "/dashboard/general-settings" );
 	}
 
-	public function editPolicies(Option $option) {
+	public function editPolicies($name) {
+
+		$option = Option::firstOrCreate(["name" => $name]);	//name = "terms|privacyPolicy|cookiePolicy"
 
 		return view("admin/settings/editPolicies")->with(["option" => $option]);
 

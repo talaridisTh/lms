@@ -208,7 +208,7 @@
 								<div class="d-flex justify-content-between align-items-center">
 									<label for="toggle">Σύνοψη</label>
 									<input id="summary-toggle" class="js-editors-toggle"
-										data-field="summary" type="checkbox" data-switch="bool"
+										data-field="summary" type="checkbox" data-switch="success"
 										@if ( isset($fields->summary) && $fields->summary == 1)
 											checked
 										@endif
@@ -225,7 +225,7 @@
 								<div class="d-flex justify-content-between align-items-center">
 									<label for="description-material">Περιγραφή</label>
 									<input id="description-toggle" class="js-editors-toggle"
-										data-field="description" type="checkbox" data-switch="bool"
+										data-field="description" type="checkbox" data-switch="success"
 										@if ( isset($fields->description) && $fields->description == 1)
 											checked
 										@endif
@@ -241,7 +241,7 @@
 								<div class="d-flex justify-content-between align-items-center">
 									<label for="content-material">Περιεχόμενο</label>
 									<input id="content-toggle" class="js-editors-toggle"
-										data-field="content" type="checkbox" data-switch="bool"
+										data-field="content" type="checkbox" data-switch="success"
 										@if ( isset($fields->content) && $fields->content == 1)
 											checked
 										@endif
@@ -342,7 +342,7 @@
                                     <div class="d-flex justify-content-between">
                                         <label for="activeMaterial">Κατάσταση</label>
                                         <input form="material-create" name="status" type="checkbox" id="activeMaterial"
-                                            data-switch="bool" @if(isset($material))
+                                            data-switch="success" @if(isset($material))
                                             {{$material->status==1? 'checked':""}} @endif />
                                         <label for="activeMaterial" data-on-label="On" class="mb-0"
                                             data-off-label="Off"></label>

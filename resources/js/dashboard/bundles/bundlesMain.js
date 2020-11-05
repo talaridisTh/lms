@@ -153,12 +153,12 @@ function activeToggleInit() {
 			if ( this.checked ) {
 				if ( now > date ) {
 					badge.classList.remove("badge-outline-dark", "badge-outline-danger");
-					badge.classList.add("badge-outline-primary");
+					badge.classList.add("badge-outline-success");
 					badge.textContent = "Published";
 				}
 				else {
 					badge.classList.remove("badge-outline-primary", "badge-outline-danger");
-					badge.classList.add("badge-outline-dark");
+					badge.classList.add("badge-outline-primary");
 					badge.textContent = "Scheduled";
 				}
 			}

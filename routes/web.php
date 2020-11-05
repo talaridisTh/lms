@@ -79,7 +79,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::get('/dashboard/general-settings', 'OptionController@index');
 	Route::post('/dashboard/general-settings/update', 'OptionController@update');
 	
-    Route::get('/dashboard/options/{option:name}', 'OptionController@editPolicies');
+	Route::get('/dashboard/options/{name}', 'OptionController@editPolicies')
+		->where("name", "terms|privacyPolicy|cookiePolicy");
     Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
 //!======================================================
 //! 			End Dashboard Routes					|

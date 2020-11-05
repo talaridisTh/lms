@@ -189,7 +189,7 @@
 									<div class="d-flex justify-content-between">
 										<label for="summary">Σύνοψη</label>
 										<input id="summary-toggle" class="js-editors-toggle"
-											data-field="summary" type="checkbox" data-switch="bool"
+											data-field="summary" type="checkbox" data-switch="success"
 											name="summaryEditor"/>
 										<label class="mb-0" for="summary-toggle" data-on-label="On" data-off-label="Off"></label>
 									</div>
@@ -208,7 +208,7 @@
 									<div class="d-flex justify-content-between">
 										<label for="description">Περιγραφή</label>
 										<input id="description-toggle" class="js-editors-toggle"
-											data-field="description" type="checkbox" data-switch="bool"
+											data-field="description" type="checkbox" data-switch="success"
 											name="descriptionEditor"/>
 										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
 									</div>

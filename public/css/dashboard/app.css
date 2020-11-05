@@ -3834,6 +3834,11 @@ figure > img {
   user-select: auto !important;
 }
 
+.custom-pill-primary.badge-outline-primary {
+  border-color: #519dff;
+  color: #519dff;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0
@@ -14813,7 +14818,7 @@ body {
 .logo {
   display: block;
   line-height: 70px;
-  width: 260px;
+  width: 220px;
   position: fixed;
   top: 0;
 }
@@ -14841,14 +14846,14 @@ body {
 }
 
 .content-page {
-  margin-left: 260px;
+  margin-left: 220px;
   overflow: hidden;
   padding: 70px 12px 65px;
   min-height: 100vh;
 }
 
 .left-side-menu {
-  width: 260px;
+  width: 220px;
   z-index: 10;
   background: linear-gradient(135deg, #6379c3 0%, #546ee5 60%);
   bottom: 0;
@@ -15153,8 +15158,8 @@ body[data-layout-mode=boxed][data-leftbar-compact-mode=condensed] .logo {
 
   body[data-leftbar-compact-mode=scrollable]:not([data-layout=topnav]) .left-side-menu {
     position: relative;
-    min-width: 260px;
-    max-width: 260px;
+    min-width: 220px;
+    max-width: 220px;
     padding-top: 0;
   }
 
@@ -15210,8 +15215,8 @@ body[data-layout=detached] .content-page {
 body[data-layout=detached] .left-side-menu {
   position: relative;
   background: #37404a !important;
-  min-width: 260px;
-  max-width: 260px;
+  min-width: 220px;
+  max-width: 220px;
   box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
   margin-top: 30px;
   padding-top: 0 !important;
@@ -15438,7 +15443,7 @@ body[data-leftbar-theme=dark][data-leftbar-compact-mode=condensed] .side-nav .si
   box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
   min-height: 70px;
   position: fixed;
-  left: 260px;
+  left: 220px;
   top: 0;
   right: 0;
   z-index: 1001;
@@ -15449,7 +15454,7 @@ body[data-leftbar-theme=dark][data-leftbar-compact-mode=condensed] .side-nav .si
   height: 70px;
   position: fixed;
   z-index: 1;
-  width: 260px;
+  width: 220px;
   text-align: center;
   top: 0;
   left: 0;
@@ -15911,7 +15916,7 @@ body[data-layout-mode=boxed][data-layout=topnav] .navbar-custom {
   position: absolute;
   right: 0;
   color: #ced4da;
-  left: 260px;
+  left: 220px;
 }
 
 .footer .footer-links a {
@@ -15955,7 +15960,7 @@ body[data-layout-mode=boxed] .footer {
   margin: 0 auto;
   background-color: #343a40;
   box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
-  max-width: calc(1300px - 260px);
+  max-width: calc(1300px - 220px);
 }
 
 body[data-layout-mode=boxed][data-leftbar-compact-mode=condensed] .footer {

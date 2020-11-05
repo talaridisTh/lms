@@ -26,16 +26,19 @@ class DashboardController extends Controller
 
 		$dateRange = [ $lastYear, $today ];
 
-		$totalLessons = Material::where( function($query) {
-			$query->where("type", "Lesson")
-				->where("status", 1)->get();
-		})->count();
+		$activeLessons = Material::where("type", "Lesson")
+			->where("status", 1)->count();
+		$totalLessons = Material::where("type", "Lesson")->count();
 
-		$totalCourses = Course::where("status", 1)->count();
+		$activeCourses = Course::where("status", 1)->count();
+		$totalCourses = Course::all()->count();
 
-		$totalBundles = Bundle::where("status", 1)->count();
+		$activeBundles = Bundle::where("status", 1)->count();
+		$totalBundles = Bundle::count();
 
-		$totalStudents = Role::find(4)->users()->where("status", 1)->count();
+		$activeStudents = Role::find(4)->users()
+			->where("email_verified_at", "!=", null)->where("status", 1)->count();
+		$totalStudents = Role::find(4)->users()->count();
 			
 		$usersPerMonth = DB::table("model_has_roles")
 			->join("users", "model_has_roles.model_id", "=", "users.id")
@@ -94,9 +97,13 @@ class DashboardController extends Controller
 			->get();
 
 		$data = [
+			'activeLessons' => $activeLessons,
 			'totalLessons' => $totalLessons,
+			'activeCourses' => $activeCourses,
 			'totalCourses' => $totalCourses,
+			'activeBundles' => $activeBundles,
 			'totalBundles' => $totalBundles,
+			'activeStudents' => $activeStudents,
 			'totalStudents' => $totalStudents,
 			'topCourses' => $topCourses,
 			'topBundles' => $topBundles,

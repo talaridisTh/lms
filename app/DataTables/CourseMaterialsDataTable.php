@@ -81,7 +81,7 @@ class CourseMaterialsDataTable extends DataTable
 
 				return "<input class='js-toggle' data-course-id='$request->courseId'
 					type='checkbox' id='". $data->slug ."-toggle-checkbox'
-					data-material-id='$data->id' $status data-switch='bool' autocomplete='off'/>
+					data-material-id='$data->id' $status data-switch='success' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
 
 			})

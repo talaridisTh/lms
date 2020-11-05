@@ -132,7 +132,7 @@ const newStudentsChart = new Chart(newStudentsCanvas, {
     data: {
 		labels: months,
 		datasets: [{
-			label: "Νέοι Μαθητές",
+			label: "Ενεργοί - Επιβεβαιωμένοι",
 			data: students,
 			lineTension: 0,
 			borderColor: "rgb(83, 109, 230)",
