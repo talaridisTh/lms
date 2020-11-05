@@ -234,17 +234,19 @@
                         <div class=" col-md-8">
                             <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
 
-                                {{$option["contactInfo"]["city"]!=null?$option["contactInfo"]["city"]:""}}
+
+
+                                {{isset($option["contactInfo"]["city"])?$option["contactInfo"]["city"]:""}}
                             </h4>
                             <p class="text-left d-flex flex-column font-14" style="color: #585d63">
                                 <span>
-                                    {{$option["contactInfo"]["address"]!=null?$option["contactInfo"]["address"].",":""}}
-                                    {{$option["contactInfo"]["zipCode"]!=null?$option["contactInfo"]["zipCode"].",":""}}
+                                    {{isset($option["contactInfo"]["address"])?$option["contactInfo"]["address"].",":""}}
+                                    {{isset($option["contactInfo"]["zipCode"])?$option["contactInfo"]["zipCode"].",":""}}
                                 </span>
                                 <span>
-                                    {{$option["contactInfo"]["email"]!=null?$option["contactInfo"]["email"]:""}}
-                                    {{$option["contactInfo"]["phone"]!=null?$option["contactInfo"]["phone"]:""}}
-                                    {{$option["contactInfo"]["fax"]!=null?$option["contactInfo"]["fax"]:""}}
+                                    {{isset($option["contactInfo"]["email"])?$option["contactInfo"]["email"]:""}}
+                                    {{isset($option["contactInfo"]["phone"])?$option["contactInfo"]["phone"]:""}}
+                                    {{isset($option["contactInfo"]["fax"])?$option["contactInfo"]["fax"]:""}}
                                 </span>
                             </p>
                         </div>
@@ -257,7 +259,7 @@
                 @endphp
                 <div class="col-md-6 d-flex justify-content-end  ">
                     @foreach($socials as $social)
-                        {{$option["social"]["$social"]}}
+                        {{isset($option["social"]["$social"])? $option["social"]["$social"] : "" }}
                     @endforeach
 
                 </div>

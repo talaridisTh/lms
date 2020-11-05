@@ -27,6 +27,8 @@ class OptionComposer {
             "social" => get_object_vars(json_decode(Option::whereName("social")->first() != null ? Option::whereName("social")->first()->value : "{}")),
         ];
 
+
+
         $view->with('option', $option);
     }
 

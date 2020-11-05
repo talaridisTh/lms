@@ -37,10 +37,6 @@ class HomeController extends Controller {
             'user' => Role::find(2)->users->count(),
         ];
 
-
-
-
-
         return view('home', compact('material', "bannersPrimary", "bannersSecondary", "arrayBanners",'chart'));
     }
 

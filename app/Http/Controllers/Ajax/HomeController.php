@@ -18,8 +18,6 @@ class HomeController extends Controller {
 
         $partners = User::getPartner();
         $courses = Course::orderBy("id", 'asc')->get();
-//        $guestSlug = Str::slug($partners->first_name.$partners->last_name, '-');
-//        dd($guestSlug);
 
 
         return view("index.guest.create-link", compact("partners", "courses"));
