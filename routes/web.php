@@ -49,7 +49,9 @@ Route::group(['middleware' => ['auth', "role:admin","superAdmin"]], function () 
     Route::post('/dashboard/materials/store', 'MaterialController@store')->name('material.store');
     Route::patch('/dashboard/materials/update/{material:slug}', 'MaterialController@update')->name('material.update');
     Route::delete('/dashboard/materials/delete/{material}', 'MaterialController@destroy')->name('material.destroy');
-    Route::get('/dashboard/materials/coursematerial/{course}/{priority}/{material:id?}', 'MaterialController@courseMaterial')->name('material.courseMaterial');
+	Route::get('/dashboard/materials/coursematerial/{course}/{priority}/{material:id?}', 'MaterialController@courseMaterial')->name('material.courseMaterial');
+	Route::get('/dashboard/view-pdf/{material:id}', 'MaterialController@viewPDF');
+	
     //! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course?}', 'CourseController@show')->name('course.show');

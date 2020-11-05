@@ -163,4 +163,13 @@ class MaterialController extends Controller {
         return view('admin.materials.material')->with($data);
 	}
 
+	public function viewPDF(Material $material) {
+
+		$pdf = $material->media()->wherePivot("usage", 4)->first();
+
+		return view("admin/materials/pdfMaterial")->with(["pdf" => $pdf]);
+		// return response()->file($pdf->rel_path);
+		// dd($pdf);
+	}
+
 }

@@ -10,6 +10,7 @@ use App\DataTables\MaterialsDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Media;
+use App\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -86,37 +87,38 @@ class MaterialController extends Controller {
         echo json_encode($files);
     }
 
-    public function addContent(Request $request)
-    {
+    public function addContent(Request $request) {
+		$request->validate([
+			'title' => 'required',
+			'file' => 'sometimes|mimetypes:application/pdf'
+		]);
 
+		
         $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
         $material->content = $request->content;
         $material->type = $request->type;
-        $material->status = $request->state;
+        $material->status = $request->status;
 		$material->slug = Str::slug($request->title, "-");
-		
-        if ($request->type == "Video") {
-
-			$material->video_link = $request->video;
-			
-		} 
-		elseif ($request->type == "Link") {
-			
-			$material->link = $request->link;
-			
-		}
-		
+		$material->video_link = $request->video;
+		$material->link = $request->link;
 		$material->save();
 		
+		if ( !is_null($request->file) && $request->file->isValid() ) {
+			$pdf = $this->storeFile($request->file);
+			$this->storeFileDetails($request, $pdf);
+		}
+
+		$material->media()->attach($pdf->id, ["usage" => 4]);
+
 		CourseMaterial::incrementPriority($request->courseId, $request->priority);
 		
 		$course = Course::find($request->courseId);
 		$course->materials()
 			->attach($material->id, [
-				"status" => $request->state,
+				"status" => $request->status,
 				"priority" => $request->priority + 1,
 				"publish_at" => $publish
 			]);
@@ -481,6 +483,61 @@ class MaterialController extends Controller {
 			->where("type", "Section")->orderBy("priority")->get();
 
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
+	private function storeFile($file) {
+
+		$date = date('Y.m');
+		$name = $this->fileName($file);
+
+		$media = new Media;
+		$media->original_name = $name->originalName;
+		$media->name = $name->name;
+		$media->type = 1;
+		$media->rel_path = "/storage/files/$date/$name->fullname";
+		$media->ext = $file->getClientOriginalExtension();
+		$media->file_info = $file->getClientMimeType();
+		$media->size = $file->getSize();
+		$media->save();
+
+		$file->storeAs("public/files/$date", $name->fullname);
+
+		return $media;
+	}
+
+	private function storeFileDetails(Request $request, Media $media) {
+
+		$details = new MediaDetails;
+		$details->media_id = $media->id;
+		$details->title = $request->title;
+		$details->subtitle = $request->subtitle;
+		$details->description = $request->description;
+		$details->save();
+
+		return $details;
+	}
+
+	private function fileName($file) {
+		$temp = explode(".", $file->getClientOriginalName());
+		$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
+		$originalName = implode( ".", $arrayName );
+		$name =  Str::slug( implode("-", $arrayName ), "-" );
+
+		$count = Media::where( "original_name", $originalName)->count();
+
+		if ( $count > 0 ) {
+			$name = $name.( $count + 1 );
+			$fullname = $name.".".$file->getClientOriginalExtension();
+		}
+		else {
+			$fullname = "$name.".$file->getClientOriginalExtension();
+		}
+
+		return (object)[
+			"name" => $name,
+			"originalName" => $originalName,
+			"fullname" => $fullname,
+		];
 	}
 
 }
