@@ -88,11 +88,11 @@ class MaterialController extends Controller {
     }
 
     public function addContent(Request $request) {
+
 		$request->validate([
 			'title' => 'required',
 			'file' => 'sometimes|mimetypes:application/pdf'
 		]);
-
 		
         $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
@@ -109,9 +109,9 @@ class MaterialController extends Controller {
 		if ( !is_null($request->file) && $request->file->isValid() ) {
 			$pdf = $this->storeFile($request->file);
 			$this->storeFileDetails($request, $pdf);
+			$material->media()->attach($pdf->id, ["usage" => 4]);
 		}
 
-		$material->media()->attach($pdf->id, ["usage" => 4]);
 
 		CourseMaterial::incrementPriority($request->courseId, $request->priority);
 		
@@ -336,7 +336,6 @@ class MaterialController extends Controller {
 
 	public function addMaterials(Request $request) {
 
-		// dd($request->all());
 		$course = Course::find( $request->courseId );
 		$material = Material::find( $request->chapterId );
 
@@ -446,6 +445,11 @@ class MaterialController extends Controller {
 
 	public function addSectionContent(Request $request) {
 
+		$request->validate([
+			'title' => 'required',
+			'file' => 'sometimes|mimetypes:application/pdf'
+		]);
+
 		$section = Material::find( $request->sectionId );
 		
 		$material = new Material;
@@ -455,19 +459,15 @@ class MaterialController extends Controller {
 		$material->type = $request->type;
 		$material->status = $request->status;
 		$material->slug = Str::slug($request->title, "-");
-
-		if ($request->type == "Video") {
-
-			$material->video_link = $request->video;
-			
-		} 
-		elseif ($request->type == "Link") {
-			
-			$material->link = $request->link;
-			
-		}
-
+		$material->video_link = $request->video;
+		$material->link = $request->link;
 		$material->save();
+
+		if ( !is_null($request->file) && $request->file->isValid() ) {
+			$pdf = $this->storeFile($request->file);
+			$this->storeFileDetails($request, $pdf);
+			$material->media()->attach($pdf->id, ["usage" => 4]);
+		}
 
 		$section->chapters()->wherePivot("priority", ">", $request->priority)
 			->increment("priority");
@@ -477,7 +477,6 @@ class MaterialController extends Controller {
 				"status" => $request->status,
 				"priority" => $request->priority + 1
 			]);
-
 
 		$sections = Course::find( $request->courseId )->materials()
 			->where("type", "Section")->orderBy("priority")->get();

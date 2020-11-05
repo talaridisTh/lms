@@ -57,35 +57,12 @@ $(".js-section-material").on("click", function() {
 	const sectionId = modal.dataset.sectionId;
 	const priority = modal.dataset.priority;
 	const type = this.dataset.type;
-
-	const selection = document.getElementsByClassName("extra-content-row")[0];
-
-	if (selection) {
-		selection.remove();
-	}
-
-	const newRow = document.createElement("tr");
-	newRow.classList.add("extra-content-row")
-
+	
 	const row = $(`table[data-section-id='${sectionId}'] > tbody > tr[data-priority='${priority}']`)[0];
-
-	if ( type == "Announcement" ) {
-		newRow.innerHTML = annoucementForm( priority );
-	}
-	else {
-		newRow.innerHTML = linkForm( type, priority);
-	}
+	const newRow = createTableRow(type, priority);
 
 	newRow.appendAfter(row);
-
-	const saveBtn = newRow.getElementsByClassName("js-section-content")[0];
-	saveBtn.dataset.sectionId = sectionId;
-	saveBtn.addEventListener("click", sectionAdditionHandler);
-
-	const cancelBtn = newRow.getElementsByClassName("js-cancel-addition")[0];
-	cancelBtn.addEventListener("click", function() {
-		this.findParent(4).remove();
-	});
+	sectionAdditionEventInit(newRow, sectionId);
 
 	if ( type == "Announcement" ) {
 		$R('#new-announcement', utilities.redactorConfig );
@@ -1421,43 +1398,30 @@ $(".js-date-search").on( "input", function() {
 
 function sectionAdditionHandler() {
 
-	const container = this.findParent(4);
-	const title = container.getElementsByClassName("js-title")[0];
-	const subtitle = container.getElementsByClassName("js-subtitle")[0];
-	const link = container.getElementsByClassName("js-link")[0];
-	const status = container.getElementsByClassName("js-state")[0];
-	const content = container.getElementsByClassName("js-content")[0];
+	const form = document.getElementById("additional-content-form");
 	const type = this.dataset.type;
 	const priority = this.dataset.priority;
 	const sectionId = this.dataset.sectionId;
 
-	let valid = checkEmpty( container, "js-empty" );
+	// let valid = checkEmpty( container, "js-empty" );
 
-	if ( !valid ) {
+	// if ( !valid ) {
 
-		Swal.fire(
-			'Προσοχή!',
-			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
-			'info'
-		);
+	// 	Swal.fire(
+	// 		'Προσοχή!',
+	// 		'Παρακαλώ συμπληρώστε όλα τα πεδία.',
+	// 		'info'
+	// 	);
 
-		return
-	}
+	// 	return
+	// }
 
-	const data = new FormData();
+	const data = new FormData(form);
 
 	data.append("courseId", courseId);
 	data.append("sectionId", sectionId);
-	data.append("title", title.value);
-	data.append("subtitle", subtitle.value);
-	data.append("status", status.value);
-	data.append("content", content.value);
 	data.append("type", type);
 	data.append("priority", priority);
-
-	if ( link ) {
-		data.append("link", link.value);
-	}
 
 	axios.post( "/section/add-content", data )
 		.then( res => {
@@ -1895,6 +1859,7 @@ $(".js-material").on( "click", function() {
 
 	newRow.appendAfter( selectedRow );
 
+	mainAdditionEventInit(newRow);
 
 	if ( type == "Announcement" ) {
 		$R('#new-announcement', utilities.redactorConfig );
@@ -2108,23 +2073,19 @@ function createTableRow( type, priority ) {
 		rowElm.innerHTML = linkForm( type, priority);
 	}
 
-	let saveBtn = rowElm.getElementsByClassName("js-add-content")[0];
-	let cancelBtn = rowElm.getElementsByClassName("js-cancel-addition")[0];
-	saveBtn.addEventListener("click", addContent);
-	cancelBtn.addEventListener("click", cancelAddition );
-
 	return rowElm;
 }
 
+
 function cancelAddition() {
 
-	let parent = this.parentElement.parentElement.parentElement.parentElement;
-	let saveBtn = parent.getElementsByClassName("js-add-content")[0];
+	const additionRow = document.getElementsByClassName("extra-content-row")[0];
+	const saveBtn = additionRow.getElementsByClassName("js-add-content")[0];
 
 	saveBtn.removeEventListener( "click", addContent );
 	this.removeEventListener( "click", cancelAddition );
 
-	parent.remove();
+	additionRow.remove();
 }
 
 function addContent() {
@@ -2165,6 +2126,34 @@ function addContent() {
 			console.log(err);
 			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
 		});
+
+}
+
+function mainAdditionEventInit(row) {
+	let saveBtn = row.getElementsByClassName("js-add-content")[0];
+	let cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
+
+	saveBtn.addEventListener("click", addContent);
+	cancelBtn.addEventListener("click", cancelAddition );
+}
+
+function sectionAdditionEventInit(row, sectionId) {
+	const saveBtn = row.getElementsByClassName("js-section-content")[0];
+	saveBtn.dataset.sectionId = sectionId;
+	saveBtn.addEventListener("click", sectionAdditionHandler);
+
+	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
+	cancelBtn.addEventListener("click", removeSectionAdditionHandler);
+}
+
+function removeSectionAdditionHandler() {
+	const row = document.getElementsByClassName("extra-content-row")[0];
+	const saveBtn = row.getElementsByClassName("js-section-content")[0];
+
+	saveBtn.removeEventListener( "click", sectionAdditionHandler );
+	this.removeEventListener( "click", removeSectionAdditionHandler );
+
+	row.remove();
 
 }
 

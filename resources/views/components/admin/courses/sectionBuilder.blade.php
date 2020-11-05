@@ -175,7 +175,7 @@
 							<td colspan="6" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
 						@endforelse
 					</tbody>
-					<thead>
+					<tfoot>
 						<tr>
 							<th scope="col"></th>
 							<th class="text-center" scope="col">Title</th>
@@ -185,7 +185,7 @@
 							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
 							<th class="text-center w-5" scope="col"></th>
 						</tr>
-					</thead>
+					</tfoot>
 				</table>
 			</div><!-- ./card-body -->
 		</div><!-- ./accordion -->
