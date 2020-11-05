@@ -13,6 +13,7 @@ class OptionComposer {
     public function compose(View $view)
     {
 
+
 //        $test =  get_object_vars(json_decode(Option::whereName("contactInfo")->first()!=null ?  Option::whereName("contactInfo")->first()->value:"{}" ));
 //        dd($test["city"]!=null?$test["city"]:"");
         $option = [
@@ -26,6 +27,8 @@ class OptionComposer {
             "contactInfo" => get_object_vars(json_decode(Option::whereName("contactInfo")->first() != null ? Option::whereName("contactInfo")->first()->value : "{}")),
             "social" => get_object_vars(json_decode(Option::whereName("social")->first() != null ? Option::whereName("social")->first()->value : "{}")),
         ];
+
+
 
 
 

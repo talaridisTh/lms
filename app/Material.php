@@ -39,6 +39,12 @@ class Material extends Model {
         return $this->morphToMany('App\Media', 'mediable')->withPivot('usage', 'priority');
     }
 
+    public function mediaDetails()
+    {
+
+        return $this->hasOne('App\MediaDetails', 'media_id');
+    }
+
     public function users()
     {
 

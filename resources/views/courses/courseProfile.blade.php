@@ -226,7 +226,9 @@
                                                     <a target="_blank" href="{{url($media->rel_path)}}">
                                                         <i class="h3 mdi {{$course->getIcon($media->ext)}}"></i>
                                                         <span
-                                                            class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
+                                                            class=" ml-3">
+                                                              {{isset($media->mediaDetails)? $media->mediaDetails->title:$media->original_name}}.{{$media->ext}}
+                                                        </span>
                                                     </a>
                                                 </div>
                                             @endif

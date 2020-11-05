@@ -202,7 +202,7 @@
                     <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
                     <div class="swiper-container primary-slide">
                         <div class="swiper-wrapper">
-                            @foreach($bannersSecondary as $key => $banner)
+                            @foreach($bannersPrimary as $key => $banner)
                                 @php
                                     $bannerArray = (array) $banner;
                                     $bannerValue = key ( $bannerArray);
@@ -233,13 +233,17 @@
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-button-next"></div>
-                        <div class="swiper-scrollbar"></div>
                     </div>
                 </div>
             @endif
             {{--row 7 --}}
         </div>
 
+        <style>
+            .swiper-slide {
+                padding-bottom: 30px;
+            }
+        </style>
         <div>
             @if($arrayBanners["secondary"]->status==1)
                 <div class="row" style="margin-top: 9rem">
@@ -277,7 +281,6 @@
                         <div class="swiper-pagination"></div>
                         <div class="swiper-button-prev"></div>
                         <div class="swiper-button-next"></div>
-                        <div class="swiper-scrollbar"></div>
                     </div>
                 </div>
             @endif

@@ -20,19 +20,35 @@ class UserSeeder extends Seeder {
      */
     public function run()
     {
-		User::create([
-			'first_name' => "admin",
-			'last_name' => "admin",
-			'email' => "admin@gmail.com",
-			"phone"=>"6978565698",
-			"profil"=>"admin profil",
-			'avatar' => "/images/avatar-placeholder.png",
-			'slug' => "admin",
-			'password' => Hash::make('password'),
-			"password_encrypt"=>Crypt::encryptString('password'),
-			'status' => 1,
-			'remember_token' => Str::random(10),
-		])->assignRole("admin")->each( function() {
+        User::create([
+            'first_name' => "darkpony",
+            'last_name' => "darkpony",
+            'email' => "info@darkpony.com",
+            "phone"=>"6978565698",
+            "profil"=>"darkpony",
+            'avatar' => "/images/avatar-placeholder.png",
+            'slug' => "darkpony-super",
+            'password' => Hash::make('darkpony'),
+            "password_encrypt"=>Crypt::encryptString('darkpony'),
+            'status' => 1,
+            'remember_token' => Str::random(10),
+        ])->assignRole("super admin");
+       ;
+
+
+        User::create([
+            'first_name' => "admin",
+            'last_name' => "admin",
+            'email' => "admin@gmail.com",
+            "phone"=>"6978565698",
+            "profil"=>"admin profil",
+            'avatar' => "/images/avatar-placeholder.png",
+            'slug' => "admin",
+            'password' => Hash::make('password'),
+            "password_encrypt"=>Crypt::encryptString('password'),
+            'status' => 1,
+            'remember_token' => Str::random(10),
+        ])->assignRole("admin")->each( function() {
 			$javascript =  Course::create([
             	'title' => "Javascript",
             	"subtitle"=>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. In dignissim pulvinar metus quis bibendum. Donec fermentum porta consequat. Pellentesque vestibulum magna convallis, consequat neque a.",
@@ -46,7 +62,7 @@ class UserSeeder extends Seeder {
 				'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1)]),
             	"publish_at"=>now()
 			]);
-			
+
 			$javascript->users()->sync(User::find(1));
 			$javascript->topics()->sync(Topic::find(1));
 			$javascript->materials()->create([
@@ -74,7 +90,7 @@ class UserSeeder extends Seeder {
 				'fields' => json_encode(["summary" => rand(0,1), "description" => rand(0,1)]),
         		"publish_at"=>now()
 			]);
-			
+
 			$laravel->users()->sync(User::find(1));
 			$laravel->topics()->sync(Topic::find(2));
 			$laravel->materials()->create([

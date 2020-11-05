@@ -2,16 +2,12 @@
 
 namespace App\DataTables;
 
+use App\Role;
 use App\User;
-use http\Env\Request;
-use Illuminate\Support\Facades\DB;
-use PhpParser\Node\Stmt\DeclareDeclare;
-use Spatie\Permission\Contracts\Role;
+
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
 class UsersDataTable extends DataTable {
@@ -25,14 +21,16 @@ class UsersDataTable extends DataTable {
     public function dataTable($query)
     {
 
+
+
+
         if (!request()->from_date && !request()->to_date)
         {
-
-
 
             $data = User::with(["roles", "courses"])->whereHas(
             'roles', function ($q) {
             $q->where('name', "!=", 'guest');
+
         }
         )->get();
 
@@ -45,7 +43,18 @@ class UsersDataTable extends DataTable {
                 ->with(["roles", "courses"])->select("users.*");
         }
 
-        return DataTables::of($data)
+
+        $superAdminIds =Role::whereId(1)->first()->users->map(function($superAdmin){
+            return $superAdmin->id;
+        });
+        if (auth()->user()->hasRole('admin')) {
+
+            $users = $data->whereNotIn('id', $superAdminIds);
+
+        }
+
+
+        return DataTables::of($users)
             ->addColumn('roles', function (User $user) {
                 return $user->roles->map(function ($role) {
                     return $role->name;

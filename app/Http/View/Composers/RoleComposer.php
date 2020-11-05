@@ -12,7 +12,8 @@ class RoleComposer {
     public function compose(View $view)
     {
         $view->with("rolesName",Role::all());
-        $view->with("users", $users = User::whereHas("courses")->get());
+
+//        $view->with("users", $users = User::whereHas("courses")->get());
 //        $view->with("users", $users = User::all());
         $view->with("courses", $courses = Course::orderBy("id",'desc')->get());
     }

@@ -282,6 +282,7 @@
                                      aria-labelledby="head-extra-content" data-parent="#extra-content">
                                     <div class="card-body" style="padding: 30px">
                                         @foreach($materials->media->where("type","!=",0) as $media)
+
                                             @if($media->ext=="mp3")
 
                                                 <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
@@ -297,7 +298,9 @@
                                                     <a target="_blank" href="{{url($media->rel_path)}}">
                                                         <i class="h3 mdi {{$materials->getIcon($media->ext)}}"></i>
                                                         <span
-                                                            class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
+                                                            class=" ml-3">
+                                                             {{isset($media->mediaDetails)? $media->mediaDetails->title:$media->original_name}}.{{$media->ext}}
+                                                        </span>
                                                     </a>
                                                 </div>
                                             @endif

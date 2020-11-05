@@ -33,7 +33,7 @@ Route::get("/test", "Index\HomeController@test")->name("user.test");
 //! Dashboard routes
 //!######################################################
 //!					middleware				            #
-Route::group(['middleware' => ['auth', "role:admin"]], function () {
+Route::group(['middleware' => ['auth', "role:admin","superAdmin"]], function () {
 
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
@@ -75,10 +75,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     //! Dashboard Home Content
     Route::get('/dashboard/home-content', 'UtilityController@index');
 	Route::post('/dashboard/home-content/update', 'UtilityController@update');
-	
+
     Route::get('/dashboard/general-settings', 'OptionController@index');
 	Route::post('/dashboard/general-settings/update', 'OptionController@update');
-	
+
 	Route::get('/dashboard/options/{name}', 'OptionController@editPolicies')
 		->where("name", "terms|privacyPolicy|cookiePolicy");
     Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
