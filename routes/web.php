@@ -33,7 +33,7 @@ Route::get("/test", "Index\HomeController@test")->name("user.test");
 //! Dashboard routes
 //!######################################################
 //!					middleware				            #
-Route::group(['middleware' => ['auth', "role:admin","superAdmin"]], function () {
+Route::group(['middleware' => ['auth', "role:admin"]], function () {
 
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
@@ -51,7 +51,7 @@ Route::group(['middleware' => ['auth', "role:admin","superAdmin"]], function () 
     Route::delete('/dashboard/materials/delete/{material}', 'MaterialController@destroy')->name('material.destroy');
 	Route::get('/dashboard/materials/coursematerial/{course}/{priority}/{material:id?}', 'MaterialController@courseMaterial')->name('material.courseMaterial');
 	Route::get('/dashboard/view-pdf/{material:id}', 'MaterialController@viewPDF');
-	
+
     //! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
     Route::get('/dashboard/course/{course?}', 'CourseController@show')->name('course.show');
