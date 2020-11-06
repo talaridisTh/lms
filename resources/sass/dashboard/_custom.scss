@@ -785,6 +785,14 @@ figure > img {
 }
 
 .lime-green {
-	border: 1px solid limegreen;
-	color: limegreen;
+	border: 1px solid limegreen !important;
+	color: limegreen !important;
+}
+
+.lime-green-border {
+	border: 1px solid limegreen !important;
+}
+
+.lime-green-color {
+	color: limegreen !important;
 }

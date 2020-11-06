@@ -2029,8 +2029,8 @@ function pdfForm(priority) {
 				<div class="form-group col-4">
 					<label class="d-inline-block" for="pdf-upload" style="width: 100%;">Αρχείο PDF</label>
 					<label for="pdf-upload" class="custom-file-upload">
-						<i class="mdi mdi-cloud-upload-outline"></i>
-						<p class="font-16">Drop file here or click to upload.</p>
+						<i class="js-cloud-icon mdi mdi-cloud-upload-outline"></i>
+						<p class="js-file-name font-16">Drop file here or click to upload.</p>
 						<input id="pdf-upload" class="custom-file-upload-input js-file-input cursor-pointer js-empty" type="file" name="file" autocomplete="off"/>
 					</label>
 				</div>
@@ -2089,7 +2089,7 @@ function cancelAddition() {
 	if (dropzone) {
 		dropzone.removeEventListener("dragover", additionsDragOverHandler);
 		dropzone.removeEventListener("dragleave", removeColorHandler);
-		dropzone.removeEventListener("drop", removeColorHandler);
+		dropzone.removeEventListener("change", fileChangeHandler);
 	}
 
 	additionRow.remove();
@@ -2148,7 +2148,7 @@ function mainAdditionEventInit(row) {
 	if (dropzone) {
 		dropzone.addEventListener("dragover", additionsDragOverHandler);
 		dropzone.addEventListener("dragleave", removeColorHandler);
-		dropzone.addEventListener("drop", removeColorHandler);
+		dropzone.addEventListener("change", fileChangeHandler);
 	}
 }
 
@@ -2164,7 +2164,7 @@ function sectionAdditionEventInit(row, sectionId) {
 
 	dropzone.addEventListener("dragover", additionsDragOverHandler);
 	dropzone.addEventListener("dragleave", removeColorHandler);
-	dropzone.addEventListener("drop", removeColorHandler);
+	dropzone.addEventListener("change", fileChangeHandler);
 }
 
 function removeSectionAdditionHandler() {
@@ -2610,12 +2610,66 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 
 function additionsDragOverHandler() {
 	const label = this.parentElement;
-	label.classList.add("lime-green");
+	label.classList.add("lime-green-border", "lime-green-color");
 }
 
 function removeColorHandler() {
 	const label = this.parentElement;
-	label.classList.remove("lime-green");
+	label.classList.remove("lime-green-border", "lime-green-color");
+}
+
+function fileChangeHandler() {
+	const label = this.parentElement;
+	const cloudIcon = label.getElementsByClassName("js-cloud-icon")[0];
+	const fileName = label.getElementsByClassName("js-file-name")[0];
+	const input = document.getElementById("pdf-upload");
+	
+	fileName.textContent = fileNameGetter(input);
+	fileName.classList.add("filled")
+
+	cloudIcon.classList.add("mdi-check-bold");
+	cloudIcon.classList.remove("mdi-cloud-upload-outline");
+	label.classList.remove("lime-green-border", "lime-green-color");
+
+	removeDropzoneInitialEvents(this);
+	secondaryDropEventsInit(this);
+}
+
+function fileNameGetter(input) {
+
+	return input.files[0].name;
+
+}
+
+function removeDropzoneInitialEvents(input) {
+	input.removeEventListener("dragover", additionsDragOverHandler);
+	input.removeEventListener("dragleave", removeColorHandler);
+	input.removeEventListener("change", fileChangeHandler);
+}
+
+function secondaryDropEventsInit(input) {
+	input.addEventListener("dragover", secondaryDragOverHandler);
+	input.addEventListener("dragleave", secondaryDragLeaveHandler);
+	input.addEventListener("change", secondaryFileHandler);
+}
+
+function secondaryDragOverHandler() {
+	const label = this.parentElement;
+	label.classList.add("lime-green-border");
+}
+
+function secondaryDragLeaveHandler() {
+	const label = this.parentElement;
+	label.classList.remove("lime-green-border");
+}
+
+function secondaryFileHandler() {
+	const label = this.parentElement;
+	const fileName = label.getElementsByClassName("js-file-name")[0];
+
+	label.classList.remove("lime-green-border");
+
+	fileName.textContent = fileNameGetter(this);
 }
 
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
