@@ -87,7 +87,8 @@ return [
     ],
     // 'mimes' => 'The :attribute must be a file of type: :values.',
     'mimes' => 'Το αρχείο μπορεί να είναι μόνο: :values.',
-    'mimetypes' => 'The :attribute must be a file of type: :values.',
+    // 'mimetypes' => 'The :attribute must be a file of type: :values.',
+    'mimetypes' => 'Το αρχείο μπορεί να είναι μόνο: :values.',
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',
         'file' => 'The :attribute must be at least :min kilobytes.',

@@ -14,6 +14,7 @@ use App\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
@@ -89,11 +90,23 @@ class MaterialController extends Controller {
 
     public function addContent(Request $request) {
 
-		$request->validate([
-			'title' => 'required',
-			'file' => 'sometimes|mimetypes:application/pdf'
-		]);
-		
+		$data = [];
+		$data["errors"] = [];
+
+		if ( is_null($request->title) ) {
+			$data["errors"]["title"] = ["Παρακαλώ εισάγετε τίτλο."];
+		}
+
+		if ( $request->type === "PDF" && is_null($request->file) || $request->type === "PDF" && $request->file->getClientMimeType() !== "application/pdf" ) {
+
+			$data["errors"]["file"] = ["Παρακαλώ εισάγετε αρχείο τύπου PDF."];
+
+		}
+
+		if ( count($data["errors"]) > 0 ) {
+			return Response::json( $data, 422 );
+		}
+
         $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
         $material->title = $request->title;
@@ -445,10 +458,15 @@ class MaterialController extends Controller {
 
 	public function addSectionContent(Request $request) {
 
-		$request->validate([
-			'title' => 'required',
-			'file' => 'sometimes|mimetypes:application/pdf'
-		]);
+		//! egine etsi epidi 8eloume 2 anti8eta pragmata:
+		//! otan to type einai PDF to arxeio na einai aparetito
+		//! allios na min einai... me to SOMETIMES tis laravel
+		//! den mporoume na exoume to REQUIRED
+		$data = $this->customValidation($request);
+
+		if ( count($data["errors"]) > 0 ) {
+			return Response::json( $data, 422 );
+		}
 
 		$section = Material::find( $request->sectionId );
 		
@@ -537,6 +555,25 @@ class MaterialController extends Controller {
 			"originalName" => $originalName,
 			"fullname" => $fullname,
 		];
+	}
+
+	private function customValidation(Request $request) {
+
+		$data = [];
+		$data["errors"] = [];
+
+		if ( is_null($request->title) ) {
+			$data["errors"]["title"] = ["Παρακαλώ εισάγετε τίτλο."];
+		}
+
+		if ( $request->type === "PDF" && is_null($request->file) || $request->type === "PDF" && $request->file->getClientMimeType() !== "application/pdf" ) {
+
+			$data["errors"]["file"] = ["Παρακαλώ εισάγετε αρχείο τύπου PDF."];
+
+		}
+
+		return $data;
+
 	}
 
 }
