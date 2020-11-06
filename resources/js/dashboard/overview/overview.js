@@ -4,7 +4,7 @@ const topCourses = document.getElementsByClassName("js-top-courses");
 const topCoursesData = categoryStudentsCountBuilder( topCourses );
 const topCoursesCanvas = document.getElementById("top-courses");
 
-const topCoursesChart = new Chart(topCoursesCanvas, {
+new Chart(topCoursesCanvas, {
 	type: 'doughnut',
 	position: "bottom",
     data: {
@@ -35,12 +35,11 @@ const topCoursesChart = new Chart(topCoursesCanvas, {
     }
 });
 
-
 const topBundles = document.getElementsByClassName("js-top-bundles");
 const topBundlesData = categoryStudentsCountBuilder( topBundles );
 const topBundlesCanvas = document.getElementById("top-bundles");
 
-const topBundlesChart = new Chart(topBundlesCanvas, {
+new Chart(topBundlesCanvas, {
 	type: 'doughnut',
 	position: "bottom",
     data: {
@@ -111,7 +110,6 @@ for ( let i = 0; i < refMonths.length; i++ ) {
 		});
 	}
 
-	console.log(newStudentsData);
 }
 
 const moveMonths = newStudentsData.splice( currentMonth + 1);
@@ -120,14 +118,12 @@ newStudentsData = moveMonths.concat(newStudentsData)
 const months = []
 const students = [];
 
-
 for ( let i = 0; i < newStudentsData.length; i++ ) {
 	months.push(newStudentsData[i].month);
 	students.push(newStudentsData[i].students);
 }
 
-
-const newStudentsChart = new Chart(newStudentsCanvas, {
+new Chart(newStudentsCanvas, {
     type: 'line',
     data: {
 		labels: months,
@@ -182,7 +178,7 @@ const topicStatsCanvas = document.getElementById("courses-per-topic");
 const topicStats = JSON.parse(topicStatsCanvas.dataset.topicStats);
 const topic = titleCountSeparator(topicStats);
 
-const topicStatsChart = new Chart(topicStatsCanvas, {
+new Chart(topicStatsCanvas, {
 	type: 'doughnut',
 	position: "bottom",
     data: {
