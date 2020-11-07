@@ -252,8 +252,13 @@
                         </div>
                         <div class=" col-md-8">
                             <div class="d-flex justify-content-end  ">
+                                <img  src="{{asset('images/facebook.png')}}" alt="">
+                                <img  src="{{asset('images/youtube.png')}}" alt="">
+                                <img  src="{{asset('images/twitter.png')}}" alt="">
+                                <img  src="{{asset('images/instagram.png')}}" alt="">
+                                <img  src="{{asset('images/linked-in.png')}}" alt="">
                                 @foreach($socials as $social)
-                                    <img  src="{{asset('images/facebook.png')}}" alt="">
+
 {{--                                    <img src="{{isset($socialMedia["$social"])? $socialMedia["$social"] : "" }}">--}}
                                 @endforeach
                             </div>
