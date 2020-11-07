@@ -3851,6 +3851,7 @@ figure > img {
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  transition: all 0.5s ease-in-out;
 }
 
 .custom-file-upload > i {
@@ -3866,6 +3867,19 @@ figure > img {
   height: 100%;
   text-align: right;
   z-index: 50;
+}
+
+.lime-green {
+  border: 1px solid limegreen !important;
+  color: limegreen !important;
+}
+
+.lime-green-border {
+  border: 1px solid limegreen !important;
+}
+
+.lime-green-color {
+  color: limegreen !important;
 }
 
 /*

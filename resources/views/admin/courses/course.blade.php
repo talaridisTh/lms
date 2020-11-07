@@ -44,15 +44,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="row px-3">
-						<div class="col-6">
-							<div id="section-chapter-btn" class="card cursor-pointer">
-								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-file-document-outline	display-3"></i>
-									<h5 class="card-title mt-2">Μάθημα</h5>
-								</div>
-							</div>
-						</div>
-						<div class="col-6">
+						<div class="col-4">
 							<div class="js-section-material card cursor-pointer" data-type="Announcement">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-comment-quote-outline display-3"></i>
@@ -60,9 +52,15 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row px-3">
-						<div class="col-6">
+						<div class="col-4">
+							<div class="js-section-material card cursor-pointer" data-type="Link">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-link-variant-plus	display-3"></i>
+									<h5 class="card-title mt-2">Link</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-4">
 							<div class="js-section-material card cursor-pointer" data-type="Video">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-filmstrip	display-3"></i>
@@ -70,11 +68,21 @@
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row px-3">
 						<div class="col-6">
-							<div class="js-section-material card cursor-pointer" data-type="Link">
+							<div class="js-section-material card cursor-pointer" data-type="PDF">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-link-variant-plus	display-3"></i>
-									<h5 class="card-title mt-2">Link</h5>
+									<i class="mdi mdi-file-pdf-outline	display-3"></i>
+									<h5 class="card-title mt-2">PDF</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-6">
+							<div id="section-chapter-btn" class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-file-document-outline	display-3"></i>
+									<h5 class="card-title mt-2">Μάθημα</h5>
 								</div>
 							</div>
 						</div>

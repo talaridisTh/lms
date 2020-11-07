@@ -57,35 +57,12 @@ $(".js-section-material").on("click", function() {
 	const sectionId = modal.dataset.sectionId;
 	const priority = modal.dataset.priority;
 	const type = this.dataset.type;
-
-	const selection = document.getElementsByClassName("extra-content-row")[0];
-
-	if (selection) {
-		selection.remove();
-	}
-
-	const newRow = document.createElement("tr");
-	newRow.classList.add("extra-content-row")
-
+	
 	const row = $(`table[data-section-id='${sectionId}'] > tbody > tr[data-priority='${priority}']`)[0];
-
-	if ( type == "Announcement" ) {
-		newRow.innerHTML = annoucementForm( priority );
-	}
-	else {
-		newRow.innerHTML = linkForm( type, priority);
-	}
+	const newRow = createTableRow(type, priority);
 
 	newRow.appendAfter(row);
-
-	const saveBtn = newRow.getElementsByClassName("js-section-content")[0];
-	saveBtn.dataset.sectionId = sectionId;
-	saveBtn.addEventListener("click", sectionAdditionHandler);
-
-	const cancelBtn = newRow.getElementsByClassName("js-cancel-addition")[0];
-	cancelBtn.addEventListener("click", function() {
-		this.findParent(4).remove();
-	});
+	sectionAdditionEventInit(newRow, sectionId);
 
 	if ( type == "Announcement" ) {
 		$R('#new-announcement', utilities.redactorConfig );
@@ -1421,43 +1398,28 @@ $(".js-date-search").on( "input", function() {
 
 function sectionAdditionHandler() {
 
-	const container = this.findParent(4);
-	const title = container.getElementsByClassName("js-title")[0];
-	const subtitle = container.getElementsByClassName("js-subtitle")[0];
-	const link = container.getElementsByClassName("js-link")[0];
-	const status = container.getElementsByClassName("js-state")[0];
-	const content = container.getElementsByClassName("js-content")[0];
+	const form = document.getElementById("additional-content-form");
 	const type = this.dataset.type;
 	const priority = this.dataset.priority;
 	const sectionId = this.dataset.sectionId;
 
-	let valid = checkEmpty( container, "js-empty" );
+	let valid = checkEmpty( form, "js-empty" );
 
 	if ( !valid ) {
-
 		Swal.fire(
 			'Προσοχή!',
 			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
 			'info'
 		);
-
-		return
+		return;
 	}
 
-	const data = new FormData();
+	const data = new FormData(form);
 
 	data.append("courseId", courseId);
 	data.append("sectionId", sectionId);
-	data.append("title", title.value);
-	data.append("subtitle", subtitle.value);
-	data.append("status", status.value);
-	data.append("content", content.value);
 	data.append("type", type);
 	data.append("priority", priority);
-
-	if ( link ) {
-		data.append("link", link.value);
-	}
 
 	axios.post( "/section/add-content", data )
 		.then( res => {
@@ -1482,6 +1444,18 @@ function sectionAdditionHandler() {
 			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
 		})
 		.catch( (err) => {
+
+			if ( err.response.status === 422 && typeof err.response.data.errors.file !== "undefined" ) {
+				additionsErrorMessage(err.response.data.errors.file[0])
+
+				return;
+			}
+			else if ( err.response.status === 422 && typeof err.response.data.errors.title !== "undefined" ) {
+				additionsErrorMessage(err.response.data.errors.title[0])
+				
+				return;
+			}
+
 			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
 		});
 }
@@ -1895,6 +1869,7 @@ $(".js-material").on( "click", function() {
 
 	newRow.appendAfter( selectedRow );
 
+	mainAdditionEventInit(newRow);
 
 	if ( type == "Announcement" ) {
 		$R('#new-announcement', utilities.redactorConfig );
@@ -1927,12 +1902,12 @@ function findMaterialRow(rows, id = false) {
 
 function linkForm( type, priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο ${ type }</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
 				<div class="form-group col-6">
-					<label for="new-title">Τίτλος</label>
+					<label for="new-title">Τίτλος <span class="text-danger">*</span></label>
 					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
 					<div class="invalid-feedback">
 						Παρακαλώ εισάγετε τίτλο.
@@ -1940,14 +1915,17 @@ function linkForm( type, priority) {
 				</div>
 				<div class="form-group col-6">
 					<label for="new-subtitle">Υπότιτλος</label>
-					<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" name="subtitle" placeholder="Εισάγετε υπότιτλο..."/>
+					<input type="text" id="new-subtitle" class="js-subtitle form-control" name="subtitle" placeholder="Εισάγετε υπότιτλο..."/>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-group col-9">
-					<label>${ type }</label>
-					<input type="text"class="js-empty form-control" name="video" ${ type === "Video" ? "" : "hidden"} placeholder="Εισάγετε video link..."/>
-					<input type="text"class="js-empty form-control" name="link" ${ type === "Video" ? "hidden" : ""} placeholder="Εισάγετε link..."/>
+					<label>${ type } <span class="text-danger">*</span></label>
+					<input type="text" class="${ type === "Video" ? "js-empty" : ""} form-control" name="video" ${ type === "Video" ? "" : "hidden"} placeholder="Εισάγετε video link..."/>
+					<input type="text" class="${ type === "Video" ? "" : "js-empty"} form-control" name="link" ${ type === "Video" ? "hidden" : ""} placeholder="Εισάγετε link..."/>
+					<div class="invalid-feedback">
+						Παρακαλώ εισάγετε link.
+        			</div>
 				</div>
 				<div class="form-group col-3 d-flex flex-column">
 					<label for="state-select">Κατάσταση</label>
@@ -1968,13 +1946,16 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέα Ανακοίνωση</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
 				<div class="form-group col-9">
-					<label for="new-title">Τίτλος</label>
+					<label for="new-title">Τίτλος <span class="text-danger">*</span></label>
 					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+					<div class="invalid-feedback">
+						Παρακαλώ εισάγετε τίτλο.
+					</div>
 				</div>
 				<div class="form-group col-3 d-flex flex-column">
 					<label for="state-select">Κατάσταση</label>
@@ -1985,8 +1966,11 @@ function annoucementForm( priority ) {
 				</div>
 			</div>
 			<div class="form-group">
-				<label for="new-announcement">Ανακοίνωση</label>
+				<label for="new-announcement">Ανακοίνωση <span class="text-danger">*</span></label>
 				<textarea id="new-announcement" class="js-empty js-content form-control" name="content" placeholder="Εισάγετε ανακοίνωση..."></textarea>
+				<div class="invalid-feedback">
+					Παρακαλώ εισάγετε Ανακοίνωση.
+				</div>
 			</div>
 			<input type="text" name="video" hidden/>
 			<input type="text" name="link" hidden/>
@@ -2001,14 +1985,17 @@ function annoucementForm( priority ) {
 
 function sectionForm(priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
 				<div class="form-group col-9">
-					<label for="new-title">Τίτλος</label>
+					<label for="new-title">Τίτλος <span class="text-danger">*</span></label>
 					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+					<div class="invalid-feedback">
+						Παρακαλώ εισάγετε τίτλο.
+					</div>
 				</div>
 				<div class="form-group col-3 d-flex flex-column">
 					<label for="state-select">Κατάσταση</label>
@@ -2032,12 +2019,12 @@ function sectionForm(priority) {
 
 function pdfForm(priority) {
 
-	return `<td id="add-content-row" class="text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο PDF</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
 				<div class="form-group col-5">
-					<label for="new-title">Τίτλος</label>
+					<label for="new-title">Τίτλος <span class="text-danger">*</span></label>
 					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
 					<div class="invalid-feedback">
 						Παρακαλώ εισάγετε τίτλο.
@@ -2045,7 +2032,7 @@ function pdfForm(priority) {
 				</div>
 				<div class="form-group col-5">
 					<label for="new-subtitle">Υπότιτλος</label>
-					<input type="text" id="new-subtitle" class="js-empty js-subtitle form-control" name="subtitle" placeholder="Εισάγετε υπότιτλο..."/>
+					<input type="text" id="new-subtitle" class="js-subtitle form-control" name="subtitle" placeholder="Εισάγετε υπότιτλο..."/>
 					<input type="text" id="new-content" class="js-content form-control" name="content" placeholder="Εισάγετε περιεχόμενο..." hidden/>
 				</div>
 				<div class="form-group col-2 d-flex flex-column">
@@ -2062,16 +2049,19 @@ function pdfForm(priority) {
 					<textarea class="form-control" id="pdf-description" name="summary" style="height: 100%;" placeholder="Εισάγετε περιγραφή"></textarea>
 				</div>
 				<div class="form-group col-4">
-					<label class="d-inline-block" for="pdf-upload" style="width: 100%;">Αρχείο PDF</label>
+					<label class="d-inline-block" for="pdf-upload" style="width: 100%;">Αρχείο PDF <span class="text-danger">*</span></label>
 					<label for="pdf-upload" class="custom-file-upload">
-						<i class="mdi mdi-cloud-upload-outline"></i>
-						<p class="font-16">Drop file here or click to upload.</p>
-						<input id="pdf-upload" class="custom-file-upload-input cursor-pointer js-empty" type="file" name="file" autocomplete="off"/>
+						<i class="js-cloud-icon mdi mdi-cloud-upload-outline"></i>
+						<p class="js-file-name font-16">Drop file here or click to upload.</p>
+						<input id="pdf-upload" class="custom-file-upload-input js-file-input cursor-pointer js-empty" type="file" name="file" autocomplete="off"/>
+						<div class="invalid-feedback">
+							Παρακαλώ εισάγετε αρχείο.
+						</div>
 					</label>
 				</div>
 			</div>
-			<input type="text" class="js-empty form-control" name="video" hidden placeholder="Εισάγετε link..."/>
-			<input type="text" class="js-empty form-control" name="link" hidden placeholder="Εισάγετε link..."/>
+			<input type="text" class="form-control" name="video" hidden placeholder="Εισάγετε link..."/>
+			<input type="text" class="form-control" name="link" hidden placeholder="Εισάγετε link..."/>
 		</form>
 		<div class="form-row justify-content-end">
 			<div class="form-group col-3 d-flex justify-content-end align-items-start" style="padding-top: 1.85rem;">
@@ -2108,41 +2098,45 @@ function createTableRow( type, priority ) {
 		rowElm.innerHTML = linkForm( type, priority);
 	}
 
-	let saveBtn = rowElm.getElementsByClassName("js-add-content")[0];
-	let cancelBtn = rowElm.getElementsByClassName("js-cancel-addition")[0];
-	saveBtn.addEventListener("click", addContent);
-	cancelBtn.addEventListener("click", cancelAddition );
-
 	return rowElm;
 }
 
+
 function cancelAddition() {
 
-	let parent = this.parentElement.parentElement.parentElement.parentElement;
-	let saveBtn = parent.getElementsByClassName("js-add-content")[0];
+	const additionRow = document.getElementsByClassName("extra-content-row")[0];
+	const saveBtn = additionRow.getElementsByClassName("js-add-content")[0];
+	const dropzone = additionRow.getElementsByClassName("js-file-input")[0];
 
 	saveBtn.removeEventListener( "click", addContent );
 	this.removeEventListener( "click", cancelAddition );
 
-	parent.remove();
+	if (dropzone) {
+		dropzone.removeEventListener("dragover", additionsDragOverHandler);
+		dropzone.removeEventListener("dragleave", removeColorHandler);
+		dropzone.removeEventListener("change", fileChangeHandler);
+		removesecondaryEvents(dropzone);
+	}
+
+	additionRow.remove();
 }
 
 function addContent() {
 	const form = document.getElementById("additional-content-form");
 	const priority = this.dataset.priority;
 	const type = this.dataset.type;
-	// let valid = checkEmpty( container, "js-empty" );
+	let valid = checkEmpty( form, "js-empty" );
 
-	// if ( !valid ) {
+	if ( !valid ) {
 
-	// 	Swal.fire(
-	// 		'Προσοχή!',
-	// 		'Παρακαλώ συμπληρώστε όλα τα πεδία.',
-	// 		'info'
-	// 	);
+		Swal.fire(
+			'Προσοχή!',
+			'Παρακαλώ συμπληρώστε όλα τα πεδία.',
+			'info'
+		);
 
-	// 	return
-	// }
+		return
+	}
 
 	let data = new FormData(form);
 
@@ -2162,9 +2156,73 @@ function addContent() {
 			utilities.toastAlert( "success", "Αποθηκεύτηκε" );
 		})
 		.catch( (err) => {
-			console.log(err);
-			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...")
+
+			if ( err.response.status === 422 && typeof err.response.data.errors.file !== "undefined" ) {
+				additionsErrorMessage(err.response.data.errors.file[0])
+
+				return;
+			}
+			else if ( err.response.status === 422 && typeof err.response.data.errors.title !== "undefined" ) {
+				additionsErrorMessage(err.response.data.errors.title[0])
+				
+				return;
+			}
+
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
 		});
+
+}
+
+function additionsErrorMessage(text) {
+	Swal.fire({
+		title: 'Error',
+		html: text,
+		icon: 'warning',
+		confirmButtonColor: '#536de6'
+	});
+}
+
+function mainAdditionEventInit(row) {
+	const saveBtn = row.getElementsByClassName("js-add-content")[0];
+	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
+	const dropzone = row.getElementsByClassName("js-file-input")[0];
+
+	saveBtn.addEventListener("click", addContent);
+
+	cancelBtn.addEventListener("click", cancelAddition );
+
+	if (dropzone) {
+		dropzone.addEventListener("dragover", additionsDragOverHandler);
+		dropzone.addEventListener("dragleave", removeColorHandler);
+		dropzone.addEventListener("change", fileChangeHandler);
+	}
+}
+
+function sectionAdditionEventInit(row, sectionId) {
+	const saveBtn = row.getElementsByClassName("js-section-content")[0];
+	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
+	const dropzone = row.getElementsByClassName("js-file-input")[0];
+
+	saveBtn.dataset.sectionId = sectionId;
+	saveBtn.addEventListener("click", sectionAdditionHandler);
+
+	cancelBtn.addEventListener("click", removeSectionAdditionHandler);
+
+	if (dropzone) {
+		dropzone.addEventListener("dragover", additionsDragOverHandler);
+		dropzone.addEventListener("dragleave", removeColorHandler);
+		dropzone.addEventListener("change", fileChangeHandler);
+	}
+}
+
+function removeSectionAdditionHandler() {
+	const row = document.getElementsByClassName("extra-content-row")[0];
+	const saveBtn = row.getElementsByClassName("js-section-content")[0];
+
+	saveBtn.removeEventListener( "click", sectionAdditionHandler );
+	this.removeEventListener( "click", removeSectionAdditionHandler );
+
+	row.remove();
 
 }
 
@@ -2196,11 +2254,9 @@ function checkEmpty( container, elmClass) {
 	let valid = true;
 
 	for ( let i = 0; i < elements.length; i++ ) {
-
 		if ( !elements[i].value ) {
 			valid = false;
 		}
-
 	}
 
 	return valid;
@@ -2597,6 +2653,76 @@ const courseFilePond = FilePond.create(courseFileUpload, {
     }),
 	maxFileSize: "50MB"
 });
+
+function additionsDragOverHandler() {
+	const label = this.parentElement;
+	label.classList.add("lime-green-border", "lime-green-color");
+}
+
+function removeColorHandler() {
+	const label = this.parentElement;
+	label.classList.remove("lime-green-border", "lime-green-color");
+}
+
+function fileChangeHandler() {
+	const label = this.parentElement;
+	const cloudIcon = label.getElementsByClassName("js-cloud-icon")[0];
+	const fileName = label.getElementsByClassName("js-file-name")[0];
+	const input = document.getElementById("pdf-upload");
+	
+	fileName.textContent = fileNameGetter(input);
+	fileName.classList.add("filled")
+
+	cloudIcon.classList.add("mdi-check-bold");
+	cloudIcon.classList.remove("mdi-cloud-upload-outline");
+	label.classList.remove("lime-green-border", "lime-green-color");
+
+	removeDropzoneInitialEvents(this);
+	secondaryDropEventsInit(this);
+}
+
+function fileNameGetter(input) {
+
+	return input.files[0].name;
+
+}
+
+function removeDropzoneInitialEvents(input) {
+	input.removeEventListener("dragover", additionsDragOverHandler);
+	input.removeEventListener("dragleave", removeColorHandler);
+	input.removeEventListener("change", fileChangeHandler);
+}
+
+function secondaryDropEventsInit(input) {
+	input.addEventListener("dragover", secondaryDragOverHandler);
+	input.addEventListener("dragleave", secondaryDragLeaveHandler);
+	input.addEventListener("change", secondaryFileHandler);
+}
+
+function secondaryDragOverHandler() {
+	const label = this.parentElement;
+	label.classList.add("lime-green-border");
+}
+
+function removesecondaryEvents(input) {
+	input.addEventListener("dragover", secondaryDragOverHandler);
+	input.addEventListener("dragleave", secondaryDragLeaveHandler);
+	input.addEventListener("change", secondaryFileHandler);
+}
+
+function secondaryDragLeaveHandler() {
+	const label = this.parentElement;
+	label.classList.remove("lime-green-border");
+}
+
+function secondaryFileHandler() {
+	const label = this.parentElement;
+	const fileName = label.getElementsByClassName("js-file-name")[0];
+
+	label.classList.remove("lime-green-border");
+
+	fileName.textContent = fileNameGetter(this);
+}
 
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 for ( let i = 0; i < dropArea.length; i++ ) {
