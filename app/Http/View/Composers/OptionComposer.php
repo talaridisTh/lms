@@ -28,6 +28,7 @@ class OptionComposer {
             "social" =>   Option::whereName("social")->first() ? Option::whereName("social")->first()->value : "",
         ];
 
+
         $view->with('option', $option);
     }
 

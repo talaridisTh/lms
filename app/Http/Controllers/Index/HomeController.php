@@ -39,6 +39,7 @@ class HomeController extends Controller {
 
 
 
+
         return view('home', compact('material', "bannersPrimary", "bannersSecondary", "arrayBanners",'chart'));
     }
 

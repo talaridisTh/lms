@@ -61,34 +61,33 @@
                 <div class="container text-center">
                     <img
                         style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
-                        class="img-custom-index img-fluid"  src="{{asset('images/vector-smart-object.png')}}"
+                        class="img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
                         alt="vector-smart-object">
                 </div>
             </div>
 
         </div>
-      @if($chart["courses"] >0 && $chart["material"]>0 && $chart["user"]>0 )
-        {{--row 2 --}}
-        <div class="row justify-content-center  mt-3">
-            <div class="col-md-3 text-center mr-5">
-                <div class="count-number-1 count-number" data-start="0" data-end="{{$chart["courses"]}}"></div>
-                <div class="line w-50 text-center"></div>
-                <h3>Courses</h3>
-            </div>
-            <div class="col-md-3 text-center mr-5">
-                <div class="count-number-2 count-number" data-start="0" data-end="{{$chart["material"]}}"></div>
-                <div class="line w-50 text-center"></div>
-                <h3>Μαθήματα</h3>
-            </div>
-            <div class="col-md-3 text-center">
-                <div class="count-number-3 count-number" data-start="0" data-end="{{$chart["user"]}}"></div>
-                <div class="line w-50 text-center"></div>
-                <h3>Καθηγητές </h3>
-            </div>
+        @if($chart["courses"] >0 && $chart["material"]>0 && $chart["user"]>0 )
+            {{--row 2 --}}
+            <div class="row justify-content-center  mt-3">
+                <div class="col-md-3 text-center mr-5">
+                    <div class="count-number-1 count-number" data-start="0" data-end="{{$chart["courses"]}}"></div>
+                    <div class="line w-50 text-center"></div>
+                    <h3>Courses</h3>
+                </div>
+                <div class="col-md-3 text-center mr-5">
+                    <div class="count-number-2 count-number" data-start="0" data-end="{{$chart["material"]}}"></div>
+                    <div class="line w-50 text-center"></div>
+                    <h3>Μαθήματα</h3>
+                </div>
+                <div class="col-md-3 text-center">
+                    <div class="count-number-3 count-number" data-start="0" data-end="{{$chart["user"]}}"></div>
+                    <div class="line w-50 text-center"></div>
+                    <h3>Καθηγητές </h3>
+                </div>
 
 
-
-        </div>
+            </div>
         @endif
         {{--row 3 --}}
         <div class="row my-5 ">
@@ -198,7 +197,7 @@
                 {{--row 7 --}}
         <div>
             @if($arrayBanners["primary"]->status==1)
-                <div class="row" style="margin-top: 9rem">
+                <div class="row js-banner-primary" data-count="{{count($bannersPrimary)}}" style="margin-top: 9rem">
                     <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
                     <div class="swiper-container primary-slide">
                         <div class="swiper-wrapper">
@@ -212,27 +211,29 @@
                                 @endphp
                                 <div class="swiper-slide ">
                                     <!-- Simple card -->
-                                    <div class="card card-shadow d-block" style="height: 50vh">
+                                    <div class="card card-shadow d-block" style="height: 50vh ;    width: 75%;">
                                         <div class="crop-height">
-                                            <img class="card-img-top  scale" src="{{$model->cover}}"
+                                            <img class="card-img-top img-fluid scale" src="{{$model->cover}}"
                                                  alt="Card image cap">
                                         </div>
-                                        <div class="card-body">
+                                        <div class="card-body text-left">
                                             <h5 class="card-title blue-title d-flex flex-column">
                                                 <span>{{$model->title}}</span> Το
                                                 πρώτο μου Ρομπότ</h5>
-                                            <p class="card-text span-custom">
-                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
-                                            </p>
+                                            <span class="card-text span-custom p">
+                                                {{$model->subtitle}}
+                                            </span>
                                         </div> <!-- end card-body-->
                                     </div> <!-- end card-->
 
                                 </div>
                             @endforeach
                         </div>
-                        <div class="swiper-pagination"></div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
+                        @if(count($bannersPrimary)>1)
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        @endif
                     </div>
                 </div>
             @endif
@@ -246,7 +247,7 @@
         </style>
         <div>
             @if($arrayBanners["secondary"]->status==1)
-                <div class="row" style="margin-top: 9rem">
+                <div class="row js-banner-secondary" data-count="{{count($bannersSecondary)}}" style="margin-top: 9rem">
                     <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
                     <div class="swiper-container secondary-slide">
                         <div class="swiper-wrapper">
@@ -260,17 +261,18 @@
                                 @endphp
                                 <div class="swiper-slide ">
                                     <!-- Simple card -->
-                                    <div class="card card-shadow d-block" style="height: 50vh">
+                                    <div class="card card-shadow d-block" style="height: 50vh; width: 65%;">
                                         <div class="crop-height">
                                             <img class="card-img-top  scale" src="{{$model->cover}}"
                                                  alt="Card image cap">
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title blue-title d-flex flex-column">
+                                        <div class="card-body text-left">
+                                            <h5 class="card-title blue-title d-flex flex-column ">
                                                 <span>{{$model->title}}</span> Το
                                                 πρώτο μου Ρομπότ</h5>
-                                            <p class="card-text span-custom">
-                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}
+                                            <p class="card-text span-custom ">
+{{--                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}--}}
+                                                {{$model->subtitle}}
                                             </p>
                                         </div> <!-- end card-body-->
                                     </div> <!-- end card-->
@@ -278,9 +280,11 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="swiper-pagination"></div>
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
+                        @if(count($bannersSecondary)>1)
+                            <div class="swiper-pagination"></div>
+                            <div class="swiper-button-prev"></div>
+                            <div class="swiper-button-next"></div>
+                        @endif
                     </div>
                 </div>
             @endif

@@ -83,9 +83,11 @@
             @if(Auth::check())
                 <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
                 	<span class=" stop nav-logo-lg">
-                	 <img class="m-2" height="60"
-                          src="{{$option['logo']}}"
-                          alt="">
+                            @isset($option['logo'])
+                            <img class="m-2" height="60"
+                                 src="{{$option['logo']}}"
+                                 alt="">
+                        @endisset
                 	</span>
                 </a>
             @else
@@ -219,9 +221,9 @@
     </div>
 
     @php
-            $contactInfo = json_decode( $option["contactInfo"]);
-            $socialMedia = json_decode( $option["social"]);
-            $socials = ["facebook","instagram","twitter","youtube","linkedIn"];
+        $contactInfo = json_decode( $option["contactInfo"]);
+        $socialMedia = json_decode( $option["social"]);
+        $socials = ["facebook","instagram","twitter","youtube","linkedIn"];
     @endphp
 
     <footer class="footer-alt border-top bg-light pb-0" style="    margin-bottom: -19px;">
@@ -231,36 +233,56 @@
                     <div class="row align-items-center">
                         <div class="col-md-4 d-flex" style="width: 147px; height: 79px;">
                            	<span class=" stop nav-logo-lg">
-                                 <img class="m-2" height="60"
-                                      src="{{$option['logo']}}"
-                                      alt="">
+                                @isset($option['logo'])
+                                    <img class="m-2" height="60"
+                                         src="{{$option['logo']}}"
+                                         alt="">
+                                @endisset
                 	        </span>
                             <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
-                                        {{isset($contactInfo->city)?$contactInfo->city:""}}
-                                    <p class="text-left d-flex flex-column font-14" style="color: #585d63">
+                                {{isset($contactInfo->city)?$contactInfo->city:""}}
+                                <p class="text-left d-flex flex-column font-14" style="color: #585d63">
                                         <span>
                                             {{isset($contactInfo->address)?$contactInfo->address.",":""}}
                                             {{isset($contactInfo->zipCode)?$contactInfo->zipCode.",":""}}
                                         </span>
-                                        <span>
+                                    <span>
                                             {{isset($contactInfo->email)?$contactInfo->email:""}}
-                                            {{isset($contactInfo->phone)?$contactInfo->phone:""}}
-                                            {{isset($contactInfo->fax)?$contactInfo->fax:""}}
+                                        {{isset($contactInfo->phone)?$contactInfo->phone:""}}
+                                        {{isset($contactInfo->fax)?$contactInfo->fax:""}}
                                         </span>
-                                    </p>
+                                </p>
                             </h4>
                         </div>
                         <div class=" col-md-8">
                             <div class="d-flex justify-content-end  ">
-                                <img  src="{{asset('images/facebook.png')}}" alt="">
-                                <img  src="{{asset('images/youtube.png')}}" alt="">
-                                <img  src="{{asset('images/twitter.png')}}" alt="">
-                                <img  src="{{asset('images/instagram.png')}}" alt="">
-                                <img  src="{{asset('images/linked-in.png')}}" alt="">
-                                @foreach($socials as $social)
 
-{{--                                    <img src="{{isset($socialMedia["$social"])? $socialMedia["$social"] : "" }}">--}}
-                                @endforeach
+                                @isset($socialMedia->facebook)
+                                    <a href="{{$socialMedia->facebook}}">
+                                        <img src="{{asset('images/facebook.png')}}" alt="">
+                                    </a>
+                                @endisset
+                                @isset($socialMedia->youtube)
+                                    <a href="{{isset($socialMedia->youtube)? $socialMedia->youtube : "" }}">
+                                        <img src="{{asset('images/youtube.png')}}" alt="">
+                                    </a>
+                                @endisset
+                                @isset($socialMedia->twitter)
+                                    <a href="{{isset($socialMedia->twitter)? $socialMedia->twitter : "" }}">
+                                        <img src="{{asset('images/twitter.png')}}" alt="">
+                                    </a>
+                                @endisset
+                                @isset($socialMedia->instagram)
+                                    <a href="{{isset($socialMedia->instagram)? $socialMedia->instagram : "" }}">
+                                        <img src="{{asset('images/instagram.png')}}" alt="">
+                                    </a>
+                                @endisset
+                                @isset($socialMedia->linked)
+                                    <a href="{{isset($socialMedia->linked)? $socialMedia->linked : "" }}">
+                                        <img src="{{asset('images/linked.png')}}" alt="">
+                                    </a>
+                                @endisset
+
                             </div>
                         </div>
                     </div>

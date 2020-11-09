@@ -4,10 +4,11 @@ import 'swiper/swiper-bundle.css';
 
 
 //primary slide
+const countPrimary = $(".js-banner-primary")[0].dataset.count
 new Swiper('.primary-slide', {
     // Optional parameters
     // If we need pagination
-    slidesPerView: 3,
+    slidesPerView: countPrimary,
     spaceBetween: 30,
     freeMode: true,
     pagination: {
@@ -27,10 +28,11 @@ new Swiper('.primary-slide', {
 })
 
 //secondary slide
+const countSecondary = $(".js-banner-secondary")[0].dataset.count
 new Swiper('.secondary-slide', {
     // Optional parameters
     // If we need pagination
-    slidesPerView: 3,
+    slidesPerView: countSecondary,
     spaceBetween: 30,
     freeMode: true,
     pagination: {
@@ -42,13 +44,13 @@ new Swiper('.secondary-slide', {
     },
 
     // Navigation arrows
+
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
     },
 
 })
-
 
 
 function animateValue($obj, start, end, duration) {
