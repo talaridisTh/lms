@@ -266,6 +266,9 @@
                                     <!-- Simple card -->
                                     <div class="card card-shadow d-block {{$bannerClass}}" style="height: 50vh; width: 75%;">
 
+
+
+
                                         @isset($model->cover)
                                             <div class="crop-height">
                                                 <img class="card-img-top  scale" src="{{$model->cover}}"
