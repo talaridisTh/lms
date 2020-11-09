@@ -22,6 +22,7 @@ mix.js('resources/js/app.js', 'public/js')
 
 	.js('resources/js/dashboard/materials/materialsMain.js', 'public/js/dashboard/materials')
 	.js('resources/js/dashboard/materials/material.js', 'public/js/dashboard/materials')
+	.js('resources/js/dashboard/materials/pdfMaterial.js', 'public/js/dashboard/materials')
 
 	.js('resources/js/dashboard/users/userMain.js', 'public/js/dashboard/users')
 	.js('resources/js/dashboard/users/userProfil.js', 'public/js/dashboard/users')

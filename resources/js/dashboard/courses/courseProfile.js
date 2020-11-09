@@ -2046,7 +2046,7 @@ function pdfForm(priority) {
 			<div class="form-row">
 				<div class="form-group col-8">
 					<label for="pdf-description">Περιγραφή</label>
-					<textarea class="form-control" id="pdf-description" name="summary" style="height: 100%;" placeholder="Εισάγετε περιγραφή"></textarea>
+					<textarea class="form-control" id="pdf-description" name="description" style="height: 100%;" placeholder="Εισάγετε περιγραφή"></textarea>
 				</div>
 				<div class="form-group col-4">
 					<label class="d-inline-block" for="pdf-upload" style="width: 100%;">Αρχείο PDF <span class="text-danger">*</span></label>

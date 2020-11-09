@@ -773,6 +773,14 @@ figure > img {
 .custom-file-upload > i {
 	font-size: 40px;
 }
+
+//! to input kalipti olo to label
+//! gia na leitourgei san drag and drop
+//! an ta gramata apo to keimeno tou input
+//! einai mesa sto label pali den leitourgei
+//! to drag and drop gi auto to width egine
+//! 200%, gia na bgoun ekso kai kriftikan me 
+//! overflow hidden
 .custom-file-upload-input {
 	opacity: 0;
 	position: absolute;

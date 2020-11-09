@@ -145,6 +145,9 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('materials/materials-datatable', 'Ajax\MaterialController@index');
     Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");
     Route::post('materials/add-course-inside-material', 'Ajax\MaterialController@addCourseMaterial')->name("add-course-material-datatable");
+    Route::post('materials/remaining-pdf-files', 'Ajax\MaterialController@remainingPDFFiles');
+
+
 //! Dashboard Ajax Bundles CRUD
     Route::post('materials/material-types', 'Ajax\MaterialController@materialTypes');
     Route::post('materials/add-additionnal-content', 'Ajax\MaterialController@addContent');
@@ -167,7 +170,9 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
     Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
     Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
-// Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
+    Route::patch('material/{material:id}/change-pdf', 'Ajax\MaterialController@changePDF');
+
+	// Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables
     Route::post('topics/topics-datatable', 'Ajax\TopicController@index');
 //! Dashboard Ajax Topic CRUD

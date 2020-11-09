@@ -7,6 +7,7 @@ use App\CourseMaterial;
 use App\DataTables\AddCourseInsideMaterialsDataTable;
 use App\DataTables\CourseInsideMaterialsDataTable;
 use App\DataTables\MaterialsDataTable;
+use App\DataTables\RemainingPDFDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Media;
@@ -90,18 +91,11 @@ class MaterialController extends Controller {
 
     public function addContent(Request $request) {
 
-		$data = [];
-		$data["errors"] = [];
-
-		if ( is_null($request->title) ) {
-			$data["errors"]["title"] = ["Παρακαλώ εισάγετε τίτλο."];
-		}
-
-		if ( $request->type === "PDF" && is_null($request->file) || $request->type === "PDF" && $request->file->getClientMimeType() !== "application/pdf" ) {
-
-			$data["errors"]["file"] = ["Παρακαλώ εισάγετε αρχείο τύπου PDF."];
-
-		}
+		//! egine etsi epidi 8eloume 2 anti8eta pragmata:
+		//! otan to type einai PDF to arxeio na einai aparetito
+		//! allios na min einai... me to SOMETIMES tis laravel
+		//! den mporoume na exoume to REQUIRED
+		$data = $this->customValidation($request);
 
 		if ( count($data["errors"]) > 0 ) {
 			return Response::json( $data, 422 );
@@ -111,7 +105,7 @@ class MaterialController extends Controller {
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
-        $material->content = $request->content;
+        $material->description = $request->description;
         $material->type = $request->type;
         $material->status = $request->status;
 		$material->slug = Str::slug($request->title, "-");
@@ -119,6 +113,10 @@ class MaterialController extends Controller {
 		$material->link = $request->link;
 		$material->save();
 		
+		//! epidi to PDF 8a 8eorite autonomo ma8ima 8a xrisimopoihte o
+		//! titlos, kai i perigrafi apo to ma8ima allios apo ton media_details
+		//! 8a ginotan mperdema. Ta eisagoume omos kai ston media_details 
+		//! gia na iparxoun
 		if ( !is_null($request->file) && $request->file->isValid() ) {
 			$pdf = $this->storeFile($request->file);
 			$this->storeFileDetails($request, $pdf);
@@ -473,7 +471,7 @@ class MaterialController extends Controller {
 		$material = new Material;
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
-		$material->content = $request->content;
+		$material->description = $request->description;
 		$material->type = $request->type;
 		$material->status = $request->status;
 		$material->slug = Str::slug($request->title, "-");
@@ -500,6 +498,21 @@ class MaterialController extends Controller {
 			->where("type", "Section")->orderBy("priority")->get();
 
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
+	public function changePDF(Request $request, Material $material) {
+
+		$material->media()->where("usage", 4)->sync([$request->pdfId => ["usage" => 4]]);
+
+		return Response::json([
+			"pdf" => Media::with("mediaDetails")->find( $request->pdfId )
+		], 200);
+	}
+
+	public function remainingPDFFiles(RemainingPDFDataTable $dataTable) {
+
+		return $dataTable->render('pdf.files');
+
 	}
 
 	private function storeFile($file) {
