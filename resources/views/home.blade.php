@@ -195,7 +195,7 @@
         </div>
         {{--       AUTA EDW THA ALLAKSOUN -}}
                 {{--row 7 --}}
-        <div>
+        <div >
             @if($arrayBanners["primary"]->status==1)
                 <div class="row js-banner-primary" data-count="{{count($bannersPrimary)}}" style="margin-top: 9rem">
                     <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
@@ -207,16 +207,18 @@
                                     $bannerValue = key ( $bannerArray);
                                     $bannerKey =array_values ($bannerArray);
                                     $model =   $bannerValue::findOrFail($bannerKey)->first();
-
+                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''
                                 @endphp
                                 <div class="swiper-slide ">
                                     <!-- Simple card -->
-                                    <div class="card card-shadow d-block" style="height: 50vh ;    width: 75%;">
+                                    <div class="card card-shadow d-block {{$bannerClass}}" style="height: 55vh ; width: 75%;">
+                                        @isset($model->cover)
                                         <div class="crop-height">
                                             <img class="card-img-top img-fluid scale" src="{{$model->cover}}"
                                                  alt="Card image cap">
                                         </div>
-                                        <div class="card-body text-left">
+                                        @endisset
+                                        <div class="card-body text-left {{$bannerClass}} ">
                                             <h5 class="card-title blue-title d-flex flex-column">
                                                 <span>{{$model->title}}</span> Το
                                                 πρώτο μου Ρομπότ</h5>
@@ -245,7 +247,7 @@
                 padding-bottom: 30px;
             }
         </style>
-        <div>
+        <div >
             @if($arrayBanners["secondary"]->status==1)
                 <div class="row js-banner-secondary" data-count="{{count($bannersSecondary)}}" style="margin-top: 9rem">
                     <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
@@ -257,21 +259,25 @@
                                     $bannerValue = key ( $bannerArray);
                                     $bannerKey =array_values ($bannerArray);
                                     $model =   $bannerValue::findOrFail($bannerKey)->first();
+                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center align': ''
 
                                 @endphp
                                 <div class="swiper-slide ">
                                     <!-- Simple card -->
-                                    <div class="card card-shadow d-block" style="height: 50vh; width: 65%;">
-                                        <div class="crop-height">
-                                            <img class="card-img-top  scale" src="{{$model->cover}}"
-                                                 alt="Card image cap">
-                                        </div>
-                                        <div class="card-body text-left">
+                                    <div class="card card-shadow d-block {{$bannerClass}}" style="height: 50vh; width: 75%;">
+
+                                        @isset($model->cover)
+                                            <div class="crop-height">
+                                                <img class="card-img-top  scale" src="{{$model->cover}}"
+                                                     alt="Card image cap">
+                                            </div>
+                                        @endisset
+                                        <div class="card-body text-left {{$bannerClass}}">
                                             <h5 class="card-title blue-title d-flex flex-column ">
                                                 <span>{{$model->title}}</span> Το
                                                 πρώτο μου Ρομπότ</h5>
-                                            <p class="card-text span-custom ">
-{{--                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}--}}
+                                            <p class="card-text span-custom " style="  word-wrap: break-word;">
+                                                {{--                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}--}}
                                                 {{$model->subtitle}}
                                             </p>
                                         </div> <!-- end card-body-->

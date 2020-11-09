@@ -8,12 +8,22 @@ const countPrimary = $(".js-banner-primary")[0].dataset.count
 new Swiper('.primary-slide', {
     // Optional parameters
     // If we need pagination
-    slidesPerView: countPrimary,
-    spaceBetween: 30,
+    // spaceBetween: 30,
     freeMode: true,
     pagination: {
         el: '.swiper-pagination',
         draggable: true,
+    },
+    breakpoints: {
+        500: {
+            slidesPerView: countPrimary-2
+        },
+        950: {
+            slidesPerView: countPrimary-1
+        },
+        1000: {
+            slidesPerView: countPrimary
+        },
     },
     fadeEffect: {
         crossFade: true
@@ -43,6 +53,17 @@ new Swiper('.secondary-slide', {
         crossFade: true
     },
 
+    breakpoints: {
+        500: {
+            slidesPerView: countPrimary-2
+        },
+        950: {
+            slidesPerView: countPrimary-1
+        },
+        1000: {
+            slidesPerView: countPrimary
+        },
+    },
     // Navigation arrows
 
     navigation: {
