@@ -3882,6 +3882,12 @@ figure > img {
   color: limegreen !important;
 }
 
+.custom-error {
+  box-sizing: border-box;
+  color: #ff5b5b;
+  font-size: 0.75rem;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0

@@ -93,11 +93,21 @@
 								
 								@csrf
 
-								<input id="pdf-id" type="text" name="pdfId" value="0" hidden />
-								<input type="text" name="type" value="PDF" hidden />
+								<input id="pdf-id" type="text" name="pdfId" value="{{ old('pdfId', 0) }}" hidden />
+
+								{{-- mpikan gia na mporei na eleg8ei to periexomeno tou PDF UI se periptosi error --}}
+								<input id="pdf-name-input" type="text" name="pdfName" value="{{ old('pdfName') }}" hidden />
+								<input id="pdf-title-input" type="text" name="pdfTitle" value="{{ old('pdfTitle', "Δεν προστέθηκε αρχείο") }}" hidden />
+
 								<div class="form-group">
 									<label for="title">Τίτλος <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" id="title" name="title" value="{{ old("title") }}" placeholder="Εισάγετε τίτλο...">
+									<input type="text" class="form-control @error('title') is-invalid @enderror"
+										id="title" name="title" value="{{ old("title") }}" placeholder="Εισάγετε τίτλο...">
+									@error('title')
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
 								</div>
 								<div class="form-group">
 									<label for="subtitle">Υπότιτλος</label>
@@ -108,7 +118,8 @@
 
 										<label for="description">Περιγραφή</label>
 										<input id="description-toggle" name="descriptionEditor"
-											data-field="description" type="checkbox" data-switch="success"
+											data-field="description" type="checkbox"
+											data-switch="success" {{ !is_null(old("descriptionEditor")) ? "checked" : "" }}
 										/>
 										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
 
@@ -131,8 +142,11 @@
 									<div class="form-group mb-1">
 										<div class="d-flex justify-content-between">
 											<label class="mb-0" for="new-pdf-material-status">Κατάσταση</label>
-											<input id="new-pdf-material-status" form="create-pdf-material" name="status" type="checkbox" data-switch="success" >
-											<label for="new-pdf-material-status" data-on-label="On" class="mb-0" data-off-label="Off"></label>
+											<input id="new-pdf-material-status" form="create-pdf-material"
+												name="status" type="checkbox"
+												data-switch="success" {{ !is_null(old("status")) ? "checked" : "" }}/>
+											<label for="new-pdf-material-status" data-on-label="On"
+												class="mb-0" data-off-label="Off"></label>
 										</div>
 									</div>
 
@@ -160,27 +174,39 @@
 
 								</div>
 							</div>
-
-							<div class="card d-block">
+							@php
+								if ( count($errors) === 0 || count($errors->get('pdfId')) > 0 ) {
+									$icon = "mdi-cancel";
+								}
+								elseif ( count($errors) > 0 ) {
+									$icon = "mdi-file-pdf-outline text-danger";
+								}
+							@endphp
+							<div class="card d-block mb-0">
 								<div class="card-header">
 									<h5 class="card-title mb-0">Αρχείο Μαθήματος <span class="text-danger" style="font-size: 0.875rem; font-weight: 600;">*</span></h5>
 								</div>
 								<div class="card-body pt-1 text-center">
-									<i id="pdf-file-icon" class="mdi mdi-cancel" style="font-size: 60px;"></i>
-									<h5 id="pdf-title" class="card-title text-center">
-										Δεν προστέθηκε αρχείο
+									<i id="pdf-file-icon" class="mdi {{ $icon }}" style="font-size: 60px;"></i>
+									<h5 id="pdf-title" class="card-title text-center mb-0">
+										{{ old("pdfTitle", "Δεν προστέθηκε αρχείο") }}
 									</h5>
-									<p id="pdf-name" class="card-text text-center d-none"></p>
-									<button id="change-pdf-btn" class="btn btn-primary btn-block" data-toggle="modal"
+									<p id="pdf-name" class="card-text text-center">{{ old("pdfName") }}</p>
+									<button id="change-pdf-btn" class="btn btn-primary btn-block mt-2" data-toggle="modal"
 										data-target="#remainings-pdf-modal">Προσθήκη</button>
 								</div> <!-- end card-body-->
 							</div>
+							@error("pdfId")
+								<span>
+									<strong class="custom-error">Το πεδίο είναι υποχρεωτικό.</strong>
+								</span>
+							@enderror
 						</div>
+
 					</div>
 				</div><!-- ./settings-tab -->
 
 			</div><!-- ./tab-content -->
-
 
 		</div><!-- ./content -->
 	</div><!-- ./wrapper -->

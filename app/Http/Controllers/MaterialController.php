@@ -98,8 +98,14 @@ class MaterialController extends Controller {
 
 		$request->validate([
 			'title' => 'required',
-			'pdfId' => 'required|integer',
+			'pdfId' => 'required|integer|not_in:0',
 		]);
+
+		$fields = [
+			"summary" => isset($request->summaryEditor) ? 1 : 0,
+			"description" => isset($request->descriptionEditor) ? 1 : 0,
+			"content" => isset($request->contentEditor) ? 1 : 0
+		];
 
 		$material = new Material;
 		$material->title = $request->title;
@@ -108,12 +114,13 @@ class MaterialController extends Controller {
 		$material->type = "PDF";
 		$material->slug = Str::slug($request->title, '-');
 		$material->status = isset($request->status) ? 1 : 0;
+		$material->fields = json_encode($fields);
 		$material->save();
 
 		$material->media()->attach($request->pdfId, ["usage" => 4]);
 
 		if ( isset($request->instructors) ) {
-			$material->users()->sync($request->instructor);
+			$material->users()->sync($request->instructors);
 		}
 
 		$data = [

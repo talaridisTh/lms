@@ -18,6 +18,8 @@ import utilities from '../main';
 function updatePDFInfo(btn) {
 	const titleElm = $("#pdf-title");
 	const nameElm = $("#pdf-name");
+	const nameInput = $("#pdf-name-input");
+	const titleInput = $("#pdf-title-input");
 	const iconElm = $("#pdf-file-icon");
 
 	iconElm.removeClass("mdi-cancel");
@@ -26,7 +28,9 @@ function updatePDFInfo(btn) {
 	$("#change-pdf-btn").text("Αλλαγή");
 
 	titleElm.text(btn.dataset.pdfTitle);
+	titleInput.val(btn.dataset.pdfTitle);
 	nameElm.text(btn.dataset.pdfName);
+	nameInput.val(btn.dataset.pdfName);
 	$("#pdf-id").val(btn.dataset.pdfId);
 
 	PDFDatatable.ajax.reload(null, false);
@@ -67,7 +71,7 @@ function changeExistingPDF(btn) {
 //!				Initializations				#
 //!##########################################
 
-utilities.redactorConfig.minHeight = "300px"
+utilities.redactorConfig.minHeight = "280px"
 $R("#description", utilities.redactorConfig);
 
 function getPDFid() {
