@@ -26,7 +26,7 @@ $(".js-editors-toggle").on("change", function() {
 
 	let fields = JSON.stringify(field);
 
-	axios.patch(`/material/${materialSlug}/toggle-editors`, {
+	axios.patch(`/material/${materialId}/toggle-editors`, {
 		fields
 	})
 	.then( res => {

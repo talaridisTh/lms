@@ -169,7 +169,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
     Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
     Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
-    Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
+    Route::patch('material/{material:id}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
     Route::patch('material/{material:id}/change-pdf', 'Ajax\MaterialController@changePDF');
 
 	// Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');

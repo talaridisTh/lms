@@ -2,7 +2,7 @@
 //!				Global Variables			#
 //!##########################################
 let materialId = $("#material-title")[0].dataset.materialId;
-// let materialSlug = $("#material-title")[0].dataset.materialSlug;
+let materialSlug = $("#material-title")[0].dataset.materialSlug;
 const namespace = "App\\Material";
 const baseUrl = window.location.origin;
 let timer = 0;
@@ -77,3 +77,34 @@ function changePDFBtnInit() {
 		})
 	})
 }
+
+//!##################################################
+//!					EventListeners					#
+//!##################################################
+
+$(".js-editors-toggle").on("change", function() {
+	let editorToggles = $(".js-editors-toggle");
+	let field = {};
+
+	for ( let i = 0; i < editorToggles.length; i++) {
+
+		field[`${editorToggles[i].dataset.field}`] = editorToggles[i].checked ? 1 : 0;
+	}
+
+	let fields = JSON.stringify(field);
+
+	axios.patch(`/material/${materialId}/toggle-editors`, {
+		fields
+	})
+	.then( res => {
+		let icon = this.checked ? "success" : "info";
+		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+		utilities.toastAlert( icon, message );
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+	})
+
+})

@@ -89,7 +89,11 @@
 					<div class="row">
 						<div class="col-xl-9 col-lg-8 col-md-12">
 
-							<form action="" method="post">
+							<form id="edit-pdf-material" action="/dashboard/materials/update/{{ $material->slug }}" method="post" autocomplete="off">
+								
+								@csrf
+								@method('PATCH')
+								<input type="text" name="type" value="PDF" hidden />
 								<div class="form-group">
 									<label for="title">Τίτλος <span class="text-danger">*</span></label>
 									<input type="text" class="form-control" id="title" name="title" value="{{ $material->title }}" placeholder="Εισάγετε τίτλο...">
@@ -99,7 +103,18 @@
 									<input type="text" class="form-control" name="subtitle" value="{{ $material->subtitle }}" placeholder="Εισάγετε υποτίτλο...">
 								</div>
 								<div class="form-group">
-									<label for="description">Περιγραφή</label>
+									<div class="d-flex justify-content-between">
+
+										<label for="description">Περιγραφή</label>
+										<input id="description-toggle" class="js-editors-toggle"
+											data-field="description" type="checkbox" data-switch="success"
+											@if ( isset($fields->description) && $fields->description == 1)
+												checked
+											@endif
+										/>
+										<label class="mb-0" for="description-toggle" data-on-label="On" data-off-label="Off"></label>
+
+									</div>
 									<textarea id="description" type="text" class="form-control" name="description" rows="5"
 										placeholder="Εισάγετε περιγραφή..." >{{ $material->description }}</textarea>
 								</div>
@@ -107,7 +122,7 @@
 						</div>
 						<div class="col-xl-3 col-lg-4 col-md-12">
 							<div class="sticky py-3 mt-1">
-								<button class="btn btn-info btn-block" type="submit">
+								<button form="edit-pdf-material" class="btn btn-info btn-block" type="submit">
 									Update
 								</button>
 							</div>
@@ -128,7 +143,7 @@
                                 	    <label for="instructorMaterial">
                                 	        Εισηγητές
                                 	    </label>
-                                	    <select form="material-create" name="instructors[]" multiple id="instructorMaterial"
+                                	    <select form="edit-pdf-material" name="instructors[]" multiple id="instructorMaterial"
                                 	        class="form-control" data-toggle="select2"
                                 	        data-placeholder="Επιλέξτε instructor...">
                                 	        @php
