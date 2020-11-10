@@ -108,3 +108,20 @@ $(".js-editors-toggle").on("change", function() {
 	})
 
 })
+
+$("#pdf-material-status").on("change", function() {
+
+	axios.patch(`/materials/toggle-status/${materialSlug}`, {
+		state: this.checked ? 1 : 0
+	})
+		.then((res) => {
+			let icon = this.checked ? "success" : "info";
+			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+			utilities.toastAlert(icon, message);
+		})
+		.catch((err) => {
+			console.log(err)
+			utilities.toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+		})
+
+})

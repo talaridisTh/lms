@@ -59,7 +59,8 @@
 							<li class="breadcrumb-item active">{{ $material->title }}</li>
 						</ol>
 					</div>
-					<h4 id="material-title" class="page-title" data-material-id="{{ $material->id }}">{{ $material->title }}</h4>
+					<h4 id="material-title" class="page-title" data-material-slug="{{ $material->slug }}"
+						data-material-id="{{ $material->id }}">{{ $material->title }}</h4>
 				</div>
 			</div>
 		</div>
@@ -132,9 +133,9 @@
 
 									<div class="form-group mb-1">
 										<div class="d-flex justify-content-between">
-											<label class="mb-0" for="material-status">Κατάσταση</label>
-											<input id="material-status" name="status" type="checkbox" data-switch="success" {{ $material->status === 1 ? "checked" : "" }}>
-											<label for="material-status" data-on-label="On" class="mb-0" data-off-label="Off"></label>
+											<label class="mb-0" for="pdf-material-status">Κατάσταση</label>
+											<input id="pdf-material-status" name="status" type="checkbox" data-switch="success" {{ $material->status === 1 ? "checked" : "" }}>
+											<label for="pdf-material-status" data-on-label="On" class="mb-0" data-off-label="Off"></label>
 										</div>
 									</div>
 
