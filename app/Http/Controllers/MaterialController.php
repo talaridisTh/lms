@@ -215,6 +215,7 @@ class MaterialController extends Controller {
 			"material" => $material,
 			"instructors" => Role::find(2)->users,
 			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
+			"fields" => json_decode($material->fields),
 			"pdf" => $pdf
 		];
 

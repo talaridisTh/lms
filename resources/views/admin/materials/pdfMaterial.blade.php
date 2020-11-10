@@ -97,11 +97,11 @@
 								<input type="text" name="type" value="PDF" hidden />
 								<div class="form-group">
 									<label for="title">Τίτλος <span class="text-danger">*</span></label>
-									<input type="text" class="form-control" id="title" name="title" value="{{ $material->title }}" placeholder="Εισάγετε τίτλο...">
+									<input type="text" class="form-control" id="title" name="title" value="{{ old("title", $material->title) }}" placeholder="Εισάγετε τίτλο...">
 								</div>
 								<div class="form-group">
 									<label for="subtitle">Υπότιτλος</label>
-									<input type="text" class="form-control" name="subtitle" value="{{ $material->subtitle }}" placeholder="Εισάγετε υποτίτλο...">
+									<input type="text" class="form-control" name="subtitle" value="{{ old("subtitle", $material->subtitle) }}" placeholder="Εισάγετε υποτίτλο...">
 								</div>
 								<div class="form-group">
 									<div class="d-flex justify-content-between">
@@ -117,7 +117,7 @@
 
 									</div>
 									<textarea id="description" type="text" class="form-control" name="description" rows="5"
-										placeholder="Εισάγετε περιγραφή..." >{{ $material->description }}</textarea>
+										placeholder="Εισάγετε περιγραφή..." >{{ old("description", $material->description) }}</textarea>
 								</div>
 							</form>
 						</div>
