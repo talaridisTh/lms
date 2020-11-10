@@ -187,6 +187,11 @@ select.is-invalid {
 }
 
 
+.dataTables_filter > label > .select2-container {
+    width: 180px !important;
+    // margin-right: 6px;
+}
+
 .dataTables_length .select2-container .select2-selection--single, #daterange {
 
     height: calc(1.8725rem + 2px) !important;
@@ -367,6 +372,14 @@ select.is-invalid {
     content: "\00d7";
 }
 
+#material-course-table_filter .select2-container {
+	height: 35px !important;
+}
+   
+
+#material-course-table_filter .select2-selection {
+	height: 32px;
+}
 
 .custom-primary {
     color: #b2bcc5;

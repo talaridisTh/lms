@@ -78,6 +78,12 @@
 					</a>
 				</li>
 				<li class="nav-item">
+					<a href="#courses-tabs" data-toggle="tab" aria-expanded="false" class="nav-link">
+						<i class="mdi mdi-home-variant d-md-none d-block"></i>
+						<span class="d-none d-md-block">Courses</span>
+					</a>
+				</li>
+				<li class="nav-item">
 					<a href="#pdf-viewer" data-toggle="tab" aria-expanded="false" class="nav-link">
 						<i class="mdi mdi-home-variant d-md-none d-block"></i>
 						<span class="d-none d-md-block">PDF Viewer</span>
@@ -188,6 +194,9 @@
 						</div>
 					</div>
 				</div><!-- ./settings-tab -->
+				<div class="tab-pane" id="courses-tabs">
+					@include("components.admin.materials.tabsCourses")
+				</div>
 				<div class="tab-pane" id="pdf-viewer">
 
 					<embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%" height="100%" style="height: 100vh" />

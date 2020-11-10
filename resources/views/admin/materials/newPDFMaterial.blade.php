@@ -79,6 +79,12 @@
 				<li class="nav-item">
 					<a href="#pdf-viewer" data-toggle="tab" aria-expanded="false" class="nav-link tab-link text-muted">
 						<i class="mdi mdi-home-variant d-md-none d-block"></i>
+						<span class="d-none d-md-block">Courses</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="#pdf-viewer" data-toggle="tab" aria-expanded="false" class="nav-link tab-link text-muted">
+						<i class="mdi mdi-home-variant d-md-none d-block"></i>
 						<span class="d-none d-md-block">PDF Viewer</span>
 					</a>
 				</li>
