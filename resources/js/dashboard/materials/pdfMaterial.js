@@ -12,12 +12,73 @@ let timer = 0;
 //!######################################
 import utilities from '../main';
 
+//!######################################
+//! 			Functions				#
+//!######################################
+function updatePDFInfo(btn) {
+	const titleElm = $("#pdf-title");
+	const nameElm = $("#pdf-name");
+	const iconElm = $("#pdf-file-icon");
+
+	iconElm.removeClass("mdi-cancel");
+	iconElm.addClass("mdi-file-pdf-outline text-danger");
+	nameElm.removeClass("d-none");
+	$("#change-pdf-btn").text("Αλλαγή");
+
+	titleElm.text(btn.dataset.pdfTitle);
+	nameElm.text(btn.dataset.pdfName);
+	$("#pdf-id").val(btn.dataset.pdfId);
+
+	PDFDatatable.ajax.reload(null, false);
+	$("#remainings-pdf-modal").modal("hide");
+		
+	utilities.toastAlert("success", "Το αρχείο άλλαξε.");
+}
+
+function changeExistingPDF(btn) {
+	
+	axios.patch(`/material/${materialId}/change-pdf`, {
+		materialId,
+		pdfId: btn.dataset.pdfId
+	})
+	.then( res => {
+		
+		const title = res.data.pdf.media_details
+			? res.data.pdf.media_details.title
+			: res.data.pdf.original_name;
+
+		$("#pdf-title").text(title);
+		$("#pdf-pdf").text(`${res.data.pdf.name}.${res.data.pdf.ext}`);
+		$("#pdf-embed").attr("src", res.data.pdf.rel_path);
+
+		PDFDatatable.ajax.reload(null, false);
+		$("#remainings-pdf-modal").modal("hide");
+		
+		utilities.toastAlert("success", "Το αρχείο άλλαξε.");
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε.");
+	})
+
+}
+
 //!##########################################
 //!				Initializations				#
 //!##########################################
 
 utilities.redactorConfig.minHeight = "300px"
 $R("#description", utilities.redactorConfig);
+
+function getPDFid() {
+	const idElm = document.getElementById("pdf-id");
+
+	if ( idElm !== null ) {
+		return idElm.value;
+	}
+
+	return false;
+}
 
 const PDFDatatable = $("#remaining-pdf-datatable").DataTable({
 	order: [[ 1, "desc" ]],
@@ -28,9 +89,12 @@ const PDFDatatable = $("#remaining-pdf-datatable").DataTable({
         url: "/materials/remaining-pdf-files",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
-        data: {
-			materialId
-        }
+		data: function( d ) {
+			return $.extend( {}, d, {
+				materialId,
+				pdfId: getPDFid()
+			})
+		}
     },
     columns: [
 		{data: "original_name", name: "original_name"},
@@ -52,29 +116,14 @@ function changePDFBtnInit() {
 	const btns = $(".js-change-pdf-btn")
 
 	btns.on("click", function() {
-		
-		axios.patch(`/material/${materialId}/change-pdf`, {
-			materialId,
-			pdfId: this.dataset.pdfId
-		})
-		.then( res => {
-			const title = res.data.pdf.media_details
-				? res.data.pdf.media_details.title
-				: res.data.pdf.original_name;
 
-			$("#pdf-title").text(title);
-			$("#pdf-pdf").text(`${res.data.pdf.name}.${res.data.pdf.ext}`);
-			$("#pdf-embed").attr("src", res.data.pdf.rel_path);
+		if ( typeof materialId !== "undefined" ) {
+			changeExistingPDF(this);
+		}
+		else {
+			updatePDFInfo(this);
+		}
 
-			PDFDatatable.ajax.reload(null, false);
-			$("#remainings-pdf-modal").modal("hide");
-			
-			utilities.toastAlert("success", "Το αρχείο άλλαξε.");
-		})
-		.catch( err => {
-			console.log(err);
-			utilities.toastAlert("success", "Κάποιο σφάλμα παρουσιάστηκε.");
-		})
 	})
 }
 
@@ -124,4 +173,15 @@ $("#pdf-material-status").on("change", function() {
 			utilities.toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
 		})
 
+})
+
+$(".tab-link").on("show.bs.tab", function(event) {
+	event.preventDefault();
+
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		html: `<p class="mb-0">Θα πρέπει να αποθηκεύσετε το μάθημα</p>για να συνεχίσετε!`,
+		confirmButtonColor: '#536de6'
+	});
 })

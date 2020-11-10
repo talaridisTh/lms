@@ -60,9 +60,11 @@ class MaterialsDataTable extends DataTable {
             ->editColumn('title', function ($data) {
 
 				if ( $data->type === "PDF" ) {
-					return "<a href='/dashboard/view-pdf/$data->id' class='h5 custom-link-primary'>$data->title</a>
+					return "<a href='/dashboard/edit-pdf/$data->slug' class='h5 custom-link-primary'>$data->title</a>
 							<p class='mb-1'>$data->slug</p>
-							<a href='/dashboard/view-pdf/$data->id' class='custom-link-primary'>View</a>";
+							<a href='/dashboard/edit-pdf/$data->slug' class='custom-link-primary'>Edit</a>
+							<span class='mx-2'>|</span>
+							<a href='#' class='custom-link-primary'>View</a>";
 				}
 
                 return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>

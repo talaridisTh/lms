@@ -50,7 +50,9 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('/dashboard/materials/update/{material:slug}', 'MaterialController@update')->name('material.update');
     Route::delete('/dashboard/materials/delete/{material}', 'MaterialController@destroy')->name('material.destroy');
 	Route::get('/dashboard/materials/coursematerial/{course}/{priority}/{material:id?}', 'MaterialController@courseMaterial')->name('material.courseMaterial');
-	Route::get('/dashboard/view-pdf/{material:id}', 'MaterialController@viewPDF');
+	Route::get('/dashboard/create-pdf', 'MaterialController@createPDF');
+	Route::post('/dashboard/store-pdf-material', 'MaterialController@storePDF');
+	Route::get('/dashboard/edit-pdf/{material}', 'MaterialController@editPDF');
 
     //! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');

@@ -38,13 +38,10 @@ class MaterialController extends Controller {
         $types = Material::all()->unique('type');
 
         return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "types"));
-    }
+	}
 
     public function store(Request $request)
     {
-
-		// dd($request->all());
-
 		$material = new Material();
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
@@ -88,7 +85,46 @@ class MaterialController extends Controller {
 
         return redirect( route("material.show",$material->slug) );
 
-    }
+	}
+	
+	public function createPDF()
+    {
+		$instructors = Role::find(2)->users;
+
+        return view('admin.materials.newPDFMaterial', compact("instructors"));
+	}
+	
+	public function storePDF(Request $request) {
+
+		$request->validate([
+			'title' => 'required',
+			'pdfId' => 'required|integer',
+		]);
+
+		$material = new Material;
+		$material->title = $request->title;
+		$material->subtitle = $request->subtitle;
+		$material->description = $request->description;
+		$material->type = "PDF";
+		$material->slug = Str::slug($request->title, '-');
+		$material->status = isset($request->status) ? 1 : 0;
+		$material->save();
+
+		$material->media()->attach($request->pdfId, ["usage" => 4]);
+
+		if ( isset($request->instructors) ) {
+			$material->users()->sync($request->instructor);
+		}
+
+		$data = [
+			"material" => $material,
+			"instructors" => Role::find(2)->users,
+			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
+			"pdf" => $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
+		];
+
+		return view("admin/materials/pdfMaterial")->with($data);
+	}
 
     public function show(Material $material = null)
     {
@@ -163,7 +199,7 @@ class MaterialController extends Controller {
         return view('admin.materials.material')->with($data);
 	}
 
-	public function viewPDF(Material $material) {
+	public function editPDF(Material $material) {
 		
 		$pdf = $material->media()->wherePivot("usage", 4)
 			->with("mediaDetails")->first();

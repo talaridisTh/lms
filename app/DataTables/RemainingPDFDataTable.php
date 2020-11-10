@@ -21,16 +21,33 @@ class RemainingPDFDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-		$activePDF = Material::find($request->materialId)->media()->where("usage", 4)->first();
-		// dd($activePDF->id);
 
-		$query = Media::where("ext", "pdf")
-			->where("id", "!=", $activePDF->id)
-			->with("mediaDetails")->get();
+		if ( !is_null($request->materialId) ) {
+
+			$activePDF = Material::find($request->materialId)->media()->where("usage", 4)->first();
+	
+			$query = Media::where("ext", "pdf")
+				->where("id", "!=", $activePDF->id)
+				->with("mediaDetails")->get();
+		}
+		else {
+			$query = Media::where("ext", "pdf")
+				->where("id", "!=", $request->pdfId)
+				->with("mediaDetails")->get();
+		}
 
         return datatables()::of($query)
 			->addColumn('action', function($data) {
-				return "<button type='button' class='btn btn-primary js-change-pdf-btn' data-pdf-id='$data->id'>Προσθήκη</button>";
+
+				if ( !is_null($data->mediaDetails) ) {
+					$title = $data->mediaDetails->title;
+				}
+				else {
+					$title = $data->original_name;
+				}
+
+				return "<button type='button' class='btn btn-primary js-change-pdf-btn'
+					data-pdf-id='$data->id' data-pdf-title='$title' data-pdf-name='$data->name.$data->ext'>Προσθήκη</button>";
 			})
 			->editColumn("original_name", function($data) {
 
