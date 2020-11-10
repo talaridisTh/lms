@@ -71,7 +71,7 @@ function changeExistingPDF(btn) {
 //!				Initializations				#
 //!##########################################
 
-utilities.redactorConfig.minHeight = "280px"
+utilities.redactorConfig.minHeight = "300px"
 $R("#description", utilities.redactorConfig);
 
 function getPDFid() {
