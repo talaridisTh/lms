@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Role;
-use App\CourseMaterial;
 use App\Http\Requests\CreateMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Material;

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Course;
-use App\CourseMaterial;
 use App\DataTables\AddCourseInsideMaterialsDataTable;
 use App\DataTables\CourseInsideMaterialsDataTable;
 use App\DataTables\MaterialsDataTable;
@@ -11,11 +10,9 @@ use App\DataTables\RemainingPDFDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Media;
-use App\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -108,9 +105,11 @@ class MaterialController extends Controller {
 		$material->link = $request->link;
 		$material->save();
 
-		CourseMaterial::incrementPriority($request->courseId, $request->priority);
-		
 		$course = Course::find($request->courseId);
+
+		$course->materials()->wherePivot("priority", ">", $request->priority)
+					->increment("priority");
+		
 		$course->materials()
 			->attach($material->id, [
 				"status" => $request->status,
