@@ -92,15 +92,9 @@ class MaterialController extends Controller {
 
     public function addContent(Request $request) {
 
-		//! egine etsi epidi 8eloume 2 anti8eta pragmata:
-		//! otan to type einai PDF to arxeio na einai aparetito
-		//! allios na min einai... me to SOMETIMES tis laravel
-		//! den mporoume na exoume to REQUIRED
-		$data = $this->customValidation($request);
-
-		if ( count($data["errors"]) > 0 ) {
-			return Response::json( $data, 422 );
-		}
+		$request->validate([
+			'title' => 'required'
+		]);
 
         $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
@@ -113,17 +107,6 @@ class MaterialController extends Controller {
 		$material->video_link = $request->video;
 		$material->link = $request->link;
 		$material->save();
-		
-		//! epidi to PDF 8a 8eorite autonomo ma8ima 8a xrisimopoihte o
-		//! titlos, kai i perigrafi apo to ma8ima allios apo ton media_details
-		//! 8a ginotan mperdema. Ta eisagoume omos kai ston media_details 
-		//! gia na iparxoun
-		if ( !is_null($request->file) && $request->file->isValid() ) {
-			$pdf = $this->storeFile($request->file);
-			$this->storeFileDetails($request, $pdf);
-			$material->media()->attach($pdf->id, ["usage" => 4]);
-		}
-
 
 		CourseMaterial::incrementPriority($request->courseId, $request->priority);
 		
@@ -451,15 +434,9 @@ class MaterialController extends Controller {
 
 	public function addSectionContent(Request $request) {
 
-		//! egine etsi epidi 8eloume 2 anti8eta pragmata:
-		//! otan to type einai PDF to arxeio na einai aparetito
-		//! allios na min einai... me to SOMETIMES tis laravel
-		//! den mporoume na exoume to REQUIRED
-		$data = $this->customValidation($request);
-
-		if ( count($data["errors"]) > 0 ) {
-			return Response::json( $data, 422 );
-		}
+		$request->validate([
+			'title' => 'required'
+		]);
 
 		$section = Material::find( $request->sectionId );
 		
@@ -473,12 +450,6 @@ class MaterialController extends Controller {
 		$material->video_link = $request->video;
 		$material->link = $request->link;
 		$material->save();
-
-		if ( !is_null($request->file) && $request->file->isValid() ) {
-			$pdf = $this->storeFile($request->file);
-			$this->storeFileDetails($request, $pdf);
-			$material->media()->attach($pdf->id, ["usage" => 4]);
-		}
 
 		$section->chapters()->wherePivot("priority", ">", $request->priority)
 			->increment("priority");
@@ -507,80 +478,6 @@ class MaterialController extends Controller {
 	public function remainingPDFFiles(RemainingPDFDataTable $dataTable) {
 
 		return $dataTable->render('pdf.files');
-
-	}
-
-	private function storeFile($file) {
-
-		$date = date('Y.m');
-		$name = $this->fileName($file);
-
-		$media = new Media;
-		$media->original_name = $name->originalName;
-		$media->name = $name->name;
-		$media->type = 1;
-		$media->rel_path = "/storage/files/$date/$name->fullname";
-		$media->ext = $file->getClientOriginalExtension();
-		$media->file_info = $file->getClientMimeType();
-		$media->size = $file->getSize();
-		$media->save();
-
-		$file->storeAs("public/files/$date", $name->fullname);
-
-		return $media;
-	}
-
-	private function storeFileDetails(Request $request, Media $media) {
-
-		$details = new MediaDetails;
-		$details->media_id = $media->id;
-		$details->title = $request->title;
-		$details->subtitle = $request->subtitle;
-		$details->description = $request->description;
-		$details->save();
-
-		return $details;
-	}
-
-	private function fileName($file) {
-		$temp = explode(".", $file->getClientOriginalName());
-		$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
-		$originalName = implode( ".", $arrayName );
-		$name =  Str::slug( implode("-", $arrayName ), "-" );
-
-		$count = Media::where( "original_name", $originalName)->count();
-
-		if ( $count > 0 ) {
-			$name = $name.( $count + 1 );
-			$fullname = $name.".".$file->getClientOriginalExtension();
-		}
-		else {
-			$fullname = "$name.".$file->getClientOriginalExtension();
-		}
-
-		return (object)[
-			"name" => $name,
-			"originalName" => $originalName,
-			"fullname" => $fullname,
-		];
-	}
-
-	private function customValidation(Request $request) {
-
-		$data = [];
-		$data["errors"] = [];
-
-		if ( is_null($request->title) ) {
-			$data["errors"]["title"] = ["Παρακαλώ εισάγετε τίτλο."];
-		}
-
-		if ( $request->type === "PDF" && is_null($request->file) || $request->type === "PDF" && $request->file->getClientMimeType() !== "application/pdf" ) {
-
-			$data["errors"]["file"] = ["Παρακαλώ εισάγετε αρχείο τύπου PDF."];
-
-		}
-
-		return $data;
 
 	}
 

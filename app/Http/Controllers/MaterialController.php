@@ -236,7 +236,8 @@ class MaterialController extends Controller {
 				]);
 			}
 			else {
-				CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
+				$course->materials()->wherePivot("priority", ">", $request->priority)
+					->increment("priority");
 
 				$course->materials()->attach( $material->id, [
 					"priority" => ($request->priority + 1),
