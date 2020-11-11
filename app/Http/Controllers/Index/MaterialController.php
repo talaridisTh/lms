@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Index;
 
 use App\Course;
-use App\CourseMaterial;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\User;

@@ -9,12 +9,9 @@ use App\Http\Requests\UpdateMaterialRequest;
 use App\Material;
 use App\Media;
 use App\Topic;
-use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Str;
-use PHPUnit\Util\Type;
 
 class MaterialController extends Controller {
 

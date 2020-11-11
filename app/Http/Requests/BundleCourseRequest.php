@@ -14,8 +14,9 @@ class BundleCourseRequest extends FormRequest
      */
     public function authorize()
     {
-		
-		if ( Auth::user()->roles[0]->id == 1 ) {
+		$id = Auth::user()->roles->first()->id;
+
+		if ( $id == 1 || $id == 2 ) {
 			return true;
 		}
 		
