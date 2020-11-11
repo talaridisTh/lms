@@ -44,7 +44,6 @@ $("#new-content-btn").on("click", function() {
 $("#section-new-pdf-material").on("click", function() {
 
 	const modal = $("#sections-additions-modal")[0];
-	// const sectionId = modal.dataset.sectionId;
 	const sectionSlug = modal.dataset.sectionSlug;
 	const priority = modal.dataset.priority;
 
