@@ -161,7 +161,6 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         utilities.resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
         utilities.resetBulk($("#course-indside-material-bulk"), $(".js-course-inside-material"));
         checkeBoxesEventListener();
-        selectMultipleCheckboxDelete();
     }
 });
 
@@ -195,8 +194,6 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
         utilities.resetBulk($("#add-remaingings-btn"), $(".remainings-checkbox"));
         checkeBoxesEventListenerModal();
         addCourse();
-        selectMultipleCheckboxUpdate();
-
     }
 })
 
@@ -604,23 +601,17 @@ $("#select-all-courses").change(function () {
 
 })
 
-const selectMultipleCheckboxDelete = () => {
-    $('#js-multiple-delete').unbind();
-    $("#js-multiple-delete").click(() => {
-        let checkboxes = $(".js-course-inside-material:checked")
-        let materialId = $("#material-course-table")[0].dataset.materialId
+$("#js-multiple-delete").on("click", function() {
+    let checkboxes = $(".js-course-inside-material:checked")
+    let materialId = $("#material-course-table")[0].dataset.materialId
+	let ids = [];
 
-        let ids = [];
+    for (let i = 0; i < checkboxes.length; i++) {
+        ids.push(checkboxes[i].findParent(3).dataset.courseId);
+    }
 
-        for (let i = 0; i < checkboxes.length; i++) {
-            ids.push(checkboxes[i].findParent(3).dataset.courseId);
-        }
-
-
-        axiosMultipleDelete(ids, materialId)
-
-    })
-}
+    axiosMultipleDelete(ids, materialId)
+});
 
 const axiosMultipleDelete = async (courseId, materialId) => {
 
@@ -672,67 +663,41 @@ $("#all-remainings-checkbox").change(function () {
 
 })
 
-const addCourse = () => {
-    $(".js-add-courses").click(function () {
-        addCourseAxios(this.findParent(2).dataset.courseId, materialId)
+function addCourseAxios(courseIds, materialId) {
+	
+	axios.post("/materials/add-course", {
+        courseIds, materialId
+	})
+	.then ( res => {
+		let message = courseIds.length === 1 
+			? "1 Course προστέθηκε" : `${courseIds.length} Courses προστέθηκαν`;
+		utilities.toastAlert("success", message);
+		addCouseModal.ajax.reload();
+		materialCourseDatatable.ajax.reload();
+	})
+    .catch ( err => {
+        console.log(err);
+        utilities.toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
+	})
+}
+
+function addCourse() {
+    $(".js-add-courses").on("click", function () {
+        addCourseAxios( [this.findParent(2).dataset.courseId], materialId )
     })
 }
 
-const addCourseAxios = async (courseId, materialId) => {
-    try {
-        const {status} = await axios.post("/materials/add-course/", {
-            courseId,
-            materialId
+$("#add-remaingings-btn").on("click", function () {
+    let checkboxes = $(".remainings-checkbox:checked")
+	let ids = [];
 
-        })
-        if (status == 200) {
-            utilities.toastAlert("success", `1 course προστέθηκε`)
-            addCouseModal.ajax.reload()
-            materialCourseDatatable.ajax.reload()
-
-        }
-    } catch (e) {
-        console.log(e)
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+    for (let i = 0; i < checkboxes.length; i++) {
+        ids.push(checkboxes[i].dataset.courseId);
     }
-}
 
-const selectMultipleCheckboxUpdate = () => {
-    $('#add-remaingings-btn').unbind();
-    $("#add-remaingings-btn").click(function () {
-        let checkboxes = $(".remainings-checkbox:checked")
+    addCourseAxios(ids, materialId)
 
-        let ids = [];
-
-
-        for (let i = 0; i < checkboxes.length; i++) {
-            ids.push(checkboxes[i].dataset.courseId);
-        }
-
-        axiosMultipleUpdate(ids, materialId)
-
-    })
-}
-
-const axiosMultipleUpdate = async (courseIds, materialId) => {
-
-    try {
-        const {status} = await axios.post('/materials/add-course/multiple', {
-            courseIds,
-            materialId
-        })
-
-        if (status == 200) {
-            utilities.toastAlert("success", `${courseIds.length} courses προστέθηκαν`)
-            addCouseModal.ajax.reload()
-            materialCourseDatatable.ajax.reload()
-
-        }
-    } catch (e) {
-        console.log(e)
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-    }
-}
+})
 
 //! DROPOZONE
 //!============================================================
