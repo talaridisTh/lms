@@ -192,9 +192,15 @@ $("#version-select").on("change", function() {
 })
 
 $("#add-new-material-btn").on("click", function() {
-	let priority = $("#store-material-priority").val();
+	const priority = $("#store-material-priority").val();
 
 	window.location = `/dashboard/materials/coursematerial/${courseSlug}/${priority}`;
+})
+
+$("#add-new-pdf-material-main").on("click", function() {
+	const priority = $("#store-material-priority").val();
+	
+	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}`;
 })
 
 $("#change-cover-btn").on("click", function() {
@@ -2075,15 +2081,13 @@ function pdfForm(priority) {
 function createTableRow( type, priority ) {
 
 	let addContentRow = $(".extra-content-row")[0];
+
 	if ( addContentRow ) {
-
 		addContentRow.remove();
-
 	}
 
 	let rowElm = document.createElement("tr");
 	rowElm.classList.add("extra-content-row")
-
 
 	if (type == "Announcement") {
 		rowElm.innerHTML = annoucementForm( priority );
@@ -2091,9 +2095,9 @@ function createTableRow( type, priority ) {
 	else if ( type == "Section" ) {
 		rowElm.innerHTML = sectionForm( priority );
 	}
-	else if ( type === "PDF" ) {
-		rowElm.innerHTML = pdfForm( priority );
-	}
+	// else if ( type === "PDF" ) {
+	// 	rowElm.innerHTML = pdfForm( priority );
+	// }
 	else {
 		rowElm.innerHTML = linkForm( type, priority);
 	}
@@ -2185,17 +2189,17 @@ function additionsErrorMessage(text) {
 function mainAdditionEventInit(row) {
 	const saveBtn = row.getElementsByClassName("js-add-content")[0];
 	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
-	const dropzone = row.getElementsByClassName("js-file-input")[0];
+	// const dropzone = row.getElementsByClassName("js-file-input")[0];
 
 	saveBtn.addEventListener("click", addContent);
 
 	cancelBtn.addEventListener("click", cancelAddition );
 
-	if (dropzone) {
-		dropzone.addEventListener("dragover", additionsDragOverHandler);
-		dropzone.addEventListener("dragleave", removeColorHandler);
-		dropzone.addEventListener("change", fileChangeHandler);
-	}
+	// if (dropzone) {
+	// 	dropzone.addEventListener("dragover", additionsDragOverHandler);
+	// 	dropzone.addEventListener("dragleave", removeColorHandler);
+	// 	dropzone.addEventListener("change", fileChangeHandler);
+	// }
 }
 
 function sectionAdditionEventInit(row, sectionId) {

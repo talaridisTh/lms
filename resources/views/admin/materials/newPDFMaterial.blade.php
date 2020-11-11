@@ -99,6 +99,17 @@
 								
 								@csrf
 
+								@if ( !is_null($course) )
+
+									<input type="text" name="courseId" value="{{ old("courseId", $course)->id }}">
+									<input type="text" name="priority" value="{{ old("priority", $priority) }}">
+
+									@if ( !is_null($section) )
+										<input type="text" name="materialId" value="{{ old("materialId", $section->id) }}">
+									@endif
+
+								@endif
+
 								<input id="pdf-id" type="text" name="pdfId" value="{{ old('pdfId', 0) }}" hidden />
 
 								{{-- mpikan gia na mporei na eleg8ei to periexomeno tou PDF UI se periptosi error --}}

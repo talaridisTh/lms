@@ -63,22 +63,8 @@ class MaterialController extends Controller {
 		$request->topic ? $material->topics()->sync($request->topic) : "";
 
 		if ( isset($request->courseId) ) {
-			$course = Course::find( $request->courseId );
-			CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
 
-			if ( isset($request->sectionId) ) {
-				$section = Material::find( $request->sectionId );
-				$section->chapters()->wherePivot("priority", ">", $request->priority)
-					->increment("priority");
-
-				$section->chapters()->attach($material->id, [
-					"priority" => $request->priority + 1,
-					"status" => isset($request->status) ? 1 : 0
-				]);
-			}
-			else {
-				$course->materials()->attach( $material->id, ["priority" => ($request->priority + 1)] );
-			}
+			$course = $this->storeExtraContent($request, $material);
 
 			return redirect("/dashboard/course/$course->slug");
 		}
@@ -87,11 +73,16 @@ class MaterialController extends Controller {
 
 	}
 	
-	public function createPDF()
-    {
-		$instructors = Role::find(2)->users;
+	public function createPDF(Course $course = null, $priority = 1, Material $material = null) {
 
-        return view('admin.materials.newPDFMaterial', compact("instructors"));
+		$data = [
+			"course" => $course,
+			"priority" => $priority,
+			"section" => $material,
+			"instructors" => Role::find(2)->users
+		];
+
+        return view('admin.materials.newPDFMaterial')->with($data);
 	}
 	
 	public function storePDF(Request $request) {
@@ -121,6 +112,13 @@ class MaterialController extends Controller {
 
 		if ( isset($request->instructors) ) {
 			$material->users()->sync($request->instructors);
+		}
+
+		if ( isset($request->courseId) ) {
+
+			$course = $this->storeExtraContent($request, $material);
+
+			return redirect("/dashboard/course/$course->slug");
 		}
 
 		$data = [
@@ -221,6 +219,31 @@ class MaterialController extends Controller {
 
 		return view("admin/materials/pdfMaterial")->with($data);
 
+	}
+
+	private function storeExtraContent(Request $request, Material $material) {
+
+		$course = Course::find( $request->courseId );
+			CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
+
+			if ( isset($request->sectionId) ) {
+				$section = Material::find( $request->sectionId );
+				$section->chapters()->wherePivot("priority", ">", $request->priority)
+					->increment("priority");
+
+				$section->chapters()->attach($material->id, [
+					"priority" => $request->priority + 1,
+					"status" => isset($request->status) ? 1 : 0
+				]);
+			}
+			else {
+				$course->materials()->attach( $material->id, [
+					"priority" => ($request->priority + 1),
+					"status" => isset($request->status) ? 1 : 0
+				]);
+			}
+
+		return $course;
 	}
 
 }
