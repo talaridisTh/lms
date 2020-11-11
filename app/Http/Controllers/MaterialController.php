@@ -224,7 +224,6 @@ class MaterialController extends Controller {
 	private function storeExtraContent(Request $request, Material $material) {
 
 		$course = Course::find( $request->courseId );
-			CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
 
 			if ( isset($request->sectionId) ) {
 				$section = Material::find( $request->sectionId );
@@ -237,6 +236,8 @@ class MaterialController extends Controller {
 				]);
 			}
 			else {
+				CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
+
 				$course->materials()->attach( $material->id, [
 					"priority" => ($request->priority + 1),
 					"status" => isset($request->status) ? 1 : 0

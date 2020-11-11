@@ -101,11 +101,11 @@
 
 								@if ( !is_null($course) )
 
-									<input type="text" name="courseId" value="{{ old("courseId", $course)->id }}">
+									<input type="text" name="courseId" value="{{ old("courseId", $course->id) }}">
 									<input type="text" name="priority" value="{{ old("priority", $priority) }}">
 
 									@if ( !is_null($section) )
-										<input type="text" name="materialId" value="{{ old("materialId", $section->id) }}">
+										<input type="text" name="sectionId" value="{{ old("materialId", $section->id) }}">
 									@endif
 
 								@endif
