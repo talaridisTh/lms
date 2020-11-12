@@ -18,25 +18,54 @@
 					</button>
 				</div>
 				<div class="modal-body">
-				
-					<table id="remaining-pdf-datatable"
-						class="table w-100 nowrap center-not-second modal-table js-remove-table-classes">
-						<thead>
-							<tr>
-								<th class="text-center">Όνομα</th>
-								<th class="text-center">Μέγεθος</th>
-								<th class="text-center w-5"></th>
-							</tr>
-						</thead>
-						<tbody class="tables-hover-effect"></tbody>
-						<tfoot>
-							<tr>
-								<th class="text-center">Όνομα</th>
-								<th class="text-center">Μέγεθος</th>
-								<th class="text-center"></th>
-							</tr>
-						</tfoot>
-					</table>
+
+					<ul class="nav nav-tabs nav-bordered mb-3">
+						<li class="nav-item">
+							<a href="#pdf-list-pane" data-toggle="tab" aria-expanded="true" class="nav-link active">
+								<i class="mdi mdi-account-circle d-md-none d-block"></i>
+								<span class="d-none d-md-block">Profile</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="#upload-pane" data-toggle="tab" aria-expanded="false" class="nav-link">
+								<i class="mdi mdi-settings-outline d-md-none d-block"></i>
+								<span class="d-none d-md-block">Settings</span>
+							</a>
+						</li>
+					</ul>
+
+					<div class="tab-content">
+						<div id="pdf-list-pane" class="tab-pane show active">
+							<table id="remaining-pdf-datatable"
+								class="table w-100 nowrap center-not-second modal-table js-remove-table-classes">
+								<thead>
+									<tr>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Μέγεθος</th>
+										<th class="text-center w-5"></th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center">Όνομα</th>
+										<th class="text-center">Μέγεθος</th>
+										<th class="text-center"></th>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+						<div id="upload-pane" class="tab-pane">
+							<input id="file-pond" class="js-filepond-file-dragging mb-0" type="file" />
+							<p class="text-right mb-2">
+								<small>
+									<strong>
+										Το πεδίο δέχεται μόνο αρχεία PDF.
+									</strong>
+								</small>
+							</p>
+						</div>
+					</div>
 				
 				</div>
 				<div class="modal-footer">

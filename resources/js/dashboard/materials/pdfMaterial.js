@@ -12,6 +12,11 @@ let timer = 0;
 //!######################################
 import utilities from '../main';
 
+import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import 'filepond/dist/filepond.min.css';
+
 //!######################################
 //! 			Functions				#
 //!######################################
@@ -110,6 +115,61 @@ function changePDFBtnInit() {
 //!##########################################
 //!				Initializations				#
 //!##########################################
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
+
+let dropzone = document.getElementById("file-pond");
+const pond = FilePond.create( dropzone, {
+	name: 'file',
+	className: "js-filepond-file-dragging",
+	labelIdle: "Drag & Drop your files or Browse",
+	allowRevert: false,
+	server: {
+		url: baseUrl,
+		process: {
+			url: '/media/pdf-upload',
+			headers: {
+				"X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			},
+		}
+	},
+	onprocessfile: function (error, data) {
+		
+		if ( pond.status === 2 ) {
+
+			clearTimeout(timer);
+			let files = pond.getFiles();
+
+			for (let i = 0; i < files.length; i++ ) {
+
+				if ( files[i].status === 5 ) {
+					timer = setTimeout(function() {
+						pond.removeFile(files[i]);
+					}, ( i + 1 ) * 500);
+				}
+
+				PDFDatatable.ajax.reload();
+
+			}
+		}
+
+	},
+	onprocessfiles: function() {
+		let files = pond.getFiles();
+		PDFDatatable.ajax.reload();
+
+		for (let i = 0; i < files.length; i++ ) {
+
+			timer = setTimeout(function() {
+				pond.removeFile(files[i]);
+
+			}, ( i + 1 ) * 500);
+
+		}
+	},
+	acceptedFileTypes: ["application/pdf"],
+	maxFileSize: "50MB"
+});
 
 utilities.redactorConfig.minHeight = "265px"
 $R("#description", utilities.redactorConfig);
@@ -184,7 +244,7 @@ const PDFDatatable = $("#remaining-pdf-datatable").DataTable({
     columns: [
 		{data: "original_name", name: "original_name"},
 		{data: "size", name: "size", className: "text-center align-middle"},
-        {data: "action", className: "text-center align-middle"},
+        {data: "action", className: "text-center align-middle", orderable: false, searchable: false},
 
     ],
     language: utilities.tableLocale,
@@ -286,8 +346,8 @@ function addCourseAxios(courseIds, materialId) {
 	})
 }
 
-$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+$(".dataTables_wrapper:not(#remaining-pdf-datatable_wrapper) > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+$(".dataTables_wrapper:not(#remaining-pdf-datatable_wrapper) > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 
 utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable, "#material-course-table_length label")
 utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
@@ -410,3 +470,31 @@ $(".tab-link").on("show.bs.tab", function(event) {
 		confirmButtonColor: '#536de6'
 	});
 })
+
+const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
+for ( let i = 0; i < dropArea.length; i++ ) {
+
+	dropArea[i].addEventListener("dragover", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+		draggingArea.classList.add("limegreen");
+		label.classList.add("text-limegreen");
+	});
+
+	dropArea[i].addEventListener("dragleave", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+		draggingArea.classList.remove("limegreen");
+		label.classList.remove("text-limegreen");
+	});
+
+	dropArea[i].addEventListener("drop", function(event) {
+		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
+		const label = draggingArea.querySelector("label");
+
+		draggingArea.classList.remove("limegreen");
+		label.classList.remove("text-limegreen");
+	});
+}

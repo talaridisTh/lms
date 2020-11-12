@@ -197,6 +197,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages');
     Route::post('media/upload-images', 'Ajax\MediaController@uploadImages');
     Route::post('media/files-upload', 'Ajax\MediaController@fileUpload');
+    Route::post('media/pdf-upload', 'Ajax\MediaController@pdfUpload');
     Route::patch('media/cover/replace', 'Ajax\MediaController@coverChange');
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
     Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
