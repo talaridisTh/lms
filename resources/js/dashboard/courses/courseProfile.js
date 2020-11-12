@@ -2591,26 +2591,23 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 
-			draggingArea.classList.add("limegreen");
-			label.classList.add("text-limegreen");
-
+		draggingArea.classList.add("limegreen");
+		label.classList.add("text-limegreen");
 	});
 
 	dropArea[i].addEventListener("dragleave", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 
-			draggingArea.classList.remove("limegreen");
-			label.classList.remove("text-limegreen");
-
+		draggingArea.classList.remove("limegreen");
+		label.classList.remove("text-limegreen");
 	});
 
 	dropArea[i].addEventListener("drop", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 
-			draggingArea.classList.remove("limegreen");
-			label.classList.remove("text-limegreen");
-
+		draggingArea.classList.remove("limegreen");
+		label.classList.remove("text-limegreen");
 	});
 }

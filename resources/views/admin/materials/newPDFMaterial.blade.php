@@ -29,7 +29,7 @@
 						<li class="nav-item">
 							<a href="#upload-pane" data-toggle="tab" aria-expanded="false" class="nav-link">
 								<i class="mdi mdi-settings-outline d-md-none d-block"></i>
-								<span class="d-none d-md-block">Settings</span>
+								<span class="d-none d-md-block">Upload</span>
 							</a>
 						</li>
 					</ul>
@@ -54,7 +54,7 @@
 									</tr>
 								</tfoot>
 							</table>
-						</div>
+						</div><!-- ./tab-pane -->
 						<div id="upload-pane" class="tab-pane">
 							<input id="file-pond" class="js-filepond-file-dragging mb-0" type="file" />
 							<p class="text-right mb-2">
@@ -64,8 +64,8 @@
 									</strong>
 								</small>
 							</p>
-						</div>
-					</div>
+						</div><!-- ./tab-pane -->
+					</div><!-- ./tab-content -->
 				
 				</div>
 				<div class="modal-footer">
