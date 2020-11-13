@@ -75,26 +75,23 @@
 		</div>
 	</div>
 
-	<!-- start page title -->
-	<div class="container content-width">
-		<div class="row">
-			<div class="col-12">
-				<div class="page-title-box">
-					<div class="page-title-right">
-						<ol class="breadcrumb m-0">
-							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
-							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
-							<li class="breadcrumb-item"><a href="/dashboard/materials" class="custom-link-primary">Υλικό</a></li>
-							<li class="breadcrumb-item active">{{ $material->title }}</li>
-						</ol>
-					</div>
-					<h4 id="material-title" class="page-title" data-material-slug="{{ $material->slug }}"
-						data-material-id="{{ $material->id }}">{{ $material->title }}</h4>
+	<!-- Title - Breadcrumb -->
+	<div class="row">
+		<div class="col-12">
+			<div class="page-title-box">
+				<div class="page-title-right">
+					<ol class="breadcrumb m-0">
+						<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+						<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+						<li class="breadcrumb-item"><a href="/dashboard/materials" class="custom-link-primary">Υλικό</a></li>
+						<li class="breadcrumb-item active">{{ $material->title }}</li>
+					</ol>
 				</div>
+				<h4 id="material-title" class="page-title" data-material-slug="{{ $material->slug }}"
+					data-material-id="{{ $material->id }}">{{ $material->title }}</h4>
 			</div>
 		</div>
-	</div>
-	<!-- end page title -->
+	</div><!-- ./Title - Breadcrumb -->
 
 	<div class="wrapper">
 		<div class="content">
