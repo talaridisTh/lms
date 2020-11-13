@@ -206,7 +206,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
     Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
 //! Dashboard Home Banner Update
-    Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+
+//! Glide Images
+	Route::get('img/{path}', 'Ajax\ImageController@show')->where('path', '.*');
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
@@ -234,6 +237,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/history-datatable', 'Index\UserController@historyDatatable')->name("datatable.history");
     Route::post('/history-datatable/material', 'Index\UserController@historyMaterialDatatable')->name("datatable.historyMaterial");
 ////meessage   MIN TO SVISEIS AKOMA !!!!
+//! TIXEROS ISOUN!!! LIGO ELIPSE!!!
 //    Route::get("/message/", "MessageController@index")->name("index.message");
 //    Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
 //    Route::get("/message/info/{user}", "MessageController@info")->name("index.info");

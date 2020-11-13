@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use App\Http\Controllers\Ajax\ImageController;
 
 class FileManagerDataTable extends DataTable
 {
@@ -75,7 +76,7 @@ class FileManagerDataTable extends DataTable
 
 				$icons = Media::$icons;
 
-				if ( is_null($data->thumbnail_path) ) {
+				if ( $data->type !== 0 ) {
 					foreach( $icons as $type => $icon ) {
 						if ( fnmatch("$type*", $data->ext ) ) {
 							return "<i class='h3 mdi {{ $icon }}' style='font-size: 105px;' title='{{ $data->ext }}'></i>";
@@ -83,15 +84,16 @@ class FileManagerDataTable extends DataTable
 					}
 				}
 
-				return "<img class='img-fluid' style='max-width: 120px;' src='$data->thumbnail_path' alt='$data->original_name' />";
+				$path = ImageController::ThumbnailUrlBuilder($data->rel_path);
 
+				return "<img class='img-fluid' style='max-width: 120px;' src='$path' alt='$data->original_name' />";
 			})
 			->editColumn("size", function($data) {
 
 				return number_format($data->size / 1000000, 2, ",", ".") ."MB";
 
 			}) 
-			->rawColumns(['original_name', 'image', 'type']);
+			->rawColumns(['original_name', 'image']);
     }
 
     /**
