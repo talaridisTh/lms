@@ -1,4 +1,9 @@
 
+.template{
+    visibility: hidden;
+}
+
+
 .content-page {
     overflow: initial;
 }
@@ -910,4 +915,13 @@ img.scale {
     background: #b04706;
 
     opacity: 0.8;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.template-fullscreen{
+    position: absolute;
+    right: -6%;
 }

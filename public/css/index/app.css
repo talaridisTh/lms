@@ -48749,6 +48749,10 @@ body[data-leftbar-theme=dark] .side-nav .side-nav-forth-level li.active > a {
   fill: #eef2f7;
 }
 
+.template {
+  visibility: hidden;
+}
+
 .content-page {
   overflow: initial;
 }
@@ -49590,5 +49594,14 @@ img.scale {
 .bg-opacity {
   background: #b04706;
   opacity: 0.8;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.template-fullscreen {
+  position: absolute;
+  right: -6%;
 }
 

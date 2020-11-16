@@ -28,7 +28,7 @@ class BigDataSeeder extends Seeder {
         ]);
         User::factory()->times(500)->create()
             ->each(function ($user) {
-                $user->roles()->attach(rand(2, 4));
+                $user->roles()->attach(rand(3, 4));
             });
         Material::factory()->times(80)->create()
             ->each(function ($material) {

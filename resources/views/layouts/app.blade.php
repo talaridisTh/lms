@@ -128,13 +128,32 @@
                         @unlessrole('guest')
                         @role("admin")
 
+
+                        <div>
+                            <a class="nav-link edit-preview-page-course" href="" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Edit this course
+                            </a>
+                        </div>
+
+                        <div>
+                            <a class="nav-link edit-preview-page-material d-none" href="" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Edit this Material
+                            </a>
+                        </div>
+
+
                         <div>
                             <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true"
                                aria-expanded="false">
                                 Dashboard
                             </a>
                         </div>
+
                         @endrole
+
+
 
                         <div>
                             @if(auth()->user()->courses()->count()>1 )
@@ -181,11 +200,11 @@
                                         <span>Προφίλ </span>
                                     </a>
                                     <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
-                                       class="side-nav-link dropdown-item">
+                                       class="side-nav-link dropdown-item template d-none">
                                         <span>Αγαπημένα</span>
                                     </a>
                                     <a href="{{route('index.profile.history',auth()->user()->slug)}}"
-                                       class="side-nav-link dropdown-item">
+                                       class="side-nav-link dropdown-item template d-none">
                                         <span>Ιστορικό </span>
                                     </a>
                                     <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
@@ -327,6 +346,12 @@
     $('#logout-btn').click(function () {
         event.preventDefault();
         $('#logout-form').submit();
+    })
+
+
+
+    $(".edit-preview-page-course").on("click",function (){
+       this.href = window.PREVIEW_PAGE_COURSE
     })
 </script>
 

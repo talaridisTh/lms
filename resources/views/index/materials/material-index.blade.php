@@ -48,42 +48,37 @@
 
     <section class=" d-flex wrapper flex-column mt-2">
         <!-- start page title -->
-{{--        @unlessrole('guest')--}}
-{{--        <div class=" ml-5 content-width">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-12">--}}
-{{--                    <div class="page-title-box">--}}
-{{--                        <div class="page-title-left">--}}
-{{--                            <ol class="breadcrumb p-1 m-0">--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"--}}
-{{--                                                               class="text-secondary">Courses</a></li>--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"--}}
-{{--                                                               class="text-secondary">{{$course->title}}</a></li>--}}
-{{--                                <li class="breadcrumb-item  text-black">{{$materials->title}}</li>--}}
-{{--                            </ol>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--        @endunlessrole--}}
-        <!-- end page title -->
-        @role("admin")
+    {{--        @unlessrole('guest')--}}
+    {{--        <div class=" ml-5 content-width">--}}
+    {{--            <div class="row">--}}
+    {{--                <div class="col-12">--}}
+    {{--                    <div class="page-title-box">--}}
+    {{--                        <div class="page-title-left">--}}
+    {{--                            <ol class="breadcrumb p-1 m-0">--}}
+    {{--                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>--}}
+    {{--                                </li>--}}
+    {{--                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"--}}
+    {{--                                                               class="text-secondary">Courses</a></li>--}}
+    {{--                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"--}}
+    {{--                                                               class="text-secondary">{{$course->title}}</a></li>--}}
+    {{--                                <li class="breadcrumb-item  text-black">{{$materials->title}}</li>--}}
+    {{--                            </ol>--}}
+    {{--                        </div>--}}
+    {{--                    </div>--}}
+    {{--                </div>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--        @endunlessrole--}}
+    <!-- end page title -->
 
-        <div class="card d-lg-none d-xl-block ribbon-box" style="background-color: transparent">
-            <div class="card-body py-0">
-                <div class="p-1 bg-secondary " style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
-                    <a class="text-white " href="{{route('material.show',$materials->slug)}}">
-                        <span class="">Edit this page</span>
-                    </a>
+        <div class="material-cnt">
+            <div class="d-flex justify-content-between align-items-center template-cnt-title">
+                <h2 data-material-slug="{{$materials->slug}}" class="template-title"></h2>
+                <div>
+                    <i class="uil-window-maximize"></i>
+                    <i class="uil-times-circle"></i>
                 </div>
-            </div> <!-- end card-body -->
-        </div>
-        @endrole
-        <div>
-
+            </div>
             <div class="row p-0" style="background-color: black">
                 <div class="w-100 p-0  d-flex justify-content-center">
                     <div class="col-md-12 position-relative p-0" style="max-width: 150vh;">
@@ -96,7 +91,7 @@
                             </div>
                         @else
 
-                            <div class="custom-background" style="background-image: url('{{$materials->cover}}')">">
+                            <div class="custom-background" style="background-image: url('{{$materials->cover}}')">
                             </div>
 
                         @endif
@@ -109,8 +104,8 @@
             <div class="p-0 m-0 defalt-color-topic d-flex justify-content-center"
                  style=";border-radius: 0; background:{{$bgColor}}">
                 <div class="container" style="max-width: 1424px">
-                    <div class="col-md-12   p-0  ">
-                        <div class="row align-items-center p-2 justify-content-between">
+                    <div class="col-md-12 p-0">
+                        <div class="row align-items-center p-2 justify-content-between template-hidden">
                             <div class="col-md-4 ">
                                 <div class="row ">
                                     <div
@@ -157,12 +152,12 @@
 
         <div class="container  w-100  p-sm-3 p-lg-2 my-3" style="max-width: 1423px">
             <div class="row ">
-                <div class="col-lg-8 ">
+                <div class="col-lg-8 template-col-12">
 
 
                     {{-- @include("components.index.user-info")--}}
 
-                    @include("components.index.announcements")
+                    {{--                    @include("components.index.announcements")--}}
 
 
                     @include("components.index.collapse-menu",
@@ -173,6 +168,7 @@
                     "body"=>isset($materials->summary)?$materials->summary:"",
                     "fields"=>isset($materials->fields)?json_decode($materials->fields)->summary:""
                     ])
+
                     @include("components.index.collapse-menu",
                     ["idAccordion"=>$materials->slug."-accordion-description" ,
                     "idHeader"=>$materials->slug."-header-description",
@@ -193,7 +189,7 @@
 
 
                 </div>
-                <div class="col-lg-4 pl-3">
+                <div class="col-lg-4 pl-3 template-hidden">
                     <div class="row hover-yellow px-2">
                         <div class="col-md-12   border d-flex justify-content-between"
                              style="border-radius: 8px; padding: 9px;background-color: #E9EAEB ;">

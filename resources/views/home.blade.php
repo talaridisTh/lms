@@ -50,8 +50,6 @@
     <div class="container-fluid mb-5" style="max-width: 1400px">
         {{--row 1 --}}
         <div class="row ">
-
-
             <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
                 <h2 class="h2-custom">{{$option["title"]}}</h2>
                 <div class="d-flex flex-column span-custom mb-3">
@@ -73,27 +71,28 @@
             </div>
 
         </div>
+
         @if($chart["courses"] >0 && $chart["material"]>0 && $chart["user"]>0 )
             {{--row 2 --}}
-            <div class="row justify-content-center  mt-3">
-                <div class="col-md-3 text-center mr-5">
-                    <div class="count-number-1 count-number" data-start="0" data-end="{{$chart["courses"]}}"></div>
-                    <div class="line w-50 text-center"></div>
-                    <h3>Courses</h3>
-                </div>
-                <div class="col-md-3 text-center mr-5">
-                    <div class="count-number-2 count-number" data-start="0" data-end="{{$chart["material"]}}"></div>
-                    <div class="line w-50 text-center"></div>
-                    <h3>Μαθήματα</h3>
-                </div>
-                <div class="col-md-3 text-center">
-                    <div class="count-number-3 count-number" data-start="0" data-end="{{$chart["user"]}}"></div>
-                    <div class="line w-50 text-center"></div>
-                    <h3>Καθηγητές </h3>
-                </div>
+{{--            <div class="row justify-content-center  mt-3">--}}
+{{--                <div class="col-md-3 text-center mr-5">--}}
+{{--                    <div class="count-number-1 count-number" data-start="0" data-end="{{$chart["courses"]}}"></div>--}}
+{{--                    <div class="line w-50 text-center"></div>--}}
+{{--                    <h3>Courses</h3>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3 text-center mr-5">--}}
+{{--                    <div class="count-number-2 count-number" data-start="0" data-end="{{$chart["material"]}}"></div>--}}
+{{--                    <div class="line w-50 text-center"></div>--}}
+{{--                    <h3>Μαθήματα</h3>--}}
+{{--                </div>--}}
+{{--                <div class="col-md-3 text-center">--}}
+{{--                    <div class="count-number-3 count-number" data-start="0" data-end="{{$chart["user"]}}"></div>--}}
+{{--                    <div class="line w-50 text-center"></div>--}}
+{{--                    <h3>Καθηγητές </h3>--}}
+{{--                </div>--}}
 
 
-            </div>
+{{--            </div>--}}
         @endif
         {{--row 3 --}}
         <div class="row my-5 ">

@@ -66,17 +66,7 @@
 {{--        @endunlessrole--}}
 
 
-    @role("admin") <!-- ribbon -->
-        <div class="card d-lg-none d-xl-block ribbon-box" style="background-color: transparent">
-            <div class="card-body py-0">
-                <div class="p-1 bg-secondary " style="border-radius: 20px"><i class="mdi mdi-access-point mr-1"></i>
-                    <a class="text-white ribbon-edit" href="{{route('course.show',$course->slug)}}">
-                        <spant class="">Edit this page</spant>
-                    </a>
-                </div>
-            </div> <!-- end card-body -->
-        </div>
-        @endrole
+
 
         <div class="container-xl mb-3" style="max-width: 1705px"> <!-- container banner -->
 
@@ -95,9 +85,9 @@
 
 
                         <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
-                            <h2 class="display-4 text-light">{{$course->title}}</h2>
+                            <h2 data-course-slug="{{$course->slug}}" class="display-4 text-light course-slug">{{$course->title}}</h2>
                             <p class="text-light my-4 text-left">{{$course->subtitle}}</p>
-                            <div class="button-course-fav my-sm-2">
+                            <div class="button-course-fav my-sm-2 template">
                                 @if(count($allMaterial))
                                     <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
                                        class=" mr-2 px-4 mb-xl-0 mb-md-2 btn-begin btn bghover btn"
@@ -116,32 +106,6 @@
                                 @endunlessrole
                             </div>
                         </div>
-
-                        {{--                        <div class="col-md-12 mt-md-2 col-lg-4 col-xl-3">--}}
-                        {{--                            <div class="box-last-material p-2 color-topic-second ">--}}
-                        {{--                                <p class="box-num-material display-4"><span>{{$allMaterial->count()}}</span></p>--}}
-                        {{--                                <div class="last-material font-12 text-light d-flex text-center flex-column mb-4">--}}
-                        {{--                                    <span>Η τελευταία προσθήκη</span>--}}
-                        {{--                                    @if(count($allMaterial))--}}
-
-                        {{--                                        <span>{{\Carbon\Carbon::parse($lastMaterial->last()->created_at)->diffForHumans()}}</span>--}}
-
-
-                        {{--                                </div>--}}
-                        {{--                                <div class="box-button-subtitle text-light text-center">--}}
-                        {{--                                        <p class="font-16">{{$lastMaterial->last()->title}}</p>--}}
-                        {{--                                        <p class="font-12">{{$lastMaterial->last()->subtitle}}</p>--}}
-
-                        {{--                                        <a class="text-white"--}}
-                        {{--                                           href="{{route('index.material.show',[$course->slug,$lastMaterial->last()->slug])}}">--}}
-                        {{--                                            <button class="bghover color-topic-second  border  btn btn-secontary ">--}}
-                        {{--                                                Δες το μάθημα--}}
-                        {{--                                            </button>--}}
-                        {{--                                        </a>--}}
-                        {{--                                    @endif--}}
-                        {{--                                </div>--}}
-                        {{--                            </div>--}}
-                        {{--                        </div>--}}
                     </div>
                 </div>
             </div> <!-- end row top banner -->
@@ -159,10 +123,10 @@
 
         </div> <!-- end container banner -->
 
-        <div class="container-fluid my-3" style="max-width: 1423px"> <!--  container info -->
+        <div class="container-fluid my-3 position-relative" style="max-width: 1423px"> <!--  container info -->
 
-            <div class="row ">
-                <div class="col-lg-8 {{empty($course->description)?"d-none":""}}">
+            <div class="row template-cnt">
+                <div class="col-lg-8 template-single-page {{empty($course->description)?"d-none":""}}">
                     @include("components.index.user-info")
                     <div class="row ">
 
@@ -193,7 +157,7 @@
                     </div>
                 </div>
 
-                <div class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block ":"offset-2 col-md-8 offset-2 text-left" }}">
+                <div class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block template-material-list":"offset-2 col-md-8 offset-2 text-left" }}">
                     @if(count($course->media->where("type","!=",0))>0)
                         <div class="accordion custom-accordion my-2" id="extra-content">
                             <div class="card mb-0">
@@ -301,7 +265,7 @@
                                                 <li data-material-id="{{$chapter->id}}"
                                                     data-material-priority="{{$key+1}}"
                                                     class="list-group-item border-r-0 list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
-                                                    <a class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
+                                                    <a data-material-slug="{{$chapter->slug}}" data-material-title="{!! $chapter->title !!}" class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":"template-prevent"}}"
                                                        href="{{$link}}">
                                                         <div class="col-lg-2 col-1 ml-1 ">
 
@@ -311,7 +275,7 @@
                                                             @else
                                                                 <div class="col-sm-2 col-1 mt-1 mr-2 ">
                                                                     <span {{$hover}} style="margin:-20px;"
-                                                                          class="material-count">
+                                                                          class="material-count template">
                                                                      {!! $activeClassMaterial!!}
                                                                     </span>
                                                                 </div>
@@ -347,12 +311,12 @@
                                 <li data-material-id="{{$materials->id}}"
                                     data-material-priority="{{$countIfNotSection}}"
                                     class="list-group-item list-material border ">
-                                    <a class="d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
+                                    <a data-material-slug="{{$materials->slug}}" data-material-title="{!! $materials->title!!}" class=" d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":"template-prevent"}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         @unlessrole("guest")
                                         <div class="col-lg-2 mr-2 col-1 ">
                                             <div>
-                                            <span {{$hover}} class="material-count">
+                                            <span {{$hover}} class="material-count template">
                                                 <span>{!! $activeClass!!}</span>
                                             </span>
                                             </div>
@@ -377,6 +341,7 @@
 
                 </div>
 
+{{--                <p class="template-fullscreen">test</p>--}}
 
             </div>
 
