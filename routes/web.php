@@ -129,6 +129,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('courses/add-students', 'Ajax\CourseController@addStudents');
     Route::patch('courses/remove-students', 'Ajax\CourseController@removeStudents');
     Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
+    Route::patch('course/{course:id}/toggle-highlight', 'Ajax\CourseController@toggleHighlight');
 //! Dashboard Ajax Bundles Datatables
     Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');
     Route::post('bundles/bundle-courses-datatable', 'Ajax\BundleController@show');

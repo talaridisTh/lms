@@ -483,7 +483,7 @@ $("#all-active-materials-checkbox").on( "change", function() {
 //! 			Datatables Initialization			#
 //!##################################################
 const courseMaterialsTable = $("#course-materials-list").DataTable({
-	order: [3, "asc"],
+	order: [4, "asc"],
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -502,6 +502,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 	columns: [
 		{ data: 'action', className: "position-relative text-center align-middle", orderable: false },
 		{ data: 'title', name: 'title' },
+		{ data: 'highlight', name: 'pivot.highlight', className: "text-center align-middle", },
 		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
 		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
@@ -549,6 +550,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
 		activeMaterialsCheckboxToggle();
+		highlightCheckboxInit();
 		toggleCourseMaterial();
 		sortInputsInit();
 		removeMaterialInit();
@@ -1568,6 +1570,18 @@ function removeMaterialHandler() {
 	})
 }
 
+function highlightCheckboxInit() {
+
+	$(".js-course-material-highlight").on("change", function() {
+		const materialId = this.dataset.materialId;
+		const status = this.checked ? 1 : 0;
+
+		// console.log(this);
+		toggleHighlight([materialId], status);
+	});
+
+}
+
 function remainingMaterialsCheckboxHandler() {
 
 	let mainCheckbox = $('#all-remainings-checkbox')[0];
@@ -1767,7 +1781,21 @@ function addCourseMaterials( materialId ) {
 	})
 	.catch( (err) => {
 		console.log(err);
-		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+		utilities.toastAlert( 'error', "Κάποιο σφάλμα παρουσιάστηκε ..." );
+	})
+}
+
+function toggleHighlight(materialIds, status) {
+
+	axios.patch(`/course/${courseId}/toggle-highlight`, {materialIds, status})
+	.then( res => {
+		const message = status === 1 ? "Το υλικό τονίστηκε." : "Ο τονισμός αφαιρέθηκε."
+		const icon = status === 1 ? "success" : "info"
+		utilities.toastAlert(icon, message);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε ...");
 	})
 }
 

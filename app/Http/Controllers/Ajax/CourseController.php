@@ -278,4 +278,14 @@ class CourseController extends Controller
 		
 	}
 
+	public function toggleHighlight(Course $course, Request $request) {
+		// $data = $request->materialIds;
+
+		// dd($data);
+		foreach ($request->materialIds as $id) {
+			$course->materials()
+				->updateExistingPivot( $id, [ 'highlight' => $request->status]);
+		}
+	}
+
 }

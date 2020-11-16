@@ -25,7 +25,6 @@ class CourseMaterialsDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-
 		if ( is_null($request->startDate) && is_null($request->endDate) ) {
 			$query = Course::find( $request->courseId )->materials()->get();
 		}
@@ -37,7 +36,6 @@ class CourseMaterialsDataTable extends DataTable
 						$subquery->whereBetween('updated_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"])
 							->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
 				})
-
 				->get();
 		}
 
@@ -82,6 +80,19 @@ class CourseMaterialsDataTable extends DataTable
 						data-slug='$data->slug'>$data->title</h4><p class='mb-0'>Σύνολο υλικού: ".$data->chapters()->count()."</p>";
 				}
 			})
+			->editColumn("highlight", function($data) {
+
+				$highlight = $data->pivot->highlight === 0 ? "" : "checked";
+				$disabled = $data->type === "Section" ? "disabled" : "";
+
+				return "<div class='icheck-success'>
+							<input class='js-course-material-highlight'
+								data-material-id='$data->id' type='checkbox'
+								id='$data->slug-highlight' $highlight 
+								$disabled autocomplete='off'>
+							<label for='$data->slug-highlight'></label>
+						</div>";
+			})
 			->editColumn('status', function($data) use ($request) {
 
 				$status = $data->pivot->status == 0 ? "" : "checked";
@@ -94,7 +105,7 @@ class CourseMaterialsDataTable extends DataTable
 			})
 			->editColumn('priority', function($data) {
 
-				return "<div class='form-group'>
+				return "<div class='form-group mb-1'>
 							<input type='text' class='form-control text-center js-sort-input'
 								data-material-id='$data->id'
 								data-current-priority=".$data->pivot->priority."
@@ -111,7 +122,7 @@ class CourseMaterialsDataTable extends DataTable
 			})
 			->rawColumns(
 				[
-					'action', 'title', 'status', 'priority',
+					'action', 'title', 'status', 'priority', 'highlight',
 					'type', 'updated_at', 'created_at', 'btns'
 				]
 			)
