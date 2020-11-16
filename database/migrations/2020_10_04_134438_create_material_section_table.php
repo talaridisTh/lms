@@ -19,6 +19,7 @@ class CreateMaterialSectionTable extends Migration
 			$table->foreignId('material_id')->references('id')->on('materials')->onDelete('cascade');
 			$table->unsignedSmallInteger('status')->default(0);
 			$table->unsignedSmallInteger('priority');
+			// $table->unsignedSmallInteger('highlight')->default(0); // added later
 			$table->timestamp('publish_at')->nullable();
 			$table->timestamps();
         });

@@ -20,6 +20,7 @@ class CreateCourseMaterialTable extends Migration
 			$table->unsignedSmallInteger('status')->default(0);
 			$table->unsignedSmallInteger('guest_status')->default(0);
 			$table->unsignedSmallInteger('priority');
+			// $table->unsignedSmallInteger('highlight')->default(0); // added later
 			$table->timestamp('publish_at')->nullable();
         });
     }

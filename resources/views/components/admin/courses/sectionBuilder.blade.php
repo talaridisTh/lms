@@ -88,6 +88,7 @@
 								</div>
 							</th>
 							<th class="text-center" scope="col">Title</th>
+							<th class="text-center w-10" scope="col">Έμφαση</th>
 							<th class="text-center w-10" scope="col">Κατάσταση</th>
 							<th class="text-center w-10" scope="col">Κατάταξη</th>
 							<th class="text-center w-10" scope="col">Τύπος</th>
@@ -133,6 +134,16 @@
 									<a href='#' class='custom-link-primary'>View</a>
 								</td>
 								<td class="align-middle text-center">
+									<div class='icheck-success d-inline'>
+										<input id='{{ $material->slug }}-chapter-material-highlight'
+											class="js-chapter-material-highlight" type='checkbox'
+											data-material-id="{{ $material->id }}" autocomplete='off'
+											data-section-id="{{ $section->id }}"
+											{{ $material->pivot->highlight === 0 ? "" : "checked" }}>
+										<label for='{{ $material->slug }}-chapter-material-highlight'></label>
+									</div>
+								</td>
+								<td class="align-middle text-center">
 									@php
 										$status = $material->pivot->status == 0 ? "" : "checked";
 									@endphp
@@ -143,7 +154,7 @@
 									<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
 								</td>
 								<td class="align-middle text-center">
-									<div class='form-group mb-0'>
+									<div class='form-group mb-1'>
 										<input type='text' class='js-chapter-priority form-control text-center'
 											data-material-id='{{ $material->id }}' data-section-id="{{ $section->id }}"
 											data-current-priority="{{ $material->pivot->priority }}"
@@ -179,6 +190,7 @@
 						<tr>
 							<th scope="col"></th>
 							<th class="text-center" scope="col">Title</th>
+							<th class="text-center w-10" scope="col">Έμφαση</th>
 							<th class="text-center w-10" scope="col">Κατάσταση</th>
 							<th class="text-center w-10" scope="col">Κατάταξη</th>
 							<th class="text-center w-10" scope="col">Τύπος</th>

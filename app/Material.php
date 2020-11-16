@@ -14,11 +14,10 @@ class Material extends Model {
 
     public function chapters()
     {
-
         return $this->belongsToMany(
             Material::class, "material_section",
             "section_id", "material_id"
-        )->withPivot('status', 'priority');
+        )->withPivot('status', 'priority', 'highlight');
     }
 
     public function courses()

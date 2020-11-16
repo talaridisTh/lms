@@ -129,6 +129,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('courses/add-students', 'Ajax\CourseController@addStudents');
     Route::patch('courses/remove-students', 'Ajax\CourseController@removeStudents');
     Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
+    Route::patch('course/{course:id}/toggle-highlight', 'Ajax\CourseController@toggleHighlight');
 //! Dashboard Ajax Bundles Datatables
     Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');
     Route::post('bundles/bundle-courses-datatable', 'Ajax\BundleController@show');
@@ -169,6 +170,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
     Route::post("section/remove-chapters", "Ajax\MaterialController@removeChapters");
     Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
+    Route::patch("section/toggle-hightlight/{material:id}", "Ajax\MaterialController@toggleHighlight");
     Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
     Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
     Route::patch('material/{material:id}/toggle-editors', 'Ajax\MaterialController@toggleEditors');

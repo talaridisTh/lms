@@ -842,6 +842,7 @@
 									</div>
 								</th>
 								<th class="text-center">Τίτλος</th>
+								<th class="text-center">Έμφαση</th>
 								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>
@@ -855,6 +856,7 @@
 							<tr>
 								<th class="text-center"></th>
 								<th class="text-center">Τίτλος</th>
+								<th class="text-center">Έμφαση</th>
 								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>

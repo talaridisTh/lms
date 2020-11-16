@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
 			$filesystem = $app->make("Illuminate\Contracts\Filesystem\Filesystem");
 
 			return ServerFactory::create([
-				// 'response' => new LaravelResponseFactory(app('request')),
+				'response' => new LaravelResponseFactory(app('request')),
             	'source' => $filesystem->getDriver(),
             	'cache' => $filesystem->getDriver(),
             	'cache_path_prefix' => '.cache',
