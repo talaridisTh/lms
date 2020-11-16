@@ -38,6 +38,11 @@
         margin: auto;
     }
 
+    .splide__slide img {
+        width: 100%;
+        height: auto;
+    }
+
 
 </style>
 
@@ -45,6 +50,7 @@
     <div class="container-fluid mb-5" style="max-width: 1400px">
         {{--row 1 --}}
         <div class="row ">
+
 
             <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
                 <h2 class="h2-custom">{{$option["title"]}}</h2>
@@ -195,12 +201,11 @@
         </div>
         {{--       AUTA EDW THA ALLAKSOUN -}}
                 {{--row 7 --}}
-        <div >
+        <div>
             @if($arrayBanners["primary"]->status==1)
-                <div class="row js-banner-primary" data-count="{{count($bannersPrimary)}}" style="margin-top: 9rem">
-                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-                    <div class="swiper-container primary-slide">
-                        <div class="swiper-wrapper">
+                <div id="card-slider" class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
                             @foreach($bannersPrimary as $key => $banner)
                                 @php
                                     $bannerArray = (array) $banner;
@@ -209,95 +214,69 @@
                                     $model =   $bannerValue::findOrFail($bannerKey)->first();
                                     $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''
                                 @endphp
-                                <div class="swiper-slide ">
-                                    <!-- Simple card -->
-                                    <div class="card card-shadow d-block {{$bannerClass}}" style="height: 55vh ; width: 75%;">
-                                        @isset($model->cover)
-                                        <div class="crop-height">
-                                            <img class="card-img-top img-fluid scale" src="{{$model->cover}}"
-                                                 alt="Card image cap">
-                                        </div>
-                                        @endisset
-                                        <div class="card-body text-left {{$bannerClass}} ">
-                                            <h5 class="card-title blue-title d-flex flex-column">
-                                                <span>{{$model->title}}</span> Το
-                                                πρώτο μου Ρομπότ</h5>
-                                            <span class="card-text span-custom p">
-                                                {{$model->subtitle}}
-                                            </span>
-                                        </div> <!-- end card-body-->
-                                    </div> <!-- end card-->
+                                <li class="splide__slide p-2">
+                                    <img class="card-img-top  scale" src="{{$model->cover}}"alt="Card image cap">
+                                    <p class="p-3"> {{$model->subtitle}}</p>
 
-                                </div>
+                                </li>
                             @endforeach
-                        </div>
-                        @if(count($bannersPrimary)>1)
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        @endif
+                        </ul>
                     </div>
                 </div>
             @endif
             {{--row 7 --}}
         </div>
 
-        <style>
-            .swiper-slide {
-                padding-bottom: 30px;
-            }
-        </style>
-        <div >
-            @if($arrayBanners["secondary"]->status==1)
-                <div class="row js-banner-secondary" data-count="{{count($bannersSecondary)}}" style="margin-top: 9rem">
-                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>
-                    <div class="swiper-container secondary-slide">
-                        <div class="swiper-wrapper">
-                            @foreach($bannersSecondary as $key => $banner)
-                                @php
-                                    $bannerArray = (array) $banner;
-                                    $bannerValue = key ( $bannerArray);
-                                    $bannerKey =array_values ($bannerArray);
-                                    $model =   $bannerValue::findOrFail($bannerKey)->first();
-                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center align': ''
+        {{--        <div>--}}
+        {{--            @if($arrayBanners["secondary"]->status==1)--}}
+        {{--                <div class="row js-banner-secondary" data-count="{{count($bannersSecondary)}}" style="margin-top: 9rem">--}}
+        {{--                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>--}}
+        {{--                    <div class="swiper-container secondary-slide">--}}
+        {{--                        <div class="swiper-wrapper">--}}
+        {{--                            @foreach($bannersSecondary as $key => $banner)--}}
+        {{--                                @php--}}
+        {{--                                    $bannerArray = (array) $banner;--}}
+        {{--                                    $bannerValue = key ( $bannerArray);--}}
+        {{--                                    $bannerKey =array_values ($bannerArray);--}}
+        {{--                                    $model =   $bannerValue::findOrFail($bannerKey)->first();--}}
+        {{--                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center align': ''--}}
 
-                                @endphp
-                                <div class="swiper-slide ">
-                                    <!-- Simple card -->
-                                    <div class="card card-shadow d-block {{$bannerClass}}" style="height: 50vh; width: 75%;">
+        {{--                                @endphp--}}
+        {{--                                <div class="swiper-slide ">--}}
+        {{--                                    <!-- Simple card -->--}}
+        {{--                                    <div class="card card-shadow d-block {{$bannerClass}}"--}}
+        {{--                                         style="height: 50vh; width: 75%;">--}}
 
 
+        {{--                                        @isset($model->cover)--}}
+        {{--                                            <div class="crop-height">--}}
+        {{--                                                <img class="card-img-top  scale" src="{{$model->cover}}"--}}
+        {{--                                                     alt="Card image cap">--}}
+        {{--                                            </div>--}}
+        {{--                                        @endisset--}}
+        {{--                                        <div class="card-body text-left {{$bannerClass}}">--}}
+        {{--                                            <h5 class="card-title blue-title d-flex flex-column ">--}}
+        {{--                                                <span>{{$model->title}}</span> Το--}}
+        {{--                                                πρώτο μου Ρομπότ</h5>--}}
+        {{--                                            <p class="card-text span-custom " style="  word-wrap: break-word;">--}}
+        {{--                                                --}}{{--                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}--}}
+        {{--                                                {{$model->subtitle}}--}}
+        {{--                                            </p>--}}
+        {{--                                        </div> <!-- end card-body-->--}}
+        {{--                                    </div> <!-- end card-->--}}
 
-
-                                        @isset($model->cover)
-                                            <div class="crop-height">
-                                                <img class="card-img-top  scale" src="{{$model->cover}}"
-                                                     alt="Card image cap">
-                                            </div>
-                                        @endisset
-                                        <div class="card-body text-left {{$bannerClass}}">
-                                            <h5 class="card-title blue-title d-flex flex-column ">
-                                                <span>{{$model->title}}</span> Το
-                                                πρώτο μου Ρομπότ</h5>
-                                            <p class="card-text span-custom " style="  word-wrap: break-word;">
-                                                {{--                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}--}}
-                                                {{$model->subtitle}}
-                                            </p>
-                                        </div> <!-- end card-body-->
-                                    </div> <!-- end card-->
-
-                                </div>
-                            @endforeach
-                        </div>
-                        @if(count($bannersSecondary)>1)
-                            <div class="swiper-pagination"></div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
-                        @endif
-                    </div>
-                </div>
-            @endif
-        </div>
+        {{--                                </div>--}}
+        {{--                            @endforeach--}}
+        {{--                        </div>--}}
+        {{--                        @if(count($bannersSecondary)>1)--}}
+        {{--                            <div class="swiper-pagination"></div>--}}
+        {{--                            <div class="swiper-button-prev"></div>--}}
+        {{--                            <div class="swiper-button-next"></div>--}}
+        {{--                        @endif--}}
+        {{--                    </div>--}}
+        {{--                </div>--}}
+        {{--            @endif--}}
+        {{--        </div>--}}
 
     </div>
 @endsection

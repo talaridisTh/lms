@@ -16,6 +16,11 @@
     {{--//pretty-checkbox/--}}
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+    <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
+
+
+
+
 
 
     <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">
@@ -324,6 +329,8 @@
         $('#logout-form').submit();
     })
 </script>
+
+
 
 
 @yield("script")
