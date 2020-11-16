@@ -50,7 +50,9 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch('/dashboard/materials/update/{material:slug}', 'MaterialController@update')->name('material.update');
     Route::delete('/dashboard/materials/delete/{material}', 'MaterialController@destroy')->name('material.destroy');
 	Route::get('/dashboard/materials/coursematerial/{course}/{priority}/{material:id?}', 'MaterialController@courseMaterial')->name('material.courseMaterial');
-	Route::get('/dashboard/view-pdf/{material:id}', 'MaterialController@viewPDF');
+	Route::get('/dashboard/create-pdf/{course?}/{priority?}/{material?}', 'MaterialController@createPDF');
+	Route::post('/dashboard/store-pdf-material', 'MaterialController@storePDF');
+	Route::get('/dashboard/edit-pdf/{material}', 'MaterialController@editPDF');
 
     //! Course Routes
     Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
@@ -145,6 +147,9 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('materials/materials-datatable', 'Ajax\MaterialController@index');
     Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");
     Route::post('materials/add-course-inside-material', 'Ajax\MaterialController@addCourseMaterial')->name("add-course-material-datatable");
+    Route::post('materials/remaining-pdf-files', 'Ajax\MaterialController@remainingPDFFiles');
+
+
 //! Dashboard Ajax Bundles CRUD
     Route::post('materials/material-types', 'Ajax\MaterialController@materialTypes');
     Route::post('materials/add-additionnal-content', 'Ajax\MaterialController@addContent');
@@ -155,8 +160,8 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 //! Dashboard Ajax Materials CRUD
     Route::patch('materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus');
     Route::delete('/materials/multiple/course/delete', 'Ajax\MaterialController@destroyMultipleCourse')->name("destroyMultipleCourse.datatable");
-    Route::post('/materials/add-course/', 'Ajax\MaterialController@addCourse');
-    Route::post('/materials/add-course/multiple', 'Ajax\MaterialController@addCourseMultiple');
+    // Route::post('/materials/add-course/', 'Ajax\MaterialController@addCourse');
+    Route::post('/materials/add-course', 'Ajax\MaterialController@addCourse');
     Route::post('/materials/cover/upload', 'Ajax\MaterialController@coverUpload')->name('user.cover.upload');
     Route::post('materials/gallery-upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
     Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
@@ -166,8 +171,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
     Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
     Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
-    Route::patch('material/{material}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
-// Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
+    Route::patch('material/{material:id}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
+    Route::patch('material/{material:id}/change-pdf', 'Ajax\MaterialController@changePDF');
+
+	// Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables
     Route::post('topics/topics-datatable', 'Ajax\TopicController@index');
 //! Dashboard Ajax Topic CRUD
@@ -190,6 +197,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('materials/upload-description-images', 'Ajax\MaterialController@uploadDescImages');
     Route::post('media/upload-images', 'Ajax\MediaController@uploadImages');
     Route::post('media/files-upload', 'Ajax\MediaController@fileUpload');
+    Route::post('media/pdf-upload', 'Ajax\MediaController@pdfUpload');
     Route::patch('media/cover/replace', 'Ajax\MediaController@coverChange');
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
     Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
@@ -198,7 +206,10 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
     Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
 //! Dashboard Home Banner Update
-    Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+
+//! Glide Images
+	Route::get('img/{path}', 'Ajax\ImageController@show')->where('path', '.*');
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
@@ -226,6 +237,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/history-datatable', 'Index\UserController@historyDatatable')->name("datatable.history");
     Route::post('/history-datatable/material', 'Index\UserController@historyMaterialDatatable')->name("datatable.historyMaterial");
 ////meessage   MIN TO SVISEIS AKOMA !!!!
+//! TIXEROS ISOUN!!! LIGO ELIPSE!!!
 //    Route::get("/message/", "MessageController@index")->name("index.message");
 //    Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
 //    Route::get("/message/info/{user}", "MessageController@info")->name("index.info");

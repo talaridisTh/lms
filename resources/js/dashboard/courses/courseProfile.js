@@ -41,6 +41,15 @@ $("#new-content-btn").on("click", function() {
 
 })
 
+$("#section-new-pdf-material").on("click", function() {
+
+	const modal = $("#sections-additions-modal")[0];
+	const sectionSlug = modal.dataset.sectionSlug;
+	const priority = modal.dataset.priority;
+
+	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}/${sectionSlug}`;
+})
+
 $("#section-chapter-btn").on("click", function() {
 
 	const modal = $("#sections-additions-modal")[0];
@@ -81,9 +90,11 @@ $("#sections-additions-modal").on("show.bs.modal", function(event) {
 
 	const btn = event.relatedTarget;
 	const sectionId = btn.dataset.sectionId;
+	const sectionSlug = btn.dataset.sectionSlug;
 	const priority = btn.dataset.priority;
 
 	this.dataset.sectionId = sectionId;
+	this.dataset.sectionSlug = sectionSlug;
 	this.dataset.priority = priority;
 
 });
@@ -192,9 +203,15 @@ $("#version-select").on("change", function() {
 })
 
 $("#add-new-material-btn").on("click", function() {
-	let priority = $("#store-material-priority").val();
+	const priority = $("#store-material-priority").val();
 
 	window.location = `/dashboard/materials/coursematerial/${courseSlug}/${priority}`;
+})
+
+$("#add-new-pdf-material-main").on("click", function() {
+	const priority = $("#store-material-priority").val();
+	
+	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}`;
 })
 
 $("#change-cover-btn").on("click", function() {
@@ -2017,82 +2034,22 @@ function sectionForm(priority) {
 	</td>`;
 }
 
-function pdfForm(priority) {
-
-	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
-		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο PDF</h3>
-		<form id="additional-content-form">
-			<div class="form-row">
-				<div class="form-group col-5">
-					<label for="new-title">Τίτλος <span class="text-danger">*</span></label>
-					<input type="text" id="new-title" class="js-empty js-title form-control" name="title" placeholder="Εισάγετε τίτλο..." />
-					<div class="invalid-feedback">
-						Παρακαλώ εισάγετε τίτλο.
-					</div>
-				</div>
-				<div class="form-group col-5">
-					<label for="new-subtitle">Υπότιτλος</label>
-					<input type="text" id="new-subtitle" class="js-subtitle form-control" name="subtitle" placeholder="Εισάγετε υπότιτλο..."/>
-					<input type="text" id="new-content" class="js-content form-control" name="content" placeholder="Εισάγετε περιεχόμενο..." hidden/>
-				</div>
-				<div class="form-group col-2 d-flex flex-column">
-					<label for="state-select">Κατάσταση</label>
-					<select class="js-state form-control select2" id="state-select" name="status">
-						<option value="1">Ενεργό</option>
-						<option value="0" selected>Ανενεργό</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-row">
-				<div class="form-group col-8">
-					<label for="pdf-description">Περιγραφή</label>
-					<textarea class="form-control" id="pdf-description" name="summary" style="height: 100%;" placeholder="Εισάγετε περιγραφή"></textarea>
-				</div>
-				<div class="form-group col-4">
-					<label class="d-inline-block" for="pdf-upload" style="width: 100%;">Αρχείο PDF <span class="text-danger">*</span></label>
-					<label for="pdf-upload" class="custom-file-upload">
-						<i class="js-cloud-icon mdi mdi-cloud-upload-outline"></i>
-						<p class="js-file-name font-16">Drop file here or click to upload.</p>
-						<input id="pdf-upload" class="custom-file-upload-input js-file-input cursor-pointer js-empty" type="file" name="file" autocomplete="off"/>
-						<div class="invalid-feedback">
-							Παρακαλώ εισάγετε αρχείο.
-						</div>
-					</label>
-				</div>
-			</div>
-			<input type="text" class="form-control" name="video" hidden placeholder="Εισάγετε link..."/>
-			<input type="text" class="form-control" name="link" hidden placeholder="Εισάγετε link..."/>
-		</form>
-		<div class="form-row justify-content-end">
-			<div class="form-group col-3 d-flex justify-content-end align-items-start" style="padding-top: 1.85rem;">
-				<button  class="js-add-content js-section-content btn btn-primary" data-type="PDF" data-priority="${ priority }">Αποθήκευση</button>
-				<button  class="js-cancel-addition btn btn-secondary ml-2">Άκυρο</button>
-			</div>
-		</div>
-	</td>`;
-}
-
 function createTableRow( type, priority ) {
 
 	let addContentRow = $(".extra-content-row")[0];
+
 	if ( addContentRow ) {
-
 		addContentRow.remove();
-
 	}
 
 	let rowElm = document.createElement("tr");
 	rowElm.classList.add("extra-content-row")
-
 
 	if (type == "Announcement") {
 		rowElm.innerHTML = annoucementForm( priority );
 	}
 	else if ( type == "Section" ) {
 		rowElm.innerHTML = sectionForm( priority );
-	}
-	else if ( type === "PDF" ) {
-		rowElm.innerHTML = pdfForm( priority );
 	}
 	else {
 		rowElm.innerHTML = linkForm( type, priority);
@@ -2106,17 +2063,9 @@ function cancelAddition() {
 
 	const additionRow = document.getElementsByClassName("extra-content-row")[0];
 	const saveBtn = additionRow.getElementsByClassName("js-add-content")[0];
-	const dropzone = additionRow.getElementsByClassName("js-file-input")[0];
 
 	saveBtn.removeEventListener( "click", addContent );
 	this.removeEventListener( "click", cancelAddition );
-
-	if (dropzone) {
-		dropzone.removeEventListener("dragover", additionsDragOverHandler);
-		dropzone.removeEventListener("dragleave", removeColorHandler);
-		dropzone.removeEventListener("change", fileChangeHandler);
-		removesecondaryEvents(dropzone);
-	}
 
 	additionRow.remove();
 }
@@ -2185,34 +2134,21 @@ function additionsErrorMessage(text) {
 function mainAdditionEventInit(row) {
 	const saveBtn = row.getElementsByClassName("js-add-content")[0];
 	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
-	const dropzone = row.getElementsByClassName("js-file-input")[0];
 
 	saveBtn.addEventListener("click", addContent);
-
 	cancelBtn.addEventListener("click", cancelAddition );
 
-	if (dropzone) {
-		dropzone.addEventListener("dragover", additionsDragOverHandler);
-		dropzone.addEventListener("dragleave", removeColorHandler);
-		dropzone.addEventListener("change", fileChangeHandler);
-	}
 }
 
 function sectionAdditionEventInit(row, sectionId) {
 	const saveBtn = row.getElementsByClassName("js-section-content")[0];
 	const cancelBtn = row.getElementsByClassName("js-cancel-addition")[0];
-	const dropzone = row.getElementsByClassName("js-file-input")[0];
 
 	saveBtn.dataset.sectionId = sectionId;
 	saveBtn.addEventListener("click", sectionAdditionHandler);
 
 	cancelBtn.addEventListener("click", removeSectionAdditionHandler);
 
-	if (dropzone) {
-		dropzone.addEventListener("dragover", additionsDragOverHandler);
-		dropzone.addEventListener("dragleave", removeColorHandler);
-		dropzone.addEventListener("change", fileChangeHandler);
-	}
 }
 
 function removeSectionAdditionHandler() {
@@ -2409,10 +2345,6 @@ $R("#summary", {
 	},
 	imageFloatMargin: '20px',
 	imageUpload: "/media/upload-images",
-	// imageData: {
-	// 	// id: courseId,
-	// 	// namespace: "App\\Course"
-	// },
 	callbacks: {
         upload: {
             beforeSend: function(xhr)
@@ -2491,8 +2423,6 @@ ArticleEditor('#description', {
 		upload: "/media/upload-images",
 		data: {
 			"_token": $('meta[name="csrf-token"]').attr('content'),
-			// "id": courseId,
-			// namespace: "App\\Course"
 		}
 	}
 });
@@ -2654,76 +2584,6 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 	maxFileSize: "50MB"
 });
 
-function additionsDragOverHandler() {
-	const label = this.parentElement;
-	label.classList.add("lime-green-border", "lime-green-color");
-}
-
-function removeColorHandler() {
-	const label = this.parentElement;
-	label.classList.remove("lime-green-border", "lime-green-color");
-}
-
-function fileChangeHandler() {
-	const label = this.parentElement;
-	const cloudIcon = label.getElementsByClassName("js-cloud-icon")[0];
-	const fileName = label.getElementsByClassName("js-file-name")[0];
-	const input = document.getElementById("pdf-upload");
-	
-	fileName.textContent = fileNameGetter(input);
-	fileName.classList.add("filled")
-
-	cloudIcon.classList.add("mdi-check-bold");
-	cloudIcon.classList.remove("mdi-cloud-upload-outline");
-	label.classList.remove("lime-green-border", "lime-green-color");
-
-	removeDropzoneInitialEvents(this);
-	secondaryDropEventsInit(this);
-}
-
-function fileNameGetter(input) {
-
-	return input.files[0].name;
-
-}
-
-function removeDropzoneInitialEvents(input) {
-	input.removeEventListener("dragover", additionsDragOverHandler);
-	input.removeEventListener("dragleave", removeColorHandler);
-	input.removeEventListener("change", fileChangeHandler);
-}
-
-function secondaryDropEventsInit(input) {
-	input.addEventListener("dragover", secondaryDragOverHandler);
-	input.addEventListener("dragleave", secondaryDragLeaveHandler);
-	input.addEventListener("change", secondaryFileHandler);
-}
-
-function secondaryDragOverHandler() {
-	const label = this.parentElement;
-	label.classList.add("lime-green-border");
-}
-
-function removesecondaryEvents(input) {
-	input.addEventListener("dragover", secondaryDragOverHandler);
-	input.addEventListener("dragleave", secondaryDragLeaveHandler);
-	input.addEventListener("change", secondaryFileHandler);
-}
-
-function secondaryDragLeaveHandler() {
-	const label = this.parentElement;
-	label.classList.remove("lime-green-border");
-}
-
-function secondaryFileHandler() {
-	const label = this.parentElement;
-	const fileName = label.getElementsByClassName("js-file-name")[0];
-
-	label.classList.remove("lime-green-border");
-
-	fileName.textContent = fileNameGetter(this);
-}
-
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 for ( let i = 0; i < dropArea.length; i++ ) {
 
@@ -2731,26 +2591,23 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 
-			draggingArea.classList.add("limegreen");
-			label.classList.add("text-limegreen");
-
+		draggingArea.classList.add("limegreen");
+		label.classList.add("text-limegreen");
 	});
 
 	dropArea[i].addEventListener("dragleave", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 
-			draggingArea.classList.remove("limegreen");
-			label.classList.remove("text-limegreen");
-
+		draggingArea.classList.remove("limegreen");
+		label.classList.remove("text-limegreen");
 	});
 
 	dropArea[i].addEventListener("drop", function(event) {
 		const draggingArea = this.getElementsByClassName("filepond--drop-label")[0];
 		const label = draggingArea.querySelector("label");
 
-			draggingArea.classList.remove("limegreen");
-			label.classList.remove("text-limegreen");
-
+		draggingArea.classList.remove("limegreen");
+		label.classList.remove("text-limegreen");
 	});
 }

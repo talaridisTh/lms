@@ -17,6 +17,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
+        "league/glide-laravel": "^1.0",
         "munafio/chatify": "^1.0",
         "spatie/laravel-activitylog": "^3.14",
         "spatie/laravel-directory-cleanup": "^1.6",

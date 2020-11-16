@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Course;
-use App\CourseMaterial;
 use App\DataTables\AddCourseInsideMaterialsDataTable;
 use App\DataTables\CourseInsideMaterialsDataTable;
 use App\DataTables\MaterialsDataTable;
+use App\DataTables\RemainingPDFDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Media;
-use App\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -90,45 +89,27 @@ class MaterialController extends Controller {
 
     public function addContent(Request $request) {
 
-		$data = [];
-		$data["errors"] = [];
-
-		if ( is_null($request->title) ) {
-			$data["errors"]["title"] = ["Παρακαλώ εισάγετε τίτλο."];
-		}
-
-		if ( $request->type === "PDF" && is_null($request->file) || $request->type === "PDF" && $request->file->getClientMimeType() !== "application/pdf" ) {
-
-			$data["errors"]["file"] = ["Παρακαλώ εισάγετε αρχείο τύπου PDF."];
-
-		}
-
-		if ( count($data["errors"]) > 0 ) {
-			return Response::json( $data, 422 );
-		}
+		$request->validate([
+			'title' => 'required'
+		]);
 
         $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
-        $material->content = $request->content;
+        $material->description = $request->description;
         $material->type = $request->type;
         $material->status = $request->status;
 		$material->slug = Str::slug($request->title, "-");
 		$material->video_link = $request->video;
 		$material->link = $request->link;
 		$material->save();
-		
-		if ( !is_null($request->file) && $request->file->isValid() ) {
-			$pdf = $this->storeFile($request->file);
-			$this->storeFileDetails($request, $pdf);
-			$material->media()->attach($pdf->id, ["usage" => 4]);
-		}
 
-
-		CourseMaterial::incrementPriority($request->courseId, $request->priority);
-		
 		$course = Course::find($request->courseId);
+
+		$course->materials()->wherePivot("priority", ">", $request->priority)
+					->increment("priority");
+		
 		$course->materials()
 			->attach($material->id, [
 				"status" => $request->status,
@@ -187,38 +168,32 @@ class MaterialController extends Controller {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function destroyMultipleCourse(Request $request)
-    {
+    public function destroyMultipleCourse(Request $request) {
+
+		$courses = Course::find($request->courseId);
+
+		foreach ($courses as $course) {
+			$priority = $course->materials()
+				->where("materials.id", $request->materialId)
+				->first()->pivot->priority;
+
+			$course->materials()->detach( $request->materialId );
+
+			$course->materials()->wherePivot("priority", ">", $priority)->decrement("priority");
+		}
+
+    }
+
+    public function addCourse(Request $request) {
 
         $material = Material::find($request->materialId);
-        $material->courses()->detach($request->courseId);
+		$courses = Course::find($request->courseIds);
+		
+        foreach ($courses as $course) {
 
-        return response()->json(['success' => 'Status change successfully.']);
-    }
+			$materialCount = $course->materials()->count();
 
-    public function addCourse(Request $request)
-    {
-
-        $material = Material::findOrFail($request->materialId);
-        $lastpriority = $material->courses()->count() > 0 ? $material->courses()->orderBy("priority", 'desc')->first()->getOriginal("pivot_priority") : 0;
-        $material->courses()->detach($request->courseId);
-        $material->courses()->attach($request->courseId, ["priority" => $lastpriority + 1, "publish_at" => now()]);
-    }
-
-    public function addCourseMultiple(Request $request)
-    {
-
-        $material = Material::findOrFail($request->materialId);
-        $courses = Course::findOrFail($request->courseIds);
-        foreach ($courses as $key => $course)
-        {
-
-            if ($key < 1)
-            {
-                $lastpriority = $material->courses()->count() > 0 ? $material->courses()->orderBy("priority", 'desc')->first()->getOriginal("pivot_priority") : 0;
-            }
-            $material->courses()->detach($course);
-            $material->courses()->attach($course, ["priority" => $lastpriority + $key, "publish_at" => now()]);
+            $material->courses()->attach($course, ["priority" => $materialCount + 1, "publish_at" => now()]);
         }
     }
 
@@ -458,34 +433,22 @@ class MaterialController extends Controller {
 
 	public function addSectionContent(Request $request) {
 
-		//! egine etsi epidi 8eloume 2 anti8eta pragmata:
-		//! otan to type einai PDF to arxeio na einai aparetito
-		//! allios na min einai... me to SOMETIMES tis laravel
-		//! den mporoume na exoume to REQUIRED
-		$data = $this->customValidation($request);
-
-		if ( count($data["errors"]) > 0 ) {
-			return Response::json( $data, 422 );
-		}
+		$request->validate([
+			'title' => 'required'
+		]);
 
 		$section = Material::find( $request->sectionId );
 		
 		$material = new Material;
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
-		$material->content = $request->content;
+		$material->description = $request->description;
 		$material->type = $request->type;
 		$material->status = $request->status;
 		$material->slug = Str::slug($request->title, "-");
 		$material->video_link = $request->video;
 		$material->link = $request->link;
 		$material->save();
-
-		if ( !is_null($request->file) && $request->file->isValid() ) {
-			$pdf = $this->storeFile($request->file);
-			$this->storeFileDetails($request, $pdf);
-			$material->media()->attach($pdf->id, ["usage" => 4]);
-		}
 
 		$section->chapters()->wherePivot("priority", ">", $request->priority)
 			->increment("priority");
@@ -502,77 +465,18 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	private function storeFile($file) {
+	public function changePDF(Request $request, Material $material) {
 
-		$date = date('Y.m');
-		$name = $this->fileName($file);
+		$material->media()->where("usage", 4)->sync([$request->pdfId => ["usage" => 4]]);
 
-		$media = new Media;
-		$media->original_name = $name->originalName;
-		$media->name = $name->name;
-		$media->type = 1;
-		$media->rel_path = "/storage/files/$date/$name->fullname";
-		$media->ext = $file->getClientOriginalExtension();
-		$media->file_info = $file->getClientMimeType();
-		$media->size = $file->getSize();
-		$media->save();
-
-		$file->storeAs("public/files/$date", $name->fullname);
-
-		return $media;
+		return Response::json([
+			"pdf" => Media::with("mediaDetails")->find( $request->pdfId )
+		], 200);
 	}
 
-	private function storeFileDetails(Request $request, Media $media) {
+	public function remainingPDFFiles(RemainingPDFDataTable $dataTable) {
 
-		$details = new MediaDetails;
-		$details->media_id = $media->id;
-		$details->title = $request->title;
-		$details->subtitle = $request->subtitle;
-		$details->description = $request->description;
-		$details->save();
-
-		return $details;
-	}
-
-	private function fileName($file) {
-		$temp = explode(".", $file->getClientOriginalName());
-		$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
-		$originalName = implode( ".", $arrayName );
-		$name =  Str::slug( implode("-", $arrayName ), "-" );
-
-		$count = Media::where( "original_name", $originalName)->count();
-
-		if ( $count > 0 ) {
-			$name = $name.( $count + 1 );
-			$fullname = $name.".".$file->getClientOriginalExtension();
-		}
-		else {
-			$fullname = "$name.".$file->getClientOriginalExtension();
-		}
-
-		return (object)[
-			"name" => $name,
-			"originalName" => $originalName,
-			"fullname" => $fullname,
-		];
-	}
-
-	private function customValidation(Request $request) {
-
-		$data = [];
-		$data["errors"] = [];
-
-		if ( is_null($request->title) ) {
-			$data["errors"]["title"] = ["Παρακαλώ εισάγετε τίτλο."];
-		}
-
-		if ( $request->type === "PDF" && is_null($request->file) || $request->type === "PDF" && $request->file->getClientMimeType() !== "application/pdf" ) {
-
-			$data["errors"]["file"] = ["Παρακαλώ εισάγετε αρχείο τύπου PDF."];
-
-		}
-
-		return $data;
+		return $dataTable->render('pdf.files');
 
 	}
 

@@ -1,6 +1,7 @@
 {
-    "/js/app.js": "/js/app.js?id=e372acc735daa534282f",
+    "/js/app.js": "/js/app.js?id=10a139b18b800078fe34",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=3fdf6a04d6ee18c3997a",
+<<<<<<< HEAD
     "/css/dashboard/app.css": "/css/dashboard/app.css?id=63c35cffda983bdbbf4c",
     "/css/index/app.css": "/css/index/app.css?id=032001e0a594d1dd304e",
     "/css/index/logIn.css": "/css/index/logIn.css?id=eabf3bce51038675f616",
@@ -29,4 +30,35 @@
     "/js/index/history/history.js": "/js/index/history/history.js?id=1b7005b323b26dee3f8f",
     "/js/index/index.js": "/js/index/index.js?id=d18b8cedab4f770611a6",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=601b1854d854e121efc0"
+=======
+    "/css/dashboard/app.css": "/css/dashboard/app.css?id=5a6f60fbd1e7ca9400cd",
+    "/css/index/app.css": "/css/index/app.css?id=b3bbaedc5345690f0c79",
+    "/css/index/logIn.css": "/css/index/logIn.css?id=eabf3bce51038675f616",
+    "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=9b8c388cc6f4dc01db3c",
+    "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=29c592d63f52685da5b8",
+    "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=3f973aef4ae276ef263f",
+    "/js/dashboard/courses/coursesMain.js": "/js/dashboard/courses/coursesMain.js?id=40c80e6d9feed6689cd9",
+    "/js/dashboard/dashboard.js": "/js/dashboard/dashboard.js?id=d5d3684ee2daa70e7493",
+    "/js/dashboard/fileManager/fileManager.js": "/js/dashboard/fileManager/fileManager.js?id=c451e0595090420c328f",
+    "/js/dashboard/main.js": "/js/dashboard/main.js?id=6c6e980bd7ed41d4a26a",
+    "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=1a77fd75df23898ddefa",
+    "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=12346e429e3ac152e9a2",
+    "/js/dashboard/materials/pdfMaterial.js": "/js/dashboard/materials/pdfMaterial.js?id=a0b3f97dc2f40f5dc130",
+    "/js/dashboard/newContent.js": "/js/dashboard/newContent.js?id=f980d77c72bdd7859ae0",
+    "/js/dashboard/overview/overview.js": "/js/dashboard/overview/overview.js?id=460be1e02d07636e511f",
+    "/js/dashboard/settings/general-settings.js": "/js/dashboard/settings/general-settings.js?id=7d84d1f4036d54baa50f",
+    "/js/dashboard/settings/home-page.js": "/js/dashboard/settings/home-page.js?id=0aef368989ae1eaa8aad",
+    "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=10e4c1afbe6369d07a8f",
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=35a5b7439835537ee50b",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=17220238e94d9db36e22",
+    "/js/index/announcement/announcement.js": "/js/index/announcement/announcement.js?id=c246c4f07e17511b0775",
+    "/js/index/app.js": "/js/index/app.js?id=836eaa87fd404637000a",
+    "/js/index/chat/message.js": "/js/index/chat/message.js?id=ef053ad3aec13025f298",
+    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=7967329ac572b6232f93",
+    "/js/index/favourites/favourites.js": "/js/index/favourites/favourites.js?id=79c51d3e396153f15ae1",
+    "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=9d2e07a5d0fcc9d69e78",
+    "/js/index/history/history.js": "/js/index/history/history.js?id=237c67e44c3b21ef14c8",
+    "/js/index/index.js": "/js/index/index.js?id=a8501b1b3528cf6411a0",
+    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=0f0874397053f44913aa"
+>>>>>>> 793b466f4e4b57343da42371801d5d6cbd4e62c6
 }

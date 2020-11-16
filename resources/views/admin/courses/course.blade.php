@@ -63,7 +63,7 @@
 						<div class="col-4">
 							<div class="js-section-material card cursor-pointer" data-type="Video">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-filmstrip	display-3"></i>
+									<i class="uil uil-film display-3"></i>
 									<h5 class="card-title mt-2">Video</h5>
 								</div>
 							</div>
@@ -71,7 +71,7 @@
 					</div>
 					<div class="row px-3">
 						<div class="col-6">
-							<div class="js-section-material card cursor-pointer" data-type="PDF">
+							<div id="section-new-pdf-material" class="card cursor-pointer">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-file-pdf-outline	display-3"></i>
 									<h5 class="card-title mt-2">PDF</h5>
@@ -253,7 +253,7 @@
 						<div class="col-4">
 							<div class="card cursor-pointer js-material" data-type="Video">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="uil uil-film	display-3"></i>
+									<i class="uil uil-film display-3"></i>
 									<h5 class="card-title mt-2">Video</h5>
 								</div>
 							</div>
@@ -263,15 +263,6 @@
 					<div class="row px-3">
 
 						<div class="col-4">
-							<div class="card cursor-pointer js-material" data-type="PDF">
-								<div class="card-body card-hover d-flex flex-column align-items-center">
-									<i class="mdi mdi-file-pdf-outline display-3"></i>
-									<h5 class="card-title mt-2">PDF</h5>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-4">
 							<div class="card cursor-pointer js-material" data-type="Section">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-puzzle-outline display-3"></i>
@@ -279,12 +270,19 @@
 								</div>
 							</div>
 						</div>
-
 						<div class="col-4">
 							<div id="add-new-material-btn" class="card cursor-pointer">
 								<div class="card-body card-hover d-flex flex-column align-items-center">
 									<i class="mdi mdi-file-document-outline	display-3"></i>
 									<h5 class="card-title mt-2">Μάθημα</h5>
+								</div>
+							</div>
+						</div>
+						<div class="col-4">
+							<div id="add-new-pdf-material-main" class="card cursor-pointer">
+								<div class="card-body card-hover d-flex flex-column align-items-center">
+									<i class="mdi mdi-file-pdf-outline display-3"></i>
+									<h5 class="card-title mt-2">PDF</h5>
 								</div>
 							</div>
 						</div>

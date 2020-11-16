@@ -302,6 +302,28 @@ class MediaController extends Controller
 
 	}
 
+	public function pdfUpload(Request $request) {
+
+		$file = $request->file;
+		
+		if ( !$file->isValid() ) {
+			abort(422);
+		}
+		
+		if ( $file->getClientMimeType() !== "application/pdf" ) {
+			abort(415);
+		}
+
+
+		if ( $file->getSize() <= 50000000 ) { // 50MB
+			$this->storeFile($file);
+		}
+		else {
+			abort(413);
+		}
+
+	}
+
 	public function coverChange(Request $request) {
 
 		$namespace = $request->namespace;

@@ -4,18 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Role;
-use App\CourseMaterial;
 use App\Http\Requests\CreateMaterialRequest;
 use App\Http\Requests\UpdateMaterialRequest;
 use App\Material;
 use App\Media;
 use App\Topic;
-use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Str;
-use PHPUnit\Util\Type;
 
 class MaterialController extends Controller {
 
@@ -38,13 +34,10 @@ class MaterialController extends Controller {
         $types = Material::all()->unique('type');
 
         return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "types"));
-    }
+	}
 
     public function store(Request $request)
     {
-
-		// dd($request->all());
-
 		$material = new Material();
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
@@ -66,29 +59,73 @@ class MaterialController extends Controller {
 		$request->topic ? $material->topics()->sync($request->topic) : "";
 
 		if ( isset($request->courseId) ) {
-			$course = Course::find( $request->courseId );
-			CourseMaterial::incrementPriority( $request->courseId, ($request->priority) );
 
-			if ( isset($request->sectionId) ) {
-				$section = Material::find( $request->sectionId );
-				$section->chapters()->wherePivot("priority", ">", $request->priority)
-					->increment("priority");
-
-				$section->chapters()->attach($material->id, [
-					"priority" => $request->priority + 1,
-					"status" => isset($request->status) ? 1 : 0
-				]);
-			}
-			else {
-				$course->materials()->attach( $material->id, ["priority" => ($request->priority + 1)] );
-			}
+			$course = $this->storeExtraContent($request, $material);
 
 			return redirect("/dashboard/course/$course->slug");
 		}
 
         return redirect( route("material.show",$material->slug) );
 
-    }
+	}
+	
+	public function createPDF(Course $course = null, $priority = 1, Material $material = null) {
+
+		$data = [
+			"course" => $course,
+			"priority" => $priority,
+			"section" => $material,
+			"instructors" => Role::find(2)->users
+		];
+
+        return view('admin.materials.newPDFMaterial')->with($data);
+	}
+	
+	public function storePDF(Request $request) {
+
+		$request->validate([
+			'title' => 'required',
+			'pdfId' => 'required|integer|not_in:0',
+		]);
+
+		$fields = [
+			"summary" => isset($request->summaryEditor) ? 1 : 0,
+			"description" => isset($request->descriptionEditor) ? 1 : 0,
+			"content" => isset($request->contentEditor) ? 1 : 0
+		];
+
+		$material = new Material;
+		$material->title = $request->title;
+		$material->subtitle = $request->subtitle;
+		$material->description = $request->description;
+		$material->type = "PDF";
+		$material->slug = Str::slug($request->title, '-');
+		$material->status = isset($request->status) ? 1 : 0;
+		$material->fields = json_encode($fields);
+		$material->save();
+
+		$material->media()->attach($request->pdfId, ["usage" => 4]);
+
+		if ( isset($request->instructors) ) {
+			$material->users()->sync($request->instructors);
+		}
+
+		if ( isset($request->courseId) ) {
+
+			$course = $this->storeExtraContent($request, $material);
+
+			return redirect("/dashboard/course/$course->slug");
+		}
+
+		$data = [
+			"material" => $material,
+			"instructors" => Role::find(2)->users,
+			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
+			"pdf" => $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
+		];
+
+		return view("admin/materials/pdfMaterial")->with($data);
+	}
 
     public function show(Material $material = null)
     {
@@ -163,13 +200,48 @@ class MaterialController extends Controller {
         return view('admin.materials.material')->with($data);
 	}
 
-	public function viewPDF(Material $material) {
+	public function editPDF(Material $material) {
+		
+		$pdf = $material->media()->wherePivot("usage", 4)
+			->with("mediaDetails")->first();
 
-		$pdf = $material->media()->wherePivot("usage", 4)->first();
+		$data = [
+			"material" => $material,
+			"instructors" => Role::find(2)->users,
+			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
+			"fields" => json_decode($material->fields),
+			"pdf" => $pdf
+		];
 
-		return view("admin/materials/pdfMaterial")->with(["pdf" => $pdf]);
-		// return response()->file($pdf->rel_path);
-		// dd($pdf);
+		return view("admin/materials/pdfMaterial")->with($data);
+
+	}
+
+	private function storeExtraContent(Request $request, Material $material) {
+
+		$course = Course::find( $request->courseId );
+
+			if ( isset($request->sectionId) ) {
+				$section = Material::find( $request->sectionId );
+				$section->chapters()->wherePivot("priority", ">", $request->priority)
+					->increment("priority");
+
+				$section->chapters()->attach($material->id, [
+					"priority" => $request->priority + 1,
+					"status" => isset($request->status) ? 1 : 0
+				]);
+			}
+			else {
+				$course->materials()->wherePivot("priority", ">", $request->priority)
+					->increment("priority");
+
+				$course->materials()->attach( $material->id, [
+					"priority" => ($request->priority + 1),
+					"status" => isset($request->status) ? 1 : 0
+				]);
+			}
+
+		return $course;
 	}
 
 }

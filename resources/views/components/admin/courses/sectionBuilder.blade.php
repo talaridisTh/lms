@@ -119,8 +119,8 @@
 									</div>
 
 									<a class='custom-primary add-material' href='#' data-section-id="{{ $section->id }}"
-										data-priority='{{ $material->pivot->priority }}' data-toggle='modal'
-										data-target='#sections-additions-modal'>
+										data-section-slug="{{ $section->slug }}" data-priority='{{ $material->pivot->priority }}'
+										data-toggle='modal' data-target='#sections-additions-modal'>
 										<i class='mdi mdi-plus-circle-outline mr-1'></i>
 									</a>
 								</td>

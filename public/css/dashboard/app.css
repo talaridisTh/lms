@@ -3335,6 +3335,10 @@ select.is-invalid {
   margin-right: 6px;
 }
 
+.dataTables_filter > label > .select2-container {
+  width: 180px !important;
+}
+
 .dataTables_length .select2-container .select2-selection--single,
 #daterange {
   height: calc(1.8725rem + 2px) !important;
@@ -3488,6 +3492,14 @@ select.is-invalid {
   font-size: 15px;
   color: #FFF;
   content: "\D7";
+}
+
+#material-course-table_filter .select2-container {
+  height: 35px !important;
+}
+
+#material-course-table_filter .select2-selection {
+  height: 32px;
 }
 
 .custom-primary {
@@ -3880,6 +3892,12 @@ figure > img {
 
 .lime-green-color {
   color: limegreen !important;
+}
+
+.custom-error {
+  box-sizing: border-box;
+  color: #ff5b5b;
+  font-size: 0.75rem;
 }
 
 /*

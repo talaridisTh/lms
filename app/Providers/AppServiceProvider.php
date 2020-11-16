@@ -9,7 +9,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
-
+use League\Glide\Responses\LaravelResponseFactory;
+use League\Glide\ServerFactory;
+use League\Glide\Server;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,7 +22,19 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Server::class, function($app) {
+
+			$filesystem = $app->make("Illuminate\Contracts\Filesystem\Filesystem");
+
+			return ServerFactory::create([
+				// 'response' => new LaravelResponseFactory(app('request')),
+            	'source' => $filesystem->getDriver(),
+            	'cache' => $filesystem->getDriver(),
+            	'cache_path_prefix' => '.cache',
+            	'base_url' => 'img',
+			]);
+
+		});
     }
 
     /**

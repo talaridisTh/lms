@@ -33,8 +33,11 @@ class UserSeeder extends Seeder {
             'status' => 1,
             'remember_token' => Str::random(10),
         ])->assignRole("super admin");
+<<<<<<< HEAD
        
 
+=======
+>>>>>>> 793b466f4e4b57343da42371801d5d6cbd4e62c6
 
         User::create([
             'first_name' => "admin",

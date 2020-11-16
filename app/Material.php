@@ -27,11 +27,11 @@ class Material extends Model {
         return $this->belongsToMany(Course::class)->withPivot('status', 'priority');
     }
 
-    public function coursesMaterial()
-    {
+    // public function coursesMaterial()
+    // {
 
-        return $this->hasMany(CourseMaterial::class);
-    }
+    //     return $this->hasMany(CourseMaterial::class);
+    // }
 
     public function media()
     {
