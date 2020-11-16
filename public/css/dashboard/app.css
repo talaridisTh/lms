@@ -6070,11 +6070,6 @@ pre code {
   opacity: 1;
 }
 
-.form-control::-ms-input-placeholder {
-  color: #8391a2;
-  opacity: 1;
-}
-
 .form-control::placeholder {
   color: #8391a2;
   opacity: 1;
@@ -46132,15 +46127,13 @@ body[data-leftbar-theme=dark] .side-nav .side-nav-forth-level li.active > a {
 
 .mdi-flip-h:before {
   transform: scaleX(-1);
-  -webkit-filter: FlipH;
-          filter: FlipH;
+  filter: FlipH;
   -ms-filter: "FlipH";
 }
 
 .mdi-flip-v:before {
   transform: scaleY(-1);
-  -webkit-filter: FlipV;
-          filter: FlipV;
+  filter: FlipV;
   -ms-filter: "FlipV";
 }
 

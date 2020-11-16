@@ -568,6 +568,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		multipleChapterActivateInit();
 		multipleChapterDeactivateInit();
 		showSectionBtnInit();
+		sectionMaterialHighlightInit();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -733,6 +734,17 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		addFilesBtnInit();
     }
 })
+
+function sectionMaterialHighlightInit() {
+
+	$(".js-chapter-material-highlight").on("change", function() {
+		const sectionId = this.dataset.sectionId;
+		const materialId = this.dataset.materialId;
+		const status = this.checked ? 1 : 0;
+
+		sectionMaterialHightlightToggle(sectionId, [materialId], status);
+	})
+}
 
 function showSectionBtnInit() {
 
@@ -1799,6 +1811,20 @@ function toggleHighlight(materialIds, status) {
 	})
 }
 
+function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
+
+	axios.patch(`/section/toggle-hightlight/${sectionId}`, {materialIds, status})
+	.then( res => {
+		const message = status === 1 ? "Το υλικό τονίστηκε." : "Ο τονισμός αφαιρέθηκε."
+		const icon = status === 1 ? "success" : "info"
+		utilities.toastAlert(icon, message);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε ...");
+	})
+}
+
 function removeMaterials( materials ) {
 
 	axios.patch( "/courses/remove-materials", {
@@ -1947,7 +1973,7 @@ function findMaterialRow(rows, id = false) {
 
 function linkForm( type, priority) {
 
-	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="9">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο ${ type }</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
@@ -1991,7 +2017,7 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="9">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέα Ανακοίνωση</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
@@ -2030,7 +2056,7 @@ function annoucementForm( priority ) {
 
 function sectionForm(priority) {
 
-	return `<td id="add-content-row" class="px-0 text-left" colspan="8">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="9">
 
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
 		<form id="additional-content-form">

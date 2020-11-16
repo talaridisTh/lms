@@ -479,5 +479,14 @@ class MaterialController extends Controller {
 		return $dataTable->render('pdf.files');
 
 	}
-
+	
+	public function toggleHighlight(Material $material, Request $request) {
+		
+		//! to $material einai to $section
+		//! an i metabliti onomasti $section den leitourgei
+		foreach ($request->materialIds as $id ) {
+			$material->chapters()
+				->updateExistingPivot($id, ["highlight" => $request->status]);
+		}
+	}
 }
