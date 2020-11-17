@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\UrlCreator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
@@ -10,7 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Course extends Model {
 
     use SoftDeletes;
-    use HasFactory;
+	use HasFactory;
+	use UrlCreator;
 
     public function sections()
     {

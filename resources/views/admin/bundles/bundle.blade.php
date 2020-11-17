@@ -419,7 +419,7 @@
 									<h4 class="card-title mb-0">Cover</h4>
 								</div>
 								<div class="card-body">
-									<img id="cover-image" src="{{ $bundle->cover }}"
+									<img id="cover-image" src="{{ $bundle->cardMediumUrl() }}"
 										class="img-fluid{{ (isset($bundle) &&  is_null($bundle->cover)) ? " d-none" : "" }}"
 										alt="Cover Image" />
 									<p id="cover-status" class="text-center{{ (isset($bundle) &&  !is_null($bundle->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
