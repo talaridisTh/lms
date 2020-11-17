@@ -65,7 +65,7 @@ class CourseUsersDataTable extends DataTable {
             })
             ->addColumn('role', function ($data) {
 
-                return $data->roles[0]->id == 2 ? "Εισηγητής" : "Μαθητής";
+                return $data->roles[0]->id == 3 ? "Εισηγητής" : "Μαθητής";
             })
             ->setRowAttr(['data-user-id' => function ($data) {
 

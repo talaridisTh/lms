@@ -28,12 +28,12 @@ class BigDataSeeder extends Seeder {
         ]);
         User::factory()->times(500)->create()
             ->each(function ($user) {
-                $user->roles()->attach(rand(3, 4));
+                $user->roles()->attach(rand(3, 5));
             });
         Material::factory()->times(80)->create()
             ->each(function ($material) {
 
-                $material->users()->attach(Role::find(2)->users()->select("id")->get()->random()->id);
+                $material->users()->attach(Role::find(3)->users()->select("id")->get()->random()->id);
                 if ($material->type == "Section")
                 {
                     for ($i = 0; $i < 5; $i ++)
@@ -59,7 +59,7 @@ class BigDataSeeder extends Seeder {
                 }
                 for ($i = 0; $i < 20; $i ++)
                 {
-                    $bundle->users()->attach(Role::find(4)->users()->select("id")->get()->random()->id);
+                    $bundle->users()->attach(Role::find(5)->users()->select("id")->get()->random()->id);
                 }
             });
     }

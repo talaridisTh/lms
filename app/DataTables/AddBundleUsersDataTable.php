@@ -21,7 +21,7 @@ class AddBundleUsersDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
-		$query = Role::find(4)->users()->where("status", 1)
+		$query = Role::find(5)->users()->where("status", 1)
 			->whereNotIn("id", function($subquery) use ($request) {
 
 				$subquery->select("user_id")->from("bundle_user")

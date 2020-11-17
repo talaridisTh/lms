@@ -27,10 +27,7 @@ AddCourseUsersDataTable extends DataTable
 		$query = DB::table('users')
 			->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
 			->where("users.status", 1)
-			// ->where( function($subquery) {
-			// 	$subquery->where("users.status", 1)->get();
-			// })
-			->whereIn('model_has_roles.role_id', [ 2, 4 ])
+			->whereIn('model_has_roles.role_id', [ 3, 5 ])
 			->whereNotIn('users.id', function($subquery) use ($request) {
 
 				$subquery->select('user_id')
@@ -78,7 +75,7 @@ AddCourseUsersDataTable extends DataTable
 			})
 			->addColumn('role', function($data) {
 
-				return $data->role_id == 2 ? "Εισηγητής" : "Μαθητής";
+				return $data->role_id == 3 ? "Εισηγητής" : "Μαθητής";
 
 			})
 			->rawColumns(['action', 'last_name', 'addBtn'])
