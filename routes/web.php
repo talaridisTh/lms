@@ -45,11 +45,11 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
     //! Material Routes
     Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
+    Route::get('/dashboard/materials/create/{course?}/{priority?}/{material:id?}', 'MaterialController@create');
     Route::get('/dashboard/material/{material?}', 'MaterialController@show')->name('material.show');
     Route::post('/dashboard/materials/store', 'MaterialController@store')->name('material.store');
     Route::patch('/dashboard/materials/update/{material:slug}', 'MaterialController@update')->name('material.update');
     Route::delete('/dashboard/materials/delete/{material}', 'MaterialController@destroy')->name('material.destroy');
-	Route::get('/dashboard/materials/coursematerial/{course}/{priority}/{material:id?}', 'MaterialController@courseMaterial')->name('material.courseMaterial');
 	Route::get('/dashboard/create-pdf/{course?}/{priority?}/{material?}', 'MaterialController@createPDF');
 	Route::post('/dashboard/store-pdf-material', 'MaterialController@storePDF');
 	Route::get('/dashboard/edit-pdf/{material}', 'MaterialController@editPDF');
@@ -149,7 +149,6 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
     Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");
     Route::post('materials/add-course-inside-material', 'Ajax\MaterialController@addCourseMaterial')->name("add-course-material-datatable");
     Route::post('materials/remaining-pdf-files', 'Ajax\MaterialController@remainingPDFFiles');
-
 
 //! Dashboard Ajax Bundles CRUD
     Route::post('materials/material-types', 'Ajax\MaterialController@materialTypes');

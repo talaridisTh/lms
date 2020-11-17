@@ -35,7 +35,7 @@
 						<i class="mdi mdi-plus-circle mr-1"></i>
 						Νέο PDF
 					</a>
-					<a href="/dashboard/material/" class="btn btn-primary mb-2">
+					<a href="/dashboard/materials/create" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-1"></i>
 						Νέο μάθημα
 					</a>
