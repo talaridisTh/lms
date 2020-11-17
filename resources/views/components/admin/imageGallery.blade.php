@@ -2,7 +2,7 @@
 
 	@forelse ($media as $image)
 		<div class="col-lg-2 col-md-3 p-2 position-relative css-img-cnt">
-			<img class="fade-image img-fluid" src="{{ $image->thumbnail_path }}" alt="{{ $image->name }}">
+			<img class="fade-image img-fluid" src="{{ $image->thumbnailUrl() }}" alt="{{ $image->name }}">
 			<i class="js-add-image image-overlay absolute-center mdi mdi-plus-circle-outline mr-1 h1"
 				data-image-id="{{ $image->id }}" data-image-source="{{ $image->rel_path }}"	
 			></i>

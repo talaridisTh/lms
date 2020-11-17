@@ -211,7 +211,7 @@ Route::group(['middleware' => ['auth', "role:admin"]], function () {
 	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
 
 //! Glide Images
-	Route::get('img/{path}', 'Ajax\ImageController@show')->where('path', '.*');
+	Route::get('img/{path}', 'MediaController@show')->where('path', '.*');
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================

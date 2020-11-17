@@ -8,7 +8,6 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-use App\Http\Controllers\Ajax\ImageController;
 
 class FileManagerDataTable extends DataTable
 {
@@ -84,9 +83,7 @@ class FileManagerDataTable extends DataTable
 					}
 				}
 
-				$path = ImageController::ThumbnailUrlBuilder($data->rel_path);
-
-				return "<img class='img-fluid' style='max-width: 120px;' src='$path' alt='$data->original_name' />";
+				return "<img class='img-fluid' style='max-width: 120px;' src='".$data->thumbnailUrl()."' alt='$data->original_name' />";
 			})
 			->editColumn("size", function($data) {
 
