@@ -39,7 +39,7 @@ class CourseFactory extends Factory
             'title' => "Title of Course ".$counter,
         	'subtitle' => "Subtitle of Course ".$counter,
         	'summary' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
-        	'cover' => "http://placeimg.com/1600/700/any",
+        	'cover' => "http://placeimg.com/1600/900/any",
 			'description' => "Description of Course ".$counter++." ".$this->faker->slug($nbSentences = 3, $variableNbSentences = true),
 			'user_id' => function() {
 				return Role::find(2)->users()->get()->random()->id;
