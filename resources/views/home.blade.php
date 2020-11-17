@@ -51,9 +51,10 @@
         {{--row 1 --}}
         <div class="row ">
             <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
-                <h2 class="h2-custom">{{$option["title"]}}</h2>
+                <h2 class="h2-custom">Βάλτε τωρα τη Ρομποτική στο σχολείο σας</h2>
                 <div class="d-flex flex-column span-custom mb-3">
-                    <span class="mb-1">{{$option["description"]}}</span>
+                    <span class="mb-1">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και προγραμματισμού για παιδιά.</span>
+                    <span>Μπες στο δίκτυο συνεργατών. Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</span>
 
                 </div>
                 <button class="btn-custom btn btn-info btn-lg text-light  ">
