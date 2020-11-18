@@ -28,19 +28,19 @@ class DatabaseSeeder extends Seeder {
 
 		Utility::factory()->create();
 
-        User::create([
-            'first_name' => "darkpony",
-            'last_name' => "darkpony",
-            'email' => "info@darkpony.com",
-            "phone"=>"6978565698",
-            "profil"=>"darkpony",
-            'avatar' => "/images/avatar-placeholder.png",
-            'slug' => "darkpony-super",
-            'password' => Hash::make('darkpony'),
-            "password_encrypt"=>Crypt::encryptString('darkpony'),
-            'status' => 1,
-            'remember_token' => Str::random(10),
-		])->assignRole("super-admin");
+//        User::create([
+//            'first_name' => "darkpony",
+//            'last_name' => "darkpony",
+//            'email' => "info@darkpony.com",
+//            "phone"=>"6978565698",
+//            "profil"=>"darkpony",
+//            'avatar' => "/images/avatar-placeholder.png",
+//            'slug' => "darkpony-super",
+//            'password' => Hash::make('darkpony'),
+//            "password_encrypt"=>Crypt::encryptString('darkpony'),
+//            'status' => 1,
+//            'remember_token' => Str::random(10),
+//		])->assignRole("super-admin");
 
 		User::create([
             'first_name' => "admin",

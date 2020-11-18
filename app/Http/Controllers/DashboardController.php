@@ -18,6 +18,16 @@ use Illuminate\Support\Facades\URL;
 class DashboardController extends Controller
 {
 
+    public function temp()
+    {
+        $role = new Role();
+        $role->name = "super";
+        $role->guard_name = "web";
+
+        $role->save();
+
+    }
+
     public function index()
     {
 
@@ -39,7 +49,7 @@ class DashboardController extends Controller
 		$activeStudents = Role::find(5)->users()
 			->where("email_verified_at", "!=", null)->where("status", 1)->count();
 		$totalStudents = Role::find(5)->users()->count();
-			
+
 		$usersPerMonth = DB::table("model_has_roles")
 			->join("users", "model_has_roles.model_id", "=", "users.id")
 			->where("model_has_roles.role_id", 5)
@@ -75,7 +85,7 @@ class DashboardController extends Controller
 
 		$recentCourses = Course::orderBy("created_at", "desc")
 		 	->where('user_id', "!=", 2)->orWhere("user_id", null)->limit(5)->get();
-		
+
 		$topInstructors = DB::table("course_user")
 			->join("users", "user_id", "=", "users.id")
 			->join("model_has_roles", "course_user.user_id", "=", "model_has_roles.model_id")
