@@ -1801,7 +1801,7 @@ function toggleHighlight(materialIds, status) {
 
 	axios.patch(`/course/${courseId}/toggle-highlight`, {materialIds, status})
 	.then( res => {
-		const message = status === 1 ? "Το υλικό τονίστηκε." : "Ο τονισμός αφαιρέθηκε."
+		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
 		utilities.toastAlert(icon, message);
 	})
@@ -1815,7 +1815,7 @@ function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
 	axios.patch(`/section/toggle-hightlight/${sectionId}`, {materialIds, status})
 	.then( res => {
-		const message = status === 1 ? "Το υλικό τονίστηκε." : "Ο τονισμός αφαιρέθηκε."
+		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
 		utilities.toastAlert(icon, message);
 	})
