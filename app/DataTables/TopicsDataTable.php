@@ -41,11 +41,22 @@ class TopicsDataTable extends DataTable {
 			})
             ->editColumn('title', function ($data) {
 
-                return "<span class='js-quick-edit h5 custom-link-primary cursor-pointer js-title'>$data->title</span>
-					<input type='text' class='js-edit form-control d-none' data-topic-id='$data->id' value='$data->title' placeholder='Εισάγετε Τίτλο...'>
-					<div class='invalid-feedback'>
-      					Το πεδίο είναι υποχρεωτικό.
-      				</div>
+				return "<h5 class='js-quick-edit custom-link-primary cursor-pointer js-title'>$data->title</h5>
+					<div class='js-edit form-group d-none'>
+						<label>Τίτλος</label>
+						<div class='input-group'>
+							<input type='text' class='form-control' data-topic-id='$data->id' value='$data->title' placeholder='Εισάγετε Τίτλο...'>
+							<div class='invalid-feedback'>
+								Το πεδίο είναι υποχρεωτικό.
+							</div>
+							<div class='input-group-append'>
+								<button class='btn btn-primary js-save' type='button'>Save</button>
+							</div>
+							<div class='input-group-append'>
+								<button class='btn btn-light ml-2 js-cancel' type='button'>Cancel</button>
+							</div>
+						</div>
+					</div>
 					<p class='mb-1'>$data->slug</p>
 					<a href='#' class='js-quick-edit custom-link-primary'>Quick Edit</a>
 					<span class='mx-2'>|</span>
