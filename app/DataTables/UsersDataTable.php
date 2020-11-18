@@ -44,7 +44,7 @@ class UsersDataTable extends DataTable {
         }
 
 
-        $superAdminIds =Role::whereId(1)->first()->users->map(function($superAdmin){
+        $superAdminIds =Role::whereId(8)->first()->users->map(function($superAdmin){
             return $superAdmin->id;
         });
         if (auth()->user()->hasRole('admin')) {

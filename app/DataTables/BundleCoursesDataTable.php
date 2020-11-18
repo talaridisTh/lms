@@ -22,7 +22,6 @@ class BundleCoursesDataTable extends DataTable {
     public function dataTable($query, Request $request)
     {
 
-        // dd($request->all());
         if (!is_null($request->startDate) && !is_null($request->endDate))
         {
             $query = Bundle::find($request->bundleId)->courses()

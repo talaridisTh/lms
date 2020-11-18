@@ -46,13 +46,13 @@ class DashboardController extends Controller
 		$activeBundles = Bundle::where("status", 1)->count();
 		$totalBundles = Bundle::count();
 
-		$activeStudents = Role::find(5)->users()
+		$activeStudents = Role::find(4)->users()
 			->where("email_verified_at", "!=", null)->where("status", 1)->count();
-		$totalStudents = Role::find(5)->users()->count();
+		$totalStudents = Role::find(4)->users()->count();
 
 		$usersPerMonth = DB::table("model_has_roles")
 			->join("users", "model_has_roles.model_id", "=", "users.id")
-			->where("model_has_roles.role_id", 5)
+			->where("model_has_roles.role_id", 4)
 			->where("users.email_verified_at", "!=", null)
 			->where("users.status", 1)
 			->whereBetween("users.created_at", $dateRange)
@@ -62,7 +62,7 @@ class DashboardController extends Controller
 		$topCourses = DB::table("course_user")
 			->join("courses", "course_id", "=", "courses.id")
 			->join("model_has_roles", "course_user.user_id", "=", "model_has_roles.model_id")
-			->where("model_has_roles.role_id", 5)
+			->where("model_has_roles.role_id", 4)
 			->select(
 				"courses.title",
 				DB::raw('COUNT(model_has_roles.model_id) as students')
@@ -75,7 +75,7 @@ class DashboardController extends Controller
 		$topBundles = DB::table("bundle_user")
 			->join("bundles", "bundle_user.bundle_id", "=", "bundles.id")
 			->join("model_has_roles", "bundle_user.user_id", "=", "model_has_roles.model_id")
-			->where("model_has_roles.role_id", 5)
+			->where("model_has_roles.role_id", 4)
 			->select(
 				"bundles.title",
 				DB::raw('COUNT(model_has_roles.model_id) as students')
@@ -89,7 +89,7 @@ class DashboardController extends Controller
 		$topInstructors = DB::table("course_user")
 			->join("users", "user_id", "=", "users.id")
 			->join("model_has_roles", "course_user.user_id", "=", "model_has_roles.model_id")
-			->where("model_has_roles.role_id", 3)
+			->where("model_has_roles.role_id", 2)
 			->select(
 				"users.last_name", "users.first_name",
 				DB::raw("COUNT(course_user.course_id) as courses")
