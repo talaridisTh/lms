@@ -66,16 +66,4 @@ class Media extends Model
 		return $url;
 	}
 
-    public function cardImageUrl() {
-        // Set complicated sign key
-        $signkey = 'The strongest of all warriors are these two, patience and time...';
-
-        // Create an instance of the URL builder
-        $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
-
-        // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes['rel_path'], ["w" => 400, "h" => 225, "fit" => "crop"]);
-
-        return $url;
-    }
 }

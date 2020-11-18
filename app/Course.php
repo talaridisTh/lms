@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use League\Glide\Urls\UrlBuilderFactory;
 
 class Course extends Model {
 
@@ -53,8 +54,6 @@ class Course extends Model {
 
         return $this->belongsToMany(User::class)->withTimestamps();
     }
-
-
 
 
     public function getRouteKeyName()
@@ -184,6 +183,19 @@ class Course extends Model {
                 return $icon;
             }
         }
+    }
+
+    public function imageUrlSmall() {
+        // Set complicated sign key
+        $signkey = 'The strongest of all warriors are these two, patience and time...';
+
+        // Create an instance of the URL builder
+        $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
+
+        // Generate a URL
+        $url = $urlBuilder->getUrl($this->attributes['cover'], ["w" => 400, "h" => 225, "fit" => "crop"]);
+
+        return $url;
     }
 
 }

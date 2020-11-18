@@ -215,9 +215,8 @@
                                     $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''
                                 @endphp
                                 <li class="splide__slide p-2">
-                                    <img class="card-img-top  scale" src="{{$model->cover}}"alt="Card image cap">
+                                    <img class="" src="{{$model->imageUrlSmall() }}"alt="Card image cap">
                                     <p class="p-3"> {{$model->subtitle}}</p>
-
                                 </li>
                             @endforeach
                         </ul>

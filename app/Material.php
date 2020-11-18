@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use League\Glide\Urls\UrlBuilderFactory;
 
 class Material extends Model {
 
@@ -138,30 +139,18 @@ class Material extends Model {
         }
     }
 
-//    public function getTypeAttribute($value)
-//    {
-//        if (!isset(request()->route()->uri))
-//        {
-//            return $value;
-//        } elseif (request()->route()->getName() == 'index.userCourse' || request()->route()->getName() == 'index.material.show')
-//        {
-//            if ($value == 'Lesson')
-//            {
-//                return 'mdi mdi-file-document-outline text-success';
-//            } elseif ($value == 'Link')
-//            {
-//                return 'mdi mdi-link-variant-plus text-info';
-//            } elseif ($value == 'Announcement')
-//            {
-//                return 'mdi mdi-comment-quote-outline text-danger';
-//            } elseif ($value == 'Video')
-//            {
-//                return 'mdi mdi-camcorder text-primary';
-//            } elseif ($value == 'Section')
-//            {
-//                return $value;
-//            }
-//        } else return $value;
-//    }
+
+    public function imageUrlSmall() {
+        // Set complicated sign key
+        $signkey = 'The strongest of all warriors are these two, patience and time...';
+
+        // Create an instance of the URL builder
+        $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
+
+        // Generate a URL
+        $url = $urlBuilder->getUrl($this->attributes['cover'], ["w" => 400, "h" => 225, "fit" => "crop"]);
+
+        return $url;
+    }
 
 }
