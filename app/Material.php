@@ -5,11 +5,8 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-<<<<<<< HEAD
 use League\Glide\Urls\UrlBuilderFactory;
-=======
 use App\Traits\UrlCreator;
->>>>>>> 4bc5faadc94ff2a8e12bb1e5fd76ed6d749c777e
 
 class Material extends Model {
 
