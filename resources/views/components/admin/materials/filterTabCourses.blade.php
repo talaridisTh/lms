@@ -17,6 +17,6 @@
 
 <select id="activeFilterMaterialCourses">
     <option value="">Όλες οι Καταστάσεις</option>
-    <option value="1">Ενεργοί</option>
-    <option value="0">Μη Ενεργοί</option>
+    <option value="1">Ενεργά</option>
+    <option value="0">Μη Ενεργά</option>
 </select>

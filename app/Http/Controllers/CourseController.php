@@ -31,7 +31,7 @@ class CourseController extends Controller
 		$data = [
 			'topics' => Topic::all(),
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-			'instructors' => Role::find( 3 )->users
+			'instructors' => Role::find( 2 )->users
 		];
 		return view('admin/courses/newCourse')->with( $data );
 
@@ -98,7 +98,7 @@ class CourseController extends Controller
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
 			'courseTopics' => $course ? $course->topics()->pluck("topics.id")->toArray() : null,
 			'topics' => Topic::all(),
-			'instructors' => Role::find( 3 )->users,
+			'instructors' => Role::find( 2 )->users,
 			'publish' => $publish,
 			"files" => $course ? $course->media()->where("type", 1)->get() : null,
 			"sections" => $course ? $course->materials()->where("type", "Section")->orderBy("priority")->get() : null,

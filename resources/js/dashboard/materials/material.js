@@ -151,6 +151,7 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         {data: "curator", name: "curator", className: "text-center align-middle"},
         {data: "updated_at", name: "updated_at", className: "text-center align-middle"},
         {data: "created_at", name: "created_at", visible: false},
+        {data: "status", name: "status", visible: false},
 
     ],
     language: utilities.tableLocale,
@@ -481,7 +482,7 @@ $R("#content-material", {
 //! GLOBAL FUNCTION Filter
 //!============================================================
 utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable, "#material-course-table_length label")
-utilities.filterButton('#activeFilterMaterialCourses', 7, materialCourseDatatable, "#material-course-table_length label")
+utilities.filterButton('#activeFilterMaterialCourses', 5, materialCourseDatatable, "#material-course-table_length label")
 utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
 utilities.filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label")
 
@@ -664,12 +665,12 @@ $("#all-remainings-checkbox").change(function () {
 })
 
 function addCourseAxios(courseIds, materialId) {
-	
+
 	axios.post("/materials/add-course", {
         courseIds, materialId
 	})
 	.then ( res => {
-		let message = courseIds.length === 1 
+		let message = courseIds.length === 1
 			? "1 Course προστέθηκε" : `${courseIds.length} Courses προστέθηκαν`;
 		utilities.toastAlert("success", message);
 		addCouseModal.ajax.reload();

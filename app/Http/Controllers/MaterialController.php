@@ -26,7 +26,7 @@ class MaterialController extends Controller {
     public function create(Course $course = null, $priority = null, Material $material = null)
     {
 		$data = [
-			"instructors" => Role::find(3)->users,
+			"instructors" => Role::find(2)->users,
 			"media" => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
 			"course" => $course,
 			"section" => $material,
@@ -76,19 +76,19 @@ class MaterialController extends Controller {
         return redirect( route("material.show",$material->slug) );
 
 	}
-	
+
 	public function createPDF(Course $course = null, $priority = 1, Material $material = null) {
 
 		$data = [
 			"course" => $course,
 			"priority" => $priority,
 			"section" => $material,
-			"instructors" => Role::find(3)->users
+			"instructors" => Role::find(2)->users
 		];
 
         return view('admin.materials.newPDFMaterial')->with($data);
 	}
-	
+
 	public function storePDF(Request $request) {
 
 		$request->validate([
@@ -127,7 +127,7 @@ class MaterialController extends Controller {
 
 		$data = [
 			"material" => $material,
-			"instructors" => Role::find(3)->users,
+			"instructors" => Role::find(2)->users,
 			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
 			"pdf" => $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
 		];
@@ -146,7 +146,7 @@ class MaterialController extends Controller {
 
 		$data = [
 			"topics" => Topic::all(),
-			"instructors" => Role::find(3)->users,
+			"instructors" => Role::find(2)->users,
 			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
 			"material" => $material,
 			"types" => $types,
@@ -187,13 +187,13 @@ class MaterialController extends Controller {
 	}
 
 	public function editPDF(Material $material) {
-		
+
 		$pdf = $material->media()->wherePivot("usage", 4)
 			->with("mediaDetails")->first();
 
 		$data = [
 			"material" => $material,
-			"instructors" => Role::find(3)->users,
+			"instructors" => Role::find(2)->users,
 			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
 			"fields" => json_decode($material->fields),
 			"pdf" => $pdf
