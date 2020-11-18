@@ -28,12 +28,12 @@ class BigDataSeeder extends Seeder {
         ]);
         User::factory()->times(500)->create()
             ->each(function ($user) {
-                $user->roles()->attach(rand(3, 5));
+                $user->roles()->attach(rand(2, 4));
             });
         Material::factory()->times(80)->create()
             ->each(function ($material) {
 
-                $material->users()->attach(Role::find(3)->users()->select("id")->get()->random()->id);
+                $material->users()->attach(Role::find(2)->users()->select("id")->get()->random()->id);
                 if ($material->type == "Section")
                 {
                     for ($i = 0; $i < 5; $i ++)
@@ -47,7 +47,7 @@ class BigDataSeeder extends Seeder {
                 $course->topics()->attach(Topic::all()->random()->id);
                 for ($i = 0; $i < 20; $i ++)
                 {
-                    $course->users()->attach(User::where('id', '!=', 1)->get()->random()->id);
+                    $course->users()->attach(User::whereNotIn('id', [1,3,5,6,7,8])->get()->random()->id);
                     $course->materials()->attach(rand(1, 80), ["priority" => $i + 1]);
                 }
             });
@@ -59,7 +59,7 @@ class BigDataSeeder extends Seeder {
                 }
                 for ($i = 0; $i < 20; $i ++)
                 {
-                    $bundle->users()->attach(Role::find(5)->users()->select("id")->get()->random()->id);
+                    $bundle->users()->attach(Role::find(4)->users()->select("id")->get()->random()->id);
                 }
             });
     }
