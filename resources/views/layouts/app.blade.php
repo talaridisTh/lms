@@ -4,6 +4,7 @@
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
     <title>{{$option["title"]}}</title>
+    <meta name="route" content="{{\Request::route()->getName()}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="{{$option["description"]}}" name="description"/>
     <meta content="Coderthemes" name="author"/>
@@ -17,10 +18,6 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
-
-
-
-
 
 
     <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">
@@ -129,19 +126,23 @@
                         @hasanyrole("admin|super-admin")
 
 
-                        <div>
-                            <a class="nav-link edit-preview-page-course" href="" role="button" aria-haspopup="true"
-                               aria-expanded="false">
-                                Edit this course
-                            </a>
-                        </div>
+                        @if(\Request::route()->getName()== "index.userCourse")
+                            <div>
+                                <a class="nav-link edit-preview-page-course" href="" role="button" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Edit this course
+                                </a>
+                            </div>
+
 
                         <div>
-                            <a class="nav-link edit-preview-page-material d-none" href="" role="button" aria-haspopup="true"
+                            <a class="nav-link edit-preview-page-material d-none" href="" role="button"
+                               aria-haspopup="true"
                                aria-expanded="false">
                                 Edit this Material
                             </a>
                         </div>
+                        @endif
 
 
                         <div>
@@ -349,13 +350,10 @@
     })
 
 
-
-    $(".edit-preview-page-course").on("click",function (){
-       this.href = window.PREVIEW_PAGE_COURSE
+    $(".edit-preview-page-course").on("click", function () {
+        this.href = window.PREVIEW_PAGE_COURSE
     })
 </script>
-
-
 
 
 @yield("script")

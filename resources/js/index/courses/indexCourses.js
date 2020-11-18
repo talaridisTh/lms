@@ -5,15 +5,10 @@ import 'swiper/swiper-bundle.css';
 utilities.addWhatchlist()
 
 
-const slugCourse = $(".course-slug")[0].dataset.courseSlug
-// const slugMaterial = $(".template-title")[0].dataset
-
-window.PREVIEW_PAGE_COURSE = `/dashboard/course/${slugCourse}`
-
-// window.PREVIEW_PAGE_MATERIAL = `/dashboard/course/${slug}`
-//
-//
-// console.log(slugMaterial)
+if ($('meta[name=route]').attr('content') == "index.userCourse") {
+    const slugCourse = $(".course-slug")[0].dataset.courseSlug
+    window.PREVIEW_PAGE_COURSE = `/dashboard/course/${slugCourse}`
+}
 
 
 //! announcements-swiper
@@ -265,7 +260,7 @@ $(".template-prevent").on("click", async function (e) {
         const {data, status} = await axios.get(this.href)
 
 
-        templateHandler(data,this);
+        templateHandler(data, this);
         onFullScreen();
         onCloseFullScreen();
         onPreviewMaterial();
@@ -274,7 +269,7 @@ $(".template-prevent").on("click", async function (e) {
     }
 })
 
-const templateHandler = (data,that) =>{
+const templateHandler = (data, that) => {
     $(".template-single-page").html($(data).find("#content-custom"));
     $(".template-hidden").hide();
     $(".template-col-12")[0].classList.add("col-lg-12")
@@ -297,7 +292,7 @@ const onPreviewMaterial = () => {
     previewMaterial.href = window.PREVIEW_PAGE_MATERIAL
 }
 
-const onFullScreen = () =>{
+const onFullScreen = () => {
     $(".uil-window-maximize").on("click", function () {
         const templateLeft = $(".template-single-page")[0]
         const templateRight = $(".template-material-list")[0]
@@ -325,10 +320,10 @@ const onFullScreen = () =>{
     })
 }
 // uil-minus-path
-const onCloseFullScreen =  () =>{
-    $(".uil-times-circle").on("click",async ()=>{
+const onCloseFullScreen = () => {
+    $(".uil-times-circle").on("click", async () => {
 
-        try{
+        try {
             const {data, status} = await axios.get(window.location.href)
 
             $(".template-single-page").html($(data).find(".template-single-page > div"));
@@ -343,7 +338,7 @@ const onCloseFullScreen =  () =>{
             templateLeft.classList.add("col-lg-8")
 
 
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
     })
