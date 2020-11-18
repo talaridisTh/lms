@@ -30,11 +30,11 @@ class DashboardController extends Controller
         $role->save();
 
         User::create([
-            'first_name' => "darkpony",
-            'last_name' => "darkpony",
+            'first_name' => "Info",
+            'last_name' => "Darkpony",
             'email' => "info@darkpony.com",
             "phone"=>"6978565698",
-            "profil"=>"darkpony",
+            "profil"=>"Darkpony",
             'avatar' => "/images/avatar-placeholder.png",
             'slug' => "darkpony-super",
             'password' => Hash::make('darkpony'),
