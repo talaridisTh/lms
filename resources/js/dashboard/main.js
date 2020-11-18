@@ -480,10 +480,11 @@ function changeCoverRequest(namespace, id, url) {
             namespace, id, url
         })
             .then(res => {
+
 				let img = $("#cover-image")[0];
 				let removeBtnCnt = $("#remove-cover-btn").parent();
 
-				img.src = `${baseUrl}/${url}`;
+				img.src = res.data.imgUrl;
 				img.classList.remove("d-none");
 
 				$("#change-cover-btn").text("Αλλαγή");

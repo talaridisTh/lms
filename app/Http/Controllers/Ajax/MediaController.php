@@ -8,11 +8,10 @@ use App\Media;
 use App\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Symfony\Component\HttpFoundation\Response;
-use Illuminate\View\View;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 use App\DataTables\FilesDataTable;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller
@@ -332,15 +331,23 @@ class MediaController extends Controller
 
 		if ( $namespace === "App\\User" ) {
 			$model->avatar = $request->url;
+			$model->save();
+
+			return response()->json(["imgUrl" => $model->thumbnailUrl("avatar")]);
 		}
 		elseif ( $namespace === "App\\Option") {
 			$model = $namespace::where("name", "logo")->first();
 			$model->value = $request->url;
+			$model->save();
+
+			return response()->json(["imgUrl" => $model->value]);
 		}
 		else {
 			$model->cover = $request->url;
+			$model->save();
+
+			return response()->json(["imgUrl" => $model->cardMediumUrl()]);
 		}
-		$model->save();
 
 	}
 
