@@ -140,24 +140,24 @@
 										Home Page
 									</a>
 								</li>
-								<li>
-									<a href="/dashboard/options/terms">
-										<i class="font-16 mdi mdi-file-document-edit-outline"></i>
-										Terms of Use
-									</a>
-								</li>
-								<li>
-									<a href="/dashboard/options/privacyPolicy">
-										<i class="font-16 mdi mdi-file-document-multiple-outline"></i>
-										Privacy Policy
-									</a>
-								</li>
-								<li>
-									<a href="/dashboard/options/cookiePolicy">
+								<li class="side-nav-item">
+                                    <a href="javascript: void(0);" aria-expanded="false">
 										<i class="font-16 mdi mdi-cookie"></i>
-										Cookie Policy
-									</a>
-								</li>
+										<span>Policies</span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="side-nav-third-level" aria-expanded="false">
+                                        <li>
+                                            <a href="/dashboard/options/terms">Terms of Use</a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/options/privacyPolicy">Privacy Policy</a>
+                                        </li>
+                                        <li>
+                                            <a href="/dashboard/options/cookiePolicy">Cookie Policy</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </li>
 					</ul>

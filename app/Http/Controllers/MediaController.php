@@ -52,7 +52,7 @@ class MediaController extends Controller
 		
 		} catch (SignatureException $e) {
 			// Handle error
-			abort(400);
+			abort(403);
 		}
 	}
 
