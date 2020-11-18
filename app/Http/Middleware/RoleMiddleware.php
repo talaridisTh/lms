@@ -23,7 +23,7 @@ class RoleMiddleware {
 
 
         $role = $request->user()->getRoleNames();
-        if ($role[0] == "admin" || $role[0] == "instructor")
+        if ($role[0] == "admin" || $role[0] == "super-admin")
         {
             return $next($request);
         }

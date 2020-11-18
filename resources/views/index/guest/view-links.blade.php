@@ -37,7 +37,7 @@
             @endhasanyrole
 
             {{--                //admin can see all users --}}
-            @role("admin")
+            @hasanyrole('super-admin|admin')
             @foreach($usersOnlyAdmin as  $user)
                 @foreach($user as  $u)
                     <tr>
@@ -53,7 +53,7 @@
                     </tr>
                 @endforeach
             @endforeach
-            @endrole
+            @endhasanyrole
 
 
             </tbody>

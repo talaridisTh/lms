@@ -32,7 +32,7 @@ class UserSeeder extends Seeder {
             "password_encrypt"=>Crypt::encryptString('darkpony'),
             'status' => 1,
             'remember_token' => Str::random(10),
-        ])->assignRole("super admin");
+        ])->assignRole("super-admin");
 
         User::create([
             'first_name' => "admin",

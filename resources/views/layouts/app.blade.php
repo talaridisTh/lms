@@ -126,7 +126,7 @@
                         </div>
                     @else
                         @unlessrole('guest')
-                        @role("admin")
+                        @hasanyrole("admin|super-admin")
 
 
                         <div>
@@ -151,7 +151,7 @@
                             </a>
                         </div>
 
-                        @endrole
+                        @endhasanyrole
 
 
 
@@ -173,7 +173,7 @@
 
 
                         <div>
-                            @role("admin")
+                            @hasanyrole('super-admin|admin')
                             <div class="dropdown">
                                 <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -184,7 +184,7 @@
                                     <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
                                 </div>
                             </div>
-                            @endrole
+                            @endhasanyrole
                         </div>
 
                         <div>

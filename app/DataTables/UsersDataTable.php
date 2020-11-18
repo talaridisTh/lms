@@ -51,6 +51,8 @@ class UsersDataTable extends DataTable {
 
             $users = $data->whereNotIn('id', $superAdminIds);
 
+        }else{
+            $users = $data->all();
         }
 
 

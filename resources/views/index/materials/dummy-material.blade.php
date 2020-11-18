@@ -17,7 +17,7 @@
 @section("content")
 
     <section class="d-flex wrapper flex-column">
-        @role("admin")
+        @hasanyrole('super-admin|admin')
         <div class="">
             <a class=" btn btn-outline-secondary nav-link" href="{{route('material.show',$materials->slug)}}"
                role="button"
@@ -25,7 +25,7 @@
                 Edit this page
             </a>
         </div>
-        @endrole
+        @endhasanyrole
 
         <div class=" container text-center ">
 
