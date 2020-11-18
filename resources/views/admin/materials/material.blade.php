@@ -427,7 +427,7 @@
                             </div>
                             <div class="card-body">
 
-                                <img id="cover-image" src="{{ $material->cover }}"
+                                <img id="cover-image" src="{{ $material->cardMediumUrl() }}"
                                     class="img-fluid{{ (isset($material) &&  is_null($material->cover)) ? " d-none" : "" }}"
                                     alt="Cover Image" />
                                 <p id="cover-status"

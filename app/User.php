@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\UrlCreator;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -15,7 +16,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable {
 
-    use Notifiable, HasRoles, HasFactory ;
+    use Notifiable, HasRoles, HasFactory, UrlCreator ;
 
     /**
      * The attributes that are mass assignable.

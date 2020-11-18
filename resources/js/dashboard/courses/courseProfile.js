@@ -56,7 +56,7 @@ $("#section-chapter-btn").on("click", function() {
 	const sectionId = modal.dataset.sectionId;
 	const priority = modal.dataset.priority;
 
-	window.location = `/dashboard/materials/coursematerial/${courseSlug}/${priority}/${sectionId}`;
+	window.location = `/dashboard/materials/create/${courseSlug}/${priority}/${sectionId}`;
 
 })
 
@@ -205,7 +205,7 @@ $("#version-select").on("change", function() {
 $("#add-new-material-btn").on("click", function() {
 	const priority = $("#store-material-priority").val();
 
-	window.location = `/dashboard/materials/coursematerial/${courseSlug}/${priority}`;
+	window.location = `/dashboard/materials/create/${courseSlug}/${priority}`;
 })
 
 $("#add-new-pdf-material-main").on("click", function() {
@@ -1172,7 +1172,7 @@ $("#add-users-roles").on( "change", function () {
 	let label = $('#select2-add-users-roles-container')[0];
 
 	utilities.filterStyle( label, this.value )
-	addCourseUsersDatatable.columns(5).search( this.value ).draw();
+	addCourseUsersDatatable.columns(4).search( this.value ).draw();
 
 });
 

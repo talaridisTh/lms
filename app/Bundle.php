@@ -6,11 +6,13 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Traits\UrlCreator;
 
 class Bundle extends Model
 {
 	use SoftDeletes;
-    use HasFactory;
+	use HasFactory;
+	use UrlCreator;
 
 	public function media() {
 

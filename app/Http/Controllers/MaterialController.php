@@ -19,25 +19,35 @@ class MaterialController extends Controller {
     {
         $materials = Material::all();
         $activeCourses = User::courseWhereActive();
-           //    soft-delete
-//        $trashMaterial = Material::onlyTrashed()->get();
-//        return view('admin.materials.materialsMain', compact("materials", "activeCourses","trashMaterial"));
 
         return view('admin.materials.materialsMain', compact("materials", "activeCourses"));
     }
 
-    public function create()
+    public function create(Course $course = null, $priority = null, Material $material = null)
     {
-        $topics = Topic::all();
-        $instructors = Role::find(2)->users;
-        $courses = Course::all();
-        $types = Material::all()->unique('type');
+		$data = [
+			"instructors" => Role::find(3)->users,
+			"media" => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
+			"course" => $course,
+			"section" => $material,
+			"priority" => $priority,
+		];
 
-        return view('admin.materials.newMaterial', compact("topics", "instructors", "courses", "types"));
+        return view('admin/materials/newMaterial')->with($data);
 	}
 
     public function store(Request $request)
     {
+		$request->validate([
+			'title' => 'required',
+		]);
+
+		$fields = [
+			"summary" => isset($request->summaryField) ? 1 : 0,
+			"description" => isset($request->descriptionField) ? 1 : 0,
+			"content" => isset($request->contentField) ? 1 : 0,
+		];
+
 		$material = new Material();
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
@@ -48,15 +58,13 @@ class MaterialController extends Controller {
 		$material->type = $request->type;
 		$material->slug = Str::slug($request->title, '-');
 		$material->status = isset($request->status) ? 1 : 0;
-        if ($request->cover)
-        {
-            $material->cover = $request->cover;
+		$material->fields = json_encode($fields);
 
-        }
 		$material->save();
 
-        $request->instructor ? $material->users()->sync($request->instructor) : "";
-		$request->topic ? $material->topics()->sync($request->topic) : "";
+		if ( isset($request->instructors) ) {
+			$material->users()->sync($request->instructors);
+		}
 
 		if ( isset($request->courseId) ) {
 
@@ -75,7 +83,7 @@ class MaterialController extends Controller {
 			"course" => $course,
 			"priority" => $priority,
 			"section" => $material,
-			"instructors" => Role::find(2)->users
+			"instructors" => Role::find(3)->users
 		];
 
         return view('admin.materials.newPDFMaterial')->with($data);
@@ -119,7 +127,7 @@ class MaterialController extends Controller {
 
 		$data = [
 			"material" => $material,
-			"instructors" => Role::find(2)->users,
+			"instructors" => Role::find(3)->users,
 			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
 			"pdf" => $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
 		];
@@ -138,7 +146,7 @@ class MaterialController extends Controller {
 
 		$data = [
 			"topics" => Topic::all(),
-			"instructors" => Role::find(2)->users,
+			"instructors" => Role::find(3)->users,
 			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
 			"material" => $material,
 			"types" => $types,
@@ -178,28 +186,6 @@ class MaterialController extends Controller {
 
 	}
 
-	public function courseMaterial(Course $course, $priority, Material $material = null) {
-
-		$types = [
-			"Lesson" => "Μάθημα",
-			"Announcement" => "Ανακοίνωση",
-			"Video" => "Video",
-			"Link" => "Link"
-		];
-
-		$data = [
-			"course" => $course,
-			"section" => $material,
-			"priority" => $priority,
-			"media" =>  Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-			"topics" => Topic::all(),
-			"instructors" => User::getInstructor(),
-			"types" => $types
-		];
-
-        return view('admin.materials.material')->with($data);
-	}
-
 	public function editPDF(Material $material) {
 		
 		$pdf = $material->media()->wherePivot("usage", 4)
@@ -207,7 +193,7 @@ class MaterialController extends Controller {
 
 		$data = [
 			"material" => $material,
-			"instructors" => Role::find(2)->users,
+			"instructors" => Role::find(3)->users,
 			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
 			"fields" => json_decode($material->fields),
 			"pdf" => $pdf
