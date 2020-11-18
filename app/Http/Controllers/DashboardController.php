@@ -12,8 +12,11 @@ use Carbon\Carbon;
 use DateTime;
 use Facade\FlareClient\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
@@ -21,10 +24,26 @@ class DashboardController extends Controller
     public function temp()
     {
         $role = new Role();
-        $role->name = "super";
+        $role->name = "super-admin";
         $role->guard_name = "web";
 
         $role->save();
+
+        User::create([
+            'first_name' => "darkpony",
+            'last_name' => "darkpony",
+            'email' => "info@darkpony.com",
+            "phone"=>"6978565698",
+            "profil"=>"darkpony",
+            'avatar' => "/images/avatar-placeholder.png",
+            'slug' => "darkpony-super",
+            'password' => Hash::make('darkpony'),
+            "password_encrypt"=>Crypt::encryptString('darkpony'),
+            'status' => 1,
+            'remember_token' => Str::random(10),
+        ])->assignRole("super-admin");
+
+
 
     }
 
