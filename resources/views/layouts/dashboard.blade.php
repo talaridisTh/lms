@@ -185,7 +185,9 @@
 								<div class="dropdown-menu dropdown-menu-right dropdown-menu-animated dropdown-lg p-0">
 									<form class="p-3" action="/dashboard/search" method="GET">
 										@csrf
-										<input type="text" class="form-control js-global-search" name="search" placeholder="Search ..." aria-label="Recipient's username">
+										<input type="text" class="form-control js-global-search"
+											name="search" placeholder="Search ..." autocomplete="off"
+											aria-label="Recipient's username">
 									</form>
 								</div>
 							</li>
@@ -194,7 +196,7 @@
 								<a class="nav-link dropdown-toggle nav-user arrow-none mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
 									aria-expanded="false" draggable="false">
 									<span class="account-user-avatar">
-										<img src="{{ Auth::user()->avatar }}" alt="user-image" class="rounded-circle" draggable="false">
+										<img src="{{ Auth::user()->thumbnailUrl("avatar") }}" alt="user-image" class="rounded-circle" draggable="false">
 									</span>
 									<span>
 										<span class="account-user-name">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
@@ -230,7 +232,8 @@
 							<form action="/dashboard/search" method="GET">
 								@csrf
 								<div class="input-group">
-									<input id="top-search" class="js-global-search form-control dropdown-toggle" name="search" type="text" placeholder="Search...">
+									<input id="top-search" class="js-global-search form-control dropdown-toggle"
+										name="search" type="text" placeholder="Search..." autocomplete="off">
 									<span class="mdi mdi-magnify search-icon"></span>
 									<div class="input-group-append">
 										<button class="btn btn-primary" type="submit" draggable="false">Search</button>

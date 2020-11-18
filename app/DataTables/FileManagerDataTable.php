@@ -83,7 +83,7 @@ class FileManagerDataTable extends DataTable
 					}
 				}
 
-				return "<img class='img-fluid' style='max-width: 120px;' src='".$data->thumbnailUrl()."' alt='$data->original_name' />";
+				return "<img class='img-fluid' style='max-width: 120px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' />";
 			})
 			->editColumn("size", function($data) {
 

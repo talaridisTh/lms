@@ -152,7 +152,7 @@ const topicsDatatable = $("#topics-datatable").DataTable({
 		$(".js-colspan").attr("colspan", 2);
 
         showEditInit();
-        editInputInit();
+        editButtonsInit();
         topicCheckboxesInit();
     }
 });
@@ -218,45 +218,58 @@ function showEditInit() {
     let editBtns = $(".js-quick-edit");
 
     editBtns.on( "click", function () {
-        let row = this.findParent(2);
-        let title = row.getElementsByClassName("js-title")[0];
-        let input = row.getElementsByClassName("js-edit")[0];
-        let valueLen = input.value.length;
+		const row = this.parentElement;
+		const title = row.getElementsByClassName("js-title")[0];
+		const inputContainer = row.getElementsByClassName("js-edit")[0];
+		const input = inputContainer.getElementsByTagName("input")[0]
+		const valueLen = input.value.length;
 
         title.classList.add("d-none");
-        input.classList.remove("d-none");
+        inputContainer.classList.remove("d-none");
         input.focus();
         input.setSelectionRange(valueLen, valueLen);
     });
 }
 
-function editInputInit() {
+function editButtonsInit() {
 
-    let editInputs = $(".js-edit");
+	const input = $(".js-edit input");
+	const save = $(".js-save");
+	const cancel = $(".js-cancel");
 
-    editInputs.on('blur', function () {
-        let row = this.findParent(2);
-        let title = row.getElementsByClassName("js-title")[0];
+	save.on("click", function() {
+		const td = this.findParent(4);
+		const input = td.getElementsByTagName("input")[0];
+
+		updateTopic(input);
+	})
+
+    cancel.on('click', function () {
+		const td = this.findParent(4);
+        const title = td.getElementsByClassName("js-title")[0];
+		const inputCnt = td.getElementsByClassName("js-edit")[0];
+		const input = inputCnt.getElementsByTagName("input")[0];
 
         title.classList.remove("d-none");
-        this.classList.add("d-none");
-        this.classList.remove("is-invalid");
-        this.value = this.defaultValue;
+        inputCnt.classList.add("d-none");
+        input.classList.remove("is-invalid");
+        input.value = input.defaultValue;
     });
 
-    editInputs.on("keyup", function () {
+    input.on("keyup", function () {
         if (event.keyCode == 13) {
             if (this.value == "") {
                 this.classList.add("is-invalid");
                 return
             }
-            let row = this.findParent(2);
-            let title = row.getElementsByClassName("js-title")[0];
+            const td = this.findParent(3);
+			const title = td.getElementsByClassName("js-title")[0];
+			const inputCnt = this.findParent(2);
 
             title.classList.remove("d-none");
-            this.classList.add("d-none");
+            inputCnt.classList.add("d-none");
 
-            updateTopic(this)
+            updateTopic(this);
         }
 
         this.classList.remove("is-invalid");

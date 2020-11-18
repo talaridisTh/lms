@@ -12,7 +12,7 @@
 			@foreach ($users as $user)
 				<a href="/dashboard/users/{{ $user->slug }}" class="dropdown-item notify-item">
 					<div class="media">
-						<img class="d-flex mr-2 rounded-circle" src="{{ $user->avatar }}" alt="User avatar" width="32" height="32">
+						<img class="d-flex mr-2 rounded-circle" src="{{ $user->thumbnailUrl("avatar") }}" alt="User avatar" width="32" height="32">
 						<div class="media-body">
 							<h5 class="m-0 font-14">{{ $user->last_name }} {{ $user->first_name }}</h5>
 							<span class="search-text-ellipsis font-12 mb-0">{{ $user->email }}</span>
@@ -31,7 +31,7 @@
 			@foreach ($courses as $course)
 				<a href="/dashboard/course/{{ $course->slug }}" class="dropdown-item notify-item">
 					<div class="media">
-						<img class="d-flex mr-2 rounded-circle" src="{{ $course->cover }}" alt="Course Cover" width="32" height="32">
+						<img class="d-flex mr-2 rounded-circle" src="{{ $course->thumbnailUrl() }}" alt="Course Cover" width="32" height="32">
 						<div class="media-body">
 							<h5 class="m-0 font-14">{{ $course->title }}</h5>
 							<span class="search-text-ellipsis font-12 mb-0">{{ $course->slug }}</span>
@@ -50,7 +50,7 @@
 			@foreach ($materials as $material)
 				<a href="/dashboard/material/{{ $material->slug }}" class="dropdown-item notify-item">
 					<div class="media">
-						<img class="d-flex mr-2 rounded-circle" src="{{ $material->cover }}" alt="Material Cover" width="32" height="32">
+						<img class="d-flex mr-2 rounded-circle" src="{{ $material->thumbnailUrl() }}" alt="Material Cover" width="32" height="32">
 						<div class="media-body">
 							<h5 class="m-0 font-14">{{ $material->title }}</h5>
 							<span class="search-text-ellipsis font-12 mb-0">{{ $material->slug }}</span>
@@ -69,7 +69,7 @@
 			@foreach ($bundles as $bundle)
 				<a href="/dashboard/bundle/{{ $bundle->slug }}" class="dropdown-item notify-item">
 					<div class="media">
-						<img class="d-flex mr-2 rounded-circle" src="{{ $bundle->cover }}" alt="Bundle Cover" width="32" height="32">
+						<img class="d-flex mr-2 rounded-circle" src="{{ $bundle->thumbnailUrl() }}" alt="Bundle Cover" width="32" height="32">
 						<div class="media-body">
 							<h5 class="m-0 font-14">{{ $bundle->title }}</h5>
 							<span class="search-text-ellipsis font-12 mb-0">{{ $bundle->slug }}</span>

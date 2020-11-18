@@ -50,7 +50,7 @@
 												<div class="row no-gutters align-items-center">
 													<div class="col-md-4">
 														<div class="embed-responsive embed-responsive-16by9">
-															<img class="img-fluid" src="{{ $user->avatar }}" />
+															<img class="img-fluid" src="{{ $user->thumbnailUrl("avatar") }}" />
 														</div>
 													</div>
 													<div class="col-md-8">
@@ -91,7 +91,7 @@
 									@foreach ($variable as $model)
 										<div class="col-md-6 col-lg-3">
 											<div class="card d-block">
-												<img class="card-img-top" src="{{ $model->cover }}" alt="{{ $model->title }}">
+												<img class="card-img-top" src="{{ $model->cardMediumUrl() }}" alt="{{ $model->title }}">
 												<div class="card-body">
 													<h5 class="card-title">{{ $model->title }}</h5>
 													<p class="card-text">{{ $model->subtitle }}</p>
