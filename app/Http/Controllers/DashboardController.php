@@ -36,8 +36,8 @@ class DashboardController extends Controller
         $role->save();
 
         User::create([
-            'first_name' => "Info",
-            'last_name' => "Darkpony",
+            'first_name' => "Darkpony",
+            'last_name' => "Digital",
             'email' => "info@darkpony.com",
             "phone"=>"6978565698",
             "profil"=>"Darkpony",
