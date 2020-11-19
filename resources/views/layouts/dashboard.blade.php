@@ -159,7 +159,23 @@
                                     </ul>
                                 </li>
                             </ul>
-                        </li>
+						</li>
+						@if ( Auth::user()->roles()->first()->id === 8 )
+							<li class="side-nav-item">
+                        	    <a href="javascript: void(0);" class="side-nav-link" draggable="false">
+                        	        <i class="mdi mdi-hammer-wrench"></i>
+                        	        <span>Dev Tools</span>
+                        	        <span class="menu-arrow"></span>
+                        	    </a>
+                        	    <ul class="side-nav-second-level" aria-expanded="false">
+									<li>
+										<a href="/dashboard/dev-tools/template-config">
+											Course Templates
+										</a>
+                        	        </li>
+                        	    </ul>
+							</li>
+						@endif
 					</ul>
 					<!-- End Sidebar -->
 

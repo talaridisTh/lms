@@ -80,4 +80,17 @@ class OptionController extends Controller
 
 		return view("admin/settings/editPolicies")->with(["option" => $option]);
 	}
+
+	public function templateConfig() {
+
+		$option =  Option::firstOrCreate(["name" => "course-templates"]);
+
+		$data = [
+			"title" => ucwords(str_replace("-", " ", $option->name)),
+			"value" => json_encode(json_decode($option->value), JSON_PRETTY_PRINT),
+			"option" => $option
+		];
+
+		return view("admin/settings/codeEditor")->with($data);
+	}
 }
