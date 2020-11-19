@@ -26,11 +26,13 @@ class CourseController extends Controller
 
     public function create()
     {
+		$templates = Option::where("name", "Course Templates")->first();
 
 		$data = [
 			'topics' => Topic::all(),
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-			'instructors' => Role::find( 2 )->users
+			'instructors' => Role::find( 2 )->users,
+			"templates" => json_decode($templates->value)
 		];
 		return view('admin/courses/newCourse')->with( $data );
 
@@ -66,6 +68,7 @@ class CourseController extends Controller
 		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;
 		$course->version = $request->version;
+		$course->template = $request->template;
 
 		$course->save();
 

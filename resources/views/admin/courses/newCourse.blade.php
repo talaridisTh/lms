@@ -314,6 +314,17 @@
 									</div>
 									<hr>
 
+									<div class="form-group mb-0">
+										<label for="version-select">Template</label>
+										<select form="create-course-form" id="template-select" name="template" data-toggle="select2"
+											class="custom-select2-warning select2 form-control @error('template') is-invalid @enderror"
+											data-minimum-results-for-search="-1" autocomplete="off">
+											@foreach ($templates as $key => $template)
+												<option value="{{ $key }}"
+												{{ old("template") == $key ? "selected" : ""}}>{{ $template->title }}</option>
+											@endforeach
+										</select>
+									</div>
 								</div>
 							</div>
 

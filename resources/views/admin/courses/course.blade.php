@@ -741,10 +741,10 @@
 										<label for="version-select">Template</label>
 										<select form="edit-course-form" id="template-select" name="template" data-toggle="select2"
 											class="custom-select2-warning select2 form-control @error('template') is-invalid @enderror"
-											data-minimum-results-for-search="-1">
+											data-minimum-results-for-search="-1" autocomplete="off">
 											@foreach ($templates as $key => $template)
 												<option value="{{ $key }}"
-												{{ old("template") === "$key" ? "selected" : ($course->template === $key ? "selected" : "")}}>{{ $template->title }}</option>
+												{{ old("template") === $key ? "selected" : ($course->template === $key ? "selected" : "")}}>{{ $template->title }}</option>
 											@endforeach
 										</select>
 									</div>
