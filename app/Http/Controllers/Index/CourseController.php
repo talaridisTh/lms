@@ -31,7 +31,7 @@ class CourseController extends Controller {
         {
             $allCourses = auth()->user()->courses;
 
-            return view("courses.courses", [
+            return view("index.courses.courses", [
                 'arrayTopics' => $arrayTopics,
                 'allCourses' => $allCourses]);
         } else
@@ -51,7 +51,7 @@ class CourseController extends Controller {
                 return Course::whereIn('id', [$test->id])->get();
             });
 
-            return view("courses.courses", [
+            return view("index.courses.courses", [
                 'arrayTopics' => $arrayTopics,
                 'allCourses' => $allCourses->flatten(1)]);
         }
@@ -90,7 +90,7 @@ class CourseController extends Controller {
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
-        return view("courses.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
+        return view("index.courses.template-1.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
 
     public function watchlistCourse(Request $request)

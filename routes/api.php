@@ -17,29 +17,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-//!	Courses Ajax Calls
-// Route::delete( 'courses/massdestroy/{ids}', 'Api\CourseController@massdestroy' );
-// Route::patch( 'courses/status', 'Api\CourseController@toggleStatus' );
-// Route::patch( 'courses/priority', 'Api\CourseController@changePriority' );
-// Route::patch( 'courses/toggle-materials', 'Api\CourseController@toggleCourseMaterials' );
-// Route::post( 'courses/add-materials', 'Api\CourseController@addMaterials' );
-// Route::patch( 'courses/remove-materials', 'Api\CourseController@removeMaterials' );
-
-
-//! Courses Datatables
-// Route::post( 'courses/courses-datatable', 'Api\CourseController@index' );
-// Route::post( 'courses/course-materials-datatable', 'Api\CourseController@courseMaterials' );
-// Route::post( 'courses/not-incourse-materials-datatable', 'Api\CourseController@remainingMaterials' );
-
-//! Bundles Datatables
-// Route::post( 'bundles/bundles-datatable', 'Api\BundleController@index' );
-// Route::patch( 'bundles/bundles-toggle-status/{bundle}', 'Api\BundleController@update' );
-
-//Users
-// Route::post('users/view-users', 'Api\UserController@index')->name("index.datatable");
-// Route::post('users/view-user', 'Api\UserController@show')->name("show.datatable");
-// Route::post('/user/add-course-modal', 'Api\UserController@addCourseModal')->name("courseModal.datatable");
-// Route::patch('/user/add-course', 'Api\UserController@addCourses')->name("addcourses.datatable");
-// Route::patch('/changeStatus', 'Api\UserController@changeStatus')->name("changeStatus.datatable");;
-// Route::delete('/user/delete', 'Api\UserController@destroy')->name("destroy.datatable");

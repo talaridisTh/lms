@@ -5,7 +5,7 @@ import 'swiper/swiper-bundle.css';
 import Splide from '@splidejs/splide';
 
 document.addEventListener( 'DOMContentLoaded', function () {
-    new Splide( '#card-slider', {
+    new Splide( '#card-slider-primary', {
         perPage    : 3,
         breakpoints: {
             600: {
@@ -16,75 +16,19 @@ document.addEventListener( 'DOMContentLoaded', function () {
     } ).mount();
 } );
 
-//primary slide
-const countPrimary = $(".js-banner-primary")[0].dataset.count
-new Swiper('.primary-slide', {
-    // Optional parameters
-    // If we need pagination
-    // spaceBetween: 30,
-    freeMode: true,
-    pagination: {
-        el: '.swiper-pagination',
-        draggable: true,
-    },
-    breakpoints: {
-        500: {
-            slidesPerView: countPrimary-2
+document.addEventListener( 'DOMContentLoaded', function () {
+    new Splide( '#card-slider-secondary', {
+        perPage    : 3,
+        breakpoints: {
+            600: {
+                perPage: 1,
+            }
         },
-        950: {
-            slidesPerView: countPrimary-1
-        },
-        1000: {
-            slidesPerView: countPrimary
-        },
-    },
-    fadeEffect: {
-        crossFade: true
-    },
 
-    // Navigation arrows
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
+    } ).mount();
+} );
 
-})
 
-//secondary slide
-const countSecondary = $(".js-banner-secondary")[0].dataset.count
-new Swiper('.secondary-slide', {
-    // Optional parameters
-    // If we need pagination
-    slidesPerView: countSecondary,
-    spaceBetween: 30,
-    freeMode: true,
-    pagination: {
-        el: '.swiper-pagination',
-        draggable: true,
-    },
-    fadeEffect: {
-        crossFade: true
-    },
-
-    breakpoints: {
-        500: {
-            slidesPerView: countPrimary-2
-        },
-        950: {
-            slidesPerView: countPrimary-1
-        },
-        1000: {
-            slidesPerView: countPrimary
-        },
-    },
-    // Navigation arrows
-
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-
-})
 
 
 function animateValue($obj, start, end, duration) {

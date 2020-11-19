@@ -177,7 +177,6 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('material/{material:id}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
     Route::patch('material/{material:id}/change-pdf', 'Ajax\MaterialController@changePDF');
 
-	// Route::delete( 'material/detach-all-files/{material}', 'Ajax\MaterialController@detachAllFiles');
 //! Dashboard Topics Datatables
     Route::post('topics/topics-datatable', 'Ajax\TopicController@index');
 //! Dashboard Ajax Topic CRUD
@@ -239,12 +238,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/watchlist-datatable/material', 'Index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
     Route::post('/history-datatable', 'Index\UserController@historyDatatable')->name("datatable.history");
     Route::post('/history-datatable/material', 'Index\UserController@historyMaterialDatatable')->name("datatable.historyMaterial");
-////meessage   MIN TO SVISEIS AKOMA !!!!
-//! TIXEROS ISOUN!!! LIGO ELIPSE!!!
-//    Route::get("/message/", "MessageController@index")->name("index.message");
-//    Route::get("/message/{user}", "MessageController@receiver")->name("index.receiver");
-//    Route::get("/message/info/{user}", "MessageController@info")->name("index.info");
-//    Route::post("/message/sent", "MessageController@sendMessage")->name("index.sendMessage");
+
 //! GUEST INDEX
     Route::get("/user/link", "Ajax\HomeController@createLink")->name("user.link");
     Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");

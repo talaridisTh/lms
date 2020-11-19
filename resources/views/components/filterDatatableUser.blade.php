@@ -16,7 +16,7 @@
 
 <select id="rolesFilter">
     <option value="">Όλοι οι ρόλοι</option>
-    @foreach(App\Role::all()->except([1,8]) as $role)
+    @foreach(App\Role::all()->except([6,8]) as $role)
         <option value="{{$role->name}}">{{$role->name}}</option>
     @endforeach
 </select>

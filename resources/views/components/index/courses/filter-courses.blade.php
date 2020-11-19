@@ -51,8 +51,8 @@
                         @endforelse
                         <a href="{{route('index.userCourse',$course->slug)}}">
                             @if($course->cover)
-                                <img style=" object-fit: cover;" height="100" width="100" class="rounded-circle my-3"
-                                     src="{{$course->cover}}"
+                                <img  class="rounded-circle my-3"
+                                     src="{{$course->roundedSmallCoverUrl()}}"
                                      alt="courses">
                             @endif
                         </a>

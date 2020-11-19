@@ -89,6 +89,12 @@
                                         allowfullscreen></iframe>
 
                             </div>
+                        @elseif($materials->type=="PDF")
+                            @php
+                                 $pdf = $materials->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
+                            @endphp
+                            <embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%" height="100%" style="height: 100vh" />
+
                         @else
 
                             <div class="custom-background" style="background-image: url('{{$materials->cover}}')">

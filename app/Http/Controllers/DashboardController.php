@@ -23,6 +23,7 @@ class DashboardController extends Controller
 
     public function temp()
     {
+
         $role = new Role();
         $role->name = "super-admin";
         $role->guard_name = "web";

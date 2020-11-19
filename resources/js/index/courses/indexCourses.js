@@ -337,6 +337,7 @@ const onCloseFullScreen = () => {
             templateLeft.classList.remove("col-lg-12")
             templateLeft.classList.add("col-lg-8")
 
+            $(".edit-preview-page-material").hide();
 
         } catch (e) {
             console.log(e)

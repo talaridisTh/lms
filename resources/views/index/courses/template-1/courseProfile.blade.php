@@ -78,7 +78,7 @@
 
                         <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
                             @if($course->cover)
-                                <img height="200" width="200" class=" avatar-image rounded-circle" src="{{($course->cover)}}"
+                                <img class="rounded-circle" src="{{($course->roundedMediumCoverUrl())}}"
                                      alt="course-logo">
                             @endif
                         </div>
@@ -130,9 +130,6 @@
                     @include("components.index.user-info")
                     <div class="row ">
 
-                        <div class="col-md-12 px-2">
-                            @include("components.index.announcements")
-                        </div>
 
                         <div class="col-md-12 px-2">
                             @include("components.index.collapse-menu",
@@ -172,6 +169,8 @@
                                         </a>
                                     </h5>
                                 </div>
+
+
 
                                 <div id="collapse-extra-content" class="collapse show"
                                      aria-labelledby="head-extra-content"
@@ -218,6 +217,8 @@
                                 $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
                                 $activeClass = isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$countIfNotSection; //ean to exei dei bazi tik allis arithmo
                                 $hover = isset($active)? "data-hover='hover'" :''; //bazei dataset hover ean to exei dei
+                                $highlight = $materials->pivot->highlight?"bg-custom":"list-material"
+
                             @endphp
 
 
@@ -226,6 +227,12 @@
                             @php
                                 --$count;//den metraei count an einai section
                             @endphp
+
+                            <div class="card-header p-1" id="head-extra-content">
+                                <h5 class="m-0 pl-2">
+                                    @include("components.index.announcements")
+                                </h5>
+                            </div>
 
                             <div class="accordion section mb-2" id="{{$materials->slug}}"> <!-- list section -->
                                 <div class="card mb-0 bg-transparent">
@@ -254,17 +261,21 @@
 
                                                 @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
 
+                                                <style>
+
+                                                </style>
                                                 @php
 
                                                     $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
                                                     $link = route('index.material.show',[$course->slug,$chapter->slug]); //orizi route
                                                     $hover=  isset($active)? "data-hover='hover'" :''; //bazei dataset hover ean to exei dei
                                                     $activeClassMaterial=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$countChapter; //ean to exei dei bazi tik allis arithmo
+                                                    $highlight = $chapter->pivot->highlight?"bg-custom":"list-material"
                                                 @endphp
 
                                                 <li data-material-id="{{$chapter->id}}"
                                                     data-material-priority="{{$key+1}}"
-                                                    class="list-group-item border-r-0 list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
+                                                    class="list-group-item border-r-0 {{$highlight}} m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                     <a data-material-slug="{{$chapter->slug}}" data-material-title="{!! $chapter->title !!}" class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":"template-prevent"}}"
                                                        href="{{$link}}">
                                                         <div class="col-lg-2 col-1 ml-1 ">
@@ -310,7 +321,7 @@
 
                                 <li data-material-id="{{$materials->id}}"
                                     data-material-priority="{{$countIfNotSection}}"
-                                    class="list-group-item list-material border ">
+                                    class="list-group-item {{$highlight}} border ">
                                     <a data-material-slug="{{$materials->slug}}" data-material-title="{!! $materials->title!!}" class=" d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":"template-prevent"}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         @unlessrole("guest")

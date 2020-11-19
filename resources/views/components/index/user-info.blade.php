@@ -16,8 +16,8 @@
     <div class="col-md-12 ">
         <div class="row ">
             <div class="col-md-2 p-0 pb-2 text-center">
-                <img height="90" width="90" class="img-fluid  rounded-circle"
-                     src="  {{$course->curator->avatar}}"
+                <img class=" rounded-circle"
+                     src="{{$course->curator->roundedSmallCoverUrl("avatar")}}"
                      alt=""></div>
             <div class="col-md-10 text-black d-flex flex-column justify-content-center ">
                 <div class="row">

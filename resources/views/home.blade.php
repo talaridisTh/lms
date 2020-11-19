@@ -1,29 +1,5 @@
 @extends('layouts.app')
 <style>
-    .swiper-container {
-        width: 100%;
-        height: 100%;
-    }
-
-    .swiper-slide {
-        text-align: center;
-        font-size: 18px;
-        background: #fff;
-
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-    }
 
     .count-number {
         font-weight: bold;
@@ -203,7 +179,7 @@
                 {{--row 7 --}}
         <div>
             @if($arrayBanners["primary"]->status==1)
-                <div id="card-slider" class="splide">
+                <div id="card-slider-primary" class="splide">
                     <div class="splide__track">
                         <ul class="splide__list">
                             @foreach($bannersPrimary as $key => $banner)
@@ -215,7 +191,8 @@
                                     $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''
                                 @endphp
                                 <li class="splide__slide p-2">
-                                    <img class="" src="{{$model->imageUrlSmall() }}"alt="Card image cap">
+                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
+                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>
                                     <p class="p-3"> {{$model->subtitle}}</p>
                                 </li>
                             @endforeach
@@ -225,57 +202,31 @@
             @endif
             {{--row 7 --}}
         </div>
-
-        {{--        <div>--}}
-        {{--            @if($arrayBanners["secondary"]->status==1)--}}
-        {{--                <div class="row js-banner-secondary" data-count="{{count($bannersSecondary)}}" style="margin-top: 9rem">--}}
-        {{--                    <h5 class="h5-custom w-100 text-center">Lorem ipsum dolor sit amet, consectetur</h5>--}}
-        {{--                    <div class="swiper-container secondary-slide">--}}
-        {{--                        <div class="swiper-wrapper">--}}
-        {{--                            @foreach($bannersSecondary as $key => $banner)--}}
-        {{--                                @php--}}
-        {{--                                    $bannerArray = (array) $banner;--}}
-        {{--                                    $bannerValue = key ( $bannerArray);--}}
-        {{--                                    $bannerKey =array_values ($bannerArray);--}}
-        {{--                                    $model =   $bannerValue::findOrFail($bannerKey)->first();--}}
-        {{--                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center align': ''--}}
-
-        {{--                                @endphp--}}
-        {{--                                <div class="swiper-slide ">--}}
-        {{--                                    <!-- Simple card -->--}}
-        {{--                                    <div class="card card-shadow d-block {{$bannerClass}}"--}}
-        {{--                                         style="height: 50vh; width: 75%;">--}}
-
-
-        {{--                                        @isset($model->cover)--}}
-        {{--                                            <div class="crop-height">--}}
-        {{--                                                <img class="card-img-top  scale" src="{{$model->cover}}"--}}
-        {{--                                                     alt="Card image cap">--}}
-        {{--                                            </div>--}}
-        {{--                                        @endisset--}}
-        {{--                                        <div class="card-body text-left {{$bannerClass}}">--}}
-        {{--                                            <h5 class="card-title blue-title d-flex flex-column ">--}}
-        {{--                                                <span>{{$model->title}}</span> Το--}}
-        {{--                                                πρώτο μου Ρομπότ</h5>--}}
-        {{--                                            <p class="card-text span-custom " style="  word-wrap: break-word;">--}}
-        {{--                                                --}}{{--                                                {!! Str::limit($model->subtitle , 200, ' (...)' ) !!}--}}
-        {{--                                                {{$model->subtitle}}--}}
-        {{--                                            </p>--}}
-        {{--                                        </div> <!-- end card-body-->--}}
-        {{--                                    </div> <!-- end card-->--}}
-
-        {{--                                </div>--}}
-        {{--                            @endforeach--}}
-        {{--                        </div>--}}
-        {{--                        @if(count($bannersSecondary)>1)--}}
-        {{--                            <div class="swiper-pagination"></div>--}}
-        {{--                            <div class="swiper-button-prev"></div>--}}
-        {{--                            <div class="swiper-button-next"></div>--}}
-        {{--                        @endif--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            @endif--}}
-        {{--        </div>--}}
+        <div>
+            @if($arrayBanners["secondary"]->status==1)
+                <div id="card-slider-secondary" class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            @foreach($bannersSecondary as $key => $banner)
+                                @php
+                                    $bannerArray = (array) $banner;
+                                    $bannerValue = key ( $bannerArray);
+                                    $bannerKey =array_values ($bannerArray);
+                                    $model =   $bannerValue::findOrFail($bannerKey)->first();
+                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''
+                                @endphp
+                                <li class="splide__slide p-2">
+                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
+                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>
+                                    <p class="p-3"> {{$model->subtitle}}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endif
+            {{--row 7 --}}
+        </div>
 
     </div>
 @endsection
