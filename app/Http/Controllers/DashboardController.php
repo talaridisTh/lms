@@ -23,6 +23,11 @@ class DashboardController extends Controller
 
     public function temp()
     {
+		$role = Role::where("name", "super-admin")->get();
+
+		if (!$role->isEmpty()) {
+			dd("already exist");
+		}
 
         $role = new Role();
         $role->name = "super-admin";
@@ -44,7 +49,7 @@ class DashboardController extends Controller
             'remember_token' => Str::random(10),
         ])->assignRole("super-admin");
 
-
+		return "done";
 
     }
 
