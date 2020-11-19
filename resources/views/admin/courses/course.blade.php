@@ -735,7 +735,6 @@
 											placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask"
 											data-mask-format="00-00-0000 00:00:00" autocomplete="off" />
 									</div>
-
 									<hr>
 									<div class="form-group mb-0">
 										<label for="version-select">Template</label>
@@ -743,8 +742,8 @@
 											class="custom-select2-warning select2 form-control @error('template') is-invalid @enderror"
 											data-minimum-results-for-search="-1" autocomplete="off">
 											@foreach ($templates as $key => $template)
-												<option value="{{ $key }}"
-												{{ old("template") === $key ? "selected" : ($course->template === $key ? "selected" : "")}}>{{ $template->title }}</option>
+												<option value="{{ $template->views->frontend }}"
+												{{ old("template") === $template->views->frontend ? "selected" : ($course->template === $template->views->frontend ? "selected" : "")}}>{{ $template->title }}</option>
 											@endforeach
 										</select>
 									</div>
