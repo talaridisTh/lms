@@ -83,12 +83,11 @@ class OptionController extends Controller
 
 	public function templateConfig() {
 
-		$option =  Option::firstOrCreate(["name" => "course-templates"]);
+		$option =  Option::firstOrCreate(["name" => "Course Templates"]);
 
 		$data = [
-			"title" => ucwords(str_replace("-", " ", $option->name)),
+			"option" => $option,
 			"value" => json_encode(json_decode($option->value), JSON_PRETTY_PRINT),
-			"option" => $option
 		];
 
 		return view("admin/settings/codeEditor")->with($data);

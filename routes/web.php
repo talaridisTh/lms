@@ -90,7 +90,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
 	
 	Route::get("/dashboard/dev-tools/template-config", "OptionController@templateConfig");
-	Route::post("/dashboard/dev-tools/{option:name}/update", "Ajax\OptionController@optionJsonUpdate");
+	Route::post("/dashboard/dev-tools/{option:id}/update", "Ajax\OptionController@optionJsonUpdate");
 //!======================================================
 //! 			End Dashboard Routes					|
 //!======================================================

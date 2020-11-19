@@ -29,10 +29,10 @@
 						<ol class="breadcrumb m-0 pb-0">
 							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
 							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
-							<li class="breadcrumb-item active">{{ $title }}</li>
+							<li class="breadcrumb-item active">{{ $option->name }}</li>
 						</ol>
 					</div>
-					<h4 id="page-title" class="page-title" data-option-name="{{ $option->name }}">{{ $title }}</h4>
+					<h4 id="page-title" class="page-title" data-option-id="{{ $option->id }}">{{ $option->name }}</h4>
 				</div>
 			</div>
 		</div>

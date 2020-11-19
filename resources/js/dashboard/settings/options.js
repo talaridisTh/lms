@@ -1,4 +1,4 @@
-const optionName = document.getElementById("page-title").dataset.optionName;
+const optionId = document.getElementById("page-title").dataset.optionId;
 
 const editor = ace.edit("editor");
 editor.setTheme("ace/theme/monokai");
@@ -14,7 +14,7 @@ updateBtn.addEventListener("click", function() {
 
 function jsonUpdate(value) {
 
-	axios.post(`/dashboard/dev-tools/${optionName}/update`, {value: value})
+	axios.post(`/dashboard/dev-tools/${optionId}/update`, {value: value})
 	.then( res => {
 		console.log(res);
 	})
