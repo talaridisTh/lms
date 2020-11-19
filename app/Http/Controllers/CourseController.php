@@ -9,8 +9,7 @@ use App\Http\Requests\BundleCourseRequest;
 use App\Media;
 use App\Role;
 use App\Topic;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\File;
+use App\Option;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
@@ -93,6 +92,8 @@ class CourseController extends Controller
 			$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
 		}
 
+		$templates = Option::where("name", "Course Templates")->first();
+
 		$data = [
 			'course' => $course,
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
@@ -102,7 +103,8 @@ class CourseController extends Controller
 			'publish' => $publish,
 			"files" => $course ? $course->media()->where("type", 1)->get() : null,
 			"sections" => $course ? $course->materials()->where("type", "Section")->orderBy("priority")->get() : null,
-			"fields" => json_decode($course->fields)
+			"fields" => json_decode($course->fields),
+			"templates" => json_decode($templates->value)
 		];
 
         return view('admin.courses.course')->with($data);
@@ -157,6 +159,7 @@ class CourseController extends Controller
 		$course->status = $status;
 		$course->slug = Str::slug($request->title, "-");
 		$course->version = $request->version;
+		$course->template = $request->template;
 		$course->save();
 
 		$course->topics()->sync( $request->topics );
