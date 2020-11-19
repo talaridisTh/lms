@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Course;
 use App\Http\Controllers\Controller;
+use App\Option;
 use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
@@ -90,7 +91,15 @@ class CourseController extends Controller {
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
-        return view("index.courses.template-1.courseProfile", compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
+
+        $test = Option::all();
+
+//        dd($course->template);
+
+        $view = json_decode($test->last()->value,true)[$course->template]["views"]["frontend"];
+
+
+        return view($view, compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
 
     public function watchlistCourse(Request $request)

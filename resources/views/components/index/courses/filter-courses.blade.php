@@ -33,6 +33,8 @@
 
 
 
+
+
         $bgColor = $course->topics->count() > 0 ? $course->topics->first()->color : "";
         @endphp
 
