@@ -20,6 +20,7 @@ class OptionController extends Controller
 	
     public function optionJsonUpdate(Option $option, Request $request) {
 
+		$option->name = $request->name;
 		$option->value = json_encode(json_decode($request->value));
 		$option->save();
 		
