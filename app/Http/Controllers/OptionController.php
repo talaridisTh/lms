@@ -81,9 +81,7 @@ class OptionController extends Controller
 		return view("admin/settings/editPolicies")->with(["option" => $option]);
 	}
 
-	public function templateConfig() {
-
-		$option =  Option::firstOrCreate(["name" => "Course Templates"]);
+	public function showJson(Option $option) {
 
 		$data = [
 			"option" => $option,
@@ -91,5 +89,10 @@ class OptionController extends Controller
 		];
 
 		return view("admin/settings/codeEditor")->with($data);
+	}
+
+	public function devIndex() {
+
+		return view("admin/settings/settingsIndex");
 	}
 }

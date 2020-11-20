@@ -58,5 +58,5 @@
 @endsection
 
 @section('scripts')
-	<script src="{{ mix("js/dashboard/settings/options.js") }}"></script>
+	<script src="{{ mix("js/dashboard/settings/json-editor.js") }}"></script>
 @endsection

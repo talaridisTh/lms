@@ -7,16 +7,11 @@ use App\User;
 use App\Bundle;
 use App\Material;
 use App\Role;
-use App\Topic;
 use Carbon\Carbon;
 use DateTime;
-use Facade\FlareClient\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
