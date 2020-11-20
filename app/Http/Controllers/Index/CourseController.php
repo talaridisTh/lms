@@ -92,14 +92,15 @@ class CourseController extends Controller {
             ->wherePivotIn("status", [1])->get();
 
 
-        $test = Option::all();
-
-//        dd($course->template);
-
-        $view = json_decode($test->last()->value,true)[$course->template]["views"]["frontend"];
+        $option = Option::all();
 
 
-        return view($view, compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
+//        $view = json_decode($test->last()->value,true)[$course->templ
+//ate]["views"]["frontend"];
+
+
+
+        return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
 
     public function watchlistCourse(Request $request)
