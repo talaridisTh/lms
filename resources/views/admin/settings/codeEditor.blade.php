@@ -58,6 +58,6 @@
 @endsection
 
 @section('scripts')
-	<script src="{{ asset("assets/plugins/ace/src-min-noconflict/ace.js") }}"></script>
+	{{-- <script src="{{ asset("assets/plugins/ace/src-min-noconflict/ace.js") }}"></script> --}}
 	<script src="{{ mix("js/dashboard/settings/options.js") }}"></script>
 @endsection
