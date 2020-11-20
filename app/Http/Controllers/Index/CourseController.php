@@ -95,17 +95,14 @@ class CourseController extends Controller {
         $option = Option::all();
 
 
-<<<<<<< HEAD
 //        $view = json_decode($test->last()->value,true)[$course->templ
 //ate]["views"]["frontend"];
 
 
 
-=======
 //         $view = json_decode($test->last()->value,true)[$course->template]["views"]["frontend"];
 
 
->>>>>>> 81dd2d23b300a7e4fbc9159e2e4b14115fc4adf2
         return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
 
