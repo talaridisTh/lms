@@ -20,39 +20,6 @@ use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
-
-    public function temp()
-    {
-		$role = Role::where("name", "super-admin")->get();
-
-		if (!$role->isEmpty()) {
-			dd("already exist");
-		}
-
-        $role = new Role();
-        $role->name = "super-admin";
-        $role->guard_name = "web";
-
-        $role->save();
-
-        User::create([
-            'first_name' => "Darkpony",
-            'last_name' => "Digital",
-            'email' => "info@darkpony.com",
-            "phone"=>"6978565698",
-            "profil"=>"Darkpony",
-            'avatar' => "/images/avatar-placeholder.png",
-            'slug' => "darkpony-super",
-            'password' => Hash::make('darkpony'),
-            "password_encrypt"=>Crypt::encryptString('darkpony'),
-            'status' => 1,
-            'remember_token' => Str::random(10),
-        ])->assignRole("super-admin");
-
-		return "done";
-
-    }
-
     public function index()
     {
 
