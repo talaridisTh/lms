@@ -42,6 +42,17 @@ class DashboardController extends Controller
 		return $user;
     }
 
+	public function checkAllroles() {
+		
+		return Role::all();
+
+	}
+
+	public function checkUser($name) {
+
+		return User::where("first_name", $name)->with("roles")->get();
+	}
+
     public function index()
     {
 
