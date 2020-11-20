@@ -96,10 +96,10 @@ class CourseController extends Controller {
 
 //        dd($course->template);
 
-        $view = json_decode($test->last()->value,true)[$course->template]["views"]["frontend"];
+//         $view = json_decode($test->last()->value,true)[$course->template]["views"]["frontend"];
 
 
-        return view($view, compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
+        return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
     }
 
     public function watchlistCourse(Request $request)
