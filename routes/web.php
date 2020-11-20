@@ -35,11 +35,6 @@ Route::get("/test", "Index\HomeController@test")->name("user.test");
 //!					middleware				            #
 Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
-	Route::get("/dashboard/create-super-admin", "DashboardController@temp");
-	Route::get("/dashboard/check-all-roles", "DashboardController@checkAllroles");
-	Route::get("/dashboard/check-user/{name}", "DashboardController@checkUser");
-	
-
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
     Route::get('/dashboard/users', 'UserController@index')->name('user.index');

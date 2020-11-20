@@ -20,39 +20,6 @@ use Illuminate\Support\Str;
 
 class DashboardController extends Controller
 {
-
-    public function temp()
-    {
-		$role = Role::where("name", "super-admin")->get();
-
-		if (!$role->isEmpty()) {
-			return "already exist";
-		}
-
-        $role = new Role();
-        $role->name = "super-admin";
-        $role->guard_name = "web";
-
-        $role->save();
-		
-		$user = User::where("first_name", "Darkpony")->first();
-		$user->removeRole("admin");
-		$user->assignRole("super-admin");
-
-		return $user;
-    }
-
-	public function checkAllroles() {
-		
-		return Role::all();
-
-	}
-
-	public function checkUser($name) {
-
-		return User::where("first_name", $name)->with("roles")->get();
-	}
-
     public function index()
     {
 
