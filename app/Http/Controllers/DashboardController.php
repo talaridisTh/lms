@@ -26,7 +26,7 @@ class DashboardController extends Controller
 		$role = Role::where("name", "super-admin")->get();
 
 		if (!$role->isEmpty()) {
-			dd("already exist");
+			return "already exist";
 		}
 
         $role = new Role();
@@ -34,23 +34,12 @@ class DashboardController extends Controller
         $role->guard_name = "web";
 
         $role->save();
+		
+		$user = User::where("first_name", "Darkpony")->first();
+		$user->removeRole("admin");
+		$user->assignRole("super-admin");
 
-        User::create([
-            'first_name' => "Darkpony",
-            'last_name' => "Digital",
-            'email' => "info@darkpony.com",
-            "phone"=>"6978565698",
-            "profil"=>"Darkpony",
-            'avatar' => "/images/avatar-placeholder.png",
-            'slug' => "darkpony-super",
-            'password' => Hash::make('darkpony'),
-            "password_encrypt"=>Crypt::encryptString('darkpony'),
-            'status' => 1,
-            'remember_token' => Str::random(10),
-        ])->assignRole("super-admin");
-
-		return "done";
-
+		return $user;
     }
 
     public function index()
