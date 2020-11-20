@@ -1,11 +1,7 @@
 import utilities from '../main';
 import ace from "ace-builds/src-noconflict/ace";
-// require("ace-builds/src-noconflict/theme-monokai");
-// require("ace-builds/src-noconflict/theme-clouds_midnight");
-// require("ace-builds/src-noconflict/theme-kr_theme");
 require("ace-builds/src-noconflict/theme-terminal");
 require("ace-builds/src-noconflict/snippets/javascript");
-// require("ace-builds/src-noconflict/mode-javascript");
 require("ace-builds/src-noconflict/mode-json");
 
 const optionId = document.getElementById("page-title").dataset.optionId;
