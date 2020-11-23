@@ -14,14 +14,18 @@ const editor = ace.edit("editor", {
 
 const updateBtn = document.getElementById("update-btn");
 updateBtn.addEventListener("click", function() {
+	const name = document.getElementById("name-input").value;
 	const value = editor.getValue();
 
-	jsonUpdate(value);
+	jsonUpdate(name, value);
 })
 
-function jsonUpdate(value) {
+function jsonUpdate(name, value) {
 
-	axios.post(`/dashboard/dev-tools/${optionId}/update`, {value: value})
+	axios.post(`/dashboard/dev-tools/${optionId}/update`, {
+		name: name,
+		value: value
+	})
 	.then( res => {
 		utilities.toastAlert("success", "Αποθηκεύτηκε!");
 	})

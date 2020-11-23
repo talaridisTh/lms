@@ -29,6 +29,7 @@
 						<ol class="breadcrumb m-0 pb-0">
 							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
 							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard/options" class="custom-link-primary">Options</a></li>
 							<li class="breadcrumb-item active">{{ $option->name }}</li>
 						</ol>
 					</div>
@@ -47,10 +48,14 @@
 		</div>
 		<div class="card">
 			<div class="card-body">
+				<div class="form-group">
+					<label for="name-input">Name</label>
+					<input id="name-input" class="form-control" type="text" value="{{ $option->name }}" placeholder="Εισάγετε όνομα">
+				</div>
+				<label for="name-input">Value</label>
 				<div class="editor-container">
 					<div id="editor">{{ $value }}</div>
 				</div>
-
 			</div>
 		</div>
 	</div>
@@ -58,5 +63,5 @@
 @endsection
 
 @section('scripts')
-	<script src="{{ mix("js/dashboard/settings/options.js") }}"></script>
+	<script src="{{ mix("js/dashboard/settings/json-editor.js") }}"></script>
 @endsection

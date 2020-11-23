@@ -86,9 +86,14 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::get('/dashboard/options/{name}', 'OptionController@editPolicies')
 		->where("name", "terms|privacyPolicy|cookiePolicy");
 	Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
-	
+
+	//! Dev Options Routes
 	Route::get("/dashboard/dev-tools/template-config", "OptionController@templateConfig");
 	Route::post("/dashboard/dev-tools/{option:id}/update", "Ajax\OptionController@optionJsonUpdate");
+	Route::get("/dashboard/options", "OptionController@devIndex");
+	Route::get("/dashboard/option/{option:id}/show-json", "OptionController@showJson");
+	Route::post("option/{option:id}/update", "Ajax\OptionController@update");
+
 //!======================================================
 //! 			End Dashboard Routes					|
 //!======================================================
@@ -210,6 +215,9 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
 //! Dashboard Home Banner Update
 	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+
+//! Options Datatable
+	Route::post('options/main-datatable', 'Ajax\OptionController@mainDatatable');
 
 //! Glide Images
 	Route::get('img/{path}', 'MediaController@show')->where('path', '.*');

@@ -169,8 +169,8 @@
                         	    </a>
                         	    <ul class="side-nav-second-level" aria-expanded="false">
 									<li>
-										<a href="/dashboard/dev-tools/template-config">
-											Course Templates
+										<a href="/dashboard/options">
+											Options
 										</a>
                         	        </li>
                         	    </ul>
