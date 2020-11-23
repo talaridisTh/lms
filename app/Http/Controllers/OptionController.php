@@ -26,6 +26,17 @@ class OptionController extends Controller
 		return view("admin/settings/general")->with($data);
 	}
 
+	public function store(Request $request) {
+		
+		// return $request->all();
+		$option = new Option;
+		$option->name = $request->name;
+		$option->value = $request->value;
+		$option->save();
+
+		return redirect("/dashboard/options");
+	}
+
 	public function update(Request $request) {
 
 		$title = Option::where("name", "title")->first();

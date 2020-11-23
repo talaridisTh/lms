@@ -1,7 +1,7 @@
 import utilities from "../main"
 
 const optionsDataTable = $("#options-datatable").DataTable({
-	// order: [6, "desc"],
+	order: [0, "desc"],
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -26,7 +26,6 @@ const optionsDataTable = $("#options-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-		// { data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -77,7 +76,7 @@ function classToggler(button, parent) {
 
 function saveOption(id, name, value) {
 
-	axios.post(`/option/${id}/update`, {name, value})
+	axios.patch(`/option/${id}/update`, {name, value})
 	.then( res => {
 
 		optionsDataTable.ajax.reload(null, false);
