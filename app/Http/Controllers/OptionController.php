@@ -27,8 +27,7 @@ class OptionController extends Controller
 	}
 
 	public function store(Request $request) {
-		
-		// return $request->all();
+
 		$option = new Option;
 		$option->name = $request->name;
 		$option->value = $request->value;
@@ -74,6 +73,50 @@ class OptionController extends Controller
 		$social->save();
 		
 		return redirect( "/dashboard/general-settings" );
+	}
+
+	public function showCarousels() {
+		
+		$page = Option::where("name", "Index Carousels")->first();
+
+		if ( $page !== null) {
+			$bannersData = json_decode($page->value);
+			$banners = (object)[];
+			
+			foreach ($bannersData as $section => $values) {
+				$banners->{ $section } = (object)[];
+				$banners->{ $section }->models = [];
+	
+				foreach($values->models as $model) {
+	
+					$namespace = key((array)$model);
+					$id = current((array)$model);
+					
+					$value = $namespace::find( $id );
+					array_push($banners->{ $section }->models, $value);
+				}
+				$banners->{ $section }->status = $values->status;
+			}
+		}
+		else {
+			$banners = [
+				"primary" => [
+					"models" => [],
+					"status" => 0
+				],
+				"secondary" => [
+					"models" => [],
+					"status" => 0
+				],
+			];
+		}
+
+		$data = [
+			"page" => $page,
+			"banners" => $banners
+		];
+
+		return view("admin/settings/editCarousels")->with($data);
 	}
 
 	public function editPolicies($name) {
@@ -126,7 +169,7 @@ class OptionController extends Controller
 	public function jsonUpdate(Option $option, Request $request) {
 
 		$request->validate([
-			'name' => 'required|unique:options',
+			'name' => 'required',
 			'json' => 'required|json'
 		]);
 		

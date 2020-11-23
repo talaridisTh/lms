@@ -24,6 +24,7 @@ class CreateCoursesTable extends Migration
             $table->string('slug');
             $table->string('version');
 			$table->unsignedTinyInteger('status');
+			// $table->string("template")->default("index.courses.template-1.courseProfile"); //added later
 			$table->json('fields')->nullable();
 			$table->timestamp('publish_at')->nullable();
 			$table->timestamps();

@@ -135,9 +135,9 @@
 									</a>
                                 </li>
                                 <li>
-									<a href="/dashboard/home-content">
-										<i class="font-16 mdi mdi-home-edit"></i>
-										Home Page
+									<a href="/dashboard/home-carousels">
+										<i class="font-16 mdi mdi-view-carousel-outline"></i>
+										Carousels
 									</a>
 								</li>
 								<li class="side-nav-item">

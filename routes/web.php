@@ -77,8 +77,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     //! Dashboard Search
     Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
     //! Dashboard Home Content
-    Route::get('/dashboard/home-content', 'UtilityController@index');
-	Route::post('/dashboard/home-content/update', 'UtilityController@update');
+    Route::get('/dashboard/home-carousels', 'OptionController@showCarousels');
 
     Route::get('/dashboard/general-settings', 'OptionController@index');
 	Route::post('/dashboard/general-settings/update', 'OptionController@update');
@@ -214,11 +213,11 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
     Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
 //! Ajax  Home Page Setting Datatables
-    Route::post('home-content/simple-materials-datatable', 'Ajax\UtilityController@simpleMaterialsDatatable');
-    Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
-    Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
+    Route::post('edit-carousels/simple-materials-datatable', 'Ajax\OptionController@simpleMaterialsDatatable');
+    Route::post('edit-carousels/simple-courses-datatable', 'Ajax\OptionController@simpleCoursesDatatable');
+    Route::post('edit-carousels/simple-bundles-datatable', 'Ajax\OptionController@simpleBundlesDatatable');
 //! Dashboard Home Banner Update
-	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+	Route::patch('edit-carousels/banners-update', 'Ajax\OptionController@updateBanners');
 
 //! Options Datatable
 	Route::post('options/main-datatable', 'Ajax\OptionController@mainDatatable');
