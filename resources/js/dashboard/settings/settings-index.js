@@ -76,7 +76,7 @@ function deleteOptionInit() {
 async function deleteBtnHandler() {
 
 	try {
-		const {isConfirmed} = await swalDelete("Διαγραφή;", "Η ενέργεια θα είναι μη αναστρέψιμη...");
+		const {isConfirmed} = await swalDelete();
 
 		if ( !isConfirmed ) return;
 
@@ -114,11 +114,11 @@ function saveOption(id, name, value) {
 	})
 }
 
-function swalDelete(title, text) {
+function swalDelete() {
 
 	return Swal.fire({
-		title: title,
-		text: text,
+		title: "Διαγραφή;",
+		text: "Η ενέργεια θα είναι μη αναστρέψιμη...",
 		icon: 'warning',
 		showCancelButton: true,
 		confirmButtonColor: '#ff5b5b',
