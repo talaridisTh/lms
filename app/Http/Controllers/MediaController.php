@@ -44,12 +44,12 @@ class MediaController extends Controller
 			SignatureFactory::create($signkey)->validateRequest($request->getPathInfo(), $_GET);
 
 			$source = new FlysystemFilesystem( new Local($source) );
-	
+
 			$server->setSource($source);
 			$server->setCachePathPrefix(".cache/$cache");
 
 			$server->outputImage($image, $_GET);
-		
+
 		} catch (SignatureException $e) {
 			// Handle error
 			abort(403);

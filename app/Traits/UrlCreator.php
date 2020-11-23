@@ -15,6 +15,7 @@ trait UrlCreator {
         // Generate a URL
         $url = $urlBuilder->getUrl($this->attributes[$column], ["w" => 400, "h" => 400, "fit" => "crop"]);
 
+
         return $url;
 	}
 
