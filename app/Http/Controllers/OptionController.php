@@ -81,6 +81,27 @@ class OptionController extends Controller
 		return view("admin/settings/editPolicies")->with(["option" => $option]);
 	}
 
+	public function createJson() {
+
+		return view("admin/settings/jsonEditor");
+
+	}
+
+	public function storeJson(Request $request) {
+
+		$request->validate([
+			'name' => 'required|unique:options',
+			'json' => 'required|json'
+		]);
+
+		$option = new Option;
+		$option->name = $request->name;
+		$option->value = json_encode(json_decode($request->json));
+		$option->save();
+
+		return redirect("/dashboard/option/$option->id/show-json");
+	}
+
 	public function showJson(Option $option) {
 
 		$data = [
@@ -88,7 +109,21 @@ class OptionController extends Controller
 			"value" => json_encode(json_decode($option->value), JSON_PRETTY_PRINT),
 		];
 
-		return view("admin/settings/codeEditor")->with($data);
+		return view("admin/settings/jsonEditor")->with($data);
+	}
+
+	public function jsonUpdate(Option $option, Request $request) {
+
+		$request->validate([
+			'name' => 'required|unique:options',
+			'json' => 'required|json'
+		]);
+		
+		$option->name = $request->name;
+		$option->value = json_encode(json_decode($request->json));
+		$option->save();
+		
+		return redirect("/dashboard/option/$option->id/show-json");
 	}
 
 	public function devIndex() {

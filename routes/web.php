@@ -89,10 +89,11 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
 	//! Dev Options Routes
 	Route::get("/dashboard/dev-tools/template-config", "OptionController@templateConfig");
-	Route::post("/dashboard/dev-tools/{option:id}/update", "Ajax\OptionController@optionJsonUpdate");
 	Route::get("/dashboard/options", "OptionController@devIndex");
+	Route::get("/dashboard/option/create-json", "OptionController@createJson");
+	Route::post("/dashboard/option/store-json", "OptionController@storeJson");
 	Route::get("/dashboard/option/{option:id}/show-json", "OptionController@showJson");
-	Route::post("option/{option:id}/update", "Ajax\OptionController@update");
+	Route::patch("/dashboard/option/{option:id}/update-json", "OptionController@jsonUpdate");
 
 //!======================================================
 //! 			End Dashboard Routes					|
