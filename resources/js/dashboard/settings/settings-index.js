@@ -78,22 +78,17 @@ async function deleteBtnHandler() {
 	try {
 		const {isConfirmed} = await swalDelete("Διαγραφή;", "Η ενέργεια θα είναι μη αναστρέψιμη...");
 
-		if ( isConfirmed ) {
-			axios.delete(`/option/${this.dataset.optionId}`)
-			.then( res => {
-				optionsDataTable.ajax.reload(null, false);
-				utilities.toastAlert("info", "Διαγράφηκε...");
-			})
-			.catch( err => {
-				console.log(err);
-				utilities.toastAlert("error", "Ooops...");
-			})
-		}
+		if ( !isConfirmed ) return;
+
+		await axios.delete(`/option/${this.dataset.optionId}`);
+
+		optionsDataTable.ajax.reload(null, false);
+		utilities.toastAlert("info", "Διαγράφηκε...");
 	}
 	catch (err) {
 		console.log(err);
+		utilities.toastAlert("error", "Ooops...");
 	}
-
 }
 
 function classToggler(button, parent) {
