@@ -91,7 +91,7 @@
 					<th class="text-center" style="width: 40px;">ID</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center" style="width: 100px;">Τελ. Ενημέρωση</th>
-					{{-- <th class="text-center"></th> --}}
+					<th class="text-center" style="width: 40px;"></th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
@@ -100,7 +100,7 @@
 					<th class="text-center" style="width: 40px;">ID</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center" style="width: 100px;">Τελ. Ενημέρωση</th>
-					{{-- <th class="text-center"></th> --}}
+					<th class="text-center" style="width: 40px;"></th>
 				</tr>
 			</tfoot>
 		</table>

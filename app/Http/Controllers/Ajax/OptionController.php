@@ -16,6 +16,12 @@ class OptionController extends Controller
 		$option->save();
 	}
 
+	public function destroy(Option $option) {
+
+		$option->delete();
+
+	}
+
 	public function mainDatatable(OptionsDataTable $dataTable) {
 
 		return $dataTable->render('options.main');

@@ -96,6 +96,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::get("/dashboard/option/{option:id}/show-json", "OptionController@showJson");
 	Route::patch("/dashboard/option/{option:id}/update-json", "OptionController@jsonUpdate");
 	Route::patch("option/{option:id}/update", "Ajax\OptionController@update");
+	Route::delete("option/{option:id}", "Ajax\OptionController@destroy");
 
 //!======================================================
 //! 			End Dashboard Routes					|

@@ -26,6 +26,7 @@ const optionsDataTable = $("#options-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
+		{ data: 'action', className: "align-middle text-center", searchable: false, orderable: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -42,6 +43,7 @@ const optionsDataTable = $("#options-datatable").DataTable({
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 
 		quickEditBtnInit();
+		deleteOptionInit();
 	}
 });
 
@@ -65,6 +67,35 @@ function quickEditBtnInit() {
 	});
 }
 
+function deleteOptionInit() {
+
+	$(".js-remove-option").on("click", deleteBtnHandler)
+
+}
+
+async function deleteBtnHandler() {
+
+	try {
+		const {isConfirmed} = await swalDelete("Διαγραφή;", "Η ενέργεια θα είναι μη αναστρέψιμη...");
+
+		if ( isConfirmed ) {
+			axios.delete(`/option/${this.dataset.optionId}`)
+			.then( res => {
+				optionsDataTable.ajax.reload(null, false);
+				utilities.toastAlert("info", "Διαγράφηκε...");
+			})
+			.catch( err => {
+				console.log(err);
+				utilities.toastAlert("error", "Ooops...");
+			})
+		}
+	}
+	catch (err) {
+		console.log(err);
+	}
+
+}
+
 function classToggler(button, parent) {
 	const td = button.findParent(parent);
 	const title = td.getElementsByClassName("js-title")[0];
@@ -86,4 +117,18 @@ function saveOption(id, name, value) {
 		console.log(err);
 		utilities.toastAlert("error", "Ooops!");
 	})
+}
+
+function swalDelete(title, text) {
+
+	return Swal.fire({
+		title: title,
+		text: text,
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#ff5b5b',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Ναι, Διαγραφή!',
+		cancelButtonText: 'Άκυρο!',
+	});
 }
