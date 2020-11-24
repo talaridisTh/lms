@@ -81,10 +81,22 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./resources/js/dashboard/mail/compose-email.js":
+/*!******************************************************!*\
+  !*** ./resources/js/dashboard/mail/compose-email.js ***!
+  \******************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ \"./resources/js/dashboard/main.js\");\n\n_main__WEBPACK_IMPORTED_MODULE_0__[\"default\"].redactorConfig.minHeight = \"300px\";\n$R(\"#editor\", _main__WEBPACK_IMPORTED_MODULE_0__[\"default\"].redactorConfig);\nvar recipientsSelect = $('#recipients-selection').select2({\n  placeholder: \"Επιλέξτε παραλήπτες...\",\n  // allowClear: true,\n  ajax: {\n    url: \"/email/users\",\n    delay: 1000,\n    dataType: \"json\",\n    data: function data(params) {\n      return {\n        search: params.term,\n        page: params.page || 1\n      };\n    }\n  }\n});\n$(\".js-recipients\").on(\"change\", function () {\n  var select = $('#recipients-selection');\n  var recipients = $(\".js-recipients:checked\");\n  select.html(\"\");\n\n  if (recipients.length === 0) {\n    select.prop(\"disabled\", false);\n    return;\n  }\n\n  var newOption;\n\n  for (var i = 0; i < recipients.length; i++) {\n    newOption = new Option(recipients[i].dataset.recipients, i, false, true);\n    select.append(newOption).trigger('change');\n  }\n\n  select.prop(\"disabled\", true);\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvZGFzaGJvYXJkL21haWwvY29tcG9zZS1lbWFpbC5qcz8zNmFmIl0sIm5hbWVzIjpbInV0aWxpdGllcyIsInJlZGFjdG9yQ29uZmlnIiwibWluSGVpZ2h0IiwiJFIiLCJyZWNpcGllbnRzU2VsZWN0IiwiJCIsInNlbGVjdDIiLCJwbGFjZWhvbGRlciIsImFqYXgiLCJ1cmwiLCJkZWxheSIsImRhdGFUeXBlIiwiZGF0YSIsInBhcmFtcyIsInNlYXJjaCIsInRlcm0iLCJwYWdlIiwib24iLCJzZWxlY3QiLCJyZWNpcGllbnRzIiwiaHRtbCIsImxlbmd0aCIsInByb3AiLCJuZXdPcHRpb24iLCJpIiwiT3B0aW9uIiwiZGF0YXNldCIsImFwcGVuZCIsInRyaWdnZXIiXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFBQTtBQUVBQSw2Q0FBUyxDQUFDQyxjQUFWLENBQXlCQyxTQUF6QixHQUFxQyxPQUFyQztBQUVBQyxFQUFFLENBQUMsU0FBRCxFQUFZSCw2Q0FBUyxDQUFDQyxjQUF0QixDQUFGO0FBRUEsSUFBTUcsZ0JBQWdCLEdBQUdDLENBQUMsQ0FBQyx1QkFBRCxDQUFELENBQTJCQyxPQUEzQixDQUFtQztBQUMzREMsYUFBVyxFQUFFLHdCQUQ4QztBQUUzRDtBQUNBQyxNQUFJLEVBQUU7QUFDTEMsT0FBRyxFQUFFLGNBREE7QUFFTEMsU0FBSyxFQUFFLElBRkY7QUFHTEMsWUFBUSxFQUFFLE1BSEw7QUFJTEMsUUFBSSxFQUFFLGNBQVNDLE1BQVQsRUFBaUI7QUFDdEIsYUFBTztBQUNOQyxjQUFNLEVBQUVELE1BQU0sQ0FBQ0UsSUFEVDtBQUVOQyxZQUFJLEVBQUVILE1BQU0sQ0FBQ0csSUFBUCxJQUFlO0FBRmYsT0FBUDtBQUlBO0FBVEk7QUFIcUQsQ0FBbkMsQ0FBekI7QUFnQkFYLENBQUMsQ0FBQyxnQkFBRCxDQUFELENBQW9CWSxFQUFwQixDQUF1QixRQUF2QixFQUFpQyxZQUFXO0FBQzNDLE1BQU1DLE1BQU0sR0FBR2IsQ0FBQyxDQUFDLHVCQUFELENBQWhCO0FBQ0EsTUFBTWMsVUFBVSxHQUFHZCxDQUFDLENBQUMsd0JBQUQsQ0FBcEI7QUFFQWEsUUFBTSxDQUFDRSxJQUFQLENBQVksRUFBWjs7QUFFQSxNQUFJRCxVQUFVLENBQUNFLE1BQVgsS0FBc0IsQ0FBMUIsRUFBNkI7QUFDNUJILFVBQU0sQ0FBQ0ksSUFBUCxDQUFZLFVBQVosRUFBd0IsS0FBeEI7QUFDQTtBQUNBOztBQUVELE1BQUlDLFNBQUo7O0FBRUEsT0FBSyxJQUFJQyxDQUFDLEdBQUcsQ0FBYixFQUFnQkEsQ0FBQyxHQUFHTCxVQUFVLENBQUNFLE1BQS9CLEVBQXVDRyxDQUFDLEVBQXhDLEVBQTRDO0FBQzNDRCxhQUFTLEdBQUcsSUFBSUUsTUFBSixDQUFXTixVQUFVLENBQUNLLENBQUQsQ0FBVixDQUFjRSxPQUFkLENBQXNCUCxVQUFqQyxFQUE2Q0ssQ0FBN0MsRUFBZ0QsS0FBaEQsRUFBdUQsSUFBdkQsQ0FBWjtBQUNBTixVQUFNLENBQUNTLE1BQVAsQ0FBY0osU0FBZCxFQUF5QkssT0FBekIsQ0FBaUMsUUFBakM7QUFDQTs7QUFFRFYsUUFBTSxDQUFDSSxJQUFQLENBQVksVUFBWixFQUF3QixJQUF4QjtBQUNBLENBbkJEIiwiZmlsZSI6Ii4vcmVzb3VyY2VzL2pzL2Rhc2hib2FyZC9tYWlsL2NvbXBvc2UtZW1haWwuanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgdXRpbGl0aWVzIGZyb20gJy4uL21haW4nO1xyXG5cclxudXRpbGl0aWVzLnJlZGFjdG9yQ29uZmlnLm1pbkhlaWdodCA9IFwiMzAwcHhcIlxyXG5cclxuJFIoXCIjZWRpdG9yXCIsIHV0aWxpdGllcy5yZWRhY3RvckNvbmZpZyk7XHJcblxyXG5jb25zdCByZWNpcGllbnRzU2VsZWN0ID0gJCgnI3JlY2lwaWVudHMtc2VsZWN0aW9uJykuc2VsZWN0Mih7XHJcblx0cGxhY2Vob2xkZXI6IFwizpXPgM65zrvOrc6+z4TOtSDPgM6xz4HOsc67zq7PgM+EzrXPgi4uLlwiLFxyXG5cdC8vIGFsbG93Q2xlYXI6IHRydWUsXHJcblx0YWpheDoge1xyXG5cdFx0dXJsOiBcIi9lbWFpbC91c2Vyc1wiLFxyXG5cdFx0ZGVsYXk6IDEwMDAsXHJcblx0XHRkYXRhVHlwZTogXCJqc29uXCIsXHJcblx0XHRkYXRhOiBmdW5jdGlvbihwYXJhbXMpIHtcclxuXHRcdFx0cmV0dXJuIHtcclxuXHRcdFx0XHRzZWFyY2g6IHBhcmFtcy50ZXJtLFxyXG5cdFx0XHRcdHBhZ2U6IHBhcmFtcy5wYWdlIHx8IDFcclxuXHRcdFx0fVxyXG5cdFx0fVxyXG5cdH1cclxufSk7XHJcblxyXG4kKFwiLmpzLXJlY2lwaWVudHNcIikub24oXCJjaGFuZ2VcIiwgZnVuY3Rpb24oKSB7XHJcblx0Y29uc3Qgc2VsZWN0ID0gJCgnI3JlY2lwaWVudHMtc2VsZWN0aW9uJyk7XHJcblx0Y29uc3QgcmVjaXBpZW50cyA9ICQoXCIuanMtcmVjaXBpZW50czpjaGVja2VkXCIpO1xyXG5cdFxyXG5cdHNlbGVjdC5odG1sKFwiXCIpO1xyXG5cdFxyXG5cdGlmIChyZWNpcGllbnRzLmxlbmd0aCA9PT0gMCkge1xyXG5cdFx0c2VsZWN0LnByb3AoXCJkaXNhYmxlZFwiLCBmYWxzZSk7XHJcblx0XHRyZXR1cm47XHJcblx0fVxyXG5cdFxyXG5cdGxldCBuZXdPcHRpb247XHJcblxyXG5cdGZvciAobGV0IGkgPSAwOyBpIDwgcmVjaXBpZW50cy5sZW5ndGg7IGkrKykge1xyXG5cdFx0bmV3T3B0aW9uID0gbmV3IE9wdGlvbihyZWNpcGllbnRzW2ldLmRhdGFzZXQucmVjaXBpZW50cywgaSwgZmFsc2UsIHRydWUpO1xyXG5cdFx0c2VsZWN0LmFwcGVuZChuZXdPcHRpb24pLnRyaWdnZXIoJ2NoYW5nZScpO1xyXG5cdH1cclxuXHJcblx0c2VsZWN0LnByb3AoXCJkaXNhYmxlZFwiLCB0cnVlKTtcclxufSk7XHJcbiJdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/js/dashboard/mail/compose-email.js\n");
+
+/***/ }),
 
 /***/ "./resources/js/dashboard/main.js":
 /*!****************************************!*\
@@ -98,14 +110,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ 21:
-/*!**********************************************!*\
-  !*** multi ./resources/js/dashboard/main.js ***!
-  \**********************************************/
+/***/ 16:
+/*!************************************************************!*\
+  !*** multi ./resources/js/dashboard/mail/compose-email.js ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
+module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\mail\compose-email.js */"./resources/js/dashboard/mail/compose-email.js");
 
 
 /***/ })

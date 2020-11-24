@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -142,7 +142,7 @@ eval("try {\n  window.Popper = __webpack_require__(/*! popper.js */ \"./node_mod
 
 /***/ }),
 
-/***/ 30:
+/***/ 31:
 /*!*****************************************!*\
   !*** multi ./resources/js/index/app.js ***!
   \*****************************************/
