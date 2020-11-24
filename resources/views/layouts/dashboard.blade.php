@@ -120,6 +120,12 @@
                                 <i class="mdi mdi-package-variant"></i>
                                 <span>File Manager</span>
                             </a>
+						</li>
+						<li class="side-nav-item">
+                            <a href="/dashboard/email" class="side-nav-link" draggable="false">
+                                <i class="mdi mdi-email-outline"></i>
+                                <span>E-Mail</span>
+                            </a>
                         </li>
 						<li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link" draggable="false">

@@ -69,7 +69,13 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
     Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
-    //! media Routes
+	
+	//! Newsletter Routes
+	Route::get('/dashboard/email', 'MailController@composeEmail');
+	Route::post('/dashboard/email', 'MailController@sendNewsletter');
+	Route::get('email/users', 'MailController@searchUsers');
+
+	//! media Routes
     Route::get("/media", "MediaController@index")->name("media.index");
     //! Topic Routes
     Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');

@@ -33,6 +33,8 @@ mix.js('resources/js/app.js', 'public/js')
 	.js('resources/js/dashboard/dashboard.js', 'public/js/dashboard')
 	.js('resources/js/dashboard/newContent.js', 'public/js/dashboard')
 
+	.js('resources/js/dashboard/mail/compose-email.js', 'public/js/dashboard/mail')
+
 	.js('resources/js/dashboard/settings/general-settings.js', 'public/js/dashboard/settings')
 	.js('resources/js/dashboard/settings/home-page.js', 'public/js/dashboard/settings')
 	.js('resources/js/dashboard/settings/json-editor.js', 'public/js/dashboard/settings')
