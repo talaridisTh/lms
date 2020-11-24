@@ -184,7 +184,7 @@
 						<div class="d-flex justify-content-end align-items-center mb-1">
 							<button type="button" class="btn btn-primary btn-sm"
 								data-toggle="modal" data-target="#edit-banners-modal" data-importance="{{ $section }}"
-								data-modal-title="Carousel {{ $counter }}" >Αλλαγή</button>
+								data-modal-title="{{ucfirst($section) }} Carousel" >Αλλαγή</button>
 							<input type="checkbox" id="{{ $section }}-banners-switch" autocomplete="off"
 								{{ !empty($values->status) && $values->status == 1 ? "checked" : ""}}
 								class="js-carousel-switch" data-switch="success"/>
