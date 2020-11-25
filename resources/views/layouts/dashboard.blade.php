@@ -154,13 +154,13 @@
                                     </a>
                                     <ul class="side-nav-third-level" aria-expanded="false">
                                         <li>
-                                            <a href="/dashboard/options/terms">Terms of Use</a>
+                                            <a href="/dashboard/options/terms-of-use">Terms of Use</a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/options/privacyPolicy">Privacy Policy</a>
+                                            <a href="/dashboard/options/privacy-policy">Privacy Policy</a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/options/cookiePolicy">Cookie Policy</a>
+                                            <a href="/dashboard/options/cookie-policy">Cookie Policy</a>
                                         </li>
                                     </ul>
                                 </li>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\Email;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,13 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/temp', function () {
+    return new Email("Mpla", "Mplou");
+});
+
+
+
 Auth::routes();
 //!########################################################
 //! 404
@@ -88,8 +96,8 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::get('/dashboard/general-settings', 'OptionController@index');
 	Route::post('/dashboard/general-settings/update', 'OptionController@update');
 
-	Route::get('/dashboard/options/{name}', 'OptionController@editPolicies')
-		->where("name", "terms|privacyPolicy|cookiePolicy");
+	Route::get('/dashboard/options/{slug}', 'OptionController@editPolicies')
+		->where("slug", "terms-of-use|privacy-policy|cookie-policy");
 	Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
 
 	//! Dev Options Routes

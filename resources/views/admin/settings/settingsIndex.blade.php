@@ -74,7 +74,7 @@
 	</div>
 	<!-- end page title -->
 
-	<div class="container table-cnt content-width">
+	<div class="container table-cnt content-width mb-3">
 
 		<div class="text-sm-right mb-2">
 			<a href="/dashboard/option/create-json" class="btn btn-primary mb-2">

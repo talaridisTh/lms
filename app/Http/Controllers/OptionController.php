@@ -5,21 +5,22 @@ namespace App\Http\Controllers;
 use App\Option;
 use App\Media;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OptionController extends Controller
 {
     public function index() {
 
 		$data = [
-			"title" => Option::firstOrCreate(["name" => "title"]),
-			"copyright" => Option::firstOrCreate(["name" => "copyright"]),
-			"logo" => Option::firstOrCreate(['name' => "logo"]),
-			"description" => Option::firstOrCreate(['name' => "description"]),
-			"terms" => Option::firstOrCreate(['name' => "terms"]),
-			"privacyPolicy" => Option::firstOrCreate(['name' => "privacyPolicy"]),
-			"cookiePolicy" => Option::firstOrCreate(['name' => "cookiePolicy"]),
-			"contactInfo" => Option::firstOrCreate(['name' => "contactInfo"]),
-			"social" => Option::firstOrCreate(['name' => "social"]),
+			"title" => Option::where("name", "Title")->first(),
+			"copyright" => Option::where("name", "Copyright")->first(),
+			"logo" => Option::where('name', "Logo")->first(),
+			"description" => Option::where('name', "Description")->first(),
+			"terms" => Option::where('name', "Terms of Use")->first(),
+			"privacyPolicy" => Option::where('name', "Privacy Policy")->first(),
+			"cookiePolicy" => Option::where('name', "Cookie Policy")->first(),
+			"contactInfo" => Option::where('name', "Contact Info")->first(),
+			"social" => Option::where('name', "Social")->first(),
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
 		];
 
@@ -30,6 +31,7 @@ class OptionController extends Controller
 
 		$option = new Option;
 		$option->name = $request->name;
+		$option->slug = Str::slug($request->name);
 		$option->value = $request->value;
 		$option->save();
 
@@ -38,11 +40,11 @@ class OptionController extends Controller
 
 	public function update(Request $request) {
 
-		$title = Option::where("name", "title")->first();
-		$copyright = Option::where("name", "copyright")->first();
-		$description = Option::where("name", "description")->first();
-		$contactInfo = Option::where("name", "contactInfo")->first();
-		$social = Option::where("name", "social")->first();
+		$title = Option::where("name", "Title")->first();
+		$copyright = Option::where("name", "Copyright")->first();
+		$description = Option::where("name", "Description")->first();
+		$contactInfo = Option::where("name", "Contact Info")->first();
+		$social = Option::where("name", "Social")->first();
 
 		$title->value = $request->title;
 		$title->save();
@@ -119,9 +121,9 @@ class OptionController extends Controller
 		return view("admin/settings/editCarousels")->with($data);
 	}
 
-	public function editPolicies($name) {
+	public function editPolicies($slug) {
 
-		$option = Option::firstOrCreate(["name" => $name]);	//name = "terms|privacyPolicy|cookiePolicy"
+		$option = Option::where(["slug" => $slug])->first();	//slug = "terms-of-use|privacy-policy|cookie-policy"
 
 		return view("admin/settings/editPolicies")->with(["option" => $option]);
 
@@ -150,6 +152,7 @@ class OptionController extends Controller
 
 		$option = new Option;
 		$option->name = $request->name;
+		$option->slug = Str::slug($request->name);
 		$option->value = json_encode(json_decode($request->json));
 		$option->save();
 
@@ -174,6 +177,7 @@ class OptionController extends Controller
 		]);
 		
 		$option->name = $request->name;
+		$option->slug = Str::slug($request->name);
 		$option->value = json_encode(json_decode($request->json));
 		$option->save();
 		

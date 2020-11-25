@@ -24,7 +24,7 @@
 		}
 		.redactor-toolbar-wrapper {
 			position: sticky;
-			top: 150px;
+			top: 70px;
 			background: #404954;
 			z-index: 1000;
 		}
@@ -53,10 +53,7 @@
 	
 	
 	<div class="container content-width">
-		<div class="py-2 text-right">
-			{{-- <button type="submit" class="btn btn-primary">
-				Παραλήπτες
-			</button> --}}
+		<div class="mt-1 mb-3 text-right">
 			<button form="email-form" type="submit" class="btn btn-danger ml-1">
 				Send
 			</button>

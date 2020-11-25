@@ -9,6 +9,7 @@ use App\DataTables\OptionsDataTable;
 use App\Http\Controllers\Controller;
 use App\Option;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class OptionController extends Controller
 {
@@ -32,6 +33,7 @@ class OptionController extends Controller
 	public function update(Option $option, Request $request) {
 
 		$option->name = $request->name;
+		$option->slug = Str::slug($request->name);
 		$option->value = $request->value;
 		$option->save();
 	}
