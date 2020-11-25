@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
+    <!--Plugin CSS file with desired skin-->
+
+
 
     <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">
 
@@ -188,8 +191,18 @@
                             @endhasanyrole
                         </div>
 
+
+                        <div>
+                            <a class="nav-link" href="{{route('discussion.index')}}" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Discussions
+                            </a>
+                        </div>
+
+
                         <div>
                             <div class="dropdown">
+
                                 <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Λογαριασμός μου
@@ -354,6 +367,13 @@
         this.href = window.PREVIEW_PAGE_COURSE
     })
 </script>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+
+
+<!--Plugin JavaScript file-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 
 
 @yield("script")

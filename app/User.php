@@ -74,31 +74,28 @@ class User extends Authenticatable {
         return $this->belongsToMany(Course::class)->withTimestamps();
     }
 
-
-    public function receiverMessasge()
+    public function likeComment()
     {
-
-        return $this->hasMany(Message::class, "from","id");
+        return $this->morphedByMany(Comment::class, 'likable');
     }
 
-    public function sentMessage()
+    public function likePost()
     {
-
-        return $this->hasMany(Message::class, "to","id");
+        return $this->morphedByMany(Post::class, 'likable');
     }
 
-//
-//    public function guest()
-//    {
-//
-//
-//        return $this->belongsToMany('App\User', 'guest_user', 'user_id')
-//            ->withTimestamps()
-//            ->withPivot("user_link",'id');
-//    }
 
 
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
     public function guest()
     {
@@ -314,11 +311,7 @@ class User extends Authenticatable {
 
     }
 
-    // public function getCreatedAtAttribute($value)
-    // {
-    //     $carbonDate = new Carbon($value);
-    //     return $carbonDate->diffForHumans();
-    // }
+
     public function getUpdatedAtAttribute($value)
     {
         $carbonDate = new Carbon($value);
@@ -330,6 +323,16 @@ class User extends Authenticatable {
         $statement = DB::select("show table status like 'users'");
         return $statement[0]->Auto_increment;
     }
+
+    public function commentIsLiked($comment)
+    {
+
+        $like = auth()->user()->likeComment->whereIn("id",$comment->id)->first()?true :false;
+
+       return $like;
+    }
+
+
 
 
 }

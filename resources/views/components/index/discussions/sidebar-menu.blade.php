@@ -1,0 +1,135 @@
+<style>
+    .modal-open {
+        overflow: auto;
+    }
+
+    .modal-backdrop {
+        opacity: 0.3 !important;
+    }
+
+    .modal-content {
+        height: 400px;
+    }
+</style>
+<ul class="ul-thread stick">
+    <li class="py-2 px-4 mt-2 mb-4 list-unstyled first-thread mb-2" data-toggle="modal" data-target="#new-threads">
+        NEW DISCUSSION
+    </li>
+
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread">
+        <i class="font-18 font-18 mr-1 uil-notebooks"></i>
+        All Threads
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-question-circle"></i>
+        Οι Ερωτήσεις μου
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-volume"></i>
+        My Participation
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-check-circle"></i>
+        My Best Answers
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-star"></i>
+        Following
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-star"></i>
+        Popular This Week
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-star"></i>
+        Popular All time
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-check-circle"></i>
+        Solved
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-times-circle"></i>
+        UnSolved
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-link-h"></i>
+        No replies yes
+    </li>
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+        <i class="font-18 mr-1 uil-notes"></i>
+        Leaderboard
+    </li>
+</ul>
+
+
+{{--//modal new threads--}}
+<div id="new-threads" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-bottom">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="form-row w-100">
+                    <div class="form-group col-md-8">
+                        <label for="post-title" class="col-form-label">Εισάγετε τίτλο</label>
+                        <input type="text" name="title" class="form-control" id="post-title" form="form-create-thread"
+                               placeholder="Εισάγετε τίτλο">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="post-course" class="col-form-label">Eπέλεξε μαθήματα </label>
+                        <select id="post-course" class="form-control" name="course_id" form="form-create-thread">
+                            <option>Choose</option>
+                            @foreach($courses as $key=> $course)
+                                <option value="{{$course}}">{{$course}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="post-body">Εισάγετε ερώτηση</label>
+                    <textarea class="form-control" id="post-body" name="body" form="form-create-thread" rows="5"
+                              placeholder="Εισάγετε ερώτηση"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary js-form-create">Post</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+
+
+{{--//modal new threads--}}
+<div id="new-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-bottom">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4><i class="mdi mdi-reply"></i> Reply to </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                        <textarea class="form-control" id="reply-body" name="body" form="form-create-reply" rows="5"
+                                  placeholder="Απάντηση.."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary js-form-reply">Post</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+
+<form id="form-create-thread" method="post" action="{{route('discussion.thread')}}">
+    @csrf
+
+</form>
+
+<form id="form-create-reply" method="post" action="{{route('discussion.reply')}}">
+    @csrf
+</form>
+

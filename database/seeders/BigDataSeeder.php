@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Post;
 use App\User;
 use App\Material;
 use App\Course;
@@ -26,6 +27,10 @@ class BigDataSeeder extends Seeder {
             UserSeeder::class,
             UtilitySeeder::class,
         ]);
+
+
+
+        //svini
         User::factory()->times(500)->create()
             ->each(function ($user) {
                 $user->roles()->attach(rand(2, 4));
@@ -62,6 +67,8 @@ class BigDataSeeder extends Seeder {
                     $bundle->users()->attach(Role::find(4)->users()->select("id")->get()->random()->id);
                 }
             });
+
+
     }
 
 }

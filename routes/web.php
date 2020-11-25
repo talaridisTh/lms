@@ -259,6 +259,7 @@ Route::group(['middleware' => ['auth']], function () {
         }
     })->name('link');
 });
+
 //! GUEST AJAX
 Route::post("/guest/course", "Ajax\HomeController@guestCourse")->name("guest.course");
 Route::post("/guest/instructor", "Ajax\HomeController@guestInstructor")->name("guest.instructor");
@@ -266,6 +267,25 @@ Route::post("/guest/instructor-course", "Ajax\HomeController@guestInstructorCour
 Route::post("/guest/instructor-material", "Ajax\HomeController@guestInstructorMaterial")->name("guest.instructorMaterial");
 Route::post("/guest/create/guest-user", "Ajax\HomeController@createGuestUser")->name("guest.createGuestUser");
 Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("guest.tempLink");
+
+
+
+//! discussion
+Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
+Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");
+
+Route::post("/discussion/post/store-thread", "Index\DiscussionController@storeThread")->name("discussion.thread");
+Route::post("/discussion/post/store-reply", "Index\DiscussionController@storeReply")->name("discussion.reply");
+Route::get("/discussion/change/filter-sidebar", "Index\DiscussionController@filterSidebar")->name("discussion.filterSidebar");
+Route::get("/discussion/change/filter-course", "Index\DiscussionController@filterCourse")->name("discussion.filterCourse");
+Route::patch("/discussion/like-comment/{id}", "Index\DiscussionController@likeComment")->name("discussion.likeComment");
+Route::delete("/discussion/delete/{id}", "Index\DiscussionController@delete")->name("discussion.delete");
+Route::patch("/discussion/best/{id}", "Index\DiscussionController@best")->name("discussion.best");
+
+//Route::post("/pagination", "Index\DiscussionController@pagination")->name("discussion.pagination");
+
+
+
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
