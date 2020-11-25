@@ -120,6 +120,12 @@
                                 <i class="mdi mdi-package-variant"></i>
                                 <span>File Manager</span>
                             </a>
+						</li>
+						<li class="side-nav-item">
+                            <a href="/dashboard/email" class="side-nav-link" draggable="false">
+                                <i class="mdi mdi-email-outline"></i>
+                                <span>E-Mail</span>
+                            </a>
                         </li>
 						<li class="side-nav-item">
                             <a href="javascript: void(0);" class="side-nav-link" draggable="false">
@@ -135,9 +141,9 @@
 									</a>
                                 </li>
                                 <li>
-									<a href="/dashboard/home-content">
-										<i class="font-16 mdi mdi-home-edit"></i>
-										Home Page
+									<a href="/dashboard/home-carousels">
+										<i class="font-16 mdi mdi-view-carousel-outline"></i>
+										Carousels
 									</a>
 								</li>
 								<li class="side-nav-item">
@@ -148,13 +154,13 @@
                                     </a>
                                     <ul class="side-nav-third-level" aria-expanded="false">
                                         <li>
-                                            <a href="/dashboard/options/terms">Terms of Use</a>
+                                            <a href="/dashboard/options/terms-of-use">Terms of Use</a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/options/privacyPolicy">Privacy Policy</a>
+                                            <a href="/dashboard/options/privacy-policy">Privacy Policy</a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/options/cookiePolicy">Cookie Policy</a>
+                                            <a href="/dashboard/options/cookie-policy">Cookie Policy</a>
                                         </li>
                                     </ul>
                                 </li>

@@ -2,69 +2,7 @@
 //! 				Imports				#
 //!######################################
 import utilities from '../main';
-import ArticleEditor from "../../../plugins/article-editor/article-editor"
-require("../../../plugins/article-editor/plugins/reorder/reorder");
 import dragula from "../../../theme/js/vendor/dragula.min.js";
-
-// Create a plugin
-ArticleEditor.add('plugin', 'mediaLibrary', {
-    start: function() {
-        this.app.addbar.add('mediaButton', {
-            title: 'Media Library',
-            icon: "<i class='mdi mdi-book-open-page-variant'></i>'",
-            command: 'mediaLibrary.modal'
-        });
-    },
-    modal: function(params, button) {
-		let id = this.app.$element.nodes[0].id;
-		this.app.popup.close();
-		$('#gallery-content')[0].dataset.editorId = `#${id}`
-		$('#gallery-content')[0].dataset.type = "article"
-        $('#gallery-modal').modal('show')
-    }
-});
-
-utilities.articleConfig.plugins = ['mediaLibrary', 'reorder'];
-
-utilities.articleConfig.custom = {
-	css: [
-		"/css/index/app.css",
-		"/css/customArticleStyle.css",
-	]
-}
-
-utilities.articleConfig.snippets = {
-	"mysnippet": {
-		"name": "Robot",
-		"html": `
-			<div class="row">
-				<div class="col-lg-5 col-md-7 d-flex align-items-center">
-					<div>
-						<h2 class="h2-custom text-center text-sm-left">Βάλτε τώρα τη Ρομποτική στο σχολείο σας</h2>
-						<div class="d-flex flex-column mt-0 mb-3">
-							<p class="font-16 mb-1 text-center text-sm-left">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και προγραμματισμού για παιδιά.</p>
-							<p class="font-16 mb-0 text-center text-sm-left">Μπες στο δίκτυο συνεργατών. Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</p>
-						</div>
-						<button class="btn-custom btn btn-info">
-							ΑΙΤΗΜΑ ΓΙΑ DEMO
-						</button>
-					</div>
-				</div>
-				<div class="col-lg-7 col-md-5 d-none d-md-block">
-					<figure>
-						<img style="background: url('/images/group-33.png'); background-position: right; " class="img-custom-index img-fluid" src="/images/vector-smart-object.png" alt="vector-smart-object">
-					</figure>
-				</div>
-			</div>
-		`
-	},
-}
-
-
-
-
-ArticleEditor("#first-section-textarea", utilities.articleConfig);
-ArticleEditor("#second-section-textarea", utilities.articleConfig);
 
 //!##########################################
 //!					DataTables				#
@@ -76,7 +14,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: "/home-content/simple-materials-datatable",
+        url: "/edit-carousels/simple-materials-datatable",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post"
     },
@@ -99,7 +37,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: "/home-content/simple-courses-datatable",
+        url: "/edit-carousels/simple-courses-datatable",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post"
     },
@@ -123,7 +61,7 @@ const bundlesDatatable = $("#bundles-datatable").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: "/home-content/simple-bundles-datatable",
+        url: "/edit-carousels/simple-bundles-datatable",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post"
     },
@@ -172,7 +110,7 @@ $(".js-carousel-switch").on("change", function() {
 	const bannersData = bannerJsonBuilder();
 
 
-	axios.patch( "/home-content/banners-update", {
+	axios.patch( "/edit-carousels/banners-update", {
 		updatedData: bannersData,
 		selectedBanners: false
 	})
@@ -319,7 +257,7 @@ function clearCallouts( container ) {
 
 function updateBannerData( importance, updatedData, selectedBanners ) {
 
-	axios.patch( "/home-content/banners-update", {
+	axios.patch( "/edit-carousels/banners-update", {
 		updatedData, selectedBanners
 	})
 	.then( res => {
@@ -542,7 +480,7 @@ function overflowCheck(element) {
 }
 
 function updateBanners( updatedData ) {
-	axios.patch( "/home-content/banners-update", {
+	axios.patch( "/edit-carousels/banners-update", {
 		updatedData,
 		selectedBanners: false
 	})
@@ -551,12 +489,6 @@ function updateBanners( updatedData ) {
 		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 	})
 }
-
-
-
-
-
-
 
 const primaryContainerRow = document.getElementById("primary-banners-row");
 const secondaryContainerRow = document.getElementById("secondary-banners-row");

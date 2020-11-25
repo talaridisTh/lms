@@ -49,7 +49,11 @@ class OptionsDataTable extends DataTable
 					return "<a href='/dashboard/option/$data->id/show-json' class='js-quick-edit h5 custom-link-primary cursor-pointer'>$data->name</a>";
 				}
 			})
-			->rawColumns(['name']);
+			->addColumn("action", function($data) {
+				return "<i class='js-remove-option h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer'
+				data-option-id='$data->id'></i>";
+			})
+			->rawColumns(['name', 'action']);
     }
 
     /**

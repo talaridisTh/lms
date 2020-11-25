@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\Email;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,13 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/temp', function () {
+    return new Email("Mpla", "Mplou");
+});
+
+
+
 Auth::routes();
 //!########################################################
 //! 404
@@ -69,7 +77,13 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
     Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
-    //! media Routes
+	
+	//! Newsletter Routes
+	Route::get('/dashboard/email', 'MailController@composeEmail');
+	Route::post('/dashboard/email', 'MailController@sendNewsletter');
+	Route::get('email/users', 'MailController@searchUsers');
+
+	//! media Routes
     Route::get("/media", "MediaController@index")->name("media.index");
     //! Topic Routes
     Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
@@ -77,22 +91,25 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     //! Dashboard Search
     Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
     //! Dashboard Home Content
-    Route::get('/dashboard/home-content', 'UtilityController@index');
-	Route::post('/dashboard/home-content/update', 'UtilityController@update');
+    Route::get('/dashboard/home-carousels', 'OptionController@showCarousels');
 
     Route::get('/dashboard/general-settings', 'OptionController@index');
 	Route::post('/dashboard/general-settings/update', 'OptionController@update');
 
-	Route::get('/dashboard/options/{name}', 'OptionController@editPolicies')
-		->where("name", "terms|privacyPolicy|cookiePolicy");
+	Route::get('/dashboard/options/{slug}', 'OptionController@editPolicies')
+		->where("slug", "terms-of-use|privacy-policy|cookie-policy");
 	Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
 
 	//! Dev Options Routes
 	Route::get("/dashboard/dev-tools/template-config", "OptionController@templateConfig");
-	Route::post("/dashboard/dev-tools/{option:id}/update", "Ajax\OptionController@optionJsonUpdate");
 	Route::get("/dashboard/options", "OptionController@devIndex");
+	Route::get("/dashboard/option/create-json", "OptionController@createJson");
+	Route::post("/dashboard/option/store-json", "OptionController@storeJson");
+	Route::post("/dashboard/option/store", "OptionController@store");
 	Route::get("/dashboard/option/{option:id}/show-json", "OptionController@showJson");
-	Route::post("option/{option:id}/update", "Ajax\OptionController@update");
+	Route::patch("/dashboard/option/{option:id}/update-json", "OptionController@jsonUpdate");
+	Route::patch("option/{option:id}/update", "Ajax\OptionController@update");
+	Route::delete("option/{option:id}", "Ajax\OptionController@destroy");
 
 //!======================================================
 //! 			End Dashboard Routes					|
@@ -210,11 +227,11 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('media/add-files', 'Ajax\MediaController@addFiles');
     Route::post('media/remove-files', 'Ajax\MediaController@removeFiles');
 //! Ajax  Home Page Setting Datatables
-    Route::post('home-content/simple-materials-datatable', 'Ajax\UtilityController@simpleMaterialsDatatable');
-    Route::post('home-content/simple-courses-datatable', 'Ajax\UtilityController@simpleCoursesDatatable');
-    Route::post('home-content/simple-bundles-datatable', 'Ajax\UtilityController@simpleBundlesDatatable');
+    Route::post('edit-carousels/simple-materials-datatable', 'Ajax\OptionController@simpleMaterialsDatatable');
+    Route::post('edit-carousels/simple-courses-datatable', 'Ajax\OptionController@simpleCoursesDatatable');
+    Route::post('edit-carousels/simple-bundles-datatable', 'Ajax\OptionController@simpleBundlesDatatable');
 //! Dashboard Home Banner Update
-	Route::patch('home-content/banners-update', 'Ajax\UtilityController@updateBanners');
+	Route::patch('edit-carousels/banners-update', 'Ajax\OptionController@updateBanners');
 
 //! Options Datatable
 	Route::post('options/main-datatable', 'Ajax\OptionController@mainDatatable');

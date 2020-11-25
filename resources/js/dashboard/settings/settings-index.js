@@ -1,7 +1,7 @@
 import utilities from "../main"
 
 const optionsDataTable = $("#options-datatable").DataTable({
-	// order: [6, "desc"],
+	order: [0, "desc"],
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -26,7 +26,7 @@ const optionsDataTable = $("#options-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-		// { data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false },
+		{ data: 'action', className: "align-middle text-center", searchable: false, orderable: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -37,12 +37,13 @@ const optionsDataTable = $("#options-datatable").DataTable({
 			minimumResultsForSearch: -1,
 		});
 
-		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 	},
 	drawCallback:function(){
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 
 		quickEditBtnInit();
+		deleteOptionInit();
 	}
 });
 
@@ -66,6 +67,30 @@ function quickEditBtnInit() {
 	});
 }
 
+function deleteOptionInit() {
+
+	$(".js-remove-option").on("click", deleteBtnHandler)
+
+}
+
+async function deleteBtnHandler() {
+
+	try {
+		const {isConfirmed} = await swalDelete();
+
+		if ( !isConfirmed ) return;
+
+		await axios.delete(`/option/${this.dataset.optionId}`);
+
+		optionsDataTable.ajax.reload(null, false);
+		utilities.toastAlert("info", "Διαγράφηκε...");
+	}
+	catch (err) {
+		console.log(err);
+		utilities.toastAlert("error", "Ooops...");
+	}
+}
+
 function classToggler(button, parent) {
 	const td = button.findParent(parent);
 	const title = td.getElementsByClassName("js-title")[0];
@@ -77,7 +102,7 @@ function classToggler(button, parent) {
 
 function saveOption(id, name, value) {
 
-	axios.post(`/option/${id}/update`, {name, value})
+	axios.patch(`/option/${id}/update`, {name, value})
 	.then( res => {
 
 		optionsDataTable.ajax.reload(null, false);
@@ -87,4 +112,18 @@ function saveOption(id, name, value) {
 		console.log(err);
 		utilities.toastAlert("error", "Ooops!");
 	})
+}
+
+function swalDelete() {
+
+	return Swal.fire({
+		title: "Διαγραφή;",
+		text: "Η ενέργεια θα είναι μη αναστρέψιμη...",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#ff5b5b',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Ναι, Διαγραφή!',
+		cancelButtonText: 'Άκυρο!',
+	});
 }
