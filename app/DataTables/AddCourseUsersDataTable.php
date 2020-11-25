@@ -23,27 +23,16 @@ AddCourseUsersDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
+		$query = User::role(["instructor", "student"])->where("status", 1)
+			->whereNotIn("users.id", function($subquery) use ($request) {
 
-		$query = DB::table('users')
-			->join('model_has_roles', 'users.id', '=', 'model_has_roles.model_id')
-			->where("users.status", 1)
-			->whereIn('model_has_roles.role_id', [ 2, 4 ])
-			->whereNotIn('users.id', function($subquery) use ($request) {
+				$subquery->select('user_id')->from('course_user')
+					->where('course_id', $request->courseId)->get();
 
-				$subquery->select('user_id')
-					->from('course_user')
-					->where('course_id', $request->courseId)
-					->get();
-
-			})
-			->select(
-				'users.id as userId', 'first_name', 'last_name', 'email_verified_at',
-				'email', 'phone', 'slug', 'model_has_roles.role_id'
+			})->select(
+				'id', 'first_name', 'last_name', 'email_verified_at',
+				'email', 'phone', 'slug'
 			)->get();
-
-
-
-
 
         return datatables()::of($query)
             ->addColumn('action', function($data) {
@@ -52,7 +41,7 @@ AddCourseUsersDataTable extends DataTable
 				$slug = preg_replace($pattern, "", $data->email);
 
 				return "<div class='icheck-primary d-inline'>
-							<input class='js-new-user-checkbox' data-user-id='$data->userId' type='checkbox' id='$slug' autocomplete='off'>
+							<input class='js-new-user-checkbox' data-user-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
 							<label for='$slug'></label>
 						</div>";
 
@@ -75,7 +64,7 @@ AddCourseUsersDataTable extends DataTable
 			})
 			->addColumn('role', function($data) {
 
-				return $data->role_id == 2 ? "Εισηγητής" : "Μαθητής";
+				return $data->getRoleNames()[0] === "instructor" ? "Εισηγητής" : "Μαθητής";
 
 			})
 			->rawColumns(['action', 'last_name', 'addBtn'])
