@@ -37,9 +37,9 @@ const optionsDataTable = $("#options-datatable").DataTable({
 			minimumResultsForSearch: -1,
 		});
 
-		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 	},
 	drawCallback:function(){
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 
 		quickEditBtnInit();
