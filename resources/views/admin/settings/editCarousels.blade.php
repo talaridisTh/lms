@@ -2,7 +2,7 @@
 
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
-	
+
 @endsection
 
 @section('content')
@@ -103,7 +103,7 @@
 									</table>
 								</div>
 							</div>
-							
+
 						</div><!-- ./left col -->
 
 						<div class="col-md-6">
@@ -194,11 +194,11 @@
 							data-importance="{{ $section }}">
 							@if ( !empty($values->models) )
 								@foreach ($values->models as $model)
-	
+
 									@php
 										$modelType = substr($model->getTable(), 0, -1);
 										$previewURL = "#";
-	
+
 										if ( $modelType == "course" ) {
 											$previewURL = "/courses/course/$model->slug";
 										}
@@ -206,7 +206,7 @@
 											$previewURL = "/material/$model->slug";
 										}
 									@endphp
-	
+
 									<div class="col-md-6 col-lg-4 col-xl-3">
 										<!-- Simple card -->
 										<div class="js-banner card d-block" data-model-id="{{ $model->id }}"
@@ -249,5 +249,5 @@
 	{{-- <script src="/assets/js/dragula.js"></script> --}}
 
 	<script src="{{ mix("js/dashboard/settings/home-page.js") }}"></script>
-	
+
 @endsection

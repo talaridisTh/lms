@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -165,7 +165,7 @@ eval("/* WEBPACK VAR INJECTION */(function(global, setImmediate) {var __WEBPACK_
 
 /***/ }),
 
-/***/ 17:
+/***/ 18:
 /*!************************************************************!*\
   !*** multi ./resources/js/dashboard/settings/home-page.js ***!
   \************************************************************/

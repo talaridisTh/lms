@@ -34,39 +34,37 @@ class DatabaseSeeder extends Seeder {
 
 		Utility::factory()->create();
 
-//svini
-//        User::factory()->times(100)->create()
-//            ->each(function ($user) {
-//                $user->roles()->attach(rand(2, 4));
-//            });
-//
-//        Material::factory()->times(80)->create()
-//            ->each(function ($material) {
-//
-//                $material->users()->attach(Role::find(2)->users()->select("id")->get()->random()->id);
-//                if ($material->type == "Section")
-//                {
-//                    for ($i = 0; $i < 5; $i ++)
-//                    {
-//                        $material->chapters()->attach(rand(1, 80), ["priority" => $i + 1]);
-//                    }
-//                }
-//            });
-//
-//        Course::factory()->times(30)->create()
-//            ->each(function ($course) {
-//                for ($i = 0; $i < 20; $i ++)
-//                {
-//                    $course->users()->attach(User::whereNotIn('id', [1,3,5])->get()->random()->id);
-//                    $course->materials()->attach(rand(1, 80), ["priority" => $i + 1]);
-//                }
-//            });
-//
-//        Post::factory()->times(15)->create();
+        User::factory()->times(100)->create()
+            ->each(function ($user) {
+                $user->roles()->attach(rand(2, 4));
+            });
+
+        Material::factory()->times(80)->create()
+            ->each(function ($material) {
+
+                $material->users()->attach(Role::find(2)->users()->select("id")->get()->random()->id);
+                if ($material->type == "Section")
+                {
+                    for ($i = 0; $i < 5; $i ++)
+                    {
+                        $material->chapters()->attach(rand(1, 80), ["priority" => $i + 1]);
+                    }
+                }
+            });
+
+        Course::factory()->times(30)->create()
+            ->each(function ($course) {
+                for ($i = 0; $i < 20; $i ++)
+                {
+                    $course->users()->attach(User::whereNotIn('id', [1,3,5])->get()->random()->id);
+                    $course->materials()->attach(rand(1, 80), ["priority" => $i + 1]);
+                }
+            });
+
+        Post::factory()->times(15)->create();
 
 
 
-        //svini
 
 		User::create([
             'first_name' => "admin",
