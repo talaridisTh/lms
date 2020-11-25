@@ -50,6 +50,11 @@ class User extends Authenticatable {
         // your other new column
     ];
 
+	public function mails() {
+
+		return $this->hasMany(Mail::class);
+	}
+
 	public function bundles() {
 
 		return $this->belongsToMany(Bundle::class);

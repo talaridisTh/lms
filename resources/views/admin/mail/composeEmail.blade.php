@@ -42,10 +42,11 @@
 						<ol class="breadcrumb m-0 pb-0">
 							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
 							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
-							<li class="breadcrumb-item active">E-Mail</li>
+							<li class="breadcrumb-item"><a href="/dashboard/email" class="custom-link-primary">E-Mail</a></li>
+							<li class="breadcrumb-item active">Compose</li>
 						</ol>
 					</div>
-					<h4 class="page-title">E-Mail</h4>
+					<h4 class="page-title">Compose E-mail</h4>
 				</div>
 			</div>
 		</div>

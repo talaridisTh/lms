@@ -1,0 +1,65 @@
+@extends('layouts.dashboard')
+
+@section('css')
+	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
+@endsection
+
+@section('content')
+
+	<!-- start page title -->
+	<div class="container content-width mt-2">
+		<div class="row">
+			<div class="col-12">
+				<div class="page-title-box">
+					<div class="page-title-right mb-0">
+						<ol class="breadcrumb m-0 pb-0">
+							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
+							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
+							<li class="breadcrumb-item active">E-Mail</li>
+						</ol>
+					</div>
+					<h4 class="page-title">E-Mail</h4>
+				</div>
+			</div>
+		</div>
+	</div><!-- end page title -->
+	
+	
+	<div class="container table-cnt content-width">
+		<div class="mt-1 mb-3 text-right">
+			<a href="/dashboard/email/compose" class="btn btn-primary ml-1">
+				Δημιουργία
+			</a>
+		</div>
+
+		<table id="mails-datatable" class="table w-100 nowrap js-remove-table-classes">
+			{{-- <thead style="display: none"> --}}
+			<thead class="d-none">
+				<tr>
+					<th class="text-center" style="width: 35px;">
+						<div class='icheck-primary d-inline'>
+							<input type='checkbox' id='select-all-mails' autocomplete='off'>
+							<label for='select-all-mails'></label>
+						</div>
+					</th>
+					{{-- <th class="text-center">Θέμα</th> --}}
+					<th class="text-center">Περιεχόμενο</th>
+					{{-- <th class="text-center">Κατάσταση</th> --}}
+					<th class="text-center" style="width: 40px;">Ημ. Αποστολής</th>
+					<th class="text-center">Κατάσταση</th>
+					{{-- <th class="text-center">Ημ.Δημιουργίας</th> --}}
+				</tr>
+			</thead>
+			<tbody class="tables-hover-effect"></tbody>
+		</table>
+	</div>
+
+@endsection
+
+@section('scripts')
+<script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
+<script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
+
+<script src="{{ mix("js/dashboard/mail/email-main.js") }}"></script>
+	
+@endsection

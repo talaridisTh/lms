@@ -2,15 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\MailsDataTable;
+use App\Mail as AppMail;
 use App\Mail\Email;
 use App\Role;
 use App\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
+	public function index() {
+
+		return view("admin.mail.mailMain");
+	}
+
+	public function mailsTable(MailsDataTable $dataTable) {
+
+		return $dataTable->render('mails.table');
+
+	}
+
 	public function searchUsers(Request $request) {
 
 		$users = User::where(function($query) use ($request) {
@@ -43,21 +57,37 @@ class MailController extends Controller
 
 	public function sendNewsletter(Request $request) {
 
+		$recipients = [
+			"ids" => [],
+			"emails" => []
+		];
+
 		if (isset($request->recipientsRoles)) {
-			$users = User::role(["partner", "instructor"])->select("email")->get();
+			$users = User::role($request->recipientsRoles)->select("id", "email")->get();
 
 			foreach($users as $user) {
-				Mail::to($user->email)
-					->send(new Email($request->subject, $request->content));
+				array_push($recipients["ids"], $user->id);
+				// Mail::to($user->email)
+				// 	->send(new Email($request->subject, $request->content));
 			}
 		}
 		else {
-			$users = User::find($request->recipients);
+			$users = User::find($request->recipients, ["id", "email"]);
 
 			foreach($users as $user) {
-				Mail::to($user->email)
-					->send(new Email($request->subject, $request->content));
+				array_push($recipients["ids"], $user->id);
+				// Mail::to($user->email)
+				// 	->send(new Email($request->subject, $request->content));
 			}
 		}
+
+		$mail = new AppMail;
+		$mail->user_id = Auth::user()->id;
+		$mail->subject = $request->subject;
+		$mail->content = $request->content;
+		$mail->recipients = json_encode($recipients);
+		$mail->status = 1;
+		$mail->sent_at = now();
+		$mail->save();
 	}
 }
