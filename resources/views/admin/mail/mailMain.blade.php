@@ -7,8 +7,12 @@
 			border-bottom: 1px solid #464f5b;
 			overflow: hidden;
 		}
-		#mails-datatable td:nth-child(odd) {
-			width: 50px;
+		
+		#mails-datatable td:first-child {
+			width: 30px;
+		}
+		#mails-datatable td:last-child {
+			width: 85px;
 		}
 		#mails-datatable .tool-cnt {
 			width: 80px;
