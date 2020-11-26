@@ -33,7 +33,7 @@
 		ol ol,
 		ul ol,
 		ol ul {
-			margin: 0 $base-line-ems 0 0;
+			margin-left: $base-line-ems;
 		}
 		figcaption {
     		text-align: right;
@@ -44,7 +44,7 @@
     	&,
     	& ul,
     	& ol {
-        	margin: 0 $base-line-ems 0 0;
+        	margin-right: $base-line-ems;
     	}
 		li {
 			text-align: right;

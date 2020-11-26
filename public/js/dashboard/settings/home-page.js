@@ -172,7 +172,7 @@ eval("/* WEBPACK VAR INJECTION */(function(global, setImmediate) {var __WEBPACK_
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\DarkProjects\Idrogeios\Demo LMS\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\Demo LMS\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
 
 
 /***/ })
