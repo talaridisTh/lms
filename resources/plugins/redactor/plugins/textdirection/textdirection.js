@@ -33,6 +33,7 @@
     		var block = this.selection.getBlock();
     		if (block && block.tagName === 'LI') {
         		var list = $R.dom(block).parents('ul, ol', '.redactor-in').last();
+        		console.log(list)
         		this.block.add({ attr: { dir: type }}, false, list);
     		}
             else {

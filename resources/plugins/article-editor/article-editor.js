@@ -1,14 +1,15 @@
 /*
     Article Editor JS
-    Version 2.1.3
-    Updated: October 6, 2020
+    Version 2.1.4
+    Updated: November 2, 2020
 
     http://imperavi.com/article/
 
     Copyright (c) 2009-2020, Imperavi Ltd.
     License: http://imperavi.com/article/license/
 */
-if (typeof CodeMirror === 'undefined') { var CodeMirror = null; }
+if (typeof CodeMirror === 'undefined') { var CodeMirror = undefined; }
+if (typeof jQuery === 'undefined') { var jQuery = undefined; }
 (function() {
 var Ajax = {};
 
@@ -1080,7 +1081,7 @@ $ARX.ajax = Ajax;
 $ARX.instances = [];
 $ARX.namespace = 'article-editor';
 $ARX.prefix = 'arx';
-$ARX.version = '2.1.3';
+$ARX.version = '2.1.4';
 $ARX.settings = {};
 $ARX.lang = {};
 $ARX._mixins = {};
@@ -2829,6 +2830,26 @@ ArticleEditor.add('mixin', 'block', {
         this.app.broadcast('block.add', { instance: instance });
     },
 
+    // change
+    change: function(newInstance, broadcast) {
+        var $newBlock = newInstance.getBlock();
+
+        this.$block.after($newBlock);
+        this.$block.remove();
+
+        // rebuild
+        this.app.editor.build();
+        this.app.toolbar.observe();
+
+        // set
+        this.app.block.set(newInstance);
+
+        // broadcast
+        if (broadcast !== false) {
+            this.app.broadcast('block.change', { instance: newInstance });
+        }
+    },
+
     // move
     moveUp: function() {
         var target = this.getPrev();
@@ -3338,6 +3359,9 @@ ArticleEditor.add('module', 'editor', {
             html = this._getContent();
             html = (tidy) ? this.app.tidy.parse(html) : html;
         }
+
+        // decode href
+        html = this.app.content.decodeHref(html);
 
         return html;
     },
@@ -4104,6 +4128,17 @@ ArticleEditor.add('module', 'content', {
     decodeEntities: function(str) {
         return String(str).replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&amp;/g, '&');
     },
+    decodeHref: function(html) {
+        var pattern = "(href=\".*?)(&amp;)(.*?\">)";
+        var matches = html.match(new RegExp(pattern, 'g'));
+        if (matches !== null) {
+            for (var i = 0; i < matches.length; i++) {
+                html = html.replace(matches[i], matches[i].replace(/&amp;/g, '&'));
+            }
+        }
+
+        return html;
+    },
 
     // sanitize
     sanitize: function(html) {
@@ -4402,7 +4437,7 @@ ArticleEditor.add('module', 'content', {
         html = (clean) ? this.app.autolink.parse(html) : html;
 
         // insert
-        this.app.insertion.insertContent({ html: html, clean: clean, parse: parse, position: position });
+        return this.app.insertion.insertContent({ html: html, clean: clean, parse: parse, position: position });
     },
 
     // paste
@@ -4564,6 +4599,7 @@ ArticleEditor.add('module', 'content', {
         var name = 'data-' + this.prefix + '-style-cache';
         var style = $el.attr('style');
         if (style) {
+            style = style.replace(/"/g, '');
             $el.attr(name, style);
         }
         else if (!style || style === '') {
@@ -6078,6 +6114,20 @@ ArticleEditor.add('module', 'block', {
 
         this.app.popup.open({ button: button });
     },
+    css: function(name, value) {
+        if (!this.is()) return;
+
+        var $el = this.get().getBlock();
+        $el.css(name, value);
+
+        // save
+        var name = 'data-' + this.prefix + '-style-cache';
+        var style = $el.attr('style');
+        if (style) {
+            style = style.replace(/"/g, '');
+            $el.attr(name, style);
+        }
+    },
 
     // data
     getData: function() {
@@ -6155,6 +6205,7 @@ ArticleEditor.add('module', 'event', {
     init: function() {
         // local
         this.dragoverEvent = false;
+        this.imageDrag = false;
         this.pressedCmd = false;
         this.isPopupMouseUp = false;
 
@@ -6333,13 +6384,25 @@ ArticleEditor.add('module', 'event', {
             html = (html.trim() === '') ? dt.getData('Text') : html;
 
             // drop
-            this.app.content.drop(e, html);
+            var dropped = this.app.content.drop(e, html);
+
+            if (this.imageDrag && dropped.instances.length !== 0) {
+                var instance = dropped.instances[0];
+                instance.change(this.imageDrag, false);
+            }
         }
 
         this._removeDragPlaceholder();
+
+        this.imageDrag = false;
         this.app.observer.trigger = true;
     },
     ondragstart: function(e) {
+        var $block = this._getBlock(e.target);
+        if ($block.length !== 0 && this.app.element.getType($block) === 'image') {
+            this.imageDrag = $block.dataget('instance');
+        }
+
         // broadcast
         this.app.broadcast('editor.dragstart', { e: e });
     },
@@ -8308,6 +8371,11 @@ ArticleEditor.add('module', 'toolbar', {
         }
     },
     _observeSticky: function() {
+        if (this.app.source.is()) {
+            this.app.container.get('bars').css('top', 0);
+            return;
+        }
+
         var $scrollTarget = this.app.scroll.getTarget();
         var paddingTop = (this.app.scroll.isTarget()) ? parseInt($scrollTarget.css('padding-top')) : 0;
 
@@ -8955,6 +9023,7 @@ ArticleEditor.add('module', 'cleaner', {
         // gdocs & word
         var isPages = this._isPages(html);
         var isMsWord = this._isHtmlMsWord(html);
+        var isEditor = this._isEditor(html);
 
         // remove doctype tag
         html = this.app.content.removeDoctype(html);
@@ -8984,7 +9053,9 @@ ArticleEditor.add('module', 'cleaner', {
         html = (isMsWord) ? this._cleanMsWord(html) : html;
 
         // remove style
-        html = this.app.content.removeStyleAttr(html, filterStyle);
+        if (!isEditor) {
+            html = this.app.content.removeStyleAttr(html, filterStyle);
+        }
 
         // restore data style
         html = this.app.content.cacheStyle(html);
@@ -9029,6 +9100,9 @@ ArticleEditor.add('module', 'cleaner', {
         html = html.replace('?>', '?&gt;');
 
         return html;
+    },
+    _isEditor: function(html) {
+        return html.match(new RegExp('meta\\stype="' + this.prefix + '-editor"', 'i'));
     },
     _isHtmlMsWord: function(html) {
         return html.match(/class="?Mso|style="[^"]*\bmso-|style='[^'']*\bmso-|w:WordDocument/i);
@@ -9892,6 +9966,8 @@ ArticleEditor.add('module', 'clipboard', {
 
         // unparse
         html = this.app.parser.unparse(html);
+        html = '<meta type="' + this.prefix + '-editor"/>' + html;
+
         text = text || this.app.content.getTextFromHtml(html, { nl: true });
 
         // set
@@ -10227,7 +10303,7 @@ ArticleEditor.add('module', 'format', {
         return $items;
     },
     _formatTextToList: function(format, dlist, caret) {
-        var newInstance = this.app.create('block.' + format.type);
+        var newInstance = this.app.create('block.' + format.type, '<' + format.tag + '>');
         var $newBlock = newInstance.getBlock();
 
         if (dlist && this.type === 'list') {
@@ -11569,6 +11645,9 @@ ArticleEditor.add('module', 'popup', {
     _buildDepth: function() {
         if (this.opts.bsmodal) {
             this.$popup.css('z-index', 1052);
+
+            // fix bootstrap modal focus
+            if (window.jQuery) jQuery(document).off('focusin.modal');
         }
     },
     _buildButton: function(params) {
@@ -12580,7 +12659,7 @@ ArticleEditor.add('module', 'link', {
         return data;
     },
     _encodeUrl: function(data) {
-        data.url = data.url.replace('&amp;', '&');
+        data.url = data.url.replace(/&amp;/g, '&');
 
         return data;
     },
@@ -12932,13 +13011,21 @@ ArticleEditor.add('module', 'grid', {
 
         this.app.popup.close();
 
-        var columns = params.columns.split('|');
+        var pattern = (params.columns === '');
+        var columns = (pattern) ? params.pattern.split('|') : params.columns.split('|');
         var $grid =  this.dom('<div>').addClass(this.opts.grid.classname);
+        if (this.opts.grid.classes !== '') {
+            $grid.addClass(this.opts.grid.classes);
+        }
+
         for (var i = 0; i < columns.length; i++) {
             var column = this.app.create('block.column');
             var $column = column.getBlock();
 
-            $column.addClass(columns[i]);
+            if (!pattern) {
+                $column.addClass(columns[i]);
+            }
+
             $grid.append($column);
         }
 

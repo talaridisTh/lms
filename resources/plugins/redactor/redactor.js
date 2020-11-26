@@ -1,14 +1,15 @@
 /*
     Redactor
-    Version 3.4.4
-    Updated: October 6, 2020
+    Version 3.4.6
+    Updated: November 17, 2020
 
     http://imperavi.com/redactor/
 
     Copyright (c) 2009-2020, Imperavi Ltd.
     License: http://imperavi.com/redactor/license/
 */
-if (typeof CodeMirror === 'undefined') { var CodeMirror = null; }
+if (typeof CodeMirror === 'undefined') { var CodeMirror = undefined; }
+if (typeof jQuery === 'undefined') { var jQuery = undefined; }
 (function() {
 var Ajax = {};
 
@@ -1335,7 +1336,7 @@ var $R = function(selector, options)
 
 // Globals
 $R.app = [];
-$R.version = '3.4.4';
+$R.version = '3.4.6';
 $R.options = {};
 $R.modules = {};
 $R.services = {};
@@ -1650,6 +1651,7 @@ $R.opts = {
     imageFloatMargin: '10px',
     imageFigure: true,
     imageObserve: true,
+    imageSrcData: false,
 
     // file
     fileUpload: false,
@@ -3514,10 +3516,6 @@ var containsNode = function containsNode(node) {
     return document.getSelection().containsNode(node, true);
 };
 
-if (!('containsNode' in Selection.prototype)) {
-    containsNode = containsNodePolyfill;
-}
-
 var containsNodePolyfill = function polyfill(node) {
     var selection = document.getSelection();
     var start = selection.anchorNode.parentNode;
@@ -3540,6 +3538,9 @@ var containsNodePolyfill = function polyfill(node) {
     return false;
 };
 
+if (!('containsNode' in Selection.prototype)) {
+    containsNode = containsNodePolyfill;
+}
 
 $R.add('service', 'selection', {
     init: function(app)
@@ -4885,7 +4886,22 @@ $R.add('service', 'toolbar', {
             if (position === 'first') this.$toolbar.prepend($button);
             else if (position === 'after') $el.after($button);
             else if (position === 'before') $el.before($button);
-            else this.$toolbar.append($button);
+            else {
+                var index = this.opts.buttons.indexOf(name);
+                if (start !== true && index !== -1) {
+                    if (index === 0) {
+                        this.$toolbar.prepend($button);
+                    }
+                    else {
+                        var $btns = this._findButtons();
+                        var $btn = $btns.eq(index-1);
+                        $btn.after($button);
+                    }
+                }
+                else {
+                    this.$toolbar.append($button);
+                }
+            }
         }
 
         return $button;
@@ -5386,12 +5402,12 @@ $R.add('class', 'toolbar.dropdown', {
         var position = 'absolute';
         var topOffset = 2;
 
-        if (isFixed) {
-            pos.top = (isTarget) ? this.$btn.offset().top : this.$btn.position().top;
-            position = 'fixed';
-            topOffset = topOffset + this.opts.toolbarFixedTopOffset;
-        }
 
+        if (isFixed) {
+            //pos.top = (isTarget) ? this.$btn.offset().top : this.$btn.position().top;
+            //position = 'fixed';
+            //topOffset = topOffset + this.opts.toolbarFixedTopOffset;
+        }
 
         var leftOffset = 0;
         var left = (pos.left + leftOffset);
@@ -5647,15 +5663,16 @@ $R.add('service', 'cleaner', {
             if (node.attributes.length > 0) {
                 var attrs = node.attributes;
                 for (var i = attrs.length - 1; i >= 0; i--) {
-                    var remove = ((attrs[i].name.search(/^data-/) === -1 && imageattrs.indexOf(attrs[i].name) === -1)
-                    || (attrs[i].name === 'src' && attrs[i].value.search(/^data|javascript:/i) !== -1));
+                    var removeAttrs = (attrs[i].name.search(/^data-/) === -1 && imageattrs.indexOf(attrs[i].name) === -1);
+                    var removeDataSrc = (attrs[i].name === 'src' && attrs[i].value.search(/^data|javascript:/i) !== -1);
+                    if (this.opts.imageSrcData) removeDataSrc = false;
 
-                    if (remove) {
+                    if (removeAttrs || removeDataSrc) {
                         node.removeAttribute(attrs[i].name);
                     }
                 }
             }
-        });
+        }.bind(this));
 
         // get wrapper html
         html = this.utils.getWrapperHtml($wrapper);
@@ -5754,6 +5771,9 @@ $R.add('service', 'cleaner', {
         // store components
         html = this.storeComponents(html);
 
+        // remove comments
+        html = html.replace(/<!--[\s\S]*?-->/g, '');
+
         // remove tags
         var deniedTags = this.deniedTags.concat(['iframe']);
         html = this.removeTags(html, deniedTags);
@@ -5840,7 +5860,7 @@ $R.add('service', 'cleaner', {
         {
             var attrs = node.attributes;
             for (var i = attrs.length - 1; i >= 0; i--) {
-                if (node.attributes[i].name !== 'class') {
+                if (node.attributes[i].name !== 'class' && node.attributes[i].name !== 'dir') {
                     node.removeAttribute(attrs[i].name);
                 }
             }
@@ -6721,10 +6741,7 @@ $R.add('class', 'cleaner.figure', {
                 return;
             }
 
-            if (this.utils.isEmptyHtml($node.html())) {
-                $node.unwrap();
-            }
-            else if (node.lastChild && node.lastChild.tagName === 'BR') {
+            if (node.lastChild && node.lastChild.tagName === 'BR') {
                 $node.unwrap();
             }
             else {
@@ -6801,7 +6818,7 @@ $R.add('class', 'cleaner.figure', {
                 }
                 else
                 {
-                    $node.unwrap();
+                    this.utils.replaceToTag($node, 'p');
                 }
             }
         }
@@ -6894,6 +6911,10 @@ $R.add('class', 'cleaner.paragraphize', {
         html = html.trim();
         html = this._trimLinks(html);
 
+        // trim new line in inline
+        var inlines = this.opts.inlineTags.join('|');
+        html = html.replace(new RegExp('<(' + inlines + ')(.*?[^>]?)>\n</(' + inlines + ')>', 'gi'), '<$1$2></$3>');
+
         // replace new lines
         html = html.replace(/xparagraphmarkerz(?:\r\n|\r|\n)$/g, '');
         html = html.replace(/xparagraphmarkerz$/g, '');
@@ -6918,6 +6939,7 @@ $R.add('class', 'cleaner.paragraphize', {
         }
 
         html = str.replace(/\n$/, '');
+
 
         // clean
         html = html.replace(new RegExp('<' + tag + '>\\s+#####', 'gi'), '#####');
@@ -8071,6 +8093,12 @@ $R.add('service', 'insertion', {
         var isInsertedText = this.inspector.isText(parsedInput.html);
         var fragment, except;
 
+        // multiple selection
+        //var blocks = this.selection.getBlocks();
+        //if (blocks && blocks.length > 1) {
+        //    parsedInput.html = (clean !== false) ? this.cleaner.paragraphize(parsedInput.html) : parsedInput.html;
+        //}
+
         // empty editor
         if (this.editor.isEmpty())
         {
@@ -8128,7 +8156,7 @@ $R.add('service', 'insertion', {
             fragment = this.utils.createFragment(parsedInput.html);
 
             var range = this.selection.getRange();
-            if (range && this.selection.isCollapsed()) {
+            if (range && !this.selection.isCollapsed()) {
                 range.deleteContents();
             }
 
@@ -8160,8 +8188,12 @@ $R.add('service', 'insertion', {
         // uncollapsed
         else if (!isCollapsed && !isFigure)
         {
-            parsedInput.html = (clean !== false) ? this.cleaner.paragraphize(parsedInput.html) : parsedInput.html;
+            if (this._isPlainHtml(parsedInput.html))
+            {
+                return this.insertNode(parsedInput.nodes, 'end');
+            }
 
+            parsedInput.html = (clean !== false) ? this.cleaner.paragraphize(parsedInput.html) : parsedInput.html;
             fragment = this.utils.createFragment(parsedInput.html);
 
             return this.insertNode(fragment, 'end');
@@ -8494,8 +8526,8 @@ $R.add('service', 'block', {
     },
 
     // funcs
-    add: function(args, tags) {
-        return this._apply('add', args, tags);
+    add: function(args, tags, el) {
+        return this._apply('add', args, tags, true, el);
     },
     set: function(args, tags) {
         return this._apply('set', args, tags);
@@ -10965,7 +10997,7 @@ $R.add('class', 'editor.events', {
         var $container = this.container.getElement();
         var $target = $R.dom(e.target);
         var targets = ['.redactor-in-' + this.uuid,  '.redactor-toolbar', '.redactor-dropdown',
-        '.redactor-context-toolbar', '#redactor-modal', '#redactor-image-resizer'];
+        '.redactor-context-toolbar', '.redactor-modal-box', '#redactor-image-resizer'];
 
         this.app.broadcast('originalblur', e);
         if (this.app.stopBlur) return;
@@ -12312,7 +12344,7 @@ $R.add('module', 'toolbar', {
             var name = this.buttons[i];
             if ($R.buttons[name])
             {
-                this.toolbar.addButton(name, $R.buttons[name], false, false, true);
+                this.toolbar.addButton(name, $R.extend(true, {}, $R.buttons[name]), false, false, true);
             }
         }
     }
@@ -13434,7 +13466,7 @@ $R.add('class', 'link.component', {
     },
     _cleanUrl: function(url)
     {
-        url = url.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        url = url.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 
         return url.trim().replace(/[^\W\w\D\d+&\'@#/%?=~_|!:,.;\(\)]/gi, '');
     },
@@ -13605,7 +13637,7 @@ $R.add('module', 'modal', {
         this.$modal.getBody().find('input[type=text],input[type=url],input[type=email]').on('keydown.redactor.modal', this._handleEnter.bind(this));
 
         // fix bootstrap modal focus
-        if (window.jQuery) jQuery(document).off('focusin.modal');
+        if (window.jQuery) window.jQuery(document).off('focusin.modal');
 
         this._broadcast('opened');
     },
@@ -14739,6 +14771,7 @@ $R.add('class', 'input.delete', {
             }
         }
 
+
         // next
         block = this._getBlock();
         var next = this.utils.findSiblings(block, 'next');
@@ -14748,8 +14781,15 @@ $R.add('class', 'input.delete', {
         var dataNext = this.inspector.parse(next);
         var isNextBlock = (next.tagName === 'P' || next.tagName === 'DIV');
 
-        // figure/code or table
-        if (isEnd && dataNext.isComponentEditable())
+        // table
+        if (isEnd && dataNext.isComponentType('table'))
+        {
+            e.preventDefault();
+            this.caret.setStart(next);
+            return;
+        }
+        // figure/code
+        else if (isEnd && dataNext.isComponentEditable())
         {
             e.preventDefault();
             this.component.remove(next, false);

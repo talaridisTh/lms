@@ -1,6 +1,5 @@
 <?php
 
-use App\Mail\Email;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -16,13 +15,6 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/temp', function () {
-    return new Email("Mpla", "Mplou");
-});
-
-
-
 Auth::routes();
 //!########################################################
 //! 404
@@ -77,11 +69,19 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
     Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
+<<<<<<< HEAD
 
 	//! Newsletter Routes
 	Route::get('/dashboard/email', 'MailController@composeEmail');
+=======
+	
+	//! Mail Routes
+	Route::get('/dashboard/email', 'MailController@index');
+	Route::get('/dashboard/email/compose', 'MailController@composeEmail');
+>>>>>>> dd22a15fd692360685440bd75f738b19774425fa
 	Route::post('/dashboard/email', 'MailController@sendNewsletter');
 	Route::get('email/users', 'MailController@searchUsers');
+	Route::post('email/data-table', 'MailController@mailsTable');
 
 	//! media Routes
     Route::get("/media", "MediaController@index")->name("media.index");

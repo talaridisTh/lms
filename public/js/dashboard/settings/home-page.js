@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 18);
+/******/ 	return __webpack_require__(__webpack_require__.s = 19);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -165,14 +165,14 @@ eval("/* WEBPACK VAR INJECTION */(function(global, setImmediate) {var __WEBPACK_
 
 /***/ }),
 
-/***/ 18:
+/***/ 19:
 /*!************************************************************!*\
   !*** multi ./resources/js/dashboard/settings/home-page.js ***!
   \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\Demo LMS\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
 
 
 /***/ })
