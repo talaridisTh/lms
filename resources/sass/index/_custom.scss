@@ -1009,7 +1009,7 @@ img.scale {
 }
 
 
-.first-thread,.first-thread-replay {
+.first-thread, .first-thread-replay {
     border-radius: 8px;
     background-color: #328af1;
     cursor: pointer;
@@ -1070,6 +1070,7 @@ img.scale {
     color: #676767;
 }
 
+
 .arrow-line {
     border-top: rgba(0, 0, 0, 0.1) solid 2px;
     border-left: rgba(0, 0, 0, 0.1) solid 2px;
@@ -1080,13 +1081,14 @@ img.scale {
     height: 20px;
 }
 
+
 .top-bar-post {
     width: 90%;
     right: 0;
     border-radius: 8px;
     border: solid 1px rgba(0, 0, 0, 0.2);
 
-    &:hover{
+    &:hover {
         border: solid 1px rgba(0, 0, 0, 0.5);
     }
 
@@ -1097,53 +1099,75 @@ img.scale {
     height: 55px
 }
 
+
 .w-35 {
     width: 35%;
 }
 
+
 .w-92 {
     width: 92%;
 }
-.main-post{
+
+
+.main-post {
+    //box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border: solid 1px transparent;
+    box-shadow: 0 1px 8px -4px #414141;
+    margin: 3px;
 }
-.main-post:hover .bg-thread{
+
+
+.single-thread {
+    //box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border: solid 1px transparent;
+    box-shadow: 0 1px 8px -4px #414141;
+    margin: 3px;
+}
+
+
+.main-post:hover .bg-thread {
     background-color: #d3dff3;
     border: solid 1px #6cb2eb;
     color: #328af1;
     transition: 0.5s ease;
 }
 
-.js-reply-post-btn{
+
+.js-reply-post-btn {
     opacity: 0;
 }
 
-.main-post:hover .js-reply-post-btn{
-    display: block!important;
+
+.main-post:hover .js-reply-post-btn {
+    //display: block !important;
     color: black;
     transition: 0.5s ease;
     opacity: 1;
 }
 
-.like-class{
+
+.like-class {
     color: red;
-    border:  solid 1px #ff9090 !important;
+    border: solid 1px #ff9090 !important;
 }
 
-.btn-reply-like{
+
+.btn-reply-like {
     border-radius: 8px;
     padding-left: 0.45rem;
     padding-right: 0.45rem;
     border: solid 1px rgba(0, 0, 0, 0.1);
     cursor: pointer;
 
-    &:hover{
+    &:hover {
         border: solid 1px rgba(0, 0, 0, 0.3);
     }
 
 }
 
-.replay-bottom{
+
+.replay-bottom {
     border-radius: 20px;
     border: 1px dashed transparent;
     background-color: rgba(0, 0, 0, 0.03);
@@ -1151,31 +1175,50 @@ img.scale {
     cursor: pointer;
 
 
-    &:hover{
-        border: 1px dashed   blue;
+    &:hover {
+        border: 1px dashed blue;
         transition: 0.5s ease;
-        background-color: rgba(0, 0, 0, 0.03)!important;
+        background-color: rgba(0, 0, 0, 0.03) !important;
     }
 }
 
 
-.replay-bottom:hover .mdi-hand-pointing-down{
+.replay-bottom:hover .mdi-hand-pointing-down {
     color: blue;
     transition: 0.2s ease;
 
 }
 
 
-.best-answer-cnt{
-    border:solid 1px #328af1;
+.best-answer-cnt {
+    border: solid 1px #328af1;
     border-radius: 8px;
     padding: 2px;
-    background-color: #d3dff3!important;
+    background-color: #d3dff3 !important;
 
 }
 
 
-.cnt-list-content{
+.cnt-list-content {
     width: 88%;
     word-wrap: break-word;
 }
+
+.css-search-snippet{
+    background: white!important;
+    height: 45px;
+    width: 339px;
+    margin-top: -13rem;
+}
+.css-search-snippet:focus,.css-search-snippet:active {
+    background: white!important;
+
+}
+
+
+.global-search {
+    bottom: 4px;
+    font-size: 26px;
+    left: 10px;
+}
+

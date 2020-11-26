@@ -19,8 +19,9 @@ class CreatePostsTable extends Migration
             $table->string("slug");
             $table->text("body");
             $table->integer("watched")->default(0);
+            $table->boolean("closed")->default(0);
             $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('course_id')->references('id')->on('courses')->nullable();
+            $table->foreignId('course_id')->references('id')->on('courses');
             $table->timestamps();
         });
     }

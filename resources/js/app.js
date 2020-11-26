@@ -12,3 +12,22 @@ require('../theme/js/app');
 // require('../theme/js/vendor');
 
 
+
+//jQuery
+$.fn.extend({
+    toggleText: function (a, b){
+        const that = this;
+        if (that.text() != a && that.text() != b){
+            that.text(a);
+        }
+        else
+        if (that.text() == a){
+            that.text(b);
+        }
+        else
+        if (that.text() == b){
+            that.text(a);
+        }
+        return this;
+    }
+});

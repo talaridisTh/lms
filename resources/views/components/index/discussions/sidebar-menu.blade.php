@@ -12,11 +12,11 @@
     }
 </style>
 <ul class="ul-thread stick">
-    <li class="py-2 px-4 mt-2 mb-4 list-unstyled first-thread mb-2" data-toggle="modal" data-target="#new-threads">
+    <li class="py-2 px-4 mt-2 mb-4 list-unstyled first-thread mb-2"  data-toggle="modal" data-target="#new-threads">
         NEW DISCUSSION
     </li>
 
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread filter-question">
         <i class="font-18 font-18 mr-1 uil-notebooks"></i>
         All Threads
     </li>
@@ -71,7 +71,7 @@
                 <div class="form-row w-100">
                     <div class="form-group col-md-8">
                         <label for="post-title" class="col-form-label">Εισάγετε τίτλο</label>
-                        <input type="text" name="title" class="form-control" id="post-title" form="form-create-thread"
+                        <input  type="text" name="title" class="form-control" id="post-title" form="form-create-thread"
                                placeholder="Εισάγετε τίτλο">
                     </div>
                     <div class="form-group col-md-4">
@@ -95,7 +95,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary js-form-create">Post</button>
+                <button type="button"  class="btn btn-primary  js-form-create">Post</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -107,22 +107,42 @@
     <div class="modal-dialog modal-lg modal-bottom">
         <div class="modal-content">
             <div class="modal-header">
-                <h4><i class="mdi mdi-reply"></i> Reply to </h4>
+                <h4>
+                    <i class="mdi mdi-reply"></i>
+                    <span> Reply to <span class="text-info replay-name"></span></span>
+                </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                        <textarea class="form-control" id="reply-body" name="body" form="form-create-reply" rows="5"
+                        <textarea class="form-control form-reply-body" id="reply-body" name="body" form="form-create-reply" rows="5"
                                   placeholder="Απάντηση.."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary js-form-reply">Post</button>
+                <button  type="button" class="btn btn-primary js-form-reply">Post</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
+
+
+{{--<button  type="button" class="btn btn-success" data-toggle="modal" data-target="#bs-example-modal-sm">Small Modal</button>--}}
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true" style="    background: rgba(0,0,0,.7);">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content" style="height:0 ;background-color: transparent">
+            <div class="modal-body ">
+                <div class="position-relative">
+                <i class="uil-search position-absolute global-search"></i>
+                <input type="text" class="form-control bg-list-thread js-search-post css-search-snippet pl-4"
+                       placeholder="Αναζήτηση" >
+                </div>
+
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <form id="form-create-thread" method="post" action="{{route('discussion.thread')}}">
     @csrf

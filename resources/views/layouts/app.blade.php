@@ -192,12 +192,12 @@
                         </div>
 
 
-{{--                        <div>--}}
-{{--                            <a class="nav-link" href="{{route('discussion.index')}}" role="button" aria-haspopup="true"--}}
-{{--                               aria-expanded="false">--}}
-{{--                                Discussions--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
+                        <div>
+                            <a class="nav-link" href="{{route('discussion.index')}}" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Discussions
+                            </a>
+                        </div>
 
 
                         <div>

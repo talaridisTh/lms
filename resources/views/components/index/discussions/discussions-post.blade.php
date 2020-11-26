@@ -14,8 +14,8 @@
     }
 
 </style>
-<div class="post-scrolbar stick mt-1 " style="background-color:#fafbfe; height: 114px;">
-    <div class="row align-items-center position-relative">
+<div class="post-scrollbar-cnt stick mt-1 " style="background-color:#fafbfe; height: 114px;">
+    <div class="row align-items-center position-relative post-scrollbar">
         <div class="col-1 mt-3" style="max-width: 14.333333%">
             <span class="bg-thread original-post ">Αρχικό</span>
         </div>
@@ -29,18 +29,18 @@
         <div class="col-1 mt-3" style="max-width: 14.333333%">
             <span class="bg-thread new-post">Νέο</span>
         </div>
-    </div>
 
-    <div class="row justify-content-center mt-2 align-items-center">
-        <i class="font-18 uil-grip-horizontal-line bg-list-thread mr-1 js-hidden-body cursor-pointer "
-           style="padding: 0px 0.375rem"></i>
-        <i class="font-18 uil-align-left bg-list-thread js-show-body cursor-pointer js-body-active"
-           style="padding: 0px 0.375rem"></i>
-    </div>
 
+        <div class="row justify-content-center mt-2 align-items-center w-100">
+            <i class="font-18 uil-grip-horizontal-line bg-list-thread mr-1 js-hidden-body cursor-pointer "
+               style="padding: 0px 0.375rem"></i>
+            <i class="font-18 uil-align-left bg-list-thread js-show-body cursor-pointer js-body-active"
+               style="padding: 0px 0.375rem"></i>
+        </div>
+    </div>
 </div>
 
-<div class="mt-3 d-flex position-relative height-55px" style="">
+<div class="mt-3 d-flex position-relative height-55px cnt-top-bar-post" style="">
     <div class="arrow-line position-absolute"></div>
     <div class="top-bar-post  position-absolute p-2 d-flex justify-content-between align-items-center">
         <div class="font-12 d-none d-lg-block">
@@ -65,12 +65,29 @@
     </div>
 </div>
 
+@php
+    $closedBadge = $post->closed?"badge-danger":"badge-info";
+    $closedHide = $post->closed?"d-none":"";
+    $closedbadgeShow = $post->closed?"":"d-none";
+    $closedBtn = $post->closed?"d-none":"";
+@endphp
+
 <div class="main-post d-flex mt-2" data-post-id="{{$post->id}}" style="background-color: rgba(0, 0, 0, 0.1)">
     <div class="mx-3 my-2">
         <img height="80" src="{{$post->user->avatar}}" alt="">
     </div>
     <div>
-        <h3 class="mt-2 mb-1 font-18">{{$post->user->fullName}}</h3>
+        <div class="d-flex align-items-center">
+            <h3 class="mt-2 mb-1 font-18 ">{{$post->user->fullName}}</h3>
+
+            @if(auth()->id()==$post->user->id)
+                <a class="badge  ml-2 mt-2 font-10 js-post-closed cursor-pointer {{$closedBadge}}">
+                    <i class=" mdi mdi-power font-20"></i>
+                    <a href="#" class=" ml-3 mt-2 badge badge-danger badge-best {{$closedbadgeShow}} font-14">Closed</a>
+                </a>
+            @endif
+
+        </div>
         <p class="font-12">{{$post->created_at->diffForHumans()}}</p>
         <h2 class="bg-thread px-3 py-3 font-16 text-dark d-inline-block mr-2 mb-4">{{$post->title}}</h2>
         <p>{{$post->body}}</p>
@@ -103,14 +120,12 @@
                         <div class="cnt-list-content">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center cnt-post-buttons">
-                                    <h3 class="mt-2 mb-1 font-18">{{$comment->user->fullName}}</h3>
+                                    <h3 class="mt-2 mb-1 font-18 author-post-name">{{$comment->user->fullName}}</h3>
                                     @if(auth()->id()==$post->user_id)
-                                        <i data-original-title="Tooltip on top"
-                                           data-toggle="tooltip"
-                                           data-placement="top"
-                                           title="Best Answer"
-                                           class="{{$isBestAnswerBtn }} js-best-answer  cursor-pointer font-20 mt-2 ml-3  mdi mdi-alpha-b-circle"></i>
-                                        <a href="#" class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best Answer</a>
+                                        <i class="{{$isBestAnswerBtn }} js-best-answer  cursor-pointer font-20 mt-2 ml-3  mdi mdi-alpha-b-circle"></i>
+                                        <a href="#"
+                                           class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
+                                            Answer</a>
                                     @endif
                                 </div>
                                 @if($comment->user_id == auth()->id())
@@ -134,7 +149,7 @@
                                     <span
                                         class="font-weight-normal font-16 text-dark">{{$comment->isLikedCount()}}</span>
                                     </i>
-                                    <span class="js-reply-post-btn js-comment-reply "
+                                    <span class="js-reply-post-btn  cursor-pointer js-comment-reply {{$closedHide}}"
                                           data-toggle="modal" data-target="#new-reply">Reply
                                 </span>
                                 </div>
@@ -157,7 +172,8 @@
                             $isBestAnswerBadge = $rep1->best?"":"d-none"
                         @endphp
 
-                        <div class="main-post d-flex mt-1 ml-5 js-reply-body {{$isBestAnswerCnt}}" data-comment-id="{{$comment->id}}"
+                        <div class="main-post d-flex mt-1 ml-5 js-reply-body {{$isBestAnswerCnt}}"
+                             data-comment-id="{{$comment->id}}"
                              data-thread-id="{{$rep1->id}}"
                              style="background-color: rgba(0, 0, 0, 0.03)">
                             <div class="mx-3 my-2">
@@ -166,14 +182,16 @@
                             <div class="cnt-list-content">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="d-flex align-items-center cnt-post-buttons">
-                                        <h3 class="mt-2 mb-1 font-18">{{$rep1->user->fullName}}</h3>
+                                        <h3 class="mt-2 mb-1 font-18 author-post-name">{{$rep1->user->fullName}}</h3>
                                         @if(auth()->id()==$post->user_id)
                                             <i data-original-title="Tooltip on top"
                                                data-toggle="tooltip"
                                                data-placement="top"
                                                title="Best Answer"
                                                class="{{$isBestAnswerBtn}} js-best-answer is-active-best cursor-pointer font-20 mt-2 ml-3 text-info mdi mdi-alpha-b-circle"></i>
-                                            <a href="#" class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best Answer</a>
+                                            <a href="#"
+                                               class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
+                                                Answer</a>
                                         @endif
                                     </div>
                                     @if($rep1->user_id == auth()->id())
@@ -196,7 +214,7 @@
                                         <span
                                             class="js-count-like font-weight-normal font-16 text-dark">{{$rep1->isLikedCount()}}</span>
                                     </i>
-                                    <span class="js-reply-post-btn js-sub-comment-reply "
+                                    <span class="js-reply-post-btn cursor-pointer  js-sub-comment-reply {{$closedHide}}"
                                           data-toggle="modal" data-target="#new-reply">Reply</span>
                                 </div>
                             </div>
@@ -213,6 +231,7 @@
 </div>
 
 
-<div class="form-group  mt-4 replay-bottom first-thread-replay mb-2" data-toggle="modal" data-target="#new-reply">
+<div  class="form-group  mt-4 replay-bottom first-thread-replay mb-2 {{$closedHide}}" data-toggle="modal"
+     data-target="#new-reply">
     <p class="p-4 text-dark  font-20"><i class="mdi mdi-hand-pointing-down font-18 mr-2"></i> Απαντησε στο Post</p>
 </div>

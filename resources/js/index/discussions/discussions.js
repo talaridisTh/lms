@@ -23,7 +23,7 @@ $(document).on("click", ".pagination a", async function (e) {
 
 
 // filter sidebar
-$(".filter-sidebar").on("change", async function () {
+$(".discussions-right").on("change",".filter-sidebar", async function () {
 
     let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
     let option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value
@@ -44,7 +44,7 @@ $(".filter-sidebar").on("change", async function () {
 })
 
 // filter course
-$(".filter-course").on("change", async function () {
+$(".discussions-right").on("change",".filter-course", async function () {
 
     let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
     let option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value
@@ -63,13 +63,13 @@ $(".filter-course").on("change", async function () {
 })
 
 // filter show body
-$(".js-show-body").on("click", function () {
+$(".discussions-right").on("click",".js-show-body", function () {
     onShowBody()
     $(".js-post-body").each((idx, el) => {
         el.classList.remove("d-none")
     });
 })
-$(".js-hidden-body").on("click", function () {
+$(".discussions-right").on("click",".js-hidden-body", function () {
     onHideBody()
 
     $(".js-post-body").each((idx, el) => {
@@ -87,29 +87,68 @@ const onShowBody = () => {
     $(".js-hidden-body")[0].classList.remove("js-body-active")
 }
 // Evenet change first button
-const onChangeFirstButton = () => {
+const onChangeFirstButtonNew = () => {
     let firstBtn = $(".first-thread")
 
-    console.log("S")
-    firstBtn[0].innerHTML = `Replay`
-    firstBtn[0].dataset.target = "#new-reply"
-    firstBtn[0].classList.add("first-thread-replay")
-    firstBtn[0].classList.remove("first-thread")
-    onFirstReplayBtnEvent();
+
+        firstBtn[0].innerHTML = `Replay`
+        firstBtn[0].dataset.target = "#new-reply"
+        firstBtn[0].classList.add("first-thread-replay")
+        firstBtn[0].classList.remove("first-thread")
+        onFirstReplayBtnEvent();
+
+
+}
+
+const onChangeFirstButtonReplay = () => {
+    let firstBtn = $(".first-thread-replay")
+
+
+
+
+    firstBtn[0].innerHTML = `NEW DISCUSSION`
+    firstBtn[0].dataset.target = "#new-threads"
+    firstBtn[0].classList.remove("first-thread-replay")
+    firstBtn[0].classList.add("first-thread")
+
+
 }
 
 // submit create form
 $(".js-form-create").on("click", function (e) {
     e.preventDefault()
+    let title = $('input#post-title').val()
+    let body = $('textarea#post-body').val()
+
+    if (!body || !title) {
+        if (!$(".validate-form-post-body").length) {
+            $('#new-threads').modal('show');
+            $("<p class='text-danger mt-2 validate-form-post-body'>*Συμπληρώστε όλα τα παιδιά</p>").insertAfter("#post-body");
+
+        }
+        return
+    }
+
     $("#form-create-thread").submit();
 })
+
 // submit reply form
 $(".js-form-reply").on("click", async function (e) {
     e.preventDefault()
+    let body = $('textarea#reply-body').val()
+
+    if (!body) {
+        if (!$(".validate-form-post").length) {
+            $('#new-reply').modal('show');
+            $("<p class='text-danger mt-2 validate-form-post'>*Tο πεδίο είναι απαραίτητο</p>").insertAfter("#reply-body");
+
+        }
+        return
+    }
     let postId = this.dataset.post;
     let parentId = this.dataset.parent;
-    let body = $('textarea#reply-body').val()
     this.disabled = true
+    $(".validate-form-post").remove();
 
     try {
         const {data, status} = await axios.post("/discussion/post/store-reply", {
@@ -119,7 +158,10 @@ $(".js-form-reply").on("click", async function (e) {
         })
 
         if (status == 200) {
-            $(".cnt-reply-list").html($(data).find(".reply-list"))
+            $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+            $(".cnt-top-bar-post").html($(data).find(".top-bar-post")) //reload topbar
+            $(".post-scrollbar-cnt").html($(data).find(".post-scrollbar")) //rolad ranger slider
+            rangeSlider();
             $('#new-reply').modal('hide')
             $('#form-create-reply')[0].reset()
             this.disabled = false
@@ -131,11 +173,33 @@ $(".js-form-reply").on("click", async function (e) {
     }
 
 })
+//validate form
+// $(".ul-thread").on("click",".first-thread",function (){
+//
+//     $("#post-title ,#post-body").on("keyup",function (e){
+//         if ($("#post-title ").val().length && $("#post-body ").val().length){
+//             $(".js-form-create").prop('disabled', false);
+//         }else{
+//             $(".js-form-create").prop('disabled', true);
+//         }
+//     })
+//
+// })
+//
+// $(document).on("click",".first-thread-replay ,.init-form-valid",function (){
+//     console.log( $(".form-reply-body"))
+//     $(".form-reply-body").on("keyup",function (e){
+//         if ($(".form-reply-body").val().length){
+//             $(".js-form-reply").prop('disabled', false);
+//         }else{
+//             $(".js-form-reply").prop('disabled', true);
+//         }
+//     })
+// })
 
 // show post
-$(".cnt-threads-main-list").on("click", '.js-thread-title', async function () {
+$(".discussions-right").on("click", '.js-thread-title', async function () {
     let postId = this.closest(".single-thread").dataset.postId
-    let watched = $(this).closest(".single-thread").find(".js-thread-watched")[0]
     try {
         // const {data, status} = await axios.patch(`/discussion/watched/${postId}`)
         const {data, status} = await axios.get(`/discussion/${postId}`)
@@ -143,7 +207,8 @@ $(".cnt-threads-main-list").on("click", '.js-thread-title', async function () {
         if (status === 200) {
             $(".discussions-right").html(data)
 
-            onChangeFirstButton()
+
+            onChangeFirstButtonNew()
             onCommentReplayBtnEvent()
             onSubCommentReplayBtnEvent()
             onLikebtn()
@@ -151,6 +216,7 @@ $(".cnt-threads-main-list").on("click", '.js-thread-title', async function () {
             rangeSlider()
             handlerReply()
             bestAnswer()
+            closedPost()
 
         }
 
@@ -160,12 +226,53 @@ $(".cnt-threads-main-list").on("click", '.js-thread-title', async function () {
 
 })
 
+
+// search
+$(document).on("keyup", ".js-search-post", async function (e) {
+    let term = e.target.value;
+
+    if (e.keyCode === 13 && term.length >= 3) {
+        try {
+            const {data, status} = await axios.post("/discussion/search", {
+                term
+            })
+            if (status == 200) {
+                $(".cnt-threads-main-list").html($(data).find(".threads-main-list"))
+                e.target.value = ""
+                $('#centermodal').modal('hide')
+                onHideBody();
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+})
+// Global search
+$(document).on("keyup", function (e) {
+
+    if (e.keyCode === 191) {
+
+        if (!$(".js-search-snippet").length)
+            $("<span class='js-search-snippet' data-toggle='modal' data-target='#centermodal'></span>")
+                .insertBefore('#centermodal');
+        $(".js-search-snippet").click();
+
+        $('#centermodal').on('shown.bs.modal', function () {
+            $('.css-search-snippet').focus();
+        })
+    }
+
+
+})
+
 //replay comment first button
 const onFirstReplayBtnEvent = () => {
-    $(".first-thread-replay").on("click", function () {
+
+    $(document).on("click",".first-thread-replay", function () {
         let postId = $(".main-post")[0].dataset.postId;
         let parentId = 0;
 
+        $("#new-reply").find(".replay-name").text("");
         $(".js-form-reply")[0].dataset.post = postId
         $(".js-form-reply")[0].dataset.parent = parentId
 
@@ -174,25 +281,24 @@ const onFirstReplayBtnEvent = () => {
 }
 //replay comment
 const onCommentReplayBtnEvent = () => {
-
-    $(".cnt-reply-list").on("click", ".js-comment-reply", function () {
+    $(".discussions-right").on("click", ".js-comment-reply", function () {
         let postId = $(".main-post")[0].dataset.postId;
         let parentId = this.closest(".main-post").dataset.commentId;
+        let author = $(this).closest(".main-post").find(".author-post-name").text()
 
-        console.log(parentId)
+        $("#new-reply").find(".replay-name").text(`@${author}`);
         $(".js-form-reply")[0].dataset.post = postId
         $(".js-form-reply")[0].dataset.parent = parentId
     })
 }
 //replay subcomment
 const onSubCommentReplayBtnEvent = () => {
-
-    $(".cnt-reply-list").on("click", ".js-sub-comment-reply", function () {
+    $(".discussions-right").on("click", ".js-sub-comment-reply", function () {
         let postId = $(".main-post")[0].dataset.postId;
         let parentId = this.closest(".main-post").dataset.commentId;
+        let author = $(this).closest(".main-post").find(".author-post-name").text()
 
-
-        console.log(parentId)
+        $("#new-reply").find(".replay-name").text(`@${author}`);
         $(".js-form-reply")[0].dataset.post = postId
         $(".js-form-reply")[0].dataset.parent = parentId
     })
@@ -200,7 +306,7 @@ const onSubCommentReplayBtnEvent = () => {
 
 //likes system comment
 const onLikebtn = () => {
-    $(".cnt-reply-list").on("click", ".btn-reply-like", async function () {
+    $(".discussions-right").on("click", ".btn-reply-like", async function () {
         try {
             const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
 
@@ -225,7 +331,7 @@ const onLikebtn = () => {
 }
 //delete comment
 const onDeleteComment = () => {
-    $(".cnt-reply-list").on("click", ".js-delete-comment", async function () {
+    $(".discussions-right").on("click", ".js-delete-comment", async function () {
         const id = this.closest(".main-post").dataset.threadId
         const postId = $(".main-post")[0].dataset.postId;
         try {
@@ -236,7 +342,11 @@ const onDeleteComment = () => {
             })
 
             if (status == 200) {
-                $(".cnt-reply-list").html($(data).find(".reply-list"))
+                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+                $(".cnt-top-bar-post").html($(data).find(".top-bar-post")) //reload topbar
+                $(".post-scrollbar-cnt").html($(data).find(".post-scrollbar")) //rolad ranger slider
+                rangeSlider();
+
             }
 
         } catch (e) {
@@ -248,10 +358,10 @@ const onDeleteComment = () => {
 
 //ranger system
 const rangeSlider = () => {
-
+    console.log("ddd")
 
     let reply = $(".main-reply").map((idx, el) => {
-        return el.id
+        return typeof el.id == "undefined" ? "post-1" : el.id
     })
 
 
@@ -260,6 +370,9 @@ const rangeSlider = () => {
         skin: "round"
     });
 
+    if ($(".irs-grid-text").text() == 'undefined') {
+        $(".irs-grid-text").text("reply-1")
+    }
 
     $(".js-range-slider").on("change", function () {
 
@@ -276,7 +389,6 @@ const rangeSlider = () => {
             behavior: 'smooth'
         });
 
-        console.log(this.value)
     })
 
     $(".new-post").on("click", function () {
@@ -289,7 +401,7 @@ const rangeSlider = () => {
 //show hide subcoomment
 const handlerReply = () => {
 
-    $(".js-show-body").on("click", function () {
+    $(".discussions-right").on("click", ".js-show-body", function () {
         onShowBody()
         $(".single-post-show").addClass("d-none")
 
@@ -299,7 +411,7 @@ const handlerReply = () => {
         });
     })
 
-    $(".js-hidden-body").on("click", function () {
+    $(".discussions-right").on("click", ".js-hidden-body", function () {
         onHideBody()
         $(".single-post-show").removeClass("d-none")
         $(".single-post-show").children('i').css('color', '#c3c3c3')
@@ -311,7 +423,7 @@ const handlerReply = () => {
     })
 
 
-    $(".cnt-reply-list").on("click", ".single-post-show", function () {
+    $(".discussions-right").on("click", ".single-post-show", function () {
         let commentId = this.closest(".main-post").dataset.commentId
         let element = $(`.js-reply-body[data-comment-id=${commentId}]`)
 
@@ -333,13 +445,12 @@ const handlerReply = () => {
 
 
 }
-
+//handler best answer
 const bestAnswer = () => {
-    $(".cnt-reply-list").on("click", ".js-best-answer", async function () {
+    $(".discussions-right").on("click", ".js-best-answer", async function () {
         $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
 
         $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
-
 
 
         if ($(this).hasClass("is-active-best")) {
@@ -359,28 +470,97 @@ const bestAnswer = () => {
 
         }
 
-         $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
+        $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
 
 
         let commentId = $(this).closest(".main-post").data("threadId")
         let postId = $(".main-post")[0].dataset.postId;
 
-        try{
+        try {
 
-            const {data,status} = await axios.patch(`/discussion/best/${commentId}`,{
+            const {data, status} = await axios.patch(`/discussion/best/${commentId}`, {
                 postId
             })
 
-            if (status==200){
+            if (status == 200) {
 
             }
 
-        }catch (e){
+        } catch (e) {
             console.log(e)
         }
 
     })
 
 
-
 }
+
+//handler closes post
+const closedPost = () => {
+    styleClosedPost()
+
+    $(".discussions-right").on("click", ".js-post-closed", async function () {
+        let postId = $(".main-post")[0].dataset.postId;
+
+
+        try {
+            const {status} = await axios.patch(`/discussion/closed/${postId}`)
+
+            if (status == 200) {
+                $(this).toggleClass("badge-danger")
+                $(this).toggleClass("badge-info")
+                $(this).siblings("a").toggleClass("d-none")
+                $(".js-comment-reply").toggleClass("d-none")
+                $(".js-sub-comment-reply").toggleClass("d-none")
+                $(".discussions-right").find(".first-thread-replay").toggleClass("d-none")
+                $(".ul-thread").find(".first-thread-replay").toggleText('CLOSED', 'Replay').toggleClass("bg-danger");
+                styleClosedPost()
+            }
+
+        } catch (e) {
+
+        }
+
+
+    })
+}
+
+//style closes post
+const styleClosedPost = () => {
+    if ($(".js-post-closed").hasClass("badge-danger")) {
+        $(".ul-thread").find(".first-thread-replay").text("CLOSED").addClass("bg-danger").prop('disabled', true)
+
+        $(".ul-thread").find(".first-thread-replay").mouseover(function () {
+            $(this).css("cursor", "not-allowed");
+        })
+        $(".ul-thread").find(".first-thread-replay").mouseout(function () {
+            $(this).css("cursor", "pointer");
+        })
+
+    } else {
+        $(".ul-thread").find(".first-thread-replay").text("REPLY").removeClass("bg-danger").prop('disabled', false)
+
+        $(".ul-thread").find(".first-thread-replay").unbind('mouseover').unbind('mouseout');
+
+    }
+}
+
+
+$(".discussions-left").on("click", ".filter-question", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion")
+
+
+        if (status==200){
+            $(".discussions-right").html($(data).find(".discussions-right> *"))
+            onHideBody()
+            onChangeFirstButtonReplay()
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+

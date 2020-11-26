@@ -49689,6 +49689,14 @@ img.scale {
 
 .main-post {
   border: solid 1px transparent;
+  box-shadow: 0 1px 8px -4px #414141;
+  margin: 3px;
+}
+
+.single-thread {
+  border: solid 1px transparent;
+  box-shadow: 0 1px 8px -4px #414141;
+  margin: 3px;
 }
 
 .main-post:hover .bg-thread {
@@ -49703,7 +49711,6 @@ img.scale {
 }
 
 .main-post:hover .js-reply-post-btn {
-  display: block !important;
   color: black;
   transition: 0.5s ease;
   opacity: 1;
@@ -49755,5 +49762,23 @@ img.scale {
 .cnt-list-content {
   width: 88%;
   word-wrap: break-word;
+}
+
+.css-search-snippet {
+  background: white !important;
+  height: 45px;
+  width: 339px;
+  margin-top: -13rem;
+}
+
+.css-search-snippet:focus,
+.css-search-snippet:active {
+  background: white !important;
+}
+
+.global-search {
+  bottom: 4px;
+  font-size: 26px;
+  left: 10px;
 }
 

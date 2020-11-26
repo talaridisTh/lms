@@ -77,7 +77,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
     Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
     Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
-	
+
 	//! Newsletter Routes
 	Route::get('/dashboard/email', 'MailController@composeEmail');
 	Route::post('/dashboard/email', 'MailController@sendNewsletter');
@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     //! Dashboard Search
     Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
     //! Dashboard Home Content
-    Route::get('/dashboard/home-carousels', 'OptionController@showCarousels');
+    Route::get('/dashboard/home-carousels', 'OptionCont`roller@showCarousels');
 
     Route::get('/dashboard/general-settings', 'OptionController@index');
 	Route::post('/dashboard/general-settings/update', 'OptionController@update');
@@ -290,6 +290,7 @@ Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("gue
 //! discussion
 Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
 Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");
+Route::post("/discussion/search", "Index\DiscussionController@search")->name("discussion.search");
 
 Route::post("/discussion/post/store-thread", "Index\DiscussionController@storeThread")->name("discussion.thread");
 Route::post("/discussion/post/store-reply", "Index\DiscussionController@storeReply")->name("discussion.reply");
@@ -298,6 +299,7 @@ Route::get("/discussion/change/filter-course", "Index\DiscussionController@filte
 Route::patch("/discussion/like-comment/{id}", "Index\DiscussionController@likeComment")->name("discussion.likeComment");
 Route::delete("/discussion/delete/{id}", "Index\DiscussionController@delete")->name("discussion.delete");
 Route::patch("/discussion/best/{id}", "Index\DiscussionController@best")->name("discussion.best");
+Route::patch("/discussion/closed/{id}", "Index\DiscussionController@closed")->name("discussion.closed");
 
 //Route::post("/pagination", "Index\DiscussionController@pagination")->name("discussion.pagination");
 

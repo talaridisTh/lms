@@ -25,12 +25,15 @@
     </div>
     <div class="d-flex m-2">
         <div class="form-group my-1  p-1">
-            <i class="font-24 uil-grip-horizontal-line bg-list-thread mr-1 js-hidden-body cursor-pointer js-body-active" style="padding: 0px 0.375rem"></i>
-            <i class="font-24 uil-align-left bg-list-thread js-show-body cursor-pointer" style="padding: 0px 0.375rem"></i>
+            <i class="font-24 uil-grip-horizontal-line bg-list-thread mr-1 js-hidden-body cursor-pointer js-body-active"
+               style="padding: 0px 0.375rem"></i>
+            <i class="font-24 uil-align-left bg-list-thread js-show-body cursor-pointer"
+               style="padding: 0px 0.375rem"></i>
         </div>
 
-        <div class="form-group my-1  p-1">
-            <input type="text" class="form-control bg-list-thread" placeholder="Αναζήτηση">
+        <div class="form-group my-1  p-1 position-relative">
+            <i class="uil-search position-absolute global-search"></i>
+                <input type="text" class="form-control bg-list-thread js-search-post pl-4" placeholder="Πάτα &quot;/&quot; Αναζήτηση">
         </div>
     </div>
 </div>
@@ -76,7 +79,7 @@
             </li>
 
         @empty
-            <h1>adeio</h1>
+            <h3>Δεν υπάρχουν σχετικές συνομιλίες <span class="text-info cursor-pointer text-hover-underline" data-toggle="modal" data-target="#new-threads">δημιουργούσε μια!</span></h3>
         @endforelse
         {{ $posts->render() }}
 
