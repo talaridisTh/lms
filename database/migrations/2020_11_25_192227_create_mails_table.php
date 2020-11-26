@@ -19,7 +19,6 @@ class CreateMailsTable extends Migration
 			$table->string("subject");
 			$table->longText("content");
 			$table->json("recipients")->nullable();
-			$table->unsignedTinyInteger("status"); //! 0 draft - 1 sent
 			$table->timestamp("sent_at")->nullable();
             $table->timestamps();
         });

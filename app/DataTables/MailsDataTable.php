@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Mail;
 use App\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
@@ -34,14 +35,26 @@ class MailsDataTable extends DataTable
 					<label for='$slug'></label>
 				</div>";
 			})
-			->addColumn("details", function($data) {
+			->addColumn("message", function($data) {
 
 				$title = Str::limit($data->subject, 30);
 				$content = Str::limit(strip_tags($data->content), 80);
 
-				return "<strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; <span title='".strip_tags($data->content)."'>$content</span>";
+				return "<p class='mb-0'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</p>";
 			})
-			->rawColumns(["action", "details"]);
+			->addColumn("details", function($data) {
+
+				$sentAt = is_null($data->sent_at) 
+					? "<p class='time-cnt mb-0 text-center'><strong>-</strong></p>"
+					: "<p class='time-cnt mb-0 text-right'><strong class='text-right'>". Carbon::parse($data->sent_at)->diffForHumans(null, false, true) ."</strong></p>";
+				
+				return "$sentAt <div class='position-absolute tool-cnt text-left'>
+						<i class='mdi mdi-delete-circle-outline font-24 custom-danger cursor-pointer'></i>
+					</div>";
+				
+			})
+			->setRowClass('position-relative')
+			->rawColumns(["action", "message", "details"]);
     }
 
     /**

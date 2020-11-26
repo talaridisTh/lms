@@ -17,26 +17,8 @@ const mailsDatatable = $("#mails-datatable").DataTable({
 	},
 	columns: [
 		{ data: 'action', name: 'action', className: "align-middle text-center", searchable:false, orderable: false },
-		{ data: 'details' },
-		{
-			data: 'sent_at',
-			name: 'sent_at',
-			className: "align-middle text-center cursor-default",
-			render: function(data) {
-				const oneDay = new Date().getTime() + (24 * 60 * 60 * 1000);
-				const date = new Date(data);
-				const hours = date.toLocaleString('default', { hour: 'numeric', minute: 'numeric', hour12: true });
-				const month = date.toLocaleString('default', { day: 'numeric', month: 'short' });
-				
-				if ( oneDay > date.getTime() ) {
-					return `<p class="mb-0"><strong>${hours}</strong></p>`;
-				}
-				else {
-					return `<p class="mb-0"><strong>${month}</strong></p>`;
-				}
-			}
-		},
-		{ data: 'status', name: 'status', visible: false },
+		{ data: 'message' },
+		{ data: 'details', className: "align-middle", searchable:false, orderable: false }
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {

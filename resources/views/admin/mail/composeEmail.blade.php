@@ -54,9 +54,12 @@
 	
 	
 	<div class="container content-width">
-		<div class="mt-1 mb-3 text-right">
-			<button form="email-form" type="submit" class="btn btn-danger ml-1">
+		<div class="mt-1 mb-3 text-right">{{-- an figi to value den mporo na kano isset() sto controller --}}
+			<button form="email-form" type="submit" class="btn btn-danger ml-1" name="button" value="send">
 				Send
+			</button>
+			<button form="email-form" type="submit" class="btn btn-dark" name="button" value="draft">
+				Set Draft
 			</button>
 		</div>
 		<form id="email-form" action="/dashboard/email" method="POST" autocomplete="off">
@@ -80,17 +83,33 @@
 					</div>
 				</div>
 				<select class="form-control" id="recipients-selection" name="recipients[]" multiple></select>
+			
+				@error('recipients')
+					<span class="text-danger" role="alert">
+						<small><strong>{{ $message }}</strong></small>
+					</span>
+				@enderror
 			</div>
 
 			<div class="form-group">
 				<label for="subject">Θέμα</label>
-				<input id="subject" class="form-control" type="text" placeholder="Εισάγετε θέμα..." name="subject" />
+				<input id="subject" class="form-control" type="text" value="{{ old("subject") }}" placeholder="Εισάγετε θέμα..." name="subject" />
+				@error('subject')
+					<span class="text-danger" role="alert">
+						<small><strong>{{ $message }}</strong></small>
+					</span>
+				@enderror
 			</div>
 
 			<div class="form-group">
 				<label for="editor">Περιεχόμενο</label>
-				<textarea class="form-control" id="editor" placeholder="Εισάγετε περιεχόμενο..."
-					name="content" rows="5"></textarea>
+				<textarea class="form-control @error('content') is-invalid @enderror" id="editor" placeholder="Εισάγετε περιεχόμενο..."
+					name="content" rows="5">{{ old('content') }}</textarea>
+					@error('content')
+						<span class="text-danger" role="alert">
+							<small><strong>{{ $message }}</strong></small>
+						</span>
+					@enderror
 			</div>
 		</form>
 	</div>
