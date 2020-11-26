@@ -21737,7 +21737,7 @@ body[data-leftbar-theme=dark] .side-nav .side-nav-forth-level li.active > a {
 }
 
 .select2-container {
-  width: 100% !important;
+  width: 100%;
 }
 
 .select2-container .select2-selection--single {
