@@ -16,11 +16,11 @@
         NEW DISCUSSION
     </li>
 
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread filter-question">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread filter-sidebar-all-threads">
         <i class="font-18 font-18 mr-1 uil-notebooks"></i>
         All Threads
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread filter-sidebar-question">
         <i class="font-18 mr-1 uil-question-circle"></i>
         Οι Ερωτήσεις μου
     </li>

@@ -63,13 +63,11 @@ class DiscussionController extends Controller {
     public function search(Request $request)
     {
 
-
         return view("components.index.discussions.discussions-main", [
-            "posts" =>  Post::where('title', 'LIKE', '%' . $request->term . '%')->paginate(10),
+            "posts" => Post::where('title', 'LIKE', '%' . $request->term . '%')->paginate(10),
             "comment" => Comment::all(),
             "courses" => $this->course
         ]);
-
     }
 
     public function storeThread(Request $request)
@@ -85,7 +83,7 @@ class DiscussionController extends Controller {
             "slug" => Str::slug($request->title, "-"),
             "body" => $request->body,
             "user_id" => auth()->id(),
-            "course_id" =>Course::where("title", $request->course_id)->first()->id
+            "course_id" => Course::where("title", $request->course_id)->first()->id
         ]);
 
         return redirect()->back();
@@ -132,6 +130,16 @@ class DiscussionController extends Controller {
         ]);
     }
 
+    public function myQuestion()
+    {
+
+        return view("index.discussions.discussions", [
+            "posts" => auth()->user()->posts()->paginate(10),
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
+    }
+
     public function likeComment($commentId)
     {
 
@@ -147,22 +155,18 @@ class DiscussionController extends Controller {
         return response()->json(!auth()->user()->commentIsLiked($comment));
     }
 
-    public function best($commentId,Request $request)
+    public function best($commentId, Request $request)
     {
         $best = Comment::findOrFail($commentId)->best;
-        Comment::where("post_id",$request->postId)->update(["best" => 0 ]);
-
-
+        Comment::where("post_id", $request->postId)->update(["best" => 0]);
         Comment::findOrFail($commentId)->update(["best" => !$best]);
     }
 
-    public function closed($postId,Request $request)
+    public function closed($postId, Request $request)
     {
 
         $closed = Post::findOrFail($postId)->closed;
-
         Post::findOrFail($postId)->update(["closed" => !$closed]);
-
     }
 
     private function getFilter($request)

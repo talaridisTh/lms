@@ -101,15 +101,16 @@ const onChangeFirstButtonNew = () => {
 }
 
 const onChangeFirstButtonReplay = () => {
-    let firstBtn = $(".first-thread-replay")
 
+    if ($(".first-thread-replay").length){
+        let firstBtn = $(".first-thread-replay")
 
+        firstBtn[0].innerHTML = `NEW DISCUSSION`
+        firstBtn[0].dataset.target = "#new-threads"
+        firstBtn[0].classList.remove("first-thread-replay")
+        firstBtn[0].classList.add("first-thread")
 
-
-    firstBtn[0].innerHTML = `NEW DISCUSSION`
-    firstBtn[0].dataset.target = "#new-threads"
-    firstBtn[0].classList.remove("first-thread-replay")
-    firstBtn[0].classList.add("first-thread")
+    }
 
 
 }
@@ -546,11 +547,27 @@ const styleClosedPost = () => {
 }
 
 
-$(".discussions-left").on("click", ".filter-question", async function () {
-
+$(".discussions-left").on("click", ".filter-sidebar-all-threads", async function () {
     try {
         const {data, status} = await axios.get("/discussion")
 
+
+        if (status==200){
+            $(".discussions-right").html($(data).find(".discussions-right> *"))
+            onHideBody()
+            onChangeFirstButtonReplay()
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+$(".discussions-left").on("click", ".filter-sidebar-question", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/my-question")
 
         if (status==200){
             $(".discussions-right").html($(data).find(".discussions-right> *"))

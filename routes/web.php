@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     //! Dashboard Search
     Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
     //! Dashboard Home Content
-    Route::get('/dashboard/home-carousels', 'OptionCont`roller@showCarousels');
+    Route::get('/dashboard/home-carousels', 'OptionController@showCarousels');
 
     Route::get('/dashboard/general-settings', 'OptionController@index');
 	Route::post('/dashboard/general-settings/update', 'OptionController@update');
@@ -286,9 +286,11 @@ Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("gue
 
 //! discussion
 Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
+Route::get("/discussion/my-question", "Index\DiscussionController@myQuestion")->name("discussion.myQuestion");
+
+
 Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");
 Route::post("/discussion/search", "Index\DiscussionController@search")->name("discussion.search");
-
 Route::post("/discussion/post/store-thread", "Index\DiscussionController@storeThread")->name("discussion.thread");
 Route::post("/discussion/post/store-reply", "Index\DiscussionController@storeReply")->name("discussion.reply");
 Route::get("/discussion/change/filter-sidebar", "Index\DiscussionController@filterSidebar")->name("discussion.filterSidebar");

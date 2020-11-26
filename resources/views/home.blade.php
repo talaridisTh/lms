@@ -177,56 +177,56 @@
         </div>
         {{--       AUTA EDW THA ALLAKSOUN -}}
                 {{--row 7 --}}
-        <div>
-            @if($arrayBanners["primary"]->status==1)
-                <div id="card-slider-primary" class="splide">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            @foreach($bannersPrimary as $key => $banner)
-                                @php
-                                    $bannerArray = (array) $banner;
-                                    $bannerValue = key ( $bannerArray);
-                                    $bannerKey =array_values ($bannerArray);
-                                    $model =   $bannerValue::findOrFail($bannerKey)->first();
-                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''
-                                @endphp
-                                <li class="splide__slide p-2">
-                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
-                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>
-                                    <p class="p-3"> {{$model->subtitle}}</p>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            @endif
-            {{--row 7 --}}
-        </div>
-        <div>
-            @if($arrayBanners["secondary"]->status==1)
-                <div id="card-slider-secondary" class="splide">
-                    <div class="splide__track">
-                        <ul class="splide__list">
-                            @foreach($bannersSecondary as $key => $banner)
-                                @php
-                                    $bannerArray = (array) $banner;
-                                    $bannerValue = key ( $bannerArray);
-                                    $bannerKey =array_values ($bannerArray);
-                                    $model =   $bannerValue::findOrFail($bannerKey)->first();
-                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''
-                                @endphp
-                                <li class="splide__slide p-2">
-                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
-                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>
-                                    <p class="p-3"> {{$model->subtitle}}</p>
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
-            @endif
-            {{--row 7 --}}
-        </div>
+{{--        <div>--}}
+{{--            @if($arrayBanners["primary"]->status==1)--}}
+{{--                <div id="card-slider-primary" class="splide">--}}
+{{--                    <div class="splide__track">--}}
+{{--                        <ul class="splide__list">--}}
+{{--                            @foreach($bannersPrimary as $key => $banner)--}}
+{{--                                @php--}}
+{{--                                    $bannerArray = (array) $banner;--}}
+{{--                                    $bannerValue = key ( $bannerArray);--}}
+{{--                                    $bannerKey =array_values ($bannerArray);--}}
+{{--                                    $model =   $bannerValue::findOrFail($bannerKey)->first();--}}
+{{--                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''--}}
+{{--                                @endphp--}}
+{{--                                <li class="splide__slide p-2">--}}
+{{--                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">--}}
+{{--                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>--}}
+{{--                                    <p class="p-3"> {{$model->subtitle}}</p>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endif--}}
+{{--            --}}{{--row 7 --}}
+{{--        </div>--}}
+{{--        <div>--}}
+{{--            @if($arrayBanners["secondary"]->status==1)--}}
+{{--                <div id="card-slider-secondary" class="splide">--}}
+{{--                    <div class="splide__track">--}}
+{{--                        <ul class="splide__list">--}}
+{{--                            @foreach($bannersSecondary as $key => $banner)--}}
+{{--                                @php--}}
+{{--                                    $bannerArray = (array) $banner;--}}
+{{--                                    $bannerValue = key ( $bannerArray);--}}
+{{--                                    $bannerKey =array_values ($bannerArray);--}}
+{{--                                    $model =   $bannerValue::findOrFail($bannerKey)->first();--}}
+{{--                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''--}}
+{{--                                @endphp--}}
+{{--                                <li class="splide__slide p-2">--}}
+{{--                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">--}}
+{{--                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>--}}
+{{--                                    <p class="p-3"> {{$model->subtitle}}</p>--}}
+{{--                                </li>--}}
+{{--                            @endforeach--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            @endif--}}
+{{--            --}}{{--row 7 --}}
+{{--        </div>--}}
 
     </div>
 @endsection
