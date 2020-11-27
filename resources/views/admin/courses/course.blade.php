@@ -675,7 +675,7 @@
 									<div class="form-group">
 										<label for="topic">Topic</label>
 										<select form="edit-course-form" id="topics-select"
-											class="select2 form-control select2-multiple"
+											class="form-control"
 											name="topics[]" multiple="multiple"
 											placeholder="Επιλέξτε Topics...">
 
@@ -703,7 +703,7 @@
 									<hr>
 									<label for="curator">Κύριος Εισηγητής</label>
 									<select id="curator" form="edit-course-form"
-										class="select2 form-control" name="curator"
+										class="form-control" name="curator" data-width="100%"
 										data-toggle="select2" data-placeholder="Επιλέξτε Εισηγητή...">
 										@foreach ($instructors as $instructor)
 
@@ -739,8 +739,8 @@
 									<div class="form-group mb-0">
 										<label for="version-select">Template</label>
 										<select form="edit-course-form" id="template-select" name="template" data-toggle="select2"
-											class="custom-select2-warning select2 form-control @error('template') is-invalid @enderror"
-											data-minimum-results-for-search="-1" autocomplete="off">
+											class="custom-select2-warning form-control @error('template') is-invalid @enderror"
+											data-minimum-results-for-search="-1" data-width="100%" autocomplete="off">
 											@foreach ($templates as $key => $template)
 												<option value="{{ $template->views->frontend }}"
 												{{ old("template") === $template->views->frontend ? "selected" : ($course->template === $template->views->frontend ? "selected" : "")}}>{{ $template->title }}</option>

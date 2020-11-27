@@ -177,7 +177,7 @@
                                 	        Εισηγητές
                                 	    </label>
                                 	    <select form="edit-pdf-material" name="instructors[]" multiple id="instructorMaterial"
-                                	        class="form-control" data-toggle="select2"
+                                	        class="form-control" data-toggle="select2" data-width="100%"
                                 	        data-placeholder="Επιλέξτε instructor...">
                                 	        @php
 												foreach ( $instructors as $instructor ) {

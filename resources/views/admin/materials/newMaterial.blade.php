@@ -265,7 +265,7 @@
                                 <div class="form-group mb-3">
                                     <label for="typeMaterial">Τύπος</label>
                                     <select data-placeholder="Επιλέξτε Topics..." id="typeMaterial" class="form-control"
-										name="type" data-toggle="select2" form="material-create" autocomplete="off"
+										name="type" data-toggle="select2" data-width="100%" form="material-create" autocomplete="off"
 										data-minimum-results-for-search="-1">
 
                                         <option value="Lesson" {{ old("type") === "Lesson" ? "selected" : "" }}>Μάθημα</option>
@@ -279,7 +279,7 @@
                                 <div class="form-group mb-0">
                                     <label for="instructorMaterial">Εισηγητές</label>
                                     <select form="material-create" name="instructors[]" multiple id="instructorMaterial"
-                                        class="form-control" data-toggle="select2" data-placeholder="Επιλέξτε instructor...">
+                                        class="form-control" data-toggle="select2" data-width="100%" data-placeholder="Επιλέξτε instructor...">
 										@foreach ( $instructors as $instructor )
 										
 											<option value='{{ $instructor->id }}' 
