@@ -92,7 +92,7 @@ const onShowBody = () => {
 const onChangeFirstButtonNew = () => {
     let firstBtn = $(".first-thread")
 
-    firstBtn[0].innerHTML = `Replay`
+    firstBtn[0].innerHTML = `ΑΠΑΝΤΗΣΗ`
     firstBtn[0].dataset.target = "#new-reply"
     firstBtn[0].classList.add("first-thread-replay")
     firstBtn[0].classList.remove("first-thread")
@@ -102,7 +102,7 @@ const onChangeFirstButtonReplay = () => {
     if ($(".first-thread-replay").length) {
 
         let firstBtn = $(".first-thread-replay")
-        firstBtn[0].innerHTML = `NEW DISCUSSION`
+        firstBtn[0].innerHTML = `NEO POST`
         firstBtn[0].dataset.target = "#new-threads"
         firstBtn[0].classList.remove("first-thread-replay")
         firstBtn[0].classList.add("first-thread")
@@ -125,10 +125,13 @@ const axiosUpdateMain = (that, data) => {
 
 
 // submit create form
-$(".js-form-create").on("click", function (e) {
+$(".js-form-create").on("click",async function (e) {
     e.preventDefault()
     let title = $('input#post-title').val()
     let body = $('textarea#post-body').val()
+    let course = $('#post-course').val()
+    this.disabled = true
+
 
     if (!body || !title) {
         if (!$(".validate-form-post-body").length) {
@@ -139,13 +142,32 @@ $(".js-form-create").on("click", function (e) {
         return
     }
 
-    $("#form-create-thread").submit();
+    try {
+        const {data, status} = await axios.post("/discussion/post/store-thread", {
+            title,
+            body,
+            course
+        })
+
+        if (status == 200) {
+            $(".discussions-right").html($(data).find(".discussions-right> *"))
+            onHideBody()
+            $('#new-threads').modal('hide')
+            $('#form-create-thread')[0].reset()
+            this.disabled = false
+
+        }
+
+    } catch (e) {
+        console.log(e)
+    }
 })
 
 // submit reply form
 $(".js-form-reply").on("click", async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
+
 
     if (!body) {
         if (!$(".validate-form-post").length) {
@@ -154,6 +176,10 @@ $(".js-form-reply").on("click", async function (e) {
 
         }
         return
+    }else{
+        body =  `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
+
+
     }
     let postId = this.dataset.post;
     let parentId = this.dataset.parent;
@@ -500,7 +526,7 @@ const closedPost = () => {
                 $(".js-comment-reply").toggleClass("d-none")
                 $(".js-sub-comment-reply").toggleClass("d-none")
                 $(".discussions-right").find(".first-thread-replay").toggleClass("d-none")
-                $(".ul-thread").find(".first-thread-replay").toggleText('CLOSED', 'Replay').toggleClass("bg-danger");
+                $(".ul-thread").find(".first-thread-replay").toggleText('CLOSED', 'ΑΠΑΝΤΗΣΗ').toggleClass("bg-danger");
                 styleClosedPost()
             }
 
@@ -515,7 +541,8 @@ const closedPost = () => {
 //style closes post
 const styleClosedPost = () => {
 
-    if ($(".js-post-closed").hasClass("badge-danger")) {
+
+    if ($(".js-post-closed").hasClass("badge-danger") ||!$(".badge-danger").hasClass("d-none") ) {
         $(".ul-thread").find(".first-thread-replay").text("CLOSED").addClass("bg-danger").prop('disabled', true)
 
         $(".ul-thread").find(".first-thread-replay").mouseover(function () {
@@ -526,7 +553,7 @@ const styleClosedPost = () => {
         })
 
     } else {
-        $(".ul-thread").find(".first-thread-replay").text("REPLY").removeClass("bg-danger").prop('disabled', false)
+        $(".ul-thread").find(".first-thread-replay").text("ΑΠΑΝΤΗΣΗ").removeClass("bg-danger").prop('disabled', false)
 
         $(".ul-thread").find(".first-thread-replay").unbind('mouseover').unbind('mouseout');
 
@@ -654,6 +681,36 @@ $(".discussions-left").on("click", "#filter-no-replies", async function () {
     }
 })
 
+
+
+
+
+// $R("#post-body", {
+//     buttons: [
+//         'html', 'undo', 'redo', 'format',
+//         'bold', 'underline', 'italic', 'deleted',
+//         'sup', 'sub', 'lists', 'file', 'link', 'image'
+//     ],
+//     style: false,
+//     plugins: [ 'alignment'],
+//     minHeight: '150px',
+//     imageResizable: true,
+//     imagePosition : {
+//         "left": "image-left",
+//         "right": "image-right",
+//         "center": "image-center text-center"
+//     },
+//     imageFloatMargin: '20px',
+//     imageUpload: "/media/upload-images",
+//     callbacks: {
+//         upload: {
+//             beforeSend: function(xhr)
+//             {
+//                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+//             }
+//         }
+//     }
+// });
 
 
 

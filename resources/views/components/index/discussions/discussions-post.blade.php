@@ -85,7 +85,7 @@
                         <i class=" mdi mdi-power font-20"></i>
                 </a>
             @endif
-                <a href="#" class=" ml-3 mt-2 badge badge-danger badge-best {{$closedbadgeShow}} font-14">Closed</a>
+                <a href="#" class=" ml-3 mt-2 badge badge-danger badge-closed {{$closedbadgeShow}} font-14">Closed</a>
 
 
         </div>
@@ -142,7 +142,7 @@
 
                             </div>
                             <p class="font-12">{{$comment->created_at->diffForHumans()}}</p>
-                            <p class="p-3">{{$comment->body}}</p>
+                            <p class="p-3">{!!  $comment->body!!}</p>
                             <hr>
                             <div class="post-buttons d-flex font-18 justify-content-between mb-2">
                                 <div class="d-flex">
@@ -152,7 +152,7 @@
                                         class="font-weight-normal font-16 text-dark">{{$comment->isLikedCount()}}</span>
                                     </i>
                                     <span class="js-reply-post-btn  cursor-pointer js-comment-reply {{$closedHide}}"
-                                          data-toggle="modal" data-target="#new-reply">Reply
+                                          data-toggle="modal" data-target="#new-reply">Aπάντηση
                                 </span>
                                 </div>
                                 <div class="single-post-show d-none">
@@ -209,7 +209,7 @@
 
                                 </div>
                                 <p class="font-12">{{$rep1->created_at->diffForHumans()}}</p>
-                                <p class="p-3">{{$rep1->body}}</p>
+                                <p class="p-3">{!!  $rep1->body!!}</p>
                                 <hr>
                                 <div class="post-buttons d-flex font-18  mb-2">
                                     <i data-comment-id="{{$rep1->id}}"
@@ -218,7 +218,7 @@
                                             class="js-count-like font-weight-normal font-16 text-dark">{{$rep1->isLikedCount()}}</span>
                                     </i>
                                     <span class="js-reply-post-btn cursor-pointer  js-sub-comment-reply {{$closedHide}}"
-                                          data-toggle="modal" data-target="#new-reply">Reply</span>
+                                          data-toggle="modal" data-target="#new-reply">Aπάντηση</span>
                                 </div>
                             </div>
                         </div>

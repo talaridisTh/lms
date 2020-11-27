@@ -17,7 +17,6 @@ class DiscussionController extends Controller {
 
     public function __construct()
     {
-
         $this->course = $courses = Course::orderBy('title')->get()->map(function ($post) {
             return $post->title;
         });
@@ -81,17 +80,34 @@ class DiscussionController extends Controller {
         $request->validate([
             "title" => "required",
             "body" => "required",
-            "course_id" => "required",
-        ]);
-        Post::create([
-            "title" => $request->title,
-            "slug" => Str::slug($request->title, "-"),
-            "body" => $request->body,
-            "user_id" => auth()->id(),
-            "course_id" => Course::where("title", $request->course_id)->first()->id
+            "course" => "required",
         ]);
 
-        return redirect()->back();
+        $post = new Post;
+        $post->title = $request->title;
+        $post->slug = Str::slug($request->title, "-");
+        $post->body = $request->body;
+        $post->user_id = auth()->id();
+        $post->course_id = Course::where("title", $request->course)->first()->id;
+        $post->save();
+
+//        Post::create([
+//            "title" => $request->title,
+//            "slug" => Str::slug($request->title, "-"),
+//            "body" => $request->body,
+//            "user_id" => auth()->id(),
+//            "course" => Course::where("title", $request->course)->first()->id
+//        ]);
+
+
+        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
+            ->paginate(10);
+
+        return view("index.discussions.discussions", [
+            "posts" => $posts,
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
     }
 
     public function storeReply(Request $request)

@@ -19,7 +19,7 @@ Element.prototype.appendAfter = function (element) {
 }, false;
 
 //!##########################################
-//!				Global Variables			#
+//!				Global Variables		F	#
 //!##########################################
 
 const baseUrl = window.location.origin;

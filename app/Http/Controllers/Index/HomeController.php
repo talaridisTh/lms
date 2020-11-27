@@ -29,9 +29,9 @@ class HomeController extends Controller {
     {
 
         //na ta travaw apo ton option
-        $arrayBanners = get_object_vars(json_decode(Utility::first()->banners));
-        $bannersPrimary = $arrayBanners["primary"]->models;
-        $bannersSecondary = $arrayBanners["secondary"]->models;
+//        $arrayBanners = get_object_vars(json_decode(Utility::first()->banners));
+//        $bannersPrimary = $arrayBanners["primary"]->models;
+//        $bannersSecondary = $arrayBanners["secondary"]->models;
         $chart = [
             "courses" => Course::all()->count(),
             'material' => Material::all()->count(),
@@ -41,7 +41,7 @@ class HomeController extends Controller {
 
 
 
-        return view('home', compact('material', "bannersPrimary", "bannersSecondary", "arrayBanners",'chart'));
+        return view('home', compact('material', 'chart'));
     }
 
     public function createLinkStore(Request $request)

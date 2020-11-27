@@ -22,7 +22,6 @@
     <!--Plugin CSS file with desired skin-->
 
 
-
     <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">
 
     @yield("style")
@@ -82,29 +81,31 @@
 <!-- Topbar Start -->
 
 <div id="wrapper-custom">
+
     <div id="header-custom" class="sticky-front p-0">
         <nav class="navbar navbar-expand-lg navbar-light bg-light ">
 
-            @if(Auth::check())
-                <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
-                	<span class=" stop nav-logo-lg">
-                            @isset($option['logo'])
-                            <img class="m-2" height="60"
-                                 src="{{$option['logo']}}"
-                                 alt="">
-                        @endisset
-                	</span>
-                </a>
-            @else
-                <a href="{{route('home')}}" class="topnav-logo">
-                	<span class=" sto pnav-logo-lg">
-                	<img class="m-2" height="60"
-                         src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"
-                         alt="">
-                	</span>
-                </a>
+{{--            @if(Auth::check())--}}
+{{--                <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">--}}
+{{--                	<span class=" stop nav-logo-lg">--}}
+{{--                            @isset($option['logo'])--}}
+{{--                            <img class="m-2" height="60"--}}
+{{--                                 src="{{$option['logo']}}"--}}
+{{--                                 alt="">--}}
+{{--                        @endisset--}}
+{{--                	</span>--}}
 
-            @endif
+
+{{--                </a>--}}
+{{--            @else--}}
+{{--                <a href="{{route('home')}}" class="topnav-logo">--}}
+{{--                	<span class=" sto pnav-logo-lg">--}}
+{{--                	<img class="m-2" height="60"--}}
+{{--                         src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"--}}
+{{--                         alt="">--}}
+{{--                	</span>--}}
+{{--                </a>--}}
+{{--            @endif--}}
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,6 +127,7 @@
                         </div>
                     @else
                         @unlessrole('guest')
+
                         @hasanyrole("admin|super-admin")
 
 
@@ -192,12 +194,12 @@
                         </div>
 
 
-{{--                        <div>--}}
-{{--                            <a class="nav-link" href="{{route('discussion.index')}}" role="button" aria-haspopup="true"--}}
-{{--                               aria-expanded="false">--}}
-{{--                                Discussions--}}
-{{--                            </a>--}}
-{{--                        </div>--}}
+                        <div>
+                            <a class="nav-link" href="{{route('discussion.index')}}" role="button" aria-haspopup="true"
+                               aria-expanded="false">
+                                Discussions
+                            </a>
+                        </div>
 
 
                         <div>
@@ -347,6 +349,7 @@
     </footer>
 
 </div>
+
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST">
     @csrf

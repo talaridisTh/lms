@@ -39,9 +39,5 @@ class Post extends Model
         return $this->morphToMany(User::class, 'likable');
     }
 
-//    public function getRouteKeyName()
-//    {
-//        return "slug";
-//
-//    }
+
 }

@@ -2,14 +2,14 @@
     <div class="d-flex m-2">
         <div class="form-group my-1 p-1">
             <select class="form-control bg-list-thread filter-sidebar" id="">
-                <option value="desc">Latest</option>
-                <option value="asc">Oldest</option>
+                <option value="desc">Νεότερα</option>
+                <option value="asc">Παλαιότερο</option>
             </select>
         </div>
 
         <div class="form-group my-1  p-1">
             <select class="form-control bg-list-thread filter-course" id="">
-                <option>All</option>
+                <option>Όλα</option>
                 @foreach($courses as $key=> $course)
                     <option>{{$courses[$key]}}</option>
                 @endforeach
@@ -26,7 +26,7 @@
 
         <div class="form-group my-1  p-1 position-relative">
             <i class="uil-search position-absolute global-search"></i>
-                <input type="text" class="form-control bg-list-thread js-search-post pl-4" placeholder="Πάτα &quot;/&quot; Αναζήτηση">
+                <input type="text" class="form-control bg-list-thread js-search-post pl-4" placeholder="Πάτα &quot;/&quot; για αναζήτηση">
         </div>
     </div>
 </div>

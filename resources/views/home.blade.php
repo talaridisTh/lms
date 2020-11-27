@@ -22,6 +22,7 @@
 
 </style>
 
+
 @section('content')
     <div class="container-fluid mb-5" style="max-width: 1400px">
         {{--row 1 --}}
@@ -175,6 +176,7 @@
             </div>
 
         </div>
+
         {{--       AUTA EDW THA ALLAKSOUN -}}
                 {{--row 7 --}}
 {{--        <div>--}}

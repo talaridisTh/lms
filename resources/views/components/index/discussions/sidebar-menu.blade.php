@@ -13,12 +13,12 @@
 </style>
 <ul class="ul-thread stick">
     <li class="py-2 px-4 mt-2 mb-4 list-unstyled first-thread mb-2" data-toggle="modal" data-target="#new-threads">
-        NEW DISCUSSION
+        NEO POST
     </li>
 
     <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread" id="filter-all-threads">
         <i class="font-18 font-18 mr-1 uil-notebooks"></i>
-        All Threads
+        Όλα τα Post
     </li>
     <li class="py-2 px-3 m-1 list-unstyled bg-thread " id="filter-my-question">
         <i class="font-18 mr-1 uil-question-circle"></i>
@@ -26,7 +26,7 @@
     </li>
     <li class="py-2 px-3 m-1 list-unstyled bg-thread " id="filter-participation">
         <i class="font-18 mr-1 uil-volume"></i>
-        My Participation
+        Η συμμετοχή μου
     </li>
     <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-best-answer">
         <i class="font-18 mr-1 uil-check-circle"></i>
@@ -50,7 +50,7 @@
     </li>
     <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-no-replies">
         <i class="font-18 mr-1 uil-link-h"></i>
-        No replies yes
+        No replies yet
     </li>
 
 </ul>
