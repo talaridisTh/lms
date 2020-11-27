@@ -71,17 +71,21 @@
 							<label for='select-all-mails'></label>
 						</div>
 					</th>
-					{{-- <th class="text-center">Θέμα</th> --}}
 					<th class="text-center">Περιεχόμενο</th>
-					{{-- <th class="text-center">Κατάσταση</th> --}}
 					<th class="text-center">Ημ. Αποστολής</th>
-					{{-- <th class="text-center">Κατάσταση</th> --}}
-					{{-- <th class="text-center">Ημ.Δημιουργίας</th> --}}
+					<th class="text-center">Ημ. Αποστολής</th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
 		</table>
 	</div>
+
+	<select class="form-control" id="status-filter">
+		<option value="">Όλα τα Mail</option>
+		<option value="^(?!\s*$).+">Sent</option>
+		<option value="^$">Draft</option>
+	</select>
+
 @endsection
 
 @section('scripts')
