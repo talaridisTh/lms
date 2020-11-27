@@ -287,14 +287,18 @@ Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("gue
 //! discussion
 Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
 Route::get("/discussion/my-question", "Index\DiscussionController@myQuestion")->name("discussion.myQuestion");
+Route::get("/discussion/participation", "Index\DiscussionController@participation")->name("discussion.participation");
+Route::get("/discussion/best-answer", "Index\DiscussionController@bestAnswer")->name("discussion.bestAnswer");
+Route::get("/discussion/popular-week", "Index\DiscussionController@popularWeek")->name("discussion.popularWeek");
+Route::get("/discussion/popular-allTime", "Index\DiscussionController@popularAllTime")->name("discussion.popularAllTime");
+Route::get("/discussion/isClosed", "Index\DiscussionController@isClosed")->name("discussion.isClosed");
+Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->name("discussion.noReplies");
 
 
 Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");
 Route::post("/discussion/search", "Index\DiscussionController@search")->name("discussion.search");
 Route::post("/discussion/post/store-thread", "Index\DiscussionController@storeThread")->name("discussion.thread");
 Route::post("/discussion/post/store-reply", "Index\DiscussionController@storeReply")->name("discussion.reply");
-Route::get("/discussion/change/filter-sidebar", "Index\DiscussionController@filterSidebar")->name("discussion.filterSidebar");
-Route::get("/discussion/change/filter-course", "Index\DiscussionController@filterCourse")->name("discussion.filterCourse");
 Route::patch("/discussion/like-comment/{id}", "Index\DiscussionController@likeComment")->name("discussion.likeComment");
 Route::delete("/discussion/delete/{id}", "Index\DiscussionController@delete")->name("discussion.delete");
 Route::patch("/discussion/best/{id}", "Index\DiscussionController@best")->name("discussion.best");

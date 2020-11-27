@@ -6,6 +6,7 @@ use App\Comment;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Post;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Str;
 
@@ -17,16 +18,20 @@ class DiscussionController extends Controller {
     public function __construct()
     {
 
-        $this->course = $courses = Post::orderBy('title')->get()->map(function ($post) {
-            return $post->course->title;
+        $this->course = $courses = Course::orderBy('title')->get()->map(function ($post) {
+            return $post->title;
         });
+
     }
 
-    public function index()
+    public function index(Request $request)
     {
 
+        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
+            ->paginate(10);
+
         return view("index.discussions.discussions", [
-            "posts" => Post::orderBy('created_at', 'desc')->paginate(10),
+            "posts" => $posts,
             "comment" => Comment::all(),
             "courses" => $this->course
         ]);
@@ -63,7 +68,7 @@ class DiscussionController extends Controller {
     public function search(Request $request)
     {
 
-        return view("components.index.discussions.discussions-main", [
+        return view("index.discussions.discussions", [
             "posts" => Post::where('title', 'LIKE', '%' . $request->term . '%')->paginate(10),
             "comment" => Comment::all(),
             "courses" => $this->course
@@ -110,31 +115,112 @@ class DiscussionController extends Controller {
         ]);
     }
 
-    public function filterSidebar(Request $request)
+    public function myQuestion(Request $request)
     {
 
-        return view("components.index.discussions.discussions-main", [
-            "posts" => $this->getFilter($request),
-            "comment" => Comment::all(),
-            "courses" => $this->course
-        ]);
-    }
-
-    public function filterCourse(Request $request)
-    {
-
-        return view("components.index.discussions.discussions-main", [
-            "posts" => $this->getFilter($request),
-            "comment" => Comment::all(),
-            "courses" => $this->course
-        ]);
-    }
-
-    public function myQuestion()
-    {
+        $posts = auth()->user()->posts()
+            ->orderBy('created_at', $request->option ? $request->option : "desc")
+            ->paginate(10);
 
         return view("index.discussions.discussions", [
-            "posts" => auth()->user()->posts()->paginate(10),
+            "posts" => $posts,
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
+    }
+
+    public function participation(Request $request)
+    {
+
+        $posts = Post::whereIn('id', function ($query) {
+
+            $query->select('post_id')
+                ->from('comments')
+                ->where("user_id", auth()->id())
+                ->get();
+        })->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+
+        return view("index.discussions.discussions", [
+            "posts" => $posts,
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
+    }
+
+    public function bestAnswer(Request $request)
+    {
+
+        $posts = Post::whereIn('id', function ($query) {
+
+            $query->select('post_id')
+                ->from('comments')
+                ->where("user_id", auth()->id())
+                ->where("best", 1)
+                ->get();
+        })->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+
+        return view("index.discussions.discussions", [
+            "posts" => $posts,
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
+    }
+
+    public function popularWeek(Request $request)
+    {
+
+        $posts = Post::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->orderBy("watched", "desc")->paginate(10);
+
+        return view("index.discussions.discussions", [
+            "posts" => $posts,
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
+    }
+
+    public function popularAllTime(Request $request)
+    {
+
+        $posts = Post::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
+            ->orderBy("watched", "desc")->paginate(10);
+
+        return view("index.discussions.discussions", [
+            "posts" => $posts,
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
+    }
+
+    public function isClosed(Request $request)
+    {
+
+        $posts = Post::where("closed", 1)
+            ->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+
+        return view("index.discussions.discussions", [
+            "posts" => $posts,
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
+    }
+
+    public function noReplies(Request $request)
+    {
+
+        $posts = Post::whereNotIn('id', function ($query) {
+
+            $query->select('posts.id')
+                ->from('posts')
+                ->join('comments', 'comments.post_id', '=', 'posts.id')
+                ->where("post_id" , "!=",null)
+                ->get();
+
+        })->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+
+
+        return view("index.discussions.discussions", [
+            "posts" => $posts,
             "comment" => Comment::all(),
             "courses" => $this->course
         ]);
@@ -167,22 +253,6 @@ class DiscussionController extends Controller {
 
         $closed = Post::findOrFail($postId)->closed;
         Post::findOrFail($postId)->update(["closed" => !$closed]);
-    }
-
-    private function getFilter($request)
-    {
-
-        if ($request->course == "All")
-        {
-            $posts = Post::orderBy('created_at', $request->option)->paginate(10);
-        } else
-        {
-            $posts = Post::whereHas('course', function ($query) use ($request) {
-                $query->where('title', $request->course);
-            })->orderBy('created_at', $request->option)->paginate(10);
-        }
-
-        return $posts;
     }
 
 }

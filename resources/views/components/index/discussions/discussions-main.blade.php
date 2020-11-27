@@ -1,16 +1,9 @@
-<style>
-
-</style>
-
 <div class="filter-thread d-flex justify-content-between stick bg-light mt-2">
     <div class="d-flex m-2">
         <div class="form-group my-1 p-1">
             <select class="form-control bg-list-thread filter-sidebar" id="">
                 <option value="desc">Latest</option>
                 <option value="asc">Oldest</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
             </select>
         </div>
 

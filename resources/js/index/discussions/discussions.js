@@ -21,61 +21,63 @@ $(document).on("click", ".pagination a", async function (e) {
     }
 })
 
+const eventTopBar  = () =>{
+    $(".discussions-right").on("change", ".filter-sidebar", async function () {
 
-// filter sidebar
-$(".discussions-right").on("change",".filter-sidebar", async function () {
+        let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
+        let option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value
 
-    let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
-    let option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value
+        let filterName = $(".active-thread").attr('id').replace("filter-", "")
+        filterName = filterName == "all-threads" ? "" : filterName;
+        const {data, status} = await axios.get(`/discussion/${filterName}`, {
+            params: {
+                option,
+                course
+            }
+        })
 
-    const {data, status} = await axios.get("/discussion/change/filter-sidebar", {
-        params: {
-            option,
-            course
+        if (status == 200) {
+            $(".cnt-threads-main-list").html($(data).find(".threads-main-list"))
+            onHideBody()
+
         }
+
     })
 
-    if (status == 200) {
-        $(".cnt-threads-main-list").html($(data).find(".threads-main-list"))
-        onHideBody()
+    $(".discussions-right").on("change", ".filter-course", async function () {
 
-    }
+        let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
+        let option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value
 
-})
+        const {data, status} = await axios.get("/discussion/change/filter-course", {
+            params: {
+                option,
+                course
+            }
+        })
 
-// filter course
-$(".discussions-right").on("change",".filter-course", async function () {
-
-    let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
-    let option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value
-
-    const {data, status} = await axios.get("/discussion/change/filter-course", {
-        params: {
-            option,
-            course
+        if (status == 200) {
+            $(".cnt-threads-main-list").html($(data).find(".threads-main-list"))
+            onHideBody()
         }
     })
-
-    if (status == 200) {
-        $(".cnt-threads-main-list").html($(data).find(".threads-main-list"))
-        onHideBody()
-    }
-})
 
 // filter show body
-$(".discussions-right").on("click",".js-show-body", function () {
-    onShowBody()
-    $(".js-post-body").each((idx, el) => {
-        el.classList.remove("d-none")
-    });
-})
-$(".discussions-right").on("click",".js-hidden-body", function () {
-    onHideBody()
+    $(".discussions-right").on("click", ".js-show-body", function () {
+        onShowBody()
+        $(".js-post-body").each((idx, el) => {
+            el.classList.remove("d-none")
+        });
+    })
+    $(".discussions-right").on("click", ".js-hidden-body", function () {
+        onHideBody()
 
-    $(".js-post-body").each((idx, el) => {
-        el.classList.add("d-none")
-    });
-})
+        $(".js-post-body").each((idx, el) => {
+            el.classList.add("d-none")
+        });
+    })
+}
+eventTopBar();
 
 // Evenet listener show body
 const onHideBody = () => {
@@ -90,30 +92,37 @@ const onShowBody = () => {
 const onChangeFirstButtonNew = () => {
     let firstBtn = $(".first-thread")
 
-
-        firstBtn[0].innerHTML = `Replay`
-        firstBtn[0].dataset.target = "#new-reply"
-        firstBtn[0].classList.add("first-thread-replay")
-        firstBtn[0].classList.remove("first-thread")
-        onFirstReplayBtnEvent();
-
-
+    firstBtn[0].innerHTML = `Replay`
+    firstBtn[0].dataset.target = "#new-reply"
+    firstBtn[0].classList.add("first-thread-replay")
+    firstBtn[0].classList.remove("first-thread")
+    onFirstReplayBtnEvent();
 }
-
 const onChangeFirstButtonReplay = () => {
+    if ($(".first-thread-replay").length) {
 
-    if ($(".first-thread-replay").length){
         let firstBtn = $(".first-thread-replay")
-
         firstBtn[0].innerHTML = `NEW DISCUSSION`
         firstBtn[0].dataset.target = "#new-threads"
         firstBtn[0].classList.remove("first-thread-replay")
         firstBtn[0].classList.add("first-thread")
+        firstBtn[0].disabled = false;
+//new na ta tsekarw!
+        firstBtn[0].classList.remove("bg-danger")
+        $(".ul-thread").find(".first-thread").unbind('mouseover').unbind('mouseout');
 
     }
-
-
 }
+
+//update main page reload
+const axiosUpdateMain = (that, data) => {
+    $(".ul-thread .bg-thread").removeClass("active-thread")
+    $(that).addClass("active-thread")
+    $(".discussions-right").html($(data).find(".discussions-right> *"))
+    onHideBody()
+    onChangeFirstButtonReplay()
+}
+
 
 // submit create form
 $(".js-form-create").on("click", function (e) {
@@ -174,40 +183,18 @@ $(".js-form-reply").on("click", async function (e) {
     }
 
 })
-//validate form
-// $(".ul-thread").on("click",".first-thread",function (){
-//
-//     $("#post-title ,#post-body").on("keyup",function (e){
-//         if ($("#post-title ").val().length && $("#post-body ").val().length){
-//             $(".js-form-create").prop('disabled', false);
-//         }else{
-//             $(".js-form-create").prop('disabled', true);
-//         }
-//     })
-//
-// })
-//
-// $(document).on("click",".first-thread-replay ,.init-form-valid",function (){
-//     console.log( $(".form-reply-body"))
-//     $(".form-reply-body").on("keyup",function (e){
-//         if ($(".form-reply-body").val().length){
-//             $(".js-form-reply").prop('disabled', false);
-//         }else{
-//             $(".js-form-reply").prop('disabled', true);
-//         }
-//     })
-// })
 
 // show post
-$(".discussions-right").on("click", '.js-thread-title', async function () {
+
+$(document).on("click", '.js-thread-title', async function () {
     let postId = this.closest(".single-thread").dataset.postId
     try {
         // const {data, status} = await axios.patch(`/discussion/watched/${postId}`)
         const {data, status} = await axios.get(`/discussion/${postId}`)
 
         if (status === 200) {
+            $(".discussions-right").off();
             $(".discussions-right").html(data)
-
 
             onChangeFirstButtonNew()
             onCommentReplayBtnEvent()
@@ -218,6 +205,7 @@ $(".discussions-right").on("click", '.js-thread-title', async function () {
             handlerReply()
             bestAnswer()
             closedPost()
+            eventTopBar()
 
         }
 
@@ -226,7 +214,6 @@ $(".discussions-right").on("click", '.js-thread-title', async function () {
     }
 
 })
-
 
 // search
 $(document).on("keyup", ".js-search-post", async function (e) {
@@ -238,7 +225,7 @@ $(document).on("keyup", ".js-search-post", async function (e) {
                 term
             })
             if (status == 200) {
-                $(".cnt-threads-main-list").html($(data).find(".threads-main-list"))
+                $(".discussions-right").html($(data).find(".discussions-right>*"))
                 e.target.value = ""
                 $('#centermodal').modal('hide')
                 onHideBody();
@@ -269,7 +256,7 @@ $(document).on("keyup", function (e) {
 //replay comment first button
 const onFirstReplayBtnEvent = () => {
 
-    $(document).on("click",".first-thread-replay", function () {
+    $(document).on("click", ".first-thread-replay", function () {
         let postId = $(".main-post")[0].dataset.postId;
         let parentId = 0;
 
@@ -359,7 +346,6 @@ const onDeleteComment = () => {
 
 //ranger system
 const rangeSlider = () => {
-    console.log("ddd")
 
     let reply = $(".main-reply").map((idx, el) => {
         return typeof el.id == "undefined" ? "post-1" : el.id
@@ -528,6 +514,7 @@ const closedPost = () => {
 
 //style closes post
 const styleClosedPost = () => {
+
     if ($(".js-post-closed").hasClass("badge-danger")) {
         $(".ul-thread").find(".first-thread-replay").text("CLOSED").addClass("bg-danger").prop('disabled', true)
 
@@ -546,16 +533,12 @@ const styleClosedPost = () => {
     }
 }
 
-
-$(".discussions-left").on("click", ".filter-sidebar-all-threads", async function () {
+//all thread sidebar
+$(".discussions-left").on("click", "#filter-all-threads", async function () {
     try {
         const {data, status} = await axios.get("/discussion")
-
-
-        if (status==200){
-            $(".discussions-right").html($(data).find(".discussions-right> *"))
-            onHideBody()
-            onChangeFirstButtonReplay()
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
         }
 
 
@@ -563,16 +546,14 @@ $(".discussions-left").on("click", ".filter-sidebar-all-threads", async function
         console.log(e)
     }
 })
-
-$(".discussions-left").on("click", ".filter-sidebar-question", async function () {
+//my question sidebar
+$(".discussions-left").on("click", "#filter-my-question", async function () {
 
     try {
         const {data, status} = await axios.get("/discussion/my-question")
 
-        if (status==200){
-            $(".discussions-right").html($(data).find(".discussions-right> *"))
-            onHideBody()
-            onChangeFirstButtonReplay()
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
         }
 
 
@@ -580,4 +561,101 @@ $(".discussions-left").on("click", ".filter-sidebar-question", async function ()
         console.log(e)
     }
 })
+//my simetoxi se post
+$(".discussions-left").on("click", "#filter-participation", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/participation")
+
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+//my kaliteri apantisi
+$(".discussions-left").on("click", "#filter-best-answer", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/best-answer")
+
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+//my popular this wwek
+$(".discussions-left").on("click", "#filter-popular-week", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/popular-week")
+
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
+            $(".filter-thread").children().first().css('visibility', 'hidden');
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+//my popular all time
+$(".discussions-left").on("click", "#filter-popular-allTime", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/popular-allTime")
+
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
+            $(".filter-thread").children().first().css('visibility', 'hidden');
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+//my post pou einai closed
+$(".discussions-left").on("click", "#filter-isClosed", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/isClosed")
+
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+//my xoris apantisi
+$(".discussions-left").on("click", "#filter-no-replies", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/no-replies")
+
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+
+
+
+
 

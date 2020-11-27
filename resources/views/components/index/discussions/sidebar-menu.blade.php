@@ -12,23 +12,23 @@
     }
 </style>
 <ul class="ul-thread stick">
-    <li class="py-2 px-4 mt-2 mb-4 list-unstyled first-thread mb-2"  data-toggle="modal" data-target="#new-threads">
+    <li class="py-2 px-4 mt-2 mb-4 list-unstyled first-thread mb-2" data-toggle="modal" data-target="#new-threads">
         NEW DISCUSSION
     </li>
 
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread filter-sidebar-all-threads">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread" id="filter-all-threads">
         <i class="font-18 font-18 mr-1 uil-notebooks"></i>
         All Threads
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread filter-sidebar-question">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread " id="filter-my-question">
         <i class="font-18 mr-1 uil-question-circle"></i>
         Οι Ερωτήσεις μου
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread " id="filter-participation">
         <i class="font-18 mr-1 uil-volume"></i>
         My Participation
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-best-answer">
         <i class="font-18 mr-1 uil-check-circle"></i>
         My Best Answers
     </li>
@@ -36,30 +36,23 @@
         <i class="font-18 mr-1 uil-star"></i>
         Following
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-popular-week">
         <i class="font-18 mr-1 uil-star"></i>
         Popular This Week
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-popular-allTime">
         <i class="font-18 mr-1 uil-star"></i>
         Popular All time
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
-        <i class="font-18 mr-1 uil-check-circle"></i>
-        Solved
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-isClosed">
+        <i class=" mdi mdi-power mr-1 font-18"></i>
+        Closed
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
-        <i class="font-18 mr-1 uil-times-circle"></i>
-        UnSolved
-    </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-no-replies">
         <i class="font-18 mr-1 uil-link-h"></i>
         No replies yes
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
-        <i class="font-18 mr-1 uil-notes"></i>
-        Leaderboard
-    </li>
+
 </ul>
 
 
@@ -71,7 +64,7 @@
                 <div class="form-row w-100">
                     <div class="form-group col-md-8">
                         <label for="post-title" class="col-form-label">Εισάγετε τίτλο</label>
-                        <input  type="text" name="title" class="form-control" id="post-title" form="form-create-thread"
+                        <input type="text" name="title" class="form-control" id="post-title" form="form-create-thread"
                                placeholder="Εισάγετε τίτλο">
                     </div>
                     <div class="form-group col-md-4">
@@ -95,7 +88,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button"  class="btn btn-primary  js-form-create">Post</button>
+                <button type="button" class="btn btn-primary  js-form-create">Post</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -115,13 +108,14 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                        <textarea class="form-control form-reply-body" id="reply-body" name="body" form="form-create-reply" rows="5"
+                        <textarea class="form-control form-reply-body" id="reply-body" name="body"
+                                  form="form-create-reply" rows="5"
                                   placeholder="Απάντηση.."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button  type="button" class="btn btn-primary js-form-reply">Post</button>
+                <button type="button" class="btn btn-primary js-form-reply">Post</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -129,14 +123,15 @@
 
 
 {{--<button  type="button" class="btn btn-success" data-toggle="modal" data-target="#bs-example-modal-sm">Small Modal</button>--}}
-<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true" style="    background: rgba(0,0,0,.7);">
+<div class="modal fade" id="centermodal" tabindex="-1" role="dialog" aria-hidden="true"
+     style="    background: rgba(0,0,0,.7);">
     <div class="modal-dialog modal-sm modal-dialog-centered">
         <div class="modal-content" style="height:0 ;background-color: transparent">
             <div class="modal-body ">
                 <div class="position-relative">
-                <i class="uil-search position-absolute global-search"></i>
-                <input type="text" class="form-control bg-list-thread js-search-post css-search-snippet pl-4"
-                       placeholder="Αναζήτηση" >
+                    <i class="uil-search position-absolute global-search"></i>
+                    <input type="text" class="form-control bg-list-thread js-search-post css-search-snippet pl-4"
+                           placeholder="Αναζήτηση">
                 </div>
 
             </div>

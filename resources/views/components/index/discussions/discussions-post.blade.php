@@ -82,10 +82,11 @@
 
             @if(auth()->id()==$post->user->id)
                 <a class="badge  ml-2 mt-2 font-10 js-post-closed cursor-pointer {{$closedBadge}}">
-                    <i class=" mdi mdi-power font-20"></i>
-                    <a href="#" class=" ml-3 mt-2 badge badge-danger badge-best {{$closedbadgeShow}} font-14">Closed</a>
+                        <i class=" mdi mdi-power font-20"></i>
                 </a>
             @endif
+                <a href="#" class=" ml-3 mt-2 badge badge-danger badge-best {{$closedbadgeShow}} font-14">Closed</a>
+
 
         </div>
         <p class="font-12">{{$post->created_at->diffForHumans()}}</p>
@@ -123,10 +124,11 @@
                                     <h3 class="mt-2 mb-1 font-18 author-post-name">{{$comment->user->fullName}}</h3>
                                     @if(auth()->id()==$post->user_id)
                                         <i class="{{$isBestAnswerBtn }} js-best-answer  cursor-pointer font-20 mt-2 ml-3  mdi mdi-alpha-b-circle"></i>
-                                        <a href="#"
-                                           class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
-                                            Answer</a>
                                     @endif
+                                    <a href="#"
+                                       class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
+                                        Answer</a>
+
                                 </div>
                                 @if($comment->user_id == auth()->id())
                                     <div class="dropdown">
@@ -189,10 +191,11 @@
                                                data-placement="top"
                                                title="Best Answer"
                                                class="{{$isBestAnswerBtn}} js-best-answer is-active-best cursor-pointer font-20 mt-2 ml-3 text-info mdi mdi-alpha-b-circle"></i>
-                                            <a href="#"
-                                               class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
-                                                Answer</a>
                                         @endif
+                                        <a href="#"
+                                           class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
+                                            Answer</a>
+
                                     </div>
                                     @if($rep1->user_id == auth()->id())
                                         <div class="dropdown">
@@ -231,7 +234,7 @@
 </div>
 
 
-<div  class="form-group  mt-4 replay-bottom first-thread-replay mb-2 {{$closedHide}}" data-toggle="modal"
+<div class="form-group  mt-4 replay-bottom first-thread-replay mb-2 {{$closedHide}}" data-toggle="modal"
      data-target="#new-reply">
     <p class="p-4 text-dark  font-20"><i class="mdi mdi-hand-pointing-down font-18 mr-2"></i> Απαντησε στο Post</p>
 </div>
