@@ -79,6 +79,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::post('/dashboard/email', 'MailController@sendNewsletter');
 	Route::get('email/users', 'MailController@searchUsers');
 	Route::post('email/data-table', 'MailController@mailsTable');
+	Route::post('email/delete', 'MailController@delete');
 
 	//! media Routes
     Route::get("/media", "MediaController@index")->name("media.index");

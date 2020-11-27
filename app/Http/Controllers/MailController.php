@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\DataTables\MailsDataTable;
 use App\Mail as AppMail;
-use App\Mail\Email;
-use App\Role;
 use App\User;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\RequiredIf;
 
 class MailController extends Controller
@@ -107,6 +103,13 @@ class MailController extends Controller
 		}
 
 		return $users;
+	}
+
+	public function delete(Request $request) {
+
+		foreach ($request->mailIds as $id) {
+			AppMail::find($id)->delete();
+		}
 	}
 
 	private function storeEmail(Request $request, $recipients, $status) {

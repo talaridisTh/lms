@@ -123,7 +123,7 @@ function swalDelete() {
 		showCancelButton: true,
 		confirmButtonColor: '#ff5b5b',
 		cancelButtonColor: '#d33',
-		confirmButtonText: 'Ναι, Διαγραφή!',
+		confirmButtonText: 'Ναι, διαγραφή!',
 		cancelButtonText: 'Άκυρο!',
 	});
 }
