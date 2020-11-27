@@ -10,7 +10,10 @@ trait UrlCreator {
 	private $option;
 
 	public function __construct() {
-		$this->option = json_decode(Option::where("name", "Image Dimensions")->first()->value);
+		$temp = Option::where("name", "Image Dimensions")->first();
+		$fallback = '{"thumbnail":{"style":{"w":400,"h":400,"fit":"crop"}},"card-small":{"style":{"w":400,"h":225,"fit":"crop"}},"card-medium":{"style":{"w":600,"h":377,"fit":"crop"}},"rounded-small":{"style":{"w":100,"h":100,"fit":"crop"}},"rounded-medium":{"style":{"w":200,"h":200,"fit":"crop"}}}';
+
+		$this->option = !is_null($temp) ? json_decode($temp->value) : json_decode($fallback);
 	}
 
     public function thumbnailUrl($column = "cover") {
@@ -32,7 +35,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], ["w" => 100, "h" => 100, "fit" => "crop"]);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"rounded-small"}->style);
 
         return $url;
     }
@@ -44,7 +47,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], ["w" => 200, "h" => 200, "fit" => "crop"]);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"rounded-medium"}->style);
 
         return $url;
     }
