@@ -2,9 +2,16 @@
 
 namespace App\Traits;
 
+use App\Option;
 use League\Glide\Urls\UrlBuilderFactory;
 
 trait UrlCreator {
+
+	private $option;
+
+	public function __construct() {
+		$this->option = json_decode(Option::where("name", "Image Dimensions")->first()->value);
+	}
 
     public function thumbnailUrl($column = "cover") {
         $signkey = 'The strongest of all warriors are these two, patience and time...';
@@ -13,8 +20,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], ["w" => 400, "h" => 400, "fit" => "crop"]);
-
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->thumbnail->style);
 
         return $url;
 	}
@@ -51,7 +57,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], ["w" => 400, "h" => 225, "fit" => "crop"]);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"card-small"}->style);
 
         return $url;
 	}
@@ -64,7 +70,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], ["w" => 600, "h" => 377, "fit" => "crop"]);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"card-medium"}->style);
 
         return $url;
     }
