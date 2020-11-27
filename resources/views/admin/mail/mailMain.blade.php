@@ -62,9 +62,9 @@
 		</div>
 
 		<table id="mails-datatable" class="table w-100 nowrap js-remove-table-classes">
-			{{-- <thead style="display: none"> --}}
 			<thead class="d-none">
 				<tr>
+					<th class="text-center">ID</th>
 					<th class="text-center">
 						<div class='icheck-primary d-inline'>
 							<input type='checkbox' id='select-all-mails' autocomplete='off'>
@@ -82,8 +82,9 @@
 
 	<select class="form-control" id="status-filter">
 		<option value="">Όλα τα Mail</option>
-		<option value="^(?!\s*$).+">Sent</option>
-		<option value="^$">Draft</option>
+		{{-- einai i times apo RegEx min skefteis na ta pirakseis!!! --}}
+		<option value="^(?!\s*$).+">Απεσταλμένα</option>
+		<option value="^$">Πρόχειρο</option>
 	</select>
 
 @endsection
