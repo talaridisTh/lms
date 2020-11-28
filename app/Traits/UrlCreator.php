@@ -7,13 +7,11 @@ use League\Glide\Urls\UrlBuilderFactory;
 
 trait UrlCreator {
 
-	private $option;
-
-	public function __construct() {
+	private function dimensions() {
 		$temp = Option::where("name", "Image Dimensions")->first();
 		$fallback = '{"thumbnail":{"style":{"w":400,"h":400,"fit":"crop"}},"card-small":{"style":{"w":400,"h":225,"fit":"crop"}},"card-medium":{"style":{"w":600,"h":377,"fit":"crop"}},"rounded-small":{"style":{"w":100,"h":100,"fit":"crop"}},"rounded-medium":{"style":{"w":200,"h":200,"fit":"crop"}}}';
 
-		$this->option = !is_null($temp) ? json_decode($temp->value) : json_decode($fallback);
+		return !is_null($temp) ? json_decode($temp->value) : json_decode($fallback);
 	}
 
     public function thumbnailUrl($column = "cover") {
@@ -23,7 +21,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->thumbnail->style);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->dimensions()->thumbnail->style);
 
         return $url;
 	}
@@ -35,7 +33,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"rounded-small"}->style);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->dimensions()->{"rounded-small"}->style);
 
         return $url;
     }
@@ -47,7 +45,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"rounded-medium"}->style);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->dimensions()->{"rounded-medium"}->style);
 
         return $url;
     }
@@ -60,7 +58,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"card-small"}->style);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->dimensions()->{"card-small"}->style);
 
         return $url;
 	}
@@ -73,7 +71,7 @@ trait UrlCreator {
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
 
         // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->option->{"card-medium"}->style);
+        $url = $urlBuilder->getUrl($this->attributes[$column], (array)$this->dimensions()->{"card-medium"}->style);
 
         return $url;
     }

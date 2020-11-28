@@ -6,6 +6,7 @@ $R("#editor", utilities.redactorConfig);
 
 const recipientsSelect = $('#recipients-selection').select2({
 	placeholder: "Επιλέξτε παραλήπτες...",
+	width: "100%",
 	// allowClear: true,
 	ajax: {
 		url: "/email/users",
