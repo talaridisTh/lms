@@ -2,14 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Post;
 use App\User;
 use App\Material;
 use App\Course;
 use App\Bundle;
 use App\Role;
 use App\Topic;
-use Database\Seeders\MessageSeeder;
 use Illuminate\Database\Seeder;
 
 class BigDataSeeder extends Seeder {
@@ -22,19 +20,18 @@ class BigDataSeeder extends Seeder {
     public function run()
     {
         $this->call([
+            OptionSeeder::class,
             RoleSeeder::class,
             TopicSeeder::class,
             UserSeeder::class,
             UtilitySeeder::class,
         ]);
 
-
-
-        //svini
         User::factory()->times(500)->create()
             ->each(function ($user) {
                 $user->roles()->attach(rand(2, 4));
             });
+
         Material::factory()->times(80)->create()
             ->each(function ($material) {
 
@@ -47,6 +44,7 @@ class BigDataSeeder extends Seeder {
                     }
                 }
             });
+
         Course::factory()->times(30)->create()
             ->each(function ($course) {
                 $course->topics()->attach(Topic::all()->random()->id);
@@ -56,6 +54,7 @@ class BigDataSeeder extends Seeder {
                     $course->materials()->attach(rand(1, 80), ["priority" => $i + 1]);
                 }
             });
+
         Bundle::factory()->times(15)->create()
             ->each(function ($bundle) {
                 for ($i = 0; $i < 5; $i ++)
@@ -67,8 +66,5 @@ class BigDataSeeder extends Seeder {
                     $bundle->users()->attach(Role::find(4)->users()->select("id")->get()->random()->id);
                 }
             });
-
-
     }
-
 }

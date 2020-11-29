@@ -105,8 +105,8 @@ class UserSeeder extends Seeder {
 
 
         User::create([
-            'first_name' => "darkpony",
-            'last_name' => "darkpony",
+            'first_name' => "Darkpony",
+            'last_name' => "Digital",
             'email' => "info@darkpony.com",
             "phone"=>"6978565698",
             "profil"=>"darkpony",
