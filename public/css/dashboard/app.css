@@ -3836,6 +3836,10 @@ figure > img {
   width: 350px !important;
 }
 
+.w-300px {
+  width: 300px !important;
+}
+
 .user-select-auto {
   -webkit-user-select: auto !important;
   -moz-user-select: auto !important;
