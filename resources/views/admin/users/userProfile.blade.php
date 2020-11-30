@@ -8,6 +8,7 @@
 
 @section('content')
     <x-alertMsg :msg="'update'"></x-alertMsg>
+    <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container-fruid">
 
 		<div class="row">
