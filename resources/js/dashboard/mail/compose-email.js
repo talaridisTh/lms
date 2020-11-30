@@ -154,3 +154,24 @@ function userTablesUpdate(recipients) {
 	usersDatatable.ajax.reload(null, false);
 	recipientsDatatable.ajax.reload(null, false);
 }
+
+$(".js-submit-btn").on("click", function() {
+	const form = document.getElementById("email-form");
+	const name = this.name;
+	const value = this.value;
+	const recipients = sessionStorage.getItem("recipients");
+
+	createInput(form, name, value);
+	$("#recipients-input").val(recipients);
+
+	form.submit();
+});
+
+function createInput(form, name, value) {
+	const input = document.createElement("input");
+	input.name = name;
+	input.value = value;
+	input.hidden = true;
+
+	form.appendChild(input);
+}
