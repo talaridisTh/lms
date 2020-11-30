@@ -20,7 +20,7 @@ class MailController extends Controller
 
 	public function mailsTable(MailsDataTable $dataTable) {
 
-		return $dataTable->render('mails.table');
+		return $dataTable->render('admin.mail.mailMain');
 
 	}
 
@@ -50,11 +50,11 @@ class MailController extends Controller
 
 	// }
 	public function selectUsers(UsersDataTable $dataTable) {
-		return $dataTable->render('select.users');
+		return $dataTable->render('admin.mail.composeEmail');
 	}
 
 	public function recipeintsDatatable(RecipientsDataTable $dataTable) {
-		return $dataTable->render('recipients');
+		return $dataTable->render('admin.mail.composeEmail');
 	}
 
     public function composeEmail() {
