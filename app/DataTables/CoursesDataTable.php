@@ -33,9 +33,8 @@ class CoursesDataTable extends DataTable {
             $query = Course::where(function ($subquery) use ($request) {
 				$subquery->whereBetween('updated_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
 					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-            }
-            )
-                ->with("topics", "curator")->get();
+			})->with("topics", "curator")->get();
+
         } else
         {
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\Mail\RecipientsDataTable;
+use App\DataTables\Mail\UsersDataTable;
 use App\DataTables\MailsDataTable;
 use App\Mail as AppMail;
 use App\User;
@@ -22,30 +24,37 @@ class MailController extends Controller
 
 	}
 
-	public function searchUsers(Request $request) {
+	// public function searchUsers(Request $request) {
 
-		$users = User::where(function($query) use ($request) {
-			$query->where("last_name", "LIKE", "%$request->search%")
-				->orWhere("first_name", "LIKE", "%$request->search%")
-				->orWhere("email", "LIKE", "%$request->search%")->get();
-		})->select("id", "first_name", "last_name")->paginate(10);
+	// 	$users = User::where(function($query) use ($request) {
+	// 		$query->where("last_name", "LIKE", "%$request->search%")
+	// 			->orWhere("first_name", "LIKE", "%$request->search%")
+	// 			->orWhere("email", "LIKE", "%$request->search%")->get();
+	// 	})->select("id", "first_name", "last_name")->paginate(10);
 
-		$result = [];
-		$result["results"] = [];
+	// 	$result = [];
+	// 	$result["results"] = [];
 
-		foreach($users as $user) {
-			array_push($result['results'], [
-				"id" => "$user->id",
-				"text" => "$user->last_name $user->first_name"
-			]);
-		}
+	// 	foreach($users as $user) {
+	// 		array_push($result['results'], [
+	// 			"id" => "$user->id",
+	// 			"text" => "$user->last_name $user->first_name"
+	// 		]);
+	// 	}
 
-		$result["pagination"] = [
-			"more" => $users->currentPage() !== $users->total()
-		];
+	// 	$result["pagination"] = [
+	// 		"more" => $users->currentPage() !== $users->total()
+	// 	];
 
-		echo json_encode($result);
+	// 	echo json_encode($result);
 
+	// }
+	public function selectUsers(UsersDataTable $dataTable) {
+		return $dataTable->render('select.users');
+	}
+
+	public function recipeintsDatatable(RecipientsDataTable $dataTable) {
+		return $dataTable->render('recipients');
 	}
 
     public function composeEmail() {
