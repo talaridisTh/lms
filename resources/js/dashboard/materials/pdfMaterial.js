@@ -40,18 +40,18 @@ function updatePDFInfo(btn) {
 
 	PDFDatatable.ajax.reload(null, false);
 	$("#remainings-pdf-modal").modal("hide");
-		
+
 	utilities.toastAlert("success", "Το αρχείο άλλαξε.");
 }
 
 function changeExistingPDF(btn) {
-	
+
 	axios.patch(`/material/${materialId}/change-pdf`, {
 		materialId,
 		pdfId: btn.dataset.pdfId
 	})
 	.then( res => {
-		
+
 		const title = res.data.pdf.media_details
 			? res.data.pdf.media_details.title
 			: res.data.pdf.original_name;
@@ -62,7 +62,7 @@ function changeExistingPDF(btn) {
 
 		PDFDatatable.ajax.reload(null, false);
 		$("#remainings-pdf-modal").modal("hide");
-		
+
 		utilities.toastAlert("success", "Το αρχείο άλλαξε.");
 	})
 	.catch( err => {
@@ -97,7 +97,7 @@ async function axiosMultipleDelete(courseId, materialId) {
 }
 
 function changePDFBtnInit() {
-	
+
 	const btns = $(".js-change-pdf-btn")
 
 	btns.on("click", function() {
@@ -134,7 +134,7 @@ const pond = FilePond.create( dropzone, {
 		}
 	},
 	onprocessfile: function (error, data) {
-		
+
 		if ( pond.status === 2 ) {
 
 			clearTimeout(timer);
@@ -259,7 +259,7 @@ const PDFDatatable = $("#remaining-pdf-datatable").DataTable({
     drawCallback: function () {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
         $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
-		
+
 		changePDFBtnInit();
 	}
 });
@@ -337,12 +337,12 @@ function addCourse() {
 }
 
 function addCourseAxios(courseIds, materialId) {
-	
+
 	axios.post("/materials/add-course", {
         courseIds, materialId
 	})
 	.then ( res => {
-		let message = courseIds.length === 1 
+		let message = courseIds.length === 1
 			? "1 Course προστέθηκε" : `${courseIds.length} Courses προστέθηκαν`;
 		utilities.toastAlert("success", message);
 		addCouseModal.ajax.reload();

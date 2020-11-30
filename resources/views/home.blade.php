@@ -52,25 +52,25 @@
 
         @if($chart["courses"] >0 && $chart["material"]>0 && $chart["user"]>0 )
             {{--row 2 --}}
-{{--            <div class="row justify-content-center  mt-3">--}}
-{{--                <div class="col-md-3 text-center mr-5">--}}
-{{--                    <div class="count-number-1 count-number" data-start="0" data-end="{{$chart["courses"]}}"></div>--}}
-{{--                    <div class="line w-50 text-center"></div>--}}
-{{--                    <h3>Courses</h3>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-3 text-center mr-5">--}}
-{{--                    <div class="count-number-2 count-number" data-start="0" data-end="{{$chart["material"]}}"></div>--}}
-{{--                    <div class="line w-50 text-center"></div>--}}
-{{--                    <h3>Μαθήματα</h3>--}}
-{{--                </div>--}}
-{{--                <div class="col-md-3 text-center">--}}
-{{--                    <div class="count-number-3 count-number" data-start="0" data-end="{{$chart["user"]}}"></div>--}}
-{{--                    <div class="line w-50 text-center"></div>--}}
-{{--                    <h3>Καθηγητές </h3>--}}
-{{--                </div>--}}
+            {{--            <div class="row justify-content-center  mt-3">--}}
+            {{--                <div class="col-md-3 text-center mr-5">--}}
+            {{--                    <div class="count-number-1 count-number" data-start="0" data-end="{{$chart["courses"]}}"></div>--}}
+            {{--                    <div class="line w-50 text-center"></div>--}}
+            {{--                    <h3>Courses</h3>--}}
+            {{--                </div>--}}
+            {{--                <div class="col-md-3 text-center mr-5">--}}
+            {{--                    <div class="count-number-2 count-number" data-start="0" data-end="{{$chart["material"]}}"></div>--}}
+            {{--                    <div class="line w-50 text-center"></div>--}}
+            {{--                    <h3>Μαθήματα</h3>--}}
+            {{--                </div>--}}
+            {{--                <div class="col-md-3 text-center">--}}
+            {{--                    <div class="count-number-3 count-number" data-start="0" data-end="{{$chart["user"]}}"></div>--}}
+            {{--                    <div class="line w-50 text-center"></div>--}}
+            {{--                    <h3>Καθηγητές </h3>--}}
+            {{--                </div>--}}
 
 
-{{--            </div>--}}
+            {{--            </div>--}}
         @endif
         {{--row 3 --}}
         <div class="row my-5 ">
@@ -177,58 +177,29 @@
 
         </div>
 
-        {{--       AUTA EDW THA ALLAKSOUN -}}
-                {{--row 7 --}}
-{{--        <div>--}}
-{{--            @if($arrayBanners["primary"]->status==1)--}}
-{{--                <div id="card-slider-primary" class="splide">--}}
-{{--                    <div class="splide__track">--}}
-{{--                        <ul class="splide__list">--}}
-{{--                            @foreach($bannersPrimary as $key => $banner)--}}
-{{--                                @php--}}
-{{--                                    $bannerArray = (array) $banner;--}}
-{{--                                    $bannerValue = key ( $bannerArray);--}}
-{{--                                    $bannerKey =array_values ($bannerArray);--}}
-{{--                                    $model =   $bannerValue::findOrFail($bannerKey)->first();--}}
-{{--                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''--}}
-{{--                                @endphp--}}
-{{--                                <li class="splide__slide p-2">--}}
-{{--                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">--}}
-{{--                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>--}}
-{{--                                    <p class="p-3"> {{$model->subtitle}}</p>--}}
-{{--                                </li>--}}
-{{--                            @endforeach--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            @endif--}}
-{{--            --}}{{--row 7 --}}
-{{--        </div>--}}
-{{--        <div>--}}
-{{--            @if($arrayBanners["secondary"]->status==1)--}}
-{{--                <div id="card-slider-secondary" class="splide">--}}
-{{--                    <div class="splide__track">--}}
-{{--                        <ul class="splide__list">--}}
-{{--                            @foreach($bannersSecondary as $key => $banner)--}}
-{{--                                @php--}}
-{{--                                    $bannerArray = (array) $banner;--}}
-{{--                                    $bannerValue = key ( $bannerArray);--}}
-{{--                                    $bannerKey =array_values ($bannerArray);--}}
-{{--                                    $model =   $bannerValue::findOrFail($bannerKey)->first();--}}
-{{--                                    $bannerClass = $model->cover ==null?' d-flex flex-column justify-content-center': ''--}}
-{{--                                @endphp--}}
-{{--                                <li class="splide__slide p-2">--}}
-{{--                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">--}}
-{{--                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>--}}
-{{--                                    <p class="p-3"> {{$model->subtitle}}</p>--}}
-{{--                                </li>--}}
-{{--                            @endforeach--}}
-{{--                        </ul>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            @endif--}}
-{{--            --}}{{--row 7 --}}
-{{--        </div>--}}
+        @foreach( $arrayBanners as  $key=>  $banners)
+            @if($banners->status==1)
+                <div id="card-slider-{{$key}}" class="splide">
+                    <div class="splide__track">
+                        <ul class="splide__list">
+                            @foreach($banners->models as $banner)
+                                @php
+                                    $bannerValue = key ( $banner);
+                                    $model =   $bannerValue::findOrFail($banner->$bannerValue);
+                                @endphp
+                                <li class="splide__slide p-2">
+                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
+                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>
+                                    <p class="p-3"> {{$model->subtitle}}</p>
+                                </li>
+                            @endforeach
+                        </ul>
+
+                    </div>
+                </div>
+            @endif
+
+        @endforeach
 
     </div>
 @endsection

@@ -30,6 +30,10 @@ class HomeController extends Controller {
 
         //na ta travaw apo ton option
 //        $arrayBanners = get_object_vars(json_decode(Utility::first()->banners));
+        $arrayBanners = json_decode(Option::where("name","Index Carousels")->pluck("value")->first());
+
+        $arrayBanners = collect($arrayBanners);
+
 //        $bannersPrimary = $arrayBanners["primary"]->models;
 //        $bannersSecondary = $arrayBanners["secondary"]->models;
         $chart = [
@@ -41,7 +45,7 @@ class HomeController extends Controller {
 
 
 
-        return view('home', compact('material', 'chart'));
+        return view('home', compact('material', 'chart',"arrayBanners"));
     }
 
     public function createLinkStore(Request $request)

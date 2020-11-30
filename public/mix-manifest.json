@@ -16,7 +16,7 @@
     "/js/dashboard/materials/material.js": "/js/dashboard/materials/material.js?id=ebc72400ec8f3b1d72e4",
     "/js/dashboard/materials/materialsMain.js": "/js/dashboard/materials/materialsMain.js?id=d51e4c9de3e093d8da86",
     "/js/dashboard/materials/newMaterial.js": "/js/dashboard/materials/newMaterial.js?id=431734aa6ca316d54fbc",
-    "/js/dashboard/materials/pdfMaterial.js": "/js/dashboard/materials/pdfMaterial.js?id=eafe4892f63351b6d965",
+    "/js/dashboard/materials/pdfMaterial.js": "/js/dashboard/materials/pdfMaterial.js?id=7bac50fcd87208b24c74",
     "/js/dashboard/newContent.js": "/js/dashboard/newContent.js?id=50256c0cbc98ced58ea0",
     "/js/dashboard/overview/overview.js": "/js/dashboard/overview/overview.js?id=d21cbdd9008c9ede2627",
     "/js/dashboard/settings/general-settings.js": "/js/dashboard/settings/general-settings.js?id=f8a1258f65f2f8fa1882",
@@ -34,6 +34,6 @@
     "/js/index/favourites/favourites.js": "/js/index/favourites/favourites.js?id=38417b722aa51c6c2a3d",
     "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=b18b721056b83c0a0aef",
     "/js/index/history/history.js": "/js/index/history/history.js?id=5263b7b7951d3fceaaba",
-    "/js/index/index.js": "/js/index/index.js?id=615fc49a94ff70e3a777",
+    "/js/index/index.js": "/js/index/index.js?id=0536610c2e6bca0ad48b",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=61a03a7a7471d769592a"
 }
