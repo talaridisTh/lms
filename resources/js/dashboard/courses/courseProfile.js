@@ -2346,11 +2346,13 @@ function endDate( input ) {
 //!##########################################
 
 $("#topics-select").select2({
+	width: "100%",
 	closeOnSelect: false,
 	placeholder: "Επιλέξτε Topics..."
 })
 
 $("#version-select").select2({
+	width: "100%",
 	minimumResultsForSearch: -1
 })
 

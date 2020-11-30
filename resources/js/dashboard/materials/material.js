@@ -491,11 +491,12 @@ utilities.filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-c
 //contant
 
 $("#typeMaterial").select2({
+	width:"100%",
     minimumResultsForSearch: -1,
 });
 
 $("#instructorMaterial").select2({
-
+	width:"100%",
     tags: true
 });
 

@@ -200,7 +200,7 @@
                                 	        Εισηγητές
                                 	    </label>
                                 	    <select form="create-pdf-material" name="instructors[]" multiple id="instructorMaterial"
-                                	        class="form-control" data-toggle="select2" autocomplete="off"
+                                	        class="form-control" data-toggle="select2" data-width="100%" autocomplete="off"
                                 	        data-placeholder="Επιλέξτε instructor...">
                                 	        @php
 												foreach ( $instructors as $instructor ) {

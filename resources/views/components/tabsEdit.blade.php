@@ -138,7 +138,7 @@
             <div class="col-md-12 border-material">
                 <h4>ROLES</h4>
                 <div class="form-group">
-                    <select name="roles" id="roles" class="form-control  select2" data-toggle="select2">
+                    <select name="roles" id="roles" class="form-control" data-toggle="select2" data-width="100%">
                         @foreach ($rolesName as $role)
                             @if(isset($user))
                                 <option  value="{{$role->name}}"
