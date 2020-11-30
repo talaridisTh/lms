@@ -26,7 +26,7 @@
 @section('content')
     <div class="container-fluid mb-5" style="max-width: 1400px">
         {{--row 1 --}}
-        <div class="row ">
+        <div class="row " style="  font-family: OpenSans;">
             <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
                 <h2 class="h2-custom">Βάλτε τωρα τη Ρομποτική στο σχολείο σας</h2>
                 <div class="d-flex flex-column span-custom mb-3">

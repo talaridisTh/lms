@@ -50529,6 +50529,7 @@ b[role=presentation] {
 }
 
 .h2-custom {
+  font-family: OpenSans;
   height: 188px;
   font-size: 54px;
   font-weight: bold;
@@ -50584,13 +50585,14 @@ b[role=presentation] {
 }
 
 .span-custom {
+  font-family: OpenSans;
   font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
-  letter-spacing: normal;
-  color: #585d63;
+  letter-spacing: 0.4px;
+  color: #2c2f30;
 }
 
 .btn-custom {
@@ -50727,15 +50729,15 @@ b[role=presentation] {
 }
 
 .ul-custom li {
-  list-style: none;
   font-family: OpenSans;
+  font-size: 16px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
-  letter-spacing: normal;
-  font-size: 16px;
-  padding: 5px;
+  letter-spacing: 0.4px;
+  color: #2c2f30;
+  margin-bottom: 5px;
 }
 
 .blue-title {

@@ -85,27 +85,20 @@
     <div id="header-custom" class="sticky-front p-0">
         <nav class="navbar navbar-expand-lg navbar-light bg-light ">
 
-{{--            @if(Auth::check())--}}
-{{--                <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">--}}
-{{--                	<span class=" stop nav-logo-lg">--}}
-{{--                            @isset($option['logo'])--}}
-{{--                            <img class="m-2" height="60"--}}
-{{--                                 src="{{$option['logo']}}"--}}
-{{--                                 alt="">--}}
-{{--                        @endisset--}}
-{{--                	</span>--}}
+            @if(Auth::check())
+                <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
+                	<span class=" stop nav-logo-lg">
+                            @isset($option['logo'])
+                            <img class="m-2" height="60"
+                                 src="{{$option['logo']}}"
+                                 alt="">
+                        @endisset
+                	</span>
 
 
-{{--                </a>--}}
-{{--            @else--}}
-{{--                <a href="{{route('home')}}" class="topnav-logo">--}}
-{{--                	<span class=" sto pnav-logo-lg">--}}
-{{--                	<img class="m-2" height="60"--}}
-{{--                         src="https://lms.idrogios.com/uploads/logos/D4k5iDz1HGejDZqYPydztYdzxXUK9BYgRNaHYwGF.png"--}}
-{{--                         alt="">--}}
-{{--                	</span>--}}
-{{--                </a>--}}
-{{--            @endif--}}
+                </a>
+
+            @endif
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                     aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

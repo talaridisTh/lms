@@ -54,7 +54,7 @@ class OptionController extends Controller
 
 		$description->value = $request->description;
 		$description->save();
-		
+
 		$contactInfo->value = json_encode([
 			"city" => $request->city,
 			"address" => $request->address,
@@ -73,27 +73,27 @@ class OptionController extends Controller
 			"linkedIn" => $request->linkedIn
 		]);
 		$social->save();
-		
+
 		return redirect( "/dashboard/general-settings" );
 	}
 
 	public function showCarousels() {
-		
+
 		$page = Option::where("name", "Index Carousels")->first();
 
 		if ( $page !== null) {
 			$bannersData = json_decode($page->value);
 			$banners = (object)[];
-			
+
 			foreach ($bannersData as $section => $values) {
 				$banners->{ $section } = (object)[];
 				$banners->{ $section }->models = [];
-	
+
 				foreach($values->models as $model) {
-	
+
 					$namespace = key((array)$model);
 					$id = current((array)$model);
-					
+
 					$value = $namespace::find( $id );
 					array_push($banners->{ $section }->models, $value);
 				}
@@ -175,12 +175,12 @@ class OptionController extends Controller
 			'name' => 'required',
 			'json' => 'required|json'
 		]);
-		
+
 		$option->name = $request->name;
 		$option->slug = Str::slug($request->name);
 		$option->value = json_encode(json_decode($request->json));
 		$option->save();
-		
+
 		return redirect("/dashboard/option/$option->id/show-json");
 	}
 

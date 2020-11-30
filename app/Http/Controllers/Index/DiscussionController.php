@@ -20,14 +20,18 @@ class DiscussionController extends Controller {
         $this->course = $courses = Course::orderBy('title')->get()->map(function ($post) {
             return $post->title;
         });
-
     }
 
     public function index(Request $request)
     {
 
-        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
+        $posts = Post::whereHas("user", function ($course) {
+            $course->whereIn("posts.course_id", auth()->user()->courses->pluck("id"));
+        })->orderBy('created_at', $request->option ? $request->option : "desc")
             ->paginate(10);
+//
+//        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
+//            ->paginate(10);
 
         return view("index.discussions.discussions", [
             "posts" => $posts,
@@ -66,12 +70,17 @@ class DiscussionController extends Controller {
 
     public function search(Request $request)
     {
+        $posts = Post::whereHas("user", function ($course) {
+            $course->whereIn("posts.course_id", auth()->user()->courses->pluck("id"));
+        })->where('title', 'LIKE', '%' . $request->term . '%')->paginate(10);
 
+//        Post::where('title', 'LIKE', '%' . $request->term . '%')->paginate(10)
         return view("index.discussions.discussions", [
-            "posts" => Post::where('title', 'LIKE', '%' . $request->term . '%')->paginate(10),
+            "posts" => $posts,
             "comment" => Comment::all(),
             "courses" => $this->course
         ]);
+        //edw emeina sinexizw me ta post refacto na t blepeo mono o user
     }
 
     public function storeThread(Request $request)
@@ -82,7 +91,6 @@ class DiscussionController extends Controller {
             "body" => "required",
             "course" => "required",
         ]);
-
         $post = new Post;
         $post->title = $request->title;
         $post->slug = Str::slug($request->title, "-");
@@ -90,7 +98,6 @@ class DiscussionController extends Controller {
         $post->user_id = auth()->id();
         $post->course_id = Course::where("title", $request->course)->first()->id;
         $post->save();
-
 //        Post::create([
 //            "title" => $request->title,
 //            "slug" => Str::slug($request->title, "-"),
@@ -98,8 +105,6 @@ class DiscussionController extends Controller {
 //            "user_id" => auth()->id(),
 //            "course" => Course::where("title", $request->course)->first()->id
 //        ]);
-
-
         $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
             ->paginate(10);
 
@@ -229,11 +234,9 @@ class DiscussionController extends Controller {
             $query->select('posts.id')
                 ->from('posts')
                 ->join('comments', 'comments.post_id', '=', 'posts.id')
-                ->where("post_id" , "!=",null)
+                ->where("post_id", "!=", null)
                 ->get();
-
         })->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
-
 
         return view("index.discussions.discussions", [
             "posts" => $posts,

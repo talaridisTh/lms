@@ -34,6 +34,7 @@
 <div class="cnt-threads-main-list">
     <ul class="threads-main-list p-0 mt-3">
         @forelse($posts  as $post)
+
             <li class="d-flex list-unstyled bg-list-thread px-3 py-2 mb-3 single-thread" data-post-id="{{$post->id}}">
 
                 <div class="mr-2 d-flex align-items-center ">
