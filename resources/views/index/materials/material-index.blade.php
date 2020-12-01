@@ -173,44 +173,55 @@
                         .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
                             color: #fff;
                             background: linear-gradient(
-                                315deg
-                                , rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%);
+                                315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%);
                         }
                     </style>
 
+
                     <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
-                        <li class="nav-item">
-                            <a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                                <span class="d-none d-md-block">Home</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#profile1" data-toggle="tab" aria-expanded="true"
-                               class="nav-link rounded-0 active">
-                                <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                                <span class="d-none d-md-block">Profile</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-                                <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                <span class="d-none d-md-block">Settings</span>
-                            </a>
-                        </li>
+                        @if($materials->summary && json_decode($materials->fields)->summary)
+                            <li class="nav-item">
+                                <a href="#home1" data-toggle="tab" aria-expanded="false"
+                                   class="nav-link rounded-0 ">
+                                    <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Σχετικά με το μάθημα</span>
+                                </a>
+                            </li>
+                        @endif
+                        @if($materials->description && json_decode($materials->fields)->description)
+                            <li class="nav-item">
+                                <a href="#profile1" data-toggle="tab" aria-expanded="true"
+                                   class="nav-link rounded-0 ">
+                                    <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Περίληψη</span>
+                                </a>
+                            </li>
+                        @endif
+                        @if($materials->content && json_decode($materials->fields)->content)
+                            <li class="nav-item">
+                                <a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                    <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Περιγραφή</span>
+                                </a>
+                            </li>
+                        @endif
                     </ul>
 
 
                     <div class="tab-content">
-                        <div class="tab-pane" id="home1">
+
+                        <div class="tab-pane " id="home1">
                             <div class="p-2"> {!! $materials->summary !!}</div>
                         </div>
-                        <div class="tab-pane show active" id="profile1">
+
+                        <div class="tab-pane " id="profile1">
                             <div class="p-2"> {!! $materials->description !!}</div>
                         </div>
+
                         <div class="tab-pane" id="settings1">
                             <div class="p-2"> {!! $materials->content !!}</div>
                         </div>
+
                     </div>
 
 
