@@ -18,6 +18,20 @@
     $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
 
 
+if (json_decode($materials->fields)->summary){
+    $activeTabsOne ="active";
+    $activeContentOne="show active";
+
+}else if(json_decode($materials->fields)->summary){
+       $activeTabsTwo ="active";
+       $activeContentTwo="show active";
+}
+else{
+     $activeTabsThree ="active";
+     $activeContentThree="show active";
+}
+
+
 @endphp
 
 @section("style")
@@ -49,29 +63,6 @@
 
 
     <section class=" d-flex wrapper flex-column mt-2">
-        <!-- start page title -->
-    {{--        @unlessrole('guest')--}}
-    {{--        <div class=" ml-5 content-width">--}}
-    {{--            <div class="row">--}}
-    {{--                <div class="col-12">--}}
-    {{--                    <div class="page-title-box">--}}
-    {{--                        <div class="page-title-left">--}}
-    {{--                            <ol class="breadcrumb p-1 m-0">--}}
-    {{--                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>--}}
-    {{--                                </li>--}}
-    {{--                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"--}}
-    {{--                                                               class="text-secondary">Courses</a></li>--}}
-    {{--                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"--}}
-    {{--                                                               class="text-secondary">{{$course->title}}</a></li>--}}
-    {{--                                <li class="breadcrumb-item  text-black">{{$materials->title}}</li>--}}
-    {{--                            </ol>--}}
-    {{--                        </div>--}}
-    {{--                    </div>--}}
-    {{--                </div>--}}
-    {{--            </div>--}}
-    {{--        </div>--}}
-    {{--        @endunlessrole--}}
-    <!-- end page title -->
 
         <div class="material-cnt">
             <div class="d-flex justify-content-between align-items-center template-cnt-title">
@@ -164,10 +155,6 @@
                 <div class="col-lg-8 template-col-12">
 
 
-                    {{-- @include("components.index.user-info")--}}
-
-                    {{--                    @include("components.index.announcements")--}}
-
                     {{--//min svisti to thelw gia na allazei to single page--}}
                     <style>
                         .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -178,80 +165,175 @@
                     </style>
 
 
-                    <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                    <ul class="nav nav-tabs mb-3">
                         @if($materials->summary && json_decode($materials->fields)->summary)
-                            <li class="nav-item">
-                                <a href="#home1" data-toggle="tab" aria-expanded="false"
-                                   class="nav-link rounded-0 ">
+                            <li class="nav-item ">
+                                <a href="#tabs-summary" data-toggle="tab" aria-expanded="false"
+                                   class="nav-link rounded-0 {{$activeTabsOne?$activeTabsOne:""}}">
                                     <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                                    <span class="d-none d-md-block">Σχετικά με το μάθημα</span>
+                                    <span class="d-none d-md-block">Πληροφορίες</span>
                                 </a>
                             </li>
                         @endif
                         @if($materials->description && json_decode($materials->fields)->description)
                             <li class="nav-item">
-                                <a href="#profile1" data-toggle="tab" aria-expanded="true"
+                                <a href="#tabs-description" data-toggle="tab" aria-expanded="true"
                                    class="nav-link rounded-0 ">
                                     <i class="mdi mdi-account-circle d-md-none d-block"></i>
                                     <span class="d-none d-md-block">Περίληψη</span>
                                 </a>
                             </li>
                         @endif
+
                         @if($materials->content && json_decode($materials->fields)->content)
                             <li class="nav-item">
-                                <a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                <a href="#tabs-content" data-toggle="tab" aria-expanded="false"
+                                   class="nav-link rounded-0">
                                     <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                    <span class="d-none d-md-block">Περιγραφή</span>
+                                    <span class="d-none d-md-block">Συζήτηση</span>
                                 </a>
                             </li>
                         @endif
+
+                        @if(count($materials->media->where("type","!=",0))>0)
+                            <li class="nav-item">
+                                <a href="#tabs-files" data-toggle="tab" aria-expanded="false"
+                                   class="nav-link rounded-0">
+                                    <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Αρχεία</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if(count($materials->media->where("type","!=",1))>0)
+                            <li class="nav-item">
+                                <a href="#tabs-media" data-toggle="tab" aria-expanded="false"
+                                   class="nav-link rounded-0">
+                                    <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Media</span>
+                                </a>
+                            </li>
+                        @endif
+
+                        <li class="nav-item">
+                            <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Quiz</span>
+                            </a>
+                        </li>
+
                     </ul>
 
 
                     <div class="tab-content">
 
-                        <div class="tab-pane " id="home1">
+                        <div class="tab-pane " id="tabs-summary">
                             <div class="p-2"> {!! $materials->summary !!}</div>
                         </div>
 
-                        <div class="tab-pane " id="profile1">
+                        <div class="tab-pane " id="tabs-description">
                             <div class="p-2"> {!! $materials->description !!}</div>
                         </div>
 
-                        <div class="tab-pane" id="settings1">
+                        <div class="tab-pane" id="tabs-content">
                             <div class="p-2"> {!! $materials->content !!}</div>
                         </div>
 
+                        <div class="tab-pane" id="tabs-files">
+                            <div class="tab-pane show active" id="profile">
+                                <div class="accordion custom-accordion my-2" id="extra-content">
+                                    <div class="card mb-0">
+
+                                        <div id="collapse-extra-content" class="collapse show"
+                                             aria-labelledby="head-extra-content" data-parent="#extra-content">
+                                            <div class="card-body" style="padding: 30px">
+                                                @foreach($materials->media->where("type","!=",0) as $media)
+
+                                                    @if($media->ext=="mp3")
+
+                                                        <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
+                                                           data-audio-status="paused"></i>
+                                                        <audio class="js-audio">
+                                                            <source src="{{ $media->rel_path }}"
+                                                                    type="{{ $media->file_info }}">
+                                                        </audio>
+                                                        <span
+                                                            class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
+                                                    @else
+
+                                                        <div class="d-flex flex-column">
+
+                                                            <a target="_blank" href="{{url($media->rel_path)}}">
+                                                                <i class="h3 mdi {{$materials->getIcon($media->ext)}}"></i>
+                                                                <span
+                                                                    class=" ml-3">
+                                                             {{isset($media->mediaDetails)? $media->mediaDetails->title:$media->original_name}}.{{$media->ext}}
+                                                        </span>
+                                                            </a>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane" id="tabs-media">
+                            <div class="col-md-12 my-1">
+                                <div
+                                    class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
+                                    <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
+
+                                    <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
+                                       data-target="#bs-example-modal-lg">
+                                        <span class="mdi font-18 ml-2 text-primary mdi-folder-multiple-image"></span>
+                                        Media
+                                    </a>
+
+                                    <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
+                                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <div class="swiper-container">
+                                                        <!-- Additional required wrapper -->
+                                                        <div class="swiper-wrapper">
+                                                            <!-- Slides -->
+
+                                                            @foreach($materials->media->where("type","!=",1) as $media)
+                                                                <div class="swiper-slide">
+                                                                    <img class="d-block img-fluid"
+                                                                         src="{{url($media->rel_path)}}"
+                                                                         alt="First slide">
+                                                                </div>
+                                                            @endforeach
+
+
+                                                        </div>
+                                                        <!-- If we need pagination -->
+                                                        <div class="swiper-pagination"></div>
+
+                                                        <!-- If we need navigation buttons -->
+                                                        <div class="swiper-button-prev"></div>
+                                                        <div class="swiper-button-next"></div>
+
+                                                        <!-- If we need scrollbar -->
+                                                        <div class="swiper-scrollbar"></div>
+                                                    </div>
+
+
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
-
-
-                    {{--                    @include("components.index.collapse-menu",--}}
-                    {{--                    ["idAccordion"=>$materials->slug."-accordion-summary" ,--}}
-                    {{--                    "idHeader"=>$materials->slug."-header-summary",--}}
-                    {{--                    "href"=>$materials->slug."-href-summary",--}}
-                    {{--                    "title"=>"Σχετικά με το μάθημα",--}}
-                    {{--                    "body"=>isset($materials->summary)?$materials->summary:"",--}}
-                    {{--                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->summary:""--}}
-                    {{--                    ])--}}
-
-                    {{--                    @include("components.index.collapse-menu",--}}
-                    {{--                    ["idAccordion"=>$materials->slug."-accordion-description" ,--}}
-                    {{--                    "idHeader"=>$materials->slug."-header-description",--}}
-                    {{--                    "href"=>$materials->slug."-href-description",--}}
-                    {{--                    "title"=>"Περίληψη",--}}
-                    {{--                    "body"=>isset($materials->description)?$materials->description:"",--}}
-                    {{--                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->description:""--}}
-                    {{--                    ])--}}
-                    {{--                    @include("components.index.collapse-menu",--}}
-                    {{--                    ["idAccordion"=>$materials->slug."-accordion-content" ,--}}
-                    {{--                    "idHeader"=>$materials->slug."-header-content",--}}
-                    {{--                    "href"=>$materials->slug."-href-content",--}}
-                    {{--                    "title"=>"Περιγραφή",--}}
-                    {{--                    "body"=>isset($materials->content)?$materials->content:"",--}}
-                    {{--                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->content:""--}}
-
-                    {{--                    ])--}}
-
 
                 </div>
                 <div class="col-lg-4 pl-3 template-hidden">
@@ -278,100 +360,6 @@
 
                         </div>
                     </div>
-
-                    @if(count($materials->media->where("type","!=",1))>0)
-
-                        <div class="col-md-12 my-1">
-                            <div
-                                class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
-                                <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
-                                <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
-                                   data-target="#bs-example-modal-lg">Εικόνες</a>
-                                <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
-                                     aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <div class="swiper-container">
-                                                    <!-- Additional required wrapper -->
-                                                    <div class="swiper-wrapper">
-                                                        <!-- Slides -->
-
-                                                        @foreach($materials->media->where("type","!=",1) as $media)
-                                                            <div class="swiper-slide">
-                                                                <img class="d-block img-fluid"
-                                                                     src="{{url($media->rel_path)}}" alt="First slide">
-                                                            </div>
-                                                        @endforeach
-
-
-                                                    </div>
-                                                    <!-- If we need pagination -->
-                                                    <div class="swiper-pagination"></div>
-
-                                                    <!-- If we need navigation buttons -->
-                                                    <div class="swiper-button-prev"></div>
-                                                    <div class="swiper-button-next"></div>
-
-                                                    <!-- If we need scrollbar -->
-                                                    <div class="swiper-scrollbar"></div>
-                                                </div>
-
-
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                            </div>
-                        </div>
-
-                    @endif
-                    @if(count($materials->media->where("type","!=",0))>0)
-                        <div class="accordion custom-accordion my-2" id="extra-content">
-                            <div class="card mb-0">
-                                <div class="card-header p-2" id="head-extra-content">
-                                    <h5 class="m-0 pl-2">
-                                        <a class="custom-accordion-title d-block py-1" data-toggle="collapse"
-                                           href="#collapse-extra-content" aria-expanded="true"
-                                           aria-controls="collapse-extra-content">
-                                            Βοηθητικά Αρχεία<i class="mdi mdi-chevron-down accordion-arrow"></i>
-                                        </a>
-                                    </h5>
-                                </div>
-
-                                <div id="collapse-extra-content" class="collapse show"
-                                     aria-labelledby="head-extra-content" data-parent="#extra-content">
-                                    <div class="card-body" style="padding: 30px">
-                                        @foreach($materials->media->where("type","!=",0) as $media)
-
-                                            @if($media->ext=="mp3")
-
-                                                <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
-                                                   data-audio-status="paused"></i>
-                                                <audio class="js-audio">
-                                                    <source src="{{ $media->rel_path }}" type="{{ $media->file_info }}">
-                                                </audio>
-                                                <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
-                                            @else
-
-                                                <div class="d-flex flex-column">
-
-                                                    <a target="_blank" href="{{url($media->rel_path)}}">
-                                                        <i class="h3 mdi {{$materials->getIcon($media->ext)}}"></i>
-                                                        <span
-                                                            class=" ml-3">
-                                                             {{isset($media->mediaDetails)? $media->mediaDetails->title:$media->original_name}}.{{$media->ext}}
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            @endif
-                                        @endforeach
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
 
                     <ul data-course-id="{{$course->id}}" class="w-600 my-2 p-0 single-section-material">
                         @php
