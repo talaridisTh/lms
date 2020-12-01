@@ -44,30 +44,6 @@
 
 
     <div class="content-page mt-1"><!-- breadcrumb -->
-{{--        @unlessrole("guest")--}}
-{{--        <div class=" ml-5 content-width">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-12">--}}
-{{--                    <div class="page-title-box ">--}}
-{{--                        <div class="page-title-left">--}}
-{{--                            <ol class="breadcrumb p-1 m-0">--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"--}}
-{{--                                                               class="text-secondary">Courses</a></li>--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"--}}
-{{--                                                               class="text-black">{{$course->title}}</a></li>--}}
-{{--                            </ol>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div><!-- end breadcrumb -->--}}
-{{--        @endunlessrole--}}
-
-
-
-
         <div class="container-xl mb-3" style="max-width: 1705px"> <!-- container banner -->
 
             <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2 px-lg-2 px-xl-5"
@@ -156,6 +132,40 @@
                 </div>
 
                 <div class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block ":"offset-2 col-md-8 offset-2 text-left" }}">
+
+                    @if((count($announcements = $course->materials->where("type","Announcement"))>0))
+                        <div class="accordion" id="courses-announcement">
+                            <div class="card mb-0">
+                                <div class="card-header alert-danger" id="heading-announcement">
+                                    <h5 class="m-0">
+                                        <a class="custom-accordion-title d-block pt-2 pb-2"
+                                           data-toggle="collapse" href="#collapseOne"
+                                           aria-expanded="true" aria-controls="collapseOne">
+                                            Ανακοινώσεις
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show"
+                                     aria-labelledby="heading-announcement" data-parent="#courses-announcement">
+                                    <div class="card-body py-1" data-simplebar style="max-height: 200px;">
+                                        @foreach($announcements  as $key => $announcement)
+                                            <div class="single-announcement  mb-3" id="announcement-{{$key}}">
+
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h3>{{$announcement->title}}</h3>
+                                                    <span class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
+                                                </div>
+
+                                                {{$announcement->description}}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @if(count($course->media->where("type","!=",0))>0)
                         <div class="accordion custom-accordion my-2" id="extra-content">
                             <div class="card mb-0">
@@ -227,11 +237,7 @@
                                 --$count;//den metraei count an einai section
                             @endphp
 
-                            <div class="card-header p-1" id="head-extra-content">
-                                <h5 class="m-0 pl-2">
-                                    @include("components.index.announcements")
-                                </h5>
-                            </div>
+
 
                             <div class="accordion section mb-2" id="{{$materials->slug}}"> <!-- list section -->
                                 <div class="card mb-0 bg-transparent">

@@ -44,28 +44,6 @@
 
 
     <div class="content-page mt-1"><!-- breadcrumb -->
-{{--        @unlessrole("guest")--}}
-{{--        <div class=" ml-5 content-width">--}}
-{{--            <div class="row">--}}
-{{--                <div class="col-12">--}}
-{{--                    <div class="page-title-box ">--}}
-{{--                        <div class="page-title-left">--}}
-{{--                            <ol class="breadcrumb p-1 m-0">--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('home')}}" class="text-secondary">Home</a>--}}
-{{--                                </li>--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('index.courses',Auth::user()->slug)}}"--}}
-{{--                                                               class="text-secondary">Courses</a></li>--}}
-{{--                                <li class="breadcrumb-item"><a href="{{route('index.userCourse',$course->slug)}}"--}}
-{{--                                                               class="text-black">{{$course->title}}</a></li>--}}
-{{--                            </ol>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div><!-- end breadcrumb -->--}}
-{{--        @endunlessrole--}}
-
-
 
 
         <div class="container-xl mb-3" style="max-width: 1705px"> <!-- container banner -->
@@ -85,7 +63,8 @@
 
 
                         <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
-                            <h2 data-course-slug="{{$course->slug}}" class="display-4 text-light course-slug">{{$course->title}}</h2>
+                            <h2 data-course-slug="{{$course->slug}}"
+                                class="display-4 text-light course-slug">{{$course->title}}</h2>
                             <p class="text-light my-4 text-left">{{$course->subtitle}}</p>
                             <div class="button-course-fav my-sm-2 template">
                                 @if(count($allMaterial))
@@ -154,7 +133,41 @@
                     </div>
                 </div>
 
-                <div class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block template-material-list":"offset-2 col-md-8 offset-2 text-left" }}">
+                <div
+                    class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block template-material-list":"offset-2 col-md-8 offset-2 text-left" }}">
+                    @if((count($announcements = $course->materials->where("type","Announcement"))>0))
+                        <div class="accordion" id="courses-announcement">
+                            <div class="card mb-0">
+                                <div class="card-header alert-danger" id="heading-announcement">
+                                    <h5 class="m-0">
+                                        <a class="custom-accordion-title d-block pt-2 pb-2"
+                                           data-toggle="collapse" href="#collapseOne"
+                                           aria-expanded="true" aria-controls="collapseOne">
+                                            Ανακοινώσεις
+                                        </a>
+                                    </h5>
+                                </div>
+
+                                <div id="collapseOne" class="collapse show"
+                                     aria-labelledby="heading-announcement" data-parent="#courses-announcement">
+                                    <div class="card-body py-1" data-simplebar style="max-height: 200px;">
+                                        @foreach($announcements  as $key => $announcement)
+                                            <div class="single-announcement  mb-3" id="announcement-{{$key}}">
+
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                <h3>{{$announcement->title}}</h3>
+                                                <span class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
+                                                </div>
+
+                                            {{$announcement->description}}
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @if(count($course->media->where("type","!=",0))>0)
                         <div class="accordion custom-accordion my-2" id="extra-content">
                             <div class="card mb-0">
@@ -169,7 +182,6 @@
                                         </a>
                                     </h5>
                                 </div>
-
 
 
                                 <div id="collapse-extra-content" class="collapse show"
@@ -203,7 +215,9 @@
                         </div>
                     @endif
 
-                    <ul data-course-id="{{$course->id}}" class="w-600 m-0 p-0 single-section-material"> <!-- list material -->
+
+                    <ul data-course-id="{{$course->id}}" class="w-600 m-0 p-0 single-section-material">
+                        <!-- list material -->
 
                         @php
                             $count = 0;  //count material
@@ -228,11 +242,7 @@
                                 --$count;//den metraei count an einai section
                             @endphp
 
-                            <div class="card-header p-1" id="head-extra-content">
-                                <h5 class="m-0 pl-2">
-                                    @include("components.index.announcements")
-                                </h5>
-                            </div>
+
 
                             <div class="accordion section mb-2" id="{{$materials->slug}}"> <!-- list section -->
                                 <div class="card mb-0 bg-transparent">
@@ -276,7 +286,9 @@
                                                 <li data-material-id="{{$chapter->id}}"
                                                     data-material-priority="{{$key+1}}"
                                                     class="list-group-item border-r-0 {{$highlight}} m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
-                                                    <a data-material-slug="{{$chapter->slug}}" data-material-title="{!! $chapter->title !!}" class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":"template-prevent"}}"
+                                                    <a data-material-slug="{{$chapter->slug}}"
+                                                       data-material-title="{!! $chapter->title !!}"
+                                                       class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":"template-prevent"}}"
                                                        href="{{$link}}">
                                                         <div class="col-lg-2 col-1 ml-1 ">
 
@@ -293,7 +305,8 @@
                                                             @endif
 
                                                         </div>
-                                                        <div class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
+                                                        <div
+                                                            class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
                                                             <h3 style="border-radius: 5px"
                                                                 class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
                                                             </h3>
@@ -322,7 +335,9 @@
                                 <li data-material-id="{{$materials->id}}"
                                     data-material-priority="{{$countIfNotSection}}"
                                     class="list-group-item {{$highlight}} border ">
-                                    <a data-material-slug="{{$materials->slug}}" data-material-title="{!! $materials->title!!}" class=" d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":"template-prevent"}}"
+                                    <a data-material-slug="{{$materials->slug}}"
+                                       data-material-title="{!! $materials->title!!}"
+                                       class=" d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":"template-prevent"}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         @unlessrole("guest")
                                         <div class="col-lg-2 mr-2 col-1 ">
@@ -352,7 +367,7 @@
 
                 </div>
 
-{{--                <p class="template-fullscreen">test</p>--}}
+                {{--                <p class="template-fullscreen">test</p>--}}
 
             </div>
 
