@@ -99,10 +99,10 @@
 	<div class="container content-width">
 
 		<div class="mt-1 mb-1 text-right">{{-- an figi to value den mporo na kano isset() sto controller --}}
-			<button form="email-form" type="submit" class="btn btn-danger ml-1" name="button" value="send">
+			<button class="js-submit-btn btn btn-danger ml-1" name="button" value="send">
 				Send
 			</button>
-			<button form="email-form" type="submit" class="btn btn-dark" name="button" value="draft">
+			<button class="js-submit-btn btn btn-dark" name="button" value="draft">
 				Set Draft
 			</button>
 		</div>
@@ -125,7 +125,8 @@
 				<form id="email-form" action="/dashboard/email" method="POST" autocomplete="off">
 			
 					@csrf
-		
+					
+					<input id="recipients-input" type="text" name="recipients" hidden>
 					{{-- <div class="form-group">
 						<div class="d-flex">
 							<label class="mr-auto" for="recipients-selection">Προς</label>
@@ -209,12 +210,6 @@
 				</table>
 			</div>
 		</div>
-														
-
-
-
-		
-		
 	</div>
 
 @endsection

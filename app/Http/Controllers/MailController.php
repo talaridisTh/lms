@@ -66,12 +66,11 @@ class MailController extends Controller
 		$request->validate([
 			"subject" => "required",
 			"content" => "required",
-			"recipients" => [
-				new RequiredIf(!isset($request->recipientsRoles) && $request->button === "send")
-			]
-		]);
+			"recipients" => "required_if:button,===,send"
+			]);
 
 		$users = $this->findRecipients($request);
+
 		$recipients = [
 			"ids" => [],
 			"emails" => []
@@ -101,11 +100,10 @@ class MailController extends Controller
 
 	private function findRecipients(Request $request) {
 
-		if (isset($request->recipientsRoles)) {
-			$users = User::role($request->recipientsRoles)->select("id", "email")->get();
-		}
-		else if ( isset($request->recipients) ) {
-			$users = User::find($request->recipients, ["id", "email"]);
+		if ( isset($request->recipients) ) {
+			$recipients = explode(",", $request->recipients);
+
+			$users = User::find($recipients, ["id", "email"]);
 		}
 		else {
 			$users = null;
