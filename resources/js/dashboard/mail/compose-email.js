@@ -175,3 +175,65 @@ function createInput(form, name, value) {
 
 	form.appendChild(input);
 }
+
+function createSelect(id) {
+	const select = document.createElement("select");
+	select.classList.add("select2", "form-control", "select2-multiple");
+	select.id = id;
+
+	return select;
+}
+
+(function coursesFilter() {
+	const lengthCnt = document.getElementById("users-datatable_length");
+	const select = createSelect("course-user-filter");
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		placeholder: "Όλα τα Courses",
+		width: "150px",
+		ajax: {
+			url: "/courses/json-search",
+			delay: 1000,
+			dataType: "json",
+			data: function(params) {
+				return {
+					search: params.term,
+					page: params.page || 1
+				}
+			}
+		}
+	})
+
+	$(select).on("change", function() {
+		usersDatatable.column(2).search( this.value ).draw();
+	})
+})();
+
+(function bundlesFilter() {
+	const lengthCnt = document.getElementById("users-datatable_length");
+	const select = createSelect("bundle-user-filter");
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		placeholder: "Όλα τα Bundles",
+		width: "150px",
+		ajax: {
+			url: "/bundles/json-search",
+			delay: 1000,
+			dataType: "json",
+			data: function(params) {
+				return {
+					search: params.term,
+					page: params.page || 1
+				}
+			}
+		}
+	})
+
+	$(select).on("change", function() {
+		usersDatatable.column(3).search( this.value ).draw();
+	})
+})()

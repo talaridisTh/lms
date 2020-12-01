@@ -29,6 +29,11 @@
 			background: #404954;
 			z-index: 1000;
 		}
+
+		#users-datatable_length span.select2:nth-child(3) {
+			margin-right: 6px;
+		}
+
 	</style>
 @endsection
 
@@ -109,19 +114,19 @@
 
 		<ul class="nav nav-tabs nav-bordered mb-3">
 			<li class="nav-item">
-				<a href="#compose-mail-tab" class="nav-link" data-toggle="tab" aria-expanded="false">
+				<a href="#compose-mail-tab" class="nav-link active" data-toggle="tab" aria-expanded="false">
 					Δημιουργία
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="#recipients-tab" class="nav-link active" data-toggle="tab" aria-expanded="true">
+				<a href="#recipients-tab" class="nav-link" data-toggle="tab" aria-expanded="true">
 					Παραλήπτες
 				</a>
 			</li>
 		</ul>
 		
 		<div class="tab-content">
-			<div class="tab-pane" id="compose-mail-tab">
+			<div class="tab-pane show active" id="compose-mail-tab">
 				<form id="email-form" action="/dashboard/email" method="POST" autocomplete="off">
 			
 					@csrf
@@ -174,7 +179,7 @@
 					</div>
 				</form>
 			</div>
-			<div class="tab-pane show active" id="recipients-tab">
+			<div class="tab-pane" id="recipients-tab">
 
 				<div class="text-right mb-3">
 					<button class="btn btn-primary" data-toggle="modal" data-target="#users-table-modal">
