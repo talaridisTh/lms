@@ -198,6 +198,9 @@ select.is-invalid {
 
 }
 
+.dataTables_length .select2-selection__placeholder {
+	color: #ced4da !important;
+}
 
 .select2-selection__rendered {
     line-height: 33px !important;

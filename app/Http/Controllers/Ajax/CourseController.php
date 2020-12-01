@@ -25,76 +25,32 @@ class CourseController extends Controller
         return $dataTable->render('courses.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	public function courseSearch(Request $request) {
+		$courses = Course::where("title", "LIKE", "%$request->search%")
+			->select("id", "title")->paginate(10);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		$result = [];
+		$result["results"] = [];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+		foreach($courses as $key => $course) {
+			if ($courses->currentPage() === 1 && $key === 0) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($ids)
-    {
-        $idList = explode(',', $ids);
-
-		foreach( $idList as $id ) {
-
-			Course::find( $id )->delete();
-			// Storage::deleteDirectory("public/courses/$id");
+				array_push($result['results'], [
+					"id" => " ",
+					"text" => "Όλα τα Courses"
+				]);
+			}
+			array_push($result['results'], [
+				"id" => $course->title,
+				"text" => $course->title
+			]);
 		}
+
+		$result["pagination"] = [
+			"more" => $courses->currentPage() !== $courses->lastPage()
+		];
+
+		echo json_encode($result);
 	}
 
 	public function toggleStatus(Request $request) {

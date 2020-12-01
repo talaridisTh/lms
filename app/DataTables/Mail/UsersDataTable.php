@@ -23,9 +23,10 @@ class UsersDataTable extends DataTable
     {
 		$recipients = explode(",", $request->recipients);
 
-		$query = User::whereNotIn("id", $recipients)->with("courses", "bundles", "roles");
+		$query = User::whereNotIn("users.id", $recipients)->with("courses", "bundles", "roles")
+			->select("users.*");
 
-        return datatables()::of($query)
+        return datatables()->of($query)
             ->addColumn('action', function($data) {
 
 				return "<div class='icheck-primary d-inline'>

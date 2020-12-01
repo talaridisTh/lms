@@ -153,7 +153,8 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('courses/add-students', 'Ajax\CourseController@addStudents');
     Route::patch('courses/remove-students', 'Ajax\CourseController@removeStudents');
     Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
-    Route::patch('course/{course:id}/toggle-highlight', 'Ajax\CourseController@toggleHighlight');
+	Route::patch('course/{course:id}/toggle-highlight', 'Ajax\CourseController@toggleHighlight');
+	Route::get("courses/json-search", "Ajax\CourseController@courseSearch");
 //! Dashboard Ajax Bundles Datatables
     Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');
     Route::post('bundles/bundle-courses-datatable', 'Ajax\BundleController@show');
@@ -167,7 +168,8 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('bundles/remove-courses', 'Ajax\BundleController@removeCourses');
     Route::post('bundles/remove-users', 'Ajax\BundleController@removeUsers');
     Route::post('bundles/add-users', 'Ajax\BundleController@addUsers');
-    Route::patch('bundle/{bundle}/toggle-editors', 'Ajax\BundleController@toggleEditors');
+	Route::patch('bundle/{bundle}/toggle-editors', 'Ajax\BundleController@toggleEditors');
+	Route::get("bundles/json-search", "Ajax\BundleController@bundleSearch");
 //! Dashboard Ajax Materials Datatables
     Route::post('materials/materials-datatable', 'Ajax\MaterialController@index');
     Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");

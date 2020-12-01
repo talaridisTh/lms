@@ -25,26 +25,33 @@ class BundleController extends Controller
         return $dataTable->render('courses.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+	public function bundleSearch(Request $request) {
+		$bundles = Bundle::where("title", "LIKE", "%$request->search%")
+			->select("id", "title")->paginate(10);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		$result = [];
+		$result["results"] = [];
+
+		foreach($bundles as $key => $bundle) {
+			if ($bundles->currentPage() === 1 && $key === 0) {
+
+				array_push($result['results'], [
+					"id" => " ",
+					"text" => "Όλα τα Bundles"
+				]);
+			}
+			array_push($result['results'], [
+				"id" => $bundle->title,
+				"text" => $bundle->title
+			]);
+		}
+
+		$result["pagination"] = [
+			"more" => $bundles->currentPage() !== $bundles->lastPage()
+		];
+
+		echo json_encode($result);
+	}
 
     /**
      * Display the specified resource.
@@ -57,28 +64,6 @@ class BundleController extends Controller
         return $dataTable->render('bundle.show');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Bundle  $bundle
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Bundle $bundle)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Bundle  $bundle
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Bundle $bundle)
-    {
-		//
-    }
 
     /**
      * Remove the specified resource from storage.

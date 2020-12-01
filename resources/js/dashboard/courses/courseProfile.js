@@ -2141,6 +2141,8 @@ function addContent() {
 		return
 	}
 
+	this.disabled = true;
+
 	let data = new FormData(form);
 
 	data.append( "courseId", courseId );
