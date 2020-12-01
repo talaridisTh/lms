@@ -68,7 +68,7 @@ class CourseInsideMaterialsDataTable extends DataTable {
             })
             ->editColumn('curator', function ($data) {
 
-                if ($data->users !== null)
+                if ($data->curator !== null)
                 {
                     return User::find($data->user_id)->fullName;
                 }

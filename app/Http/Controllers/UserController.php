@@ -80,8 +80,6 @@ class UserController extends Controller {
 
 
 
-
-
        $request->avatar? $data["avatar"] = $request->avatar:$data["avatar"]="/images/avatar-placeholder.png";
 
 

@@ -44,7 +44,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
         {
 			data: "created_at",
 			name: "created_at",
-			className: "align-middle text-center", 
+			className: "align-middle text-center",
 			orderData: [7],
 			render: function(data) {
 				let date = new Date(data);
@@ -256,8 +256,7 @@ const axiosMultipleDelete = async (ids) => {
 
             })
             if (res.status == 200) {
-                $(".all-model")[0].textContent = `Ολα (${res.data.success.all})`
-                $(".trash-model")[0].textContent = `Διεγραμενα (${res.data.success.trashMaterial})`
+                // $(".all-model")[0].textContent = `Ολα (${res.data.success.all})`
                 utilities.toastAlert("success", `${ids.length} Διαγράφικαν`)
                 materialsDatatable.ajax.reload()
             }

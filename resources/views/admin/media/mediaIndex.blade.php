@@ -18,6 +18,7 @@
 	</style>
 @endsection
 
+
 @section('content')
 
 	<!-- Full Page Drag n Drop Overlay -->
@@ -31,7 +32,6 @@
 		</div>
 		<p class="h1 mt-0">Drop to upload your files</p>
 	</div>
-
 	<!-- Upload Modal -->
 	<div class="modal fade" id="upload-file-modal" tabindex="-1" role="dialog" aria-labelledby="upload-file-modalLabel" aria-hidden="true">
 		<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">

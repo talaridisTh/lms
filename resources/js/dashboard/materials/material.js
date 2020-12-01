@@ -632,6 +632,7 @@ const axiosMultipleDelete = async (courseId, materialId) => {
                 addCouseModal.ajax.reload()
                 materialCourseDatatable.ajax.reload()
 
+
             }
         }
     } catch (e) {

@@ -25,7 +25,7 @@ class MaterialController extends Controller {
 
         return $dataTable->render('materials.index');
 	}
-	
+
 	public function editChapter(Material $material, Request $request) {
 
 		$material->title = $request->title;
@@ -46,7 +46,7 @@ class MaterialController extends Controller {
     public function addCourseMaterial(AddCourseInsideMaterialsDataTable $dataTable)
     {
         return $dataTable->render('add-course-material');
-	}	
+	}
 
     public function toggleStatus(Material $material, Request $request)
     {
@@ -109,14 +109,14 @@ class MaterialController extends Controller {
 
 		$course->materials()->wherePivot("priority", ">", $request->priority)
 					->increment("priority");
-		
+
 		$course->materials()
 			->attach($material->id, [
 				"status" => $request->status,
 				"priority" => $request->priority + 1,
 				"publish_at" => $publish
 			]);
-	
+
 		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
@@ -126,7 +126,6 @@ class MaterialController extends Controller {
 
         $data = [
             'all' => Material::all()->count() - count($request->material_id),
-            'trashMaterial' => Material::onlyTrashed()->get()->count() + count($request->material_id)
         ];
         Material::whereIn('id', $request->material_id)->delete();
 
@@ -188,7 +187,7 @@ class MaterialController extends Controller {
 
         $material = Material::find($request->materialId);
 		$courses = Course::find($request->courseIds);
-		
+
         foreach ($courses as $course) {
 
 			$materialCount = $course->materials()->count();
@@ -240,7 +239,7 @@ class MaterialController extends Controller {
     {
 
 		$material = Material::find($request->id);
-		
+
 		if ( $material->media()->count() > 0 ) {
 			$priority = $material->media()->orderBy("priority", "desc")->first()->pivot->priority;
 		}
@@ -368,7 +367,7 @@ class MaterialController extends Controller {
 					$counter++;
 				}
 			});
-		
+
 		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
@@ -376,7 +375,7 @@ class MaterialController extends Controller {
 	public function toggleChapters( Request $request ) {
 
 		$material = Material::find( $request->sectionId );
-		
+
 		foreach ($request->data as $chapter ) {
 			$material->chapters()
 				->updateExistingPivot($chapter['id'], ["status" => $chapter['status']]);
@@ -411,7 +410,7 @@ class MaterialController extends Controller {
 		foreach ($chapters as $chapter) {
 
 			$chapter->pivot->update(["priority" => $counter++]);
-	
+
 		}
 
 		$chapter = $material->chapters()->where("materials.id", $request->materialId)->first();
@@ -419,7 +418,7 @@ class MaterialController extends Controller {
 
 		$material->updated_at = Carbon::now();
 		$material->save();
-		
+
 		$sections = Course::find( $request->courseId )->materials()->where("type", "Section")->orderBy("priority")->get();
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
@@ -428,7 +427,7 @@ class MaterialController extends Controller {
 
 		$material->fields = $request->fields;
 		$material->save();
-		
+
 	}
 
 	public function addSectionContent(Request $request) {
@@ -438,7 +437,7 @@ class MaterialController extends Controller {
 		]);
 
 		$section = Material::find( $request->sectionId );
-		
+
 		$material = new Material;
 		$material->title = $request->title;
 		$material->subtitle = $request->subtitle;
@@ -479,9 +478,9 @@ class MaterialController extends Controller {
 		return $dataTable->render('pdf.files');
 
 	}
-	
+
 	public function toggleHighlight(Material $material, Request $request) {
-		
+
 		//! to $material einai to $section
 		//! an i metabliti onomasti $section den leitourgei
 		foreach ($request->materialIds as $id ) {
