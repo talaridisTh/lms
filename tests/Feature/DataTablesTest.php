@@ -22,7 +22,7 @@ class DataTablesTest extends TestCase
 		$admin->name = "admin";
 		$admin->guard_name = "web";
 		$admin->save();
-		
+
 	}
 
 	/** @test */
@@ -42,11 +42,14 @@ class DataTablesTest extends TestCase
 
 		$this->actingAs(User::factory()->create()->assignRole("admin"));
 
-        $response = $this->post('/email/select-users');
+        $response = $this->post('
+
+
+        ');
 
         $response->assertStatus(200);
 	}
-	
+
 	/** @test */
 	public function mail_recipients_datatable() {
 		$this->withoutExceptionHandling();

@@ -40,6 +40,8 @@
             top: 0px;
             z-index: 1999;
         }
+
+
     </style>
 @endsection
 
@@ -91,9 +93,10 @@
                             </div>
                         @elseif($materials->type=="PDF")
                             @php
-                                 $pdf = $materials->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
+                                $pdf = $materials->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
                             @endphp
-                            <embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%" height="100%" style="height: 100vh" />
+                            <embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%"
+                                   height="100%" style="height: 100vh"/>
 
                         @else
 
@@ -165,33 +168,78 @@
 
                     {{--                    @include("components.index.announcements")--}}
 
+                    {{--//min svisti to thelw gia na allazei to single page--}}
+                    <style>
+                        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+                            color: #fff;
+                            background: linear-gradient(
+                                315deg
+                                , rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%);
+                        }
+                    </style>
 
-                    @include("components.index.collapse-menu",
-                    ["idAccordion"=>$materials->slug."-accordion-summary" ,
-                    "idHeader"=>$materials->slug."-header-summary",
-                    "href"=>$materials->slug."-href-summary",
-                    "title"=>"Σχετικά με το μάθημα",
-                    "body"=>isset($materials->summary)?$materials->summary:"",
-                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->summary:""
-                    ])
+                    <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                        <li class="nav-item">
+                            <a href="#home1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#profile1" data-toggle="tab" aria-expanded="true"
+                               class="nav-link rounded-0 active">
+                                <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Profile</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#settings1" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                <span class="d-none d-md-block">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
 
-                    @include("components.index.collapse-menu",
-                    ["idAccordion"=>$materials->slug."-accordion-description" ,
-                    "idHeader"=>$materials->slug."-header-description",
-                    "href"=>$materials->slug."-href-description",
-                    "title"=>"Περίληψη",
-                    "body"=>isset($materials->description)?$materials->description:"",
-                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->description:""
-                    ])
-                    @include("components.index.collapse-menu",
-                    ["idAccordion"=>$materials->slug."-accordion-content" ,
-                    "idHeader"=>$materials->slug."-header-content",
-                    "href"=>$materials->slug."-href-content",
-                    "title"=>"Περιγραφή",
-                    "body"=>isset($materials->content)?$materials->content:"",
-                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->content:""
 
-                    ])
+                    <div class="tab-content">
+                        <div class="tab-pane" id="home1">
+                            <div class="p-2"> {!! $materials->summary !!}</div>
+                        </div>
+                        <div class="tab-pane show active" id="profile1">
+                            <div class="p-2"> {!! $materials->description !!}</div>
+                        </div>
+                        <div class="tab-pane" id="settings1">
+                            <div class="p-2"> {!! $materials->content !!}</div>
+                        </div>
+                    </div>
+
+
+                    {{--                    @include("components.index.collapse-menu",--}}
+                    {{--                    ["idAccordion"=>$materials->slug."-accordion-summary" ,--}}
+                    {{--                    "idHeader"=>$materials->slug."-header-summary",--}}
+                    {{--                    "href"=>$materials->slug."-href-summary",--}}
+                    {{--                    "title"=>"Σχετικά με το μάθημα",--}}
+                    {{--                    "body"=>isset($materials->summary)?$materials->summary:"",--}}
+                    {{--                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->summary:""--}}
+                    {{--                    ])--}}
+
+                    {{--                    @include("components.index.collapse-menu",--}}
+                    {{--                    ["idAccordion"=>$materials->slug."-accordion-description" ,--}}
+                    {{--                    "idHeader"=>$materials->slug."-header-description",--}}
+                    {{--                    "href"=>$materials->slug."-href-description",--}}
+                    {{--                    "title"=>"Περίληψη",--}}
+                    {{--                    "body"=>isset($materials->description)?$materials->description:"",--}}
+                    {{--                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->description:""--}}
+                    {{--                    ])--}}
+                    {{--                    @include("components.index.collapse-menu",--}}
+                    {{--                    ["idAccordion"=>$materials->slug."-accordion-content" ,--}}
+                    {{--                    "idHeader"=>$materials->slug."-header-content",--}}
+                    {{--                    "href"=>$materials->slug."-href-content",--}}
+                    {{--                    "title"=>"Περιγραφή",--}}
+                    {{--                    "body"=>isset($materials->content)?$materials->content:"",--}}
+                    {{--                    "fields"=>isset($materials->fields)?json_decode($materials->fields)->content:""--}}
+
+                    {{--                    ])--}}
 
 
                 </div>
