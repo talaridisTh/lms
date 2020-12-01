@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Mail;
 
 use App\Mail;
 use App\User;
@@ -40,7 +40,7 @@ class MailsDataTable extends DataTable
 				$title = Str::limit($data->subject, 30);
 				$content = Str::limit(strip_tags($data->content), 80);
 
-				return "<p class='mb-0'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</p>";
+				return "<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
 			})
 			->addColumn("details", function($data) {
 
