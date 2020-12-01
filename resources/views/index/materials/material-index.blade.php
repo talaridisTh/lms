@@ -284,52 +284,16 @@ else{
 
                         <div class="tab-pane" id="tabs-media">
                             <div class="col-md-12 my-1">
-                                <div
-                                    class="cursor-pointer  custom-link-primary row justify-content-center align-items-center">
-                                    <i class=" mr-2 font-18 mdi mdi-image-filter"></i>
+                                <div class="d-flex flex-wrap ">
+                                    @foreach($materials->media->where("type","!=",1) as $media)
 
-                                    <a type="button" class="js-gallery my-1 font-18" data-toggle="modal"
-                                       data-target="#bs-example-modal-lg">
-                                        <span class="mdi font-18 ml-2 text-primary mdi-folder-multiple-image"></span>
-                                        Media
-                                    </a>
+                                        <a href="{{$media->rel_path}} "data-lightbox="image-1" >
+                                        <img class="d-block m-1"
+                                             src="{{$media->roundedMediumCoverUrl("rel_path")}}"
+                                             alt="First slide">
+                                        </a>
 
-                                    <div class="modal fade" id="bs-example-modal-lg" tabindex="-1" role="dialog"
-                                         aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="swiper-container">
-                                                        <!-- Additional required wrapper -->
-                                                        <div class="swiper-wrapper">
-                                                            <!-- Slides -->
-
-                                                            @foreach($materials->media->where("type","!=",1) as $media)
-                                                                <div class="swiper-slide">
-                                                                    <img class="d-block img-fluid"
-                                                                         src="{{url($media->rel_path)}}"
-                                                                         alt="First slide">
-                                                                </div>
-                                                            @endforeach
-
-
-                                                        </div>
-                                                        <!-- If we need pagination -->
-                                                        <div class="swiper-pagination"></div>
-
-                                                        <!-- If we need navigation buttons -->
-                                                        <div class="swiper-button-prev"></div>
-                                                        <div class="swiper-button-next"></div>
-
-                                                        <!-- If we need scrollbar -->
-                                                        <div class="swiper-scrollbar"></div>
-                                                    </div>
-
-
-                                                </div>
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->
+                                    @endforeach
                                 </div>
                             </div>
                         </div>

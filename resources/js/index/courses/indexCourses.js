@@ -1,6 +1,7 @@
 import utilities from '../../index/main';
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
+require('../../../../node_modules/lightbox2/dist/js/lightbox');
 
 utilities.addWhatchlist()
 
@@ -259,11 +260,20 @@ $(".template-prevent").on("click", async function (e) {
     try {
         const {data, status} = await axios.get(this.href)
 
+if (status==200) {
 
-        templateHandler(data, this);
-        onFullScreen();
-        onCloseFullScreen();
-        onPreviewMaterial();
+
+    templateHandler(data, this);
+    onFullScreen();
+    onCloseFullScreen();
+    onPreviewMaterial();
+
+    let href = $(".nav-tabs").children().first().find("a").attr( "href").substring(1);
+
+    $(".nav-tabs").children().first().find("a").addClass("active")
+    $(".tab-content").find(`#${href}`).addClass("active");
+}
+
     } catch (e) {
         console.log(e)
     }

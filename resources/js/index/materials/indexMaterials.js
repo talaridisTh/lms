@@ -1,4 +1,5 @@
 import utilities from '../../index/main';
+require('../../../../node_modules/lightbox2/dist/js/lightbox');
 
 
 utilities.addWhatchlist()
@@ -207,4 +208,10 @@ document.querySelectorAll(".section").forEach((section,idx)=>{
 
     console.log(section.findChild(5).innerHTML = `Ενότητα ${idx+1}: &nbsp `)
 })
+
+
+let href = $(".nav-tabs").children().first().find("a").attr( "href").substring(1);
+
+$(".nav-tabs").children().first().find("a").addClass("active")
+$(".tab-content").find(`#${href}`).addClass("active");
 
