@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
+use Schema;
 
 class HomeController extends Controller {
 
@@ -123,8 +124,11 @@ class HomeController extends Controller {
 
     public function test()
     {
+       dd( $columns = Schema::getConnection()->getDoctrineSchemaManager()->listTableColumns('courses'));
+//        $column = Schema::getConnection()->getDoctrineColumn('table_name'', 'column_name'); //For a single column:);
 
-        dd(auth()->user()->getRoleNames()[0] == "admin");
+
+
 //
     }
 
