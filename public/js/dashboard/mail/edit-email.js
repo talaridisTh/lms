@@ -81,10 +81,22 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 23);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./resources/js/dashboard/mail/edit-email.js":
+/*!***************************************************!*\
+  !*** ./resources/js/dashboard/mail/edit-email.js ***!
+  \***************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ \"./resources/js/dashboard/main.js\");\n\nvar historyDatatable = $(\"#history-datatable\").DataTable({\n  // order: [1, \"asc\"],\n  // processing: true,\n  // serverSide: true,\n  // ajax: {\n  // \turl: \"/email/select-users\",\n  // \theaders: {'X-CSRF-TOKEN': $('meta[name=\"csrf-token\"]').attr('content')},\n  // \ttype: \"post\",\n  // \tdata: function( d ) {\n  // \t\treturn $.extend( {}, d, {\n  // \t\t\trecipients: sessionStorage.getItem(\"recipients\")\n  // \t\t})\n  // \t}\n  // },\n  // columns: [\n  // \t{ data: 'action', name: 'action', className: \"align-middle text-center\", orderable: false },\n  // \t{ data: 'name', name: 'users.last_name', className: \"align-middle\" },\n  // \t{ data: 'courses', name: 'courses.title', className: \"align-middle text-center text-wrap\" },\n  // \t{ data: 'bundles', name: 'bundles.title', className: \"align-middle text-center text-wrap\" },\n  // \t{ data: 'btn', className: \"align-middle text-center text-wrap\", orderable: false, searchable: false },\n  // ],\n  language: _main__WEBPACK_IMPORTED_MODULE_0__[\"default\"].tableLocale,\n  fnInitComplete: function fnInitComplete(oSettings, json) {\n    var lenthSelection = $(\"select[name='history-datatable_length']\");\n    lenthSelection.select2({\n      minimumResultsForSearch: -1\n    });\n  },\n  drawCallback: function drawCallback() {\n    $(\".dataTables_paginate > .pagination\").addClass(\"pagination-rounded\"); // $(\".js-add-recipient\").on(\"click\", addRecipientHandler);\n  }\n});//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvZGFzaGJvYXJkL21haWwvZWRpdC1lbWFpbC5qcz8wM2JkIl0sIm5hbWVzIjpbImhpc3RvcnlEYXRhdGFibGUiLCIkIiwiRGF0YVRhYmxlIiwibGFuZ3VhZ2UiLCJ1dGlsaXRpZXMiLCJ0YWJsZUxvY2FsZSIsImZuSW5pdENvbXBsZXRlIiwib1NldHRpbmdzIiwianNvbiIsImxlbnRoU2VsZWN0aW9uIiwic2VsZWN0MiIsIm1pbmltdW1SZXN1bHRzRm9yU2VhcmNoIiwiZHJhd0NhbGxiYWNrIiwiYWRkQ2xhc3MiXSwibWFwcGluZ3MiOiJBQUFBO0FBQUE7QUFBQTtBQUVBLElBQU1BLGdCQUFnQixHQUFHQyxDQUFDLENBQUMsb0JBQUQsQ0FBRCxDQUF3QkMsU0FBeEIsQ0FBa0M7QUFDMUQ7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFFQTtBQUNBQyxVQUFRLEVBQUVDLDZDQUFTLENBQUNDLFdBdEJzQztBQXVCMURDLGdCQUFjLEVBQUUsd0JBQVVDLFNBQVYsRUFBcUJDLElBQXJCLEVBQTRCO0FBQzNDLFFBQUlDLGNBQWMsR0FBR1IsQ0FBQyxDQUFDLHlDQUFELENBQXRCO0FBRUFRLGtCQUFjLENBQUNDLE9BQWYsQ0FBdUI7QUFDdEJDLDZCQUF1QixFQUFFLENBQUM7QUFESixLQUF2QjtBQUdBLEdBN0J5RDtBQThCMURDLGNBQVksRUFBQyx3QkFBVTtBQUN0QlgsS0FBQyxDQUFDLG9DQUFELENBQUQsQ0FBd0NZLFFBQXhDLENBQWlELG9CQUFqRCxFQURzQixDQUd0QjtBQUNBO0FBbEN5RCxDQUFsQyxDQUF6QiIsImZpbGUiOiIuL3Jlc291cmNlcy9qcy9kYXNoYm9hcmQvbWFpbC9lZGl0LWVtYWlsLmpzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHV0aWxpdGllcyBmcm9tICcuLi9tYWluJztcclxuXHJcbmNvbnN0IGhpc3RvcnlEYXRhdGFibGUgPSAkKFwiI2hpc3RvcnktZGF0YXRhYmxlXCIpLkRhdGFUYWJsZSh7XHJcblx0Ly8gb3JkZXI6IFsxLCBcImFzY1wiXSxcclxuXHQvLyBwcm9jZXNzaW5nOiB0cnVlLFxyXG5cdC8vIHNlcnZlclNpZGU6IHRydWUsXHJcblx0Ly8gYWpheDoge1xyXG5cdC8vIFx0dXJsOiBcIi9lbWFpbC9zZWxlY3QtdXNlcnNcIixcclxuXHQvLyBcdGhlYWRlcnM6IHsnWC1DU1JGLVRPS0VOJzogJCgnbWV0YVtuYW1lPVwiY3NyZi10b2tlblwiXScpLmF0dHIoJ2NvbnRlbnQnKX0sXHJcblx0Ly8gXHR0eXBlOiBcInBvc3RcIixcclxuXHQvLyBcdGRhdGE6IGZ1bmN0aW9uKCBkICkge1xyXG5cdC8vIFx0XHRyZXR1cm4gJC5leHRlbmQoIHt9LCBkLCB7XHJcblx0Ly8gXHRcdFx0cmVjaXBpZW50czogc2Vzc2lvblN0b3JhZ2UuZ2V0SXRlbShcInJlY2lwaWVudHNcIilcclxuXHQvLyBcdFx0fSlcclxuXHQvLyBcdH1cclxuXHQvLyB9LFxyXG5cdC8vIGNvbHVtbnM6IFtcclxuXHQvLyBcdHsgZGF0YTogJ2FjdGlvbicsIG5hbWU6ICdhY3Rpb24nLCBjbGFzc05hbWU6IFwiYWxpZ24tbWlkZGxlIHRleHQtY2VudGVyXCIsIG9yZGVyYWJsZTogZmFsc2UgfSxcclxuXHQvLyBcdHsgZGF0YTogJ25hbWUnLCBuYW1lOiAndXNlcnMubGFzdF9uYW1lJywgY2xhc3NOYW1lOiBcImFsaWduLW1pZGRsZVwiIH0sXHJcblx0Ly8gXHR7IGRhdGE6ICdjb3Vyc2VzJywgbmFtZTogJ2NvdXJzZXMudGl0bGUnLCBjbGFzc05hbWU6IFwiYWxpZ24tbWlkZGxlIHRleHQtY2VudGVyIHRleHQtd3JhcFwiIH0sXHJcblx0Ly8gXHR7IGRhdGE6ICdidW5kbGVzJywgbmFtZTogJ2J1bmRsZXMudGl0bGUnLCBjbGFzc05hbWU6IFwiYWxpZ24tbWlkZGxlIHRleHQtY2VudGVyIHRleHQtd3JhcFwiIH0sXHJcblx0Ly8gXHR7IGRhdGE6ICdidG4nLCBjbGFzc05hbWU6IFwiYWxpZ24tbWlkZGxlIHRleHQtY2VudGVyIHRleHQtd3JhcFwiLCBvcmRlcmFibGU6IGZhbHNlLCBzZWFyY2hhYmxlOiBmYWxzZSB9LFxyXG5cclxuXHQvLyBdLFxyXG5cdGxhbmd1YWdlOiB1dGlsaXRpZXMudGFibGVMb2NhbGUsXHJcblx0Zm5Jbml0Q29tcGxldGU6IGZ1bmN0aW9uKCBvU2V0dGluZ3MsIGpzb24gKSB7XHJcblx0XHRsZXQgbGVudGhTZWxlY3Rpb24gPSAkKFwic2VsZWN0W25hbWU9J2hpc3RvcnktZGF0YXRhYmxlX2xlbmd0aCddXCIpO1xyXG5cclxuXHRcdGxlbnRoU2VsZWN0aW9uLnNlbGVjdDIoe1xyXG5cdFx0XHRtaW5pbXVtUmVzdWx0c0ZvclNlYXJjaDogLTEsXHJcblx0XHR9KTtcclxuXHR9LFxyXG5cdGRyYXdDYWxsYmFjazpmdW5jdGlvbigpe1xyXG5cdFx0JChcIi5kYXRhVGFibGVzX3BhZ2luYXRlID4gLnBhZ2luYXRpb25cIikuYWRkQ2xhc3MoXCJwYWdpbmF0aW9uLXJvdW5kZWRcIik7XHJcblxyXG5cdFx0Ly8gJChcIi5qcy1hZGQtcmVjaXBpZW50XCIpLm9uKFwiY2xpY2tcIiwgYWRkUmVjaXBpZW50SGFuZGxlcik7XHJcblx0fVxyXG59KTsiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/dashboard/mail/edit-email.js\n");
+
+/***/ }),
 
 /***/ "./resources/js/dashboard/main.js":
 /*!****************************************!*\
@@ -98,14 +110,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ 23:
-/*!**********************************************!*\
-  !*** multi ./resources/js/dashboard/main.js ***!
-  \**********************************************/
+/***/ 18:
+/*!*********************************************************!*\
+  !*** multi ./resources/js/dashboard/mail/edit-email.js ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\Demo LMS\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\Demo LMS\resources\js\dashboard\mail\edit-email.js */"./resources/js/dashboard/mail/edit-email.js");
 
 
 /***/ })

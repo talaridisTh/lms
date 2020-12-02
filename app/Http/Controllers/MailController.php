@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\DataTables\Mail\RecipientsDataTable;
 use App\DataTables\Mail\UsersDataTable;
-use App\DataTables\MailsDataTable;
+use App\DataTables\Mail\MailsDataTable;
 use App\Mail as AppMail;
+use App\Mail\Email;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +17,23 @@ class MailController extends Controller
 	public function index() {
 
 		return view("admin.mail.mailMain");
+	}
+
+	public function show(AppMail $mail) {
+
+		$recipients = json_decode($mail->recipients);
+
+		if ($recipients) {
+			$recipients = User::find($recipients->ids);
+		}
+
+		$data = [
+			"mail" => $mail,
+			"recipients" => $recipients,
+			"body" => new Email($mail->subject, $mail->content)
+		];
+
+		return view("admin.mail.editMail")->with($data);
 	}
 
 	public function mailsTable(MailsDataTable $dataTable) {
@@ -103,13 +121,10 @@ class MailController extends Controller
 		if ( isset($request->recipients) ) {
 			$recipients = explode(",", $request->recipients);
 
-			$users = User::find($recipients, ["id", "email"]);
-		}
-		else {
-			$users = null;
+			return User::find($recipients, ["id", "email"]);
 		}
 
-		return $users;
+		return null;
 	}
 
 	public function delete(Request $request) {
