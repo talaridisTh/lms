@@ -27,6 +27,18 @@
 		margin-right: 2px;
 	}
 
+	.CodeMirror {
+	  border: 1px solid #eee;
+	  height: auto !important;
+	  min-height: 300px !important;
+	}
+
+	.CodeMirror-scroll {
+	  min-height: 300px !important;
+	  overflow-y: auto;
+	  overflow-x: auto;
+	}
+
 </style>
 @endsection
 
@@ -96,44 +108,44 @@
 	</div><!-- ./additionnal content modal -->
 
 	<div class="modal fade" id="remainings-files-modal" tabindex="-1" role="dialog"
-         aria-labelledby="remainings-files-modalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header modal-colored-header bg-primary">
-                    <h5 class="modal-title" id="remainings-files-modalLabel">File Library</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+		 aria-labelledby="remainings-files-modalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header modal-colored-header bg-primary">
+					<h5 class="modal-title" id="remainings-files-modalLabel">File Library</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
 
-                    <table id="remaining-files-datatable"
-                           class="table w-100 nowrap center-not-second modal-table js-remove-table-classes">
-                        <thead>
-                        <tr>
-                            <th class="text-center">Όνομα</th>
-                            <th class="text-center">Μέγεθος</th>
-                            <th class="text-center w-5"></th>
-                        </tr>
-                        </thead>
-                        <tbody class="tables-hover-effect"></tbody>
-                        <tfoot>
-                        <tr>
-                            <th class="text-center">Όνομα</th>
-                            <th class="text-center">Μέγεθος</th>
-                            <th class="text-center"></th>
-                        </tr>
-                        </tfoot>
-                    </table>
+					<table id="remaining-files-datatable"
+						   class="table w-100 nowrap center-not-second modal-table js-remove-table-classes">
+						<thead>
+						<tr>
+							<th class="text-center">Όνομα</th>
+							<th class="text-center">Μέγεθος</th>
+							<th class="text-center w-5"></th>
+						</tr>
+						</thead>
+						<tbody class="tables-hover-effect"></tbody>
+						<tfoot>
+						<tr>
+							<th class="text-center">Όνομα</th>
+							<th class="text-center">Μέγεθος</th>
+							<th class="text-center"></th>
+						</tr>
+						</tfoot>
+					</table>
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
-                </div>
-            </div>
-        </div>
-    </div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<!-- Modal -->
 	<div class="modal fade" id="gallery-modal" tabindex="-1" role="dialog" aria-labelledby="gallery-modalLabel" aria-hidden="true">
@@ -429,6 +441,13 @@
 						Sections
 					</a>
 				</li>
+				<li class="nav-item ml-auto">
+					<a href="#scripts-tab" id="sections-tab-btn"
+						data-toggle="tab" aria-expanded="true"
+						class="nav-link {{ !isset($course) ? 'tab-link text-muted' : '' }}">
+						Script
+					</a>
+				</li>
 			</ul><!-- ./tabs -->
 
 			<div class="tab-content">
@@ -519,32 +538,33 @@
 										</span>
 									@enderror
 								</div>
-
+								<textarea id="script-area" name="script" hidden>{{ $course->script }}</textarea>
 							</form>
+							
 
 							@isset($course)
 								<h5>Βοηθητικά Αρχεία</h5>
-                            	<div class="bg-light mb-0">
-                            	    <div class="pt-2 px-2">
+								<div class="bg-light mb-0">
+									<div class="pt-2 px-2">
 										<button id="file-library-btn" class="btn btn-primary m-1"
 											data-toggle="modal" data-target="#remainings-files-modal">
-                            	            File Library
-                            	        </button>
-                            	        <button id="remove-all-files-btn"
-                            	                class="btn btn-danger m-1 {{ $files->isEmpty() ? 'd-none' : "" }}">
-                            	            Remove all
-                            	        </button>
-                            	    </div>
-                            	    <div id="active-files-loading" class="row d-none my-3">
-                            	        <div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
-                            	    </div>
-                            	    <div id="files-cnt" class="row" style="padding: 0 1.1rem;">
-                            	        @include('components/admin/filesTable', ["files" => $files])
+											File Library
+										</button>
+										<button id="remove-all-files-btn"
+												class="btn btn-danger m-1 {{ $files->isEmpty() ? 'd-none' : "" }}">
+											Remove all
+										</button>
+									</div>
+									<div id="active-files-loading" class="row d-none my-3">
+										<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
+									</div>
+									<div id="files-cnt" class="row" style="padding: 0 1.1rem;">
+										@include('components/admin/filesTable', ["files" => $files])
 									</div>
 
 									<!-- FilePond -->
 									<input id="course-file-upload" class="js-filepond-file-dragging mb-0" type="text">
-                            	</div>
+								</div>
 								<p class="text-right mb-2">
 									<small>
 										<strong>
@@ -761,21 +781,22 @@
 										<img id="cover-image" src="{{ $course->cardMediumUrl() }}"
 											class="img-fluid{{ (isset($course) &&  is_null($course->cover)) ? " d-none" : "" }}"
 											alt="Cover Image" />
-										<p id="cover-status" class="text-center{{ (isset($course) &&  !is_null($course->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
+										<p id="cover-status" class="text-center{{ (isset($course) &&  !is_null($course->cover)) ? " d-none" : "" }}"
+											><strong>Δεν βρέθηκε εικόνα</strong></p>
 
 										<div class="form-row mt-2">
-                                            <div class="col-md-6 d-flex justify-content-center">
-                                                <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
-                                                    {{isset($course) && !is_null($course->cover) ?"Αλλαγή":"Προσθηκη"}}
-                                                </button>
+											<div class="col-md-6 d-flex justify-content-center">
+												<button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
+													{{isset($course) && !is_null($course->cover) ?"Αλλαγή":"Προσθηκη"}}
+												</button>
 
-                                            </div>
+											</div>
 											<div class="{{ isset($course) && !is_null($course->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
-                                                <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
-                                                    Αφαίρεση
-                                                </button>
-                                            </div>
-                                        </div>
+												<button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
+													Αφαίρεση
+												</button>
+											</div>
+										</div>
 
 									</div> <!-- end card-body -->
 								</div> <!-- end course info card -->
@@ -943,6 +964,12 @@
 					</div>
 				</div><!-- section-content -->
 
+				<div id="scripts-tab" class="tab-pane mb-3">
+					<div class="text-right mb-3">
+						<button class="btn btn-primary" form="edit-course-form" type="submit" value="save">Save</button>
+					</div>
+					<div id="editor"></div>
+				</div>
 			</div><!-- tab-content -->
 
 		</div>

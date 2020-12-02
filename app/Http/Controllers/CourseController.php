@@ -133,7 +133,6 @@ class CourseController extends Controller
      */
     public function update(BundleCourseRequest $request, Course $course)
     {
-
 		if ( isset($request->save) ) {
 			if ( $request->publishDate ) {
 				$publish = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
@@ -157,6 +156,7 @@ class CourseController extends Controller
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
+		$course->script = preg_replace('/\s+/', ' ', $request->script);
 		$course->publish_at = $publish;
 		$course->user_id = $request->curator;
 		$course->status = $status;
@@ -211,7 +211,6 @@ class CourseController extends Controller
 
 	public function clone(Request $request) {
 
-		// dd($request->all());
 		$request->validate([
 			'title' => 'required|unique:courses'
 		]);

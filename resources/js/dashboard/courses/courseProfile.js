@@ -19,6 +19,14 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import 'filepond/dist/filepond.min.css';
 
+import CodeMirror from "codemirror/lib/codemirror";
+require("codemirror/mode/htmlmixed/htmlmixed");
+require("codemirror/addon/display/autorefresh");
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/night.css";
+
+const beautify_html = require('js-beautify').html
+
 //!##########################################
 //! 			EventListerners				#
 //!##########################################
@@ -333,10 +341,6 @@ $("#select-all-active-users").on( "change", function() {
 	let bulkBtn = $("#active-users-bulk")[0]
 
 	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
-});
-
-$("#update-btn").on( "click", function() {
-	$("#edit-course-form").submit();
 });
 
 $("#active-switch").on( "change", function() {
@@ -2669,3 +2673,29 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 		label.classList.remove("text-limegreen");
 	});
 }
+
+const editor = document.getElementById("editor");
+const scriptArea = document.getElementById("script-area");
+
+const format = beautify_html(scriptArea.value, {indent_size: 4})
+
+const myCodeMirror = CodeMirror(editor, {
+	viewportMargin: Infinity,
+	value: format,
+	mode:  "htmlmixed",
+	theme: "night",
+	indentWithTabs: true,
+	lineNumbers: true,
+	lineWrapping: true,
+	autoRefresh: true,
+	styleActiveLine: true
+});
+
+$("#edit-course-form").on("submit", function(event) {
+	event.preventDefault();
+	
+	const scriptValue = myCodeMirror.getValue();
+	scriptArea.value = scriptValue;
+
+	this.submit();
+});

@@ -16,8 +16,10 @@ class VerifyCourses
      */
     public function handle(Request $request, Closure $next)
     {
+		$role = auth()->user()->getRoleNames()[0];
 
-        if (auth()->user()->getRoleNames()[0]=="admin"){
+        if ( $role == "admin" || $role === "super-admin" ) {
+
             return $next($request);
 
         }
