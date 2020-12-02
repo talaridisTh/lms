@@ -1,15 +1,15 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Carousels;
 
-use App\Material;
+use App\Bundle;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class newCourseMaterialsDataTable extends DataTable
+class BundlesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,18 +19,26 @@ class newCourseMaterialsDataTable extends DataTable
      */
     public function dataTable($query)
     {
-        return datatables()
-            ->eloquent($query)
-            ->addColumn('action', 'newcoursematerialsdatatable.action');
+		$query = Bundle::select("id", "title", "subtitle", "cover")->where("status", 1)->get();
+
+        return datatables()::of($query)
+		->addColumn('action', function($data) {
+
+			return "<i class='js-add-bundle-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
+				data-model-id='$data->id' data-model-title='$data->title'
+				data-model-subtitle='$data->subtitle' data-namespace='App\Bundle'></i>";
+
+		})
+		->rawColumns(["action"]);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Material $model
+     * @param \Bundle $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Material $model)
+    public function query(Bundle $model)
     {
         return $model->newQuery();
     }
@@ -43,7 +51,7 @@ class newCourseMaterialsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('newcoursematerialsdatatable-table')
+                    ->setTableId('simplebundledatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -84,6 +92,6 @@ class newCourseMaterialsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'newCourseMaterials_' . date('YmdHis');
+        return 'SimpleBundle_' . date('YmdHis');
     }
 }

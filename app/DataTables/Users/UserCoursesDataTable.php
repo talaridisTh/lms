@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Users;
 
 use App\Course;
 use App\User;
@@ -13,7 +13,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class UserProfileDataTable extends DataTable {
+class UserCoursesDataTable extends DataTable {
 
     /**
      * Build DataTable class.

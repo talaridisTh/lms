@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Courses;
 
 use App\Course;
 use Carbon\Carbon;

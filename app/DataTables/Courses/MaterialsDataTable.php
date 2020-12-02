@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Courses;
 
 use App\Material;
 use Yajra\DataTables\Html\Button;
@@ -13,7 +13,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Course;
 
 
-class RemainingMaterialsDataTable extends DataTable
+class MaterialsDataTable extends DataTable
 {
     /**
      * Build DataTable class.

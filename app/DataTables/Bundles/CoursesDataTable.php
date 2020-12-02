@@ -1,18 +1,16 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Bundles;
 
-use App\Bundle;
 use App\Course;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class RemainingCoursesDataTable extends DataTable {
+class CoursesDataTable extends DataTable {
 
     /**
      * Build DataTable class.

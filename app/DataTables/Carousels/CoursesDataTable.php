@@ -1,19 +1,15 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Carousels;
 
-use App\AddCourseInsideMaterial;
 use App\Course;
-use App\Material;
-use App\User;
-use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AddCourseInsideMaterialsDataTable extends DataTable
+class CoursesDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,44 +17,35 @@ class AddCourseInsideMaterialsDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query )
+    public function dataTable($query)
     {
+		$query = Course::where("status", 1)->with("topics")->get();
 
+        return datatables()::of($query)
+			->addColumn('action', function($data) {
 
+				return "<i class='js-add-course-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
+					data-model-id='$data->id' data-model-title='$data->title'
+					data-model-subtitle='$data->subtitle' data-namespace='App\Course'></i>";
 
-        $query = Course::notInMaterialsCourse(request()->materialId);
+			})
+			->editColumn('topics', function ($data) {
 
+                $topics = [];
+                foreach ($data->topics as $topic)
+                {
+                    array_push($topics, $topic['title']);
+                }
 
-        return DataTables::of($query)
-            ->addColumn('checkbox', function ($data) {
-
-                return "<div class='icheck-primary d-inline'>
-							<input class='remainings-checkbox' data-course-id='$data->id'  type='checkbox' id='$data->title' autocomplete='off'>
-							<label for='$data->title'></label>
-						</div>";
+                return implode(", ", $topics);
             })
-            ->addColumn('curator', function ($data) {
-
-				if ( is_null($data->user_id) ) {
-					return "-";
-				}
-
-                return User::find($data->user_id)->fullName;
-            })
-            ->addColumn('action', function ($data) {
-
-                return "<button class='js-add-courses btn btn-primary'>Προσθήκη</button>";
-            })
-        ->rawColumns(['checkbox',"curator","action"])
-            ->setRowAttr(['data-course-id' => function ($data) {
-                return [$data->id];
-            }]);
+			->rawColumns(["action"]);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \App\AddCourseInsideMaterial $model
+     * @param \Course $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Course $model)
@@ -74,7 +61,7 @@ class AddCourseInsideMaterialsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('addcourseinsidematerials-table')
+                    ->setTableId('simplecoursesdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -115,6 +102,6 @@ class AddCourseInsideMaterialsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'AddCourseInsideMaterials_' . date('YmdHis');
+        return 'SimpleCourses_' . date('YmdHis');
     }
 }

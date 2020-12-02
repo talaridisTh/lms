@@ -1,8 +1,7 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Files;
 
-use App\Material;
 use App\Media;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -10,7 +9,6 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Support\Facades\DB;
 
 class FilesDataTable extends DataTable
 {

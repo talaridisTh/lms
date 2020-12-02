@@ -1,15 +1,17 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Bundles;
 
-use App\Bundle;
+use App\Role;
+use App\User;
+use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SimpleBundlesDataTable extends DataTable
+class UsersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -17,28 +19,60 @@ class SimpleBundlesDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query)
+    public function dataTable($query, Request $request)
     {
-		$query = Bundle::select("id", "title", "subtitle", "cover")->where("status", 1)->get();
+		$query = Role::find(4)->users()->where("status", 1)
+			->whereNotIn("id", function($subquery) use ($request) {
+
+				$subquery->select("user_id")->from("bundle_user")
+					->where("bundle_id", $request->bundleId)->get();
+
+			})->get();
 
         return datatables()::of($query)
-		->addColumn('action', function($data) {
+			->addColumn('action', function($data) {
 
-			return "<i class='js-add-bundle-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
-				data-model-id='$data->id' data-model-title='$data->title'
-				data-model-subtitle='$data->subtitle' data-namespace='App\Bundle'></i>";
+				return "<div class='icheck-primary d-inline ml-2'>
+							<input class='js-remaining-user-checkbox' data-user-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
+							<label for='$data->slug'></label>
+						</div>";
 
-		})
-		->rawColumns(["action"]);
+			})
+			->editColumn("last_name", function($data) {
+
+				$badge = "";
+
+				if ( is_null($data->email_verified_at) ) {
+					$badge .= "<span class='badge badge-outline-warning badge-pill ml-3'>Unverified</span>";
+				}
+
+				if ( $data->status === 0 ) {
+					$badge .= "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
+				}
+
+				return "
+					<span>$data->last_name $data->first_name</span>$badge
+					<div class='mt-1'>
+						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
+					</div>
+				";
+
+			})
+			->addColumn('btn', function($data) {
+
+				return "<button type='button' class='btn btn-primary js-add-user-btn' data-user-id='$data->id'>Προσθήκη</button>";
+
+			})
+			->rawColumns(['action', 'last_name', 'btn']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Bundle $model
+     * @param \User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Bundle $model)
+    public function query(User $model)
     {
         return $model->newQuery();
     }
@@ -51,7 +85,7 @@ class SimpleBundlesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('simplebundledatatable-table')
+                    ->setTableId('addbundleusersdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -92,6 +126,6 @@ class SimpleBundlesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'SimpleBundle_' . date('YmdHis');
+        return 'AddBundleUsers_' . date('YmdHis');
     }
 }

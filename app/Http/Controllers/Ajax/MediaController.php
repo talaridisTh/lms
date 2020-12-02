@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\DataTables\FileManagerDataTable;
+use App\DataTables\Files\FileManagerDataTable;
 use App\Http\Controllers\Controller;
 use App\Media;
 use App\MediaDetails;
@@ -10,12 +10,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
-use App\DataTables\FilesDataTable;
-use Illuminate\Http\Response;
+use App\DataTables\Files\FilesDataTable;
 use Illuminate\Support\Facades\DB;
 
-class MediaController extends Controller
-{
+class MediaController extends Controller {
 
 	private $allowedTypes = [
 		"application/octet-stream", "application/x-zip-compressed", "application/pdf",

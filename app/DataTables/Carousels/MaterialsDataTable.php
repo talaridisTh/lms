@@ -1,17 +1,15 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Carousels;
 
-use App\Role;
-use App\User;
-use Illuminate\Http\Request;
+use App\Material;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class AddBundleUsersDataTable extends DataTable
+class MaterialsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,60 +17,31 @@ class AddBundleUsersDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query, Request $request)
+    public function dataTable($query)
     {
-		$query = Role::find(4)->users()->where("status", 1)
-			->whereNotIn("id", function($subquery) use ($request) {
-
-				$subquery->select("user_id")->from("bundle_user")
-					->where("bundle_id", $request->bundleId)->get();
-
-			})->get();
+		$query = Material::select("id", "title", "subtitle", "cover")->where( function($query) {
+			$query->where("type", "Lesson")
+				->where("status", 1)->get();
+		})->get();
 
         return datatables()::of($query)
 			->addColumn('action', function($data) {
 
-				return "<div class='icheck-primary d-inline ml-2'>
-							<input class='js-remaining-user-checkbox' data-user-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
-							<label for='$data->slug'></label>
-						</div>";
+				return "<i class='js-add-material-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
+					data-model-id='$data->id' data-model-title='$data->title'
+					data-model-subtitle='$data->subtitle' data-namespace='App\Material'></i>";
 
 			})
-			->editColumn("last_name", function($data) {
-
-				$badge = "";
-
-				if ( is_null($data->email_verified_at) ) {
-					$badge .= "<span class='badge badge-outline-warning badge-pill ml-3'>Unverified</span>";
-				}
-
-				if ( $data->status === 0 ) {
-					$badge .= "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
-				}
-
-				return "
-					<span>$data->last_name $data->first_name</span>$badge
-					<div class='mt-1'>
-						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
-					</div>
-				";
-
-			})
-			->addColumn('btn', function($data) {
-
-				return "<button type='button' class='btn btn-primary js-add-user-btn' data-user-id='$data->id'>Προσθήκη</button>";
-
-			})
-			->rawColumns(['action', 'last_name', 'btn']);
+			->rawColumns(["action"]);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \User $model
+     * @param \Material $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(User $model)
+    public function query(Material $model)
     {
         return $model->newQuery();
     }
@@ -85,7 +54,7 @@ class AddBundleUsersDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('addbundleusersdatatable-table')
+                    ->setTableId('simplematerialdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -126,6 +95,6 @@ class AddBundleUsersDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'AddBundleUsers_' . date('YmdHis');
+        return 'SimpleMaterial_' . date('YmdHis');
     }
 }

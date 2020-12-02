@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Topics;
 
 use App\Topic;
 use Yajra\DataTables\Html\Button;
@@ -8,7 +8,6 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TopicsDataTable extends DataTable {

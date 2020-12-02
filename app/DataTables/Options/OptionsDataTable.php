@@ -1,15 +1,15 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Options;
 
-use App\Course;
+use App\Option;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class SimpleCoursesDataTable extends DataTable
+class OptionsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,36 +19,50 @@ class SimpleCoursesDataTable extends DataTable
      */
     public function dataTable($query)
     {
-		$query = Course::where("status", 1)->with("topics")->get();
-
         return datatables()::of($query)
-			->addColumn('action', function($data) {
+            ->editColumn('name', function($data) {
 
-				return "<i class='js-add-course-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
-					data-model-id='$data->id' data-model-title='$data->title'
-					data-model-subtitle='$data->subtitle' data-namespace='App\Course'></i>";
-
+				if ( !json_decode($data->value, JSON_ERROR_SYNTAX) ) {
+					return "<a href='#' class='js-quick-edit h5 custom-link-primary cursor-pointer js-title'>$data->name</a>
+						<div class='js-edit-cnt d-none'>
+							<div class='form-group'>
+								<label>Τίτλος</label>
+								<input type='text' class='js-option-name form-control' value='$data->name' placeholder='Εισάγετε Όνομα...'>
+								<div class='invalid-feedback'>
+									Το πεδίο είναι υποχρεωτικό.
+								</div>
+							</div>
+							<div class='form-group'>
+								<label>Τιμή</label>
+								<textarea class='js-option-value form-control' rows='5' placeholder='Εισάγετε Τιμή...'>$data->value</textarea>
+								<div class='invalid-feedback'>
+									Το πεδίο είναι υποχρεωτικό.
+								</div>
+							</div>
+							<div class='text-right'>
+								<button class='js-save btn btn-primary' data-option-id='$data->id'>Save</button>
+								<button class='js-cancel btn btn-light'>Cancel</button>
+							</div>
+						</div>";
+				}
+				else {
+					return "<a href='/dashboard/option/$data->id/show-json' class='js-quick-edit h5 custom-link-primary cursor-pointer'>$data->name</a>";
+				}
 			})
-			->editColumn('topics', function ($data) {
-
-                $topics = [];
-                foreach ($data->topics as $topic)
-                {
-                    array_push($topics, $topic['title']);
-                }
-
-                return implode(", ", $topics);
-            })
-			->rawColumns(["action"]);
+			->addColumn("action", function($data) {
+				return "<i class='js-remove-option h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer'
+				data-option-id='$data->id'></i>";
+			})
+			->rawColumns(['name', 'action']);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Course $model
+     * @param \Option $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(Option $model)
     {
         return $model->newQuery();
     }
@@ -61,7 +75,7 @@ class SimpleCoursesDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('simplecoursesdatatable-table')
+                    ->setTableId('optionsdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -102,6 +116,6 @@ class SimpleCoursesDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'SimpleCourses_' . date('YmdHis');
+        return 'Options_' . date('YmdHis');
     }
 }

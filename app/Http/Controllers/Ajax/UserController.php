@@ -3,19 +3,17 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Course;
-use App\DataTables\AddCoursesDataTable;
+use App\DataTables\Users\CoursesDataTable;
 use App\DataTables\CoursesInsideUsersDataTable;
-use App\DataTables\UserProfileDataTable;
-use App\DataTables\UsersDataTable;
+use App\DataTables\Users\UserCoursesDataTable;
+use App\DataTables\Users\UsersDataTable;
 use App\Media;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 use App\Mail\NewUserNotification;
 
 class UserController {
@@ -26,13 +24,13 @@ class UserController {
         return $dataTable->render('users.index');
     }
 
-    public function show(UserProfileDataTable $dataTable)
+    public function show(UserCoursesDataTable $dataTable)
     {
 
         return $dataTable->render('users.profile');
     }
 
-    public function addCourseModal(AddCoursesDataTable $dataTable)
+    public function addCourseModal(CoursesDataTable $dataTable)
     {
 
         return $dataTable->render('users.addCourses');

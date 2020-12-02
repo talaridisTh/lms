@@ -1,9 +1,8 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Courses;
 
-use App\Material;
-use App\Media;
+use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -11,7 +10,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class RemainingPDFDataTable extends DataTable
+class UsersDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -21,68 +20,70 @@ class RemainingPDFDataTable extends DataTable
      */
     public function dataTable($query, Request $request)
     {
+		$query = User::role(["instructor", "student"])->where("status", 1)
+			->whereNotIn("users.id", function($subquery) use ($request) {
 
-		if ( !is_null($request->materialId) ) {
+				$subquery->select('user_id')->from('course_user')
+					->where('course_id', $request->courseId)->get();
 
-			$activePDF = Material::find($request->materialId)->media()->where("usage", 4)->first();
-	
-			$query = Media::where("ext", "pdf")
-				->where("id", "!=", $activePDF->id)
-				->with("mediaDetails")->get();
-		}
-		else {
-			$query = Media::where("ext", "pdf")
-				->where("id", "!=", $request->pdfId)
-				->with("mediaDetails")->get();
-		}
+			})->select(
+				'id', 'first_name', 'last_name', 'email_verified_at',
+				'email', 'phone', 'slug'
+			)->get();
 
         return datatables()::of($query)
-			->addColumn('action', function($data) {
+            ->addColumn('action', function($data) {
 
-				if ( !is_null($data->mediaDetails) ) {
-					$title = $data->mediaDetails->title;
-				}
-				else {
-					$title = $data->original_name;
-				}
+				$pattern = "/[-!$%^&*(@)_+|~=`{}\[\]:\";'<>?,.\/]/m";
+				$slug = preg_replace($pattern, "", $data->email);
 
-				return "<button type='button' class='btn btn-primary js-change-pdf-btn'
-					data-pdf-id='$data->id' data-pdf-title='$title' data-pdf-name='$data->name.$data->ext'>Προσθήκη</button>";
+				return "<div class='icheck-primary d-inline'>
+							<input class='js-new-user-checkbox' data-user-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
+							<label for='$slug'></label>
+						</div>";
+
 			})
-			->editColumn("original_name", function($data) {
+			->editColumn("last_name", function($data) {
+				$badge = "";
 
-				if ( !is_null($data->mediaDetails) ) {
-					$title = $data->mediaDetails->title;
-				}
-				else {
-					$title = $data->original_name;
+				if ( is_null($data->email_verified_at) ) {
+					$badge .= "<span class='badge badge-outline-warning badge-pill ml-3'>Unverified</span>";
 				}
 
 				return "
-					<div class='d-flex'>
-						<i class='my-1 h3 mdi mdi-file-pdf-outline text-danger' title='$data->ext'></i>
-						<div class='d-inline'>
-							<a href='$data->rel_path' class='h5 mb-0 ml-2 custom-link-primary' download>$title</a>
-							<p class='mb-0 ml-2'>$data->name.$data->ext</p>
-						</div>
-					</div>
+					<span>$data->last_name $data->first_name</span>$badge
 				";
 			})
-			->editColumn("size", function($data) {
+            ->addColumn('addBtn', function($data) {
 
-				return number_format($data->size / 1000000, 2, ",", ".") ."MB";
+				return "<button type='button' class='js-add-user-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
 
 			})
-			->rawColumns(['action', 'original_name']);
+			->addColumn('role', function($data) {
+
+				return $data->getRoleNames()[0] === "instructor" ? "Εισηγητής" : "Μαθητής";
+
+			})
+			->rawColumns(['action', 'last_name', 'addBtn'])
+			->setRowAttr([ 'data-user-id' => function($data) {
+
+				return  $data->userId;
+
+			},
+			"data-user-slug" => function($data) {
+
+				return $data->slug;
+
+			}]);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Media $model
+     * @param \User $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Media $model)
+    public function query(User $model)
     {
         return $model->newQuery();
     }
@@ -95,7 +96,7 @@ class RemainingPDFDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('remainingpdfdatatable-table')
+                    ->setTableId('addcoursestudentsdatatable-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -136,6 +137,6 @@ class RemainingPDFDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'RemainingPDF_' . date('YmdHis');
+        return 'AddCourseStudents_' . date('YmdHis');
     }
 }

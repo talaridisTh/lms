@@ -1,11 +1,9 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Materials;
 
 use App\Course;
-use App\CourseInsideMaterial;
 use App\Material;
-use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
@@ -14,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class CourseInsideMaterialsDataTable extends DataTable {
+class MaterialCoursesDataTable extends DataTable {
 
     /**
      * Build DataTable class.

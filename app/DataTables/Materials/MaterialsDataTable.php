@@ -1,11 +1,8 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Materials;
 
 use App\Material;
-use App\User;
-use Carbon\Carbon;
-use http\Env\Request;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;

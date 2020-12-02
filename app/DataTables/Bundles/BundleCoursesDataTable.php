@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataTables;
+namespace App\DataTables\Bundles;
 
 use App\Bundle;
 use Illuminate\Http\Request;
