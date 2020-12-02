@@ -291,6 +291,16 @@ const templateHandler = (data, that) => {
                     <i class="font-18 uil-times-circle cursor-pointer"></i>
                 </div>
             `
+
+    $( ".material-cnt" ).prepend( "<nav aria-label='breadcrumb'>\n" +
+        "    <ol class='breadcrumb mb-0'>\n" +
+        "        <li class='breadcrumb-item'><a href='#'>course</a></li>\n" +
+        "<span class=\"mx-1 font-16\">/</span>"+
+        "        <li class='breadcrumb-item active' aria-current='page'>photoshop</li>\n" +
+        "    </ol>\n" +
+        "</nav>" );
+
+
 }
 
 const onPreviewMaterial = () => {

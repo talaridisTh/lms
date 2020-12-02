@@ -1225,3 +1225,11 @@ img.scale {
     left: 10px;
 }
 
+
+
+
+
+
+.breadcrumb-item+.breadcrumb-item::before{
+    font-family: "Material Design Icons";
+}
