@@ -5,44 +5,6 @@ utilities.redactorConfig.minHeight = "300px"
 $R("#editor", utilities.redactorConfig);
 sessionStorage.removeItem("recipients");
 
-// const recipientsSelect = $('#recipients-selection').select2({
-// 	placeholder: "Επιλέξτε παραλήπτες...",
-// 	width: "100%",
-// 	// allowClear: true,
-// 	ajax: {
-// 		url: "/email/users",
-// 		delay: 1000,
-// 		dataType: "json",
-// 		data: function(params) {
-// 			return {
-// 				search: params.term,
-// 				page: params.page || 1
-// 			}
-// 		}
-// 	}
-// });
-
-// $(".js-recipients").on("change", function() {
-// 	const select = $('#recipients-selection');
-// 	const recipients = $(".js-recipients:checked");
-	
-// 	select.html("");
-	
-// 	if (recipients.length === 0) {
-// 		select.prop("disabled", false);
-// 		return;
-// 	}
-	
-// 	let newOption;
-
-// 	for (let i = 0; i < recipients.length; i++) {
-// 		newOption = new Option(recipients[i].dataset.recipients, i, false, true);
-// 		select.append(newOption).trigger('change');
-// 	}
-
-// 	select.prop("disabled", true);
-// });
-
 utilities.tableLocale.emptyTable = "Δεν ορίστικαν παραλήπτες";
 utilities.tableLocale.zeroRecords = "Δεν βρέθηκαν παραλήπτες";
 
@@ -87,6 +49,7 @@ const usersDatatable = $("#users-datatable").DataTable({
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 
 		$(".js-add-recipient").on("click", addRecipientHandler);
+		$(".js-user-checkbox").on("change", addUserCheckboxHandler);
 	}
 });
 
@@ -127,6 +90,14 @@ const recipientsDatatable = $("#recipients-datatable").DataTable({
 		$(".js-remove-recipient").on("click", removeRecipientHandler);
 	}
 });
+
+function addUserCheckboxHandler() {
+	let mainCheckbox = $("#select-all-users")[0];
+	let minorCheckboxes = $(".js-user-checkbox");
+	let bulkBtn = $("#add-recipients-blk")[0]
+
+	utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
+}
 
 function addRecipientHandler() {
 
@@ -215,6 +186,9 @@ function createSelect(id) {
 	})
 
 	$(select).on("change", function() {
+		const label = $('#select2-course-user-filter-container')[0];
+
+		utilities.filterStyle( label, this.value.trim() );
 		usersDatatable.column(2).search( this.value ).draw();
 	})
 })();
@@ -242,6 +216,9 @@ function createSelect(id) {
 	})
 
 	$(select).on("change", function() {
+		const label = $('#select2-bundle-user-filter-container')[0];
+
+		utilities.filterStyle( label, this.value.trim() );
 		usersDatatable.column(3).search( this.value ).draw();
 	})
 })();
@@ -264,6 +241,16 @@ function createSelect(id) {
 	})
 
 	$(select).on("change", function() {
+		const label = $('#select2-user-role-filter-container')[0];
+
+		utilities.filterStyle( label, this.value );
 		usersDatatable.column(5).search( this.value ).draw();
 	})
 })();
+
+$("#select-all-users").on("change", function() {
+	let checkboxes = $('.js-user-checkbox');
+	let bulkBtn = $("#add-recipients-blk")[0];
+
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
+})

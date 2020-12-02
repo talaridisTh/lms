@@ -43,7 +43,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header modal-colored-header bg-primary">
-                <h4 class="modal-title" id="users-table-modalLabel">Modal Heading</h4>
+                <h4 class="modal-title" id="users-table-modalLabel">Χρήστες</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body table-cnt">
@@ -79,8 +79,10 @@
 				</table>
             </div>
             <div class="modal-footer">
+				<button id="add-recipients-blk" type="button"
+					class="btn btn-secondary" disabled data-text="Προσθήκη Επιλογών"
+					data-enabled-color="btn-primary" data-disabled-color="btn-secondary">Προσθήκη Επιλογών (0)</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

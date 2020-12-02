@@ -29,9 +29,12 @@ class UsersDataTable extends DataTable
         return datatables()->of($query)
             ->addColumn('action', function($data) {
 
+				$pattern = "/[-!$%^&*(@)_+|~=`{}\[\]:\";'<>?,.\/]/m";
+				$slug = preg_replace($pattern, "", $data->email);
+				
 				return "<div class='icheck-primary d-inline'>
-					<input type='checkbox' id='select-all-users' autocomplete='off'>
-					<label for='select-all-users'></label>
+					<input type='checkbox' id='$slug-checkbox' class='js-user-checkbox' autocomplete='off'>
+					<label for='$slug-checkbox'></label>
 				</div>";
 			})
 			->addColumn("name", function($data) {
