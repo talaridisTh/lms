@@ -19,11 +19,15 @@ class VerifyCourses
 
         if (auth()->user()->getRoleNames()[0]=="admin"){
             return $next($request);
+
         }
 
         $courseId = $request->route("course")->id;
 
+
+
        $user = auth()->user()->courses->whereIn("id",$courseId);
+
 
         if (count($user)>0 ) {
             return $next($request);

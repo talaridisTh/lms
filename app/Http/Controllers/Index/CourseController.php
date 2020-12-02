@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Comment;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Option;
+use App\Post;
 use App\Topic;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Str;
 
 class CourseController extends Controller {
 
@@ -27,7 +30,6 @@ class CourseController extends Controller {
         $arrayTopics = collect($topics)->mapWithKeys(function ($q) {
             return $q;
         });
-
         if (request()->idsTopic == "reset" || !request()->ajax())
         {
             $allCourses = auth()->user()->courses;
@@ -60,55 +62,37 @@ class CourseController extends Controller {
 
     public function userCourse(Course $course)
     {
-
-
-
+        $post = Post::where("title", $course->title)->first();
         $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
         $lastMaterial = $course->materials()
             ->where("type", "!=", "Announcement")
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
-        if(auth()->user()->getRoleNames()[0]==="guest"){
+        if (auth()->user()->getRoleNames()[0] === "guest")
+        {
 //            dd(auth()->user()->guestMaterial()->get());
-
             $allMaterial = auth()->user()->guestMaterial()
                 ->where("type", "!=", "Announcement")
                 ->wherePivotIn("course_id", [$course->id])
                 ->get();
-        }
-        else{
+        } else
+        {
             $allMaterial = $course->materials()
                 ->where("type", "!=", "Announcement")
                 ->orderBy("priority")
                 ->wherePivotIn("status", [1])->get();
         }
-
-
-
         $announcements = $course->materials()
             ->where("type", "Announcement")
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
-
-        $option = Option::all();
-
-
-//        $view = json_decode($test->last()->value,true)[$course->templ
-//ate]["views"]["frontend"];
-
-
-
-//         $view = json_decode($test->last()->value,true)[$course->template]["views"]["frontend"];
-
-
-        return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements"));
+        return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements","post"));
     }
 
     public function watchlistCourse(Request $request)
     {
-
 
         $watchlist = User::findOrFail($request->userId)
             ->watchlistCourse()->where('watchlistable_id', $request->modelId)->first();
@@ -128,6 +112,53 @@ class CourseController extends Controller {
 
             return response("add");
         }
+    }
+
+    public function courseComment(Request $request)
+    {
+
+
+        $post = Post::where("title", $request->courseInfo["title"])->first();
+        if (empty($post))
+        {
+            $curator = empty($request->courseInfo["user_id"]) ?
+                User::where("first_name", "Υδρόγειος")->first()->id : $request->courseInfo["user_id"];
+            $post = Post::create([
+                "title" => $request->courseInfo["title"],
+                "slug" => Str::slug($request->courseInfo["title"], "-"),
+                "user_id" => $curator,
+                "course_id" => $request->courseInfo["id"]
+            ]);
+        }
+
+        Comment::create([
+            "body" => $request->body,
+            "user_id" => auth()->id(),
+            "post_id" => $post->id,
+            "parent_id" => $request->parentId
+        ]);
+
+        return view("components.index.courses.course-comment",[
+           "post"=>$post
+        ]);
+
+    }
+
+    public function deleteComment(Request $request)
+    {
+
+
+        Comment::where("parent_id", $request->id)->get()->each(function ($comment) {
+            $comment->delete();
+        });
+        Comment::findOrFail($request->id)->delete();
+
+        $post = Post::where("title", $request->courseInfo["title"])->first();
+
+
+        return view("components.index.courses.course-comment",[
+            "post"=>$post
+        ]);
     }
 
 }

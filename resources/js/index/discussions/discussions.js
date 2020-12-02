@@ -128,12 +128,11 @@ const axiosUpdateMain = (that, data) => {
 $(".js-form-create").on("click",async function (e) {
     e.preventDefault()
     let title = $('input#post-title').val()
-    let body = $('textarea#post-body').val()
     let course = $('#post-course').val()
     this.disabled = true
 
 
-    if (!body || !title) {
+    if (!title) {
         if (!$(".validate-form-post-body").length) {
             $('#new-threads').modal('show');
             $("<p class='text-danger mt-2 validate-form-post-body'>*Συμπληρώστε όλα τα παιδιά</p>").insertAfter("#post-body");
@@ -145,7 +144,6 @@ $(".js-form-create").on("click",async function (e) {
     try {
         const {data, status} = await axios.post("/discussion/post/store-thread", {
             title,
-            body,
             course
         })
 

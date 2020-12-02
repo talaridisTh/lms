@@ -105,11 +105,9 @@
         <div class="container-fluid my-3 position-relative" style="max-width: 1423px"> <!--  container info -->
 
             <div class="row template-cnt">
-                <div class="col-lg-8 template-single-page {{empty($course->description)?"d-none":""}}">
+                <div class="col-lg-8 template-single-page">
                     @include("components.index.user-info")
                     <div class="row ">
-
-
                         <div class="col-md-12 px-2">
                             @include("components.index.collapse-menu",
                                 ["idAccordion"=>$course->slug."-accordion-summary" ,
@@ -130,11 +128,35 @@
                                  "fields"=>json_decode($course->fields)->description ])
                         </div>
 
+                        <div class="col-md-12 px-2">
+                            <div class="cnt-disscus rounded" style="background-color: rgba(0, 0, 0, 0.08) !important;">
+                                <h4 class="p-3">Συζήτηση</h4>
+
+                            </div>
+
+
+
+                            <div class="hidden-post" data-course-slug="{{$course->slug}}"
+                                 data-course-info="{{$course}}"></div>
+
+
+                        </div>
+
+                        <div class="col-md-12">
+                            @include("components.index.courses.course-comment")
+                            <div class="form-group  mt-4 replay-bottom first-thread-replay mb-2 " data-toggle="modal"
+                                 data-target="#new-reply">
+                                <p class="p-4 text-dark  font-20"><i
+                                        class="mdi mdi-hand-pointing-down font-18 mr-2"></i> Απαντησε στο Post</p>
+                            </div>
+                        </div>
+
                     </div>
+
+
                 </div>
 
-                <div
-                    class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block template-material-list":"offset-2 col-md-8 offset-2 text-left" }}">
+                <div class="col-lg-4 pl-3 d-flex justify-content-center d-lg-block template-material-list">
                     @if((count($announcements = $course->materials->where("type","Announcement"))>0))
                         <div class="accordion" id="courses-announcement">
                             <div class="card mb-0">
@@ -155,11 +177,12 @@
                                             <div class="single-announcement  mb-3" id="announcement-{{$key}}">
 
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                <h3>{{$announcement->title}}</h3>
-                                                <span class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
+                                                    <h3>{{$announcement->title}}</h3>
+                                                    <span
+                                                        class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
                                                 </div>
 
-                                            {{$announcement->description}}
+                                                {{$announcement->description}}
                                             </div>
                                         @endforeach
                                     </div>
@@ -367,14 +390,46 @@
 
                 </div>
 
-                {{--                <p class="template-fullscreen">test</p>--}}
-
             </div>
 
 
         </div> <!--  container info -->
 
     </div>
+
+    <div id="new-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-bottom">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>
+                        <i class="mdi mdi-reply"></i>
+                        <span> Reply to <span class="text-info replay-name"></span></span>
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <textarea class="form-control form-reply-body" id="reply-body"
+                                  name="body"
+                                  form="form-create-reply" rows="5"
+                                  placeholder="Απάντηση.."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal">Close
+                    </button>
+                    <button type="button" class="btn btn-primary js-form-reply">Post</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal-dialog -->
+
+    <form id="form-create-reply" method="post" action="{{route('index.courseComment')}}">
+        @csrf
+    </form>
+
 
 @endsection
 

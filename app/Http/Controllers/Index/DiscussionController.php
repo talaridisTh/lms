@@ -88,23 +88,15 @@ class DiscussionController extends Controller {
 
         $request->validate([
             "title" => "required",
-            "body" => "required",
             "course" => "required",
         ]);
-        $post = new Post;
-        $post->title = $request->title;
-        $post->slug = Str::slug($request->title, "-");
-        $post->body = $request->body;
-        $post->user_id = auth()->id();
-        $post->course_id = Course::where("title", $request->course)->first()->id;
-        $post->save();
-//        Post::create([
-//            "title" => $request->title,
-//            "slug" => Str::slug($request->title, "-"),
-//            "body" => $request->body,
-//            "user_id" => auth()->id(),
-//            "course" => Course::where("title", $request->course)->first()->id
-//        ]);
+
+        Post::create([
+            "title" => $request->title,
+            "slug" => Str::slug($request->title, "-"),
+            "user_id" => auth()->id(),
+            "course_id" => Course::where("title", $request->course)->first()->id
+        ]);
         $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
             ->paginate(10);
 
