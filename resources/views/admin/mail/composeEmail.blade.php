@@ -59,6 +59,8 @@
 							<th class="text-center">Ονοματεπώνυμο</th>
 							<th class="text-center min-width-200 w-300px">Courses</th>
 							<th class="text-center min-width-200 w-300px">Bundles</th>
+							<th class="text-center min-width-200 w-300px">Email</th>
+							<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
 							<th class="text-center"></th>
 						</tr>
 					</thead>
@@ -68,6 +70,9 @@
 							<th class="text-center"></th>
 							<th class="text-center">Ονοματεπώνυμο</th>
 							<th class="text-center">Courses</th>
+							<th class="text-center">Bundles</th>
+							<th class="text-center">Email</th>
+							<th class="text-center">Ιδιότητα</th>
 							<th class="text-center"></th>
 						</tr>
 					</tfoot>

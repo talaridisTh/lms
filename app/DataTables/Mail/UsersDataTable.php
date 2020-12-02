@@ -54,6 +54,35 @@ class UsersDataTable extends DataTable
 				return "<button class='js-add-recipient btn btn-primary' data-user-id='$data->id'>Προσθήκη</button>";
 
 			})
+			->addColumn("role", function($data) {
+
+				$role = $data->getRoleNames()[0];
+				switch ($role) {
+					case "admin":
+						return "Admin";
+					case "instructor":
+						return "Εισηγητής";
+					case "partner":
+						return "Partner";
+					default:
+						return "Μαθητής";
+				}
+
+			})
+			->filterColumn("courses.title", function($query, $keyword) {
+				
+				$query->whereHas("courses", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
+			->filterColumn("bundles.title", function($query, $keyword) {
+				
+				$query->whereHas("bundles", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
 			->rawColumns(['action', 'btn']);
     }
 

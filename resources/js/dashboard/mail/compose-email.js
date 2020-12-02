@@ -48,6 +48,7 @@ utilities.tableLocale.zeroRecords = "Δεν βρέθηκαν παραλήπτε�
 
 const usersDatatable = $("#users-datatable").DataTable({
 	order: [1, "asc"],
+	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -63,9 +64,13 @@ const usersDatatable = $("#users-datatable").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'name', name: 'users.last_name', className: "align-middle" },
-		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap" },
-		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap" },
+		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap", visible: false },
+		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap", visible: false },
+		{ data: 'email', name: 'email', className: "align-middle text-center text-wrap" },
+		{ data: 'role', name: 'roles.name', className: "align-middle text-center text-wrap" },
 		{ data: 'btn', className: "align-middle text-center text-wrap", orderable: false, searchable: false },
+		{ data: 'first_name', name: "first_name", visible: false },
+		{ data: 'last_name', name: "last_name", visible: false },
 
 	],
 	language: utilities.tableLocale,
@@ -78,6 +83,8 @@ const usersDatatable = $("#users-datatable").DataTable({
 	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 
 		$(".js-add-recipient").on("click", addRecipientHandler);
 	}
@@ -85,6 +92,7 @@ const usersDatatable = $("#users-datatable").DataTable({
 
 const recipientsDatatable = $("#recipients-datatable").DataTable({
 	order: [1, "asc"],
+	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -236,4 +244,26 @@ function createSelect(id) {
 	$(select).on("change", function() {
 		usersDatatable.column(3).search( this.value ).draw();
 	})
-})()
+})();
+
+(function rolesFilter() {
+	const lengthCnt = document.getElementById("users-datatable_length");
+	const select = createSelect("user-role-filter");
+	select.innerHTML = `
+		<option value="">Όλοι οι Ρόλοι</option>
+		<option value="admin">Admin</option>
+		<option value="instructor">Εισηγητές</option>
+		<option value="partner">Partners</option>
+		<option value="student">Μαθητές</option>
+	`;
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		width: "150px",
+	})
+
+	$(select).on("change", function() {
+		usersDatatable.column(4).search( this.value ).draw();
+	})
+})();
