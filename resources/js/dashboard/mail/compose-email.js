@@ -264,6 +264,6 @@ function createSelect(id) {
 	})
 
 	$(select).on("change", function() {
-		usersDatatable.column(4).search( this.value ).draw();
+		usersDatatable.column(5).search( this.value ).draw();
 	})
 })();
