@@ -285,11 +285,7 @@ $("#remove-recipients-btn").on("click", function() {
 		recipients.splice(index, 1);
 	}
 
-	sessionStorage.removeItem("recipients");
-	sessionStorage.setItem("recipients", recipients.toString());
-
-	usersDatatable.ajax.reload(null, false);
-	recipientsDatatable.ajax.reload(null, false);
+	userTablesUpdate(recipients.toString());
 });
 
 $("#add-recipients-blk").on("click", function() {
@@ -301,11 +297,7 @@ $("#add-recipients-blk").on("click", function() {
 		recipients.push(users[i].dataset.userId);
 	}
 
-	sessionStorage.removeItem("recipients");
-	sessionStorage.setItem("recipients", recipients.toString());
-
-	usersDatatable.ajax.reload(null, false);
-	recipientsDatatable.ajax.reload(null, false);
+	userTablesUpdate(recipients.toString());
 
 	$("#users-table-modal").modal("hide");
 })
