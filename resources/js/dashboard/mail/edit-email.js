@@ -209,3 +209,44 @@ $("#mail-form").on("submit", function() {
 	const recipients = sessionStorage.getItem("new_recipients");
 	$("#recipients-input").val(recipients);
 });
+
+$("#add-recipients-blk").on("click", function() {
+	const recipients = sessionStorage.getItem("recipients").split(",");
+	const newRecipients = sessionStorage.getItem("new_recipients") === null
+		? [] : sessionStorage.getItem("recipients").split(",");
+	const users = $(".js-user-checkbox:checked");
+
+	for ( let i = 0; i < users.length; i++ ) {
+		recipients.push(users[i].dataset.userId);
+		newRecipients.push(users[i].dataset.userId);
+	}
+
+	sessionStorage.setItem("recipients", recipients);
+	sessionStorage.setItem("new_recipients", newRecipients);
+
+	usersDatatable.ajax.reload(null, false);
+	recipientsDatatable.ajax.reload(null, false);
+
+	$("#users-table-modal").modal("hide");
+});
+
+$("#remove-recipients-btn").on("click", function() {
+	const recipients = sessionStorage.getItem("recipients").split(",");
+	const newRecipients = sessionStorage.getItem("new_recipients").split(",");
+	const unwanted = $(".js-recipient-checkbox:checked");
+	let index;
+
+	for (let i = 0; i < unwanted.length; i++) {
+		index = recipients.indexOf(unwanted[i].dataset.userId);
+		recipients.splice(index, 1);
+		
+		index = newRecipients.indexOf(unwanted[i].dataset.userId);
+		newRecipients.splice(index, 1);
+	}
+
+	sessionStorage.setItem("recipients", recipients);
+	sessionStorage.setItem("new_recipients", newRecipients);
+
+	usersDatatable.ajax.reload(null, false);
+	recipientsDatatable.ajax.reload(null, false);
+});

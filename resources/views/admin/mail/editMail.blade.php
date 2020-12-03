@@ -234,5 +234,15 @@
 
 <script src="{{ mix("js/dashboard/mail/edit-email.js") }}"></script>
 
+@error('recipients')
+	<script>
+		Swal.fire({
+			title: "Προσοχή!",
+			text: 'Δεν ορίστηκαν παραλήπτες.',
+			icon: 'warning',
+			confirmButtonColor: '#536de6',
+		});
+	</script>
+@enderror
 	
 @endsection

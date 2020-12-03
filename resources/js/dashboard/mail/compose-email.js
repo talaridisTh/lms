@@ -300,4 +300,4 @@ $("#add-recipients-blk").on("click", function() {
 	userTablesUpdate(recipients.toString());
 
 	$("#users-table-modal").modal("hide");
-})
+});
