@@ -78,6 +78,13 @@ class MailController extends Controller
 		return redirect("/dashboard/email")->with($message);
 	}
 
+	public function delete(AppMail $mail) {
+
+		$mail->delete();
+
+		return view("admin.mail.mailMain");
+	}
+
 	private function findRecipients(Request $request) {
 
 		if ( isset($request->recipients) ) {

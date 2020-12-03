@@ -250,3 +250,113 @@ $("#remove-recipients-btn").on("click", function() {
 	usersDatatable.ajax.reload(null, false);
 	recipientsDatatable.ajax.reload(null, false);
 });
+
+$("#delete-btn").on("click", function() {
+	Swal.fire({
+		title: 'Διαγραφή;',
+		text: "Η ενέργεια θα είναι μη αναστρέψιμη",
+		icon: 'warning',
+		showCancelButton: true,
+		confirmButtonColor: '#ff5b5b',
+		cancelButtonColor: '#d33',
+		confirmButtonText: 'Ναι, διαγραφή!',
+		cancelButtonText: 'Άκυρο'
+	}).then((result) => {
+		if (result.isConfirmed) {
+			$("#delete-mail-form")[0].submit()
+		}
+	})
+});
+
+function createSelect(id) {
+	const select = document.createElement("select");
+	select.classList.add("select2", "form-control", "select2-multiple");
+	select.id = id;
+
+	return select;
+}
+
+(function coursesFilter() {
+	const lengthCnt = document.getElementById("users-datatable_length");
+	const select = createSelect("course-user-filter");
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		placeholder: "Όλα τα Courses",
+		width: "150px",
+		ajax: {
+			url: "/courses/json-search",
+			delay: 1000,
+			dataType: "json",
+			data: function(params) {
+				return {
+					search: params.term,
+					page: params.page || 1
+				}
+			}
+		}
+	})
+
+	$(select).on("change", function() {
+		const label = $('#select2-course-user-filter-container')[0];
+
+		utilities.filterStyle( label, this.value.trim() );
+		usersDatatable.column(2).search( this.value ).draw();
+	})
+})();
+
+(function bundlesFilter() {
+	const lengthCnt = document.getElementById("users-datatable_length");
+	const select = createSelect("bundle-user-filter");
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		placeholder: "Όλα τα Bundles",
+		width: "150px",
+		ajax: {
+			url: "/bundles/json-search",
+			delay: 1000,
+			dataType: "json",
+			data: function(params) {
+				return {
+					search: params.term,
+					page: params.page || 1
+				}
+			}
+		}
+	})
+
+	$(select).on("change", function() {
+		const label = $('#select2-bundle-user-filter-container')[0];
+
+		utilities.filterStyle( label, this.value.trim() );
+		usersDatatable.column(3).search( this.value ).draw();
+	})
+})();
+
+(function rolesFilter() {
+	const lengthCnt = document.getElementById("users-datatable_length");
+	const select = createSelect("user-role-filter");
+	select.innerHTML = `
+		<option value="">Όλοι οι Ρόλοι</option>
+		<option value="admin">Admin</option>
+		<option value="instructor">Εισηγητές</option>
+		<option value="partner">Partners</option>
+		<option value="student">Μαθητές</option>
+	`;
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		width: "150px",
+	})
+
+	$(select).on("change", function() {
+		const label = $('#select2-user-role-filter-container')[0];
+
+		utilities.filterStyle( label, this.value );
+		usersDatatable.column(5).search( this.value ).draw();
+	})
+})();

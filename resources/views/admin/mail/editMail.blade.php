@@ -113,14 +113,14 @@
 			<button form="mail-form" class="btn btn-danger ml-1" type="submit" name="button" value="send">
 				Προώθηση
 			</button>
-			<button class="btn btn-light" name="button" value="draft">
+			<button id="delete-btn" class="btn btn-light">
 				Διαγραφή
 			</button>
 		</div>
 
 		<ul class="nav nav-tabs nav-bordered mb-3">
 			<li class="nav-item">
-				<a href="#view-mail-tab" class="nav-link" data-toggle="tab" aria-expanded="false">
+				<a href="#view-mail-tab" class="nav-link active" data-toggle="tab" aria-expanded="false">
 					Προβολή
 				</a>
 			</li>
@@ -130,14 +130,14 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="#forward-tab" class="nav-link active" data-toggle="tab" aria-expanded="true">
+				<a href="#forward-tab" class="nav-link" data-toggle="tab" aria-expanded="true">
 					Παραλήπτες
 				</a>
 			</li>
 		</ul>
 
 		<div class="tab-content">
-			<div id="view-mail-tab" class="tab-pane">
+			<div id="view-mail-tab" class="tab-pane show active">
 				
 				<div class="position-relative" style="width: 100%; height: 100vh">
 					<div style="position: absolute; top: 0; bottom:0; left: 0px; right: 0; background: #fff;">
@@ -176,7 +176,7 @@
 				</table>
 			</div>
 
-			<div id="forward-tab" class="tab-pane show active">
+			<div id="forward-tab" class="tab-pane">
 				<div class="text-right mb-3">
 					<button class="btn btn-primary" data-toggle="modal" data-target="#users-table-modal">
 						Προσθήκη
@@ -222,6 +222,11 @@
 				<input type="text" name="subject" value="{{ old("subject", $mail->subject) }}" hidden>
 				<input type="text" name="content" value="{{ old("content", $mail->content) }}" hidden>
 				<input id="recipients-input" type="text" name="recipients" hidden>
+			</form>
+
+			<form id="delete-mail-form" action="/dashboard/email/{{ $mail->id }}/delete" method="POST">
+				@csrf
+				@method('DELETE')
 			</form>
 		</div>
 	</div><!-- ./container -->
