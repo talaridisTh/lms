@@ -25,6 +25,11 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+
+        Gate::define('viewWebTinker', function ($user = null) {
+            // return true if access to web tinker is allowed
+            return true;
+        });
         //
     }
 }

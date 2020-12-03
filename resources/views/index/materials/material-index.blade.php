@@ -299,6 +299,7 @@ else{
                         </div>
                     </div>
 
+                    @include("components.index.comments.comments-main",["model"=>$materials,"namespace"=>"App\Material"])
                 </div>
                 <div class="col-lg-4 pl-3 template-hidden">
                     <div class="row hover-yellow px-2">

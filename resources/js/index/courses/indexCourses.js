@@ -387,19 +387,20 @@ $(".js-form-reply").on("click", async function (e) {
 
     }
 
-    const courseInfo = JSON.parse(this.dataset.course)
+    const modelInfo = JSON.parse(this.dataset.model)
     const parentId = this.dataset.parent;
+    const namespace = this.dataset.namespace;
     this.disabled = true
     $(".validate-form-post").remove();
 
 
     try {
-        const {data, status} = await axios.post(`/courses/course/comment`, {
-            courseInfo,
+        const {data, status} = await axios.post(`/model/comment`, {
+            modelInfo,
             body,
+            namespace,
             parentId
-        })
-
+        });
         if (status == 200) {
             $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
             $('#new-reply').modal('hide')
@@ -414,14 +415,18 @@ $(".js-form-reply").on("click", async function (e) {
 
 })
 
+
 const onFirstReplayBtnEvent = () => {
 
     $(document).on("click", ".first-thread-replay", function () {
-        let course = $(".hidden-post").data("course-info");
+        let model = $(".hidden-post").data("model-info");
+        let namespace = $(".hidden-post").data("namespace");
+
 
         $("#new-reply").find(".replay-name").text("");
-        $(".js-form-reply")[0].dataset.course = JSON.stringify(course)
+        $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
         $(".js-form-reply")[0].dataset.parent = 0
+        $(".js-form-reply")[0].dataset.namespace = namespace;
 
     })
 
@@ -429,37 +434,39 @@ const onFirstReplayBtnEvent = () => {
 
 const onCommentReplayBtnEvent = () => {
     $(".template-cnt").on("click", ".js-comment-reply", function () {
-        let course = $(".hidden-post").data("course-info");
+        let model = $(".hidden-post").data("model-info");
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
 
         $("#new-reply").find(".replay-name").text(`@${author}`);
-        $(".js-form-reply")[0].dataset.course = JSON.stringify(course)
+        $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
         $(".js-form-reply")[0].dataset.parent = parentId
     })
 }
 
 const onSubCommentReplayBtnEvent = () => {
     $(".template-cnt").on("click", ".js-sub-comment-reply", function () {
-        let course = $(".hidden-post").data("course-info");
+        let model = $(".hidden-post").data("model-info");
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
 
         $("#new-reply").find(".replay-name").text(`@${author}`);
-        $(".js-form-reply")[0].dataset.course = JSON.stringify(course)
+        $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
         $(".js-form-reply")[0].dataset.parent = parentId
     })
 }
+
+
 
 const onDeleteComment = () => {
 
     $(".template-cnt").on("click", ".js-delete-comment", async function (e) {
         e.preventDefault();
         const id = this.closest(".main-post").dataset.threadId
-        const courseInfo = $(".hidden-post").data("course-info");
+        const modelInfo = $(".hidden-post").data("model-info");
         try {
-            const {data, status} = await axios.post(`/courses/delete`, {
-                courseInfo,
+            const {data, status} = await axios.post(`/model/delete`, {
+                modelInfo,
                 id
             })
 

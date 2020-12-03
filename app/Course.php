@@ -57,6 +57,10 @@ class Course extends Model {
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
+    public function post()
+    {
+        return $this->morphMany(Post::class, 'postable');
+    }
 
     public function getRouteKeyName()
     {

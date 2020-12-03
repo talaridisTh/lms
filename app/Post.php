@@ -22,12 +22,10 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function course()
+    public function postable()
     {
-        return $this->belongsTo(Course::class);
+        return $this->morphTo();
     }
-
-
     public function getCourse()
     {
         return $this->course?$this->course->title:"General";
@@ -38,6 +36,4 @@ class Post extends Model
     {
         return $this->morphToMany(User::class, 'likable');
     }
-
-
 }

@@ -20,6 +20,7 @@
         }
         footer{
             display: none;
+
         }
 
     </style>
@@ -46,3 +47,4 @@
 
 
 @endsection
+

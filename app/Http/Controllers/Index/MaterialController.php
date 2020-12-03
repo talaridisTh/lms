@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Index;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Material;
+use App\Traits\hasComments;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class MaterialController extends Controller {
 
+    use hasComments;
     public function show(Course $course, Material $materials)
     {
         $icons = [

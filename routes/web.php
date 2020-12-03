@@ -318,9 +318,9 @@ Route::patch("/discussion/closed/{id}", "Index\DiscussionController@closed")->na
 Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
     Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
 //! Course
-    Route::post('/courses/course/comment', 'Index\CourseController@courseComment')->name("index.courseComment")->withoutMiddleware(['verifyCourse']);
+    Route::post('/model/comment', 'Index\CourseController@modelComment')->name("index.modelComment")->withoutMiddleware(['verifyCourse']);
     Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
-    Route::post("/courses/delete", "Index\CourseController@deleteComment")->name("index.deleteComment")->withoutMiddleware(['verifyCourse']);
+    Route::post("/model/delete", "Index\CourseController@deleteComment")->name("index.deleteComment")->withoutMiddleware(['verifyCourse']);
 
 //! Material index  ajax
     Route::patch('/add-watchlist/course', 'Index\CourseController@watchlistCourse')->name('index.watchlist.course');

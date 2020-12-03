@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropBodyColumnFromPosts extends Migration
+class DropPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class DropBodyColumnFromPosts extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('body');
-        });
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Schema::dropIfExists("posts");
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+
+
     }
 
     /**
@@ -25,8 +28,6 @@ class DropBodyColumnFromPosts extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-                $table->text("body");
-        });
+        //
     }
 }

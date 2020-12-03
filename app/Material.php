@@ -65,10 +65,10 @@ class Material extends Model {
         return $this->morphToMany('App\User', 'watchlistable');
     }
 
-//    public function witchlist()
-//    {
-//        return $this->hasMany(Witchlist::class);
-//    }
+    public function post()
+    {
+        return $this->morphMany(Post::class, 'postable');
+    }
 
     public function witchlist()
     {

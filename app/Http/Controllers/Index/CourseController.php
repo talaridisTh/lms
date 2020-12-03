@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Option;
 use App\Post;
 use App\Topic;
+use App\Traits\hasComments;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\View;
 use Str;
 
 class CourseController extends Controller {
-
+    use hasComments;
     //
     public function show(Course $course)
     {
@@ -114,51 +115,5 @@ class CourseController extends Controller {
         }
     }
 
-    public function courseComment(Request $request)
-    {
-
-
-        $post = Post::where("title", $request->courseInfo["title"])->first();
-        if (empty($post))
-        {
-            $curator = empty($request->courseInfo["user_id"]) ?
-                User::where("first_name", "Υδρόγειος")->first()->id : $request->courseInfo["user_id"];
-            $post = Post::create([
-                "title" => $request->courseInfo["title"],
-                "slug" => Str::slug($request->courseInfo["title"], "-"),
-                "user_id" => $curator,
-                "course_id" => $request->courseInfo["id"]
-            ]);
-        }
-
-        Comment::create([
-            "body" => $request->body,
-            "user_id" => auth()->id(),
-            "post_id" => $post->id,
-            "parent_id" => $request->parentId
-        ]);
-
-        return view("components.index.courses.course-comment",[
-           "post"=>$post
-        ]);
 
     }
-
-    public function deleteComment(Request $request)
-    {
-
-
-        Comment::where("parent_id", $request->id)->get()->each(function ($comment) {
-            $comment->delete();
-        });
-        Comment::findOrFail($request->id)->delete();
-
-        $post = Post::where("title", $request->courseInfo["title"])->first();
-
-
-        return view("components.index.courses.course-comment",[
-            "post"=>$post
-        ]);
-    }
-
-}
