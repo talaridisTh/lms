@@ -160,8 +160,8 @@
                         <form id="material-create" method="post" action="/dashboard/materials/store" enctype="multipart/form-data" autocomplete="off">
 
                             @isset($priority)
-                            	<input type="text" name="courseId" value="{{ $course->id }}" />
-								<input type="text" name="priority" value="{{ $priority }}" />
+                            	<input type="text" name="courseId" value="{{ $course->id }}" hidden />
+								<input type="text" name="priority" value="{{ $priority }}" hidden />
 								@if ( !is_null($section) )
 
 									<input type="text" name="sectionId" value="{{ $section->id }}" />
