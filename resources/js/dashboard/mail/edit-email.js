@@ -142,7 +142,6 @@ function removeRecipientHandler() {
 
 	usersDatatable.ajax.reload(null, false);
 	recipientsDatatable.ajax.reload(null, false);
-	// userTablesUpdate(recipients);
 }
 
 function addUserCheckboxHandler() {
@@ -165,13 +164,6 @@ function addRecipientHandler() {
 	usersDatatable.ajax.reload(null, false);
 	recipientsDatatable.ajax.reload(null, false);
 }
-
-// function userTablesUpdate(recipients) {
-// 	sessionStorage.setItem("recipients", recipients);
-
-// 	usersDatatable.ajax.reload(null, false);
-// 	recipientsDatatable.ajax.reload(null, false);
-// }
 
 function updateRecipients(ids) {
 	let recipients = sessionStorage.getItem("recipients");
@@ -198,3 +190,22 @@ function updateNewRecipients(ids) {
 
 	sessionStorage.setItem("new_recipients", recipients);
 }
+
+$("#select-all-users").on("change", function() {
+	let checkboxes = $('.js-user-checkbox');
+	let bulkBtn = $("#add-recipients-blk")[0];
+
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
+});
+
+$("#select-all-recipients").on("change", function() {
+	let checkboxes = $('.js-recipient-checkbox');
+	let bulkBtn = $("#remove-recipients-btn")[0];
+
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
+});
+
+$("#mail-form").on("submit", function() {
+	const recipients = sessionStorage.getItem("new_recipients");
+	$("#recipients-input").val(recipients);
+});

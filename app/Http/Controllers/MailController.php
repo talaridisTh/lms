@@ -81,6 +81,8 @@ class MailController extends Controller
 
 	public function sendNewsletter(Request $request) {
 
+		// dd($request->all());
+
 		$request->validate([
 			"subject" => "required",
 			"content" => "required",

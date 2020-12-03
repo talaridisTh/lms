@@ -273,7 +273,7 @@ $("#select-all-recipients").on("change", function() {
 	let bulkBtn = $("#remove-recipients-btn")[0];
 
 	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
-})
+});
 
 $("#remove-recipients-btn").on("click", function() {
 	const recipients = sessionStorage.getItem("recipients").split(",");

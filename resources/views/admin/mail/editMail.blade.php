@@ -110,10 +110,10 @@
 	
 	<div class="container content-width">
 		<div class="mt-1 mb-1 text-right">{{-- an figi to value den mporo na kano isset() sto controller --}}
-			<button class="js-submit-btn btn btn-danger ml-1" name="button" value="send">
+			<button form="mail-form" class="btn btn-danger ml-1" type="submit" name="button" value="send">
 				Προώθηση
 			</button>
-			<button class="js-submit-btn btn btn-light" name="button" value="draft">
+			<button class="btn btn-light" name="button" value="draft">
 				Διαγραφή
 			</button>
 		</div>
@@ -131,7 +131,7 @@
 			</li>
 			<li class="nav-item">
 				<a href="#forward-tab" class="nav-link active" data-toggle="tab" aria-expanded="true">
-					Προώθηση
+					Παραλήπτες
 				</a>
 			</li>
 		</ul>
@@ -215,6 +215,14 @@
 				</table>
 			</div>
 
+			<form id="mail-form" action="/dashboard/email" method="POST" autocomplete="off">
+
+				@csrf
+
+				<input type="text" name="subject" value="{{ old("subject", $mail->subject) }}" hidden>
+				<input type="text" name="content" value="{{ old("content", $mail->content) }}" hidden>
+				<input id="recipients-input" type="text" name="recipients" hidden>
+			</form>
 		</div>
 	</div><!-- ./container -->
 
