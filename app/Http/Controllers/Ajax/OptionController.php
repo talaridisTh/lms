@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\DataTables\SimpleMaterialsDataTable;
-use App\DataTables\SimpleCoursesDataTable;
-use App\DataTables\SimpleBundlesDataTable;
-use App\DataTables\OptionsDataTable;
+use App\DataTables\Carousels\MaterialsDataTable;
+use App\DataTables\Carousels\CoursesDataTable;
+use App\DataTables\Carousels\BundlesDataTable;
+use App\DataTables\Options\OptionsDataTable;
 use App\Http\Controllers\Controller;
 use App\Option;
 use Illuminate\Http\Request;
@@ -18,15 +18,15 @@ class OptionController extends Controller
 		return $dataTable->render('options.main');
 	}
 
-	public function simpleMaterialsDatatable(SimpleMaterialsDataTable $datatable) {
+	public function simpleMaterialsDatatable(MaterialsDataTable $datatable) {
 		return $datatable->render('simple.materials.datatable');
 	}
 
-	public function simpleCoursesDatatable(SimpleCoursesDataTable $datatable) {
+	public function simpleCoursesDatatable(CoursesDataTable $datatable) {
 		return $datatable->render('simple.courses.datatable');
 	}
 
-	public function simpleBundlesDatatable(SimpleBundlesDataTable $datatable) {
+	public function simpleBundlesDatatable(BundlesDataTable $datatable) {
 		return $datatable->render('simple.bundles.datatable');
 	}
 

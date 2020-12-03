@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Bundle;
-use App\DataTables\AddBundleUsersDataTable;
-use App\DataTables\BundleCoursesDataTable;
-use App\DataTables\BundleDataTable;
-use App\DataTables\BundleUsersDatatable;
-use App\DataTables\RemainingCoursesDataTable;
+use App\DataTables\Bundles\UsersDataTable;
+use App\DataTables\Bundles\BundleCoursesDataTable;
+use App\DataTables\Bundles\BundleDataTable;
+use App\DataTables\Bundles\BundleUsersDatatable;
+use App\DataTables\Bundles\CoursesDataTable;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -82,8 +82,8 @@ class BundleController extends Controller
 		}
 	}
 	
-	public function remainingCourses(RemainingCoursesDataTable $dataTable) {
-		return $dataTable->render('bundle.remainingCoursesDataTable');
+	public function remainingCourses(CoursesDataTable $dataTable) {
+		return $dataTable->render('bundle.CoursesDataTable');
 	}
 
 	public function addCourses(Request $request) {
@@ -119,7 +119,7 @@ class BundleController extends Controller
         return $dataTable->render('bundle.users');
 	}
 
-	public function remainingUsers ( AddBundleUsersDataTable $dataTable ) {
+	public function remainingUsers (UsersDataTable $dataTable ) {
 		
 		return $dataTable->render('bundle.remaining.users');
 

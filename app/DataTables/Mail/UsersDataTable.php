@@ -29,9 +29,13 @@ class UsersDataTable extends DataTable
         return datatables()->of($query)
             ->addColumn('action', function($data) {
 
+				$pattern = "/[-!$%^&*(@)_+|~=`{}\[\]:\";'<>?,.\/]/m";
+				$slug = preg_replace($pattern, "", $data->email);
+				
 				return "<div class='icheck-primary d-inline'>
-					<input type='checkbox' id='select-all-users' autocomplete='off'>
-					<label for='select-all-users'></label>
+					<input type='checkbox' id='$slug-checkbox' data-user-id='$data->id'
+						class='js-user-checkbox' autocomplete='off'>
+					<label for='$slug-checkbox'></label>
 				</div>";
 			})
 			->addColumn("name", function($data) {
@@ -52,6 +56,35 @@ class UsersDataTable extends DataTable
 			->addColumn("btn", function($data) {
 
 				return "<button class='js-add-recipient btn btn-primary' data-user-id='$data->id'>Προσθήκη</button>";
+
+			})
+			->addColumn("role", function($data) {
+
+				$role = $data->getRoleNames()[0];
+				switch ($role) {
+					case "admin":
+						return "Admin";
+					case "instructor":
+						return "Εισηγητής";
+					case "partner":
+						return "Partner";
+					default:
+						return "Μαθητής";
+				}
+
+			})
+			->filterColumn("courses.title", function($query, $keyword) {
+				
+				$query->whereHas("courses", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
+			->filterColumn("bundles.title", function($query, $keyword) {
+				
+				$query->whereHas("bundles", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
 
 			})
 			->rawColumns(['action', 'btn']);

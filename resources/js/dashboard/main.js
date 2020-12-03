@@ -233,13 +233,13 @@ function bulkModifier(bulkBtn, status, sum) {
     let disabledColor = bulkBtn.dataset.disabledColor ? bulkBtn.dataset.disabledColor : "btn-secondary";
 
     if (status) {
+		bulkBtn.classList.remove(enabledColor)
         bulkBtn.classList.add(disabledColor)
-        bulkBtn.classList.remove(enabledColor)
         bulkBtn.textContent = `${text} (0)  `
         bulkBtn.disabled = true;
     } else {
+		bulkBtn.classList.remove(disabledColor);
         bulkBtn.classList.add(enabledColor);
-        bulkBtn.classList.remove(disabledColor);
         bulkBtn.textContent = `${text}  (${sum})  `
         bulkBtn.disabled = false;
     }
@@ -351,9 +351,9 @@ function endDate(input) {
     return secondDate;
 }
 
-function resetBulk(bulkBtn, checkbox) {
+function resetBulk(bulkBtn, checkbox, text = "Επιλογές  (0)") {
 
-    bulkBtn.text("Επιλογές  (0)");
+    bulkBtn.text(text);
     bulkBtn.addClass("btn-secondary");
     bulkBtn.removeClass("btn-warning");
     bulkBtn.prop("disabled", true);

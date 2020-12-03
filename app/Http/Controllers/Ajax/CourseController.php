@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Course;
-use App\DataTables\AddCourseUsersDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use App\DataTables\CoursesDataTable;
-use App\DataTables\CourseMaterialsDataTable;
-use App\DataTables\CourseUsersDataTable;
-use App\DataTables\RemainingMaterialsDataTable;
+use App\DataTables\Courses\CoursesDataTable;
+use App\DataTables\Courses\CourseMaterialsDataTable;
+use App\DataTables\Courses\CourseUsersDataTable;
+use App\DataTables\Courses\MaterialsDataTable;
+use App\DataTables\Courses\UsersDataTable;
 
 
 class CourseController extends Controller
@@ -127,7 +127,7 @@ class CourseController extends Controller
 		return $dataTable->render('course.materials');
 	}
 
-	public function remainingMaterials(RemainingMaterialsDataTable $dataTable) {
+	public function remainingMaterials(MaterialsDataTable $dataTable) {
 		return $dataTable->render('course.remaingMaterials');
 	}
 
@@ -199,7 +199,7 @@ class CourseController extends Controller
 
 	}
 
-	public function addCourseStudents(AddCourseUsersDataTable $dataTable) {
+	public function addCourseStudents(UsersDataTable $dataTable) {
 
 		return $dataTable->render('courses.add.users');
 

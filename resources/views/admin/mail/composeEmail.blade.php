@@ -30,7 +30,7 @@
 			z-index: 1000;
 		}
 
-		#users-datatable_length span.select2:nth-child(3) {
+		#users-datatable_length span.select2:not(:last-child) {
 			margin-right: 6px;
 		}
 
@@ -43,7 +43,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header modal-colored-header bg-primary">
-                <h4 class="modal-title" id="users-table-modalLabel">Modal Heading</h4>
+                <h4 class="modal-title" id="users-table-modalLabel">Χρήστες</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body table-cnt">
@@ -59,6 +59,8 @@
 							<th class="text-center">Ονοματεπώνυμο</th>
 							<th class="text-center min-width-200 w-300px">Courses</th>
 							<th class="text-center min-width-200 w-300px">Bundles</th>
+							<th class="text-center min-width-200 w-300px">Email</th>
+							<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
 							<th class="text-center"></th>
 						</tr>
 					</thead>
@@ -68,14 +70,19 @@
 							<th class="text-center"></th>
 							<th class="text-center">Ονοματεπώνυμο</th>
 							<th class="text-center">Courses</th>
+							<th class="text-center">Bundles</th>
+							<th class="text-center">Email</th>
+							<th class="text-center">Ιδιότητα</th>
 							<th class="text-center"></th>
 						</tr>
 					</tfoot>
 				</table>
             </div>
             <div class="modal-footer">
+				<button id="add-recipients-blk" type="button"
+					class="btn btn-secondary" disabled data-text="Προσθήκη Επιλογών"
+					data-enabled-color="btn-primary" data-disabled-color="btn-secondary">Προσθήκη Επιλογών (0)</button>
                 <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -107,7 +114,7 @@
 			<button class="js-submit-btn btn btn-danger ml-1" name="button" value="send">
 				Send
 			</button>
-			<button class="js-submit-btn btn btn-dark" name="button" value="draft">
+			<button class="js-submit-btn btn btn-secondary" name="button" value="draft">
 				Set Draft
 			</button>
 		</div>
@@ -132,30 +139,6 @@
 					@csrf
 					
 					<input id="recipients-input" type="text" name="recipients" hidden>
-					{{-- <div class="form-group">
-						<div class="d-flex">
-							<label class="mr-auto" for="recipients-selection">Προς</label>
-							<div class="custom-control custom-checkbox">
-								<input id="all-partners" class="js-recipients custom-control-input" data-recipients="Όλοι οι Partners" name="recipientsRoles[]" value="partner" type="checkbox">
-								<label class="custom-control-label" for="all-partners">Partners</label>
-							</div>
-							<div class="custom-control custom-checkbox ml-4">
-								<input id="all-instructors" class="js-recipients custom-control-input" data-recipients="Όλοι οι εισηγητές" name="recipientsRoles[]" value="instructor" type="checkbox">
-								<label class="custom-control-label" for="all-instructors">Εισηγητές</label>
-							</div>
-							<div class="custom-control custom-checkbox ml-4">
-								<input id="all-students" class="js-recipients custom-control-input" data-recipients="Όλοι οι μαθητές" name="recipientsRoles[]" value="student" type="checkbox">
-								<label class="custom-control-label" for="all-students">Μαθητές</label>
-							</div>
-						</div>
-						<select class="form-control" id="recipients-selection" name="recipients[]" multiple></select>
-					
-						@error('recipients')
-							<span class="text-danger" role="alert">
-								<small><strong>{{ $message }}</strong></small>
-							</span>
-						@enderror
-					</div> --}}
 		
 					<div class="form-group">
 						<label for="subject">Θέμα</label>
@@ -184,6 +167,10 @@
 				<div class="text-right mb-3">
 					<button class="btn btn-primary" data-toggle="modal" data-target="#users-table-modal">
 						Προσθήκη
+					</button>
+					<button id="remove-recipients-btn" class="btn btn-secondary" disabled
+						data-enabled-color="btn-secondary" data-disabled-color="btn-secondary" data-text="Αφαίρεση">
+						Αφαίρεση (0)
 					</button>
 				</div>
 
@@ -225,5 +212,15 @@
 
 <script src="{{ mix("js/dashboard/mail/compose-email.js") }}"></script>
 
+@error('recipients')
+	<script>
+		Swal.fire({
+			title: "Προσοχή!",
+			text: 'Δεν ορίστηκαν παραλήπτες.',
+			icon: 'warning',
+			confirmButtonColor: '#536de6',
+		});
+	</script>
+@enderror
 	
 @endsection

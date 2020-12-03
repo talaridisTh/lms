@@ -1194,7 +1194,7 @@ $("#active-course-status").on( "change", function() {
 	let label = $('#select2-active-course-status-container')[0];
 
 	utilities.filterStyle( label, this.value )
-	courseMaterialsTable.columns( 2 ).search( this.value ).draw();
+	courseMaterialsTable.columns( 3 ).search( this.value ).draw();
 });
 
 //* Append Course Materials Date Picker Filter
@@ -1886,7 +1886,7 @@ axios.post("/materials/material-types")
 
 			utilities.filterStyle( label, this.value )
 
-			courseMaterialsTable.columns( 4 ).search( this.value ).draw();
+			courseMaterialsTable.columns( 5 ).search( this.value ).draw();
 		})
 
 		$("#remaining-materials-types").select2({

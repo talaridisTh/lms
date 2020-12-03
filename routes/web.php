@@ -78,10 +78,10 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::get('/dashboard/email/compose', 'MailController@composeEmail');
 	Route::get('/dashboard/email/{mail:id}', 'MailController@show');
 	Route::post('/dashboard/email', 'MailController@sendNewsletter');
-	Route::post('email/select-users', 'MailController@selectUsers');
-	Route::post('email/recipients-data-table', 'MailController@recipeintsDatatable');
-	Route::post('email/data-table', 'MailController@mailsTable');
-	Route::post('email/delete', 'MailController@delete');
+	Route::post('email/select-users', 'Ajax\MailController@selectUsersDatatable');
+	Route::post('email/recipients-data-table', 'Ajax\MailController@recipeintsDatatable');
+	Route::post('email/data-table', 'Ajax\MailController@mailsDataTable');
+	Route::post('email/delete', 'Ajax\MailController@delete');
 
 	//! media Routes
     Route::get("/media", "MediaController@index")->name("media.index");

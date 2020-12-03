@@ -39,6 +39,55 @@
 
 @section('content')
 
+	<div id="users-table-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="users-table-modalLabel" aria-hidden="true">
+	    <div class="modal-dialog modal-xl">
+	        <div class="modal-content">
+	            <div class="modal-header modal-colored-header bg-primary">
+	                <h4 class="modal-title" id="users-table-modalLabel">Χρήστες</h4>
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+	            </div>
+	            <div class="modal-body table-cnt">
+	                <table id="users-datatable" class="table w-100 modal-table nowrap center-not-second js-remove-table-classes">
+						<thead>
+							<tr>
+								<th class="text-center" style="width: 30px;">
+									<div class='icheck-primary d-inline'>
+										<input type='checkbox' id='select-all-users' autocomplete='off'>
+										<label for='select-all-users'></label>
+									</div>
+								</th>
+								<th class="text-center">Ονοματεπώνυμο</th>
+								<th class="text-center min-width-200 w-300px">Courses</th>
+								<th class="text-center min-width-200 w-300px">Bundles</th>
+								<th class="text-center min-width-200 w-300px">Email</th>
+								<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
+								<th class="text-center"></th>
+							</tr>
+						</thead>
+						<tbody class="tables-hover-effect"></tbody>
+						<tfoot>
+							<tr>
+								<th class="text-center"></th>
+								<th class="text-center">Ονοματεπώνυμο</th>
+								<th class="text-center">Courses</th>
+								<th class="text-center">Bundles</th>
+								<th class="text-center">Email</th>
+								<th class="text-center">Ιδιότητα</th>
+								<th class="text-center"></th>
+							</tr>
+						</tfoot>
+					</table>
+	            </div>
+	            <div class="modal-footer">
+					<button id="add-recipients-blk" type="button"
+						class="btn btn-secondary" disabled data-text="Προσθήκη Επιλογών"
+						data-enabled-color="btn-primary" data-disabled-color="btn-secondary">Προσθήκη Επιλογών (0)</button>
+	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 	<!-- start page title -->
 	<div class="container content-width mt-2">
 		<div class="row">
@@ -61,17 +110,17 @@
 	
 	<div class="container content-width">
 		<div class="mt-1 mb-1 text-right">{{-- an figi to value den mporo na kano isset() sto controller --}}
-			<button class="js-submit-btn btn btn-danger ml-1" name="button" value="send">
+			<button form="mail-form" class="btn btn-danger ml-1" type="submit" name="button" value="send">
 				Προώθηση
 			</button>
-			<button class="js-submit-btn btn btn-light" name="button" value="draft">
+			<button class="btn btn-light" name="button" value="draft">
 				Διαγραφή
 			</button>
 		</div>
 
 		<ul class="nav nav-tabs nav-bordered mb-3">
 			<li class="nav-item">
-				<a href="#view-mail-tab" class="nav-link active" data-toggle="tab" aria-expanded="false">
+				<a href="#view-mail-tab" class="nav-link" data-toggle="tab" aria-expanded="false">
 					Προβολή
 				</a>
 			</li>
@@ -81,14 +130,14 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="#forward-tab" class="nav-link" data-toggle="tab" aria-expanded="true">
-					Προώθηση
+				<a href="#forward-tab" class="nav-link active" data-toggle="tab" aria-expanded="true">
+					Παραλήπτες
 				</a>
 			</li>
 		</ul>
 
 		<div class="tab-content">
-			<div id="view-mail-tab" class="tab-pane show active">
+			<div id="view-mail-tab" class="tab-pane">
 				
 				<div class="position-relative" style="width: 100%; height: 100vh">
 					<div style="position: absolute; top: 0; bottom:0; left: 0px; right: 0; background: #fff;">
@@ -109,7 +158,7 @@
 					<tbody class="tables-hover-effect">
 						@if (!is_null($recipients))
 							@foreach ($recipients as $user)
-								<tr>
+								<tr class="js-old-recipients" data-old-recipient-id="{{ $user->id }}">
 									<td>{{ $user->last_name }} {{ $user->first_name }}</td>
 									<td class="text-center">{{ $user->email }}</td>
 									<td class="text-center">{{ $user->phone }}</td>
@@ -126,10 +175,54 @@
 					</tfoot>
 				</table>
 			</div>
-			<div id="forward-tab" class="tab-pane">
-				forward
+
+			<div id="forward-tab" class="tab-pane show active">
+				<div class="text-right mb-3">
+					<button class="btn btn-primary" data-toggle="modal" data-target="#users-table-modal">
+						Προσθήκη
+					</button>
+					<button id="remove-recipients-btn" class="btn btn-secondary" disabled
+						data-enabled-color="btn-secondary" data-disabled-color="btn-secondary" data-text="Αφαίρεση">
+						Αφαίρεση (0)
+					</button>
+				</div>
+				
+				<table id="recipients-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
+					<thead>
+						<tr>
+							<th class="text-center" style="width: 35px">
+								<div class='icheck-primary d-inline'>
+									<input type='checkbox' id='select-all-recipients' autocomplete='off'>
+									<label for='select-all-recipients'></label>
+								</div>
+							</th>
+							<th class="text-center">Ονοματεπώνυμο</th>
+							<th class="text-center min-width-200 w-300px">Courses</th>
+							<th class="text-center min-width-200 w-300px">Bundles</th>
+							<th class="text-center" style="width: 35px"></th>
+						</tr>
+					</thead>
+					<tbody class="tables-hover-effect"></tbody>
+					<tfoot>
+						<tr>
+							<th class="text-center"></th>
+							<th class="text-center">Ονοματεπώνυμο</th>
+							<th class="text-center">Courses</th>
+							<th class="text-center">Bundles</th>
+							<th class="text-center"></th>
+						</tr>
+					</tfoot>
+				</table>
 			</div>
 
+			<form id="mail-form" action="/dashboard/email" method="POST" autocomplete="off">
+
+				@csrf
+
+				<input type="text" name="subject" value="{{ old("subject", $mail->subject) }}" hidden>
+				<input type="text" name="content" value="{{ old("content", $mail->content) }}" hidden>
+				<input id="recipients-input" type="text" name="recipients" hidden>
+			</form>
 		</div>
 	</div><!-- ./container -->
 
@@ -141,5 +234,15 @@
 
 <script src="{{ mix("js/dashboard/mail/edit-email.js") }}"></script>
 
+@error('recipients')
+	<script>
+		Swal.fire({
+			title: "Προσοχή!",
+			text: 'Δεν ορίστηκαν παραλήπτες.',
+			icon: 'warning',
+			confirmButtonColor: '#536de6',
+		});
+	</script>
+@enderror
 	
 @endsection

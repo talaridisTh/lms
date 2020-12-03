@@ -11,7 +11,7 @@
 		role="dialog" aria-labelledby="edit-banners-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl" role="document">
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header modal-colored-header bg-primary">
 					  	<h5 class="modal-title" id="edit-banners-modalLabel">Modal title</h5>
 					  	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -29,7 +29,7 @@
 								<div class="col-9 mb-1">
 									<select id="type-select" data-toggle="select2"
 										class="select2 form-control" autocomplete="off"
-										data-minimum-results-for-search="-1">
+										data-minimum-results-for-search="-1" data-width="100%">
 										<option value="courses" selected>Courses</option>
 										<option value="materials">Μαθήματα</option>
 										<option value="bundles">Bundles</option>
@@ -181,7 +181,7 @@
 				@php $counter = true; @endphp
 				@foreach ($banners as $section => $values)
 					<div id="{{ $section }}-carousel" class="tab-pane{{ $counter ? " show active" : "" }}">
-						<div class="d-flex justify-content-end align-items-center mb-1">
+						<div class="d-flex justify-content-end align-items-center mb-3">
 							<button type="button" class="btn btn-primary btn-sm"
 								data-toggle="modal" data-target="#edit-banners-modal" data-importance="{{ $section }}"
 								data-modal-title="{{ucfirst($section) }} Carousel" >Αλλαγή</button>

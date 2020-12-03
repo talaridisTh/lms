@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\DataTables\TopicsDataTable;
+use App\DataTables\Topics\TopicsDataTable;
 use App\Http\Controllers\Controller;
 use App\Topic;
 use Illuminate\Http\Request;

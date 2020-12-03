@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Course;
-use App\DataTables\AddCourseInsideMaterialsDataTable;
-use App\DataTables\CourseInsideMaterialsDataTable;
-use App\DataTables\MaterialsDataTable;
-use App\DataTables\RemainingPDFDataTable;
+use App\DataTables\Materials\CoursesDataTable;
+use App\DataTables\Materials\MaterialCoursesDataTable;
+use App\DataTables\Materials\MaterialsDataTable;
+use App\DataTables\Materials\PDFDataTable;
 use App\Http\Controllers\Controller;
 use App\Material;
 use App\Media;
@@ -37,13 +37,13 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-    public function indexCourse(CourseInsideMaterialsDataTable $dataTable)
+    public function indexCourse(MaterialCoursesDataTable $dataTable)
     {
 
         return $dataTable->render('materials-course.index');
     }
 
-    public function addCourseMaterial(AddCourseInsideMaterialsDataTable $dataTable)
+    public function addCourseMaterial(CoursesDataTable $dataTable)
     {
         return $dataTable->render('add-course-material');
 	}
@@ -474,7 +474,7 @@ class MaterialController extends Controller {
 		], 200);
 	}
 
-	public function remainingPDFFiles(RemainingPDFDataTable $dataTable) {
+	public function remainingPDFFiles(PDFDataTable $dataTable) {
 
 		return $dataTable->render('pdf.files');
 

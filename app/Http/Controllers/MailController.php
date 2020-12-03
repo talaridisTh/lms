@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\Mail\RecipientsDataTable;
-use App\DataTables\Mail\UsersDataTable;
-use App\DataTables\Mail\MailsDataTable;
+
 use App\Mail as AppMail;
 use App\Mail\Email;
 use App\User;
@@ -36,45 +34,6 @@ class MailController extends Controller
 		return view("admin.mail.editMail")->with($data);
 	}
 
-	public function mailsTable(MailsDataTable $dataTable) {
-
-		return $dataTable->render('admin.mail.mailMain');
-
-	}
-
-	// public function searchUsers(Request $request) {
-
-	// 	$users = User::where(function($query) use ($request) {
-	// 		$query->where("last_name", "LIKE", "%$request->search%")
-	// 			->orWhere("first_name", "LIKE", "%$request->search%")
-	// 			->orWhere("email", "LIKE", "%$request->search%")->get();
-	// 	})->select("id", "first_name", "last_name")->paginate(10);
-
-	// 	$result = [];
-	// 	$result["results"] = [];
-
-	// 	foreach($users as $user) {
-	// 		array_push($result['results'], [
-	// 			"id" => "$user->id",
-	// 			"text" => "$user->last_name $user->first_name"
-	// 		]);
-	// 	}
-
-	// 	$result["pagination"] = [
-	// 		"more" => $users->currentPage() !== $users->total()
-	// 	];
-
-	// 	echo json_encode($result);
-
-	// }
-	public function selectUsers(UsersDataTable $dataTable) {
-		return $dataTable->render('admin.mail.composeEmail');
-	}
-
-	public function recipeintsDatatable(RecipientsDataTable $dataTable) {
-		return $dataTable->render('admin.mail.composeEmail');
-	}
-
     public function composeEmail() {
 		return view('admin.mail.composeEmail');
 	}
@@ -85,7 +44,10 @@ class MailController extends Controller
 			"subject" => "required",
 			"content" => "required",
 			"recipients" => "required_if:button,===,send"
-			]);
+		],
+		[
+			"recipients.required_if" => "Δεν ορίστηκαν παραλήπτες."
+		]);
 
 		$users = $this->findRecipients($request);
 
@@ -125,13 +87,6 @@ class MailController extends Controller
 		}
 
 		return null;
-	}
-
-	public function delete(Request $request) {
-
-		foreach ($request->mailIds as $id) {
-			AppMail::find($id)->delete();
-		}
 	}
 
 	private function storeEmail(Request $request, $recipients, $status) {
