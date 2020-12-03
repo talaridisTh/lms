@@ -85,7 +85,10 @@ class MailController extends Controller
 			"subject" => "required",
 			"content" => "required",
 			"recipients" => "required_if:button,===,send"
-			]);
+		],
+		[
+			"recipients.required_if" => "Δεν ορίστηκαν παραλήπτες."
+		]);
 
 		$users = $this->findRecipients($request);
 

@@ -212,5 +212,15 @@
 
 <script src="{{ mix("js/dashboard/mail/compose-email.js") }}"></script>
 
+@error('recipients')
+	<script>
+		Swal.fire({
+			title: "Προσοχή!",
+			text: 'Δεν ορίστηκαν παραλήπτες.',
+			icon: 'warning',
+			confirmButtonColor: '#536de6',
+		});
+	</script>
+@enderror
 	
 @endsection

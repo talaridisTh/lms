@@ -92,7 +92,7 @@ const recipientsDatatable = $("#recipients-datatable").DataTable({
 		$(".js-remove-recipient").on("click", removeRecipientHandler);
 		$(".js-recipient-checkbox").on("change", removeRecipientsCheckboxHandler);
 
-		utilities.resetBulk( $("remove-recipients-btn"), $("#select-all-recipients"), "Αφαίρεση (0)")
+		utilities.resetBulk( $("#remove-recipients-btn"), $("#select-all-recipients"), "Αφαίρεση (0)")
 	}
 });
 
