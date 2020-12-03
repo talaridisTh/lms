@@ -34,39 +34,11 @@ class MailController extends Controller
 		return view("admin.mail.editMail")->with($data);
 	}
 
-	// public function searchUsers(Request $request) {
-
-	// 	$users = User::where(function($query) use ($request) {
-	// 		$query->where("last_name", "LIKE", "%$request->search%")
-	// 			->orWhere("first_name", "LIKE", "%$request->search%")
-	// 			->orWhere("email", "LIKE", "%$request->search%")->get();
-	// 	})->select("id", "first_name", "last_name")->paginate(10);
-
-	// 	$result = [];
-	// 	$result["results"] = [];
-
-	// 	foreach($users as $user) {
-	// 		array_push($result['results'], [
-	// 			"id" => "$user->id",
-	// 			"text" => "$user->last_name $user->first_name"
-	// 		]);
-	// 	}
-
-	// 	$result["pagination"] = [
-	// 		"more" => $users->currentPage() !== $users->total()
-	// 	];
-
-	// 	echo json_encode($result);
-
-	// }
-
     public function composeEmail() {
 		return view('admin.mail.composeEmail');
 	}
 
 	public function sendNewsletter(Request $request) {
-
-		// dd($request->all());
 
 		$request->validate([
 			"subject" => "required",
