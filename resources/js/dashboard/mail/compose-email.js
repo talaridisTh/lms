@@ -88,8 +88,19 @@ const recipientsDatatable = $("#recipients-datatable").DataTable({
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
 
 		$(".js-remove-recipient").on("click", removeRecipientHandler);
+		$(".js-recipient-checkbox").on("change", removeRecipientsCheckboxHandler);
+
+		utilities.resetBulk( $("remove-recipients-btn"), $("#select-all-recipients"), "Αφαίρεση (0)")
 	}
 });
+
+function removeRecipientsCheckboxHandler() {
+	let mainCheckbox = $("#select-all-recipients")[0];
+	let minorCheckboxes = $(".js-recipient-checkbox");
+	let bulkBtn = $("#remove-recipients-btn")[0]
+
+	utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
+}
 
 function addUserCheckboxHandler() {
 	let mainCheckbox = $("#select-all-users")[0];
@@ -253,4 +264,28 @@ $("#select-all-users").on("change", function() {
 	let bulkBtn = $("#add-recipients-blk")[0];
 
 	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
+});
+
+$("#select-all-recipients").on("change", function() {
+	let checkboxes = $('.js-recipient-checkbox');
+	let bulkBtn = $("#remove-recipients-btn")[0];
+
+	utilities.minorCheckboxSwitcher( this, checkboxes, bulkBtn );
+})
+
+$("#remove-recipients-btn").on("click", function() {
+	const recipients = sessionStorage.getItem("recipients").split(",");
+	const unwanted = $(".js-recipient-checkbox:checked");
+	let index;
+
+	for (let i = 0; i < unwanted.length; i++) {
+		index = recipients.indexOf(unwanted[i].dataset.userId);
+		recipients.splice(index, 1);
+	}
+
+	sessionStorage.removeItem("recipients");
+	sessionStorage.setItem("recipients", recipients.toString());
+
+	usersDatatable.ajax.reload(null, false);
+	recipientsDatatable.ajax.reload(null, false);
 })

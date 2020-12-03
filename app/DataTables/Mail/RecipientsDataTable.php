@@ -31,7 +31,8 @@ class RecipientsDataTable extends DataTable
                 $slug = preg_replace($pattern, "", $data->email);
 
 				return "<div class='icheck-primary d-inline'>
-					<input type='checkbox' id='recipient-$slug' autocomplete='off'>
+					<input id='recipient-$slug' class='js-recipient-checkbox'
+						data-user-id='$data->id' type='checkbox' autocomplete='off'>
 					<label for='recipient-$slug'></label>
 				</div>";
 			})

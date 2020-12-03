@@ -114,7 +114,7 @@
 			<button class="js-submit-btn btn btn-danger ml-1" name="button" value="send">
 				Send
 			</button>
-			<button class="js-submit-btn btn btn-dark" name="button" value="draft">
+			<button class="js-submit-btn btn btn-secondary" name="button" value="draft">
 				Set Draft
 			</button>
 		</div>
@@ -139,30 +139,6 @@
 					@csrf
 					
 					<input id="recipients-input" type="text" name="recipients" hidden>
-					{{-- <div class="form-group">
-						<div class="d-flex">
-							<label class="mr-auto" for="recipients-selection">Προς</label>
-							<div class="custom-control custom-checkbox">
-								<input id="all-partners" class="js-recipients custom-control-input" data-recipients="Όλοι οι Partners" name="recipientsRoles[]" value="partner" type="checkbox">
-								<label class="custom-control-label" for="all-partners">Partners</label>
-							</div>
-							<div class="custom-control custom-checkbox ml-4">
-								<input id="all-instructors" class="js-recipients custom-control-input" data-recipients="Όλοι οι εισηγητές" name="recipientsRoles[]" value="instructor" type="checkbox">
-								<label class="custom-control-label" for="all-instructors">Εισηγητές</label>
-							</div>
-							<div class="custom-control custom-checkbox ml-4">
-								<input id="all-students" class="js-recipients custom-control-input" data-recipients="Όλοι οι μαθητές" name="recipientsRoles[]" value="student" type="checkbox">
-								<label class="custom-control-label" for="all-students">Μαθητές</label>
-							</div>
-						</div>
-						<select class="form-control" id="recipients-selection" name="recipients[]" multiple></select>
-					
-						@error('recipients')
-							<span class="text-danger" role="alert">
-								<small><strong>{{ $message }}</strong></small>
-							</span>
-						@enderror
-					</div> --}}
 		
 					<div class="form-group">
 						<label for="subject">Θέμα</label>
@@ -191,6 +167,10 @@
 				<div class="text-right mb-3">
 					<button class="btn btn-primary" data-toggle="modal" data-target="#users-table-modal">
 						Προσθήκη
+					</button>
+					<button id="remove-recipients-btn" class="btn btn-secondary" disabled
+						data-enabled-color="btn-secondary" data-disabled-color="btn-secondary" data-text="Αφαίρεση">
+						Αφαίρεση (0)
 					</button>
 				</div>
 
