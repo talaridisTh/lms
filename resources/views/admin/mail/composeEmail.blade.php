@@ -30,7 +30,7 @@
 			z-index: 1000;
 		}
 
-		#users-datatable_length span.select2:nth-child(3) {
+		#users-datatable_length span.select2:not(:last-child) {
 			margin-right: 6px;
 		}
 

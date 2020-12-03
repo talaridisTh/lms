@@ -50,6 +50,8 @@ const usersDatatable = $("#users-datatable").DataTable({
 
 		$(".js-add-recipient").on("click", addRecipientHandler);
 		$(".js-user-checkbox").on("change", addUserCheckboxHandler);
+
+		utilities.resetAddButton( $("#add-recipients-blk"), $("#select-all-users") );
 	}
 });
 
@@ -288,4 +290,22 @@ $("#remove-recipients-btn").on("click", function() {
 
 	usersDatatable.ajax.reload(null, false);
 	recipientsDatatable.ajax.reload(null, false);
+});
+
+$("#add-recipients-blk").on("click", function() {
+	const recipients = sessionStorage.getItem("recipients") === null 
+		? [] : sessionStorage.getItem("recipients").split(",");
+	const users = $(".js-user-checkbox:checked");
+
+	for ( let i = 0; i < users.length; i++ ) {
+		recipients.push(users[i].dataset.userId);
+	}
+
+	sessionStorage.removeItem("recipients");
+	sessionStorage.setItem("recipients", recipients.toString());
+
+	usersDatatable.ajax.reload(null, false);
+	recipientsDatatable.ajax.reload(null, false);
+
+	$("#users-table-modal").modal("hide");
 })
