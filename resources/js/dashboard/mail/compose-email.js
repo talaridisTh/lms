@@ -73,8 +73,8 @@ const recipientsDatatable = $("#recipients-datatable").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'name', name: 'users.last_name', className: "align-middle" },
-		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap"/* , visible: false */},
-		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap"/* , visible: false */},
+		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap", visible: false},
+		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap", visible: false},
 		{ data: 'email', name: 'email', className: "align-middle text-center text-wrap" },
 		{ data: 'role', name: 'roles.name', className: "align-middle text-center text-wrap" },
 		{ data: 'btn', className: "align-middle text-center text-wrap", orderable: false, searchable: false },
