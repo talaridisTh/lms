@@ -25,6 +25,8 @@ class CreatePostsTable extends Migration
             $table->boolean("closed")->default(0);
             $table->timestamps();
 
+
+
         });
     }
 

@@ -22,7 +22,7 @@ class CreateMediablesTable extends Migration
         });
     }
 
-    /**
+    /**z
      * Reverse the migrations.
      *
      * @return void
