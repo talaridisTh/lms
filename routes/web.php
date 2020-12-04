@@ -32,7 +32,6 @@ Route::get("/delete/all-post",function (){
     dump( [App\Post::all(),\App\Comment::all()]);
     DB::table("posts")->delete();
 
-
     dump( [App\Post::all(),\App\Comment::all()]);
 });
 Route::get("/test", "Index\HomeController@test")->name("user.test");
