@@ -14,7 +14,13 @@
 		#mails-datatable td:last-child {
 			width: 85px;
 		}
+
+		#mails-datatable > tbody > tr > td:nth-child(3) {
+			position: relative;
+		}
+
 		#mails-datatable .tool-cnt {
+			position: absolute;
 			width: 80px;
 			top: 50%;
 			background: #343a40;

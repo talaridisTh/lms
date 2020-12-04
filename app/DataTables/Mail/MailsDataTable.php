@@ -52,13 +52,12 @@ class MailsDataTable extends DataTable
 					? "<p class='time-cnt mb-0 text-center'><strong>-</strong></p>"
 					: "<p class='time-cnt mb-0 text-right'><strong class='text-right'>". Carbon::parse($data->sent_at)->diffForHumans(null, false, true) ."</strong></p>";
 				
-				return "$sentAt <div class='position-absolute tool-cnt text-left'>
+				return "$sentAt <div class='tool-cnt text-left'>
 						<i class='js-delete-mail mdi mdi-delete-circle-outline font-24 custom-danger cursor-pointer'
 							data-mail-id='$data->id'></i>
 					</div>";
 				
 			})
-			->setRowClass('position-relative')
 			->rawColumns(["action", "message", "details"]);
     }
 
