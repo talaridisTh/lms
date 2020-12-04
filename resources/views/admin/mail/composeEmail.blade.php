@@ -139,10 +139,16 @@
 					@csrf
 					
 					<input id="recipients-input" type="text" name="recipients" hidden>
-		
+
+					@if (!is_null($mail))
+						<input type="text" name="id" value="{{ old("id", $mail->id) }}" hidden>
+					@endif
+
 					<div class="form-group">
 						<label for="subject">Θέμα</label>
-						<input id="subject" class="form-control" type="text" value="{{ old("subject") }}" placeholder="Εισάγετε θέμα..." name="subject" />
+						<input id="subject" class="form-control" type="text"
+							placeholder="Εισάγετε θέμα..." name="subject"
+							value="{{ old("subject") != "" ? old("subject") : ( !is_null($mail) ? $mail->subject : "" ) }}"/>
 						@error('subject')
 							<span class="text-danger" role="alert">
 								<small><strong>{{ $message }}</strong></small>
@@ -152,8 +158,9 @@
 		
 					<div class="form-group">
 						<label for="editor">Περιεχόμενο</label>
-						<textarea class="form-control @error('content') is-invalid @enderror" id="editor" placeholder="Εισάγετε περιεχόμενο..."
-							name="content" rows="5">{{ old('content') }}</textarea>
+						<textarea class="form-control @error('content') is-invalid @enderror"
+							id="editor" placeholder="Εισάγετε περιεχόμενο..."
+							name="content" rows="5">{{ old('content') != "" ? old('content') : ( !is_null($mail) ? $mail->content : "" )}}</textarea>
 							@error('content')
 								<span class="text-danger" role="alert">
 									<small><strong>{{ $message }}</strong></small>

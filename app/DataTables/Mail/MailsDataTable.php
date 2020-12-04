@@ -40,6 +40,10 @@ class MailsDataTable extends DataTable
 				$title = Str::limit($data->subject, 30);
 				$content = Str::limit(strip_tags($data->content), 80);
 
+				if ( is_null($data->sent_at) ) {
+					return "<a href='/dashboard/email/compose/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
+				}
+
 				return "<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
 			})
 			->addColumn("details", function($data) {

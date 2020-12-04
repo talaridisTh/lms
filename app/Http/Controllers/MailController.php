@@ -34,8 +34,9 @@ class MailController extends Controller
 		return view("admin.mail.editMail")->with($data);
 	}
 
-    public function composeEmail() {
-		return view('admin.mail.composeEmail');
+    public function composeEmail(AppMail $mail = null) {
+
+		return view('admin.mail.composeEmail', compact("mail"));
 	}
 
 	public function sendNewsletter(Request $request) {
@@ -63,15 +64,8 @@ class MailController extends Controller
 				// 	->send(new Email($request->subject, $request->content));
 			}
 		}
-		else {
-			if ( !is_null($users) ) {
-				foreach($users as $user) {
-					array_push($recipients["ids"], $user->id);
-				}
-			}
-		}
-			
-		$this->storeEmail($request, is_null($users) ? null : $recipients, $request->button);
+
+		$this->storeEmail($request, $recipients, $request->button);
 
 		$message = $request->button === "send" ? ["sent" => "sent"] : ["saved" => "saved"];
 
@@ -97,11 +91,18 @@ class MailController extends Controller
 	}
 
 	private function storeEmail(Request $request, $recipients, $status) {
-		$mail = new AppMail;
+
+		if ( isset($request->id) ) {
+			$mail = AppMail::find($request->id);
+		}
+		else {
+			$mail = new AppMail;
+		}
+
 		$mail->user_id = Auth::user()->id;
 		$mail->subject = $request->subject;
 		$mail->content = $request->content;
-		$mail->recipients = !is_null($recipients) ? json_encode($recipients) : null;
+		$mail->recipients = json_encode($recipients);
 		$mail->sent_at = $status === "send" ? now() : null;
 		$mail->save();
 	}

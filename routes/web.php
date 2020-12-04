@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
 	//! Mail Routes
 	Route::get('/dashboard/email', 'MailController@index');
-	Route::get('/dashboard/email/compose', 'MailController@composeEmail');
+	Route::get('/dashboard/email/compose/{mail:id?}', 'MailController@composeEmail');
 	Route::get('/dashboard/email/{mail:id}', 'MailController@show');
 	Route::post('/dashboard/email', 'MailController@sendNewsletter');
 	Route::delete('/dashboard/email/{mail:id}/delete', 'MailController@delete');
