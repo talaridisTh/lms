@@ -64,6 +64,7 @@ class CourseController extends Controller
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
+		$course->script = $request->script;
 		$course->status = 0;
 		$course->slug = Str::slug($request->title, "-");
 		$course->fields = json_encode($fields);

@@ -23,7 +23,7 @@ import CodeMirror from "codemirror/lib/codemirror";
 require("codemirror/mode/htmlmixed/htmlmixed");
 require("codemirror/addon/display/autorefresh");
 import "codemirror/lib/codemirror.css";
-import "codemirror/theme/night.css";
+import "codemirror/theme/shadowfox.css";
 
 const beautify_html = require('js-beautify').html
 
@@ -2754,7 +2754,7 @@ const myCodeMirror = CodeMirror(editor, {
 	viewportMargin: Infinity,
 	value: format,
 	mode:  "htmlmixed",
-	theme: "night",
+	theme: "shadowfox",
 	indentWithTabs: true,
 	lineNumbers: true,
 	lineWrapping: true,

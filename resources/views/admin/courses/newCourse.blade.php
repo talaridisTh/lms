@@ -23,6 +23,27 @@
 		color:#b2bcc5;
 	}
 
+	/* #settings .cm-s-shadowfox.CodeMirror{
+		background: #404954;
+	}
+
+	#settings .cm-s-shadowfox .CodeMirror-gutters{
+		background: #1d1d20;
+	} */
+
+
+	.CodeMirror {
+	  border: 1px solid #47515d;
+	  border-radius: 4px;
+	  height: auto !important;
+	  min-height: 300px !important;
+	}
+
+	.CodeMirror-scroll {
+	  min-height: 300px !important;
+	  overflow-y: auto;
+	  overflow-x: auto;
+	}
 </style>
 @endsection
 
@@ -142,6 +163,13 @@
 						Sections
 					</a>
 				</li>
+				<li class="nav-item">
+					<a href="#"
+						data-toggle="tab" aria-expanded="true"
+						class="nav-link tab-link text-muted">
+						Αρχεία
+					</a>
+				</li>
 			</ul><!-- ./tabs -->
 
 			<div class="tab-content">
@@ -153,17 +181,13 @@
 								method="POST" enctype="multipart/form-data" autocomplete="off">
 
 								@csrf
-								@if ( isset($course) )
-									@method('PATCH')
-								@endif
 
 								<div class="form-row">
 									<div class="form-group col-lg-6">
 										<label for="title">Τίτλος <span class="text-danger">*</span></label>
 										<input id="title" type="text" name="title"
 											class="form-control @error('title') is-invalid @enderror"
-											value="{{ old('title') != "" ? old('title') : ( isset($course) ? $course['title'] : "" ) }}"
-											placeholder="Εισάγετε τίτλο...">
+											value="{{ old('title') }}"placeholder="Εισάγετε τίτλο...">
 										@error('title')
 											<span class="invalid-feedback" role="alert">
 												<strong>{{ $message }}</strong>
@@ -175,7 +199,7 @@
 										<input id="subtitle" type="text"
 											class="form-control @error('subtitle') is-invalid @enderror"
 											name="subtitle"
-											value="{{ old('subtitle') != "" ? old('subtitle') : ( isset($course) ? $course['subtitle'] : "" ) }}"
+											value="{{ old('subtitle') }}"
 											placeholder="Εισάγετε υπότιτλο...">
 										@error('subtitle')
 											<span class="invalid-feedback" role="alert">
@@ -196,7 +220,7 @@
 									<textarea class="form-control @error('summary') is-invalid @enderror"
 										id="summary" name="summary" rows="4"
 										placeholder="Εισάγετε σύνοψη..."
-										>{{ old('summary') != "" ? old('summary') : ( isset($course) ? $course['summary'] : "" ) }}</textarea>
+										>{{ old('summary') }}</textarea>
 									@error('summary')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
@@ -215,15 +239,18 @@
 									<textarea class="form-control @error('description') is-invalid @enderror"
 										id="description" name="description" rows="4"
 										placeholder="Εισάγετε περιγραφή..."
-										>{{ old('description') != "" ? old('description') : ( isset($course) ? $course['description'] : "" ) }}</textarea>
+										>{{ old('description') }}</textarea>
 									@error('description')
 										<span class="invalid-feedback" role="alert">
 											<strong>{{ $message }}</strong>
 										</span>
 									@enderror
 								</div>
-
+								<textarea id="script-area" name="script" hidden>{{ old("script") }}</textarea>
 							</form>
+
+							<label>Script</label>
+							<div id="editor"></div>
 
 						</div>
 						<div class="col-xl-3 col-lg-5 col-md-12 pt-1">
@@ -241,19 +268,13 @@
 								<div class="card-body">
 									<div class="form-group">
 
-										<label for="version-select">Έκδοση <span class="text-danger">*</span></label>
+										<label for="version-select">Έκδοση</label>
 										<select form="create-course-form" id="version-select"
 											name="version"  data-toggle="select2" data-minimum-results-for-search="-1"
-											class="custom-select2-warning select2 form-control @error('version') is-invalid @enderror">
-											<option value="" {{ old("version") == "" ? "selected" : "" }}>Επιλέξτε έκδοση</option>
-											<option value="Normal" {{ old("version") == "Normal" ? "selected" : ""}}>Normal</option>
-											<option value="Trial" {{ old("version") == "Trial" ? "selected" : ""}}>Trial</option>
+											class="custom-select2-warning select2 form-control">
+											<option value="Trial" {{ old("version") === "Trial" ? "selected" : ""}}>Trial</option>
+											<option value="Normal" {{ old("version") === "Normal" ? "selected" : ""}}>Normal</option>
 										</select>
-										@error('version')
-											<span class="invalid-feedback" role="alert">
-												<strong>{{ $message }}</strong>
-											</span>
-										@enderror
 									</div>
 
 									<hr>
@@ -308,7 +329,7 @@
 										<label for="publish-date-select">Published</label>
 										<input form="create-course-form" type="text" class="form-control"
 											id="publish-date-select" name="publishDate"
-											value="{{ old("publishDate") != "" ? old("publishDate") : "" }}"
+											value="{{ old("publishDate") }}"
 											placeholder="Εισάγετε ημερομηνία..." data-toggle="input-mask"
 											data-mask-format="00-00-0000 00:00:00" autocomplete="off" />
 									</div>

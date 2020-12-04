@@ -10,6 +10,14 @@ import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
+import CodeMirror from "codemirror/lib/codemirror";
+require("codemirror/mode/htmlmixed/htmlmixed");
+require("codemirror/addon/display/autorefresh");
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/shadowfox.css";
+
+const beautify_html = require('js-beautify').html
+
 //!##############################################
 //! 			Global Variables				#
 //!##############################################
@@ -235,3 +243,29 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 
 	});
 }
+
+const editor = document.getElementById("editor");
+const scriptArea = document.getElementById("script-area");
+
+const format = beautify_html(scriptArea.value, {indent_size: 4})
+
+const myCodeMirror = CodeMirror(editor, {
+	viewportMargin: Infinity,
+	value: format,
+	mode:  "htmlmixed",
+	theme: "shadowfox",
+	indentWithTabs: true,
+	lineNumbers: true,
+	lineWrapping: true,
+	autoRefresh: true,
+	styleActiveLine: true
+});
+
+$("#create-course-form").on("submit", function(event) {
+	event.preventDefault();
+	
+	const scriptValue = myCodeMirror.getValue();
+	scriptArea.value = scriptValue;
+
+	this.submit();
+});
