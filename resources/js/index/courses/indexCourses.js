@@ -256,17 +256,15 @@ document.querySelectorAll(".section").forEach((section, idx) => {
 $(".template-prevent").on("click", async function (e) {
     e.preventDefault();
 
-
     try {
         const {data, status} = await axios.get(this.href)
 
 if (status==200) {
-
-
     templateHandler(data, this);
     onFullScreen();
     onCloseFullScreen();
     onPreviewMaterial();
+    onInitEventHandler();
 
     let href = $(".nav-tabs").children().first().find("a").attr( "href").substring(1);
 

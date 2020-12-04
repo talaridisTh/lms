@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Index;
 use App\Course;
 use App\Http\Controllers\Controller;
 use App\Material;
+use App\Post;
 use App\Traits\hasComments;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,6 +16,8 @@ class MaterialController extends Controller {
     use hasComments;
     public function show(Course $course, Material $materials)
     {
+
+        $post = Post::where("title", $materials->title)->first();
         $icons = [
             "mp3" => "mdi-music-clef-treble",
             "pdf" => "mdi-file-pdf-outline text-danger",
@@ -50,7 +53,7 @@ class MaterialController extends Controller {
             ->wherePivotIn("status", [1])->get();
 
         return view("index.materials.material-index",
-            compact("sections", "announcements", "materials", "course", "MaterialsOrderByPriority", "icons"));
+            compact("sections", "announcements", "materials", "course", "MaterialsOrderByPriority", "icons","post"));
     }
 
     public function dummyPage(Material $materials)

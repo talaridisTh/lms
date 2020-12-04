@@ -20,7 +20,7 @@ $(document).on("click", ".pagination a", async function (e) {
         onHideBody()
     }
 })
-
+$(".first-thread").hide();
 const eventTopBar  = () =>{
     $(".discussions-right").on("change", ".filter-sidebar", async function () {
 
@@ -121,6 +121,7 @@ const axiosUpdateMain = (that, data) => {
     $(".discussions-right").html($(data).find(".discussions-right> *"))
     onHideBody()
     onChangeFirstButtonReplay()
+    $(".first-thread").hide();
 }
 
 
@@ -219,7 +220,7 @@ $(document).on("click", '.js-thread-title', async function () {
         if (status === 200) {
             $(".discussions-right").off();
             $(".discussions-right").html(data)
-
+            $(".first-thread").show();
             onChangeFirstButtonNew()
             onCommentReplayBtnEvent()
             onSubCommentReplayBtnEvent()
