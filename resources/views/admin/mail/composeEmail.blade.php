@@ -34,6 +34,9 @@
 			margin-right: 6px;
 		}
 
+		#recipients-datatable_length span.select2:not(:last-child) {
+			margin-right: 6px;
+		}
 	</style>
 @endsection
 
@@ -193,7 +196,11 @@
 							<th class="text-center">Ονοματεπώνυμο</th>
 							<th class="text-center min-width-200 w-300px">Courses</th>
 							<th class="text-center min-width-200 w-300px">Bundles</th>
+							<th class="text-center min-width-200 w-300px">Email</th>
+							<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
 							<th class="text-center" style="width: 35px"></th>
+							<th>Όνομα</th>
+							<th>Επώνυμο</th>
 						</tr>
 					</thead>
 					<tbody class="tables-hover-effect"></tbody>
@@ -203,7 +210,11 @@
 							<th class="text-center">Ονοματεπώνυμο</th>
 							<th class="text-center">Courses</th>
 							<th class="text-center">Bundles</th>
+							<th class="text-center">Email</th>
+							<th class="text-center">Ιδιότητα</th>
 							<th class="text-center"></th>
+							<th>Όνομα</th>
+							<th>Επώνυμο</th>
 						</tr>
 					</tfoot>
 				</table>

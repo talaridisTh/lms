@@ -23,7 +23,8 @@ class UsersDataTable extends DataTable
     {
 		$recipients = explode(",", $request->recipients);
 
-		$query = User::whereNotIn("users.id", $recipients)->with("courses", "bundles", "roles")
+		$query = User::role(["admin", "instructor", "student", "partner"])
+			->whereNotIn("users.id", $recipients)->with("courses", "bundles", "roles")
 			->select("users.*");
 
         return datatables()->of($query)
