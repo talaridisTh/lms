@@ -10,6 +10,7 @@
 </div>
 
 <div class="col-md-12">
+
     @include("components.index.comments.comments")
     <div class="form-group  mt-4 replay-bottom first-thread-replay mb-2 " data-toggle="modal"
          data-target="#new-reply">

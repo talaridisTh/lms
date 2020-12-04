@@ -26,13 +26,13 @@ class DiscussionController extends Controller {
     {
 
         $posts = Post::whereHas("user", function ($course) {
-            $course->whereIn("posts.course_id", auth()->user()->courses->pluck("id"));
+
+            $course->whereIn("posts.postable_id", auth()->user()->courses->pluck("id"));
         })->orderBy('created_at', $request->option ? $request->option : "desc")
             ->paginate(10);
 //
 //        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
 //            ->paginate(10);
-
         return view("index.discussions.discussions", [
             "posts" => $posts,
             "comment" => Comment::all(),
@@ -71,7 +71,7 @@ class DiscussionController extends Controller {
     public function search(Request $request)
     {
         $posts = Post::whereHas("user", function ($course) {
-            $course->whereIn("posts.course_id", auth()->user()->courses->pluck("id"));
+            $course->whereIn("posts.postable_id", auth()->user()->courses->pluck("id"));
         })->where('title', 'LIKE', '%' . $request->term . '%')->paginate(10);
 
 //        Post::where('title', 'LIKE', '%' . $request->term . '%')->paginate(10)
@@ -90,12 +90,10 @@ class DiscussionController extends Controller {
             "title" => "required",
             "course" => "required",
         ]);
-
         Post::create([
             "title" => $request->title,
             "slug" => Str::slug($request->title, "-"),
             "user_id" => auth()->id(),
-            "course_id" => Course::where("title", $request->course)->first()->id
         ]);
         $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
             ->paginate(10);
