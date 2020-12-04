@@ -33,7 +33,6 @@ const usersDatatable = $("#users-datatable").DataTable({
 		{ data: 'btn', className: "align-middle text-center text-wrap", orderable: false, searchable: false },
 		{ data: 'first_name', name: "first_name", visible: false },
 		{ data: 'last_name', name: "last_name", visible: false },
-
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
