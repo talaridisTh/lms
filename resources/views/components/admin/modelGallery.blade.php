@@ -1,7 +1,7 @@
 @forelse ($gallery as $image)
 	<div class="col-xl-2 col-md-3 p-2 css-img-cnt position-relative">
 		<img class="js-active-image img-fluid fade-image cursor-move"
-			src="{{ $image->thumbnail_path }}" alt="{{ $image->name }}"
+			src="{{ $image->thumbnailUrl("rel_path") }}" alt="{{ $image->name }}"
 			data-image-id="{{ $image->id }}"
 		/>
 		<span data-image-id="{{ $image->id}}" 

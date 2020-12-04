@@ -2646,6 +2646,77 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 	maxFileSize: "50MB"
 });
 
+const galleryUpload = $("#course-img-upload")[0];
+const galleryPond = FilePond.create(galleryUpload, {
+    server: {
+        url: baseUrl,
+        process: {
+            url: `/course/${courseId}/gallery-upload`,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			},
+			onload: function(data) {
+
+				let container = $("#gallery-cnt")
+				container.html(data);
+
+				let removeBtns = container.find(".js-remove-image");
+				removeBtns.on("click", utilities.removeImageHandler);
+
+				$("#remove-all-images-btn").removeClass("d-none");
+				utilities.paginationRequest( 1, "");
+
+			},
+		},
+	},
+    onprocessfile: function (error, data) {
+
+		if ( galleryPond.status === 2 ) {
+
+			clearTimeout(timer);
+			let files = galleryPond.getFiles();
+
+			for (let i = 0; i < files.length; i++ ) {
+
+				if ( files[i].status === 5 ) {
+					timer = setTimeout(function() {
+						galleryPond.removeFile(files[i]);
+					}, ( i + 1 ) * 500);
+				}
+
+			}
+			$("#gallery-cnt").removeClass("d-none");
+			$("#active-gallery-loading").addClass("d-none");
+		}
+
+	},
+	onprocessfileabort: function() {
+		$("#gallery-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+	},
+	onprocessfiles: function() {
+
+		let files = galleryPond.getFiles();
+
+		for (let i = 0; i < files.length; i++ ) {
+
+			timer = setTimeout(function() {
+				galleryPond.removeFile(files[i]);
+
+			}, ( i + 1 ) * 500);
+
+		}
+		$("#gallery-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+
+	},
+	oninitfile: function(file) {
+		$("#gallery-cnt").addClass("d-none");
+		$("#active-gallery-loading").removeClass("d-none");
+	},
+    acceptedFileTypes: ['image/png', 'image/jpeg'],
+});
+
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 for ( let i = 0; i < dropArea.length; i++ ) {
 
@@ -2699,3 +2770,56 @@ $("#edit-course-form").on("submit", function(event) {
 
 	this.submit();
 });
+
+$("#remove-all-images-btn").on("click", function() {
+
+	let images = $(".js-active-image")
+	let ids = [];
+
+	for (let i = 0; i < images.length; i++) {
+		ids.push(images[i].dataset.fileId);
+	}
+
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		text: 'Αφαίρεση όλων των εικόνων;',
+		showCancelButton: true,
+		confirmButtonColor: '#536de6',
+		confirmButtonText: `Ναι, αφαίρεση!`,
+		cancelButtonText: `Ακύρωση`,
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			utilities.removeImages(ids);
+			utilities.toastAlert("info", "Οι εικόνες αφαιρέθηκαν");
+			this.classList.add("d-none");
+		}
+	  })
+
+});
+
+$(".js-remove-image").on("click", utilities.removeImageHandler);
+
+$("#add-gallery-images-btn").on("click", function() {
+	$("#gallery-content")[0].dataset.type = "gallery";
+
+	$("#gallery-modal").modal('show');
+});
+
+let dragArea = $("#gallery-cnt")[0];
+dragula( [dragArea], {})
+.on("drop", function() {
+	let images = $(".js-active-image");
+	let imagesPriority = [];
+	images.splice( -1, 1 );
+
+	for ( let i = 0; i < images.length; i++) {
+		imagesPriority.push(images[i].dataset.imageId)
+	}
+
+	axios.patch(`/course/${courseId}/gallery-sort`, {imagesPriority})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	});
+})

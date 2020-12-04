@@ -163,6 +163,9 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
 	Route::patch('course/{course:id}/toggle-highlight', 'Ajax\CourseController@toggleHighlight');
 	Route::get("courses/json-search", "Ajax\CourseController@courseSearch");
+	Route::post('course/{course:id}/gallery-upload', "Ajax\CourseController@galleryUpload");
+	Route::patch('course/{course:id}/gallery-sort', "Ajax\CourseController@gallerySort");
+
 //! Dashboard Ajax Bundles Datatables
     Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');
     Route::post('bundles/bundle-courses-datatable', 'Ajax\BundleController@show');

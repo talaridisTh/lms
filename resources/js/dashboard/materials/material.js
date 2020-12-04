@@ -122,13 +122,13 @@ $("#remove-all-images-btn").on("click", function() {
 
 });
 
-$(".js-remove-image").on("click", utilities.removeImageHandler)
+$(".js-remove-image").on("click", utilities.removeImageHandler);
 
 $("#add-gallery-images-btn").on("click", function() {
 	$("#gallery-content")[0].dataset.type = "gallery";
 
 	$("#gallery-modal").modal('show');
-})
+});
 
 //! DATATABLE INIT
 //!============================================================
@@ -955,10 +955,7 @@ function audioPlayerHandler() {
 }
 
 let dragArea = $("#gallery-cnt")[0];
-dragula( [dragArea], {
-
-})
-.on("drop", function() {
+dragula( [dragArea], {}).on("drop", function() {
 	let images = $(".js-active-image");
 	let imagesPriority = [];
 	images.splice( -1, 1 );
@@ -970,12 +967,10 @@ dragula( [dragArea], {
 	axios.patch("/material/images-sort", {
 		materialId, imagesPriority
 	})
-	.then( res => {
-
-	})
 	.catch( err => {
-
-	})
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	});
 })
 
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");

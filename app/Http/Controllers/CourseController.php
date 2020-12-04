@@ -10,11 +10,13 @@ use App\Media;
 use App\Role;
 use App\Topic;
 use App\Option;
+use App\Traits\MediaUploader;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class CourseController extends Controller
 {
+	use MediaUploader;
 
     public function index()
     {
@@ -85,27 +87,20 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course = null, Request $request)
-    {
-
-		if ( is_null($course) ) {
-			$publish = "";
-		}
-		else {
-			$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
-		}
+	public function show(Course $course) {
 
 		$templates = Option::where("name", "Course Templates")->first();
 
 		$data = [
 			'course' => $course,
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-			'courseTopics' => $course ? $course->topics()->pluck("topics.id")->toArray() : null,
+			"gallery" => $course->media()->wherePivot("usage", "!=", 3)->orderBy("priority")->get(),
+			'courseTopics' => $course->topics()->pluck("topics.id")->toArray(),
 			'topics' => Topic::all(),
 			'instructors' => Role::find( 2 )->users,
-			'publish' => $publish,
-			"files" => $course ? $course->media()->where("type", 1)->get() : null,
-			"sections" => $course ? $course->materials()->where("type", "Section")->orderBy("priority")->get() : null,
+			'publish' => Carbon::parse( $course->publish_at )->format("d-m-Y H:i"),
+			"files" => $course->media()->where("type", 1)->get(),
+			"sections" => $course->materials()->where("type", "Section")->orderBy("priority")->get(),
 			"fields" => json_decode($course->fields),
 			"templates" => json_decode($templates->value)
 		];

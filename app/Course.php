@@ -24,7 +24,7 @@ class Course extends Model {
     public function media()
     {
 
-        return $this->morphToMany('App\Media', 'mediable');
+        return $this->morphToMany('App\Media', 'mediable')->withPivot('usage', 'priority');
     }
 
     public function curator()

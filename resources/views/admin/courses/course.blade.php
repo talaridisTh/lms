@@ -543,6 +543,38 @@
 							
 
 							@isset($course)
+								<h5>Gallery</h5>
+								<div class="bg-light">
+									<div class="pt-2 px-2">
+										<button id="add-gallery-images-btn" class="btn btn-primary m-1">
+											Media Library
+										</button>
+										<button id="remove-all-images-btn"
+											class="btn btn-danger m-1 {{ $gallery->isEmpty() ? 'd-none' : "" }}">
+											Remove all
+										</button>
+									</div>
+								
+									<div id="active-gallery-loading" class="row d-none my-3">
+										<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
+									</div>
+								
+								
+									<div id="gallery-cnt" class="row" style="padding: 0 1.1rem;" data-namespace="App\Course"
+										data-model-id="{{ $course->id }}">
+										@include('components/admin/modelGallery', ["gallery" => $gallery])
+									</div>
+									<input id="course-img-upload" class="js-filepond-file-dragging mb-0" type="text">
+								
+								</div>
+								<p class="text-right mb-2">
+									<small>
+										<strong>
+											Το πεδίο δέχεται αρχεία: .jpg, .png.
+										</strong>
+									</small>
+								</p>
+								
 								<h5>Βοηθητικά Αρχεία</h5>
 								<div class="bg-light mb-0">
 									<div class="pt-2 px-2">
@@ -989,6 +1021,8 @@
 <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
 <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
 <script src="/assets/js/vendor/dataTables.buttons.min.js"></script>
+<script src="/assets/js/vendor/dragula.min.js"></script>
+<script src="/assets/js/ui/component.dragula.js"></script>
 
 <script src="{{ mix('js/dashboard/courses/courseProfile.js') }}"></script>
 @endsection

@@ -303,8 +303,7 @@ class MaterialController extends Controller {
 
 		$gallery = $material->media()->where("type", 0)->orderBy("priority")->get();
 		return View('components/admin/modelGallery', ['gallery' => $gallery]);
-
-    }
+	}
 
 	public function gallerySort(Request $request) {
 
