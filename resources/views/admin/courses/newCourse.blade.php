@@ -361,6 +361,6 @@
 
 @section('scripts')
 
-<script src="{{ mix("/js/dashboard/newContent.js") }}"></script>
+<script src="{{ mix("/js/dashboard/courses/newCourse.js") }}"></script>
 
 @endsection

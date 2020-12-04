@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -198,7 +198,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _mai
 
 /***/ }),
 
-/***/ 9:
+/***/ 10:
 /*!***************************************************************!*\
   !*** multi ./resources/js/dashboard/materials/newMaterial.js ***!
   \***************************************************************/

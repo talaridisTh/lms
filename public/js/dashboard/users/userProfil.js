@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -232,7 +232,7 @@ eval("/* WEBPACK VAR INJECTION */(function(module) {\n\nfunction _typeof(obj) {\
 
 /***/ }),
 
-/***/ 12:
+/***/ 13:
 /*!**********************************************************!*\
   !*** multi ./resources/js/dashboard/users/userProfil.js ***!
   \**********************************************************/
