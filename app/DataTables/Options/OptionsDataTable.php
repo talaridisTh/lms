@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Options;
 
-use App\Option;
+use App\Models\Option;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;

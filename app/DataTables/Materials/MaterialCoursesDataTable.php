@@ -2,9 +2,9 @@
 
 namespace App\DataTables\Materials;
 
-use App\Course;
-use App\Material;
-use App\User;
+use App\Models\Course;
+use App\Models\Material;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;

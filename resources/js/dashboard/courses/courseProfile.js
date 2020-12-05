@@ -1,7 +1,7 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
-const namespace = "App\\Course";
+const namespace = "App\\Models\\Course";
 const courseSlug = $("#course-materials-list")[0].dataset.courseSlug
 const baseUrl = window.location.origin;
 
@@ -509,7 +509,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'highlight', name: 'pivot.highlight', className: "text-center align-middle", },
 		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
-		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
+		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle", visible: false},
 		{
 			data: 'updated_at',name: 'updated_at',
 			className: "cursor-default text-center align-middle", searchable: false,
@@ -2763,12 +2763,10 @@ const myCodeMirror = CodeMirror(editor, {
 });
 
 $("#edit-course-form").on("submit", function(event) {
-	event.preventDefault();
 	
 	const scriptValue = myCodeMirror.getValue();
 	scriptArea.value = scriptValue;
 
-	this.submit();
 });
 
 $("#remove-all-images-btn").on("click", function() {

@@ -49,7 +49,7 @@ $(statusFilter).select2({
 
 $(statusFilter).on("change", function() {
 	//! to value einai REGEX! sto draft kanei match empty strings!
-	mailsDatatable.column( 3 ).search( this.value, true, false ).draw();
+	mailsDatatable.column( 4 ).search( this.value, true, false ).draw();
 
 })
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\MediaDetails;
+use App\Models\MediaDetails;
 use Illuminate\Http\Request;
 
 class MediaDetailsController extends Controller

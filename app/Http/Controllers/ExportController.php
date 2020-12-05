@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Exports\UsersExportView;
-use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ExportController extends Controller

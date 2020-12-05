@@ -196,13 +196,13 @@ $("#type-select").on("change", function() {
 	let namespace;
 
 	if (this.value == "materials") {
-		namespace = "App\\Material";
+		namespace = "App\\Models\\Material";
 	}
 	else if (this.value == "courses") {
-		namespace = "App\\Course";
+		namespace = "App\\Models\\Course";
 	}
 	else {
-		namespace = "App\\Bundle";
+		namespace = "App\\Models\\Bundle";
 	}
 
 	selectionCnt.attr("data-namespace", namespace);

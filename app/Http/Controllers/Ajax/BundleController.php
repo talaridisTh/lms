@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Bundle;
+use App\Models\Bundle;
 use App\DataTables\Bundles\UsersDataTable;
 use App\DataTables\Bundles\BundleCoursesDataTable;
 use App\DataTables\Bundles\BundleDataTable;

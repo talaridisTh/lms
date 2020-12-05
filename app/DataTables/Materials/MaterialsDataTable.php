@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Materials;
 
-use App\Material;
+use App\Models\Material;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;

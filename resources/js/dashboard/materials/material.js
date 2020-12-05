@@ -6,7 +6,7 @@ import 'filepond/dist/filepond.min.css';
 
 let materialId = $("#material-course-table")[0].dataset.materialId;
 let materialSlug = $("#material-title")[0].dataset.materialSlug;
-const namespace = "App\\Material";
+const namespace = "App\\Models\\Material";
 const baseUrl = window.location.origin;
 
 let timer = 0;
@@ -406,7 +406,7 @@ $R("#description-material", {
     imageUpload: "/media/upload-images",
     // imageData: {
     // 	// id: courseId,
-    // 	// namespace: "App\\Course"
+    // 	// namespace: "App\\Models\\Course"
     // },
     callbacks: {
         upload: {
@@ -463,7 +463,7 @@ $R("#content-material", {
     imageUpload: "/media/upload-images",
     // imageData: {
     // 	// id: courseId,
-    // 	// namespace: "App\\Course"
+    // 	// namespace: "App\\Models\\Course"
     // },
     callbacks: {
         upload: {
@@ -858,7 +858,7 @@ const materialFilePond = FilePond.create(materialFileUpload, {
 
 			},
 			ondata: function(formData) {
-				formData.append("namespace", "App\\Material");
+				formData.append("namespace", "App\\Models\\Material");
 				formData.append("id", materialId);
 				return formData
 			}

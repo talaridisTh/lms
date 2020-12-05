@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Bundle;
-use App\Topic;
-use App\Media;
+use App\Models\Bundle;
+use App\Models\Topic;
+use App\Models\Media;
 use App\Http\Requests\BundleCourseRequest;
 use Illuminate\Support\Str;
 use Carbon\Carbon;

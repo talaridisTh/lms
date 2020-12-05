@@ -2,12 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\User;
-use App\Material;
-use App\Course;
-use App\Bundle;
-use App\Role;
-use App\Topic;
+use App\Models\User;
+use App\Models\Material;
+use App\Models\Course;
+use App\Models\Bundle;
+use App\Models\Role;
+use App\Models\Topic;
 use Illuminate\Database\Seeder;
 
 class BigDataSeeder extends Seeder {

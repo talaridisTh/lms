@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Courses;
 
-use App\Material;
+use App\Models\Material;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -10,7 +10,7 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-use App\Course;
+use App\Models\Course;
 
 
 class MaterialsDataTable extends DataTable

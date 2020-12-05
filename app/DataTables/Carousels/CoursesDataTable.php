@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Carousels;
 
-use App\Course;
+use App\Models\Course;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -26,7 +26,7 @@ class CoursesDataTable extends DataTable
 
 				return "<i class='js-add-course-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
 					data-model-id='$data->id' data-model-title='$data->title'
-					data-model-subtitle='$data->subtitle' data-namespace='App\Course'></i>";
+					data-model-subtitle='$data->subtitle' data-namespace='App\Models\Course'></i>";
 
 			})
 			->editColumn('topics', function ($data) {

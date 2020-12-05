@@ -2,8 +2,7 @@
 
 namespace App\Http\View\Composers;
 
-use App\Course;
-use App\User;
+use App\Models\Course;
 use Spatie\Permission\Models\Role;
 use Illuminate\View\View;
 

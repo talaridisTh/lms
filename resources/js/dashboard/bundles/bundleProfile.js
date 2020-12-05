@@ -14,7 +14,7 @@ import 'filepond/dist/filepond.min.css';
 //!##############################################
 const bundleId = $("#bundle-title")[0].dataset.bundleId;
 const bundleSlug = $("#bundle-title")[0].dataset.bundleSlug;
-const namespace = "App\\Bundle";
+const namespace = "App\\Models\\Bundle";
 const baseUrl = window.location.origin;
 
 //!##########################################

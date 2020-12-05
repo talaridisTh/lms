@@ -189,7 +189,7 @@
 									</div>
 								</div>
 							</div>
-							<div id="gallery-content" data-model="App\Course" data-id={{ isset($course) ? $course->id : "" }}>
+							<div id="gallery-content" data-model="App\Models\Course" data-id={{ isset($course) ? $course->id : "" }}>
 								@include('components.admin.imageGallery', ['media' => $media])
 							</div>
 						</div>
@@ -422,26 +422,26 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#materials" id="materials-tab-btn"class="nav-link"
+					<a href="#materials" id="materials-tab-btn" class="nav-link"
 						data-toggle="tab" aria-expanded="true">
 						Υλικό
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#users" id="users-tab-btn"class="nav-link"
+					<a href="#users" id="users-tab-btn" class="nav-link"
 						data-toggle="tab" aria-expanded="true"
 						>
 						Χρήστες
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#sections" id="sections-tab-btn"class="nav-link"
+					<a href="#sections" id="sections-tab-btn" class="nav-link"
 						data-toggle="tab" aria-expanded="true">
 						Sections
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#files-tab" id="sections-tab-btn"class="nav-link"
+					<a href="#files-tab" id="sections-tab-btn" class="nav-link"
 						data-toggle="tab" aria-expanded="true">
 						Αρχεία
 					</a>
@@ -887,7 +887,7 @@
 								<div id="active-gallery-loading" class="row d-none my-3">
 									<div class="spinner-border avatar-md text-primary mx-auto" role="status"></div>
 								</div>
-								<div id="gallery-cnt" class="row" style="padding: 0 1.1rem;" data-namespace="App\Course"
+								<div id="gallery-cnt" class="row" style="padding: 0 1.1rem;" data-namespace="App\Models\Course"
 									data-model-id="{{ $course->id }}">
 									@include('components/admin/modelGallery', ["gallery" => $gallery])
 								</div>

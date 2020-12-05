@@ -262,10 +262,8 @@ const myCodeMirror = CodeMirror(editor, {
 });
 
 $("#create-course-form").on("submit", function(event) {
-	event.preventDefault();
 	
 	const scriptValue = myCodeMirror.getValue();
 	scriptArea.value = scriptValue;
 
-	this.submit();
 });

@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Mail;
 
-use App\Mail;
-use App\User;
+use App\Models\Mail;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;

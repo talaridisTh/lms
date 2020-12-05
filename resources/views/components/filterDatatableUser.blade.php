@@ -9,14 +9,14 @@
 
 <select id="fullNameFilter">
     <option value="">Όλα τα Courses </option>
-    @foreach(App\Course::all() as $course)
+    @foreach(App\Models\Course::all() as $course)
         <option value="{{$course->title}}">{{$course->title}}</option>
     @endforeach
 </select>
 
 <select id="rolesFilter">
     <option value="">Όλοι οι ρόλοι</option>
-    @foreach(App\Role::all()->except([6,8]) as $role)
+    @foreach(App\Models\Role::all()->except([6,8]) as $role)
         <option value="{{$role->name}}">{{$role->name}}</option>
     @endforeach
 </select>

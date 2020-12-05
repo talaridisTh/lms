@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Courses;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -56,7 +56,7 @@ class UsersDataTable extends DataTable
 			})
             ->addColumn('addBtn', function($data) {
 
-				return "<button type='button' class='js-add-user-btn btn btn-primary' data-user-id='$data->userId'>Προσθήκη</button>";
+				return "<button type='button' class='js-add-user-btn btn btn-primary' data-user-id='$data->id'>Προσθήκη</button>";
 
 			})
 			->addColumn('role', function($data) {
@@ -67,7 +67,7 @@ class UsersDataTable extends DataTable
 			->rawColumns(['action', 'last_name', 'addBtn'])
 			->setRowAttr([ 'data-user-id' => function($data) {
 
-				return  $data->userId;
+				return  $data->id;
 
 			},
 			"data-user-slug" => function($data) {

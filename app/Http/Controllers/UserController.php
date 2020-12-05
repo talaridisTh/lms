@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\UsersDataTable;
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Mail\NewUserNotification;
-use App\Material;
-use App\Media;
-use App\User;
-use Illuminate\Http\Request;
+use App\Models\Media;
+use App\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use PhpParser\Node\Stmt\DeclareDeclare;
 use Spatie\Activitylog\Models\Activity;
 
 class UserController extends Controller {

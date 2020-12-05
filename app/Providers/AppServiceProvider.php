@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use App\Http\View\Composers\OptionComposer;
 use App\Http\View\Composers\RoleComposer;
-use App\Option;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;

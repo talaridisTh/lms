@@ -73,15 +73,15 @@
                                                        data-user-id="{{$instructor->id}}"
                                                        class="js-message-chat text-body">
                                                         <div class="media mt-1 p-2">
-                                                            <img src="{{App\User::find($instructor->id)->cover}} "
+                                                            <img src="{{App\Models\User::find($instructor->id)->cover}} "
                                                                  class="mr-2 rounded-circle" height="48"
-                                                                 alt="{{App\User::find($instructor->id)->first_name}}"/>
+                                                                 alt="{{App\Models\User::find($instructor->id)->first_name}}"/>
                                                             <div class=" media-body">
 
                                                                 <h5 class="mt-0 mb-0 font-14">
                                                                     <span
-                                                                        class="float-right text-muted font-12 preview-hour">   {{App\User::getlastHour($instructor->id)}}</span>
-                                                                    {{ App\User::find($instructor->id)->fullName}}
+                                                                        class="float-right text-muted font-12 preview-hour">   {{App\Models\User::getlastHour($instructor->id)}}</span>
+                                                                    {{ App\Models\User::find($instructor->id)->fullName}}
                                                                 </h5>
                                                                 <p class="mt-1 mb-0 text-muted font-14">
 
@@ -94,7 +94,7 @@
                                                             </span>
 
                                                                     <span class="w-75 preview-message">
-                                                                {{App\User::getlastMessage($instructor->id)}}
+                                                                {{App\Models\User::getlastMessage($instructor->id)}}
                                                             </span>
                                                                 </p>
                                                             </div>
@@ -128,20 +128,20 @@
                                         <div class="col">
                                             <div data-simplebar style="max-height: 550px">
                                                 @foreach($users as $instructor)
-                                                    @if(App\User::find($instructor->id)->getRoleNames()[0] == "instructor")
+                                                    @if(App\Models\User::find($instructor->id)->getRoleNames()[0] == "instructor")
                                                         <a id="user-{{ $instructor->id }}" href="javascript:void(0);"
                                                            data-user-id="{{$instructor->id}}"
                                                            class="js-message-chat text-body">
                                                             <div class="media mt-1 p-2">
-                                                                <img src="{{ App\User::find($instructor->id)->cover}} "
+                                                                <img src="{{ App\Models\User::find($instructor->id)->cover}} "
                                                                      class="mr-2 rounded-circle" height="48"
                                                                 />
                                                                 <div class=" media-body">
 
                                                                     <h5 class="mt-0 mb-0 font-14">
                                                                     <span
-                                                                        class="float-right text-muted font-12 preview-hour">   {{App\User::getlastHour($instructor->id)}}</span>
-                                                                        {{ App\User::find($instructor->id)->fullName}}
+                                                                        class="float-right text-muted font-12 preview-hour">   {{App\Models\User::getlastHour($instructor->id)}}</span>
+                                                                        {{ App\Models\User::find($instructor->id)->fullName}}
                                                                     </h5>
                                                                     <p class="mt-1 mb-0 text-muted font-14">
 
@@ -154,7 +154,7 @@
                                                             </span>
 
                                                                         <span class="w-75 preview-message">
-                                                                {{App\User::getlastMessage($instructor->id)}}
+                                                                {{App\Models\User::getlastMessage($instructor->id)}}
                                                             </span>
                                                                     </p>
                                                                 </div>

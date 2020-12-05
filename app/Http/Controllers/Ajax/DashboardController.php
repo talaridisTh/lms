@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Bundle;
-use App\Course;
+use App\Models\Bundle;
+use App\Models\Course;
 use App\Http\Controllers\Controller;
-use App\Material;
-use App\User;
+use App\Models\Material;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller

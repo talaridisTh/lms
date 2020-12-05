@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 
-use App\Mail as AppMail;
+use App\Models\Mail as AppMail;
 use App\Mail\Email;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules\RequiredIf;
 
 class MailController extends Controller
 {

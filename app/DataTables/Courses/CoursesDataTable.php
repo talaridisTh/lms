@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Courses;
 
-use App\Course;
+use App\Models\Course;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;

@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Mail;
 
-use App\Mail;
-use App\User;
+use App\Models\Mail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;

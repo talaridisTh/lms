@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Mediable;
+use App\Models\Mediable;
 use Illuminate\Http\Request;
 
 class MediableController extends Controller

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Course;
+use App\Models\Course;
 use App\DataTables\Materials\CoursesDataTable;
 use App\DataTables\Materials\MaterialCoursesDataTable;
 use App\DataTables\Materials\MaterialsDataTable;
 use App\DataTables\Materials\PDFDataTable;
 use App\Http\Controllers\Controller;
-use App\Material;
-use App\Media;
+use App\Models\Material;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;

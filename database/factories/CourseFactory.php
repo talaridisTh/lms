@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Course;
-use App\Role;
+use App\Models\Course;
+use App\Models\Role;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 

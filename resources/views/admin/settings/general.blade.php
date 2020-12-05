@@ -63,7 +63,7 @@
 									</div>
 								</div>
 							</div>
-							<div id="gallery-content" data-model="App\Option" data-type="logo">
+							<div id="gallery-content" data-model="App\Models\Option" data-type="logo">
 								@include('components.admin.imageGallery', ['media' => $media])
 							</div>
 						</div>

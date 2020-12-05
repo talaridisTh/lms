@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,10 @@ Route::get('/clear', function () {
     return redirect(route("home"));
 });
 Route::get("/delete/all-post",function (){
-    dump( [App\Post::all(),\App\Comment::all()]);
+    dump( [App\Models\Post::all(),\App\Models\Comment::all()]);
     DB::table("posts")->delete();
 
-    dump( [App\Post::all(),\App\Comment::all()]);
+    dump( [App\Models\Post::all(),\App\Models\Comment::all()]);
 });
 Route::get("/test", "Index\HomeController@test")->name("user.test");
 //!########################################################
@@ -105,7 +106,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
 	Route::get('/dashboard/options/{slug}', 'OptionController@editPolicies')
 		->where("slug", "terms-of-use|privacy-policy|cookie-policy");
-	Route::post('/dashboard/options/{option:name}/update', 'OptionController@updatePolicies');
+	Route::post('/dashboard/options/{option}/update', 'OptionController@updatePolicies');
 
 	//! Dev Options Routes
 	Route::get("/dashboard/dev-tools/template-config", "OptionController@templateConfig");

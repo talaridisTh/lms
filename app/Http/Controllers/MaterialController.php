@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
-use App\Role;
-use App\Http\Requests\CreateMaterialRequest;
-use App\Http\Requests\UpdateMaterialRequest;
-use App\Material;
-use App\Media;
-use App\Topic;
+use App\Models\Course;
+use App\Models\Role;
+use App\Models\Material;
+use App\Models\Media;
+use App\Models\Topic;
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Str;
 
 class MaterialController extends Controller {

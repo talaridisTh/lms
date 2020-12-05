@@ -4,7 +4,7 @@ namespace App\Traits;
 
 define("IMAGE_TYPES", ["image/png", "image/jpeg"]);
 
-use App\Media;
+use App\Models\Media;
 use Exception;
 use Illuminate\Support\Str;
 Use Intervention\Image\Facades\Image;

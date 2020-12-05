@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="gallery-content" data-model="App\Material">
+                        <div id="gallery-content" data-model="App\Models\Material">
                             @include('components.admin.imageGallery', ['media' => $media])
                         </div>
                     </div>

@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Materials;
 
-use App\Course;
-use App\User;
+use App\Models\Course;
+use App\Models\User;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;

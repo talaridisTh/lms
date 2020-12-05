@@ -2,7 +2,7 @@
 
 namespace App\Traits;
 
-use App\Option;
+use App\Models\Option;
 use League\Glide\Urls\UrlBuilderFactory;
 
 trait UrlCreator {

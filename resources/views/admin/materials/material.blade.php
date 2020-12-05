@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="gallery-content" data-model="App\Material"
+                        <div id="gallery-content" data-model="App\Models\Material"
                             data-id={{ isset($material)? $material->id:"" }}>
                             @include('components.admin.imageGallery', ['media' => $media])
                         </div>
@@ -273,7 +273,7 @@
                             </div>
 
 
-                            <div id="gallery-cnt" class="row" style="padding: 0 1.1rem;" data-namespace="App\Material"
+                            <div id="gallery-cnt" class="row" style="padding: 0 1.1rem;" data-namespace="App\Models\Material"
                                 data-model-id="{{ $material->id }}">
                                 @include('components/admin/modelGallery', ["gallery" => $gallery])
                             </div>

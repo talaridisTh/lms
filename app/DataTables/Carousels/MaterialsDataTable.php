@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Carousels;
 
-use App\Material;
+use App\Models\Material;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -29,7 +29,7 @@ class MaterialsDataTable extends DataTable
 
 				return "<i class='js-add-material-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
 					data-model-id='$data->id' data-model-title='$data->title'
-					data-model-subtitle='$data->subtitle' data-namespace='App\Material'></i>";
+					data-model-subtitle='$data->subtitle' data-namespace='App\Models\Material'></i>";
 
 			})
 			->rawColumns(["action"]);

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Ajax;
 
 use App\DataTables\Files\FileManagerDataTable;
 use App\Http\Controllers\Controller;
-use App\Media;
-use App\MediaDetails;
+use App\Models\Media;
+use App\Models\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -120,7 +120,7 @@ class MediaController extends Controller {
 
 		$model = $request->namespace::find( $request->id );
 
-		if ( $request->namespace === "App\\User" ) {
+		if ( $request->namespace === "App\\Models\\User" ) {
 			$model->avatar = null;
 		}
 		else {
@@ -327,13 +327,13 @@ class MediaController extends Controller {
 		$id = $request->id;
 		$model = $namespace::find( $id );
 
-		if ( $namespace === "App\\User" ) {
+		if ( $namespace === "App\\Models\\User" ) {
 			$model->avatar = $request->url;
 			$model->save();
 
 			return response()->json(["imgUrl" => $model->thumbnailUrl("avatar")]);
 		}
-		elseif ( $namespace === "App\\Option") {
+		elseif ( $namespace === "App\\Models\\Option") {
 			$model = $namespace::where("name", "logo")->first();
 			$model->value = $request->url;
 			$model->save();

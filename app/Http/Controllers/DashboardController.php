@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
-use App\User;
-use App\Bundle;
-use App\Material;
-use App\Role;
+use App\Models\Course;
+use App\Models\User;
+use App\Models\Bundle;
+use App\Models\Material;
+use App\Models\Role;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -87,7 +87,7 @@ class DashboardController extends Controller
 		$coursesPerTopic = DB::table("topics")
 			->join("topicables", "topics.id", "=", "topicables.topic_id")
 			->join("courses", "topicables.topicable_id", "=", "courses.id")
-			->where("topicable_type", "App\Course")
+			->where("topicable_type", "App\Models\Course")
 			->where("courses.status", 1)
 			->selectRaw("topics.title, COUNT(*) as count")
 			->groupBy("topics.title")->orderBy("count", "desc")->limit(5)

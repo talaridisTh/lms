@@ -2,12 +2,11 @@
 
 namespace App\Traits;
 
-use App\Comment;
-use App\Course;
-use App\Post;
-use App\User;
+use App\Models\Comment;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 
 trait hasComments {
 

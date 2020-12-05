@@ -2,9 +2,8 @@
 
 namespace App\DataTables;
 
-use App\Course;
-use App\CoursesInsideUser;
-use App\User;
+use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;

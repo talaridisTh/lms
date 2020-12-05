@@ -7,9 +7,9 @@
             <li class="clearfix {{$msg->from==Auth::id()? "odd":""}}">
                 <div class="chat-avatar">
                     @if($msg->from==Auth::id())
-                        <img src="{{ App\User::find($msg->from)->cover}}" class="rounded" alt="Shreyu N"/>
+                        <img src="{{ App\Models\User::find($msg->from)->cover}}" class="rounded" alt="Shreyu N"/>
                     @else
-                        <img src="{{ App\User::find($msg->from)->cover}}" class="rounded" alt="Shreyu N"/>
+                        <img src="{{ App\Models\User::find($msg->from)->cover}}" class="rounded" alt="Shreyu N"/>
                     @endif
 
                     <i>{{$msg->created_at->diffForHumans()}}</i>
@@ -17,7 +17,7 @@
                 <div class="conversation-text">
                     <div class="ctext-wrap">
 
-                        <i>{{App\User::find($msg->from)->fullName}}</i>
+                        <i>{{App\Models\User::find($msg->from)->fullName}}</i>
                         <p>
                             {{$msg->message}}
                         </p>
