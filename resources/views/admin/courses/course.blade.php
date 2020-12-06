@@ -453,7 +453,7 @@
 				<div id="settings" class="tab-pane mb-3 show active">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
-							<form id="edit-course-form" action="{{ route('course.update', $course->slug) }}"
+							<form id="edit-course-form" action="{{ "/dashboard/courses/$course->slug" }}"
 								method="POST" enctype="multipart/form-data" autocomplete="off">
 
 								@csrf

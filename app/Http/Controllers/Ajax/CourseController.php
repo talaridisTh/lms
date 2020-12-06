@@ -133,7 +133,7 @@ class CourseController extends Controller
 		return $dataTable->render('course.remaingMaterials');
 	}
 
-	public function toggleCourseMaterials( Request $request ) {
+	public function toggleMaterials( Request $request ) {
 
 		$course = Course::find( $request->courseId );
 		$data = $request->data;
@@ -201,13 +201,13 @@ class CourseController extends Controller
 
 	}
 
-	public function addCourseStudents(UsersDataTable $dataTable) {
+	public function usersDataTable(UsersDataTable $dataTable) {
 
 		return $dataTable->render('courses.add.users');
 
 	}
 
-	public function addStudents( Request $request ) {
+	public function addUsers( Request $request ) {
 
 		$course = Course::find( $request->courseId );
 		$userIds = $request->userIds;
@@ -218,7 +218,7 @@ class CourseController extends Controller
 
 	}
 
-	public function removeStudents( Request $request ) {
+	public function removeUsers( Request $request ) {
 
 		$course = Course::find( $request->courseId );
 		$userIds = $request->userIds;

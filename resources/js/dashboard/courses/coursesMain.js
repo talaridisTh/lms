@@ -65,7 +65,7 @@ $('#delete-courses-btn').on("click", function() {
 
 		if (result.value) {
 
-			axios.delete(`/courses/destroy/${ids}`)
+			axios.delete(`/course-ajax/destroy/${ids}`)
 			.then(function (response) {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
@@ -93,7 +93,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/courses-datatable",
+		url: "/course-datatables/main",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: function( d ) {
@@ -184,7 +184,7 @@ function toggleStatus() {
 
 	$('.js-toggle').on('change', function() {
 
-		axios.patch('/courses/status', {
+		axios.patch('/course-ajax/status', {
 			courseId: this.dataset.courseId,
 			status: this.checked
 		})

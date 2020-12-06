@@ -78,7 +78,7 @@ class CourseController extends Controller
 			$course->topics()->attach( $request->topics );
 		}
 
-		return redirect( "/dashboard/course/$course->slug" );
+		return redirect( "/dashboard/courses/$course->slug/edit" );
 
     }
     /**
@@ -88,8 +88,19 @@ class CourseController extends Controller
      * @return \Illuminate\Http\Response
      */
 	public function show(Course $course) {
+	
+		//
+    }
 
-		$templates = Option::where("name", "Course Templates")->first();
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Course  $course
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Course $course)
+    {
+        $templates = Option::where("name", "Course Templates")->first();
 
 		$data = [
 			'course' => $course,
@@ -106,17 +117,6 @@ class CourseController extends Controller
 		];
 
         return view('admin.courses.course')->with($data);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Course  $course
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Course $course)
-    {
-        //
     }
 
     /**
@@ -166,7 +166,7 @@ class CourseController extends Controller
 
 		$course->topics()->sync( $request->topics );
 
-        return redirect( "/dashboard/course/$course->slug" );
+        return redirect( "/dashboard/courses/$course->slug/edit" );
     }
 
     /**
@@ -274,6 +274,6 @@ class CourseController extends Controller
 			}
 		}
 
-		return redirect("/dashboard/course/$newCourse->slug");
+		return redirect("/dashboard/courses/$newCourse->slug/edit");
 	}
 }

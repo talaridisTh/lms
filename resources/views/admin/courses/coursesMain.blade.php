@@ -53,7 +53,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="clone-form" action="courses/clone" method="POST">
+					<form id="clone-form" action="/dashboard/courses/clone" method="POST">
 
 						@csrf
 

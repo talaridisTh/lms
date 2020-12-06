@@ -177,7 +177,7 @@
 				<div id="settings" class="tab-pane show active mb-3">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
-							<form id="create-course-form" action="/dashboard/courses/store"
+							<form id="create-course-form" action="/dashboard/courses"
 								method="POST" enctype="multipart/form-data" autocomplete="off">
 
 								@csrf

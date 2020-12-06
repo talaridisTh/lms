@@ -61,14 +61,6 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::post('/dashboard/store-pdf-material', 'MaterialController@storePDF');
 	Route::get('/dashboard/edit-pdf/{material}', 'MaterialController@editPDF');
 
-    //! Course Routes
-    Route::get('/dashboard/courses', 'CourseController@index')->name('course.index');
-    Route::get('/dashboard/course/{course?}', 'CourseController@show')->name('course.show');
-    Route::get('/dashboard/courses/create', 'CourseController@create')->name('course.create');
-    Route::post('/dashboard/courses/store', 'CourseController@store')->name('course.store');
-    Route::post('/dashboard/courses/clone', 'CourseController@clone')->name('course.clone');
-    Route::patch('/dashboard/courses/update/{course}', 'CourseController@update')->name('course.update');
-    Route::delete('/dashboard/course/{course}', 'CourseController@softDelete')->name('course.softDelete');
     //! Bundle Routes
     Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
     Route::get('/dashboard/bundles/create', 'BundleController@create')->name('bundle.create');
@@ -146,26 +138,9 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');
     Route::post("file-details-store", "Ajax\MediaController@store")->name("file.details.store");
     Route::patch("media/remove-cover", "Ajax\MediaController@removeCover");
-//! Dashboard Ajax Courses Datatables
-    Route::post('courses/courses-datatable', 'Ajax\CourseController@index');
-    Route::post('courses/course-materials-datatable', 'Ajax\CourseController@courseMaterials');
-    Route::post('courses/not-incourse-materials-datatable', 'Ajax\CourseController@remainingMaterials');
-    Route::post('courses/course-users-datatable', 'Ajax\CourseController@courseUsers');
-    Route::post('courses/add-course-students-datatable', 'Ajax\CourseController@addCourseStudents');
-//! Dashboard Ajax Courses CRUD
-    Route::delete('courses/destroy/{ids}', 'Ajax\CourseController@destroy');
-    Route::patch('courses/status', 'Ajax\CourseController@toggleStatus');
-    Route::patch('courses/priority', 'Ajax\CourseController@changePriority');
-    Route::patch('courses/toggle-materials', 'Ajax\CourseController@toggleCourseMaterials');
-    Route::post('courses/add-materials', 'Ajax\CourseController@addMaterials');
-    Route::patch('courses/remove-materials', 'Ajax\CourseController@removeMaterials');
-    Route::patch('courses/add-students', 'Ajax\CourseController@addStudents');
-    Route::patch('courses/remove-students', 'Ajax\CourseController@removeStudents');
-    Route::patch('course/{course}/toggle-editors', 'Ajax\CourseController@toggleEditors');
-	Route::patch('course/{course:id}/toggle-highlight', 'Ajax\CourseController@toggleHighlight');
+
+//! Select2 Ajax Search
 	Route::get("courses/json-search", "Ajax\CourseController@courseSearch");
-	Route::post('course/{course:id}/gallery-upload', "Ajax\CourseController@galleryUpload");
-	Route::patch('course/{course:id}/gallery-sort', "Ajax\CourseController@gallerySort");
 
 //! Dashboard Ajax Bundles Datatables
     Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');

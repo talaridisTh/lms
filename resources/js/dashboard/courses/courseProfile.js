@@ -119,7 +119,7 @@ $(".js-editors-toggle").on("change", function() {
 
 	let fields = JSON.stringify(field);
 
-	axios.patch(`/course/${courseSlug}/toggle-editors`, {
+	axios.patch(`/course-ajax/${courseId}/toggle-editors`, {
 		fields
 	})
 	.then( res => {
@@ -343,25 +343,6 @@ $("#select-all-active-users").on( "change", function() {
 	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 });
 
-$("#active-switch").on( "change", function() {
-
-	axios.patch( "/courses/status", {
-		course: courseId,
-		state: this.checked ? 1 : 0
-	})
-	.then( (res) => {
-
-		let icon = this.checked ? "success" : "info";
-		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-
-		utilities.toastAlert( icon, message );
-	})
-	.catch( (err) => {
-		console.log(err);
-		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
-	});
-});
-
 $("#add-multiple-users-btn").on( "click", function() {
 	let newUsers = $(".js-new-user-checkbox:checked");
 	let userIds = [];
@@ -491,7 +472,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/course-materials-datatable",
+		url: "/course-datatables/course-materials",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: function( d ) {
@@ -583,7 +564,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/not-incourse-materials-datatable",
+		url: "/course-datatables/materials",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: function( d ) {
@@ -628,7 +609,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/course-users-datatable",
+		url: "/course-datatables/course-users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -673,7 +654,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/add-course-students-datatable",
+		url: "/course-datatables/users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -1357,7 +1338,7 @@ function sortInputsInit() {
 	$('.js-sort-input').on('keyup', function() {
 
 		if ( event.keyCode == 13 && !isNaN( this.value) ) {
-			axios.patch('/courses/priority', {
+			axios.patch('/course-ajax/priority', {
 				courseId: $('#course-materials-list')[0].dataset.courseId,
 				materialId: this.dataset.materialId,
 				priority: {
@@ -1383,7 +1364,7 @@ function toggleCourseMaterial() {
 
 		//& an empene to function (toggleState)
 		//& 8a ginotan ena PERITO reload tou table
-		axios.patch('/courses/toggle-materials', {
+		axios.patch('/course-ajax/toggle-materials', {
 			courseId: this.dataset.courseId,
 			data: [{
 				id: this.dataset.materialId,
@@ -1706,7 +1687,7 @@ function editChaptersTitle(materialSlug, title) {
 }
 
 function addUsers( userIds ) {
-	axios.patch( "/courses/add-students", {
+	axios.patch( "/course-ajax/add-users", {
 		courseId,
 		userIds
 	})
@@ -1729,7 +1710,7 @@ function addUsers( userIds ) {
 }
 
 function removeUsers( userIds, caller ) {
-	axios.patch( "/courses/remove-students", {
+	axios.patch( "/course-ajax/remove-users", {
 		courseId,
 		userIds
 	})
@@ -1781,7 +1762,7 @@ function addChapterMaterials( chapterId, materialIds ) {
 }
 
 function addCourseMaterials( materialId ) {
-	axios.post( "/courses/add-materials", {
+	axios.post( "/course-ajax/add-materials", {
 		courseId, materialId
 	})
 	.then( (res) => {
@@ -1803,7 +1784,7 @@ function addCourseMaterials( materialId ) {
 
 function toggleHighlight(materialIds, status) {
 
-	axios.patch(`/course/${courseId}/toggle-highlight`, {materialIds, status})
+	axios.patch(`/course-ajax/${courseId}/toggle-highlight`, {materialIds, status})
 	.then( res => {
 		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
@@ -1831,7 +1812,7 @@ function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
 function removeMaterials( materials ) {
 
-	axios.patch( "/courses/remove-materials", {
+	axios.patch( "/course-ajax/remove-materials", {
 		courseId,
 		materials
 	})
@@ -2275,7 +2256,7 @@ function createDateElm( id ) {
 
 function toggleState(data) {
 
-	axios.patch('/courses/toggle-materials', {
+	axios.patch('/course-ajax/toggle-materials', {
 		courseId,
 		data
 	})
@@ -2651,7 +2632,7 @@ const galleryPond = FilePond.create(galleryUpload, {
     server: {
         url: baseUrl,
         process: {
-            url: `/course/${courseId}/gallery-upload`,
+            url: `/course-ajax/${courseId}/gallery-upload`,
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
 			},
@@ -2815,7 +2796,7 @@ dragula( [dragArea], {})
 		imagesPriority.push(images[i].dataset.imageId)
 	}
 
-	axios.patch(`/course/${courseId}/gallery-sort`, {imagesPriority})
+	axios.patch(`/course-ajax/${courseId}/gallery-sort`, {imagesPriority})
 	.catch( err => {
 		console.log(err);
 		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
