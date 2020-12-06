@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DropPostsTable extends Migration
+class CreateOptionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ class DropPostsTable extends Migration
      */
     public function up()
     {
-
-        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        Schema::dropIfExists("posts");
-        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-
-
+        Schema::create('options', function (Blueprint $table) {
+            $table->id();
+			$table->string("name");
+			$table->string('slug')->nullable();
+            $table->longText("value")->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -28,6 +29,6 @@ class DropPostsTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('options');
     }
 }
