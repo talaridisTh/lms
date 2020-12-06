@@ -61,14 +61,6 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::post('/dashboard/store-pdf-material', 'MaterialController@storePDF');
 	Route::get('/dashboard/edit-pdf/{material}', 'MaterialController@editPDF');
 
-    //! Bundle Routes
-    Route::get('/dashboard/bundles', 'BundleController@index')->name('bundle.index');
-    Route::get('/dashboard/bundles/create', 'BundleController@create')->name('bundle.create');
-    Route::get('/dashboard/bundle/{bundle?}', 'BundleController@show')->name('bundle.show');
-    Route::post('/dashboard/bundle/store', 'BundleController@store')->name('bundle.store');
-    Route::patch('/dashboard/bundle/update/{bundle}', 'BundleController@update')->name('bundle.update');
-    Route::delete('/dashboard/bundle/{bundle}', 'BundleController@softDelete')->name('bundle.softDelete');
-
 	//! Newsletter Routes
 	Route::get('/dashboard/email', 'MailController@composeEmail');
 
@@ -141,22 +133,8 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
 //! Select2 Ajax Search
 	Route::get("courses/json-search", "Ajax\CourseController@courseSearch");
-
-//! Dashboard Ajax Bundles Datatables
-    Route::post('bundles/bundles-datatable', 'Ajax\BundleController@index');
-    Route::post('bundles/bundle-courses-datatable', 'Ajax\BundleController@show');
-    Route::post('bundles/bundle-users-datatable', 'Ajax\BundleController@bundleUsers');
-    Route::post('bundles/remaining-courses-datatable', 'Ajax\BundleController@remainingCourses');
-    Route::post('bundles/remaining-users-datatable', 'Ajax\BundleController@remainingUsers');
-//! Dashboard Ajax Bundles CRUD
-    Route::delete('bundles/destroy/{ids}', 'Ajax\BundleController@destroy');
-    Route::patch('bundles/status', 'Ajax\BundleController@toggleStatus');
-    Route::patch('bundles/add-courses', 'Ajax\BundleController@addCourses');
-    Route::patch('bundles/remove-courses', 'Ajax\BundleController@removeCourses');
-    Route::post('bundles/remove-users', 'Ajax\BundleController@removeUsers');
-    Route::post('bundles/add-users', 'Ajax\BundleController@addUsers');
-	Route::patch('bundle/{bundle}/toggle-editors', 'Ajax\BundleController@toggleEditors');
 	Route::get("bundles/json-search", "Ajax\BundleController@bundleSearch");
+
 //! Dashboard Ajax Materials Datatables
     Route::post('materials/materials-datatable', 'Ajax\MaterialController@index');
     Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");

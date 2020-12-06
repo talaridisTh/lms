@@ -113,7 +113,7 @@
 										</div>
 									</div>
 								</div>
-								<div id="gallery-content" data-model="App\Bundle" data-id={{ $bundle->id }}>
+								<div id="gallery-content" data-model="App\Models\Bundle" data-id={{ $bundle->id }}>
 									@include('components.admin.imageGallery', ['media' => $media])
 								</div>
 							</div>
@@ -237,21 +237,19 @@
 				<div id="settings" class="tab-pane show active">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
-							<form id="bundle-edit-form"
-								action="{{ isset($bundle) ? route('bundle.update', $bundle->slug) : "/dashboard/bundle/store" }}"
+							<form id="bundle-edit-form" action="{{ "/dashboard/bundles/$bundle->slug" }}"
 								method="POST" enctype="multipart/form-data" autocomplete="off">
+
 								@csrf
-								@if ( isset($bundle) )
-									@method('PATCH')
-								@endif
+
+								@method('PATCH')
+
 								<div class="row">
 							        <div class="col-xl-6">
 							            <div class="form-group">
 							                <label for="name">Τίτλος</label>
 											<input type="text" class="form-control @error('title') is-invalid @enderror"
-												id="name" name="title"
-												value="{{ old('title') != "" ? old('title') : ( isset($bundle) ? $bundle['title'] : "" ) }}"
-												placeholder="Εισάγετε τίτλο...">
+												id="name" name="title" value="{{ old('title', $bundle->title) }}" placeholder="Εισάγετε τίτλο...">
 											@error('title')
 												<span class="invalid-feedback" role="alert">
 												    <strong>{{ $message }}</strong>
@@ -266,10 +264,7 @@
 											    <div class="custom-file">
 													<input class="form-control @error('subtitle') is-invalid @enderror"
 														name="subtitle" id="subtitle-input" type="text" placeholder="Εισάγετε υπότιτλο..."
-														value="{{ old('subtitle') != "" ? old('subtitle')
-															: ( isset($bundle) ? $bundle['subtitle'] : "" )
-														}}"
-													>
+														value="{{ old('subtitle', $bundle->subtitle) }}">
 												</div>
 												@error('subtitle')
 													<span class="invalid-feedback d-block" role="alert">
@@ -296,9 +291,7 @@
 												</div>
 												<textarea class="form-control @error('summary') is-invalid @enderror"
 													id="summary" name="summary" rows="4" placeholder="Σύνοψη Bundle..."
-												>{{ old('summary') != "" ? old('summary')
-													: ( isset($bundle) ? $bundle['summary'] : "" )
-												}}</textarea>
+												>{{ old('summary', $bundle->summary) }}</textarea>
 												@error('summary')
                     							    <span class="invalid-feedback" role="alert">
                     							        <strong>{{ $message }}</strong>
@@ -322,9 +315,7 @@
 												</div>
 												<textarea class="form-control @error('description') is-invalid @enderror"
 													id="description" name="description" rows="4" placeholder="Περιγραφή Bundle..."
-												>{{ old('description') != "" ? old('description')
-													: ( isset($bundle) ? $bundle['description'] : "")
-												}}</textarea>
+												>{{ old('description', $bundle->description) }}</textarea>
 												@error('description')
                     							    <span class="invalid-feedback" role="alert">
                     							        <strong>{{ $message }}</strong>
@@ -420,18 +411,18 @@
 								</div>
 								<div class="card-body">
 									<img id="cover-image" src="{{ $bundle->cardMediumUrl() }}"
-										class="img-fluid{{ (isset($bundle) &&  is_null($bundle->cover)) ? " d-none" : "" }}"
+										class="img-fluid{{ is_null($bundle->cover) ? " d-none" : "" }}"
 										alt="Cover Image" />
-									<p id="cover-status" class="text-center{{ (isset($bundle) &&  !is_null($bundle->cover)) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
+									<p id="cover-status" class="text-center{{ !is_null($bundle->cover) ? " d-none" : "" }}"><strong>Δεν βρέθηκε εικόνα</strong></p>
 
 									<div class="form-row mt-2">
 										<div class="col-md-6 d-flex justify-content-center">
 											<button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
-												{{isset($bundle) && !is_null($bundle->cover) ?"Αλλαγή":"Προσθηκη"}}
+												{{ !is_null($bundle->cover) ?"Αλλαγή":"Προσθηκη" }}
 											</button>
 
 										</div>
-										<div class="{{ isset($bundle) && !is_null($bundle->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+										<div class="{{ !is_null($bundle->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
 											<button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
 												Αφαίρεση
 											</button>

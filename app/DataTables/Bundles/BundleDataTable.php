@@ -41,9 +41,9 @@ class BundleDataTable extends DataTable
 			})
 			->editColumn('title', function($data) {
 
-				return "<a href='/dashboard/bundle/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+				return "<a href='/dashboard/bundles/$data->slug/edit' class='h5 custom-link-primary'>$data->title</a>
 				<p class='mb-1'>$data->slug</p>
-				<a href='/dashboard/bundle/$data->slug' class='custom-link-primary'>Edit</a>
+				<a href='/dashboard/bundles/$data->slug/edit' class='custom-link-primary'>Edit</a>
 				<span class='mx-2'>|</span>
 				<a href='#' class='custom-link-primary'>View</a>";
 

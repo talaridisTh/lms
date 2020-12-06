@@ -86,9 +86,8 @@ class BundleController extends Controller
 		return $dataTable->render('bundle.CoursesDataTable');
 	}
 
-	public function addCourses(Request $request) {
+	public function addCourses(Request $request, Bundle $bundle) {
 
-		$bundle = Bundle::find( $request->bundleId );
 		$courseIds = $request->courseIds;
 
 		foreach ( $courseIds as $id ) {
@@ -100,9 +99,8 @@ class BundleController extends Controller
 
 	}
 
-	public function removeCourses( Request $request ) {
+	public function removeCourses(Request $request, Bundle $bundle) {
 
-		$bundle = Bundle::find( $request->bundleId );
 		$courseIds = $request->courseIds;
 
 		foreach ( $courseIds as $id ) {
@@ -125,9 +123,7 @@ class BundleController extends Controller
 
 	}
 	
-	public function removeUsers(Request $request) {
-
-		$bundle = Bundle::find( $request->bundleId );
+	public function removeUsers(Request $request,  Bundle $bundle) {
 
 		foreach( $request->users as $id ) {
 			$bundle->users()->detach( $id );
@@ -135,16 +131,13 @@ class BundleController extends Controller
 
 	}
 
-	public function addUsers(Request $request) {
+	public function addUsers(Request $request, Bundle $bundle) {
 
-		$bundle = Bundle::find( $request->bundleId );
 		$bundle->users()->sync( $request->users, false );
 
 	}
 
-	public function toggleStatus(Request $request)
-    {
-		$bundle = Bundle::find( $request->bundleId );
+	public function toggleStatus(Request $request, Bundle $bundle){
 
 		if ( !$bundle->publish_at && $request->status == 1 ) {
 			$bundle->publish_at = date("Y-m-d H:i:s");

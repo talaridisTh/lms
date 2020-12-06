@@ -45,9 +45,11 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
 		$this->mapWebRoutes();
+		// Course
 		$this->mapWebDashboardCourseRoutes();
+		// Bundle
+		$this->mapWebDashboardBundleRoutes();
 
-        //
     }
 
     /**
@@ -69,6 +71,13 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware(["web", "auth", "role:admin|super-admin"])
             // ->namespace($this->namespace)
             ->group(base_path('routes/dashboard/course/web.php'));
+	}
+	
+	protected function mapWebDashboardBundleRoutes()
+    {
+        Route::middleware(["web", "auth", "role:admin|super-admin"])
+            // ->namespace($this->namespace)
+            ->group(base_path('routes/dashboard/bundle/web.php'));
     }
 
     /**

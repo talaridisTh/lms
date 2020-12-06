@@ -32,7 +32,7 @@ $(".js-editors-toggle").on("change", function() {
 
 	let fields = JSON.stringify(field);
 
-	axios.patch(`/bundle/${bundleSlug}/toggle-editors`, {
+	axios.patch(`/bundle-ajax/${bundleId}/toggle-editors`, {
 		fields
 	})
 	.then( res => {
@@ -270,7 +270,7 @@ const bundleCoursesTable = $("#bundle-courses-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/bundles/bundle-courses-datatable",
+		url: "/bundle-datatables/bundle-courses",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: function( d ) {
@@ -429,7 +429,7 @@ const bundleUsersTable = $("#bundle-users-table").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/bundles/bundle-users-datatable",
+		url: "/bundle-datatables/bundle-users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -501,7 +501,7 @@ const remainingCoursesTable = $("#remaining-courses-table").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/bundles/remaining-courses-datatable",
+		url: "/bundle-datatables/courses",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -611,8 +611,7 @@ $("#add-courses-type-filter").on( "change", function() {
 
 
 function postCourseIds( courseIds ) {
-	axios.patch( "/bundles/add-courses", {
-		bundleId,
+	axios.patch( `/bundle-ajax/${bundleId}/add-courses`, {
 		courseIds
 	})
 	.then( (res) => {
@@ -631,8 +630,7 @@ function postCourseIds( courseIds ) {
 
 function removeCourses( courseIds ) {
 
-	axios.patch( "/bundles/remove-courses", {
-		bundleId,
+	axios.patch( `/bundle-ajax/${bundleId}/remove-courses`, {
 		courseIds
 	})
 	.then( (res) => {
@@ -652,8 +650,7 @@ function removeCourses( courseIds ) {
 }
 
 function removeUsers( users ) {
-	axios.post("/bundles/remove-users", {
-		bundleId,
+	axios.post(`/bundle-ajax/${bundleId}/remove-users`, {
 		users
 	})
 	.then( res => {
@@ -677,7 +674,7 @@ const remainingUsersTable = $("#remaining-users-table").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/bundles/remaining-users-datatable",
+		url: "/bundle-datatables/users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -729,8 +726,7 @@ function minorUsersCheckboxInit() {
 }
 
 function addUserBundle( users ) {
-	axios.post("/bundles/add-users", {
-		bundleId,
+	axios.post(`/bundle-ajax/${bundleId}/add-users`, {
 		users
 	})
 	.then( res => {
