@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\Ajax\CourseController as CourseAjaxController;
+use App\Http\Controllers\Ajax\SectionController as SectionAjaxController;
 
 //! Course CRUD
 Route::prefix("dashboard")->group(function () {
@@ -43,4 +44,12 @@ Route::prefix("course-ajax")->group(function() {
 	Route::patch('{course:id}/toggle-highlight', [CourseAjaxController::class, "toggleHighlight"]);
 	Route::post('{course:id}/gallery-upload', [CourseAjaxController::class, "galleryUpload"]);
 	Route::patch('{course:id}/gallery-sort', [CourseAjaxController::class, "gallerySort"]);
+});
+
+Route::prefix("section-ajax")->group(function() {
+	Route::post("remove-chapters", [SectionAjaxController::class, "removeChapters"]);
+    Route::patch("toggle-chapters", [SectionAjaxController::class, "toggleChapters"]);
+    Route::patch("toggle-hightlight/{material:id}", [SectionAjaxController::class, "toggleHighlight"]);
+    Route::patch("chapters-priority", [SectionAjaxController::class, "chaptersPriority"]);
+	Route::post("add-content", [SectionAjaxController::class, "addNewChapter"]);
 });

@@ -826,7 +826,7 @@ function chapterPriorityInit() {
 
 			let sectionId = this.dataset.sectionId;
 
-			axios.patch(`/section/chapters-priority`, {
+			axios.patch(`/section-ajax/chapters-priority`, {
 				courseId, sectionId,
 				materialId: this.dataset.materialId,
 				priority: {
@@ -866,7 +866,7 @@ function chapterStatusInit() {
 
 		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section/toggle-chapters`, {
+		axios.patch(`/section-ajax/toggle-chapters`, {
 			courseId, sectionId,
 			data: [{
 				id: this.dataset.materialId,
@@ -1437,7 +1437,7 @@ function sectionAdditionHandler() {
 	data.append("type", type);
 	data.append("priority", priority);
 
-	axios.post( "/section/add-content", data )
+	axios.post( "/section-ajax/add-content", data )
 		.then( res => {
 			let sectionsCnt = document.getElementsByClassName("accordion")[0];
 			sectionsCnt.innerHTML = res.data;
@@ -1606,7 +1606,7 @@ function activeMaterialsCheckboxHandler() {
 
 function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section/toggle-chapters`, {
+	axios.patch(`/section-ajax/toggle-chapters`, {
 		courseId, sectionId, data
 	})
 	.then( res => {
@@ -1644,7 +1644,7 @@ function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
 
 function removeChapters(sectionId, chapterIds) {
 
-	axios.post(`/section/remove-chapters`, {
+	axios.post(`/section-ajax/remove-chapters`, {
 		courseId, sectionId, chapterIds
 	})
 	.then( res => {
@@ -1798,7 +1798,7 @@ function toggleHighlight(materialIds, status) {
 
 function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
-	axios.patch(`/section/toggle-hightlight/${sectionId}`, {materialIds, status})
+	axios.patch(`/section-ajax/toggle-hightlight/${sectionId}`, {materialIds, status})
 	.then( res => {
 		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
