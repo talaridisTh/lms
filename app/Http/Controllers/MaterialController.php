@@ -68,10 +68,10 @@ class MaterialController extends Controller {
 
 			$course = $this->storeExtraContent($request, $material);
 
-			return redirect("/dashboard/course/$course->slug");
+			return redirect("/dashboard/courses/$course->slug/edit");
 		}
 
-        return redirect( route("material.show",$material->slug) );
+        return redirect( "/dashboard/materials/$material->slug/edit" );
 
 	}
 
@@ -120,7 +120,7 @@ class MaterialController extends Controller {
 
 			$course = $this->storeExtraContent($request, $material);
 
-			return redirect("/dashboard/course/$course->slug");
+			return redirect("/dashboard/courses/$course->slug/edit");
 		}
 
 		$data = [
@@ -133,7 +133,7 @@ class MaterialController extends Controller {
 		return view("admin/materials/pdfMaterial")->with($data);
 	}
 
-    public function show(Material $material = null)
+    public function edit(Material $material)
     {
 		$types = [
 			"Lesson" => "Μάθημα",
@@ -145,13 +145,13 @@ class MaterialController extends Controller {
 		$data = [
 			"topics" => Topic::all(),
 			"instructors" => Role::find(2)->users,
-			"activeInstructors" => $material ? $material->users()->pluck("users.id")->toArray() : null,
+			"activeInstructors" => $material->users()->pluck("users.id")->toArray(),
 			"material" => $material,
 			"types" => $types,
 			"media" => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-			"gallery" => $material ? $material->media()->wherePivot("usage", "!=", 3)->orderBy("priority")->get() : null,
-			"files" => $material ? $material->media()->where("type", 1)->get() : null,
-			"fields" => $material?json_decode($material->fields): null
+			"gallery" => $material->media()->wherePivot("usage", "!=", 3)->orderBy("priority")->get(),
+			"files" => $material->media()->where("type", 1)->get(),
+			"fields" => json_decode($material->fields)
 		];
 
         return view('admin.materials.material')->with($data);

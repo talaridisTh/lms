@@ -20,23 +20,17 @@ class MaterialsDataTable extends DataTable {
      */
     public function dataTable($query)
     {
+        if (!request()->from_date && !request()->to_date) {
 
-
-
-            if (!request()->from_date && !request()->to_date)
-            {
-
-                $data = Material::where("type", "!=", "Section")->with("courses")->get();
-            } else
-            {
-                $data = Material::where(function ($subquery) {
-
-					$subquery->where("type", "!=", "Section")
-						->whereBetween('created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
-						->get();
-				})->get();
-            }
-        // }
+            $data = Material::where("type", "!=", "Section")->with("courses")->get();
+		}
+		else {
+            $data = Material::where(function ($subquery) {
+				$subquery->where("type", "!=", "Section")
+					->whereBetween('created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
+					->get();
+			})->get();
+        }
 
         return DataTables::of($data)
             ->addColumn('action', function ($data) {
@@ -57,16 +51,16 @@ class MaterialsDataTable extends DataTable {
             ->editColumn('title', function ($data) {
 
 				if ( $data->type === "PDF" ) {
-					return "<a href='/dashboard/edit-pdf/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+					return "<a href='/dashboard/pdf/$data->slug/edit' class='h5 custom-link-primary'>$data->title</a>
 							<p class='mb-1'>$data->slug</p>
-							<a href='/dashboard/edit-pdf/$data->slug' class='custom-link-primary'>Edit</a>
+							<a href='/dashboard/pdf/$data->slug/edit' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
 							<a href='#' class='custom-link-primary'>View</a>";
 				}
 
-                return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+                return "<a href='/dashboard/materials/$data->slug/edit' class='h5 custom-link-primary'>$data->title</a>
 						<p class='mb-1'>$data->slug</p>
-						<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
+						<a href='/dashboard/materials/$data->slug/edit' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
 						<a href='#' class='custom-link-primary'>View</a>";
             })

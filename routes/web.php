@@ -50,16 +50,6 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
     Route::patch('/dashboard/users/update/{user}', 'UserController@update')->name('user.update');
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
-    //! Material Routes
-    Route::get('/dashboard/materials', 'MaterialController@index')->name('material.index');
-    Route::get('/dashboard/materials/create/{course?}/{priority?}/{material:id?}', 'MaterialController@create');
-    Route::get('/dashboard/material/{material?}', 'MaterialController@show')->name('material.show');
-    Route::post('/dashboard/materials/store', 'MaterialController@store')->name('material.store');
-    Route::patch('/dashboard/materials/update/{material:slug}', 'MaterialController@update')->name('material.update');
-    Route::delete('/dashboard/materials/delete/{material}', 'MaterialController@destroy')->name('material.destroy');
-	Route::get('/dashboard/create-pdf/{course?}/{priority?}/{material?}', 'MaterialController@createPDF');
-	Route::post('/dashboard/store-pdf-material', 'MaterialController@storePDF');
-	Route::get('/dashboard/edit-pdf/{material}', 'MaterialController@editPDF');
 
 	//! Newsletter Routes
 	Route::get('/dashboard/email', 'MailController@composeEmail');
@@ -136,18 +126,20 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	Route::get("bundles/json-search", "Ajax\BundleController@bundleSearch");
 
 //! Dashboard Ajax Materials Datatables
-    Route::post('materials/materials-datatable', 'Ajax\MaterialController@index');
-    Route::post('materials/materials-course-datatable', 'Ajax\MaterialController@indexCourse')->name("material-courses-datatable");
-    Route::post('materials/add-course-inside-material', 'Ajax\MaterialController@addCourseMaterial')->name("add-course-material-datatable");
     Route::post('materials/remaining-pdf-files', 'Ajax\MaterialController@remainingPDFFiles');
 
-//! Dashboard Ajax Bundles CRUD
+	//? courses
     Route::post('materials/material-types', 'Ajax\MaterialController@materialTypes');
-    Route::post('materials/add-additionnal-content', 'Ajax\MaterialController@addContent');
-    Route::delete('/materials/multiple/delete', 'Ajax\MaterialController@destroyMultipleMaterials')->name("destroyMultipleMaterials.datatable");
-    Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMaterialMultiple')->name("addMaterialMultiple.datatable");
-    Route::patch('/materials/multiple/changeStatus', 'Ajax\MaterialController@changeStatusMultiple')->name("changeStatusMultipleMaterial.datatable");;
-    Route::patch('materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive');
+	Route::post('materials/add-additionnal-content', 'Ajax\MaterialController@addContent');
+	
+	//? fail
+    // Route::delete('/materials/multiple/delete', 'Ajax\MaterialController@destroyMultipleMaterials')->name("destroyMultipleMaterials.datatable");
+	Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMaterialMultiple')->name("addMaterialMultiple.datatable");
+    // Route::patch('/materials/multiple/changeStatus', 'Ajax\MaterialController@changeStatusMultiple')->name("changeStatusMultipleMaterial.datatable");;
+	
+
+	Route::patch('materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive');
+
 //! Dashboard Ajax Materials CRUD
     Route::patch('materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus');
     Route::delete('/materials/multiple/course/delete', 'Ajax\MaterialController@destroyMultipleCourse')->name("destroyMultipleCourse.datatable");
@@ -158,13 +150,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
     Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
 	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
-	
-    // Route::post("section/remove-chapters", "Ajax\MaterialController@removeChapters");
-    // Route::patch("section/toggle-chapters", "Ajax\MaterialController@toggleChapters");
-    // Route::patch("section/toggle-hightlight/{material:id}", "Ajax\MaterialController@toggleHighlight");
-    // Route::patch("section/chapters-priority", "Ajax\MaterialController@chaptersPriority");
-	// Route::post("section/add-content", "Ajax\MaterialController@addSectionContent");
-	
+		
     Route::patch('material/{material:id}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
     Route::patch('material/{material:id}/change-pdf', 'Ajax\MaterialController@changePDF');
 

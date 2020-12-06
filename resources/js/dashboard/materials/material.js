@@ -138,8 +138,8 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: config.routes.materialCoursesDatatable,
-        headers: config.headers.csrf,
+        url: "/material-datatables/material-courses",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
         data: {
             materialId
@@ -171,8 +171,8 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: '/materials/add-course-inside-material',
-        headers: config.headers.csrf,
+        url: '/material-datatables/courses',
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
         data: {
             materialId

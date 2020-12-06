@@ -55,7 +55,7 @@ $("#section-new-pdf-material").on("click", function() {
 	const sectionSlug = modal.dataset.sectionSlug;
 	const priority = modal.dataset.priority;
 
-	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}/${sectionSlug}`;
+	window.location = `/dashboard/pdf/create/${courseSlug}/${priority}/${sectionSlug}`;
 })
 
 $("#section-chapter-btn").on("click", function() {
@@ -219,7 +219,7 @@ $("#add-new-material-btn").on("click", function() {
 $("#add-new-pdf-material-main").on("click", function() {
 	const priority = $("#store-material-priority").val();
 	
-	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}`;
+	window.location = `/dashboard/pdf/create/${courseSlug}/${priority}`;
 })
 
 $("#change-cover-btn").on("click", function() {

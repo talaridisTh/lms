@@ -36,13 +36,13 @@ class MaterialController extends Controller {
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-    public function indexCourse(MaterialCoursesDataTable $dataTable)
+    public function materialCourses(MaterialCoursesDataTable $dataTable)
     {
 
         return $dataTable->render('materials-course.index');
     }
 
-    public function addCourseMaterial(CoursesDataTable $dataTable)
+    public function coursesDatatable(CoursesDataTable $dataTable)
     {
         return $dataTable->render('add-course-material');
 	}
