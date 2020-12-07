@@ -55,6 +55,11 @@ Route::get("/set-polymorphic", function() {
 			"watchlistable_type" => "App\Models\Course"
 		]);
 
+	DB::table('activity_log')
+		->update([
+			'causer_type' => "App\Models\User",
+		]);
+
 });
 
 
