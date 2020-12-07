@@ -531,7 +531,7 @@
 										</span>
 									@enderror
 								</div>
-								<textarea id="script-area" name="script" hidden>{{ $course->script }}</textarea>
+								<textarea id="script-area" name="script" hidden>{{ old("script", $course->script) }}</textarea>
 							</form>
 
 							<label>Script</label>

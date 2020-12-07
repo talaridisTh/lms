@@ -4,7 +4,20 @@
 
         {{-- <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" /> --}}
 
-
+	<style>
+		.CodeMirror {
+			border: 1px solid #47515d;
+			border-radius: 4px;
+			height: auto !important;
+			min-height: 300px !important;
+		}
+	  
+		.CodeMirror-scroll {
+			min-height: 300px !important;
+			overflow-y: auto;
+			overflow-x: auto;
+		}
+	</style>
 @endsection
 
 @section('content')
@@ -225,7 +238,11 @@
                                     placeholder="Εισάγετε περιεχόμενο...">{{ old('content') }}</textarea>
                             </div>
 
-                        </form>
+							<textarea id="script-area" name="script" hidden>{{ old("script") }}</textarea>
+						</form>
+						
+						<label>Script</label>
+						<div id="editor"></div>
 
                     </div><!-- ./form inputs -->
 
