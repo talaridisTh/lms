@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Option;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +18,33 @@ use Illuminate\Support\Facades\DB;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get("/find-user/{search}", function($search) {
+	$user = User::where("first_name", "LIKE", "%$search%")
+		->orWhere("last_name", "LIKE", "%$search%")->with("roles")->first();
+
+	return $user;
+});
+
+
+Route::get("/set-carousels", function() {
+	$option = Option::where("name", "Index Carousels")->first();
+
+	$option->value = json_encode([
+			"primary" => [
+				"models" => [],
+				"status" => 0
+			],
+			"secondary" => [
+				"models" => [],
+				"status" => 0
+			]
+		]);
+
+	$option->save();
+});
+
+
 Auth::routes();
 //!########################################################
 //! 404
