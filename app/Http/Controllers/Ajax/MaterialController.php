@@ -114,7 +114,7 @@ class MaterialController extends Controller {
 			->attach($material->id, [
 				"status" => $request->status,
 				"priority" => $request->priority + 1,
-				"publish_at" => $publish
+				"publish_at" => $request->status == 1 ? $publish : null
 			]);
 
 		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();

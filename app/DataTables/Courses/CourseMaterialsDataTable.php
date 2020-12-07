@@ -10,7 +10,7 @@ use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Carbon;
 
 class CourseMaterialsDataTable extends DataTable
 {
@@ -23,7 +23,7 @@ class CourseMaterialsDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 		if ( is_null($request->startDate) && is_null($request->endDate) ) {
-			$query = Course::find( $request->courseId )->materials()->get();
+			$query = Course::find( $request->courseId )->materials;
 		}
 		else {
 			$query = Course::find( $request->courseId )
@@ -58,7 +58,7 @@ class CourseMaterialsDataTable extends DataTable
 
 				if ($data->type === "PDF") {
 					return "<a href='/dashboard/pdf/$data->slug/edit' class='h5 custom-link-primary'>$data->title </a>$badge
-							<p class='mb-1'>$data->type</p>
+							<p class='mb-1'>$data->slug</p>
 							<a href='/dashboard/pdf/$data->slug/edit' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
 							<a href='#' class='custom-link-primary'>View</a>
@@ -70,7 +70,7 @@ class CourseMaterialsDataTable extends DataTable
 				else if ($data->type != "Section") {
 
 					return "<a href='/dashboard/materials/$data->slug/edit' class='h5 custom-link-primary mb-0'>$data->title </a>$badge
-							<p class='my-1'>$data->type</p>
+							<p class='my-1'>$data->slug</p>
 							<a href='/dashboard/materials/$data->slug/edit' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
 							<a href='#' class='custom-link-primary'>View</a>
@@ -126,15 +126,31 @@ class CourseMaterialsDataTable extends DataTable
 			->editColumn('type', function($data) {
 				return "<p class='mb-1'>$data->type</p>";
 			})
-			->addColumn("btns", function($data) {
+			->editColumn('publish', function ($data) {
 
-				return "<i class='js-remove-material h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer'
-					data-material-id='$data->id' data-material-type='$data->type'></i>";
+				if ( $data->pivot->status == 1 ) {
+					if ( time() > strtotime($data->pivot->publish_at) && !is_null($data->pivot->publish_at) ) {
+						$status = ["icon" => "badge-outline-success", "text" => "Published"];
+					}
+					else {
+						$status = ["icon" => "custom-pill-primary badge-outline-primary", "text" => "Scheduled"];
+					}
+				}
+				else {
+					$status = ["icon" => "badge-outline-danger", "text" => "Draft"];
+				}
+
+				// dump($data->pivot->publish_at);
+				$date = !is_null($data->pivot->publish_at) ? Carbon::parse($data->pivot->publish_at)->format("d-m-Y") : "";
+				$time = !is_null($data->pivot->publish_at) ? Carbon::parse($data->pivot->publish_at)->format("H:i") : "";
+
+				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+				<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
 			})
 			->rawColumns(
 				[
 					'action', 'title', 'status', 'priority', 'highlight',
-					'type', 'updated_at', 'created_at', 'btns'
+					'type', 'publish'
 				]
 			)
 			->setRowClass(function ($data) {

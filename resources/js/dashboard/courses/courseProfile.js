@@ -32,6 +32,8 @@ const beautify_html = require('js-beautify').html
 //! 			EventListerners				#
 //!##########################################
 
+utilities.toastAlert("info", "Publish is under development...")
+
 $("#new-content-btn").on("click", function() {
 	const rows = $("#course-materials-list > tbody > tr");
 	const firstRowPriority = rows[0].dataset.priority;
@@ -472,6 +474,13 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 	order: [4, "asc"],
 	processing: true,
 	serverSide: true,
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 0, width: "60px"},
+		{ targets: 3, width: "125px"},
+		{ targets: [2, 4], width: "115px"},
+		{ targets: [5, 6], width: "100px"},
+	],
 	ajax: {
 		url: "/course-datatables/course-materials",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -483,41 +492,29 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 				endDate: endDate( $("#course-material-date-range")[0] )
 			})
 		}
-
 	},
 	columns: [
 		{ data: 'action', className: "position-relative text-center align-middle", orderable: false },
 		{ data: 'title', name: 'title' },
 		{ data: 'highlight', name: 'pivot.highlight', className: "text-center align-middle", },
 		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
-		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
-		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle", visible: false},
-		{
-			data: 'updated_at',name: 'updated_at',
-			className: "cursor-default text-center align-middle", searchable: false,
-			render: function(data) {
-				let date = new Date(data);
-				let day = date.toLocaleDateString().replace( /[/]/g, "-");
-				let hours = `${date.getHours()}`.padStart(2, "0");
-				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+		{ data: 'priority', name: 'pivot.priority', className: "align-middle", searchable: false },
+		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
+		{ data: 'publish', name: "pivot.publish_at", className: "align-middle text-center cursor-default", searchable: false, orderable: false },
+		// {
+		// 	data: 'pivot.publish_at', name: 'pivot.publish_at',
+		// 	className: "cursor-default text-center align-middle w-165px", searchable: false,
+		// 	render: function(data) {
+		// 		console.log(data);
+		// 		let date = new Date(data);
+		// 		let day = date.toLocaleDateString().replace( /[/]/g, "-");
+		// 		let hours = `${date.getHours()}`.padStart(2, "0");
+		// 		let minutes = `${date.getMinutes()}`.padStart(2, "0");
 
-				let time = `${hours}:${minutes}`;
-				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
-			}
-		},
-		{
-			data: 'created_at', name: 'created_at',
-			className: "cursor-default text-center align-middle", searchable: false,
-			render: function(data) {
-				let date = new Date(data);
-				let day = date.toLocaleDateString().replace( /[/]/g, "-");
-				let hours = `${date.getHours()}`.padStart(2, "0");
-				let minutes = `${date.getMinutes()}`.padStart(2, "0");
-
-				let time = `${hours}:${minutes}`;
-				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
-			}
-		},
+		// 		let time = `${hours}:${minutes}`;
+		// 		return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+		// 	}
+		// },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -1934,6 +1931,7 @@ $(".js-material").on( "click", function() {
 	let statusElm = newRow.getElementsByClassName("js-state")[0];
 	$(statusElm).select2({
 		minimumResultsForSearch: -1,
+		width: "100%"
 	});
 
 	$('#add-additions-modal').modal('hide')
@@ -1958,7 +1956,7 @@ function findMaterialRow(rows, id = false) {
 
 function linkForm( type, priority) {
 
-	return `<td id="add-content-row" class="px-0 text-left" colspan="9">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="7">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο ${ type }</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
@@ -2002,7 +2000,7 @@ function linkForm( type, priority) {
 
 function annoucementForm( priority ) {
 
-	return `<td id="add-content-row" class="px-0 text-left" colspan="9">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="7">
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέα Ανακοίνωση</h3>
 		<form id="additional-content-form">
 			<div class="form-row">
@@ -2041,7 +2039,7 @@ function annoucementForm( priority ) {
 
 function sectionForm(priority) {
 
-	return `<td id="add-content-row" class="px-0 text-left" colspan="9">
+	return `<td id="add-content-row" class="px-0 text-left" colspan="7">
 
 		<h3 class="text-center font-20 line-height-05 b-block mb-3 underline">Νέο Section</h3>
 		<form id="additional-content-form">

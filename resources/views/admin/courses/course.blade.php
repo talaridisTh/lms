@@ -767,7 +767,7 @@
 					</div>
 
 					<table id="course-materials-list" data-course-id="{{ $course->id }}" data-course-slug="{{ $course->slug }}"
-						class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
+						class="table w-100 nowrap js-remove-table-classes js-table">
 						<thead>
 							<tr>
 								<th class="text-center">
@@ -781,8 +781,9 @@
 								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>
-								<th class="text-center">Τελ. Ανανέωση</th>
-								<th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center">Publish</th>
+								{{-- <th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center">Ημ. Δημιουργίας</th> --}}
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -794,8 +795,9 @@
 								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>
-								<th class="text-center">Τελ. Ανανέωση</th>
-								<th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center">Publish</th>
+								{{-- <th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center">Ημ. Δημιουργίας</th> --}}
 							</tr>
 						</tfoot>
 					</table>
