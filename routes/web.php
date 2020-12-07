@@ -28,11 +28,9 @@ Route::get('/clear', function () {
 
     return redirect(route("home"));
 });
-Route::get("/delete/all-post",function (){
-    dump( [App\Post::all(),\App\Comment::all()]);
-    DB::table("posts")->delete();
+Route::post("/test/upload",function (Request  $request){
 
-    dump( [App\Post::all(),\App\Comment::all()]);
+    dd($request->files, $request->all());
 });
 Route::get("/test", "Index\HomeController@test")->name("user.test");
 //!########################################################

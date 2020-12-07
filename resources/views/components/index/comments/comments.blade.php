@@ -98,8 +98,7 @@
                                                class="{{$isBestAnswerBtn}} js-best-answer is-active-best cursor-pointer font-20 mt-2 ml-3 text-info mdi mdi-alpha-b-circle"></i>
                                         @endif
                                         <a href="#"
-                                           class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
-                                            Answer</a>
+                                           class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best Answer</a>
 
                                     </div>
                                     @if($rep1->user_id == auth()->id())

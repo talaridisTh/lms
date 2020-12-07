@@ -15,14 +15,16 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('postable_id');
+            $table->string('postable_type', 50);
+            $table->foreignId('user_id')->references('id')->on('users');
             $table->string("title");
             $table->string("slug");
-            $table->text("body");
             $table->boolean("watched")->default(0);
+            $table->boolean("followed")->default(0);
             $table->boolean("closed")->default(0);
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->foreignId('course_id')->references('id')->on('courses');
             $table->timestamps();
+
         });
 
 

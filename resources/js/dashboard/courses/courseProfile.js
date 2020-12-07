@@ -74,7 +74,7 @@ $(".js-section-material").on("click", function() {
 	const sectionId = modal.dataset.sectionId;
 	const priority = modal.dataset.priority;
 	const type = this.dataset.type;
-	
+
 	const row = $(`table[data-section-id='${sectionId}'] > tbody > tr[data-priority='${priority}']`)[0];
 	const newRow = createTableRow(type, priority);
 
@@ -218,7 +218,7 @@ $("#add-new-material-btn").on("click", function() {
 
 $("#add-new-pdf-material-main").on("click", function() {
 	const priority = $("#store-material-priority").val();
-	
+
 	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}`;
 })
 
@@ -1487,7 +1487,7 @@ function sectionAdditionHandler() {
 			}
 			else if ( err.response.status === 422 && typeof err.response.data.errors.title !== "undefined" ) {
 				additionsErrorMessage(err.response.data.errors.title[0])
-				
+
 				return;
 			}
 
@@ -1967,7 +1967,7 @@ function findMaterialRow(rows, id = false) {
 		rowId = rows[i].dataset.materialId;
 
 		if ( id == rowId ) {
-			
+
 			return rows[i];
 		}
 	}
@@ -2173,7 +2173,7 @@ function addContent() {
 			}
 			else if ( err.response.status === 422 && typeof err.response.data.errors.title !== "undefined" ) {
 				additionsErrorMessage(err.response.data.errors.title[0])
-				
+
 				return;
 			}
 
@@ -2515,7 +2515,7 @@ const pond = FilePond.create( dropzone, {
 
 	},
 	onprocessfile: function (error, data) {
-		
+
 		if ( pond.status === 2 ) {
 
 			clearTimeout(timer);
@@ -2541,9 +2541,9 @@ const pond = FilePond.create( dropzone, {
 
 			timer = setTimeout(function() {
 				pond.removeFile(files[i]);
-				
+
 			}, ( i + 1 ) * 500);
-			
+
 		}
 
 	},
@@ -2604,7 +2604,7 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 			$("#files-cnt").removeClass("d-none");
 			$("#active-files-loading").addClass("d-none");
 		}
-		
+
 	},
 	onprocessfileabort: function() {
 		$("#files-cnt").removeClass("d-none");
@@ -2618,9 +2618,9 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 
 			timer = setTimeout(function() {
 				courseFilePond.removeFile(files[i]);
-				
+
 			}, ( i + 1 ) * 500);
-			
+
 		}
 
 		$("#files-cnt").removeClass("d-none");
@@ -2629,7 +2629,7 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 	},
     acceptedFileTypes: utilities.ALLOWEDTYPES,
 	fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
-		
+
 		// Do custom type detection here and return with promise
 		const extension = source.name.split(".").pop();
 
@@ -2693,7 +2693,7 @@ const myCodeMirror = CodeMirror(editor, {
 
 $("#edit-course-form").on("submit", function(event) {
 	event.preventDefault();
-	
+
 	const scriptValue = myCodeMirror.getValue();
 	scriptArea.value = scriptValue;
 

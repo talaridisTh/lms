@@ -287,10 +287,10 @@ else{
                                 <div class="d-flex flex-wrap ">
                                     @foreach($materials->media->where("type","!=",1) as $media)
 
-                                        <a href="{{$media->rel_path}} "data-lightbox="image-1" >
-                                        <img class="d-block m-1"
-                                             src="{{$media->roundedMediumCoverUrl("rel_path")}}"
-                                             alt="First slide">
+                                        <a href="{{$media->rel_path}} " data-lightbox="image-1">
+                                            <img class="d-block m-1"
+                                                 src="{{$media->roundedMediumCoverUrl("rel_path")}}"
+                                                 alt="First slide">
                                         </a>
 
                                     @endforeach
@@ -475,6 +475,7 @@ else{
 
     </section>
 
+    @include("components.index.comments.comments-form")
 @endsection
 
 @section("script")

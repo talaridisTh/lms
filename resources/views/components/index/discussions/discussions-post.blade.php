@@ -142,7 +142,7 @@
 
                             </div>
                             <p class="font-12">{{$comment->created_at->diffForHumans()}}</p>
-                            <p class="p-3">{!!  $comment->body!!}</p>
+                            <pre style="font-family:'Open Sans'"class="font-16 p-3">{!!  $comment->body!!}</pre>
                             <hr>
                             <div class="post-buttons d-flex font-18 justify-content-between mb-2">
                                 <div class="d-flex">
@@ -209,7 +209,7 @@
 
                                 </div>
                                 <p class="font-12">{{$rep1->created_at->diffForHumans()}}</p>
-                                <p class="p-3">{!!  $rep1->body!!}</p>
+                                <pre style="font-family:'Open Sans'"class="font-16 p-3">{!!  $rep1->body!!}</pre>
                                 <hr>
                                 <div class="post-buttons d-flex font-18  mb-2">
                                     <i data-comment-id="{{$rep1->id}}"

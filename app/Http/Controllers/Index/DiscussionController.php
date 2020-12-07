@@ -253,7 +253,7 @@ class DiscussionController extends Controller {
     public function best($commentId, Request $request)
     {
         $best = Comment::findOrFail($commentId)->best;
-        Comment::where("post_id", $request->postId)->update(["best" => 0]);
+        Comment::where("post_id", $request->model)->update(["best" => 0]);
         Comment::findOrFail($commentId)->update(["best" => !$best]);
     }
 

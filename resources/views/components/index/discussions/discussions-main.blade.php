@@ -73,7 +73,7 @@
             </li>
 
         @empty
-            <h3>Δεν υπάρχουν σχετικές συνομιλίες <span class="text-info cursor-pointer text-hover-underline" data-toggle="modal" data-target="#new-threads">δημιουργούσε μια!</span></h3>
+            <h3>Δεν υπάρχουν σχετικές συνομιλίες</h3>
         @endforelse
         {{ $posts->render() }}
 

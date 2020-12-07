@@ -1,9 +1,24 @@
 import utilities from '../../index/main';
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
+
 require('../../../../node_modules/lightbox2/dist/js/lightbox');
 
 utilities.addWhatchlist()
+
+
+
+
+
+// commentsFilePond.on('processfile', (error, file) => {
+//         const image = new Image();
+//     image.src = URL.createObjectURL(file);
+//     image.classList.add("m-2")
+//     $(".image-preview-filepond").append(image);
+// });
+
+// Select the file input and use
+// create() to turn it into a pond
 
 
 if ($('meta[name=route]').attr('content') == "index.userCourse") {
@@ -259,18 +274,18 @@ $(".template-prevent").on("click", async function (e) {
     try {
         const {data, status} = await axios.get(this.href)
 
-if (status==200) {
-    templateHandler(data, this);
-    onFullScreen();
-    onCloseFullScreen();
-    onPreviewMaterial();
-    onInitEventHandler();
+        if (status == 200) {
+            templateHandler(data, this);
+            onFullScreen();
+            onCloseFullScreen();
+            onPreviewMaterial();
+            onInitEventHandler();
 
-    let href = $(".nav-tabs").children().first().find("a").attr( "href").substring(1);
+            let href = $(".nav-tabs").children().first().find("a").attr("href").substring(1);
 
-    $(".nav-tabs").children().first().find("a").addClass("active")
-    $(".tab-content").find(`#${href}`).addClass("active");
-}
+            $(".nav-tabs").children().first().find("a").addClass("active")
+            $(".tab-content").find(`#${href}`).addClass("active");
+        }
 
     } catch (e) {
         console.log(e)
@@ -290,13 +305,13 @@ const templateHandler = (data, that) => {
                 </div>
             `
 
-    $( ".material-cnt" ).prepend( "<nav aria-label='breadcrumb'>\n" +
+    $(".material-cnt").prepend("<nav aria-label='breadcrumb'>\n" +
         "    <ol class='breadcrumb mb-0'>\n" +
         "        <li class='breadcrumb-item'><a href='#'>course</a></li>\n" +
-        "<span class=\"mx-1 font-16\">/</span>"+
+        "<span class=\"mx-1 font-16\">/</span>" +
         "        <li class='breadcrumb-item active' aria-current='page'>photoshop</li>\n" +
         "    </ol>\n" +
-        "</nav>" );
+        "</nav>");
 
 
 }
@@ -366,7 +381,6 @@ const onCloseFullScreen = () => {
 }
 
 
-
 $(".js-form-reply").on("click", async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
@@ -379,8 +393,8 @@ $(".js-form-reply").on("click", async function (e) {
 
         }
         return
-    }else{
-        body =  `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
+    } else {
+        body = `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
 
 
     }
@@ -436,6 +450,7 @@ const onCommentReplayBtnEvent = () => {
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
 
+
         $("#new-reply").find(".replay-name").text(`@${author}`);
         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
         $(".js-form-reply")[0].dataset.parent = parentId
@@ -453,7 +468,6 @@ const onSubCommentReplayBtnEvent = () => {
         $(".js-form-reply")[0].dataset.parent = parentId
     })
 }
-
 
 
 const onDeleteComment = () => {
@@ -481,7 +495,7 @@ const onDeleteComment = () => {
 }
 
 const onLikebtn = () => {
-    $(".template-cnt").on("click", ".btn-reply-like", async function () {
+    $(".cnt-list-content").on("click", ".btn-reply-like", async function () {
         try {
             const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
 
@@ -505,12 +519,62 @@ const onLikebtn = () => {
     })
 }
 
-const onInitEventHandler = ()=>{
+const bestAnswer = () => {
+    $(".cnt-list-content").on("click", ".js-best-answer", async function () {
+        $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
+
+        $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
+
+
+        if ($(this).hasClass("is-active-best")) {
+
+            $(this).closest(".main-post").addClass("best-answer-cnt")
+
+            $(this).removeClass("is-active-best text-info").addClass("text-success")
+
+            $(this).parent().append('<a href="#" class="ml-3 mt-2 badge badge-success badge-best font-14">Best Answer</a>\n');
+        } else {
+
+            $(this).closest(".main-post").removeClass("best-answer-cnt")
+
+            $(this).removeClass("text-success").addClass("is-active-best text-info")
+
+            $(this).parent().find(".badge-best").remove()
+
+        }
+
+        $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
+
+
+        let commentId = $(this).closest(".main-post").data("threadId")
+        let model = $(".hidden-post").data("model-info").id;
+
+        try {
+
+            const {data, status} = await axios.patch(`/discussion/best/${commentId}`, {
+                model
+            })
+
+            if (status == 200) {
+
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    })
+
+
+}
+
+const onInitEventHandler = () => {
     onDeleteComment();
     onLikebtn();
     onFirstReplayBtnEvent()
     onCommentReplayBtnEvent()
     onSubCommentReplayBtnEvent();
+    bestAnswer();
 }
 onInitEventHandler();
 

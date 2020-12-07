@@ -128,6 +128,7 @@
                                  "fields"=>json_decode($course->fields)->description ])
                         </div>
 
+                        @include("components.index.comments.comments-main",["model"=>$course,"namespace"=>"App\Course"])
                     </div>
                 </div>
 
@@ -362,6 +363,7 @@
 
     </div>
 
+    @include("components.index.comments.comments-form")
 @endsection
 
 

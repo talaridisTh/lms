@@ -44,6 +44,7 @@ const eventTopBar  = () =>{
 
     })
 
+//todo den doulevi
     $(".discussions-right").on("change", ".filter-course", async function () {
 
         let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
@@ -123,7 +124,6 @@ const axiosUpdateMain = (that, data) => {
     onChangeFirstButtonReplay()
     $(".first-thread").hide();
 }
-
 
 // submit create form
 $(".js-form-create").on("click",async function (e) {
@@ -210,7 +210,6 @@ $(".js-form-reply").on("click", async function (e) {
 })
 
 // show post
-
 $(document).on("click", '.js-thread-title', async function () {
     let postId = this.closest(".single-thread").dataset.postId
     try {

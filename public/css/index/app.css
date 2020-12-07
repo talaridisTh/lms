@@ -51361,3 +51361,9 @@ img.scale {
   font-family: "Material Design Icons";
 }
 
+.custom-file-upload {
+  height: 0;
+  overflow: hidden;
+  width: 0;
+}
+
