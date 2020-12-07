@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Course;
 use App\Http\Controllers\Controller;
-use App\Material;
-use App\Option;
-use App\Role;
-use App\Topic;
-use App\User;
-use App\Utility;
+use App\Models\Course;
+use App\Models\Material;
+use App\Models\Option;
+use App\Models\Role;
+use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Schema;
 

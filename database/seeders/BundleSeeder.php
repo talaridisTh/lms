@@ -1,6 +1,6 @@
 <?php
 
-use App\Bundle;
+use App\Models\Bundle;
 use Illuminate\Database\Seeder;
 
 class BundleSeeder extends Seeder

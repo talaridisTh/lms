@@ -1,7 +1,7 @@
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
-const namespace = "App\\Course";
+const namespace = "App\\Models\\Course";
 const courseSlug = $("#course-materials-list")[0].dataset.courseSlug
 const baseUrl = window.location.origin;
 
@@ -23,7 +23,7 @@ import CodeMirror from "codemirror/lib/codemirror";
 require("codemirror/mode/htmlmixed/htmlmixed");
 require("codemirror/addon/display/autorefresh");
 import "codemirror/lib/codemirror.css";
-import "codemirror/theme/night.css";
+import "codemirror/theme/shadowfox.css";
 
 const beautify_html = require('js-beautify').html
 
@@ -55,7 +55,7 @@ $("#section-new-pdf-material").on("click", function() {
 	const sectionSlug = modal.dataset.sectionSlug;
 	const priority = modal.dataset.priority;
 
-	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}/${sectionSlug}`;
+	window.location = `/dashboard/pdf/create/${courseSlug}/${priority}/${sectionSlug}`;
 })
 
 $("#section-chapter-btn").on("click", function() {
@@ -119,7 +119,7 @@ $(".js-editors-toggle").on("change", function() {
 
 	let fields = JSON.stringify(field);
 
-	axios.patch(`/course/${courseSlug}/toggle-editors`, {
+	axios.patch(`/course-ajax/${courseId}/toggle-editors`, {
 		fields
 	})
 	.then( res => {
@@ -218,8 +218,13 @@ $("#add-new-material-btn").on("click", function() {
 
 $("#add-new-pdf-material-main").on("click", function() {
 	const priority = $("#store-material-priority").val();
+<<<<<<< HEAD
 
 	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}`;
+=======
+	
+	window.location = `/dashboard/pdf/create/${courseSlug}/${priority}`;
+>>>>>>> a84d8db06b95b0c7b7937748a47d719a4db0a744
 })
 
 $("#change-cover-btn").on("click", function() {
@@ -341,25 +346,6 @@ $("#select-all-active-users").on( "change", function() {
 	let bulkBtn = $("#active-users-bulk")[0]
 
 	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
-});
-
-$("#active-switch").on( "change", function() {
-
-	axios.patch( "/courses/status", {
-		course: courseId,
-		state: this.checked ? 1 : 0
-	})
-	.then( (res) => {
-
-		let icon = this.checked ? "success" : "info";
-		let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-
-		utilities.toastAlert( icon, message );
-	})
-	.catch( (err) => {
-		console.log(err);
-		utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
-	});
 });
 
 $("#add-multiple-users-btn").on( "click", function() {
@@ -491,7 +477,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/course-materials-datatable",
+		url: "/course-datatables/course-materials",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: function( d ) {
@@ -509,7 +495,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'highlight', name: 'pivot.highlight', className: "text-center align-middle", },
 		{ data: 'status', name: 'pivot.status', className: "text-center align-middle", },
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle",  width: "5%", searchable: false },
-		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
+		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle", visible: false},
 		{
 			data: 'updated_at',name: 'updated_at',
 			className: "cursor-default text-center align-middle", searchable: false,
@@ -583,7 +569,7 @@ const remainingMaterialsTables = $("#remaining-materials-table").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/not-incourse-materials-datatable",
+		url: "/course-datatables/materials",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: function( d ) {
@@ -628,7 +614,7 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/course-users-datatable",
+		url: "/course-datatables/course-users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -673,7 +659,7 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/courses/add-course-students-datatable",
+		url: "/course-datatables/users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: {
@@ -845,7 +831,7 @@ function chapterPriorityInit() {
 
 			let sectionId = this.dataset.sectionId;
 
-			axios.patch(`/section/chapters-priority`, {
+			axios.patch(`/section-ajax/chapters-priority`, {
 				courseId, sectionId,
 				materialId: this.dataset.materialId,
 				priority: {
@@ -885,7 +871,7 @@ function chapterStatusInit() {
 
 		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section/toggle-chapters`, {
+		axios.patch(`/section-ajax/toggle-chapters`, {
 			courseId, sectionId,
 			data: [{
 				id: this.dataset.materialId,
@@ -1357,7 +1343,7 @@ function sortInputsInit() {
 	$('.js-sort-input').on('keyup', function() {
 
 		if ( event.keyCode == 13 && !isNaN( this.value) ) {
-			axios.patch('/courses/priority', {
+			axios.patch('/course-ajax/priority', {
 				courseId: $('#course-materials-list')[0].dataset.courseId,
 				materialId: this.dataset.materialId,
 				priority: {
@@ -1383,7 +1369,7 @@ function toggleCourseMaterial() {
 
 		//& an empene to function (toggleState)
 		//& 8a ginotan ena PERITO reload tou table
-		axios.patch('/courses/toggle-materials', {
+		axios.patch('/course-ajax/toggle-materials', {
 			courseId: this.dataset.courseId,
 			data: [{
 				id: this.dataset.materialId,
@@ -1456,7 +1442,7 @@ function sectionAdditionHandler() {
 	data.append("type", type);
 	data.append("priority", priority);
 
-	axios.post( "/section/add-content", data )
+	axios.post( "/section-ajax/add-content", data )
 		.then( res => {
 			let sectionsCnt = document.getElementsByClassName("accordion")[0];
 			sectionsCnt.innerHTML = res.data;
@@ -1625,7 +1611,7 @@ function activeMaterialsCheckboxHandler() {
 
 function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section/toggle-chapters`, {
+	axios.patch(`/section-ajax/toggle-chapters`, {
 		courseId, sectionId, data
 	})
 	.then( res => {
@@ -1663,7 +1649,7 @@ function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
 
 function removeChapters(sectionId, chapterIds) {
 
-	axios.post(`/section/remove-chapters`, {
+	axios.post(`/section-ajax/remove-chapters`, {
 		courseId, sectionId, chapterIds
 	})
 	.then( res => {
@@ -1706,7 +1692,7 @@ function editChaptersTitle(materialSlug, title) {
 }
 
 function addUsers( userIds ) {
-	axios.patch( "/courses/add-students", {
+	axios.patch( "/course-ajax/add-users", {
 		courseId,
 		userIds
 	})
@@ -1729,7 +1715,7 @@ function addUsers( userIds ) {
 }
 
 function removeUsers( userIds, caller ) {
-	axios.patch( "/courses/remove-students", {
+	axios.patch( "/course-ajax/remove-users", {
 		courseId,
 		userIds
 	})
@@ -1781,7 +1767,7 @@ function addChapterMaterials( chapterId, materialIds ) {
 }
 
 function addCourseMaterials( materialId ) {
-	axios.post( "/courses/add-materials", {
+	axios.post( "/course-ajax/add-materials", {
 		courseId, materialId
 	})
 	.then( (res) => {
@@ -1803,7 +1789,7 @@ function addCourseMaterials( materialId ) {
 
 function toggleHighlight(materialIds, status) {
 
-	axios.patch(`/course/${courseId}/toggle-highlight`, {materialIds, status})
+	axios.patch(`/course-ajax/${courseId}/toggle-highlight`, {materialIds, status})
 	.then( res => {
 		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
@@ -1817,7 +1803,7 @@ function toggleHighlight(materialIds, status) {
 
 function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
-	axios.patch(`/section/toggle-hightlight/${sectionId}`, {materialIds, status})
+	axios.patch(`/section-ajax/toggle-hightlight/${sectionId}`, {materialIds, status})
 	.then( res => {
 		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
@@ -1831,7 +1817,7 @@ function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
 function removeMaterials( materials ) {
 
-	axios.patch( "/courses/remove-materials", {
+	axios.patch( "/course-ajax/remove-materials", {
 		courseId,
 		materials
 	})
@@ -2275,7 +2261,7 @@ function createDateElm( id ) {
 
 function toggleState(data) {
 
-	axios.patch('/courses/toggle-materials', {
+	axios.patch('/course-ajax/toggle-materials', {
 		courseId,
 		data
 	})
@@ -2646,6 +2632,77 @@ const courseFilePond = FilePond.create(courseFileUpload, {
 	maxFileSize: "50MB"
 });
 
+const galleryUpload = $("#course-img-upload")[0];
+const galleryPond = FilePond.create(galleryUpload, {
+    server: {
+        url: baseUrl,
+        process: {
+            url: `/course-ajax/${courseId}/gallery-upload`,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+			},
+			onload: function(data) {
+
+				let container = $("#gallery-cnt")
+				container.html(data);
+
+				let removeBtns = container.find(".js-remove-image");
+				removeBtns.on("click", utilities.removeImageHandler);
+
+				$("#remove-all-images-btn").removeClass("d-none");
+				utilities.paginationRequest( 1, "");
+
+			},
+		},
+	},
+    onprocessfile: function (error, data) {
+
+		if ( galleryPond.status === 2 ) {
+
+			clearTimeout(timer);
+			let files = galleryPond.getFiles();
+
+			for (let i = 0; i < files.length; i++ ) {
+
+				if ( files[i].status === 5 ) {
+					timer = setTimeout(function() {
+						galleryPond.removeFile(files[i]);
+					}, ( i + 1 ) * 500);
+				}
+
+			}
+			$("#gallery-cnt").removeClass("d-none");
+			$("#active-gallery-loading").addClass("d-none");
+		}
+
+	},
+	onprocessfileabort: function() {
+		$("#gallery-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+	},
+	onprocessfiles: function() {
+
+		let files = galleryPond.getFiles();
+
+		for (let i = 0; i < files.length; i++ ) {
+
+			timer = setTimeout(function() {
+				galleryPond.removeFile(files[i]);
+
+			}, ( i + 1 ) * 500);
+
+		}
+		$("#gallery-cnt").removeClass("d-none");
+		$("#active-gallery-loading").addClass("d-none");
+
+	},
+	oninitfile: function(file) {
+		$("#gallery-cnt").addClass("d-none");
+		$("#active-gallery-loading").removeClass("d-none");
+	},
+    acceptedFileTypes: ['image/png', 'image/jpeg'],
+});
+
 const dropArea = document.getElementsByClassName("js-filepond-file-dragging");
 for ( let i = 0; i < dropArea.length; i++ ) {
 
@@ -2683,7 +2740,7 @@ const myCodeMirror = CodeMirror(editor, {
 	viewportMargin: Infinity,
 	value: format,
 	mode:  "htmlmixed",
-	theme: "night",
+	theme: "shadowfox",
 	indentWithTabs: true,
 	lineNumbers: true,
 	lineWrapping: true,
@@ -2692,6 +2749,7 @@ const myCodeMirror = CodeMirror(editor, {
 });
 
 $("#edit-course-form").on("submit", function(event) {
+<<<<<<< HEAD
 	event.preventDefault();
 
 	const scriptValue = myCodeMirror.getValue();
@@ -2699,3 +2757,63 @@ $("#edit-course-form").on("submit", function(event) {
 
 	this.submit();
 });
+=======
+	
+	const scriptValue = myCodeMirror.getValue();
+	scriptArea.value = scriptValue;
+
+});
+
+$("#remove-all-images-btn").on("click", function() {
+
+	let images = $(".js-active-image")
+	let ids = [];
+
+	for (let i = 0; i < images.length; i++) {
+		ids.push(images[i].dataset.fileId);
+	}
+
+	Swal.fire({
+		icon: 'info',
+		title: 'Προσοχή!',
+		text: 'Αφαίρεση όλων των εικόνων;',
+		showCancelButton: true,
+		confirmButtonColor: '#536de6',
+		confirmButtonText: `Ναι, αφαίρεση!`,
+		cancelButtonText: `Ακύρωση`,
+	  }).then((result) => {
+		if (result.isConfirmed) {
+			utilities.removeImages(ids);
+			utilities.toastAlert("info", "Οι εικόνες αφαιρέθηκαν");
+			this.classList.add("d-none");
+		}
+	  })
+
+});
+
+$(".js-remove-image").on("click", utilities.removeImageHandler);
+
+$("#add-gallery-images-btn").on("click", function() {
+	$("#gallery-content")[0].dataset.type = "gallery";
+
+	$("#gallery-modal").modal('show');
+});
+
+let dragArea = $("#gallery-cnt")[0];
+dragula( [dragArea], {})
+.on("drop", function() {
+	let images = $(".js-active-image");
+	let imagesPriority = [];
+	images.splice( -1, 1 );
+
+	for ( let i = 0; i < images.length; i++) {
+		imagesPriority.push(images[i].dataset.imageId)
+	}
+
+	axios.patch(`/course-ajax/${courseId}/gallery-sort`, {imagesPriority})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	});
+})
+>>>>>>> a84d8db06b95b0c7b7937748a47d719a4db0a744

@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Files;
 
-use App\Media;
+use App\Models\Media;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Illuminate\Http\Request;

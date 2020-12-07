@@ -40,7 +40,7 @@
                             </div>
                         </div>
 
-                        <div id="gallery-content" data-model="App\User" {{ isset($user)? "data-id=$user->id" : "" }} data-type="avatar">
+                        <div id="gallery-content" data-model="App\Models\User" {{ isset($user)? "data-id=$user->id" : "" }} data-type="avatar">
                             @include('components.admin.imageGallery', ['media' => $media])
                         </div>
 

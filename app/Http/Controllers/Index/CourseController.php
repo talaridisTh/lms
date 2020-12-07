@@ -2,18 +2,13 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Comment;
-use App\Course;
+use App\Models\Course;
 use App\Http\Controllers\Controller;
-use App\Option;
-use App\Post;
-use App\Topic;
+use App\Models\Post;
 use App\Traits\hasComments;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\View;
-use Str;
 
 class CourseController extends Controller {
     use hasComments;

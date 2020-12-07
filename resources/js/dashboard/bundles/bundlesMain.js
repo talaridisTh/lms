@@ -41,7 +41,7 @@ $("#delete-bundles-btn").on("click", function() {
 
 		if (result.value) {
 
-			axios.delete(`/bundles/destroy/${ids}`)
+			axios.delete(`/bundle-ajax/destroy/${ids}`)
 			.then(function (response) {
 
 				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
@@ -87,7 +87,7 @@ const bundlesDatatable = $("#bundle-table").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/bundles/bundles-datatable",
+		url: "/bundle-datatables/main",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		data: function( d ) {
@@ -135,8 +135,9 @@ function activeToggleInit() {
 
 	toggle.on( "change", function() {
 
-		axios.patch( `/bundles/status`, {
-			bundleId: this.dataset.bundleId,
+		const id = this.dataset.bundleId;
+
+		axios.patch( `/bundle-ajax/${id}/status`, {
 			status: this.checked ? 1 : 0
 		})
 		.then( (res) => {

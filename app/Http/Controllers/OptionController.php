@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Option;
-use App\Media;
+use App\Models\Option;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -123,7 +123,7 @@ class OptionController extends Controller
 
 	public function editPolicies($slug) {
 
-		$option = Option::where(["slug" => $slug])->first();	//slug = "terms-of-use|privacy-policy|cookie-policy"
+		$option = Option::where("slug", $slug)->first();	//slug = "terms-of-use|privacy-policy|cookie-policy"
 
 		return view("admin/settings/editPolicies")->with(["option" => $option]);
 

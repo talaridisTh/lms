@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Carousels;
 
-use App\Bundle;
+use App\Models\Bundle;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -26,7 +26,7 @@ class BundlesDataTable extends DataTable
 
 			return "<i class='js-add-bundle-banner p-2 font-20 mdi mdi-plus-circle-outline cursor-pointer'
 				data-model-id='$data->id' data-model-title='$data->title'
-				data-model-subtitle='$data->subtitle' data-namespace='App\Bundle'></i>";
+				data-model-subtitle='$data->subtitle' data-namespace='App\Models\Bundle'></i>";
 
 		})
 		->rawColumns(["action"]);

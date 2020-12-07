@@ -7,7 +7,7 @@ use App\DataTables\Mail\UsersDataTable;
 use App\DataTables\Mail\MailsDataTable;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Mail as AppMail;
+use App\Models\Mail as AppMail;
 
 class MailController extends Controller
 {

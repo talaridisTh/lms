@@ -44,7 +44,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="gallery-content" data-model="App\Material">
+                        <div id="gallery-content" data-model="App\Models\Material">
                             @include('components.admin.imageGallery', ['media' => $media])
                         </div>
                     </div>
@@ -157,14 +157,14 @@
                     <!-- form inputs -->
                     <div class="col-xl-9 col-lg-8 col-md-12">
 
-                        <form id="material-create" method="post" action="/dashboard/materials/store" enctype="multipart/form-data" autocomplete="off">
+                        <form id="material-create" method="post" action="/dashboard/materials" enctype="multipart/form-data" autocomplete="off">
 
                             @isset($priority)
                             	<input type="text" name="courseId" value="{{ $course->id }}" hidden />
 								<input type="text" name="priority" value="{{ $priority }}" hidden />
 								@if ( !is_null($section) )
 
-									<input type="text" name="sectionId" value="{{ $section->id }}" />
+									<input type="text" name="sectionId" value="{{ $section->id }}" hidden/>
 
 								@endif
                             @endisset
@@ -175,8 +175,8 @@
 
                                 <div class="form-group col-lg-6">
                                     <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                    <input name="title" id="titleMaterial" type="text" class="form-control @error("
-                                        title") is-invalid @enderror" placeholder="Εισάγετε τίτλο..." value="{{ old('title') }}" />
+									<input name="title" id="titleMaterial" type="text" placeholder="Εισάγετε τίτλο..."
+										class="form-control @error("title") is-invalid @enderror" value="{{ old('title') }}" />
                                     @error("title")
                                     	<span class="invalid-feedback" role="alert">
                                     	    <strong>{{ $message }}</strong>

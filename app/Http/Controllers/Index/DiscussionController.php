@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Comment;
-use App\Course;
+use App\Models\Comment;
+use App\Models\Course;
 use App\Http\Controllers\Controller;
-use App\Post;
+use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Str;
+use Illuminate\Support\Str;
 
 class DiscussionController extends Controller {
 

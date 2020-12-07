@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 
-use App\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;

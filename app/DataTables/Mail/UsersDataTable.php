@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Mail;
 
-use App\Mail;
-use App\User;
+use App\Models\Mail;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -23,7 +23,8 @@ class UsersDataTable extends DataTable
     {
 		$recipients = explode(",", $request->recipients);
 
-		$query = User::whereNotIn("users.id", $recipients)->with("courses", "bundles", "roles")
+		$query = User::role(["admin", "instructor", "student", "partner"])
+			->whereNotIn("users.id", $recipients)->with("courses", "bundles", "roles")
 			->select("users.*");
 
         return datatables()->of($query)

@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Course;
-use App\Post;
-use App\User;
-use Faker\Provider\Text;
+use App\Models\Course;
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Str;
+use Illuminate\Support\Str;
 
 class PostFactory extends Factory
 {

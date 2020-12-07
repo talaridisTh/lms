@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Course;
+use App\Models\Course;
 use App\DataTables\HistoryCourseDatatable;
 use App\DataTables\HistoryMaterialDatatable;
 use App\DataTables\WatchlistCourseDatatable;
 use App\DataTables\WatchlistMaterialDatatable;
 use App\Http\Controllers\Controller;
-use App\Mail\NewUserNotification;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller {
 

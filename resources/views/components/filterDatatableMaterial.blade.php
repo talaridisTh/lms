@@ -11,14 +11,14 @@
 
 <select id="typeFilterMaterial">
     <option value="">Όλα τα Type</option>
-    @foreach(App\Material::where("type", "!=", "Section")->get()->unique('type') as $course)
+    @foreach(App\Models\Material::where("type", "!=", "Section")->get()->unique('type') as $course)
     <option value="{{$course->type}}">{{$course->type}}</option>
     @endforeach
 </select>
 
 <select id="courseFilterMaterial">
     <option value="">Όλα τα Courses</option>
-    @foreach(App\Course::all() as $course)
+    @foreach(App\Models\Course::all() as $course)
     <option value="{{$course->title}}">{{$course->title}}</option>
     @endforeach
 </select>

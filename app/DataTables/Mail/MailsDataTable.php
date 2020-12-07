@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Mail;
 
-use App\Mail;
-use App\User;
+use App\Models\Mail;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -52,13 +52,12 @@ class MailsDataTable extends DataTable
 					? "<p class='time-cnt mb-0 text-center'><strong>-</strong></p>"
 					: "<p class='time-cnt mb-0 text-right'><strong class='text-right'>". Carbon::parse($data->sent_at)->diffForHumans(null, false, true) ."</strong></p>";
 				
-				return "$sentAt <div class='position-absolute tool-cnt text-left'>
+				return "$sentAt <div class='tool-cnt text-left'>
 						<i class='js-delete-mail mdi mdi-delete-circle-outline font-24 custom-danger cursor-pointer'
 							data-mail-id='$data->id'></i>
 					</div>";
 				
 			})
-			->setRowClass('position-relative')
 			->rawColumns(["action", "message", "details"]);
     }
 

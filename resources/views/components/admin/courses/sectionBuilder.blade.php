@@ -68,7 +68,7 @@
 						</div>
 
 						<div class="dropdown-divider my-0"></div>
-						<a class="js-multiple-chapter-remove dropdown-item d-block py-2" href="#" disabled>Αφαίρεση επιλεγμένων (0)</a>
+						<a class="js-multiple-chapter-remove dropdown-item d-block py-2" href="#" disabled>Αφαίρεση επιλογών (0)</a>
 					</div>
 				</div>
 
@@ -88,10 +88,10 @@
 								</div>
 							</th>
 							<th class="text-center" scope="col">Title</th>
-							<th class="text-center w-10" scope="col">Έμφαση</th>
+							<th class="text-center w-10" scope="col">highlight</th>
 							<th class="text-center w-10" scope="col">Κατάσταση</th>
 							<th class="text-center w-10" scope="col">Κατάταξη</th>
-							<th class="text-center w-10" scope="col">Τύπος</th>
+							{{-- <th class="text-center w-10" scope="col">Τύπος</th> --}}
 							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
 							<th class="text-center w-5" scope="col"></th>
 						</tr>
@@ -128,7 +128,7 @@
 
 								<td>
 									<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>{!! $badge !!}
-									<p class='overflow-ellipsis mb-1' title="{{ $material->slug }}" style="max-width: 400px;">{{ $material->slug }}</p>
+									<p class='overflow-ellipsis mb-1' style="max-width: 400px;">{{ $material->type }}</p>
 									<a href='/dashboard/material/{{ $material->slug }}' class='custom-link-primary'>Edit</a>
 									<span class='mx-2'>|</span>
 									<a href='#' class='custom-link-primary'>View</a>
@@ -161,7 +161,7 @@
 											value="{{ $material->pivot->priority }}" autocomplete='off'>
 									</div>
 								</td>
-								<td class="align-middle text-center">{{ $material->type}}</td>
+								{{-- <td class="align-middle text-center">{{ $material->type}}</td> --}}
 								<td class="text-center align-middle">
 									@php
 										if ( !is_null($material->updated_at) ) {
@@ -190,10 +190,10 @@
 						<tr>
 							<th scope="col"></th>
 							<th class="text-center" scope="col">Title</th>
-							<th class="text-center w-10" scope="col">Έμφαση</th>
+							<th class="text-center w-10" scope="col">highlight</th>
 							<th class="text-center w-10" scope="col">Κατάσταση</th>
 							<th class="text-center w-10" scope="col">Κατάταξη</th>
-							<th class="text-center w-10" scope="col">Τύπος</th>
+							{{-- <th class="text-center w-10" scope="col">Τύπος</th> --}}
 							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
 							<th class="text-center w-5" scope="col"></th>
 						</tr>

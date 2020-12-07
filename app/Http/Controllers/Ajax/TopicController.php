@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\DataTables\Topics\TopicsDataTable;
 use App\Http\Controllers\Controller;
-use App\Topic;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 

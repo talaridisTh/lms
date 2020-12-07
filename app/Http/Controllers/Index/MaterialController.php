@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Course;
+use App\Models\Course;
 use App\Http\Controllers\Controller;
-use App\Material;
-use App\Post;
+use App\Models\Material;
+use App\Models\Post;
 use App\Traits\hasComments;
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class MaterialController extends Controller {
 

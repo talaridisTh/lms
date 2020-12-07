@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Bundle;
-use App\Topic;
-use App\Media;
+use App\Models\Bundle;
+use App\Models\Topic;
+use App\Models\Media;
 use App\Http\Requests\BundleCourseRequest;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
@@ -58,34 +58,26 @@ class BundleController extends Controller
 
 		$bundle->save();
 
-		return redirect( "/dashboard/bundle/$bundle->slug" );
+		return redirect( "/dashboard/bundles/$bundle->slug/edit" );
     }
 
-    public function show(Bundle $bundle = null)
-    {
+    public function show(Bundle $bundle) {
 
-		if ( is_null($bundle) ) {
-			$publish = "";
-		}
-		else {
-			$publish = is_null($bundle->publish_at) ? null : Carbon::parse( $bundle->publish_at )->format("d-m-Y H:i");
-		}
+		//
+    }
+
+    public function edit(Bundle $bundle) {
 
 		$data = [
 			'bundle' => $bundle,
 			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
 			'topics' => Topic::all("title"),
-			'publish' => $publish,
+			'publish' => is_null($bundle->publish_at) ? null : Carbon::parse( $bundle->publish_at )
+				->format("d-m-Y H:i"),
 			"fields" => json_decode($bundle->fields)
 		];
 
         return view("admin/bundles/bundle")->with($data);
-    }
-
-
-    public function edit(Bundle $bundle)
-    {
-        //
     }
 
 
@@ -120,7 +112,7 @@ class BundleController extends Controller
 		$bundle->slug = Str::slug($request->title, "-");
 		$bundle->save();
 
-		return redirect( "/dashboard/bundle/$bundle->slug" );
+		return redirect( "/dashboard/bundles/$bundle->slug/edit" );
     }
 
 

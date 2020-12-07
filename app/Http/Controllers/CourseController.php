@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Course;
+use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\BundleCourseRequest;
-use App\Media;
-use App\Role;
-use App\Topic;
-use App\Option;
+use App\Models\Media;
+use App\Models\Role;
+use App\Models\Topic;
+use App\Models\Option;
+use App\Traits\MediaUploader;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 
 class CourseController extends Controller
 {
+	use MediaUploader;
 
     public function index()
     {
@@ -38,11 +40,10 @@ class CourseController extends Controller
 
     }
 
-    public function store(BundleCourseRequest $request)
+    public function store(Request $request)
     {
 		$request->validate([
-			'title' => 'required|unique:courses',
-			'version' => 'required'
+			'title' => 'required'
 		]);
 
 		if ( isset($request->publishDate) ) {
@@ -62,6 +63,7 @@ class CourseController extends Controller
 		$course->subtitle = $request->subtitle;
 		$course->summary = $request->summary;
 		$course->description = $request->description;
+		$course->script = $request->script;
 		$course->status = 0;
 		$course->slug = Str::slug($request->title, "-");
 		$course->fields = json_encode($fields);
@@ -76,7 +78,7 @@ class CourseController extends Controller
 			$course->topics()->attach( $request->topics );
 		}
 
-		return redirect( "/dashboard/course/$course->slug" );
+		return redirect( "/dashboard/courses/$course->slug/edit" );
 
     }
     /**
@@ -85,32 +87,9 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function show(Course $course = null, Request $request)
-    {
-
-		if ( is_null($course) ) {
-			$publish = "";
-		}
-		else {
-			$publish = is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i");
-		}
-
-		$templates = Option::where("name", "Course Templates")->first();
-
-		$data = [
-			'course' => $course,
-			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-			'courseTopics' => $course ? $course->topics()->pluck("topics.id")->toArray() : null,
-			'topics' => Topic::all(),
-			'instructors' => Role::find( 2 )->users,
-			'publish' => $publish,
-			"files" => $course ? $course->media()->where("type", 1)->get() : null,
-			"sections" => $course ? $course->materials()->where("type", "Section")->orderBy("priority")->get() : null,
-			"fields" => json_decode($course->fields),
-			"templates" => json_decode($templates->value)
-		];
-
-        return view('admin.courses.course')->with($data);
+	public function show(Course $course) {
+	
+		//
     }
 
     /**
@@ -121,7 +100,23 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        $templates = Option::where("name", "Course Templates")->first();
+
+		$data = [
+			'course' => $course,
+			'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
+			"gallery" => $course->media()->wherePivot("usage", "!=", 3)->orderBy("priority")->get(),
+			'courseTopics' => $course->topics()->pluck("topics.id")->toArray(),
+			'topics' => Topic::all(),
+			'instructors' => Role::find( 2 )->users,
+			'publish' => is_null($course->publish_at) ? null : Carbon::parse( $course->publish_at )->format("d-m-Y H:i"),
+			"files" => $course->media()->where("type", 1)->get(),
+			"sections" => $course->materials()->where("type", "Section")->orderBy("priority")->get(),
+			"fields" => json_decode($course->fields),
+			"templates" => json_decode($templates->value)
+		];
+
+        return view('admin.courses.course')->with($data);
     }
 
     /**
@@ -131,8 +126,12 @@ class CourseController extends Controller
      * @param  \App\Course  $course
      * @return \Illuminate\Http\Response
      */
-    public function update(BundleCourseRequest $request, Course $course)
+    public function update(Request $request, Course $course)
     {
+		$request->validate([
+			'title' => 'required'
+		]);
+
 		if ( isset($request->save) ) {
 			if ( $request->publishDate ) {
 				$publish = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
@@ -167,7 +166,7 @@ class CourseController extends Controller
 
 		$course->topics()->sync( $request->topics );
 
-        return redirect( "/dashboard/course/$course->slug" );
+        return redirect( "/dashboard/courses/$course->slug/edit" );
     }
 
     /**
@@ -275,6 +274,6 @@ class CourseController extends Controller
 			}
 		}
 
-		return redirect("/dashboard/course/$newCourse->slug");
+		return redirect("/dashboard/courses/$newCourse->slug/edit");
 	}
 }

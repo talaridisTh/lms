@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Course;
+use App\Models\Course;
 use App\DataTables\Users\CoursesDataTable;
 use App\DataTables\CoursesInsideUsersDataTable;
 use App\DataTables\Users\UserCoursesDataTable;
 use App\DataTables\Users\UsersDataTable;
-use App\Media;
-use App\User;
+use App\Models\Media;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;

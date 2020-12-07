@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Ajax;
 
-use App\Course;
+use App\Models\Course;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -11,10 +11,12 @@ use App\DataTables\Courses\CourseMaterialsDataTable;
 use App\DataTables\Courses\CourseUsersDataTable;
 use App\DataTables\Courses\MaterialsDataTable;
 use App\DataTables\Courses\UsersDataTable;
-
+use App\Traits\MediaUploader;
 
 class CourseController extends Controller
 {
+	use MediaUploader;
+	
     /**
      * Display a listing of the resource.
      *
@@ -131,7 +133,7 @@ class CourseController extends Controller
 		return $dataTable->render('course.remaingMaterials');
 	}
 
-	public function toggleCourseMaterials( Request $request ) {
+	public function toggleMaterials( Request $request ) {
 
 		$course = Course::find( $request->courseId );
 		$data = $request->data;
@@ -199,13 +201,13 @@ class CourseController extends Controller
 
 	}
 
-	public function addCourseStudents(UsersDataTable $dataTable) {
+	public function usersDataTable(UsersDataTable $dataTable) {
 
 		return $dataTable->render('courses.add.users');
 
 	}
 
-	public function addStudents( Request $request ) {
+	public function addUsers( Request $request ) {
 
 		$course = Course::find( $request->courseId );
 		$userIds = $request->userIds;
@@ -216,7 +218,7 @@ class CourseController extends Controller
 
 	}
 
-	public function removeStudents( Request $request ) {
+	public function removeUsers( Request $request ) {
 
 		$course = Course::find( $request->courseId );
 		$userIds = $request->userIds;
@@ -241,6 +243,30 @@ class CourseController extends Controller
 		foreach ($request->materialIds as $id) {
 			$course->materials()
 				->updateExistingPivot( $id, [ 'highlight' => $request->status]);
+		}
+	}
+
+	public function galleryUpload(Request $request, Course $course ) {
+		
+		$priority = $course->media()->count();
+
+		foreach($request->file as $key => $image) {
+
+			$media = $this->storeImage($image);
+
+			$course->media()
+				->attach($media->id, ["usage" => 1, "priority" => $key + 1 + $priority]);
+		}
+
+		$gallery = $course->media()->where("type", 0)->orderBy("priority")->get();
+		return View('components/admin/modelGallery', ['gallery' => $gallery]);
+
+	}
+
+	public function gallerySort(Request $request, Course $course) {
+
+		foreach ($request->imagesPriority as $key => $id) {
+			$course->media()->updateExistingPivot($id, ['priority' => ($key + 1) ]);
 		}
 	}
 

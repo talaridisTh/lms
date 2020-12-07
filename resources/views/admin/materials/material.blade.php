@@ -44,8 +44,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="gallery-content" data-model="App\Material"
-                            data-id={{ isset($material)? $material->id:"" }}>
+                        <div id="gallery-content" data-model="App\Models\Material"
+                            data-id={{ $material->id }}>
                             @include('components.admin.imageGallery', ['media' => $media])
                         </div>
                     </div>
@@ -121,15 +121,16 @@
                         <a href="/dashboard" class="custom-link-primary">Dashboard</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="/dashboard/materials" class="custom-link-primary">Υλικό</a></li>
+						<a href="/dashboard/materials" class="custom-link-primary">Υλικό</a>
+					</li>
                     <li class="breadcrumb-item active">
-                        {{ isset($material) ? $material->title : "Νέο Υλικό" }}
-                    </li>
+						{{ $material->title }}
+					</li>
                 </ol>
             </div>
             <h4 id="material-title" class="page-title"
-                data-material-slug="{{ isset($material) ? $material->slug : "" }}">
-                {{ isset($material) ? $material->title : "Νέο Υλικό" }}
+                data-material-slug="{{ $material->slug }}">
+                {{ $material->title }}
             </h4>
         </div>
     </div>
@@ -146,8 +147,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#courses-tabs" data-toggle="tab" aria-expanded="true"
-                    class="nav-link {{ !isset($material) ? 'tab-link text-muted' : '' }}">
+                <a href="#courses-tabs" data-toggle="tab" aria-expanded="true" class="nav-link">
                     <i class="mdi mdi-account-circle d-md-none d-block"></i>
                     <span class="d-none d-md-block">Courses</span>
                 </a>
@@ -161,45 +161,31 @@
                     <!-- form inputs -->
                     <div class="col-xl-9 col-lg-8 col-md-12">
 
-                        <form id="material-create" method="post" action="{{ isset($material)
-									? "/dashboard/materials/update/$material->slug"
-									: "/dashboard/materials/store" }}" enctype="multipart/form-data" autocomplete="off">
-
-                            @isset($priority)
-                            	<input type="text" hidden name="courseId" value="{{ $course->id }}" hidden />
-								<input type="text" hidden name="priority" value="{{ $priority }}" hidden />
-								@if ( !is_null($section) )
-
-									<input type="text" hidden name="sectionId" value="{{ $section->id }}" />
-
-								@endif
-                            @endisset
+						<form id="material-create" method="post" enctype="multipart/form-data"
+							action="{{ "/dashboard/materials/$material->slug" }}" autocomplete="off">
 
                             @csrf
-                            @if(isset($material))
-                            @method('PATCH')
-                            @endif
 
+                            @method('PATCH')
 
                             <div class="form-row">
 
                                 <div class="form-group col-lg-6">
                                     <label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-                                    <input name="title" id="titleMaterial" type="text" class="form-control @error("
-                                        title") is-invalid @enderror" placeholder="Εισάγετε τίτλο..." value="{{ old('title') != "" ? old('title')
-												: ( isset($material) ? $material->title : "" ) }}" />
+									<input name="title" id="titleMaterial" type="text" 
+										class="form-control @error("title") is-invalid @enderror"
+										placeholder="Εισάγετε τίτλο..." value="{{ old('title', $material->title) }}" />
                                     @error("title")
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    	<span class="invalid-feedback" role="alert">
+                                    	    <strong>{{ $message }}</strong>
+                                    	</span>
                                     @enderror
                                 </div>
 
                                 <div class="form-group col-lg-6">
                                     <label for="subtitleMaterial">Υποτίτλος</label>
                                     <input id="subtitleMaterial" name="subtitle" type="text" class="form-control"
-                                        placeholder="Εισάγετε υποτίτλο..." value="{{ old('subtitle') != "" ? old('subtitle')
-												: ( isset($material) ? $material->subtitle : "" ) }}" />
+                                        placeholder="Εισάγετε υποτίτλο..." value="{{ old('subtitle', $material->subtitle) }}" />
                                 </div>
 
                             </div>
@@ -217,8 +203,7 @@
 								</div>
 
                                 <textarea id="summary" name="summary" class="form-control" rows="5"
-                                    placeholder="Εισάγετε σύνοψη...">{{ old('summary') != "" ? old('summary')
-											: (isset($material) ? $material->summary : "") }}</textarea>
+									placeholder="Εισάγετε σύνοψη..." >{{ old('summary', $material->summary) }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -233,8 +218,7 @@
 									<label for="description-toggle" data-on-label="On" data-off-label="Off"></label>
 								</div>
                                 <textarea id="description-material" name="description" class="form-control" rows="5"
-                                    placeholder="Εισάγετε περιγραφή...">{{ old('description') != "" ? old('description')
-											: (isset($material) ? $material->description : "") }}</textarea>
+                                    placeholder="Εισάγετε περιγραφή...">{{ old('description', $material->description) }}</textarea>
                             </div>
 
                             <div class="form-group">
@@ -249,13 +233,11 @@
 									<label for="content-toggle" data-on-label="On" data-off-label="Off"></label>
 								</div>
                                 <textarea id="content-material" name="content" class="form-control" rows="5"
-                                    placeholder="Εισάγετε περιεχόμενο μαθήματος...">{{ old('content') != "" ? old('content')
-											: (isset($material) ? $material->content : "") }}</textarea>
+                                    placeholder="Εισάγετε περιεχόμενο μαθήματος...">{{ old('content', $material->content) }}</textarea>
                             </div>
 
                         </form>
 
-                        @isset($material)
                         <h5>Gallery</h5>
                         <div class="bg-light">
                             <div class="pt-2 px-2">
@@ -273,7 +255,7 @@
                             </div>
 
 
-                            <div id="gallery-cnt" class="row" style="padding: 0 1.1rem;" data-namespace="App\Material"
+                            <div id="gallery-cnt" class="row" style="padding: 0 1.1rem;" data-namespace="App\Models\Material"
                                 data-model-id="{{ $material->id }}">
                                 @include('components/admin/modelGallery', ["gallery" => $gallery])
                             </div>
@@ -315,24 +297,24 @@
 								</strong>
 							</small>
 						</p>
-                        @endisset
                     </div><!-- ./form inputs -->
 
                     <div class="col-xl-3 col-lg-4 col-md-12 pt-1">
 
                         <!-- Βuttons -->
                         <div class="sticky py-3">
-                            <button id="store-material-btn" class="btn {{isset($material)? "btn-info":"btn-primary"}}" type="submit"
-                                form="material-create">
-                                {{isset($material)? "Update":"Save"}}
-                            </button>
-                            @if(isset($material) && count($material->courses)>0 && $material->type != "Link" &&
-                            $material->type != "Announcement" )
-                            <a target="_blank" href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"
-                                id="preview-btn" class="btn btn-warning">
-                                <i class="mdi mdi-eye"></i>
-                            </a>
-                            @endif
+
+                            <button form="material-create" id="store-material-btn" class="btn btn-info" type="submit">
+                                Update
+							</button>
+							
+                            @if( count($material->courses) > 0 && $material->type != "Link" && $material->type != "Announcement" )
+                            	<a target="_blank" href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"
+                            	    id="preview-btn" class="btn btn-warning">
+                            	    <i class="mdi mdi-eye"></i>
+                            	</a>
+							@endif
+
                         </div><!-- ./Βuttons -->
 
                         <div class="card">
@@ -342,8 +324,7 @@
                                     <div class="d-flex justify-content-between">
                                         <label for="activeMaterial">Κατάσταση</label>
                                         <input form="material-create" name="status" type="checkbox" id="activeMaterial"
-                                            data-switch="success" @if(isset($material))
-                                            {{$material->status==1? 'checked':""}} @endif />
+											data-switch="success" {{ $material->status == 1 ? 'checked' : "" }}/>
                                         <label for="activeMaterial" data-on-label="On" class="mb-0"
                                             data-off-label="Off"></label>
                                     </div>
@@ -353,8 +334,7 @@
                                 <div class="form-group mb-3 wrapper-video">
                                     <label for="urlMaterial">URL video</label>
                                     <input   form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
-                                        id="urlMaterial" placeholder="vimeo-id" value="{{ old('video_link') != "" ? old('video_link')
-												: ( isset($material) ? $material->video_link : "" ) }}"  />
+                                        id="urlMaterial" placeholder="vimeo-id" value="{{ old('video_link', $material->video_link) }}" />
                                     <div class="input-group-prepend">
                                         <span style="top: 29px ; left: 0" class="input-group-text px-1 " id="basic-addon1">https://vimeo.com/</span>
                                     </div>
@@ -368,19 +348,19 @@
                                         name="type" data-toggle="select2" form="material-create">
 
                                         @foreach ($types as $value => $title)
-                                        @php
-                                        if ( old("type") == $value ) {
-                                        $selected = "selected";
-                                        }
-                                        elseif (old("type") == "" && isset($material) && $material->type == $value) {
-                                        $selected = "selected";
-                                        }
-                                        else {
-                                        $selected = "";
-                                        }
-                                        @endphp
+                                        	@php
+                                        		if ( old("type") == $value ) {
+                                        			$selected = "selected";
+                                        		}
+                                        		elseif (old("type") == "" && isset($material) && $material->type == $value) {
+                                        			$selected = "selected";
+                                        		}
+                                        		else {
+                                        			$selected = "";
+                                        		}
+                                        	@endphp
 
-                                        <option value="{{ $value }}" {{ $selected }}>{{ $title }}</option>
+                                        	<option value="{{ $value }}" {{ $selected }}>{{ $title }}</option>
 
                                         @endforeach
                                     </select>
@@ -419,7 +399,7 @@
                             </div>
                         </div>
 
-                        @isset($material)
+
                         <!-- Cover Preview -->
                         <div class="card">
                             <div class="card-header">
@@ -428,21 +408,21 @@
                             <div class="card-body">
 
                                 <img id="cover-image" src="{{ $material->cardMediumUrl() }}"
-                                    class="img-fluid{{ (isset($material) &&  is_null($material->cover)) ? " d-none" : "" }}"
+                                    class="img-fluid{{ is_null($material->cover) ? " d-none" : "" }}"
                                     alt="Cover Image" />
                                 <p id="cover-status"
-                                    class="text-center{{ (isset($material) &&  !is_null($material->cover)) ? " d-none" : "" }}">
+                                    class="text-center{{ !is_null($material->cover) ? " d-none" : "" }}">
                                     <strong>Δεν βρέθηκε εικόνα</strong></p>
 
                                 <div class="form-row mt-2">
                                     <div class="col-md-6 d-flex justify-content-center">
                                         <button id="change-cover-btn" class="btn btn-primary btn-block text-nowrap">
-                                            {{isset($material) && !is_null($material->cover) ?"Αλλαγή":"Προσθήκη"}}
+                                            {{ !is_null($material->cover) ? "Αλλαγή" : "Προσθήκη" }}
                                         </button>
 
                                     </div>
                                     <div
-                                        class="{{ isset($material) && !is_null($material->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
+                                        class="{{ !is_null($material->cover) ? "d-flex " : "d-none " }}col-md-6 justify-content-center">
                                         <button id="remove-cover-btn" class="btn btn-danger btn-block text-nowrap">
                                             Αφαίρεση
                                         </button>
@@ -450,7 +430,6 @@
                                 </div>
                             </div> <!-- end card-body -->
                         </div> <!-- end course info card -->
-                        @endisset
 
                     </div>
                 </div>
@@ -463,10 +442,6 @@
 
     </div>
 </div>
-
-<x-alertMsg :msg="'create'"></x-alertMsg>
-<x-alertMsg :msg="'update'"></x-alertMsg>
-
 
 @endsection
 

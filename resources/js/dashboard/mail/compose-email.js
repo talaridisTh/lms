@@ -33,7 +33,6 @@ const usersDatatable = $("#users-datatable").DataTable({
 		{ data: 'btn', className: "align-middle text-center text-wrap", orderable: false, searchable: false },
 		{ data: 'first_name', name: "first_name", visible: false },
 		{ data: 'last_name', name: "last_name", visible: false },
-
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -73,10 +72,13 @@ const recipientsDatatable = $("#recipients-datatable").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'name', name: 'users.last_name', className: "align-middle" },
-		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap" },
-		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap" },
+		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap", visible: false},
+		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap", visible: false},
+		{ data: 'email', name: 'email', className: "align-middle text-center text-wrap" },
+		{ data: 'role', name: 'roles.name', className: "align-middle text-center text-wrap" },
 		{ data: 'btn', className: "align-middle text-center text-wrap", orderable: false, searchable: false },
-
+		{ data: 'first_name', name: "first_name", visible: false },
+		{ data: 'last_name', name: "last_name", visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -176,6 +178,7 @@ function createSelect(id) {
 	return select;
 }
 
+//! Users table filters
 (function coursesFilter() {
 	const lengthCnt = document.getElementById("users-datatable_length");
 	const select = createSelect("course-user-filter");
@@ -258,6 +261,92 @@ function createSelect(id) {
 
 		utilities.filterStyle( label, this.value );
 		usersDatatable.column(5).search( this.value ).draw();
+	})
+})();
+
+//! Recipients table filters
+(function coursesRecipientFilter() {
+	const lengthCnt = document.getElementById("recipients-datatable_length");
+	const select = createSelect("course-recipients-filter");
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		placeholder: "Όλα τα Courses",
+		width: "150px",
+		ajax: {
+			url: "/courses/json-search",
+			delay: 1000,
+			dataType: "json",
+			data: function(params) {
+				return {
+					search: params.term,
+					page: params.page || 1
+				}
+			}
+		}
+	})
+
+	$(select).on("change", function() {
+		const label = $('#select2-course-recipients-filter-container')[0];
+
+		utilities.filterStyle( label, this.value.trim() );
+		recipientsDatatable.column(2).search( this.value ).draw();
+	})
+})();
+
+(function bundleRecipientsFilter() {
+	const lengthCnt = document.getElementById("recipients-datatable_length");
+	const select = createSelect("bundle-recipients-filter");
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		placeholder: "Όλα τα Bundles",
+		width: "150px",
+		ajax: {
+			url: "/bundles/json-search",
+			delay: 1000,
+			dataType: "json",
+			data: function(params) {
+				return {
+					search: params.term,
+					page: params.page || 1
+				}
+			}
+		}
+	})
+
+	$(select).on("change", function() {
+		const label = $('#select2-bundle-recipients-filter-container')[0];
+
+		utilities.filterStyle( label, this.value.trim() );
+		recipientsDatatable.column(3).search( this.value ).draw();
+	})
+})();
+
+(function rolesFilter() {
+	const lengthCnt = document.getElementById("recipients-datatable_length");
+	const select = createSelect("recipient-role-filter");
+	select.innerHTML = `
+		<option value="">Όλοι οι Ρόλοι</option>
+		<option value="admin">Admin</option>
+		<option value="instructor">Εισηγητές</option>
+		<option value="partner">Partners</option>
+		<option value="student">Μαθητές</option>
+	`;
+
+	lengthCnt.append(select);
+
+	$(select).select2({
+		width: "150px",
+	})
+
+	$(select).on("change", function() {
+		const label = $('#select2-recipient-role-filter-container')[0];
+
+		utilities.filterStyle( label, this.value );
+		recipientsDatatable.column(5).search( this.value ).draw();
 	})
 })();
 

@@ -9,7 +9,7 @@ import 'filepond/dist/filepond.min.css';
 const userId = $(".course-materials-list")[0].dataset.id
 const userSlug = $(".course-materials-list")[0].dataset.slug
 const baseUrl = window.location.origin;
-const namespace = "App\\User";
+const namespace = "App\\Models\\User";
 let timer = 0;
 
 //! GLOBAL METHOD AND EVENT LISTENER
@@ -580,7 +580,7 @@ $R("#summary", {
     imageUpload: "/media/upload-images",
     // imageData: {
     // 	// id: courseId,
-    // 	// namespace: "App\\Course"
+    // 	// namespace: "App\\Models\\Course"
     // },
     callbacks: {
         upload: {

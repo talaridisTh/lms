@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Topicable;
+use App\Models\Topicable;
 use Illuminate\Http\Request;
 
 class TopicableController extends Controller

@@ -3,7 +3,7 @@
 //!##########################################
 let materialId = $("#material-title")[0].dataset.materialId;
 let materialSlug = $("#material-title")[0].dataset.materialSlug;
-const namespace = "App\\Material";
+const namespace = "App\\Models\\Material";
 const baseUrl = window.location.origin;
 let timer = 0;
 

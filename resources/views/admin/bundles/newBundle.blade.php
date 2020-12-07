@@ -124,7 +124,7 @@
 				<div id="settings" class="tab-pane show active">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
-							<form id="bundle-edit-form" action="/dashboard/bundle/store"
+							<form id="bundle-edit-form" action="/dashboard/bundles"
 								method="POST" enctype="multipart/form-data" autocomplete="off">
 								@csrf
 								<div class="form-row">

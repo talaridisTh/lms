@@ -47,7 +47,7 @@
                             </button>
                         </td>
                         <td>{{\Str::limit($u->pivot->user_link,50)}}</td>
-                        <td>{{App\User::findOrFail($u->pivot->user_id)->fullName}}</td>
+                        <td>{{App\Models\User::findOrFail($u->pivot->user_id)->fullName}}</td>
                         <td>{{$u->name}}</td>
                         <td>{{$usersLeft[$counter++]}}</td>
                     </tr>

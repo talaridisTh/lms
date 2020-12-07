@@ -2,7 +2,7 @@
 
 namespace App\DataTables\Mail;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -22,7 +22,9 @@ class RecipientsDataTable extends DataTable
     {
 		$recipients = explode(",", $request->recipients);
 
-		$query = User::whereIn("id", $recipients)->with("courses", "bundles", "roles");
+		$query = User::role(["admin", "instructor", "student", "partner"])
+			->whereIn("users.id", $recipients)->with("courses", "bundles", "roles")
+			->select("users.*");
 
         return datatables()::of($query)
             ->addColumn('action', function($data) {
@@ -55,6 +57,35 @@ class RecipientsDataTable extends DataTable
 
 				return "<i class='js-remove-recipient h3 px-2 pt-1 mdi mdi-delete-circle-outline cursor-pointer custom-danger'
 					data-user-id='$data->id'></i>";
+
+			})
+			->addColumn("role", function($data) {
+
+				$role = $data->getRoleNames()[0];
+				switch ($role) {
+					case "admin":
+						return "Admin";
+					case "instructor":
+						return "Εισηγητής";
+					case "partner":
+						return "Partner";
+					default:
+						return "Μαθητής";
+				}
+
+			})
+			->filterColumn("courses.title", function($query, $keyword) {
+				
+				$query->whereHas("courses", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
+			->filterColumn("bundles.title", function($query, $keyword) {
+				
+				$query->whereHas("bundles", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
 
 			})
 			->rawColumns(['action', 'btn']);

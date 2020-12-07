@@ -2,13 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Course;
-use App\Topic;
-use App\User;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 
 class UserSeeder extends Seeder {

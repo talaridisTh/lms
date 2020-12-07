@@ -11,7 +11,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: "/materials/materials-datatable",
+        url: "/material-datatables/main",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
         data: function (d) {
@@ -71,7 +71,6 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 
         toggleInit();
         selectMultipleCheckboxDelete()
-        selectMultipleCheckboxUpdate()
         selectStatusMultiple()
         checkeBoxesEventListener()
     }
@@ -249,7 +248,7 @@ const axiosMultipleDelete = async (ids) => {
     try {
         const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${ids.length} απο τον χρήστη `)
         if (value) {
-            const res = await axios.delete(config.routes.destroyMultipleMaterialDatatable, {
+            const res = await axios.delete("/material-ajax/delete", {
                 data: {
                     'material_id': ids,
                 }
@@ -260,40 +259,6 @@ const axiosMultipleDelete = async (ids) => {
                 utilities.toastAlert("success", `${ids.length} Διαγράφικαν`)
                 materialsDatatable.ajax.reload()
             }
-        }
-    } catch (e) {
-        console.log(e)
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-    }
-}
-
-const selectMultipleCheckboxUpdate = () => {
-    $('.js-multiple-update').unbind();
-    $(".js-multiple-update").click(function () {
-        let checkboxes = $(".js-user-checkbox:checked")
-
-        let ids = [];
-
-        for (let i = 0; i < checkboxes.length; i++) {
-            ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.materialId);
-        }
-
-        axiosMultipleUpdate(ids, this.dataset.coursesId)
-
-    })
-}
-
-const axiosMultipleUpdate = async (ids, courseId) => {
-
-    try {
-        const {status} = await axios.patch(config.routes.addMaterialMultipleDatatable, {
-            'material_id': ids,
-            "course_id": courseId
-        })
-
-        if (status == 200) {
-            utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
-            console.log(status)
         }
     } catch (e) {
         console.log(e)
@@ -312,8 +277,6 @@ const selectStatusMultiple = () => {
             ids.push(checkboxes[i].parentElement.parentElement.parentElement.dataset.materialId);
         }
 
-
-        console.log("S")
         changeStatusMultiple(ids, this.dataset.coursesChange)
 
     })
@@ -322,7 +285,7 @@ const selectStatusMultiple = () => {
 const changeStatusMultiple = async (ids, stat) => {
 
     try {
-        let {status} = await axios.patch(config.routes.changeStatusMultipleMaterialDatatable, {
+        let {status} = await axios.patch("/material-ajax/bulk-toggle-status", {
             "material_id": ids,
             "status": stat,
         })

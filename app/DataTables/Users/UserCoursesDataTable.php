@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Users;
 
-use App\Course;
-use App\User;
+use App\Models\Course;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;

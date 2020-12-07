@@ -463,7 +463,7 @@ function paginationRequest(activePage, search) {
 }
 
 function changeCoverRequest(namespace, id, url) {
-	if ( typeof id === "undefined" && namespace == "App\\User" ) {
+	if ( typeof id === "undefined" && namespace == "App\\Models\\User" ) {
 		let img = $("#cover-image")[0];
 		let removeBtnCnt = $("#remove-cover-btn").parent();
 

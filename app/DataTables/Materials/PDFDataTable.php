@@ -2,8 +2,8 @@
 
 namespace App\DataTables\Materials;
 
-use App\Material;
-use App\Media;
+use App\Models\Material;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;

@@ -7,7 +7,7 @@ use App\DataTables\Carousels\CoursesDataTable;
 use App\DataTables\Carousels\BundlesDataTable;
 use App\DataTables\Options\OptionsDataTable;
 use App\Http\Controllers\Controller;
-use App\Option;
+use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 

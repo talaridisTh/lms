@@ -2,12 +2,8 @@
 
 namespace App\Http\View\Composers;
 
-use App\Course;
-use App\Media;
-use App\Option;
-use App\User;
+use App\Models\Option;
 use Illuminate\View\View;
-use Spatie\Permission\Models\Role;
 
 class OptionComposer {
 

@@ -2,17 +2,14 @@
 
 namespace App\DataTables\Courses;
 
-use App\Course;
-use App\Coursematerial;
+use App\Models\Course;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-use Carbon\Carbon;
 
 
 class CourseMaterialsDataTable extends DataTable
@@ -61,7 +58,7 @@ class CourseMaterialsDataTable extends DataTable
 
 				if ($data->type === "PDF") {
 					return "<a href='/dashboard/edit-pdf/$data->slug' class='h5 custom-link-primary'>$data->title </a>$badge
-							<p class='mb-1'>$data->slug</p>
+							<p class='mb-1'>$data->type</p>
 							<a href='/dashboard/edit-pdf/$data->slug' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
 							<a href='#' class='custom-link-primary'>View</a>";
@@ -69,7 +66,7 @@ class CourseMaterialsDataTable extends DataTable
 				else if ($data->type != "Section") {
 
 					return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title </a>$badge
-							<p class='mb-1'>$data->slug</p>
+							<p class='mb-1'>$data->type</p>
 							<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
 							<a href='#' class='custom-link-primary'>View</a>";

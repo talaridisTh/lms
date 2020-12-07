@@ -16,6 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
 
 	.js('resources/js/dashboard/courses/coursesMain.js', 'public/js/dashboard/courses')
 	.js('resources/js/dashboard/courses/courseProfile.js', 'public/js/dashboard/courses')
+	.js('resources/js/dashboard/courses/newCourse.js', 'public/js/dashboard/courses')
 
 	.js('resources/js/dashboard/bundles/bundlesMain.js', 'public/js/dashboard/bundles')
 	.js('resources/js/dashboard/bundles/bundleProfile.js', 'public/js/dashboard/bundles')

@@ -122,7 +122,7 @@
 					<div class="row">
 						<div class="col-xl-9 col-lg-8 col-md-12">
 
-							<form id="create-pdf-material" action="/dashboard/store-pdf-material" method="post" autocomplete="off">
+							<form id="create-pdf-material" action="/dashboard/pdf" method="post" autocomplete="off">
 								
 								@csrf
 
