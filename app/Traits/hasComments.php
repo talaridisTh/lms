@@ -40,16 +40,17 @@ trait hasComments {
 
     public function deleteComment(Request $request)
     {
-
+        $postId = Comment::findOrFail($request->id)->post->id;
         Comment::where("parent_id", $request->id)->get()->each(function ($comment) {
             $comment->delete();
         });
-        if (Comment::all()->count() <= 1)
+        if (Comment::where("post_id",$postId)->count()<=1)
         {
             Comment::findOrFail($request->id)->post()->first()->delete();
         } else
         {
 
+            dump(Comment::findOrFail($request->id));
             Comment::findOrFail($request->id)->delete();
         }
 

@@ -1,3 +1,4 @@
+
 //! GLOBAL VARIABLES
 //!============================================================
 const courseId = $("#course-materials-list")[0].dataset.courseId
@@ -218,7 +219,7 @@ $("#add-new-material-btn").on("click", function() {
 
 $("#add-new-pdf-material-main").on("click", function() {
 	const priority = $("#store-material-priority").val();
-	
+
 	window.location = `/dashboard/pdf/create/${courseSlug}/${priority}`;
 })
 
@@ -2744,7 +2745,7 @@ const myCodeMirror = CodeMirror(editor, {
 });
 
 $("#edit-course-form").on("submit", function(event) {
-	
+
 	const scriptValue = myCodeMirror.getValue();
 	scriptArea.value = scriptValue;
 

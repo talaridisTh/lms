@@ -275,6 +275,7 @@ $(".template-prevent").on("click", async function (e) {
         const {data, status} = await axios.get(this.href)
 
         if (status == 200) {
+
             templateHandler(data, this);
             onFullScreen();
             onCloseFullScreen();
@@ -381,7 +382,7 @@ const onCloseFullScreen = () => {
 }
 
 
-$(".js-form-reply").on("click", async function (e) {
+$(document).on("click",".js-form-reply" ,async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
 
@@ -495,7 +496,7 @@ const onDeleteComment = () => {
 }
 
 const onLikebtn = () => {
-    $(".cnt-list-content").on("click", ".btn-reply-like", async function () {
+    $(".template-cnt").on("click", ".btn-reply-like", async function () {
         try {
             const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
 
@@ -569,6 +570,7 @@ const bestAnswer = () => {
 }
 
 const onInitEventHandler = () => {
+    $(".template-cnt").off();
     onDeleteComment();
     onLikebtn();
     onFirstReplayBtnEvent()
