@@ -19,29 +19,50 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get("/find-user/{search}", function($search) {
-	$user = User::where("first_name", "LIKE", "%$search%")
-		->orWhere("last_name", "LIKE", "%$search%")->with("roles")->first();
+Route::get("/set-polymorphic", function() {
+	
+	DB::table('model_has_roles')
+    ->update([
+        'model_type' => "App\Models\User",
+	]);
+	
+	DB::table("topicables")
+		->update([
+			"topicable_type" => "App\Models\Course"
+		]);
 
-	return $user;
+	DB::table("mediables")
+		->where("mediable_type", "App\Course")
+		->update([
+			"mediable_type" => "App\Models\Course"
+		]);
+
+	DB::table("mediables")
+		->where("mediable_type", "App\Material")
+		->update([
+			"mediable_type" => "App\Models\Material"
+		]);
+
+	DB::table("watchlistables")
+		->where("watchlistable_type", "App\Material")
+		->update([
+			"watchlistable_type" => "App\Models\Material"
+		]);
+
+	DB::table("watchlistables")
+		->where("watchlistable_type", "App\Course")
+		->update([
+			"watchlistable_type" => "App\Models\Course"
+		]);
+
 });
 
 
-Route::get("/set-carousels", function() {
-	$option = Option::where("name", "Index Carousels")->first();
 
-	$option->value = json_encode([
-			"primary" => [
-				"models" => [],
-				"status" => 0
-			],
-			"secondary" => [
-				"models" => [],
-				"status" => 0
-			]
-		]);
-
-	$option->save();
+Route::get("/find-permissions", function() {
+	
+	return DB::table("model_has_permissions")->select("*")->get();
+	
 });
 
 

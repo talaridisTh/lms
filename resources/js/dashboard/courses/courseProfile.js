@@ -218,13 +218,8 @@ $("#add-new-material-btn").on("click", function() {
 
 $("#add-new-pdf-material-main").on("click", function() {
 	const priority = $("#store-material-priority").val();
-<<<<<<< HEAD
-
-	window.location = `/dashboard/create-pdf/${courseSlug}/${priority}`;
-=======
 	
 	window.location = `/dashboard/pdf/create/${courseSlug}/${priority}`;
->>>>>>> a84d8db06b95b0c7b7937748a47d719a4db0a744
 })
 
 $("#change-cover-btn").on("click", function() {
@@ -2749,15 +2744,6 @@ const myCodeMirror = CodeMirror(editor, {
 });
 
 $("#edit-course-form").on("submit", function(event) {
-<<<<<<< HEAD
-	event.preventDefault();
-
-	const scriptValue = myCodeMirror.getValue();
-	scriptArea.value = scriptValue;
-
-	this.submit();
-});
-=======
 	
 	const scriptValue = myCodeMirror.getValue();
 	scriptArea.value = scriptValue;
@@ -2816,4 +2802,3 @@ dragula( [dragArea], {})
 		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
 	});
 })
->>>>>>> a84d8db06b95b0c7b7937748a47d719a4db0a744
