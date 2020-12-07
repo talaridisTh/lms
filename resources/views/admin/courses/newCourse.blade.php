@@ -139,7 +139,7 @@
 					<a href="#settings" id="setting-tab-btn"
 						data-toggle="tab" aria-expanded="false"
 						class="nav-link active">
-						Ρυθμίσεις
+						Γενικά
 					</a>
 				</li>
 				<li class="nav-item">

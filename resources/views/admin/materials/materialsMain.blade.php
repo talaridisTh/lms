@@ -31,7 +31,7 @@
             <div class="col-sm-4"></div>
             <div class="col-sm-8">
                 <div class="text-sm-right">
-					<a href="/dashboard/create-pdf" class="btn btn-primary mb-2">
+					<a href="/dashboard/pdf/create" class="btn btn-primary mb-2">
 						<i class="mdi mdi-plus-circle mr-1"></i>
 						Νέο PDF
 					</a>

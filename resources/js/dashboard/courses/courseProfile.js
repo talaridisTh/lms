@@ -518,7 +518,6 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-		{ data: 'btns', className: "cursor-default text-center align-middle", searchable: false, orderable: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {

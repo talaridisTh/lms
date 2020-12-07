@@ -92,7 +92,7 @@
 						<li class="side-nav-item">
 							<a href="/dashboard/materials" class="side-nav-link" draggable="false">
 								<i class="mdi mdi-book-open-page-variant"></i>
-								<span>Μαθήματα</span>
+								<span>Υλικό</span>
 							</a>
 						</li>
 						<li class="side-nav-item">
@@ -117,8 +117,8 @@
 
                         <li class="side-nav-item">
                             <a href="{{route('media.index')}}" class="side-nav-link" draggable="false">
-                                <i class="mdi mdi-package-variant"></i>
-                                <span>File Manager</span>
+                                <i class="mdi mdi-cloud-upload-outline"></i>
+                                <span>Media</span>
                             </a>
 						</li>
 						<li class="side-nav-item">

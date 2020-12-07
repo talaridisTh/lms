@@ -157,7 +157,7 @@
 			<li class="nav-item">
 				<a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
 					<i class="mdi mdi-home-variant d-md-none d-block"></i>
-					<span class="d-none d-md-block">Ρυθμίσεις</span>
+					<span class="d-none d-md-block">Γενικά</span>
 				</a>
 			</li>
 			<li class="nav-item">

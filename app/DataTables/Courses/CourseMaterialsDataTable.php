@@ -57,24 +57,38 @@ class CourseMaterialsDataTable extends DataTable
 				}
 
 				if ($data->type === "PDF") {
-					return "<a href='/dashboard/edit-pdf/$data->slug' class='h5 custom-link-primary'>$data->title </a>$badge
+					return "<a href='/dashboard/pdf/$data->slug/edit' class='h5 custom-link-primary'>$data->title </a>$badge
 							<p class='mb-1'>$data->type</p>
-							<a href='/dashboard/edit-pdf/$data->slug' class='custom-link-primary'>Edit</a>
+							<a href='/dashboard/pdf/$data->slug/edit' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
-							<a href='#' class='custom-link-primary'>View</a>";
+							<a href='#' class='custom-link-primary'>View</a>
+							<span class='mx-2'>|</span>
+							<a href='#' class='js-remove-material custom-link-primary'
+								data-material-id='$data->id' data-material-type='$data->type'
+							>Remove</a>";
 				}
 				else if ($data->type != "Section") {
 
-					return "<a href='/dashboard/material/$data->slug' class='h5 custom-link-primary'>$data->title </a>$badge
-							<p class='mb-1'>$data->type</p>
-							<a href='/dashboard/material/$data->slug' class='custom-link-primary'>Edit</a>
+					return "<a href='/dashboard/materials/$data->slug/edit' class='h5 custom-link-primary mb-0'>$data->title </a>$badge
+							<p class='my-1'>$data->type</p>
+							<a href='/dashboard/materials/$data->slug/edit' class='custom-link-primary'>Edit</a>
 							<span class='mx-2'>|</span>
-							<a href='#' class='custom-link-primary'>View</a>";
+							<a href='#' class='custom-link-primary'>View</a>
+							<span class='mx-2'>|</span>
+							<a href='#' class='js-remove-material custom-link-primary'
+								data-material-id='$data->id' data-material-type='$data->type'
+							>Remove</a>";
 
 				}
 				else {
-					return "<h4 class='js-section cursor-pointer mt-0'
-						data-slug='$data->slug'>$data->title</h4><p class='mb-0'>Σύνολο υλικού: ".$data->chapters()->count()."</p>";
+					return "<h5 class='js-section cursor-pointer mt-0'
+						data-slug='$data->slug'>
+							$data->title
+						</h5>
+						<p class='mb-1'>Σύνολο υλικού: ".$data->chapters()->count()."</p>
+						<a href='#' class='js-remove-material custom-link-primary'
+							data-material-id='$data->id' data-material-type='$data->type'
+							>Delete</a>";
 				}
 			})
 			->editColumn("highlight", function($data) {
@@ -97,12 +111,12 @@ class CourseMaterialsDataTable extends DataTable
 				return "<input class='js-toggle' data-course-id='$request->courseId'
 					type='checkbox' id='". $data->slug ."-toggle-checkbox'
 					data-material-id='$data->id' $status data-switch='success' autocomplete='off'/>
-					<label for='". $data->slug ."-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
+					<label for='". $data->slug ."-toggle-checkbox' class='mb-0 mt-1' data-on-label='On' data-off-label='Off'></label>";
 
 			})
 			->editColumn('priority', function($data) {
 
-				return "<div class='form-group mb-1'>
+				return "<div class='form-group mb-0'>
 							<input type='text' class='form-control text-center js-sort-input'
 								data-material-id='$data->id'
 								data-current-priority=".$data->pivot->priority."

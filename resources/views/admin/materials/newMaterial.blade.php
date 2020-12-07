@@ -151,7 +151,7 @@
             <li class="nav-item">
                 <a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
                     <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                    <span class="d-none d-md-block">Ρυθμίσεις</span>
+                    <span class="d-none d-md-block">Γενικά</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -163,7 +163,7 @@
             </li>
         </ul><!-- ./Tab Links -->
 
-        <div class="tab-content">
+        <div class="tab-content mb-3">
             <div class="tab-pane show active" id="content">
                 <div class="row">
 

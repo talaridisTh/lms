@@ -418,7 +418,7 @@
 					<a href="#settings" id="setting-tab-btn"
 						data-toggle="tab" aria-expanded="false"
 						class="nav-link active">
-						Ρυθμίσεις
+						Γενικά
 					</a>
 				</li>
 				<li class="nav-item">
@@ -783,7 +783,6 @@
 								<th class="text-center">Τύπος</th>
 								<th class="text-center">Τελ. Ανανέωση</th>
 								<th class="text-center">Ημ. Δημιουργίας</th>
-								<th class="text-center"></th>
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -797,7 +796,6 @@
 								<th class="text-center">Τύπος</th>
 								<th class="text-center">Τελ. Ανανέωση</th>
 								<th class="text-center">Ημ. Δημιουργίας</th>
-								<th class="text-center"></th>
 							</tr>
 						</tfoot>
 					</table>
