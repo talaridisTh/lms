@@ -160,6 +160,8 @@ class MaterialController extends Controller {
     public function update(Request $request, Material $material)
     {
 
+		// dd($request->all());
+
 		$request->validate([
 			'title' => 'required',
 			'type' => 'required',

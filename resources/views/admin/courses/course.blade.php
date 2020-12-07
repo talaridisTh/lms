@@ -441,9 +441,9 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#files-tab" id="sections-tab-btn" class="nav-link"
+					<a href="#media-tab" id="sections-tab-btn" class="nav-link"
 						data-toggle="tab" aria-expanded="true">
-						Αρχεία
+						Media
 					</a>
 				</li>
 			</ul><!-- ./tabs -->
@@ -866,7 +866,7 @@
 					</div>
 				</div><!-- section-content -->
 
-				<div id="files-tab" class="tab-pane mb-3">
+				<div id="media-tab" class="tab-pane mb-3">
 
 					{{-- <div class="text-right mb-3">
 						<button class="btn btn-primary" form="edit-course-form" type="submit" value="save">Save</button>
