@@ -304,7 +304,7 @@
                                                         </div>
                                                         <div class="col-lg-2 col-1 js-alert">
                                                         <span class="">
-                                                            <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i> {{--bazei to icon anti gia to type--}}
+                                                            <i class=" font-24 text-black {{App\Models\Material::getType($chapter->type)}}"></i> {{--bazei to icon anti gia to type--}}
                                                         </span>
                                                         </div>
                                                     </a>
@@ -343,7 +343,7 @@
                                                   class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
                                         </div>
                                         <div class="col-lg-2 col-1 p-0  js-alert">
-                                            <i class=" font-24 text-black {{App\Material::getType($materials->type)}}"></i>
+                                            <i class=" font-24 text-black {{App\Models\Material::getType($materials->type)}}"></i>
                                         </div>
                                     </a>
                                 </li>

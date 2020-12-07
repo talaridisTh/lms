@@ -299,7 +299,7 @@ else{
                         </div>
                     </div>
 
-                    @include("components.index.comments.comments-main",["model"=>$materials,"namespace"=>"App\Material"])
+                    @include("components.index.comments.comments-main",["model"=>$materials,"namespace"=>"App\Models\Material"])
                 </div>
                 <div class="col-lg-4 pl-3 template-hidden">
                     <div class="row hover-yellow px-2">
@@ -413,7 +413,7 @@ else{
 
                                                                     <div class="col-lg-2 col-1 js-alert">
                                                                         <span class="">
-                                                                            <i class=" font-24 text-black {{App\Material::getType($chapter->type)}}"></i>
+                                                                            <i class=" font-24 text-black {{App\Models\Material::getType($chapter->type)}}"></i>
                                                                         </span>
                                                                     </div>
                                                                 </a>
@@ -457,7 +457,7 @@ else{
                                             </div>
                                             <div class="col-lg-2 col-1 p-0 js-alert">
                                 <span class="">
-                                    <i class=" font-24 text-black {{App\Material::getType($material->type)}}"></i>
+                                    <i class=" font-24 text-black {{App\Models\Material::getType($material->type)}}"></i>
                                 </span>
                                             </div>
                                         </a>

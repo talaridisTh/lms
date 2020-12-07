@@ -321,7 +321,7 @@ const onPreviewMaterial = () => {
     previewMaterial.classList.remove("d-none")
 
     const slugMaterial = $(".template-title")[0].dataset.materialSlug
-    window.PREVIEW_PAGE_MATERIAL = `/dashboard/material/${slugMaterial}`
+    window.PREVIEW_PAGE_MATERIAL = `/dashboard/materials/${slugMaterial}/edit`
     previewMaterial.href = window.PREVIEW_PAGE_MATERIAL
 }
 
