@@ -29,18 +29,8 @@ Route::get('/clear', function () {
 
     return redirect(route("home"));
 });
-<<<<<<< HEAD
-Route::post("/test/upload",function (Request  $request){
 
-    dd($request->files, $request->all());
-=======
-Route::get("/delete/all-post",function (){
-    dump( [App\Models\Post::all(),\App\Models\Comment::all()]);
-    DB::table("posts")->delete();
 
-    dump( [App\Models\Post::all(),\App\Models\Comment::all()]);
->>>>>>> a84d8db06b95b0c7b7937748a47d719a4db0a744
-});
 Route::get("/test", "Index\HomeController@test")->name("user.test");
 //!########################################################
 //! Dashboard routes
@@ -137,12 +127,12 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 	//? courses
     Route::post('materials/material-types', 'Ajax\MaterialController@materialTypes');
 	Route::post('materials/add-additionnal-content', 'Ajax\MaterialController@addContent');
-	
+
 	//? fail
     // Route::delete('/materials/multiple/delete', 'Ajax\MaterialController@destroyMultipleMaterials')->name("destroyMultipleMaterials.datatable");
 	Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMaterialMultiple')->name("addMaterialMultiple.datatable");
     // Route::patch('/materials/multiple/changeStatus', 'Ajax\MaterialController@changeStatusMultiple')->name("changeStatusMultipleMaterial.datatable");;
-	
+
 
 	Route::patch('materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive');
 
@@ -156,7 +146,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
     Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
 	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
-		
+
     Route::patch('material/{material:id}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
     Route::patch('material/{material:id}/change-pdf', 'Ajax\MaterialController@changePDF');
 
