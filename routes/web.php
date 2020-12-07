@@ -30,6 +30,14 @@ Route::get('/clear', function () {
     return redirect(route("home"));
 });
 
+Route::get("/delete/all-post",function (){
+    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all()]);
+    DB::table("posts")->delete();
+    DB::table("likables")->delete();
+    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all()]);
+
+});
+
 
 Route::get("/test", "Index\HomeController@test")->name("user.test");
 //!########################################################

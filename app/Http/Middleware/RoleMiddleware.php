@@ -21,7 +21,7 @@ class RoleMiddleware {
     {
 		$allowed = ["admin", "super-admin"];
 		$roles = Auth::user()->getRoleNames();
-		
+
 		foreach ($roles as $role) {
 			if (in_array($role, $allowed)) {
 				return $next($request);
@@ -29,7 +29,7 @@ class RoleMiddleware {
 		}
 		// dd(Auth::user()->getRoleNames());
 
-		
+
 
         // if ($role[0] == "admin" || $role[0] == "super-admin")
         // {
