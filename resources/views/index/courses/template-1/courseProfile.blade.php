@@ -211,11 +211,13 @@ else{
                                     <div class="p-2"> {!! $course->summary !!}</div>
                                 </div>
 
-                                <div class="tab-pane {{isset($activeContentTwo)?$activeContentTwo:""}}" id="tabs-description">
+                                <div class="tab-pane {{isset($activeContentTwo)?$activeContentTwo:""}}"
+                                     id="tabs-description">
                                     <div class="p-2"> {!! $course->description !!}</div>
                                 </div>
 
-                                <div class="tab-pane {{isset($activeContentThree)?$activeContentThree:""}}"  id="tabs-files">
+                                <div class="tab-pane {{isset($activeContentThree)?$activeContentThree:""}}"
+                                     id="tabs-files">
                                     <div class="tab-pane show active" id="profile">
                                         <div class="accordion custom-accordion my-2" id="extra-content">
                                             <div class="card mb-0">
@@ -258,7 +260,8 @@ else{
 
                                 </div>
 
-                                <div class="tab-pane {{isset($activeContentFour)?$activeContentFour:""}}"  id="tabs-media">
+                                <div class="tab-pane {{isset($activeContentFour)?$activeContentFour:""}}"
+                                     id="tabs-media">
                                     <div class="col-md-12 my-1">
                                         <div class="d-flex flex-wrap ">
                                             @foreach($course->media->where("type","!=",1) as $media)
@@ -274,11 +277,13 @@ else{
                                     </div>
                                 </div>
 
-                                <div class="tab-pane {{isset($activeContentFive)?$activeContentFive:""}}"  id="tabs-quiz">
+                                <div class="tab-pane {{isset($activeContentFive)?$activeContentFive:""}}"
+                                     id="tabs-quiz">
                                     {!! $course->script !!}
                                 </div>
 
-                                <div class="tab-pane {{isset($activeContentSix)?$activeContentSix:""}}"  id="tabs-disscus">
+                                <div class="tab-pane {{isset($activeContentSix)?$activeContentSix:""}}"
+                                     id="tabs-disscus">
                                     @include("components.index.comments.comments-main",["model"=>$course,"namespace"=>"App\Models\Course"])
                                 </div>
                             </div>
@@ -306,20 +311,27 @@ else{
 
                                 <div id="collapseOne" class="collapse show"
                                      aria-labelledby="heading-announcement" data-parent="#courses-announcement">
-                                    <div class="card-body py-1" data-simplebar style="max-height: 200px;">
+                                    <div class="card-body py-1 cnt-announcement" data-simplebar
+                                         style="max-height: 200px;">
+                                        @php
+                                            $count = 0;
+                                        @endphp
                                         @foreach($announcements  as $key => $announcement)
-                                            <div class="single-announcement cursor-pointer  mb-3" id="announcement-{{$key}}">
+                                            <div class="single-announcement cursor-pointer  mb-3"
+                                                 id="announcement-{{$key}}">
 
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                <h4>{{$announcement->title}}</h4>
+                                                    <h4 id="slide-{{$key}}" data-count="{{$count++}}"
+                                                        data-toggle="modal"
+                                                        data-target="#announcements-modal">{{$announcement->title}}</h4>
                                                     <span
                                                         class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
                                                 </div>
 
-
                                             </div>
                                             <hr style="border-top: black">
                                         @endforeach
+
                                     </div>
                                 </div>
                             </div>
@@ -531,6 +543,48 @@ else{
 
     </div>
 
+    <div class="modal fade" id="announcements-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Ανακοινώσεις</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <div class="swiper-container-announcements">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            @foreach($announcements  as $key => $announcement)
+                                <div class="swiper-slide">
+                                    <div style="word-wrap: break-word"
+                                         class="px-5 d-flex flex-column justify-content-center">
+                                        <h3 class="mb-3 ">{{$announcement->title}}  </h3>
+                                        <p>{{$announcement->content}}</p>
+                                        <span class="font-13 font-weight-normal">
+                                            ({{$announcement->created_at->diffForHumans()}})
+                                        </span>
+
+                                    </div>
+                                </div>
+                            @endforeach
+                        <!-- Slides -->
+                        </div>
+                        <!-- If we need pagination -->
+                        <div class="swiper-pagination"></div>
+
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+
+                        <!-- If we need scrollbar -->
+                        <div class="swiper-scrollbar"></div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     @include("components.index.comments.comments-form")
 @endsection
 

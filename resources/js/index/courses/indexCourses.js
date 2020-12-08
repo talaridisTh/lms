@@ -1,5 +1,9 @@
 import utilities from '../../index/main';
 
+if ($('meta[name=route]').attr('content') == "index.userCourse") {
+    const slugCourse = $(".course-slug")[0].dataset.courseSlug
+    window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
+}
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 
@@ -73,10 +77,7 @@ const initFilepond =()=>{
 }
 
 initFilepond();
-if ($('meta[name=route]').attr('content') == "index.userCourse") {
-    const slugCourse = $(".course-slug")[0].dataset.courseSlug
-    window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
-}
+
 
 //! announcements-swiper
 //!============================================================
@@ -89,9 +90,7 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
         el: '.swiper-pagination-announcements',
         draggable: true,
     },
-    fadeEffect: {
-        crossFade: true
-    },
+
 
     // Navigation arrows
     navigation: {
@@ -108,11 +107,16 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
         onlyInViewport: false,
     },
 })
+let countSlider = 0
+$(".cnt-announcement").on("click" ,function (e){
+    countSlider =   $(e.target).data("count")
+})
 $('#announcements-modal').on('shown.bs.modal', function (e) {
     swiperAnnouncements.update();
     var $invoker = $(e.relatedTarget);
     swiperAnnouncements.slideTo($invoker.data('slider'));
     swiperAnnouncements.update();
+    swiperAnnouncements.slideTo(countSlider);
 });
 
 //FILTER TOPIC
