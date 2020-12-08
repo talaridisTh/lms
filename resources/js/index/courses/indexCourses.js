@@ -354,13 +354,17 @@ const templateHandler = (data, that) => {
                 </div>
             `
 
-    $(".material-cnt").prepend("<nav aria-label='breadcrumb'>\n" +
-        "    <ol class='breadcrumb mb-0'>\n" +
-        "        <li class='breadcrumb-item'><a href='#'>course</a></li>\n" +
-        "<span class=\"mx-1 font-16\">/</span>" +
-        "        <li class='breadcrumb-item active' aria-current='page'>photoshop</li>\n" +
-        "    </ol>\n" +
-        "</nav>");
+    $(".material-cnt").prepend(`<nav aria-label='breadcrumb'>
+            <ol class='breadcrumb mb-0'>
+                <li class='breadcrumb-item'>
+                <span class="uil-times-circle invisible ">
+                    <a href='#' class="visible">course</a>
+                </spanc>
+                </li>
+                    <span class='mx-1 font-16'>/</span>
+                <li class='breadcrumb-item active' aria-current='page'>${that.dataset.materialTitle}</li>
+            </ol>
+        </nav>`);
 
 
 }

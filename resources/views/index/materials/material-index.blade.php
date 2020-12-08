@@ -22,13 +22,30 @@ if (json_decode($materials->fields)->summary){
     $activeTabsOne ="active";
     $activeContentOne="show active";
 
-}else if(json_decode($materials->fields)->summary){
+}else if (json_decode($materials->fields)->description) {
        $activeTabsTwo ="active";
        $activeContentTwo="show active";
+
+}
+else if (json_decode($materials->fields)->description) {
+       $activeTabsThree ="active";
+       $activeContentThree="show active";
+}
+else if(count($materials->media->where("type","!=",0))>0) {
+       $activeTabsFour ="active";
+       $activeContentFour="show active";
+}
+else if(count($materials->media->where("type","!=",1))>0) {
+       $activeTabsFive ="active";
+       $activeContentFive="show active";
+}
+else if ($materials->script) {
+       $activeTabsFive ="active";
+       $activeContentFive="show active";
 }
 else{
-     $activeTabsThree ="active";
-     $activeContentThree="show active";
+    $activeTabsSeven ="active";
+       $activeContentSeven="show active";
 }
 
 
@@ -169,7 +186,7 @@ else{
                         @if($materials->summary && json_decode($materials->fields)->summary)
                             <li class="nav-item ">
                                 <a href="#tabs-summary" data-toggle="tab" aria-expanded="false"
-                                   class="nav-link rounded-0 {{$activeTabsOne?$activeTabsOne:""}}">
+                                   class="nav-link rounded-0 {{isset($activeTabsOne)?$activeTabsOne:""}}">
                                     <i class="mdi mdi-home-variant d-md-none d-block"></i>
                                     <span class="d-none d-md-block">Πληροφορίες</span>
                                 </a>
@@ -178,7 +195,7 @@ else{
                         @if($materials->description && json_decode($materials->fields)->description)
                             <li class="nav-item">
                                 <a href="#tabs-description" data-toggle="tab" aria-expanded="true"
-                                   class="nav-link rounded-0 ">
+                                   class="nav-link rounded-0 {{isset($activeTabsTwo)?$activeTabsTwo:""}}">
                                     <i class="mdi mdi-account-circle d-md-none d-block"></i>
                                     <span class="d-none d-md-block">Περίληψη</span>
                                 </a>
@@ -188,9 +205,9 @@ else{
                         @if($materials->content && json_decode($materials->fields)->content)
                             <li class="nav-item">
                                 <a href="#tabs-content" data-toggle="tab" aria-expanded="false"
-                                   class="nav-link rounded-0">
+                                   class="nav-link rounded-0 {{isset($activeTabsThree)?$activeTabsThree:""}}">
                                     <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                    <span class="d-none d-md-block">Συζήτηση</span>
+                                    <span class="d-none d-md-block">Περιεχόμενο</span>
                                 </a>
                             </li>
                         @endif
@@ -198,7 +215,7 @@ else{
                         @if(count($materials->media->where("type","!=",0))>0)
                             <li class="nav-item">
                                 <a href="#tabs-files" data-toggle="tab" aria-expanded="false"
-                                   class="nav-link rounded-0">
+                                   class="nav-link rounded-0 {{isset($activeTabsFour)?$activeTabsFour:""}}">
                                     <i class="mdi mdi-settings-outline d-md-none d-block"></i>
                                     <span class="d-none d-md-block">Αρχεία</span>
                                 </a>
@@ -208,38 +225,47 @@ else{
                         @if(count($materials->media->where("type","!=",1))>0)
                             <li class="nav-item">
                                 <a href="#tabs-media" data-toggle="tab" aria-expanded="false"
-                                   class="nav-link rounded-0">
+                                   class="nav-link rounded-0 {{isset($activeTabsFive)?$activeTabsFive:""}}">
                                     <i class="mdi mdi-settings-outline d-md-none d-block"></i>
                                     <span class="d-none d-md-block">Media</span>
                                 </a>
                             </li>
                         @endif
+                        @if($materials->script)
+                            <li class="nav-item">
+                                <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false"
+                                   class="nav-link rounded-0 {{isset($activeTabsSix)?$activeTabsSix:""}}">
+                                    <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                    <span class="d-none d-md-block">Quiz</span>
+                                </a>
+                            </li>
+                        @endif
 
                         <li class="nav-item">
-                            <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                            <a href="#tabs-disscus" data-toggle="tab" aria-expanded="false"
+                               class="nav-link rounded-0 {{isset($activeTabsSeven)?$activeTabsSeven:""}}">
                                 <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                <span class="d-none d-md-block">Quiz</span>
+                                <span class="d-none d-md-block">Συζήτηση</span>
                             </a>
                         </li>
-
                     </ul>
 
 
                     <div class="tab-content">
 
-                        <div class="tab-pane " id="tabs-summary">
+                        <div class="tab-pane {{isset($activeContentOne)?$activeContentOne:""}}" id="tabs-summary">
                             <div class="p-2"> {!! $materials->summary !!}</div>
                         </div>
 
-                        <div class="tab-pane " id="tabs-description">
+                        <div class="tab-pane {{isset($activeTabsTwo)?$activeTabsTwo:""}}" id="tabs-description">
                             <div class="p-2"> {!! $materials->description !!}</div>
                         </div>
 
-                        <div class="tab-pane" id="tabs-content">
+                        <div class="tab-pane {{isset($activeTabsThree)?$activeTabsThree:""}}" id="tabs-content">
                             <div class="p-2"> {!! $materials->content !!}</div>
                         </div>
 
-                        <div class="tab-pane" id="tabs-files">
+                        <div class="tab-pane {{isset($activeTabsFour)?$activeTabsFour:""}}" id="tabs-files">
                             <div class="tab-pane show active" id="profile">
                                 <div class="accordion custom-accordion my-2" id="extra-content">
                                     <div class="card mb-0">
@@ -282,7 +308,7 @@ else{
 
                         </div>
 
-                        <div class="tab-pane" id="tabs-media">
+                        <div class="tab-pane {{isset($activeTabsFive)?$activeTabsFive:""}}" id="tabs-media">
                             <div class="col-md-12 my-1">
                                 <div class="d-flex flex-wrap ">
                                     @foreach($materials->media->where("type","!=",1) as $media)
@@ -297,9 +323,16 @@ else{
                                 </div>
                             </div>
                         </div>
+
+                        <div class="tab-pane {{isset($activeTabsSix)?$activeTabsSix:""}}" id="tabs-quiz">
+                            {!! $materials->script !!}
+                        </div>
+
+                        <div class="tab-pane {{isset($activeTabsSeven)?$activeTabsSeven:""}}" id="tabs-disscus">
+                            @include("components.index.comments.comments-main",["model"=>$materials,"namespace"=>"App\Models\Material"])
+                        </div>
                     </div>
 
-                    @include("components.index.comments.comments-main",["model"=>$materials,"namespace"=>"App\Models\Material"])
                 </div>
                 <div class="col-lg-4 pl-3 template-hidden">
                     <div class="row hover-yellow px-2">
