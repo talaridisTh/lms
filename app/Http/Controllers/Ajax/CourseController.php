@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ajax;
 
 use App\Models\Course;
+use App\Models\Material;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -133,16 +134,51 @@ class CourseController extends Controller
 		return $dataTable->render('course.remaingMaterials');
 	}
 
-	public function toggleMaterials( Request $request ) {
+	public function toggleMaterial(Request $request, Course $course) {
 
-		$course = Course::find( $request->courseId );
-		$data = $request->data;
+		$material = $course->materials()
+			->wherePivot("material_id", $request->materialId)->first();
 
-		foreach ($data as $material) {
-			$course->materials()
-				->updateExistingPivot( $material['id'], [ 'status' => $material['status']]);
+		$publish = $material->pivot->publish_at;
+		$now = Carbon::now();
+
+		if ($request->status === 1) {
+			$material->pivot->update([
+				"status" => 1,
+				"publish_at" => is_null($publish) ? $now : $publish
+			]);
+		}
+		else {
+			$material->pivot->update([
+				"status" => 0
+			]);
 		}
 
+		echo Carbon::parse($material->pivot->publish_at)->format("Y-m-d H:i");
+	}
+
+	public function toggleMultipleMaterials(Request $request, Course $course) {
+
+		$now = Carbon::now();
+
+		foreach ( $request->ids as $id ) {
+			$material = $course->materials()
+				->wherePivot("material_id", $id)->first();
+
+			$publish = $material->pivot->publish_at;
+
+			if ( $request->status ) {
+				$material->pivot->update([
+					"status" => 1,
+					"publish_at" => is_null($publish) ? $now : $publish
+				]);
+			}
+			else {
+				$material->pivot->update([
+					"status" => 0
+				]);
+			}
+		}
 	}
 
 	public function addMaterials( Request $request ) {
@@ -268,6 +304,14 @@ class CourseController extends Controller
 		foreach ($request->imagesPriority as $key => $id) {
 			$course->media()->updateExistingPivot($id, ['priority' => ($key + 1) ]);
 		}
+	}
+
+	public function publishMaterial(Request $request, Course $course) {
+
+		$course->materials()->updateExistingPivot($request->materialId, [
+			"publish_at" => $request->date
+		]);
+
 	}
 
 }

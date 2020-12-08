@@ -32,8 +32,6 @@ const beautify_html = require('js-beautify').html
 //! 			EventListerners				#
 //!##########################################
 
-utilities.toastAlert("info", "Publish is under development...")
-
 $("#new-content-btn").on("click", function() {
 	const rows = $("#course-materials-list > tbody > tr");
 	const firstRowPriority = rows[0].dataset.priority;
@@ -240,13 +238,10 @@ $(".js-add-image").on( "click", utilities.imageHandler);
 
 $("#activate-selection").on( 'click', function() {
 	let selection = $(".js-course-material-checkbox:checked");
-	let data = [];
+	let ids = [];
 
 	for ( var i = 0; i < selection.length; i++ ) {
-		data.push({
-			id: selection[i].dataset.materialId,
-			status: 1
-		});
+		ids.push(selection[i].dataset.materialId);
 	}
 
 	Swal.fire({
@@ -261,7 +256,7 @@ $("#activate-selection").on( 'click', function() {
 
 		if (result.value) {
 
-			toggleState( data );
+			toggleState(ids, true);
 
 		}
 	})
@@ -270,13 +265,10 @@ $("#activate-selection").on( 'click', function() {
 
 $("#deactivate-selection").on( "click", function() {
 	let selection = $(".js-course-material-checkbox:checked");
-	let data = [];
+	let ids = [];
 
 	for ( var i = 0; i < selection.length; i++ ) {
-		data.push({
-			id: selection[i].dataset.materialId,
-			status: 0
-		});
+		ids.push(selection[i].dataset.materialId);
 	}
 
 	Swal.fire({
@@ -291,14 +283,14 @@ $("#deactivate-selection").on( "click", function() {
 
 		if (result.isConfirmed) {
 
-			toggleState( data );
+			toggleState(ids, false);
 
 		}
 	})
 
 });
 
-let publishDate = $("#publish-date-select").daterangepicker({
+const pickerConfig = {
 	singleDatePicker: true,
 	drops: "auto",
     opens: "center",
@@ -310,7 +302,9 @@ let publishDate = $("#publish-date-select").daterangepicker({
 		format: "DD-MM-YYYY H:mm",
 		cancelLabel: "Clear"
     },
-});
+}
+
+let publishDate = $("#publish-date-select").daterangepicker(pickerConfig);
 
 publishDate.on( "apply.daterangepicker", function(event, picker) {
 
@@ -479,7 +473,8 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ targets: 0, width: "60px"},
 		{ targets: 3, width: "125px"},
 		{ targets: [2, 4], width: "115px"},
-		{ targets: [5, 6], width: "100px"},
+		{ targets: 5, width: "100px"},
+		{ targets: 6, width: "150px"},
 	],
 	ajax: {
 		url: "/course-datatables/course-materials",
@@ -501,20 +496,6 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		{ data: 'priority', name: 'pivot.priority', className: "align-middle", searchable: false },
 		{ data: 'type', name: 'type', className: "cursor-default text-center align-middle" },
 		{ data: 'publish', name: "pivot.publish_at", className: "align-middle text-center cursor-default", searchable: false, orderable: false },
-		// {
-		// 	data: 'pivot.publish_at', name: 'pivot.publish_at',
-		// 	className: "cursor-default text-center align-middle w-165px", searchable: false,
-		// 	render: function(data) {
-		// 		console.log(data);
-		// 		let date = new Date(data);
-		// 		let day = date.toLocaleDateString().replace( /[/]/g, "-");
-		// 		let hours = `${date.getHours()}`.padStart(2, "0");
-		// 		let minutes = `${date.getMinutes()}`.padStart(2, "0");
-
-		// 		let time = `${hours}:${minutes}`;
-		// 		return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
-		// 	}
-		// },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -551,6 +532,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		multipleChapterDeactivateInit();
 		showSectionBtnInit();
 		sectionMaterialHighlightInit();
+		dateInputShow();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -715,7 +697,27 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 
 		addFilesBtnInit();
     }
-})
+});
+
+function dateInputShow() {
+
+	$(".js-publish-cover").on("click", function() {
+		const cover = this;
+		const td = cover.parentElement;
+		const dateInput = td.getElementsByClassName("js-publish-picker")[0];
+
+		this.classList.add("d-none");
+		dateInput.classList.remove("d-none");
+
+		$(dateInput).daterangepicker(pickerConfig);
+
+		$(dateInput).on("apply.daterangepicker", materialPublishApplyHandler.bind(this));
+
+		$(dateInput).on("hide.daterangepicker", materialPublishHideHandler.bind(this, cover, dateInput));
+
+		dateInput.focus();
+	})
+}
 
 function sectionMaterialHighlightInit() {
 
@@ -1361,33 +1363,27 @@ function toggleCourseMaterial() {
 
 		//& an empene to function (toggleState)
 		//& 8a ginotan ena PERITO reload tou table
-		axios.patch('/course-ajax/toggle-materials', {
-			courseId: this.dataset.courseId,
-			data: [{
-				id: this.dataset.materialId,
-				status: this.checked ? 1 : 0
-			}],
+		axios.patch(`/course-ajax/${courseId}/toggle-material`, {
+			materialId: this.dataset.materialId,
+			status: this.checked ? 1 : 0
 		})
 		.then( (res) => {
-			let icon = this.checked ? "success" : "info";
-			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-			let badge = $(`.js-chapter-badge[data-material-id="${this.dataset.materialId}"]`);
+			const row = this.findParent(2);
+			const icon = this.checked ? "success" : "info";
+			const message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+			const type = this.dataset.type;
 
-			if ( this.checked ) {
-				badge.removeClass("badge-outline-danger");
-				badge.addClass("badge-outline-success px-1 mr-1");
-				badge.text("Active");
+			if ( type === "Section" ) {
+				sectionBadgeUpdate(this.dataset.materialId, this.checked);
 			}
-			else {
-				badge.removeClass("badge-outline-success px-1 mr-1");
-				badge.addClass("badge-outline-danger");
-				badge.text("Inactive");
-			}
+
+			publishTextUpdate(row, res.data);
+			publishBadgeUpdate(row, res.data, this.checked);
 
 			utilities.toastAlert( icon, message );
-
 		})
 		.catch( (err) => {
+			console.log(err);
 			utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
 		});
 	});
@@ -2252,39 +2248,27 @@ function createDateElm( id ) {
 	return input;
 }
 
-function toggleState(data) {
+function toggleState(ids, status) {
 
-	axios.patch('/course-ajax/toggle-materials', {
-		courseId,
-		data
+	axios.patch(`/course-ajax/${courseId}/toggle-multiple-materials`, {
+		ids: ids,
+		status: status
 	})
 	.then( (res) => {
-		let materialCount = data.length;
-		let status = data[0].status;
+		let materialCount = ids.length;
 		let message = "";
 		let icon = status == 1 ? "success" : "info";
-		let badge = "";
 
 		if ( materialCount == 1 ) {
-			message = status == 1 ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+			message = status ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
 		}
 		else {
-			message = status == 1 ? "Ενεργοποιήθηκαν" : "Απενεργοποιήθηκαν";
+			message = status ? "Ενεργοποιήθηκαν" : "Απενεργοποιήθηκαν";
 		}
 
-		for (let i = 0; i < data.length; i++) {
-			badge = $(`.js-chapter-badge[data-material-id="${data[i].id}"]`);
+		for (let i = 0; i < ids.length; i++) {
 
-			if ( data[i].status == 1 ) {
-				badge.removeClass("badge-outline-danger");
-				badge.addClass("badge-outline-success px-1 mr-1");
-				badge.text("Active");
-			}
-			else {
-				badge.removeClass("badge-outline-success px-1 mr-1");
-				badge.addClass("badge-outline-danger");
-				badge.text("Inactive");
-			}
+			sectionBadgeUpdate(ids[i], status)
 
 		}
 
@@ -2324,6 +2308,76 @@ function endDate( input ) {
 	let secondDate = dateInputValue[1].split("/").reverse().join("-");
 
 	return secondDate;
+}
+
+function materialPublishApplyHandler(ev, picker) {
+	const materialId = this.dataset.materialId;
+
+	axios.patch(`/course-ajax/${courseId}/publish-material`, {
+		materialId,
+		date: picker.startDate.format('YYYY-MM-DD H:mm')
+	})
+	.then( res => {
+		courseMaterialsTable.ajax.reload(null, false);
+	})
+			  
+}
+function materialPublishHideHandler(cover, dateInput) {
+	setTimeout(() => {
+		cover.classList.remove("d-none");
+		dateInput.classList.add("d-none");
+		
+		$(dateInput).data('daterangepicker').remove();
+	}, 50);
+}
+
+function sectionBadgeUpdate(sectionId, checked) {
+	let badge = $(`.js-chapter-badge[data-material-id="${sectionId}"]`);
+
+	if ( checked ) {
+		badge.removeClass("badge-outline-danger");
+		badge.addClass("badge-outline-success px-1 mr-1");
+		badge.text("Active");
+	}
+	else {
+		badge.removeClass("badge-outline-success px-1 mr-1");
+		badge.addClass("badge-outline-danger");
+		badge.text("Inactive");
+	}
+}
+
+function publishTextUpdate(row, date) {
+	let dateElm = row.getElementsByClassName("js-date")[0];
+	let timeElm = row.getElementsByClassName("js-time")[0];
+	
+	date = date.split(" ");
+
+	dateElm.textContent = date[0].split("-").reverse().join("-");
+	timeElm.textContent = date[1];
+}
+
+function publishBadgeUpdate(row, date, checked) {
+	const badge = row.getElementsByClassName("js-badge")[0];
+	const now = new Date();
+	date = new Date(date);
+
+	if ( checked ) {
+		if ( now > date ) {
+			badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+			badge.classList.add("badge-outline-success");
+			badge.textContent = "Published";
+		}
+		else {
+			badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+			badge.classList.add("badge-outline-primary");
+			badge.textContent = "Scheduled";
+		}
+	}
+	else {
+		badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+		badge.classList.add("badge-outline-danger");
+		badge.textContent = "Draft";
+	}
 }
 
 //!##########################################

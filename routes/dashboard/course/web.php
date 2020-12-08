@@ -35,7 +35,8 @@ Route::prefix("course-ajax")->group(function() {
 	Route::delete('destroy/{ids}', [CourseAjaxController::class, "destroy"]);
     Route::patch('status', [CourseAjaxController::class, "toggleStatus"]);
     Route::patch('priority', [CourseAjaxController::class, "changePriority"]);
-    Route::patch('toggle-materials', [CourseAjaxController::class, "toggleMaterials"]);
+    Route::patch('{course:id}/toggle-material', [CourseAjaxController::class, "toggleMaterial"]);
+    Route::patch('{course:id}/toggle-multiple-materials', [CourseAjaxController::class, "toggleMultipleMaterials"]);
 	Route::post('add-materials', [CourseAjaxController::class, "addMaterials"]);
 	Route::patch('remove-materials', [CourseAjaxController::class, "removeMaterials"]);
     Route::patch('add-users', [CourseAjaxController::class, "addUsers"]);
@@ -44,6 +45,7 @@ Route::prefix("course-ajax")->group(function() {
 	Route::patch('{course:id}/toggle-highlight', [CourseAjaxController::class, "toggleHighlight"]);
 	Route::post('{course:id}/gallery-upload', [CourseAjaxController::class, "galleryUpload"]);
 	Route::patch('{course:id}/gallery-sort', [CourseAjaxController::class, "gallerySort"]);
+	Route::patch('{course:id}/publish-material', [CourseAjaxController::class, "publishMaterial"]);
 });
 
 Route::prefix("section-ajax")->group(function() {
