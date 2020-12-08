@@ -52,6 +52,7 @@ class MaterialController extends Controller {
 		$material->summary = $request->summary;
 		$material->description = $request->description;
 		$material->content = $request->content;
+		$material->script = $request->script;
 		$material->video_link = $request->video_link;
 		$material->type = $request->type;
 		$material->slug = Str::slug($request->title, '-');
@@ -159,7 +160,6 @@ class MaterialController extends Controller {
 
     public function update(Request $request, Material $material)
     {
-
 		$request->validate([
 			'title' => 'required',
 			'type' => 'required',

@@ -418,7 +418,7 @@
 					<a href="#settings" id="setting-tab-btn"
 						data-toggle="tab" aria-expanded="false"
 						class="nav-link active">
-						Ρυθμίσεις
+						Γενικά
 					</a>
 				</li>
 				<li class="nav-item">
@@ -441,9 +441,9 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="#files-tab" id="sections-tab-btn" class="nav-link"
+					<a href="#media-tab" id="sections-tab-btn" class="nav-link"
 						data-toggle="tab" aria-expanded="true">
-						Αρχεία
+						Media
 					</a>
 				</li>
 			</ul><!-- ./tabs -->
@@ -531,7 +531,7 @@
 										</span>
 									@enderror
 								</div>
-								<textarea id="script-area" name="script" hidden>{{ $course->script }}</textarea>
+								<textarea id="script-area" name="script" hidden>{{ old("script", $course->script) }}</textarea>
 							</form>
 
 							<label>Script</label>
@@ -767,7 +767,7 @@
 					</div>
 
 					<table id="course-materials-list" data-course-id="{{ $course->id }}" data-course-slug="{{ $course->slug }}"
-						class="table w-100 nowrap center-not-second js-remove-table-classes js-table">
+						class="table w-100 nowrap js-remove-table-classes js-table">
 						<thead>
 							<tr>
 								<th class="text-center">
@@ -781,9 +781,9 @@
 								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>
-								<th class="text-center">Τελ. Ανανέωση</th>
-								<th class="text-center">Ημ. Δημιουργίας</th>
-								<th class="text-center"></th>
+								<th class="text-center">Publish</th>
+								{{-- <th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center">Ημ. Δημιουργίας</th> --}}
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -795,9 +795,9 @@
 								<th class="text-center">Κατάσταση</th>
 								<th class="text-center">Κατάταξη</th>
 								<th class="text-center">Τύπος</th>
-								<th class="text-center">Τελ. Ανανέωση</th>
-								<th class="text-center">Ημ. Δημιουργίας</th>
-								<th class="text-center"></th>
+								<th class="text-center">Publish</th>
+								{{-- <th class="text-center">Ημ. Δημιουργίας</th>
+								<th class="text-center">Ημ. Δημιουργίας</th> --}}
 							</tr>
 						</tfoot>
 					</table>
@@ -866,7 +866,7 @@
 					</div>
 				</div><!-- section-content -->
 
-				<div id="files-tab" class="tab-pane mb-3">
+				<div id="media-tab" class="tab-pane mb-3">
 
 					{{-- <div class="text-right mb-3">
 						<button class="btn btn-primary" form="edit-course-form" type="submit" value="save">Save</button>

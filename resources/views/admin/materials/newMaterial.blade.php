@@ -4,7 +4,20 @@
 
         {{-- <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" /> --}}
 
-
+	<style>
+		.CodeMirror {
+			border: 1px solid #47515d;
+			border-radius: 4px;
+			height: auto !important;
+			min-height: 300px !important;
+		}
+	  
+		.CodeMirror-scroll {
+			min-height: 300px !important;
+			overflow-y: auto;
+			overflow-x: auto;
+		}
+	</style>
 @endsection
 
 @section('content')
@@ -138,7 +151,7 @@
             <li class="nav-item">
                 <a href="#content" data-toggle="tab" aria-expanded="false" class="nav-link active">
                     <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                    <span class="d-none d-md-block">Ρυθμίσεις</span>
+                    <span class="d-none d-md-block">Γενικά</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -150,7 +163,7 @@
             </li>
         </ul><!-- ./Tab Links -->
 
-        <div class="tab-content">
+        <div class="tab-content mb-3">
             <div class="tab-pane show active" id="content">
                 <div class="row">
 
@@ -225,7 +238,11 @@
                                     placeholder="Εισάγετε περιεχόμενο...">{{ old('content') }}</textarea>
                             </div>
 
-                        </form>
+							<textarea id="script-area" name="script" hidden>{{ old("script") }}</textarea>
+						</form>
+						
+						<label>Script</label>
+						<div id="editor"></div>
 
                     </div><!-- ./form inputs -->
 

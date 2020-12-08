@@ -3310,12 +3310,12 @@ select.is-invalid {
   font-size: 20px;
   position: absolute;
   left: -10%;
-  top: 85%;
+  top: 86%;
   z-index: 10;
 }
 
 .bg-light-gray .add-material {
-  top: 80%;
+  top: 85%;
 }
 
 #course-materials-list > tbody > tr:hover .add-material {
