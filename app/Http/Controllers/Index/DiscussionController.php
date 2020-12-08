@@ -6,12 +6,13 @@ use App\Models\Comment;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Traits\MediaUploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class DiscussionController extends Controller {
-
+use MediaUploader;
     //
     private $course;
 
@@ -262,6 +263,10 @@ class DiscussionController extends Controller {
 
         $closed = Post::findOrFail($postId)->closed;
         Post::findOrFail($postId)->update(["closed" => !$closed]);
+    }
+
+    public function commentUpload(Request  $request){
+        $this->storeImage($request->file[0]);
     }
 
 }

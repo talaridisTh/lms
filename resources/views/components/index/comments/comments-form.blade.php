@@ -1,5 +1,3 @@
-
-
 <div id="new-reply" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-bottom">
         <div class="modal-content">
@@ -14,41 +12,49 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <div class="image-preview-filepond m-2"></div>
-                        <textarea class="form-control form-reply-body" id="reply-body"
-                                  name="body"
-                                  form="form-create-reply" rows="5"
-                                  placeholder="Απάντηση.."></textarea>
+
+                    <textarea class="form-control form-reply-body" id="reply-body"
+                              name="body"
+                              form="form-create-reply" rows="5"
+                              placeholder="Απάντηση.."></textarea>
                 </div>
             </div>
             <style>
                 .filepond--item {
-                    width: calc(50% - .5em);
+                    width: calc(33.33% - .5em);
                 }
             </style>
             <div class="modal-footer d-flex justify-content-between">
                 <div class=" w-75 form-group">
-                        <input type="file"
-                               class="filepond"
-                               name="files"
-                               multiple
-                               data-allow-reorder="true"
-                               data-max-file-size="2MB"
-                               data-max-files="2">
-                </div>
-                <div>
-                    <button type="button" class="btn btn-light" data-dismiss="modal">Close
-                    </button>
-                    <button type="button" class="btn btn-primary js-form-reply">Post</button>
-                </div>
+                    <div class="card">
 
-            </div>
-        </div><!-- /.modal-content -->
+                        <div id="upload" class=" d-none tab-pane">
+
+                            <input id="file-pond" class="js-filepond-file-dragging mb-0" type="file[]"/>
+                            <p class="text-right mb-2">
+                                <small>
+                                    <strong>
+                                        Το πεδίο δέχεται αρχεία: .jpg, .png.
+                                    </strong>
+                                </small>
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+                    <div>
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Close
+                        </button>
+                        <button type="button" class="btn btn-primary js-form-reply">Post</button>
+                    </div>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal-dialog -->
 
-<form id="form-create-reply" method="post" action="{{route('index.modelComment')}}">
-    @csrf
-</form>
+    <form id="form-create-reply" method="post" action="{{route('index.modelComment')}}">
+        @csrf
+    </form>
 
 

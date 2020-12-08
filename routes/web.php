@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\DB;
 */
 
 Route::get("/set-polymorphic", function() {
-	
+
 	DB::table('model_has_roles')
     ->update([
         'model_type' => "App\Models\User",
 	]);
-	
+
 	DB::table("topicables")
 		->update([
 			"topicable_type" => "App\Models\Course"
@@ -60,9 +60,9 @@ Route::get("/set-polymorphic", function() {
 
 
 Route::get("/find-permissions", function() {
-	
+
 	return DB::table("model_has_permissions")->select("*")->get();
-	
+
 });
 
 
@@ -314,7 +314,7 @@ Route::patch("/discussion/like-comment/{id}", "Index\DiscussionController@likeCo
 Route::delete("/discussion/delete/{id}", "Index\DiscussionController@delete")->name("discussion.delete");
 Route::patch("/discussion/best/{id}", "Index\DiscussionController@best")->name("discussion.best");
 Route::patch("/discussion/closed/{id}", "Index\DiscussionController@closed")->name("discussion.closed");
-
+Route::post("/discussion/comment/upload", "Index\DiscussionController@commentUpload")->name("discussion.commentUpload");
 //Route::post("/pagination", "Index\DiscussionController@pagination")->name("discussion.pagination");
 
 

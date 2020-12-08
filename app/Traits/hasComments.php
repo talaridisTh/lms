@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Comment;
+use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,10 +11,12 @@ use Illuminate\Support\Str;
 
 trait hasComments {
 
+    use MediaUploader;
+    private $image=[];
+
 
     public function modelComment(Request $request)
     {
-
         $post = Post::where("title", $request->modelInfo["title"])->first();
         if (empty($post))
         {
@@ -26,16 +29,31 @@ trait hasComments {
                 "user_id" => $curator,
             ]);
         }
-        Comment::create([
+        $comment = Comment::create([
             "body" => $request->body,
             "user_id" => auth()->id(),
             "post_id" => $post->id,
             "parent_id" => $request->parentId
         ]);
 
+        if ($request->upload){
+
+                $this->attachComment($request,$comment);
+
+        }
         return view("components.index.comments.comments", [
             "post" => $post
         ]);
+    }
+
+    private function attachComment ($request,$comment){
+        foreach ($request->upload as $image){
+
+            $media = Media::where("original_name",$image)->first()->id;
+
+            $comment->media()->attach($media,["usage"=>5]);
+
+        }
     }
 
     public function deleteComment(Request $request)
@@ -44,7 +62,7 @@ trait hasComments {
         Comment::where("parent_id", $request->id)->get()->each(function ($comment) {
             $comment->delete();
         });
-        if (Comment::where("post_id",$postId)->count()<=1)
+        if (Comment::where("post_id", $postId)->count() <= 1)
         {
             Comment::findOrFail($request->id)->post()->first()->delete();
         } else
@@ -53,7 +71,6 @@ trait hasComments {
             dump(Comment::findOrFail($request->id));
             Comment::findOrFail($request->id)->delete();
         }
-
         $post = Post::where("title", $request->modelInfo["title"])->first();
 
         return view("components.index.comments.comments", [

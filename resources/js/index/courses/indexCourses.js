@@ -1,31 +1,82 @@
 import utilities from '../../index/main';
+
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 
 require('../../../../node_modules/lightbox2/dist/js/lightbox');
 
-utilities.addWhatchlist()
+
+import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css';
+
+FilePond.setOptions({
+    name: 'file[]',
+    maxFiles: 6,
+    allowMultiple: true,
+    className: "js-filepond-file-dragging",
+    labelIdle: "Drag & Drop your files or Browse",
+    allowRevert: false
+});
+
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
+FilePond.registerPlugin(FilePondPluginImagePreview);
+var pond ={};
+const initFilepond =()=>{
+
+    let dropzone = document.getElementById("file-pond");
+     pond = FilePond.create(dropzone, {
+        server: {
+            url: window.location.origin,
+            process: {
+                url: '/discussion/comment/upload',
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+                },
+                onload: function (data) {
+                }
+            }
+
+        },
+
+        onprocessfiles: function () {
 
 
+            let files = pond.getFiles().map(file => {
+                return file.filenameWithoutExtension
+            })
+            $(".hidden-post").attr("data-upload", JSON.stringify(files));
 
+            $(".js-form-reply").prop('disabled', false);
 
+            // var pond_ids = [];
+            //
+            // if (pond.getFiles().length != 0) {  // "pond" is an object, created by FilePond.create
+            //     pond.getFiles().forEach(function(file) {
+            //         pond_ids.push(file.id);
+            //     });
+            // }
+            //
+            // pond.removeFiles(pond_ids);
+        },
+        onaddfile: function (error, file) {
+            $(".js-form-reply").prop('disabled', true);
+        },
 
-// commentsFilePond.on('processfile', (error, file) => {
-//         const image = new Image();
-//     image.src = URL.createObjectURL(file);
-//     image.classList.add("m-2")
-//     $(".image-preview-filepond").append(image);
-// });
-
-// Select the file input and use
-// create() to turn it into a pond
-
-
-if ($('meta[name=route]').attr('content') == "index.userCourse") {
-    const slugCourse = $(".course-slug")[0].dataset.courseSlug
-    window.PREVIEW_PAGE_COURSE = `/dashboard/course/${slugCourse}`
+        acceptedFileTypes: ['image/png', 'image/jpeg'],
+        allowReorder: true
+    });
 }
 
+initFilepond();
+if ($('meta[name=route]').attr('content') == "index.userCourse") {
+    const slugCourse = $(".course-slug")[0].dataset.courseSlug
+    window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
+}
 
 //! announcements-swiper
 //!============================================================
@@ -109,8 +160,6 @@ function handlerCountMaterial() {
     })
 
     $(".cnt-count-material")[0].innerHTML = `
-
-
             <div class="offset-4 col-md-4 offset-4 d-flex justify-content-around ">
 
                 <div class="text-center">
@@ -126,7 +175,6 @@ function handlerCountMaterial() {
                 </div>
 
             </div>
-
         `
 }
 
@@ -281,7 +329,7 @@ $(".template-prevent").on("click", async function (e) {
             onCloseFullScreen();
             onPreviewMaterial();
             onInitEventHandler();
-
+            initFilepond();
             let href = $(".nav-tabs").children().first().find("a").attr("href").substring(1);
 
             $(".nav-tabs").children().first().find("a").addClass("active")
@@ -380,9 +428,7 @@ const onCloseFullScreen = () => {
 
 
 }
-
-
-$(document).on("click",".js-form-reply" ,async function (e) {
+$(document).on("click", ".js-form-reply", async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
 
@@ -396,13 +442,13 @@ $(document).on("click",".js-form-reply" ,async function (e) {
         return
     } else {
         body = `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
-
-
     }
 
     const modelInfo = JSON.parse(this.dataset.model)
     const parentId = this.dataset.parent;
     const namespace = this.dataset.namespace;
+    let upload = $(".hidden-post").data("upload");
+
     this.disabled = true
     $(".validate-form-post").remove();
 
@@ -412,14 +458,18 @@ $(document).on("click",".js-form-reply" ,async function (e) {
             modelInfo,
             body,
             namespace,
-            parentId
+            parentId,
+            upload
+
         });
         if (status == 200) {
             $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
             $('#new-reply').modal('hide')
             $('#form-create-reply')[0].reset()
+            pond.destroy();
+            pond={};
+            initFilepond()
             this.disabled = false
-
         }
 
     } catch (e) {
@@ -469,7 +519,6 @@ const onSubCommentReplayBtnEvent = () => {
         $(".js-form-reply")[0].dataset.parent = parentId
     })
 }
-
 
 const onDeleteComment = () => {
 

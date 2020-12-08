@@ -7,11 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Traits\hasComments;
 use App\Models\User;
+use App\Traits\UrlCreator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class CourseController extends Controller {
-    use hasComments;
+    use hasComments,UrlCreator;
     //
     public function show(Course $course)
     {

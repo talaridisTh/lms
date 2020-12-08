@@ -36,4 +36,10 @@ class Comment extends Model
         return $this->likes->count()?$this->likes->count():"";
 
     }
+
+    public function media()
+    {
+
+        return $this->morphToMany(Media::class, 'mediable')->withPivot('usage', 'priority');
+    }
 }

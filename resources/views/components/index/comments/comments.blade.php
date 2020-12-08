@@ -43,6 +43,15 @@
 
                             </div>
                             <p class="font-12">{{$comment->created_at->diffForHumans()}}</p>
+                            <div class="d-flex px-3 mt-2 mb-3">
+                                @foreach($comment->media as $image)
+                                    <a class="d-flex mr-2 rounded" href="{{ $image->rel_path}}"
+                                       height="100" data-lightbox="cover-comment" data-title="{{$image->name}}">
+                                        <img class="rounded" src=" {{$image->roundedSmallCoverUrl("rel_path")}}"
+                                             alt="comment-photo">
+                                    </a>
+                                @endforeach
+                            </div>
                             <p class="p-3">{!!  $comment->body!!}</p>
                             <hr>
                             <div
@@ -98,7 +107,8 @@
                                                class="{{$isBestAnswerBtn}} js-best-answer is-active-best cursor-pointer font-20 mt-2 ml-3 text-info mdi mdi-alpha-b-circle"></i>
                                         @endif
                                         <a href="#"
-                                           class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best Answer</a>
+                                           class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
+                                            Answer</a>
 
                                     </div>
                                     @if($rep1->user_id == auth()->id())
@@ -115,6 +125,15 @@
 
                                 </div>
                                 <p class="font-12">{{$rep1->created_at->diffForHumans()}}</p>
+                                <div class="d-flex px-3 mt-2 mb-3">
+                                    @foreach($rep1->media as $image)
+                                        <a class="d-flex mr-2 rounded" href="{{ $image->rel_path}}"
+                                           height="100" data-lightbox="cover-comment" data-title="{{$image->name}}">
+                                            <img class="rounded" src=" {{$image->roundedSmallCoverUrl("rel_path")}}"
+                                                 alt="comment-photo">
+                                        </a>
+                                    @endforeach
+                                </div>
                                 <p class="p-3">{!!  $rep1->body!!}</p>
                                 <hr>
                                 <div class="post-buttons d-flex font-18  mb-2">
