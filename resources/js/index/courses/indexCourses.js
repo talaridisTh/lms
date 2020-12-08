@@ -334,10 +334,15 @@ $(".template-prevent").on("click", async function (e) {
             onPreviewMaterial();
             onInitEventHandler();
             initFilepond();
-            let href = $(".nav-tabs").children().first().find("a").attr("href").substring(1);
 
+
+            let href = $(".nav-tabs").children().first().find("a").attr("href").substring(1);
             $(".nav-tabs").children().first().find("a").addClass("active")
             $(".tab-content").find(`#${href}`).addClass("active");
+
+            $(".list-material").removeAttr("style")
+            $(this).closest("li").css('cssText', 'background-color: #bebebe  !important');
+
         }
 
     } catch (e) {

@@ -321,7 +321,7 @@ else{
                                                  id="announcement-{{$key}}">
 
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h4 id="slide-{{$key}}" data-count="{{$count++}}"
+                                                    <h4 id="slide-{{$key}}" class="text-hover-underline" data-count="{{$count++}}"
                                                         data-toggle="modal"
                                                         data-target="#announcements-modal">{{$announcement->title}}</h4>
                                                     <span
@@ -455,7 +455,7 @@ else{
 
                                                 <li data-material-id="{{$chapter->id}}"
                                                     data-material-priority="{{$key+1}}"
-                                                    class="list-group-item border-r-0 {{$highlight}} m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
+                                                    class="list-group-item border-r-0 list-single-material {{$highlight}} m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
                                                     <a data-material-slug="{{$chapter->slug}}"
                                                        data-material-title="{!! $chapter->title !!}"
                                                        class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":"template-prevent"}}"
