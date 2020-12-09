@@ -699,15 +699,18 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     }
 });
 
-function dateInputShow() {
 
+function dateInputShow() {
+	
 	$(".js-publish-cover").on("click", function() {
 		const cover = this;
 		const td = cover.parentElement;
 		const dateInput = td.getElementsByClassName("js-publish-picker")[0];
-
+		
 		this.classList.add("d-none");
 		dateInput.classList.remove("d-none");
+
+		pickerConfig.locale.cancelLabel = "Cancel";
 
 		$(dateInput).daterangepicker(pickerConfig);
 

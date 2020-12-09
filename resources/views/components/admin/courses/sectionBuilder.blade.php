@@ -81,19 +81,18 @@
 				<table class="table mb-0" data-section-id="{{ $section->id }}" data-section-slug="{{ $section->slug }}">
 					<thead>
 						<tr>
-							<th class="text-center align-middle" scope="col">
+							<th class="text-center align-middle" scope="col" style="width: 80px;">
 								<div class='icheck-primary d-inline'>
 									<input id='{{ $section->slug }}-main-checkbox' class="js-section-main-checkbox" type='checkbox' autocomplete='off'>
 									<label for='{{ $section->slug }}-main-checkbox'></label>
 								</div>
 							</th>
 							<th class="text-center" scope="col">Title</th>
-							<th class="text-center w-10" scope="col">highlight</th>
-							<th class="text-center w-10" scope="col">Κατάσταση</th>
-							<th class="text-center w-10" scope="col">Κατάταξη</th>
-							{{-- <th class="text-center w-10" scope="col">Τύπος</th> --}}
-							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
-							<th class="text-center w-5" scope="col"></th>
+							<th class="text-center" scope="col">highlight</th>
+							<th class="text-center" scope="col">Κατάσταση</th>
+							<th class="text-center" scope="col" style="width: 115px;">Κατάταξη</th>
+							{{-- <th class="text-center" scope="col">Τύπος</th> --}}
+							<th class="text-center" scope="col" style="width: 170px;">Τελ. Ανανέωση</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -128,10 +127,13 @@
 
 								<td>
 									<a href='/dashboard/material/{{ $material->slug }}' class='h5 custom-link-primary'>{{ $material->title }}</a>{!! $badge !!}
-									<p class='overflow-ellipsis mb-1' style="max-width: 400px;">{{ $material->type }}</p>
+									<p class='overflow-ellipsis mb-1' style="max-width: 400px;">{{ $material->slug }}</p>
 									<a href='/dashboard/material/{{ $material->slug }}' class='custom-link-primary'>Edit</a>
 									<span class='mx-2'>|</span>
 									<a href='#' class='custom-link-primary'>View</a>
+									<span class='mx-2'>|</span>
+									<a href='#' class='custom-link-primary js-remove-chapter'
+										data-material-id="{{ $material->id }}">Remove</a>
 								</td>
 								<td class="align-middle text-center">
 									<div class='icheck-success d-inline'>
@@ -177,10 +179,6 @@
 									<p class='js-date mb-0 mt-1'>{{ $dayMonthYear }}</p>
 									<p class='js-time mb-0'>{{ $hour }}</p>
 								</td>
-								<td class="align-middle text-center">
-									<i class="js-remove-chapter h3 pt-1 mx-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
-										data-material-id="{{ $material->id }}"></i>
-								</td>
 							</tr>
 						@empty
 							<td colspan="6" class="dataTables_empty text-center" valign="top">Δεν υπάρχουν εγγραφές</td>
@@ -195,7 +193,6 @@
 							<th class="text-center w-10" scope="col">Κατάταξη</th>
 							{{-- <th class="text-center w-10" scope="col">Τύπος</th> --}}
 							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
-							<th class="text-center w-5" scope="col"></th>
 						</tr>
 					</tfoot>
 				</table>
