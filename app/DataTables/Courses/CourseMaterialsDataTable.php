@@ -109,7 +109,7 @@ class CourseMaterialsDataTable extends DataTable
 				$status = $data->pivot->status == 0 ? "" : "checked";
 
 				return "<input class='js-toggle' data-course-id='$request->courseId'
-					type='checkbox' id='". $data->slug ."-toggle-checkbox'
+					type='checkbox' id='". $data->slug ."-toggle-checkbox' data-type='$data->type'
 					data-material-id='$data->id' $status data-switch='success' autocomplete='off'/>
 					<label for='". $data->slug ."-toggle-checkbox' class='mb-0 mt-1' data-on-label='On' data-off-label='Off'></label>";
 
@@ -140,12 +140,24 @@ class CourseMaterialsDataTable extends DataTable
 					$status = ["icon" => "badge-outline-danger", "text" => "Draft"];
 				}
 
-				// dump($data->pivot->publish_at);
-				$date = !is_null($data->pivot->publish_at) ? Carbon::parse($data->pivot->publish_at)->format("d-m-Y") : "";
-				$time = !is_null($data->pivot->publish_at) ? Carbon::parse($data->pivot->publish_at)->format("H:i") : "";
+				if ( !is_null($data->pivot->publish_at) ) {
+					$date = Carbon::parse($data->pivot->publish_at)->format("d-m-Y");
+					$time = Carbon::parse($data->pivot->publish_at)->format("H:i");
+					$datetime = Carbon::parse($data->pivot->publish_at)->format("d-m-Y H:i");
+				}
+				else {
+					$date = "";
+					$time = "";
+					$datetime = "";
+				}
 
-				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
-				<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
+				return "
+						<div class='js-publish-cover' data-material-id='$data->id'>
+							<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+							<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>
+						</div>
+						<input class='js-publish-picker form-control d-none' type='text'
+						 data-toggle='input-mask' data-mask-format='00-00-0000 00:00:00' value='$datetime'>";
 			})
 			->rawColumns(
 				[
