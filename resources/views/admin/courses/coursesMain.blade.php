@@ -99,10 +99,6 @@
 						</button>
 						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
 							<a id="delete-courses-btn" class="dropdown-item py-2" href="#">Διαγραφή</a>
-							{{-- <div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Προσθήκη σε Bundle</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Export</a> --}}
 						</div>
 					</div>
 				</div>

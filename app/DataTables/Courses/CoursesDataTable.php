@@ -91,7 +91,7 @@ class CoursesDataTable extends DataTable {
 						$status = ["icon" => "badge-outline-success", "text" => "Published"];
 					}
 					else {
-						$status = ["icon" => "custom-pill-primary badge-outline-primary", "text" => "Scheduled"];
+						$status = ["icon" => "badge-outline-primary", "text" => "Scheduled"];
 					}
 				}
 				else {
@@ -101,8 +101,12 @@ class CoursesDataTable extends DataTable {
 				$date = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("d-m-Y") : "";
 				$time = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("H:i") : "";
 
-				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
-				<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
+				return "<div class='js-publish-cover'>
+						<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+						<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>
+					</div>
+				<input class='js-publish-picker form-control d-none'
+					type='text' value='$date $time' data-course-id='$data->id'>";
 			})
             ->rawColumns(['action', 'title', 'toggle', 'publish'])
             ->setRowAttr(['data-course-id' => function ($data) {

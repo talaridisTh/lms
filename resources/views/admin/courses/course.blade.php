@@ -27,19 +27,6 @@
 		margin-right: 2px;
 	}
 
-	.CodeMirror {
-	  border: 1px solid #47515d;
-	  border-radius: 4px;
-	  height: auto !important;
-	  min-height: 300px !important;
-	}
-
-	.CodeMirror-scroll {
-	  min-height: 300px !important;
-	  overflow-y: auto;
-	  overflow-x: auto;
-	}
-
 </style>
 @endsection
 

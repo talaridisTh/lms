@@ -46,6 +46,7 @@ Route::prefix("course-ajax")->group(function() {
 	Route::post('{course:id}/gallery-upload', [CourseAjaxController::class, "galleryUpload"]);
 	Route::patch('{course:id}/gallery-sort', [CourseAjaxController::class, "gallerySort"]);
 	Route::patch('{course:id}/publish-material', [CourseAjaxController::class, "publishMaterial"]);
+	Route::patch('{course:id}/edit-publish', [CourseAjaxController::class, "editPublish"]);
 });
 
 Route::prefix("section-ajax")->group(function() {

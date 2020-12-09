@@ -92,6 +92,10 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 	order: [6, "desc"],
 	processing: true,
 	serverSide: true,
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 7, width: "200px"}
+	],
 	ajax: {
 		url: "/course-datatables/main",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -104,13 +108,14 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		}
 	},
 	columns: [
-		{ data: 'action', name: 'action', className: "align-middle text-center", width: "5%", orderable: false },
+		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'title', name: 'title' },
 		{ data: 'toggle', name: 'status', className: "align-middle text-center" },
-		{ data: 'curator', name: 'curator', className: "align-middle text-center" },
+		{ data: 'curator', name: 'curator', className: "align-middle text-center", visible: false},
 		{ data: 'topics', name: 'topics', className: "align-middle text-wrap min-width-200" },
 		{ data: 'version', name: 'version', className: "align-middle text-center" },
 		{
+			visible: false,
 			data: 'updated_at',
 			name: 'updated_at',
 			className: "align-middle text-center cursor-default",
@@ -124,7 +129,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-		{ data: 'publish', name: "publish_at", className: "align-middle text-center cursor-default", searchable: false },
+		{ data: 'publish', name: "publish_at", className: "align-middle text-center cursor-default min-width-170", searchable: false },
 		{ data: 'status', name: 'status', visible: false },
 		{ data: 'updated_at', name: 'updated_at', visible: false },
 	],
@@ -146,6 +151,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		toggleStatus();
 		checkeBoxesEventListener();
 		cloneEventListener();
+		$(".js-publish-cover").on("click", publishHandler);
 		utilities.resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses"));
 	}
 });
@@ -153,6 +159,33 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 //! #################################################
 //!		Datatable event initialazion functions		#
 //! #################################################
+const pickerConfig = {
+	singleDatePicker: true,
+	drops: "auto",
+    opens: "center",
+	timePicker: true,
+	autoUpdateInput: false,
+	timePicker24Hour: true,
+	cancelButtonClasses: "btn-secondary",
+	locale: {
+		format: "DD-MM-YYYY H:mm",
+		cancelLabel: "Cancel"
+    },
+}
+
+function publishHandler() {
+	const cover = this;
+	const td = this.parentElement;
+	const dateInput = td.getElementsByClassName("js-publish-picker")[0];
+
+	this.classList.add("d-none");
+	dateInput.classList.remove("d-none");
+
+	$(dateInput).daterangepicker(pickerConfig);
+	$(dateInput).on("apply.daterangepicker", publishApplyHandler);
+	$(dateInput).on("hide.daterangepicker", publishHideHandler.bind(this, cover, dateInput));
+	dateInput.focus();
+}
 
 function cloneEventListener() {
 
@@ -192,6 +225,7 @@ function toggleStatus() {
 			let row = this.findParent(2);
 			let dateElm = row.getElementsByClassName("js-date")[0];
 			let timeElm = row.getElementsByClassName("js-time")[0];
+			let inputElm = row.getElementsByClassName("js-publish-picker")[0];
 			let badge = row.getElementsByClassName("js-badge")[0];
 			let date = res.data.date.split("-").reverse().join("-");
 			let time = res.data.time;
@@ -219,6 +253,7 @@ function toggleStatus() {
 
 			dateElm.textContent = res.data.date;
 			timeElm.textContent = res.data.time;
+			inputElm.value = `${res.data.date} ${res.data.time}`;
 
 			let icon = this.checked ? "success" : "info";
 			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
@@ -334,6 +369,76 @@ $("#course-type-selection").change( function() {
 //!##########################################
 //!				script functions			#
 //!##########################################
+function datetime(date) {
+	const temp = date.split(" ");
+
+	return {
+		day: temp[0],
+		time: temp[1]
+	}
+}
+
+function publishCoverUpdate(row, date, status) {
+	let dateElm = row.getElementsByClassName("js-date")[0];
+	let timeElm = row.getElementsByClassName("js-time")[0];
+	let inputElm = row.getElementsByClassName("js-publish-picker")[0];
+	let badge = row.getElementsByClassName("js-badge")[0];
+	let day = date.day
+	let time = date.time;
+	let now = new Date();
+
+	date = new Date( `${day} ${time}` );
+
+	if ( status == 1 ) {
+		if ( now > date ) {
+			badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+			badge.classList.add("badge-outline-success");
+			badge.textContent = "Published";
+		}
+		else {
+			badge.classList.remove("badge-outline-success", "badge-outline-danger");
+			badge.classList.add("badge-outline-primary");
+			badge.textContent = "Scheduled";
+		}
+	}
+	else {
+		badge.classList.remove("badge-outline-primary", "badge-outline-success");
+		badge.classList.add("badge-outline-danger");
+		badge.textContent = "Draft";
+	}
+	day = day.split("-").reverse().join("-");
+	dateElm.textContent = day;
+	timeElm.textContent = time;
+	inputElm.value = `${day} ${time}`;
+}
+
+function publishApplyHandler(ev, picker) {
+	const date = picker.startDate.format('YYYY-MM-DD H:mm');
+	const courseId = this.dataset.courseId;
+
+	axios.patch(`/course-ajax/${courseId}/edit-publish`, {
+		date: date
+	})
+	.then( res => {
+		const row = this.findParent(2)
+		const date = datetime(res.data.publish);
+
+		publishCoverUpdate(row, date, res.data.status);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+	})
+}
+
+function publishHideHandler(cover, dateInput) {
+	setTimeout(() => {
+		cover.classList.remove("d-none");
+		dateInput.classList.add("d-none");
+		
+		$(dateInput).data('daterangepicker').remove();
+	}, 50);
+}
 
 function createDateElm() {
 

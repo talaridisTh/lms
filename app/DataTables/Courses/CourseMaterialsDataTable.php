@@ -133,7 +133,7 @@ class CourseMaterialsDataTable extends DataTable
 						$status = ["icon" => "badge-outline-success", "text" => "Published"];
 					}
 					else {
-						$status = ["icon" => "custom-pill-primary badge-outline-primary", "text" => "Scheduled"];
+						$status = ["icon" => "badge-outline-primary", "text" => "Scheduled"];
 					}
 				}
 				else {

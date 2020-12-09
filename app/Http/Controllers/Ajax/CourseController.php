@@ -312,4 +312,17 @@ class CourseController extends Controller
 
 	}
 
+	public function editPublish(Request $request, Course $course) {
+
+		$course->publish_at = $request->date;
+		$course->save();
+
+		$data = [
+			"status" => $course->status,
+			"publish" => $course->publish_at
+		];
+
+		echo json_encode($data);
+	}
+
 }
