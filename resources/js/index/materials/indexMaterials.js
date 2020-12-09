@@ -1,6 +1,62 @@
 import utilities from '../../index/main';
 require('../../../../node_modules/lightbox2/dist/js/lightbox');
 
+import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css';
+
+FilePond.setOptions({
+    maxFiles: 6,
+    allowMultiple: true,
+    className: "js-filepond-file-dragging",
+    labelIdle: "Drag & Drop your files or Browse",
+    allowRevert: false
+});
+
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
+FilePond.registerPlugin(FilePondPluginImagePreview);
+var pond = {};
+const initFilepond = () => {
+
+    let dropzone = document.getElementById("file-pond");
+    pond = FilePond.create(dropzone, {
+        server: {
+            url: window.location.origin,
+            process: {
+                url: '/discussion/comment/upload',
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+                },
+                onload: function (data) {
+                }
+            }
+
+        },
+
+        onprocessfiles: function () {
+
+            let files = pond.getFiles().map(file => {
+                return file.filenameWithoutExtension
+            })
+            $(".js-form-reply").prop('disabled', false);
+            // delete   $(".js-form-reply")[0].dataset.upload
+            $(".js-form-reply")[0].dataset.upload = JSON.stringify(files);
+
+        },
+        onaddfile: function (error, file) {
+            $(".js-form-reply").prop('disabled', true);
+        },
+
+        acceptedFileTypes: ['image/png', 'image/jpeg'],
+        allowReorder: true
+    });
+}
+
+initFilepond();
 
 utilities.addWhatchlist()
 
@@ -216,7 +272,7 @@ $(".nav-tabs").children().first().find("a").addClass("active")
 $(".tab-content").find(`#${href}`).addClass("active");
 
 
-$(".js-form-reply").on("click", async function (e) {
+$(document).on("click", ".js-form-reply", async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
 
@@ -228,32 +284,34 @@ $(".js-form-reply").on("click", async function (e) {
 
         }
         return
-    }else{
-        body =  `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
-
-
+    } else {
+        body = `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
     }
 
+    console.log(this)
     const modelInfo = JSON.parse(this.dataset.model)
     const parentId = this.dataset.parent;
     const namespace = this.dataset.namespace;
+    // delete this.dataset.upload;
+    let upload = typeof this.dataset.upload == "undefined" ? [] : JSON.parse(this.dataset.upload);
     this.disabled = true
     $(".validate-form-post").remove();
-
-
     try {
         const {data, status} = await axios.post(`/model/comment`, {
             modelInfo,
             body,
             namespace,
-            parentId
+            parentId,
+            upload
+
         });
         if (status == 200) {
             $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
             $('#new-reply').modal('hide')
             $('#form-create-reply')[0].reset()
+            pond.removeFiles();
+            delete this.dataset.upload;
             this.disabled = false
-
         }
 
     } catch (e) {
@@ -261,7 +319,6 @@ $(".js-form-reply").on("click", async function (e) {
     }
 
 })
-
 
 const onFirstReplayBtnEvent = () => {
 

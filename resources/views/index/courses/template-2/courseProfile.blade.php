@@ -39,6 +39,31 @@
         $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
 
 
+if (json_decode($course->fields)->summary){
+    $activeTabsOne ="active";
+    $activeContentOne="show active";
+
+}else if (json_decode($course->fields)->description) {
+       $activeTabsTwo ="active";
+       $activeContentTwo="show active";
+}
+else if(count($course->media->where("type","!=",0))>0) {
+       $activeTabsThree ="active";
+       $activeContentThree="show active";
+}
+else if(count($course->media->where("type","!=",1))>0) {
+       $activeTabsFour ="active";
+       $activeContentFour="show active";
+}
+else if ($course->script) {
+       $activeTabsFive ="active";
+       $activeContentFive="show active";
+}
+else{
+    $activeTabsSix ="active";
+       $activeContentSix="show active";
+}
+
 @endphp
 @section("content")
 
@@ -101,34 +126,162 @@
 
         <div class="container-fluid my-3 position-relative" style="max-width: 1423px"> <!--  container info -->
 
-            <div class="row ">
+            <div class="row template-cnt">
                 <div class="col-lg-8  {{empty($course->description)?"d-none":""}}">
                     @include("components.index.user-info")
                     <div class="row ">
+                        <div class="col-lg-12 template-col-12">
+                            {{--//min svisti to thelw gia na allazei to single page--}}
+                            <style>
+                                .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+                                    color: #fff;
+                                    background: linear-gradient(
+                                        315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%);
+                                }
+                            </style>
+                            <ul class="nav nav-tabs mb-3">
+                                @if($course->summary && json_decode($course->fields)->summary)
+                                    <li class="nav-item ">
+                                        <a href="#tabs-summary" data-toggle="tab" aria-expanded="false"
+                                           class="nav-link rounded-0 {{isset($activeTabsOne)?$activeTabsOne:""}}">
+                                            <i class="mdi mdi-home-variant d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Πληροφορίες</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if($course->description && json_decode($course->fields)->description)
+                                    <li class="nav-item">
+                                        <a href="#tabs-description" data-toggle="tab" aria-expanded="true"
+                                           class="nav-link rounded-0 {{isset($activeTabsTwo)?$activeTabsTwo:""}}">
+                                            <i class="mdi mdi-account-circle d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Περίληψη</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if(count($course->media->where("type","!=",0))>0)
+                                    <li class="nav-item">
+                                        <a href="#tabs-files" data-toggle="tab" aria-expanded="false"
+                                           class="nav-link rounded-0 {{isset($activeTabsThree)?$activeTabsThree:""}}">
+                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Αρχεία</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                @if(count($course->media->where("type","!=",1))>0)
+                                    <li class="nav-item">
+                                        <a href="#tabs-media" data-toggle="tab" aria-expanded="false"
+                                           class="nav-link rounded-0 {{isset($activeTabsFour)?$activeTabsFour:""}}">
+                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Media</span>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if($course->script)
+                                    <li class="nav-item">
+                                        <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false"
+                                           class="nav-link rounded-0 {{isset($activeTabsFive)?$activeTabsFive:""}}">
+                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                            <span class="d-none d-md-block">Quiz</span>
+                                        </a>
+                                    </li>
+                                @endif
+
+                                <li class="nav-item">
+                                    <a href="#tabs-disscus" data-toggle="tab" aria-expanded="false"
+                                       class="nav-link rounded-0 {{isset($activeTabsSix)?$activeTabsSix:""}}">
+                                        <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                        <span class="d-none d-md-block">Συζήτηση</span>
+                                    </a>
+                                </li>
+                            </ul>
 
 
+                            <div class="tab-content">
+                                <div class="tab-pane {{isset($activeContentOne)?$activeContentOne:""}}"
+                                     id="tabs-summary">
+                                    <div class="p-2"> {!! $course->summary !!}</div>
+                                </div>
 
-                        <div class="col-md-12 px-2">
-                            @include("components.index.collapse-menu",
-                                ["idAccordion"=>$course->slug."-accordion-summary" ,
-                                "idHeader"=>$course->slug."-header-summary",
-                                "href"=>$course->slug."-href-summary",
-                                "title"=>"Σχετικά με το μάθημα",
-                                "body"=>$course->summary,
-                                "fields"=>json_decode($course->fields)->summary])
+                                <div class="tab-pane {{isset($activeContentTwo)?$activeContentTwo:""}}"
+                                     id="tabs-description">
+                                    <div class="p-2"> {!! $course->description !!}</div>
+                                </div>
+
+                                <div class="tab-pane {{isset($activeContentThree)?$activeContentThree:""}}"
+                                     id="tabs-files">
+                                    <div class="tab-pane show active" id="profile">
+                                        <div class="accordion custom-accordion my-2" id="extra-content">
+                                            <div class="card mb-0">
+
+                                                <div id="collapse-extra-content" class="collapse show"
+                                                     aria-labelledby="head-extra-content" data-parent="#extra-content">
+                                                    <div class="card-body" style="padding: 30px">
+                                                        @foreach($course->media->where("type","!=",0) as $media)
+
+                                                            @if($media->ext=="mp3")
+
+                                                                <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
+                                                                   data-audio-status="paused"></i>
+                                                                <audio class="js-audio">
+                                                                    <source src="{{ $media->rel_path }}"
+                                                                            type="{{ $media->file_info }}">
+                                                                </audio>
+                                                                <span
+                                                                    class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
+                                                            @else
+
+                                                                <div class="d-flex flex-column">
+
+                                                                    <a target="_blank" href="{{url($media->rel_path)}}">
+                                                                        <i class="h3 mdi {{$course->getIcon($media->ext)}}"></i>
+                                                                        <span
+                                                                            class=" ml-3">
+                                                             {{isset($media->mediaDetails)? $media->mediaDetails->title:$media->original_name}}.{{$media->ext}}
+                                                        </span>
+                                                                    </a>
+                                                                </div>
+                                                            @endif
+                                                        @endforeach
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="tab-pane {{isset($activeContentFour)?$activeContentFour:""}}"
+                                     id="tabs-media">
+                                    <div class="col-md-12 my-1">
+                                        <div class="d-flex flex-wrap ">
+                                            @foreach($course->media->where("type","!=",1) as $media)
+
+                                                <a href="{{$media->rel_path}} " data-lightbox="image-1">
+                                                    <img class="d-block m-1"
+                                                         src="{{$media->roundedMediumCoverUrl("rel_path")}}"
+                                                         alt="First slide">
+                                                </a>
+
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="tab-pane {{isset($activeContentFive)?$activeContentFive:""}}"
+                                     id="tabs-quiz">
+                                    {!! $course->script !!}
+                                </div>
+
+                                <div class="tab-pane {{isset($activeContentSix)?$activeContentSix:""}}"
+                                     id="tabs-disscus">
+                                    @include("components.index.comments.comments-main",["model"=>$course,"namespace"=>"App\Models\Course"])
+                                </div>
+                            </div>
+
                         </div>
-
-                        <div class="col-md-12 px-2">
-                            @include("components.index.collapse-menu",
-                                ["idAccordion"=>$course->slug."-accordion-description" ,
-                                "idHeader"=>$course->slug."-header-description",
-                                "href"=>$course->slug."-href-description",
-                                "title"=>"Μάθημα",
-                                "body"=>$course->description,
-                                 "fields"=>json_decode($course->fields)->description ])
-                        </div>
-
-                        @include("components.index.comments.comments-main",["model"=>$course,"namespace"=>"App\Course"])
                     </div>
                 </div>
 

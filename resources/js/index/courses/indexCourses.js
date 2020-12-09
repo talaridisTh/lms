@@ -471,25 +471,26 @@ $(document).on("click", ".js-form-reply", async function (e) {
 
 
 const onFirstReplayBtnEvent = () => {
-    $(".template-cnt").on("click", ".first-thread-replay", function () {
+
+    $(document).on("click", ".first-thread-replay", function () {
         let model = $(".hidden-post").data("model-info");
         let namespace = $(".hidden-post").data("namespace");
+
+
         $("#new-reply").find(".replay-name").text("");
         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
         $(".js-form-reply")[0].dataset.parent = 0
         $(".js-form-reply")[0].dataset.namespace = namespace;
-
 
     })
 
 }
 
 const onCommentReplayBtnEvent = () => {
-    $(".template-cnt").on("click", ".js-comment-reply", function () {
+    $(".cnt-reply-list").on("click", ".js-comment-reply", function () {
         let model = $(".hidden-post").data("model-info");
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
-
 
         $("#new-reply").find(".replay-name").text(`@${author}`);
         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
@@ -498,7 +499,7 @@ const onCommentReplayBtnEvent = () => {
 }
 
 const onSubCommentReplayBtnEvent = () => {
-    $(".template-cnt").on("click", ".js-sub-comment-reply", function () {
+    $(".cnt-reply-list").on("click", ".js-sub-comment-reply", function () {
         let model = $(".hidden-post").data("model-info");
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
@@ -509,54 +510,6 @@ const onSubCommentReplayBtnEvent = () => {
     })
 }
 
-const onDeleteComment = () => {
-
-    $(".template-cnt").on("click", ".js-delete-comment", async function (e) {
-        e.preventDefault();
-        const id = this.closest(".main-post").dataset.threadId
-        const modelInfo = $(".hidden-post").data("model-info");
-        try {
-            const {data, status} = await axios.post(`/model/delete`, {
-                modelInfo,
-                id
-            })
-
-            if (status == 200) {
-                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
-
-            }
-
-        } catch (e) {
-            console.log(e)
-        }
-    })
-
-}
-
-const onLikebtn = () => {
-    $(".template-cnt").on("click", ".btn-reply-like", async function () {
-        try {
-            const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
-
-            if (status == 200) {
-                if (data) {
-                    this.classList.add("like-class")
-
-                    this.firstElementChild.innerHTML.trim().length == 0 ?
-                        this.firstElementChild.innerHTML = parseInt(1) :
-                        this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) + 1
-                } else {
-                    this.classList.remove("like-class")
-                    this.firstElementChild.innerHTML.trim() == "1" ?
-                        this.firstElementChild.innerHTML = "" :
-                        this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) - 1
-                }
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    })
-}
 
 const bestAnswer = () => {
     $(".cnt-list-content").on("click", ".js-best-answer", async function () {
@@ -607,8 +560,56 @@ const bestAnswer = () => {
 
 }
 
-const onInitEventHandler = () => {
-    $(".template-cnt").off();
+const onDeleteComment = () => {
+
+    $(".cnt-reply-list").on("click", ".js-delete-comment", async function (e) {
+        e.preventDefault();
+        const id = this.closest(".main-post").dataset.threadId
+        const modelInfo = $(".hidden-post").data("model-info");
+        try {
+            const {data, status} = await axios.post(`/model/delete`, {
+                modelInfo,
+                id
+            })
+
+            if (status == 200) {
+                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    })
+
+}
+
+const onLikebtn = () => {
+    $(".cnt-reply-list").on("click", ".btn-reply-like", async function () {
+        try {
+            const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
+
+            if (status == 200) {
+                if (data) {
+                    this.classList.add("like-class")
+
+                    this.firstElementChild.innerHTML.trim().length == 0 ?
+                        this.firstElementChild.innerHTML = parseInt(1) :
+                        this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) + 1
+                } else {
+                    this.classList.remove("like-class")
+                    this.firstElementChild.innerHTML.trim() == "1" ?
+                        this.firstElementChild.innerHTML = "" :
+                        this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) - 1
+                }
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    })
+}
+
+const onInitEventHandler = ()=>{
     onDeleteComment();
     onLikebtn();
     onFirstReplayBtnEvent()
@@ -617,7 +618,6 @@ const onInitEventHandler = () => {
     bestAnswer();
 }
 onInitEventHandler();
-
 
 
 
