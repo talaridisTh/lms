@@ -92,7 +92,7 @@
 							<th class="text-center" scope="col" style="width: 133px;">Κατάσταση</th>
 							<th class="text-center" scope="col" style="width: 115px;">Κατάταξη</th>
 							<th class="text-center" scope="col" style="width: 170px;">Τύπος</th>
-							<th class="text-center" scope="col" style="width: 170px;">Τελ. Ανανέωση</th>
+							<th class="text-center" scope="col" style="width: 180px;">Τελ. Ανανέωση</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -150,10 +150,10 @@
 										$status = $material->pivot->status == 0 ? "" : "checked";
 									@endphp
 
-									<input id='{{ $material->slug }}-toggle-checkbox' data-section-id="{{ $section->id }}"
+									<input id='{{ $material->slug }}-switch-checkbox' data-section-id="{{ $section->id }}"
 										class="js-chapter-toggle" data-material-id='{{ $material->id }}'
 										type='checkbox' {{ $status }} data-switch='success' autocomplete='off'/>
-									<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
+									<label for='{{ $material->slug }}-switch-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
 								</td>
 								<td class="align-middle text-center">
 									<div class='form-group mb-1'>
@@ -165,11 +165,13 @@
 								</td>
 								<td class="align-middle text-center">{{ $material->type}}</td>
 								<td class="text-center align-middle">
-									<div class='js-chapter-publish-cover cursor-pointer' data-material-id='{{ $material->id }}'>
+									<div class='js-chapter-publish-cover cursor-pointer' data-material-id='{{ $material->id }}'  data-section-id="{{ $section->id }}">
 										<span class='js-badge badge {{ $material->publishBadge()->icon }} badge-pill'>{{ $material->publishBadge()->text }}</span>
 										<p class='js-date mb-0 mt-1'>{{ $material->publishDate()->date }}</p><p class='js-time mb-0'>{{ $material->publishDate()->time }}</p>
-										<input class='js-chapter-publish-picker form-control d-none' type='text' value='$datetime'>
 									</div>
+									<input class='js-chapter-publish-picker form-control d-none' type='text'
+										data-material-id="{{ $material->id }}" data-section-id="{{ $section->id }}"
+										value='{{ $material->publishDate()->date }} {{ $material->publishDate()->time }}'>
 								</td>
 							</tr>
 						@empty

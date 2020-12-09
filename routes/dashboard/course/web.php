@@ -55,4 +55,5 @@ Route::prefix("section-ajax")->group(function() {
     Route::patch("toggle-hightlight/{material:id}", [SectionAjaxController::class, "toggleHighlight"]);
     Route::patch("chapters-priority", [SectionAjaxController::class, "chaptersPriority"]);
 	Route::post("add-content", [SectionAjaxController::class, "addNewChapter"]);
+	Route::patch('{material:id}/publish-chapter', [SectionAjaxController::class, "publishchapter"]);
 });

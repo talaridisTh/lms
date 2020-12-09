@@ -178,4 +178,12 @@ class SectionController extends Controller
 
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
+
+	public function publishchapter(Request $request, Material $material) {
+
+		$material->chapters()->updateExistingPivot($request->materialId, [
+			"publish_at" => $request->date
+		]);
+
+	}
 }

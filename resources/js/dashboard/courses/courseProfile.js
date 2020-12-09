@@ -533,6 +533,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		showSectionBtnInit();
 		sectionMaterialHighlightInit();
 		dateInputShow();
+		chapterPublishShow();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -699,6 +700,25 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     }
 });
 
+function chapterPublishShow() {
+	$(".js-chapter-publish-cover").on("click", function() {
+		const cover = this;
+		const td = cover.parentElement;
+		const dateInput = td.getElementsByClassName("js-chapter-publish-picker")[0];
+		
+		this.classList.add("d-none");
+		dateInput.classList.remove("d-none");
+
+		pickerConfig.locale.cancelLabel = "Cancel";
+
+		$(dateInput).daterangepicker(pickerConfig);
+		$(dateInput).on("apply.daterangepicker", chapterPublishApplyHandler.bind(this));
+		$(dateInput).on("hide.daterangepicker", materialPublishHideHandler.bind(this, cover, dateInput));
+
+		dateInput.focus();
+	})
+}
+
 
 function dateInputShow() {
 	
@@ -713,9 +733,7 @@ function dateInputShow() {
 		pickerConfig.locale.cancelLabel = "Cancel";
 
 		$(dateInput).daterangepicker(pickerConfig);
-
 		$(dateInput).on("apply.daterangepicker", materialPublishApplyHandler.bind(this));
-
 		$(dateInput).on("hide.daterangepicker", materialPublishHideHandler.bind(this, cover, dateInput));
 
 		dateInput.focus();
@@ -2287,6 +2305,23 @@ function endDate( input ) {
 	return secondDate;
 }
 
+function chapterPublishApplyHandler(ev, picker) {
+	const sectionId = this.dataset.sectionId;
+	const materialId = this.dataset.materialId;
+	const date = picker.startDate.format('YYYY-MM-DD H:mm');
+
+	axios.patch(`/section-ajax/${sectionId}/publish-chapter`, {
+		materialId, date
+	})
+	.then( res => {
+		const row = this.findParent(2);
+		const status = row.getElementsByClassName("js-chapter-toggle")[0].checked;
+
+		publishBadgeUpdate(row, date, status);
+		publishTextUpdate(row, date);
+	})
+}
+
 function materialPublishApplyHandler(ev, picker) {
 	const materialId = this.dataset.materialId;
 
@@ -2340,18 +2375,18 @@ function publishBadgeUpdate(row, date, checked) {
 
 	if ( checked ) {
 		if ( now > date ) {
-			badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+			badge.classList.remove("badge-outline-primary", "badge-outline-danger");
 			badge.classList.add("badge-outline-success");
 			badge.textContent = "Published";
 		}
 		else {
-			badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+			badge.classList.remove("badge-outline-success", "badge-outline-danger");
 			badge.classList.add("badge-outline-primary");
 			badge.textContent = "Scheduled";
 		}
 	}
 	else {
-		badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+		badge.classList.remove("badge-outline-primary", "badge-outline-success");
 		badge.classList.add("badge-outline-danger");
 		badge.textContent = "Draft";
 	}
