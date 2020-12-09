@@ -28,9 +28,9 @@
                 <div class=" w-75 form-group">
                     <div class="card">
 
-                        <div id="upload" class=" d-none tab-pane">
+                        <div id="upload" class="tab-pane">
 
-                            <input id="file-pond" class="js-filepond-file-dragging mb-0" type="file[]"/>
+                            <input id="file-pond" type="file" name="filepond" class="js-filepond-file-dragging mb-0" />
                             <p class="text-right mb-2">
                                 <small>
                                     <strong>

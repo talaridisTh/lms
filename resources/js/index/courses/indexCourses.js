@@ -7,8 +7,6 @@ if ($('meta[name=route]').attr('content') == "index.userCourse") {
 import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 
-require('../../../../node_modules/lightbox2/dist/js/lightbox');
-
 
 import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
@@ -18,7 +16,6 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
 
 FilePond.setOptions({
-    name: 'file[]',
     maxFiles: 6,
     allowMultiple: true,
     className: "js-filepond-file-dragging",
@@ -29,11 +26,11 @@ FilePond.setOptions({
 FilePond.registerPlugin(FilePondPluginFileValidateType);
 FilePond.registerPlugin(FilePondPluginFileValidateSize);
 FilePond.registerPlugin(FilePondPluginImagePreview);
-var pond ={};
-const initFilepond =()=>{
+var pond = {};
+const initFilepond = () => {
 
     let dropzone = document.getElementById("file-pond");
-     pond = FilePond.create(dropzone, {
+    pond = FilePond.create(dropzone, {
         server: {
             url: window.location.origin,
             process: {
@@ -49,23 +46,12 @@ const initFilepond =()=>{
 
         onprocessfiles: function () {
 
-
             let files = pond.getFiles().map(file => {
                 return file.filenameWithoutExtension
             })
-            $(".hidden-post").attr("data-upload", JSON.stringify(files));
-
             $(".js-form-reply").prop('disabled', false);
+            $(".js-form-reply")[0].dataset.upload = JSON.stringify(files);
 
-            // var pond_ids = [];
-            //
-            // if (pond.getFiles().length != 0) {  // "pond" is an object, created by FilePond.create
-            //     pond.getFiles().forEach(function(file) {
-            //         pond_ids.push(file.id);
-            //     });
-            // }
-            //
-            // pond.removeFiles(pond_ids);
         },
         onaddfile: function (error, file) {
             $(".js-form-reply").prop('disabled', true);
@@ -108,8 +94,8 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
     },
 })
 let countSlider = 0
-$(".cnt-announcement").on("click" ,function (e){
-    countSlider =   $(e.target).data("count")
+$(".cnt-announcement").on("click", function (e) {
+    countSlider = $(e.target).data("count")
 })
 $('#announcements-modal').on('shown.bs.modal', function (e) {
     swiperAnnouncements.update();
@@ -223,17 +209,12 @@ $(".js-watchlist-btn").on("click", function () {
 })
 
 const axiosAddWitchlist = async (courseId, materialId, materialPriority = null, that) => {
-    // console.log(courseId)
-    // console.log(materialId)
-    // console.log(materialPriority)
-    // console.log(that)
     const btnWatchlist = $(".js-watchlist-btn")[0];
     try {
         const {data} = await axios.patch(`/add-witchlist/material`, {
             courseId,
             materialId
         })
-        console.log(data)
         if (data === "remove") {
             that.innerHTML = `${materialPriority}`
             if (!materialPriority) {
@@ -284,7 +265,6 @@ $(".js-link-material").on("click", async function (e) {
     const href = this.href;
     e.preventDefault()
     if (e.target.tagName === "SPAN" || e.target.tagName === "I") {
-        console.log(e.target)
         return
 
     } else {
@@ -296,7 +276,6 @@ $(".js-link-material").on("click", async function (e) {
             cancelButtonText: "Ακύρωση "
         })
         if (value) {
-            console.log(href)
             window.open(href, '_target');
 
         }
@@ -307,7 +286,7 @@ $(".js-link-material").on("click", async function (e) {
 
 document.querySelectorAll('.section-list').forEach(sectionList => {
     if (!sectionList.children.length) {
-        console.log(sectionList.findParent(4).remove())
+        sectionList.findParent(4).remove()
     } else {
 
     }
@@ -316,7 +295,7 @@ document.querySelectorAll('.section-list').forEach(sectionList => {
 })
 document.querySelectorAll(".section").forEach((section, idx) => {
 
-    console.log(section.findChild(5).innerHTML = `Ενότητα ${idx + 1}: &nbsp `)
+    section.findChild(5).innerHTML = `Ενότητα ${idx + 1}: &nbsp `
 })
 
 
@@ -334,7 +313,6 @@ $(".template-prevent").on("click", async function (e) {
             onPreviewMaterial();
             onInitEventHandler();
             initFilepond();
-
 
             let href = $(".nav-tabs").children().first().find("a").attr("href").substring(1);
             $(".nav-tabs").children().first().find("a").addClass("active")
@@ -460,12 +438,9 @@ $(document).on("click", ".js-form-reply", async function (e) {
     const modelInfo = JSON.parse(this.dataset.model)
     const parentId = this.dataset.parent;
     const namespace = this.dataset.namespace;
-    let upload = $(".hidden-post").data("upload");
-
+    let upload = typeof this.dataset.upload=="undefined"?[]:JSON.parse(this.dataset.upload);
     this.disabled = true
     $(".validate-form-post").remove();
-
-
     try {
         const {data, status} = await axios.post(`/model/comment`, {
             modelInfo,
@@ -479,9 +454,8 @@ $(document).on("click", ".js-form-reply", async function (e) {
             $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
             $('#new-reply').modal('hide')
             $('#form-create-reply')[0].reset()
-            pond.destroy();
-            pond={};
-            initFilepond()
+            pond.removeFiles();
+            delete this.dataset.upload;
             this.disabled = false
         }
 
@@ -494,15 +468,15 @@ $(document).on("click", ".js-form-reply", async function (e) {
 
 const onFirstReplayBtnEvent = () => {
 
-    $(document).on("click", ".first-thread-replay", function () {
+    $(".template-cnt").on("click", ".first-thread-replay", function () {
         let model = $(".hidden-post").data("model-info");
         let namespace = $(".hidden-post").data("namespace");
-
-
         $("#new-reply").find(".replay-name").text("");
+
         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
         $(".js-form-reply")[0].dataset.parent = 0
         $(".js-form-reply")[0].dataset.namespace = namespace;
+
 
     })
 

@@ -266,7 +266,7 @@ use MediaUploader;
     }
 
     public function commentUpload(Request  $request){
-        $this->storeImage($request->file[0]);
+        $this->storeImage($request->filepond);
     }
 
 }
