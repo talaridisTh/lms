@@ -92,7 +92,7 @@ class MaterialController extends Controller {
 			'title' => 'required'
 		]);
 
-        $publish = Carbon::now()->format("Y-m-d H:i:s");
+        // $publish = Carbon::now()->format("Y-m-d H:i:s");
         $material = new Material;
         $material->title = $request->title;
         $material->subtitle = $request->subtitle;
@@ -114,7 +114,8 @@ class MaterialController extends Controller {
 			->attach($material->id, [
 				"status" => $request->status,
 				"priority" => $request->priority + 1,
-				"publish_at" => $request->status == 1 ? $publish : null
+				// "publish_at" => $request->status == 1 ? $publish : null
+				"publish_at" => date( "Y-m-d H:i:s", (time() - 10) )
 			]);
 
 		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
@@ -335,7 +336,11 @@ class MaterialController extends Controller {
 
 		foreach ( $request->materialIds as $key => $id ) {
 			$material->chapters()
-				->attach( $id, ['status' => 0, 'priority' => $lastpriority + $key + 1 ]);
+				->attach( $id, [
+					'status' => 0,
+					'priority' => $lastpriority + $key + 1,
+					"publish_at" => date( "Y-m-d H:i:s", (time() - 10) )
+				]);
 		}
 
 		$material->updated_at = Carbon::now();

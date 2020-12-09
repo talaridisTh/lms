@@ -19,15 +19,39 @@ class SectionController extends Controller
 		}
 	}
 
-	public function toggleChapters( Request $request ) {
+	public function toggleChapters(Request $request, Material $material ) {
 
-		$material = Material::find( $request->sectionId );
+		$now = Carbon::now();
+		$data = [
+			"materials" => [],
+			"status" => $request->status
+		];
 
-		foreach ($request->data as $chapter ) {
-			$material->chapters()
-				->updateExistingPivot($chapter['id'], ["status" => $chapter['status']]);
+		foreach ($request->ids as $id ) {
+			$chapter = $material->chapters()
+				->wherePivot("material_id", $id)->first();
+
+			$publish = $chapter->pivot->publish_at;
+
+			if ( $request->status ) {
+				$chapter->pivot->update([
+					"status" => 1,
+					"publish_at" => is_null($publish) ? $now : $publish
+				]);
+			}
+			else {
+				$chapter->pivot->update([
+					"status" => 0
+				]);
+			}
+
+			array_push($data["materials"], [
+				"id" => $chapter->id,
+				"publish" => $chapter->pivot->publish_at
+			]);
 		}
 
+		echo json_encode($data);
 	}
 
     public function removeChapters(Request $request) {
@@ -121,7 +145,8 @@ class SectionController extends Controller
 		$section->chapters()
 			->attach( $material->id, [
 				"status" => $request->status,
-				"priority" => $request->priority + 1
+				"priority" => $request->priority + 1,
+				"publish_at" => date( "Y-m-d H:i:s", (time() - 10) )
 			]);
 
 		$sections = Course::find( $request->courseId )->materials()

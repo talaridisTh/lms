@@ -156,8 +156,7 @@ class CourseMaterialsDataTable extends DataTable
 							<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
 							<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>
 						</div>
-						<input class='js-publish-picker form-control d-none' type='text'
-						 data-toggle='input-mask' data-mask-format='00-00-0000 00:00:00' value='$datetime'>";
+						<input class='js-publish-picker form-control d-none' type='text' value='$datetime'>";
 			})
 			->rawColumns(
 				[

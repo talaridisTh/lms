@@ -744,17 +744,14 @@ function showSectionBtnInit() {
 function multipleChapterDeactivateInit() {
 	// deactivate-chapters
 
-	$(".deactivate-chapters").on( 'click', function() {
+	$(".js-deactivate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
 		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
-		let data = [];
+		let ids = [];
 
 		checkedboxes.forEach( checkbox => {
-			data.push({
-				id: checkbox.dataset.materialId,
-				status: 0
-			})
+			ids.push(checkbox.dataset.materialId);
 		});
 
 		Swal.fire({
@@ -769,7 +766,7 @@ function multipleChapterDeactivateInit() {
 
 			if (result.isConfirmed) {
 
-				toggleChapters( sectionId, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, ids, false, mainCnt, checkedboxes )
 
 			}
 		})
@@ -779,17 +776,14 @@ function multipleChapterDeactivateInit() {
 }
 
 function multipleChapterActivateInit() {
-	$(".activate-chapters").on( 'click', function() {
+	$(".js-activate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
 		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
-		let data = [];
+		let ids = [];
 
 		checkedboxes.forEach( checkbox => {
-			data.push({
-				id: checkbox.dataset.materialId,
-				status: 1
-			})
+			ids.push(checkbox.dataset.materialId)
 		});
 
 		Swal.fire({
@@ -804,7 +798,7 @@ function multipleChapterActivateInit() {
 
 			if (result.isConfirmed) {
 
-				toggleChapters( sectionId, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, ids, true, mainCnt, checkedboxes );
 
 			}
 		})
@@ -1600,36 +1594,19 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
 }
 
-function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
+function toggleChapters( sectionId, ids, active, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section-ajax/toggle-chapters`, {
-		courseId, sectionId, data
+	axios.patch(`/section-ajax/${sectionId}/toggle-chapters`, {
+		ids, "status": active //! or inactive
 	})
 	.then( res => {
-		let icon = "";
-		let message = "";
+		switchesToggle(checkedboxes, active);
 
-		if ( data[0].status == 1 ) {
-			icon = "success";
-			message = data.length == 1 ? "Ενεργοποιήθηκε" : "Ενεργοποιήθηκαν";
-			checkedboxes.forEach( checkbox => {
-				checkbox.checked = false;
-				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = true;
-			});
-		}
-		else {
-			icon = "info";
-			message = data.length == 1 ? "Απενεργοποιήθηκε" : "Απενεργοποιήθηκαν";
-			checkedboxes.forEach( checkbox => {
-				checkbox.checked = false;
-				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = false;
-			});
-		}
+		chapterBadgeUpdate(mainCnt, res.data);
 
 		mainCnt.getElementsByClassName("js-section-main-checkbox")[0].checked = false;
 		mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0].textContent = "Αφαίρεση επιλεγμένων (0)"
 		mainCnt.getElementsByClassName("js-chapters-status")[0].textContent = "Αλλαγή κατάστασης (0)";
-		utilities.toastAlert( icon, message );
 	})
 	.catch( err => {
 		console.log(err);
@@ -2380,6 +2357,32 @@ function publishBadgeUpdate(row, date, checked) {
 		badge.classList.remove("badge-outline-primary", "badge-outline-dark");
 		badge.classList.add("badge-outline-danger");
 		badge.textContent = "Draft";
+	}
+}
+
+function switchesToggle(checkedboxes, active) {
+	if ( active ) {
+		checkedboxes.forEach( checkbox => {
+			checkbox.checked = false;
+			checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = true;
+		});
+	}
+	else {
+		checkedboxes.forEach( checkbox => {
+			checkbox.checked = false;
+			checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = false;
+		});
+	}
+}
+
+function chapterBadgeUpdate(cnt, data) {
+	const materials = data.materials;
+	const status = data.status;
+	let row;
+
+	for (let i = 0; i < materials.length; i++) {
+		row = cnt.querySelector(`.js-accordion-row[data-material-id="${materials[i].id}"]`);
+		publishBadgeUpdate(row, materials[i].publish, status);
 	}
 }
 
