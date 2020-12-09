@@ -152,7 +152,7 @@ class CourseMaterialsDataTable extends DataTable
 				}
 
 				return "
-						<div class='js-publish-cover' data-material-id='$data->id'>
+						<div class='js-publish-cover cursor-pointer' data-material-id='$data->id'>
 							<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
 							<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>
 						</div>
