@@ -97,6 +97,7 @@ $('#bs-example-modal-lg').on('shown.bs.modal', function (e) {
     swiper.update();
 });
 
+
 //! announcements-swiper
 //!============================================================
 var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
