@@ -19,7 +19,31 @@ class SectionController extends Controller
 		}
 	}
 
-	public function toggleChapters(Request $request, Material $material ) {
+	public function toggleChapter(Request $request, Material $material) {
+
+		$chapter = $material->chapters()
+			->wherePivot("material_id", $request->materialId)->first();
+
+		$publish = $chapter->pivot->publish_at;
+		$now = Carbon::now();
+
+		if ($request->status === 1) {
+			$chapter->pivot->update([
+				"status" => 1,
+				"publish_at" => is_null($publish) ? $now : $publish
+			]);
+		}
+		else {
+			$chapter->pivot->update([
+				"status" => 0
+			]);
+		}
+
+		//! kribo ta deuterolepta
+		echo Carbon::parse($chapter->pivot->publish_at)->format("Y-m-d H:i");
+	}
+
+	public function toggleMultipleChapters(Request $request, Material $material ) {
 
 		$now = Carbon::now();
 		$data = [

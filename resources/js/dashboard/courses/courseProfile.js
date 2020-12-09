@@ -862,18 +862,15 @@ function chapterStatusInit() {
 
 		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section-ajax/toggle-chapters`, {
-			courseId, sectionId,
-			data: [{
-				id: this.dataset.materialId,
-				status: this.checked ? 1 : 0
-			}],
+		axios.patch(`/section-ajax/${sectionId}/toggle-chapter`, {
+			materialId: this.dataset.materialId,
+			status: this.checked ? 1 : 0
 		})
 		.then( res => {
-			let icon = this.checked ? "success" : "info";
-			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+			const row = this.findParent(2);
 
-			utilities.toastAlert( icon, message );
+			publishTextUpdate(row, res.data);
+			publishBadgeUpdate(row, res.data, this.checked);
 		})
 		.catch( err => {
 			console.log(err);
@@ -1596,7 +1593,7 @@ function activeMaterialsCheckboxHandler() {
 
 function toggleChapters( sectionId, ids, active, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section-ajax/${sectionId}/toggle-chapters`, {
+	axios.patch(`/section-ajax/${sectionId}/toggle-multiple-chapters`, {
 		ids, "status": active //! or inactive
 	})
 	.then( res => {

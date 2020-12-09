@@ -50,7 +50,8 @@ Route::prefix("course-ajax")->group(function() {
 
 Route::prefix("section-ajax")->group(function() {
 	Route::post("remove-chapters", [SectionAjaxController::class, "removeChapters"]);
-    Route::patch("{material:id}/toggle-chapters", [SectionAjaxController::class, "toggleChapters"]);
+    Route::patch("{material:id}/toggle-multiple-chapters", [SectionAjaxController::class, "toggleMultipleChapters"]);
+    Route::patch("{material:id}/toggle-chapter", [SectionAjaxController::class, "toggleChapter"]);
     Route::patch("toggle-hightlight/{material:id}", [SectionAjaxController::class, "toggleHighlight"]);
     Route::patch("chapters-priority", [SectionAjaxController::class, "chaptersPriority"]);
 	Route::post("add-content", [SectionAjaxController::class, "addNewChapter"]);

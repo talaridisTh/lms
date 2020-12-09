@@ -167,7 +167,7 @@
 								<td class="text-center align-middle">
 									<div class='js-chapter-publish-cover cursor-pointer' data-material-id='{{ $material->id }}'>
 										<span class='js-badge badge {{ $material->publishBadge()->icon }} badge-pill'>{{ $material->publishBadge()->text }}</span>
-										<p class='js-chapter-date mb-0 mt-1'>{{ $material->publishDate()->date }}</p><p class='js-time mb-0'>{{ $material->publishDate()->time }}</p>
+										<p class='js-date mb-0 mt-1'>{{ $material->publishDate()->date }}</p><p class='js-time mb-0'>{{ $material->publishDate()->time }}</p>
 										<input class='js-chapter-publish-picker form-control d-none' type='text' value='$datetime'>
 									</div>
 								</td>
