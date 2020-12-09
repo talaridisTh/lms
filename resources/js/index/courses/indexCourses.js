@@ -50,6 +50,7 @@ const initFilepond = () => {
                 return file.filenameWithoutExtension
             })
             $(".js-form-reply").prop('disabled', false);
+            // delete   $(".js-form-reply")[0].dataset.upload
             $(".js-form-reply")[0].dataset.upload = JSON.stringify(files);
 
         },
@@ -399,6 +400,7 @@ const onCloseFullScreen = () => {
         try {
             const {data, status} = await axios.get(window.location.href)
 
+            $(".list-material").removeAttr("style")
             $(".template-single-page").html($(data).find(".template-single-page > div"));
 
             const templateLeft = $(".template-single-page")[0]
@@ -435,10 +437,12 @@ $(document).on("click", ".js-form-reply", async function (e) {
         body = `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
     }
 
+    console.log(this)
     const modelInfo = JSON.parse(this.dataset.model)
     const parentId = this.dataset.parent;
     const namespace = this.dataset.namespace;
-    let upload = typeof this.dataset.upload=="undefined"?[]:JSON.parse(this.dataset.upload);
+    // delete this.dataset.upload;
+    let upload = typeof this.dataset.upload == "undefined" ? [] : JSON.parse(this.dataset.upload);
     this.disabled = true
     $(".validate-form-post").remove();
     try {
@@ -467,12 +471,10 @@ $(document).on("click", ".js-form-reply", async function (e) {
 
 
 const onFirstReplayBtnEvent = () => {
-
     $(".template-cnt").on("click", ".first-thread-replay", function () {
         let model = $(".hidden-post").data("model-info");
         let namespace = $(".hidden-post").data("namespace");
         $("#new-reply").find(".replay-name").text("");
-
         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
         $(".js-form-reply")[0].dataset.parent = 0
         $(".js-form-reply")[0].dataset.namespace = namespace;

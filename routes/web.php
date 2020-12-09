@@ -86,10 +86,11 @@ Route::get('/clear', function () {
 });
 
 Route::get("/delete/all-post",function (){
-    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all()]);
+    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all(),\App\Models\Media::all(),\App\Models\Mediable::all()]);
     DB::table("posts")->delete();
     DB::table("likables")->delete();
-    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all()]);
+
+    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all(),\App\Models\Media::all(),\App\Models\Mediable::all()]);
 
 });
 

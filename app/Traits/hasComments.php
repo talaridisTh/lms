@@ -46,20 +46,13 @@ trait hasComments {
         ]);
     }
 
-    private function attachComment ($request,$comment){
-        foreach ($request->upload as $image){
-
-            $media = Media::where("original_name",$image)->first()->id;
-
-            $comment->media()->attach($media,["usage"=>5]);
-
-        }
-    }
-
     public function deleteComment(Request $request)
     {
         $postId = Comment::findOrFail($request->id)->post->id;
+
+        $this->deletePhotoComment($request->id);
         Comment::where("parent_id", $request->id)->get()->each(function ($comment) {
+            $this->deletePhotoComment($comment->id);
             $comment->delete();
         });
         if (Comment::where("post_id", $postId)->count() <= 1)
@@ -68,7 +61,6 @@ trait hasComments {
         } else
         {
 
-            dump(Comment::findOrFail($request->id));
             Comment::findOrFail($request->id)->delete();
         }
         $post = Post::where("title", $request->modelInfo["title"])->first();
@@ -76,6 +68,23 @@ trait hasComments {
         return view("components.index.comments.comments", [
             "post" => $post
         ]);
+    }
+
+    private function deletePhotoComment( $commentId){
+        $comment = Comment::findOrFail($commentId);
+        $comment->media()->each(function ($com){
+            $com->delete();
+        });
+        $comment->media()->detach();
+    }
+    private function attachComment ($request,$comment){
+        foreach ($request->upload as $image){
+
+            $media = Media::where("original_name",$image)->first()->id;
+
+            $comment->media()->attach($media,["usage"=>5]);
+
+        }
     }
 
 }
