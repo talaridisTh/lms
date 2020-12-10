@@ -335,7 +335,7 @@ const templateHandler = (data, that) => {
     $(".template-col-12")[0].classList.add("col-lg-12")
 
     $(".template-cnt-title")[0].innerHTML = `
-                 <h2 data-material-slug="${that.dataset.materialSlug}" class="template-title">${that.dataset.materialTitle}</h2>
+                 <h2 data-material-slug="${that.dataset.materialSlug}" style="margin-left: 1.1rem;" class="template-title">${that.dataset.materialTitle}</h2>
                 <div >
                     <i class="font-18 uil-window-maximize cursor-pointer mr-1"></i>
                     <i class="font-18 uil-times-circle cursor-pointer"></i>

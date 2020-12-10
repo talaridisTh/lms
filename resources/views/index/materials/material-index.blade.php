@@ -83,7 +83,7 @@ else{
 
         <div class="material-cnt">
             <div class="d-flex justify-content-between align-items-center template-cnt-title">
-                <h2 data-material-slug="{{$materials->slug}}" class="template-title"></h2>
+                <h2 data-material-slug="{{$materials->slug}}" class="template-title" style=margin-left: 1.1rem;"></h2>
                 <div>
                     <i class="uil-window-maximize"></i>
                     <i class="uil-times-circle"></i>
