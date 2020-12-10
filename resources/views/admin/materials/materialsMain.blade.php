@@ -58,8 +58,7 @@
 					<th class="text-center">Τύπος</th>
 					<th class="text-center">Τελ. Ανανέωση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
-					<th class="text-center">create</th>
-					<th class="text-center">id</th>
+					{{-- <th class="text-center">Courses</th> --}}
 				</tr>
 			</thead>
 			<tbody  class="tables-hover-effect"></tbody>
@@ -76,9 +75,8 @@
 					<th class="text-center">Τύπος</th>
 					<th class="text-center">Τελ. Ανανέωση</th>
                     <th class="text-center">Ημ. Δημιουργίας</th>
-                    <th class="text-center">create</th>
-                    <th class="text-center">id</th>
-
+                    {{-- <th class="text-center">Courses</th> --}}
+				</tr>
             </tfoot>
 		</table>
     </div>

@@ -6,7 +6,7 @@ let dataRange = $("#daterange")
 //! INIT DATATABLE
 //!============================================================
 const materialsDatatable = $("#materials-datatable").DataTable({
-	order: [[ 7, "desc" ]],
+	order: [ 5, "desc" ],
 	searchDelay: "1000",
     processing: true,
     serverSide: true,
@@ -18,7 +18,6 @@ const materialsDatatable = $("#materials-datatable").DataTable({
             return $.extend({}, d, {
                 from_date: fromDay($(".date")[0]),
                 to_date: toDay($(".date")[0]),
-                trash
             })
         }
     },
@@ -45,7 +44,6 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 			data: "created_at",
 			name: "created_at",
 			className: "align-middle text-center",
-			orderData: [7],
 			render: function(data) {
 				let date = new Date(data);
 				let day = date.toLocaleDateString().replace( /[/]/g, "-");
@@ -56,8 +54,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-        {data: "courses", name: "courses", className: "align-middle text-center", orderable: false,visible:false},
-        {data: "id", name: "id",visible: false},
+        // {data: "courses", name: "courses.title", className: "align-middle text-center", orderable: false, visible:false},
     ],
     language: utilities.tableLocale,
     drawCallback: function () {
@@ -81,7 +78,7 @@ const materialsDatatable = $("#materials-datatable").DataTable({
 //!============================================================
 utilities.filterButton('#activeFilterMaterial', 2, materialsDatatable,"#materials-datatable_length label");
 utilities.filterButton('#typeFilterMaterial', 3, materialsDatatable,"#materials-datatable_length label");
-utilities.filterButton('#courseFilterMaterial', 6, materialsDatatable,"#materials-datatable_length label");
+// utilities.filterButton('#courseFilterMaterial', 6, materialsDatatable,"#materials-datatable_length label");
 
 function fromDay(input) {
     let dateInput = input;
