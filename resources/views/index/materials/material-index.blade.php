@@ -126,7 +126,7 @@ else{
                             <div class="col-md-4 ">
                                 <div class="row ">
                                     <div
-                                        class="ml-2 fixed col-md-12 text-white d-flex align-items-center justify-content-center justify-content-md-start">
+                                        class="p-0  fixed col-md-12 text-white d-flex align-items-center justify-content-center justify-content-md-start">
                                         <h4>{{$materials->title}}</h4>
                                     </div>
 

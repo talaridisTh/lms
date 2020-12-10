@@ -17,7 +17,7 @@ class CreateMediaTable extends Migration
 			$table->bigIncrements('id')->unsigned();
             $table->string('original_name', 255)->nullable()->index();
             $table->string('name')->nullable()->index(); // slug clean name, with possible increments if duplicate exists
-            $table->tinyInteger('type')->default(0); // image, file, video etc, 9 => ad
+            $table->tinyInteger('type')->default(0); // image, file, video , comment-image etc, 9 => ad
             $table->tinyInteger('usability')->default(0); // 0 : all, 1 : admins
 
             $table->integer('path')->nullable(); // depends if we want to keep emporium data structuring

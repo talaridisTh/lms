@@ -62,18 +62,21 @@
                 </div>
 
                 <div class="col-md-9 d-flex flex-column justify-content-between align-items-center p-2 ">
-                    <h3 class="font-16 font-weight-bold mb-0"><a
-                            href="{{route('index.userCourse',[$course->slug])}}">{!!$course->title  !!}</a>
+                    <h3 class="font-16 font-weight-bold mb-0">
+                        <a href="{{route('index.userCourse',[$course->slug])}}">{!!$course->title  !!}</a>
                     </h3>
                     <p class="font-12 text-left w-75">{{\Str::limit($course->subtitle,150,"...")}}</p>
                     <div class="material-box d-flex justify-content-between font-10 card-info">
                         <span class="mr-3 all-material">Μαθήματα : {{$allMaterial}}</span>
                         <span class="all-extra-material">Βοηθητικά Αρχεία :{{$extraMaterial}}</span>
                     </div>
-                    <button class="btn  w-75  btn-outline-custom-info card-play"><i class="mr-1 font-18 mdi mdi-play-circle-outline">
 
-                        </i><span class=" font-18">play</span>
-                    </button>
+                    <a href="{{route('index.userCourse',[$course->slug])}}">
+                        <button class="btn  w-75  btn-outline-custom-info card-play"><i class="mr-1 font-18 mdi mdi-play-circle-outline"></i>
+                            </i><span class=" font-19">play</span>
+                        </button>
+                    </a>
+
                 </div>
 
             </div>

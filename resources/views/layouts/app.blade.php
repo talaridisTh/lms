@@ -133,13 +133,13 @@
                             </div>
 
 
-                        <div>
-                            <a class="nav-link edit-preview-page-material d-none" href="" role="button"
-                               aria-haspopup="true"
-                               aria-expanded="false">
-                                Edit this Material
-                            </a>
-                        </div>
+                            <div>
+                                <a class="nav-link edit-preview-page-material d-none" href="" role="button"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Edit this Material
+                                </a>
+                            </div>
                         @endif
 
 
@@ -264,7 +264,7 @@
             <div class="row align-items-center mt-2">
                 <div class="col-md-12">
                     <div class="row align-items-center">
-                        <div class="col-md-4 d-flex" style="width: 147px; height: 79px;">
+                        <div class="col-md-10 col-sm-12 d-flex justify-content-center justify-content-md-start">
                            	<span class=" stop nav-logo-lg">
                                 @isset($option['logo'])
                                     <img class="m-2" height="60"
@@ -272,7 +272,7 @@
                                          alt="">
                                 @endisset
                 	        </span>
-                            <h4 class="text-left font-weight-bold font-18 mb-0" style="color: #585d63">
+                            <h4 class="text-left font-weight-bold font-19 mb-0" style="color: #585d63">
                                 {{isset($contactInfo->city)?$contactInfo->city:""}}
                                 <p class="text-left d-flex flex-column font-14" style="color: #585d63">
                                         <span>
@@ -281,40 +281,23 @@
                                         </span>
                                     <span>
                                             {{isset($contactInfo->email)?$contactInfo->email:""}}
-                                        {{isset($contactInfo->phone)?$contactInfo->phone:""}}
-                                        {{isset($contactInfo->fax)?$contactInfo->fax:""}}
                                         </span>
+                                    <span>{{isset($contactInfo->phone)?$contactInfo->phone:""}}
+                                        {{isset($contactInfo->fax)?$contactInfo->fax:""}}</span>
                                 </p>
                             </h4>
                         </div>
-                        <div class=" col-md-8">
-                            <div class="d-flex justify-content-end  ">
+                        <div class=" col-md-2 col-sm-12">
+                            <div class="d-flex justify-content-between px-3 ">
 
-                                @isset($socialMedia->facebook)
-                                    <a href="{{$socialMedia->facebook}}">
-                                        <img src="{{asset('images/facebook.png')}}" alt="">
-                                    </a>
-                                @endisset
-                                @isset($socialMedia->youtube)
-                                    <a href="{{isset($socialMedia->youtube)? $socialMedia->youtube : "" }}">
-                                        <img src="{{asset('images/youtube.png')}}" alt="">
-                                    </a>
-                                @endisset
-                                @isset($socialMedia->twitter)
-                                    <a href="{{isset($socialMedia->twitter)? $socialMedia->twitter : "" }}">
-                                        <img src="{{asset('images/twitter.png')}}" alt="">
-                                    </a>
-                                @endisset
-                                @isset($socialMedia->instagram)
-                                    <a href="{{isset($socialMedia->instagram)? $socialMedia->instagram : "" }}">
-                                        <img src="{{asset('images/instagram.png')}}" alt="">
-                                    </a>
-                                @endisset
-                                @isset($socialMedia->linked)
-                                    <a href="{{isset($socialMedia->linked)? $socialMedia->linked : "" }}">
-                                        <img src="{{asset('images/linked.png')}}" alt="">
-                                    </a>
-                                @endisset
+                                @foreach($socials as $social)
+                                    @isset($socialMedia->$social)
+                                        <a href="{{$socialMedia->$social}}">
+                                            <img src="{{asset("images/$social.png")}}" alt="">
+                                        </a>
+                                    @endisset
+                                @endforeach
+
 
                             </div>
                         </div>
