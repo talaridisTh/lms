@@ -561,7 +561,7 @@ else{
                                     <div style="word-wrap: break-word"
                                          class="px-5 d-flex flex-column justify-content-center">
                                         <h3 class="mb-3 ">{{$announcement->title}}  </h3>
-                                        <p>{{$announcement->content}}</p>
+                                        <p>{!! $announcement->content !!}</p>
                                         <span class="font-13 font-weight-normal">
                                             ({{$announcement->created_at->diffForHumans()}})
                                         </span>

@@ -346,7 +346,7 @@ const templateHandler = (data, that) => {
             <ol class='breadcrumb mb-0'>
                 <li class='breadcrumb-item'>
                 <span class="uil-times-circle invisible ">
-                    <a href='#' class="visible">course</a>
+                    <a href='#' class="visible">${$(".course-slug").text()}</a>
                 </spanc>
                 </li>
                     <span class='mx-1 font-16'>/</span>

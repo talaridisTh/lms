@@ -7,6 +7,7 @@ import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
+import Swiper from "swiper";
 
 FilePond.setOptions({
     maxFiles: 6,
@@ -100,6 +101,7 @@ $('#bs-example-modal-lg').on('shown.bs.modal', function (e) {
 
 //! announcements-swiper
 //!============================================================
+
 var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
     // Optional parameters
 
@@ -109,9 +111,7 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
         el: '.swiper-pagination-announcements',
         draggable: true,
     },
-    fadeEffect: {
-        crossFade: true
-    },
+
 
     // Navigation arrows
     navigation: {
@@ -128,12 +128,18 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
         onlyInViewport: false,
     },
 })
+let countSlider = 0
+$(".cnt-announcement").on("click", function (e) {
+    countSlider = $(e.target).data("count")
+})
 $('#announcements-modal').on('shown.bs.modal', function (e) {
     swiperAnnouncements.update();
     var $invoker = $(e.relatedTarget);
     swiperAnnouncements.slideTo($invoker.data('slider'));
     swiperAnnouncements.update();
+    swiperAnnouncements.slideTo(countSlider);
 });
+
 
 $(".js-audio-btn").click(function () {
     let cnt = this.parentElement;

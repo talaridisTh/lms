@@ -303,11 +303,17 @@ else{
                                 <div id="collapseOne" class="collapse show"
                                      aria-labelledby="heading-announcement" data-parent="#courses-announcement">
                                     <div class="card-body py-1" data-simplebar style="max-height: 200px;">
-                                        @foreach($announcements  as $key => $announcement)
+                                        @php
+                                            $count = 0;
+                                        @endphp
+
+                                    @foreach($announcements  as $key => $announcement)
                                             <div class="single-announcement  mb-3" id="announcement-{{$key}}">
 
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h3>{{$announcement->title}}</h3>
+                                                    <h4 id="slide-{{$key}}" class="text-hover-underline" data-count="{{$count++}}"
+                                                        data-toggle="modal"
+                                                        data-target="#announcements-modal">{{$announcement->title}}</h4>
                                                     <span class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
                                                 </div>
 
@@ -516,6 +522,48 @@ else{
 
     </div>
 
+    <div class="modal fade" id="announcements-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">Ανακοινώσεις</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body" style="overflow: hidden">
+                    <div class="swiper-container-announcements">
+                        <!-- Additional required wrapper -->
+                        <div class="swiper-wrapper">
+                            <!-- Slides -->
+                            @foreach($announcements  as $key => $announcement)
+                                <div class="swiper-slide">
+                                    <div style="word-wrap: break-word"
+                                         class="px-5 d-flex flex-column justify-content-center">
+                                        <h3 class="mb-3 ">{{$announcement->title}}  </h3>
+                                        <p>{!! $announcement->content !!}</p>
+                                        <span class="font-13 font-weight-normal">
+                                            ({{$announcement->created_at->diffForHumans()}})
+                                        </span>
+
+                                    </div>
+                                </div>
+                        @endforeach
+                        <!-- Slides -->
+                        </div>
+                        <!-- If we need pagination -->
+                        <div class="swiper-pagination"></div>
+
+                        <!-- If we need navigation buttons -->
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+
+                        <!-- If we need scrollbar -->
+                        <div class="swiper-scrollbar"></div>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
     @include("components.index.comments.comments-form")
 @endsection
 
