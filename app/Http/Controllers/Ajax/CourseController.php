@@ -56,6 +56,15 @@ class CourseController extends Controller
 		echo json_encode($result);
 	}
 
+	public function bulkStatusUpdate(Request $request) {
+
+		foreach ($request->ids as $id) {
+			$course = Course::find($id);
+			$course->status = $request->status;
+			$course->save();
+		}
+	}
+
 	public function toggleStatus(Request $request) {
 
 		$course = Course::find($request->courseId);

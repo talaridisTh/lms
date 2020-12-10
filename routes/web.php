@@ -19,58 +19,6 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
-Route::get("/set-polymorphic", function() {
-
-	DB::table('model_has_roles')
-    ->update([
-        'model_type' => "App\Models\User",
-	]);
-
-	DB::table("topicables")
-		->update([
-			"topicable_type" => "App\Models\Course"
-		]);
-
-	DB::table("mediables")
-		->where("mediable_type", "App\Course")
-		->update([
-			"mediable_type" => "App\Models\Course"
-		]);
-
-	DB::table("mediables")
-		->where("mediable_type", "App\Material")
-		->update([
-			"mediable_type" => "App\Models\Material"
-		]);
-
-	DB::table("watchlistables")
-		->where("watchlistable_type", "App\Material")
-		->update([
-			"watchlistable_type" => "App\Models\Material"
-		]);
-
-	DB::table("watchlistables")
-		->where("watchlistable_type", "App\Course")
-		->update([
-			"watchlistable_type" => "App\Models\Course"
-		]);
-
-	DB::table('activity_log')
-		->update([
-			'causer_type' => "App\Models\User",
-		]);
-
-});
-
-
-
-Route::get("/find-permissions", function() {
-
-	return DB::table("model_has_permissions")->select("*")->get();
-
-});
-
-
 Auth::routes();
 //!########################################################
 //! 404

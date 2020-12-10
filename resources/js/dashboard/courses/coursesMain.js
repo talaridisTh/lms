@@ -8,8 +8,26 @@ import utilities from '../main';
 //!##########################################
 
 $(".js-bulk-status").on("click", function() {
-	utilities.toastAlert("info", "Under Development")
-})
+	const status = this.dataset.status;
+	const courses = $(".js-course-checkbox:checked");
+	const ids = [];
+
+	for (let i = 0; i < courses.length; i++) {
+		ids.push(courses[i].dataset.courseId);
+	}
+
+	axios.patch("/course-ajax/bulk-status-update", {
+		ids: ids,
+		status: status
+	})
+	.then( res => {
+		coursesDatatable.ajax.reload(null, false);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	})
+});
 
 $("#clone-course-modal").on( 'show.bs.modal', function() {
 
