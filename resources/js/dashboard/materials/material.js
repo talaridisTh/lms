@@ -165,7 +165,9 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
     ],
     language: utilities.tableLocale,
     drawCallback: function () {
-        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
         $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
 
         utilities.resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
