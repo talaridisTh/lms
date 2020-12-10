@@ -10,6 +10,7 @@ use App\DataTables\Materials\PDFDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Material;
 use App\Models\Media;
+use App\Traits\MediaUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
@@ -18,6 +19,8 @@ use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class MaterialController extends Controller {
+
+	use MediaUploader;
 
     public function index(MaterialsDataTable $dataTable)
     {
@@ -236,8 +239,7 @@ class MaterialController extends Controller {
         }
     }
 
-    public function galleryUpload(Request $request)
-    {
+    public function galleryUpload(Request $request) {
 
 		$material = Material::find($request->id);
 
@@ -248,57 +250,13 @@ class MaterialController extends Controller {
 			$priority = 0;
 		}
 
-		$allowedTypes = ["image/png", "image/jpeg"];
-		$date = date('Y.m');
-
 		foreach ( $request->file as $key => $image ) {
-			if ( $image->isValid() ) {
-				if ( in_array($image->getClientMimeType(), $allowedTypes) ) {
-					if ( $image->getSize() <= 50000000 ) { // 50MB
 
-						$temp = explode(".", $image->getClientOriginalName());
-						$arrayName = (array_diff( $temp, [$image->getClientOriginalExtension()] ));
-						$originalName = implode( ".", $arrayName );
-						$name =  Str::slug( implode("-", $arrayName ), "-" );
+			$media = $this->storeImage($image);
 
-						$count = Media::where( "original_name", $originalName)->count();
+			$material->media()
+				->attach($media->id, ["usage" => 1, "priority" => $key + 1 + $priority]);
 
-						if ( $count > 0 ) {
-							$name = $name.( $count + 1 );
-							$fullname = $name.".".$image->getClientOriginalExtension();
-						}
-						else {
-							$fullname = "$name.".$image->getClientOriginalExtension();
-						}
-
-						$media = new Media;
-						$media->original_name = $originalName;
-						$media->name = $name;
-						$media->rel_path = "/storage/images/$date/$fullname";
-						$media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
-						$media->ext = $image->getClientOriginalExtension();
-						$media->file_info = $image->getClientMimeType();
-						$media->size = $image->getSize();
-						$media->width = Image::make( $image )->width();
-						$media->height = Image::make( $image )->height();
-						$media->save();
-
-						$material->media()
-							->attach($media->id, ["usage" => 1, "priority" => $key + 1 + $priority]);
-
-						$image->storeAs("public/images/$date", $fullname);
-
-						if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
-							Storage::disk("local")->makeDirectory("public/thumbnails/$date");
-
-						}
-
-						Image::make( $image )->fit( 215, 215)
-							->save( storage_path("/app/public/thumbnails/$date/$fullname") );
-
-					}
-				}
-			}
 		}
 
 		$gallery = $material->media()->where("type", 0)->orderBy("priority")->get();

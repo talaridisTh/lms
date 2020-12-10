@@ -7,13 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Media;
 use App\Models\MediaDetails;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 use App\DataTables\Files\FilesDataTable;
+use App\Traits\MediaUploader;
 use Illuminate\Support\Facades\DB;
 
 class MediaController extends Controller {
+
+	use MediaUploader;
 
 	private $allowedTypes = [
 		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
@@ -41,10 +41,6 @@ class MediaController extends Controller {
     public function index( Request $request ) {
 
 		if ( $request->search ) {
-			// $media = Media::where("type", 0)
-			// 	->where("name", "like", "%$request->search%")
-			// 	->orderBy("id", "desc")
-			// 	->paginate(18);
 
 			$media = DB::table("media")
 				->leftJoin("media_details", "media.id", "=", "media_details.media_id")
@@ -353,79 +349,29 @@ class MediaController extends Controller {
 
 		$file = $request->file;
 
-		$fileTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
 		$imageTypes = ["image/png", "image/jpeg"];
+		$fileTypes = array_diff($this->allowedTypes, $imageTypes);
 
-		if ( $file->isValid() ) {
-			if ( $file->getSize() <= 50000000 ) { // 50MB
-				if ( in_array($file->getClientMimeType(), $imageTypes) ) {
-
-					$this->storeImage($file);
-
-				}		//! elegxei arxeia na MIN mpi mesa se else
-				elseif ( in_array($file->getClientMimeType(), $fileTypes) ) {
-
-					$this->storeFile($file);
-
-				}
-			}
+		if ( !$file->isValid() ) {
+			abort(422);
 		}
-	}
 
-	private function fileName($file) {
-		$temp = explode(".", $file->getClientOriginalName());
-		$arrayName = (array_diff( $temp, [$file->getClientOriginalExtension()] ));
-		$originalName = implode( ".", $arrayName );
-		$name =  Str::slug( implode("-", $arrayName ), "-" );
+		if ( $file->getSize() > 50000000 ) { // 50MB
+			abort(413);
+		}
 
-		$count = Media::where( "original_name", $originalName)->count();
+		if ( in_array($file->getClientMimeType(), $imageTypes) ) {
 
-		if ( $count > 0 ) {
-			$name = $name.( $count + 1 );
-			$fullname = $name.".".$file->getClientOriginalExtension();
+			$this->storeImage($file);
+
+		}
+		elseif ( in_array($file->getClientMimeType(), $fileTypes) ) {
+			//! na perastei se trait kai na figoun ta extra if
+			$this->storeFile($file);
 		}
 		else {
-			$fullname = "$name.".$file->getClientOriginalExtension();
+			abort(415);
 		}
-
-		return (object)[
-			"name" => $name,
-			"originalName" => $originalName,
-			"fullname" => $fullname,
-		];
-	}
-
-	private function storeImage($image) {
-		
-		$date = date('Y.m');
-		$name = $this->fileName($image);
-
-		$media = new Media;
-		$media->original_name = $name->originalName;
-		$media->name = $name->name;
-		$media->rel_path = "/storage/images/$date/$name->fullname";
-		$media->thumbnail_path = "/storage/thumbnails/$date/$name->fullname";
-		$media->ext = $image->getClientOriginalExtension();
-		$media->file_info = $image->getClientMimeType();
-		$media->size = $image->getSize();
-		$media->width = Image::make( $image )->width();
-		$media->height = Image::make( $image )->height();
-
-		$media->save();
-
-		$image->storeAs("public/images/$date", $name->fullname);
-
-		if ( !file_exists( storage_path("app/public/thumbnails/$date") ) ) {
-			Storage::disk("local")->makeDirectory("public/thumbnails/$date");
-		}
-
-		Image::make( $image )->fit( 250, 250)
-			->save( storage_path("/app/public/thumbnails/$date/$name->fullname") );
-
-		return (object)[
-			"id" => $media->id,
-			"rel_path" => $media->rel_path
-		];
 	}
 
 	private function storeFile($file) {
@@ -434,16 +380,16 @@ class MediaController extends Controller {
 		$name = $this->fileName($file);
 
 		$media = new Media;
-		$media->original_name = $name->originalName;
-		$media->name = $name->name;
+		$media->original_name = $name->original;
+		$media->name = $name->slug;
 		$media->type = 1;
-		$media->rel_path = "/storage/files/$date/$name->fullname";
+		$media->rel_path = "/storage/files/$date/$name->full";
 		$media->ext = $file->getClientOriginalExtension();
 		$media->file_info = $file->getClientMimeType();
 		$media->size = $file->getSize();
 		$media->save();
 
-		$file->storeAs("public/files/$date", $name->fullname);
+		$file->storeAs("public/files/$date", $name->full);
 
 		return $media;
 	}
