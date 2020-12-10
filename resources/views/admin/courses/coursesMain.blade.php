@@ -103,9 +103,9 @@
 									Αλλαγή κατάστασης
 								</button>
 								<div class="dropdown-menu py-0">
-									<a class="dropdown-item js-bulk-status cursor-pointer py-2">Ενεργοποιήση</a>
+									<a class="dropdown-item js-bulk-status cursor-pointer py-2" data-status="1">Ενεργοποιήση</a>
 									<div class="dropdown-divider my-0"></div>
-									<a class="dropdown-item js-bulk-status cursor-pointer py-2">Απενεργοποίηση</a>
+									<a class="dropdown-item js-bulk-status cursor-pointer py-2" data-status="0">Απενεργοποίηση</a>
 								</div>
 							</div>
 						</div>

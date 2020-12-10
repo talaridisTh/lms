@@ -33,6 +33,7 @@ Route::prefix("course-datatables")->group(function() {
 
 Route::prefix("course-ajax")->group(function() {
 	Route::delete('destroy/{ids}', [CourseAjaxController::class, "destroy"]);
+    Route::patch('bulk-status-update', [CourseAjaxController::class, "bulkStatusUpdate"]);
     Route::patch('status', [CourseAjaxController::class, "toggleStatus"]);
     Route::patch('priority', [CourseAjaxController::class, "changePriority"]);
     Route::patch('{course:id}/toggle-material', [CourseAjaxController::class, "toggleMaterial"]);
