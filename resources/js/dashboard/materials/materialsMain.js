@@ -111,26 +111,6 @@ function toDay(input) {
 
 }
 
-
-$(".trash-model").click( function () {
-
-
-    trash = 1
-    materialsDatatable.draw();
-
-
-});
-
-
-$(".all-model").click( function () {
-    console.log("s")
-    trash = 0
-    materialsDatatable.draw();
-
-});
-
-
-
 //! DATAPICKER FUNCTION
 //!============================================================
 dataRange.daterangepicker( utilities.datePickerConfig );
@@ -288,8 +268,7 @@ const changeStatusMultiple = async (ids, stat) => {
         })
 
         if (status == 200) {
-            utilities.toastAlert("success", `${ids.length} μαθητές προστέθηκαν`)
-            materialsDatatable.ajax.reload();
+            materialsDatatable.ajax.reload(null, false);
         }
     } catch (e) {
         console.log(e)
