@@ -319,9 +319,9 @@ class CourseController extends Controller
 
 		$data = [
 			"status" => $course->status,
-			"publish" => $course->publish_at
+			"publish" => Carbon::parse($course->publish_at)->format("Y-m-d H:i")
 		];
-
+		
 		echo json_encode($data);
 	}
 

@@ -98,7 +98,16 @@
 							Επιλογές (0)
 						</button>
 						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
-							<a id="delete-courses-btn" class="dropdown-item py-2" href="#">Διαγραφή</a>
+							<div class="btn-group dropleft w-100">
+								<button type="button" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Αλλαγή κατάστασης
+								</button>
+								<div class="dropdown-menu py-0">
+									<a class="dropdown-item js-bulk-status cursor-pointer py-2">Ενεργοποιήση</a>
+									<div class="dropdown-divider my-0"></div>
+									<a class="dropdown-item js-bulk-status cursor-pointer py-2">Απενεργοποίηση</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

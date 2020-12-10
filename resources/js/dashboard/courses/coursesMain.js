@@ -7,6 +7,10 @@ import utilities from '../main';
 //! 			EventListeners				#
 //!##########################################
 
+$(".js-bulk-status").on("click", function() {
+	utilities.toastAlert("info", "Under Development")
+})
+
 $("#clone-course-modal").on( 'show.bs.modal', function() {
 
 	if ( !event ) {
@@ -36,53 +40,6 @@ $("#submit-form-btn").on("click", function() {
 
 $("#cover-input").change( function() {
 	$("#cover-input-label")[0].textContent = this.value.replace("C:\\fakepath\\", "");
-});
-
-$('#delete-courses-btn').on("click", function() {
-
-	let checkedBoxes = $('.js-course-checkbox:checked');
-
-	if ( checkedBoxes.length == 0 ) {
-		Swal.fire('Δεν έχετε επιλέξει τίποτα');
-		return;
-	}
-
-	let ids = [];
-
-	for ( let i = 0; i < checkedBoxes.length; i++ ) {
-		ids.push( checkedBoxes[i].dataset.courseId );
-	}
-
-	Swal.fire({
-		title: 'Είστε σίγουρος;',
-		text: `${checkedBoxes.length} ${checkedBoxes.length == 1 ? "αρχείο θα διαγραφεί" : " αρχεία θα διαγραφούν"}`,
-		icon: 'warning',
-		showCancelButton: true,
-		confirmButtonColor: '#ff5b5b',
-		confirmButtonText: 'Ναι, διαγραφή!',
-		cancelButtonText: 'Άκυρο'
-	}).then( (result) => {
-
-		if (result.value) {
-
-			axios.delete(`/course-ajax/destroy/${ids}`)
-			.then(function (response) {
-
-				let message = checkedBoxes.length == 1 ? "Διεγράφη" : "Διαγράφηκαν"
-
-				utilities.toastAlert( "success", message );
-
-				coursesDatatable.ajax.reload();
-				utilities.resetBulk( $("#course-bulk-action-btn"), $("#select-all-courses") );
-			})
-			.catch(function (error) {
-
-				utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
-
-			});
-
-		}
-	})
 });
 
 //!##########################################
