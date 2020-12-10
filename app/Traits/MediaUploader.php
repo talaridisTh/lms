@@ -11,7 +11,7 @@ Use Intervention\Image\Facades\Image;
 
 trait MediaUploader {
 
-	private function storeImage($image) {
+	private function storeImage($image, $type = 0) {
 
 		$this->fileValidation($image, 50000000, IMAGE_TYPES);
 
@@ -21,6 +21,7 @@ trait MediaUploader {
 		$media = new Media;
 		$media->original_name = $name->original;				//! xoris ext
 		$media->name = $name->slug;
+		$media->type = $type;
 		$media->rel_path = "/storage/images/$date/$name->full";	//! + increment on dublicate
 		// $media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
 		$media->ext = $image->getClientOriginalExtension();

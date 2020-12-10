@@ -101,7 +101,7 @@ class CoursesDataTable extends DataTable {
 				$date = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("d-m-Y") : "";
 				$time = !is_null($data->publish_at) ? Carbon::parse($data->publish_at)->format("H:i") : "";
 
-				return "<div class='js-publish-cover'>
+				return "<div class='js-publish-cover cursor-pointer'>
 						<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
 						<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>
 					</div>

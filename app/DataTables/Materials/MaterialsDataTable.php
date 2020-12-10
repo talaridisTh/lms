@@ -22,14 +22,15 @@ class MaterialsDataTable extends DataTable {
     {
         if (!request()->from_date && !request()->to_date) {
 
-            $data = Material::where("type", "!=", "Section")->with("courses")->get();
+            $data = Material::where("type", "!=", "Section");
 		}
 		else {
             $data = Material::where(function ($subquery) {
 				$subquery->where("type", "!=", "Section")
-					->whereBetween('created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
+					->whereBetween('updated_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
+					->orWhereBetween('created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
 					->get();
-			})->get();
+			});
         }
 
         return DataTables::of($data)
@@ -39,14 +40,6 @@ class MaterialsDataTable extends DataTable {
 							<input class='js-material-checkbox js-user-checkbox' data-material-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>";
-            })
-            ->addColumn('courses', function (Material $material) {
-                return $material->courses->map(function ($course) {
-                    return $course->title;
-                })->implode(', ');
-            })
-            ->addColumn('id', function (Material $material) {
-                return $material->id;
             })
             ->editColumn('title', function ($data) {
 
@@ -72,12 +65,13 @@ class MaterialsDataTable extends DataTable {
 					<label for='" . $data->slug . "-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
             })
             ->rawColumns(['action', 'status', "courses", "title"])
-            ->setRowAttr(['data-material-id' => function ($data) {
-
-                return $data->id;
-            }, 'data-material-slug' => function ($data) {
-                return $data->slug;
-            }
+            ->setRowAttr([
+				'data-material-id' => function ($data) {
+					return $data->id;
+				},
+				'data-material-slug' => function ($data) {
+                	return $data->slug;
+            	}
             ]);
     }
 

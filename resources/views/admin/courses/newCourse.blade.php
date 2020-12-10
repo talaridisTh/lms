@@ -225,9 +225,15 @@
 									@enderror
 								</div>
 								<textarea id="script-area" name="script" hidden>{{ old("script") }}</textarea>
+								
+								<div class="d-flex justify-content-between">
+									<label>Script</label>
+									<input id="script-toggle" class="js-editors-toggle"
+										data-field="script" type="checkbox" data-switch="success"
+										name="scriptEditor">
+									<label class="mb-0" for="script-toggle" data-on-label="On" data-off-label="Off"></label>
+								</div>
 							</form>
-
-							<label>Script</label>
 							<div id="editor"></div>
 
 						</div>
@@ -250,8 +256,8 @@
 										<select form="create-course-form" id="version-select"
 											name="version"  data-toggle="select2" data-minimum-results-for-search="-1"
 											class="custom-select2-warning select2 form-control">
-											<option value="Trial" {{ old("version") === "Trial" ? "selected" : ""}}>Trial</option>
 											<option value="Normal" {{ old("version") === "Normal" ? "selected" : ""}}>Normal</option>
+											<option value="Trial" {{ old("version") === "Trial" ? "selected" : ""}}>Trial</option>
 										</select>
 									</div>
 

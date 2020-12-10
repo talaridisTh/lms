@@ -40,8 +40,8 @@ class CourseController extends Controller
 
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+
 		$request->validate([
 			'title' => 'required'
 		]);
@@ -55,7 +55,8 @@ class CourseController extends Controller
 
 		$fields = [
 			"summary" => isset($request->summaryEditor) ? 1 : 0,
-			"description" => isset($request->descriptionEditor) ? 1 : 0
+			"description" => isset($request->descriptionEditor) ? 1 : 0,
+			"script" => isset($request->scriptEditor) ? 1 : 0
 		];
 
 		$course = new Course;

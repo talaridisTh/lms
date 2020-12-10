@@ -1,5 +1,5 @@
 <select id="topicFilterMaterialCourses">
-    <option value="">Όλα τα Type</option>
+    <option value="">Όλα τα Topic</option>
     @foreach(App\Models\Topic::all() as $topic)
         <option value="{{$topic->title}}">{{$topic->title}}</option>
     @endforeach

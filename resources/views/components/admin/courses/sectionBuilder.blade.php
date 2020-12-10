@@ -40,7 +40,7 @@
 
 				<i class="js-edit-chapter-btn px-1 ml-2 mdi mdi-square-edit-outline custom-primary cursor-pointer" title="Edit section"></i>
 				<i class="js-remove-material px-1 ml-2 mdi mdi-delete-circle-outline custom-danger cursor-pointer"
-					data-material-id="{{ $section->id }}" title="Delete section"></i>
+					data-material-id="{{ $section->id }}" data-material-type="Section" title="Delete section"></i>
 
 				<div class="dropdown">
 					<i id="{{ $section->slug }}-dropdown" class="js-section-dots ml-2 mdi mdi-dots-vertical cursor-pointer custom-primary"

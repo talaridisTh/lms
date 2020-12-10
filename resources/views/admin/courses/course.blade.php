@@ -521,7 +521,16 @@
 								<textarea id="script-area" name="script" hidden>{{ old("script", $course->script) }}</textarea>
 							</form>
 
-							<label>Script</label>
+							<div class="d-flex justify-content-between">
+								<label>Script</label>
+								<input id="script-toggle" class="js-editors-toggle"
+									data-field="script" type="checkbox" data-switch="success"
+									@if ( isset($fields->script) && $fields->script == 1)
+										checked
+									@endif
+								/>
+								<label class="mb-0" for="script-toggle" data-on-label="On" data-off-label="Off"></label>
+							</div>
 							<div id="editor"></div>
 
 						</div>

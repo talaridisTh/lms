@@ -129,10 +129,9 @@
 					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
 					<th class="text-center">Έκδοση</th>
-					<th class="text-center">Τελ. Ενημέρωση</th>
+					<th class="text-center">Ημ. Δημιουργίας</th>
 					<th class="text-center">Publish</th>
 					<th class="text-center">Ενεργό</th>
-					<th class="text-center">Τελ. Ενημέρωση</th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
@@ -144,10 +143,9 @@
 					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
 					<th class="text-center">Έκδοση</th>
-					<th class="text-center">Τελ. Ενημέρωση</th>
+					<th class="text-center">Ημ. Δημιουργίας</th>
 					<th class="text-center">Publish</th>
 					<th class="text-center">Ενεργό</th>
-					<th class="text-center">Τελ. Ενημέρωση</th>
 				</tr>
 			</tfoot>
 		</table>
