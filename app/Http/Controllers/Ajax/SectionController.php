@@ -19,15 +19,63 @@ class SectionController extends Controller
 		}
 	}
 
-	public function toggleChapters( Request $request ) {
+	public function toggleChapter(Request $request, Material $material) {
 
-		$material = Material::find( $request->sectionId );
+		$chapter = $material->chapters()
+			->wherePivot("material_id", $request->materialId)->first();
 
-		foreach ($request->data as $chapter ) {
-			$material->chapters()
-				->updateExistingPivot($chapter['id'], ["status" => $chapter['status']]);
+		$publish = $chapter->pivot->publish_at;
+		$now = Carbon::now();
+
+		if ($request->status === 1) {
+			$chapter->pivot->update([
+				"status" => 1,
+				"publish_at" => is_null($publish) ? $now : $publish
+			]);
+		}
+		else {
+			$chapter->pivot->update([
+				"status" => 0
+			]);
 		}
 
+		//! kribo ta deuterolepta
+		echo Carbon::parse($chapter->pivot->publish_at)->format("Y-m-d H:i");
+	}
+
+	public function toggleMultipleChapters(Request $request, Material $material ) {
+
+		$now = Carbon::now();
+		$data = [
+			"materials" => [],
+			"status" => $request->status
+		];
+
+		foreach ($request->ids as $id ) {
+			$chapter = $material->chapters()
+				->wherePivot("material_id", $id)->first();
+
+			$publish = $chapter->pivot->publish_at;
+
+			if ( $request->status ) {
+				$chapter->pivot->update([
+					"status" => 1,
+					"publish_at" => is_null($publish) ? $now : $publish
+				]);
+			}
+			else {
+				$chapter->pivot->update([
+					"status" => 0
+				]);
+			}
+
+			array_push($data["materials"], [
+				"id" => $chapter->id,
+				"publish" => $chapter->pivot->publish_at
+			]);
+		}
+
+		echo json_encode($data);
 	}
 
     public function removeChapters(Request $request) {
@@ -121,12 +169,21 @@ class SectionController extends Controller
 		$section->chapters()
 			->attach( $material->id, [
 				"status" => $request->status,
-				"priority" => $request->priority + 1
+				"priority" => $request->priority + 1,
+				"publish_at" => date( "Y-m-d H:i:s", (time() - 10) )
 			]);
 
 		$sections = Course::find( $request->courseId )->materials()
 			->where("type", "Section")->orderBy("priority")->get();
 
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
+	public function publishchapter(Request $request, Material $material) {
+
+		$material->chapters()->updateExistingPivot($request->materialId, [
+			"publish_at" => $request->date
+		]);
+
 	}
 }

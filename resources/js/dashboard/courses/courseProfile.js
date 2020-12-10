@@ -533,6 +533,7 @@ const courseMaterialsTable = $("#course-materials-list").DataTable({
 		showSectionBtnInit();
 		sectionMaterialHighlightInit();
 		dateInputShow();
+		chapterPublishShow();
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
 	},
 
@@ -699,6 +700,25 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
     }
 });
 
+function chapterPublishShow() {
+	$(".js-chapter-publish-cover").on("click", function() {
+		const cover = this;
+		const td = cover.parentElement;
+		const dateInput = td.getElementsByClassName("js-chapter-publish-picker")[0];
+		
+		this.classList.add("d-none");
+		dateInput.classList.remove("d-none");
+
+		pickerConfig.locale.cancelLabel = "Cancel";
+
+		$(dateInput).daterangepicker(pickerConfig);
+		$(dateInput).on("apply.daterangepicker", chapterPublishApplyHandler.bind(this));
+		$(dateInput).on("hide.daterangepicker", materialPublishHideHandler.bind(this, cover, dateInput));
+
+		dateInput.focus();
+	})
+}
+
 
 function dateInputShow() {
 	
@@ -713,9 +733,7 @@ function dateInputShow() {
 		pickerConfig.locale.cancelLabel = "Cancel";
 
 		$(dateInput).daterangepicker(pickerConfig);
-
 		$(dateInput).on("apply.daterangepicker", materialPublishApplyHandler.bind(this));
-
 		$(dateInput).on("hide.daterangepicker", materialPublishHideHandler.bind(this, cover, dateInput));
 
 		dateInput.focus();
@@ -744,17 +762,14 @@ function showSectionBtnInit() {
 function multipleChapterDeactivateInit() {
 	// deactivate-chapters
 
-	$(".deactivate-chapters").on( 'click', function() {
+	$(".js-deactivate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
 		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
-		let data = [];
+		let ids = [];
 
 		checkedboxes.forEach( checkbox => {
-			data.push({
-				id: checkbox.dataset.materialId,
-				status: 0
-			})
+			ids.push(checkbox.dataset.materialId);
 		});
 
 		Swal.fire({
@@ -769,7 +784,7 @@ function multipleChapterDeactivateInit() {
 
 			if (result.isConfirmed) {
 
-				toggleChapters( sectionId, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, ids, false, mainCnt, checkedboxes )
 
 			}
 		})
@@ -779,17 +794,14 @@ function multipleChapterDeactivateInit() {
 }
 
 function multipleChapterActivateInit() {
-	$(".activate-chapters").on( 'click', function() {
+	$(".js-activate-chapters").on( 'click', function() {
 		let mainCnt = this.findParent(7);
 		let sectionId = this.dataset.sectionId;
 		let checkedboxes = mainCnt.querySelectorAll(".js-chapter-checkbox:checked");
-		let data = [];
+		let ids = [];
 
 		checkedboxes.forEach( checkbox => {
-			data.push({
-				id: checkbox.dataset.materialId,
-				status: 1
-			})
+			ids.push(checkbox.dataset.materialId)
 		});
 
 		Swal.fire({
@@ -804,7 +816,7 @@ function multipleChapterActivateInit() {
 
 			if (result.isConfirmed) {
 
-				toggleChapters( sectionId, data, mainCnt, checkedboxes )
+				toggleChapters( sectionId, ids, true, mainCnt, checkedboxes );
 
 			}
 		})
@@ -868,18 +880,15 @@ function chapterStatusInit() {
 
 		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section-ajax/toggle-chapters`, {
-			courseId, sectionId,
-			data: [{
-				id: this.dataset.materialId,
-				status: this.checked ? 1 : 0
-			}],
+		axios.patch(`/section-ajax/${sectionId}/toggle-chapter`, {
+			materialId: this.dataset.materialId,
+			status: this.checked ? 1 : 0
 		})
 		.then( res => {
-			let icon = this.checked ? "success" : "info";
-			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+			const row = this.findParent(2);
 
-			utilities.toastAlert( icon, message );
+			publishTextUpdate(row, res.data);
+			publishBadgeUpdate(row, res.data, this.checked);
 		})
 		.catch( err => {
 			console.log(err);
@@ -1600,36 +1609,19 @@ function activeMaterialsCheckboxHandler() {
 	utilities.mainCheckboxSwitcher( mainCheckbox, checkbox, bulkBtn );
 }
 
-function toggleChapters( sectionId, data, mainCnt, checkedboxes ) {
+function toggleChapters( sectionId, ids, active, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section-ajax/toggle-chapters`, {
-		courseId, sectionId, data
+	axios.patch(`/section-ajax/${sectionId}/toggle-multiple-chapters`, {
+		ids, "status": active //! or inactive
 	})
 	.then( res => {
-		let icon = "";
-		let message = "";
+		switchesToggle(checkedboxes, active);
 
-		if ( data[0].status == 1 ) {
-			icon = "success";
-			message = data.length == 1 ? "Ενεργοποιήθηκε" : "Ενεργοποιήθηκαν";
-			checkedboxes.forEach( checkbox => {
-				checkbox.checked = false;
-				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = true;
-			});
-		}
-		else {
-			icon = "info";
-			message = data.length == 1 ? "Απενεργοποιήθηκε" : "Απενεργοποιήθηκαν";
-			checkedboxes.forEach( checkbox => {
-				checkbox.checked = false;
-				checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = false;
-			});
-		}
+		chapterBadgeUpdate(mainCnt, res.data);
 
 		mainCnt.getElementsByClassName("js-section-main-checkbox")[0].checked = false;
 		mainCnt.getElementsByClassName("js-multiple-chapter-remove")[0].textContent = "Αφαίρεση επιλεγμένων (0)"
 		mainCnt.getElementsByClassName("js-chapters-status")[0].textContent = "Αλλαγή κατάστασης (0)";
-		utilities.toastAlert( icon, message );
 	})
 	.catch( err => {
 		console.log(err);
@@ -2313,6 +2305,23 @@ function endDate( input ) {
 	return secondDate;
 }
 
+function chapterPublishApplyHandler(ev, picker) {
+	const sectionId = this.dataset.sectionId;
+	const materialId = this.dataset.materialId;
+	const date = picker.startDate.format('YYYY-MM-DD H:mm');
+
+	axios.patch(`/section-ajax/${sectionId}/publish-chapter`, {
+		materialId, date
+	})
+	.then( res => {
+		const row = this.findParent(2);
+		const status = row.getElementsByClassName("js-chapter-toggle")[0].checked;
+
+		publishBadgeUpdate(row, date, status);
+		publishTextUpdate(row, date);
+	})
+}
+
 function materialPublishApplyHandler(ev, picker) {
 	const materialId = this.dataset.materialId;
 
@@ -2366,20 +2375,46 @@ function publishBadgeUpdate(row, date, checked) {
 
 	if ( checked ) {
 		if ( now > date ) {
-			badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+			badge.classList.remove("badge-outline-primary", "badge-outline-danger");
 			badge.classList.add("badge-outline-success");
 			badge.textContent = "Published";
 		}
 		else {
-			badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+			badge.classList.remove("badge-outline-success", "badge-outline-danger");
 			badge.classList.add("badge-outline-primary");
 			badge.textContent = "Scheduled";
 		}
 	}
 	else {
-		badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+		badge.classList.remove("badge-outline-primary", "badge-outline-success");
 		badge.classList.add("badge-outline-danger");
 		badge.textContent = "Draft";
+	}
+}
+
+function switchesToggle(checkedboxes, active) {
+	if ( active ) {
+		checkedboxes.forEach( checkbox => {
+			checkbox.checked = false;
+			checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = true;
+		});
+	}
+	else {
+		checkedboxes.forEach( checkbox => {
+			checkbox.checked = false;
+			checkbox.findParent(3).getElementsByClassName("js-chapter-toggle")[0].checked = false;
+		});
+	}
+}
+
+function chapterBadgeUpdate(cnt, data) {
+	const materials = data.materials;
+	const status = data.status;
+	let row;
+
+	for (let i = 0; i < materials.length; i++) {
+		row = cnt.querySelector(`.js-accordion-row[data-material-id="${materials[i].id}"]`);
+		publishBadgeUpdate(row, materials[i].publish, status);
 	}
 }
 

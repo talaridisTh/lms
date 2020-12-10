@@ -57,12 +57,12 @@
 								Αλλαγή κατάστασης (0)
 							</a>
 							<div class="dropdown-menu py-0">
-								<a class="activate-chapters dropdown-item my-0 py-2" href="#"
+								<a class="js-activate-chapters dropdown-item my-0 py-2" href="#"
 									data-section-id="{{ $section->id }}">Ενεργοποιήση</a>
 
 								<div class="dropdown-divider my-0"></div>
 
-								<a class="deactivate-chapters dropdown-item my-0 py-2" href="#"
+								<a class="js-deactivate-chapters dropdown-item my-0 py-2" href="#"
 									data-section-id="{{ $section->id }}">Απενεργοποίηση</a>
 							</div>
 						</div>
@@ -88,11 +88,11 @@
 								</div>
 							</th>
 							<th class="text-center" scope="col">Title</th>
-							<th class="text-center" scope="col">highlight</th>
-							<th class="text-center" scope="col">Κατάσταση</th>
+							<th class="text-center" scope="col" style="width: 133px;">Highlight</th>
+							<th class="text-center" scope="col" style="width: 133px;">Κατάσταση</th>
 							<th class="text-center" scope="col" style="width: 115px;">Κατάταξη</th>
-							{{-- <th class="text-center" scope="col">Τύπος</th> --}}
-							<th class="text-center" scope="col" style="width: 170px;">Τελ. Ανανέωση</th>
+							<th class="text-center" scope="col" style="width: 170px;">Τύπος</th>
+							<th class="text-center" scope="col" style="width: 180px;">Τελ. Ανανέωση</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -150,10 +150,10 @@
 										$status = $material->pivot->status == 0 ? "" : "checked";
 									@endphp
 
-									<input id='{{ $material->slug }}-toggle-checkbox' data-section-id="{{ $section->id }}"
+									<input id='{{ $material->slug }}-switch-checkbox' data-section-id="{{ $section->id }}"
 										class="js-chapter-toggle" data-material-id='{{ $material->id }}'
-										type='checkbox' {{ $status }} data-switch='bool' autocomplete='off'/>
-									<label for='{{ $material->slug }}-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
+										type='checkbox' {{ $status }} data-switch='success' autocomplete='off'/>
+									<label for='{{ $material->slug }}-switch-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>
 								</td>
 								<td class="align-middle text-center">
 									<div class='form-group mb-1'>
@@ -163,21 +163,15 @@
 											value="{{ $material->pivot->priority }}" autocomplete='off'>
 									</div>
 								</td>
-								{{-- <td class="align-middle text-center">{{ $material->type}}</td> --}}
+								<td class="align-middle text-center">{{ $material->type}}</td>
 								<td class="text-center align-middle">
-									@php
-										if ( !is_null($material->updated_at) ) {
-											$date = date_create($material->updated_at);
-											$dayMonthYear = date_format($date, "d-m-Y");
-											$hour = date_format($date, "H:i");
-										}
-										else {
-											$dayMonthYear ="";
-											$hour ="";
-										}
-									@endphp
-									<p class='js-date mb-0 mt-1'>{{ $dayMonthYear }}</p>
-									<p class='js-time mb-0'>{{ $hour }}</p>
+									<div class='js-chapter-publish-cover cursor-pointer' data-material-id='{{ $material->id }}'  data-section-id="{{ $section->id }}">
+										<span class='js-badge badge {{ $material->publishBadge()->icon }} badge-pill'>{{ $material->publishBadge()->text }}</span>
+										<p class='js-date mb-0 mt-1'>{{ $material->publishDate()->date }}</p><p class='js-time mb-0'>{{ $material->publishDate()->time }}</p>
+									</div>
+									<input class='js-chapter-publish-picker form-control d-none' type='text'
+										data-material-id="{{ $material->id }}" data-section-id="{{ $section->id }}"
+										value='{{ $material->publishDate()->date }} {{ $material->publishDate()->time }}'>
 								</td>
 							</tr>
 						@empty
@@ -188,11 +182,11 @@
 						<tr>
 							<th scope="col"></th>
 							<th class="text-center" scope="col">Title</th>
-							<th class="text-center w-10" scope="col">highlight</th>
-							<th class="text-center w-10" scope="col">Κατάσταση</th>
-							<th class="text-center w-10" scope="col">Κατάταξη</th>
-							{{-- <th class="text-center w-10" scope="col">Τύπος</th> --}}
-							<th class="text-center" scope="col" style="min-width: 133px;">Τελ. Ανανέωση</th>
+							<th class="text-center" scope="col">Highlight</th>
+							<th class="text-center" scope="col">Κατάσταση</th>
+							<th class="text-center" scope="col">Κατάταξη</th>
+							<th class="text-center" scope="col">Τύπος</th>
+							<th class="text-center" scope="col">Τελ. Ανανέωση</th>
 						</tr>
 					</tfoot>
 				</table>

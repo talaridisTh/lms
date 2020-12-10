@@ -50,7 +50,7 @@ class CourseController extends Controller
 			$publishDate = Carbon::parse( $request->publishDate )->format("Y-m-d H:i:s");
 		}
 		else {
-			$publishDate = null;
+			$publishDate = Carbon::now();
 		}
 
 		$fields = [

@@ -3614,12 +3614,16 @@ figure.image-center {
   white-space: normal !important;
 }
 
+.min-width-170 {
+  min-width: 170px !important;
+}
+
 .min-width-200 {
   min-width: 200px !important;
 }
 
 .content-width {
-  max-width: 1550px !important;
+  max-width: 1600px !important;
 }
 
 .text-orange {
@@ -3903,6 +3907,19 @@ figure > img {
   box-sizing: border-box;
   color: #ff5b5b;
   font-size: 0.75rem;
+}
+
+.CodeMirror {
+  border: 1px solid #47515d;
+  border-radius: 4px;
+  height: auto !important;
+  min-height: 300px !important;
+}
+
+.CodeMirror-scroll {
+  min-height: 300px !important;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 /*

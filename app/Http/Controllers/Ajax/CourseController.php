@@ -273,9 +273,7 @@ class CourseController extends Controller
 	}
 
 	public function toggleHighlight(Course $course, Request $request) {
-		// $data = $request->materialIds;
 
-		// dd($data);
 		foreach ($request->materialIds as $id) {
 			$course->materials()
 				->updateExistingPivot( $id, [ 'highlight' => $request->status]);
@@ -312,6 +310,19 @@ class CourseController extends Controller
 			"publish_at" => $request->date
 		]);
 
+	}
+
+	public function editPublish(Request $request, Course $course) {
+
+		$course->publish_at = $request->date;
+		$course->save();
+
+		$data = [
+			"status" => $course->status,
+			"publish" => Carbon::parse($course->publish_at)->format("Y-m-d H:i")
+		];
+		
+		echo json_encode($data);
 	}
 
 }

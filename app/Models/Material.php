@@ -19,7 +19,7 @@ class Material extends Model {
         return $this->belongsToMany(
             Material::class, "material_section",
             "section_id", "material_id"
-        )->withPivot('status', 'priority', 'highlight');
+        )->withPivot('status', 'priority', 'highlight', 'publish_at');
     }
 
     public function courses()
@@ -140,6 +140,47 @@ class Material extends Model {
         }
     }
 
+	public function publishBadge() {
+		if ( $this->pivot->status == 1 ) {
+			if ( time() > strtotime($this->pivot->publish_at) && !is_null($this->pivot->publish_at) ) {
+				return (object)[
+					"icon" => "badge-outline-success",
+					"text" => "Published"
+				];
+			}
+			else {
+				return (object)[
+					"icon" => "custom-pill-primary badge-outline-primary",
+					"text" => "Scheduled"
+				];
+			}
+		}
+		else {
+			return (object)[
+				"icon" => "badge-outline-danger",
+				"text" => "Draft"
+			];
+		}
+	}
+
+	public function publishDate() {
+		if ( !is_null($this->pivot->publish_at) ) {
+			$publish = date_create($this->pivot->publish_at);
+
+			return (object)[
+				"publish" => $publish,
+				"date" => date_format($publish, "d-m-Y"),
+				"time" => date_format($publish, "H:i")
+			];
+		}
+		else {
+			return (object)[
+				"publish" => "",
+				"date" => "",
+				"time" => ""
+			];
+		}
+	}
 
     public function imageUrlSmall() {
         // Set complicated sign key

@@ -22,28 +22,6 @@
 	.custom-accordion-title {
 		color:#b2bcc5;
 	}
-
-	/* #settings .cm-s-shadowfox.CodeMirror{
-		background: #404954;
-	}
-
-	#settings .cm-s-shadowfox .CodeMirror-gutters{
-		background: #1d1d20;
-	} */
-
-
-	.CodeMirror {
-	  border: 1px solid #47515d;
-	  border-radius: 4px;
-	  height: auto !important;
-	  min-height: 300px !important;
-	}
-
-	.CodeMirror-scroll {
-	  min-height: 300px !important;
-	  overflow-y: auto;
-	  overflow-x: auto;
-	}
 </style>
 @endsection
 

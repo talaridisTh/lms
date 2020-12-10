@@ -46,12 +46,15 @@ Route::prefix("course-ajax")->group(function() {
 	Route::post('{course:id}/gallery-upload', [CourseAjaxController::class, "galleryUpload"]);
 	Route::patch('{course:id}/gallery-sort', [CourseAjaxController::class, "gallerySort"]);
 	Route::patch('{course:id}/publish-material', [CourseAjaxController::class, "publishMaterial"]);
+	Route::patch('{course:id}/edit-publish', [CourseAjaxController::class, "editPublish"]);
 });
 
 Route::prefix("section-ajax")->group(function() {
 	Route::post("remove-chapters", [SectionAjaxController::class, "removeChapters"]);
-    Route::patch("toggle-chapters", [SectionAjaxController::class, "toggleChapters"]);
+    Route::patch("{material:id}/toggle-multiple-chapters", [SectionAjaxController::class, "toggleMultipleChapters"]);
+    Route::patch("{material:id}/toggle-chapter", [SectionAjaxController::class, "toggleChapter"]);
     Route::patch("toggle-hightlight/{material:id}", [SectionAjaxController::class, "toggleHighlight"]);
     Route::patch("chapters-priority", [SectionAjaxController::class, "chaptersPriority"]);
 	Route::post("add-content", [SectionAjaxController::class, "addNewChapter"]);
+	Route::patch('{material:id}/publish-chapter', [SectionAjaxController::class, "publishchapter"]);
 });
