@@ -44,6 +44,7 @@ class MaterialController extends Controller {
 			"summary" => isset($request->summaryField) ? 1 : 0,
 			"description" => isset($request->descriptionField) ? 1 : 0,
 			"content" => isset($request->contentField) ? 1 : 0,
+			"script" => isset($request->scriptEditor) ? 1 : 0,
 		];
 
 		$material = new Material();

@@ -229,8 +229,8 @@
 								<div class="d-flex justify-content-between">
 									<label>Script</label>
 									<input id="script-toggle" class="js-editors-toggle"
-									data-field="script" type="checkbox" data-switch="success"
-									name="scriptEditor">
+										data-field="script" type="checkbox" data-switch="success"
+										name="scriptEditor">
 									<label class="mb-0" for="script-toggle" data-on-label="On" data-off-label="Off"></label>
 								</div>
 							</form>
