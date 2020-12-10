@@ -90,9 +90,8 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{ data: 'topics', name: 'topics', className: "align-middle text-wrap min-width-200" },
 		{ data: 'version', name: 'version', className: "align-middle text-center" },
 		{
-			visible: false,
-			data: 'updated_at',
-			name: 'updated_at',
+			data: 'created_at',
+			name: 'created_at',
 			className: "align-middle text-center cursor-default",
 			render: function(data) {
 				let date = new Date(data);
@@ -106,7 +105,6 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		},
 		{ data: 'publish', name: "publish_at", className: "align-middle text-center cursor-default min-width-170", searchable: false },
 		{ data: 'status', name: 'status', visible: false },
-		{ data: 'updated_at', name: 'updated_at', visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
