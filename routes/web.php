@@ -108,20 +108,17 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //! AJAX routes
 //!########################################################
 //! Dashboard Ajax Users Datatables
-    Route::post('users/view-users', 'Ajax\UserController@index')->name("index.datatable");
+    Route::post('users/view-users', 'Ajax\UserController@index');
     Route::post('users/view-user', 'Ajax\UserController@show')->name("show.datatable");
     Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->name("courseModal.datatable");
-    Route::post('/user/courses-inside-users', 'Ajax\UserController@coursesInsideUsers')->name("coursesInsideUsers.datatable");
     Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
 //! Dashboard Ajax Users CRUD
     Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
-    Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");;
-    Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple')->name("changeStatusMultiple.datatable");;
+    Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
+    Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple');
     Route::patch('/user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers')->name("addCoursesMultipleUsers.datatable");
-    Route::patch('/user/multiple/add-user', 'Ajax\UserController@AddMultipleUserCourse')->name("AddMultipleUserCourse.datatable");
     Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
-    Route::delete('/user/multiple/courses/delete', 'Ajax\UserController@destroyMultipleCourses')->name("destroyMultipleCourses.datatable");
-    Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers')->name("destroyMultipleUsers.datatable");
+    Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers');
     Route::post("/user/show-password", "Ajax\UserController@showPassword")->name("showPassword");
     Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('user.avatar.upload');
 //! Dashboard Ajax Media

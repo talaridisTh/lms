@@ -36,11 +36,11 @@ class UserController {
         return $dataTable->render('users.addCourses');
     }
 
-    public function coursesInsideUsers(CoursesInsideUsersDataTable $dataTable)
-    {
+    // public function coursesInsideUsers(CoursesInsideUsersDataTable $dataTable)
+    // {
 
-        return $dataTable->render('users.coursesInsideUsers');
-    }
+    //     return $dataTable->render('users.coursesInsideUsers');
+    // }
 
     public function changeStatus(Request $request)
     {
@@ -80,18 +80,18 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function addCoursesMultipleUsers(Request $request)
-    {
+    // public function addCoursesMultipleUsers(Request $request)
+    // {
 
-        $courses = Course::findOrFail($request->course_id);
-        foreach ($courses as $course)
-        {
+    //     $courses = Course::findOrFail($request->course_id);
+    //     foreach ($courses as $course)
+    //     {
 
-            $course->users()->syncWithoutDetaching($request->user_id);
-        }
+    //         $course->users()->syncWithoutDetaching($request->user_id);
+    //     }
 
-        return response()->json(['success' => 'Status change successfully.']);
-    }
+    //     return response()->json(['success' => 'Status change successfully.']);
+    // }
 
     public function AddMultipleUserCourse(Request $request)
     {
@@ -113,14 +113,14 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function destroyMultipleCourses(Request $request)
-    {
-        $user = User::find($request->user_id);
-        $user->courses()->detach($request->course_id);
-        $user->watchlistCourse()->detach($request->course_id);
+    // public function destroyMultipleCourses(Request $request)
+    // {
+    //     $user = User::find($request->user_id);
+    //     $user->courses()->detach($request->course_id);
+    //     $user->watchlistCourse()->detach($request->course_id);
 
-        return response()->json(['success' => 'Status change successfully.']);
-    }
+    //     return response()->json(['success' => 'Status change successfully.']);
+    // }
 
     public function destroyMultipleUsers(Request $request)
     {

@@ -27,7 +27,7 @@
 	<!-- end page title -->
 
     <x-alertMsg :msg="'create'"></x-alertMsg>
-    <div class="container content-width">
+    <div class="container content-width table-cnt">
         <div class="row mb-2 justify-content-end">
             <div id="containerCol" class="col-sm-12">
                 <div class="text-right">
@@ -35,7 +35,63 @@
                             class="mdi mdi-plus-circle mr-2"></i>
                         Νέος χρήστης
                     </a>
-                @include("components.bulkActionDatatable")
+					<div class="btn-group mb-2">
+						<button id="course-bulk-action-btn" disabled type="button" class="btn btn-secondary dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Επιλογές (0)
+						</button>
+					
+						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
+							{{-- <div class="btn-group dropleft">
+								<div class="dropdown-divider"></div>
+								<button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">
+									Προσθήκη σε course
+								</button>
+								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+									@foreach($activeCourses as $courses)
+									<a class="dropdown-item js-multiple-update cursor-pointer"
+									   data-courses-type="{{$courses->type}}"
+										data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
+									@endforeach
+								</div>
+							</div> --}}
+
+							<div class="btn-group dropleft w-100">
+								<button type="button" id="status-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">
+									Αλλαγή κατάστασης
+								</button>
+								<div class="dropdown-menu" aria-labelledby="status-dropdown">
+									<a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="on">Ενεργά</a>
+									<a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="off">Μη ενεργά</a>
+								</div>
+							</div>
+					
+							<div class="dropdown-divider m-0"></div>
+					
+							<div class="btn-group dropleft w-100">
+								<button type="button" id="export-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown"
+									aria-haspopup="true" aria-expanded="false">
+									Export
+								</button>
+								<div class="dropdown-menu" aria-labelledby="export-dropdown">
+									<a href="#" class="dropdown-item">Print</a>
+									<a href="#" id="excel-btn" class="dropdown-item">Excel</a>
+									<a href="#" class="dropdown-item">CVS </a>
+								</div>
+							</div>
+				
+							<div class="dropdown-divider m-0"></div>
+							
+							<a class="dropdown-item js-detach-delete py-2" href="#">Αφαίρεση άπο Course</a>
+							
+							<div class="dropdown-divider m-0"></div>
+
+							<a id="delete-users-btn" class="dropdown-item js-multiple-delete py-2" href="#">Διαγραφή επιλεγμένων</a>
+						</div>
+					</div>
+					
                 </div>
             </div>
         </div>
@@ -43,44 +99,34 @@
         <table id="scroll-horizontal-datatable" class="table w-100 nowrap data-table js-remove-table-classes ">
             <thead>
             <tr>
-                <th class="text-left"></th>
                 <th id='all-user-checkbox' class="text-left ">
                     <div class='icheck-primary d-inline'>
                         <input type='checkbox' id='select-all-courses' autocomplete='off'>
                         <label for='select-all-courses'></label>
                     </div>
                 </th>
-                <th class="text-left">Επώνυμο</th>
-                <th class="text-left">Όνομα</th>
-                <th class="text-left">Ρόλος</th>
-                <th class="text-left">Email</th>
-                <th class="text-left">Ενεργός</th>
-{{--                <th class="text-left">Hμερομηνια</th>--}}
-                <th class="text-left">Hμερομηνια Εγ.</th>
-                <th class="text-left">Courses</th>
-                <th class="text-left">id</th>
+                <th class="text-center">Ονοματεπώνυμο</th>
+                <th class="text-center">Courses</th>
+                <th class="text-center">Όνομα</th>
+                <th class="text-center">Ρόλος</th>
+                <th class="text-center">Τηλέφωνο</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Κατάσταση</th>
+                <th class="text-center">Ημ.Εγγραφής</th>
             </tr>
             </thead>
-            <tbody class="">
-            </tbody>
+            <tbody class="tables-hover-effect"></tbody>
             <tfoot>
             <tr>
-                <th class="text-left"></th>
-                <th id='all-user-checkbox' class="text-left ">
-                    <div class='icheck-primary d-inline'>
-                        <input type='checkbox' id='select-all-courses' autocomplete='off'>
-                        <label for='select-all-courses'></label>
-                    </div>
-                </th>
-                <th class="text-left">Επώνυμο</th>
-                <th class="text-left">Όνομα</th>
-                <th class="text-left">Ρόλος</th>
-                <th class="text-left">Email</th>
-                <th class="text-left">Ενεργός</th>
-{{--                <th class="text-left">Hμερομηνια</th>--}}
-                <th class="text-left">Ημ. Εγγραφής</th>
-                <th class="text-left">courses</th>
-                <th class="text-left">id</th>
+                <th></th>
+                <th class="text-center">Ονοματεπώνυμο</th>
+                <th class="text-center">Courses</th>
+                <th class="text-center">Όνομα</th>
+                <th class="text-center">Ρόλος</th>
+                <th class="text-center">Τηλέφωνο</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Κατάσταση</th>
+                <th class="text-center">Ημ.Εγγραφής</th>
             </tr>
             </tfoot>
         </table>
@@ -97,7 +143,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#fullNameFilter").select2({
+            $("#course-filter").select2({
                 // placeholder: "Όλα τα Courses ",
 
                 // minimumInputLength: 2,
@@ -120,8 +166,6 @@
 
             });
         })
-
-
     </script>
 
     <script>

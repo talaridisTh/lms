@@ -61,7 +61,7 @@ function toastAlert(icon, message) {
 
 function toastAlertDelete(text, icon = "warning") {
     return Swal.fire({
-        title: 'Είστε σίγουρος;',
+        title: 'Είστε σίγουρος/η;',
         text: text,
         icon: icon,
 		showCancelButton: true,

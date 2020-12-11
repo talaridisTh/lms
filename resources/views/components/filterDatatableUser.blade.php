@@ -1,13 +1,10 @@
-<div class=" select2-container form-group ragneButton" style="width: 179px!important;" >
-    <input type="text" class="form-control  date" placeholder="Επιλέξτε ημερομηνίες..."   autocomplete="off"   id="daterange"   />
-</div>
 <select id="activeFilter">
     <option value="">Όλες οι Καταστάσεις</option>
     <option value="1">Ενεργοί</option>
     <option value="0">Μη Ενεργοί</option>
 </select>
 
-<select id="fullNameFilter">
+<select id="course-filter">
     <option value="">Όλα τα Courses </option>
     @foreach(App\Models\Course::all() as $course)
         <option value="{{$course->title}}">{{$course->title}}</option>
@@ -16,8 +13,10 @@
 
 <select id="rolesFilter">
     <option value="">Όλοι οι ρόλοι</option>
-    @foreach(App\Models\Role::all()->except([6,8]) as $role)
-        <option value="{{$role->name}}">{{$role->name}}</option>
-    @endforeach
+    <option value="admin">Admin</option>
+    <option value="instructor">Εισηγητές</option>
+    <option value="student">Μαθητές</option>
+    <option value="partner">Partners</option>
+    
 </select>
 

@@ -2,13 +2,12 @@
 
 namespace App\DataTables\Users;
 
-use App\Models\Role;
 use App\Models\User;
-
+use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
-use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Carbon;
 
 class UsersDataTable extends DataTable {
 
@@ -18,51 +17,31 @@ class UsersDataTable extends DataTable {
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\datatableabstract
      */
-    public function dataTable($query)
-    {
+    public function dataTable($query, Request $request) {
 
+        if (!is_null($request->fromDate) && !is_null($request->toDate)) {
 
+			$query = User::role(["admin", "instructor", "student", "partner"])
+				->whereBetween("users.created_at", [$request->fromDate ."  00:00:00", $request->toDate ." 23:59:59"])
+				->with("roles", "courses")->select("users.*");
 
+		}
 
-        if (!request()->from_date && !request()->to_date)
-        {
-
-            $data = User::with(["roles", "courses"])->whereHas(
-            'roles', function ($q) {
-            $q->where('name', "!=", 'guest');
-
-        }
-        )->get();
-
-
-
-//            $data = User::with("courses")->get();
-        } else
-        {
-            $data = User::whereBetween('users.created_at', [request()->from_date . "  00:00:00", request()->to_date . " 23:59:59"])
-                ->with(["roles", "courses"])->select("users.*");
-        }
-
-
-        $superAdminIds =Role::whereId(8)->first()->users->map(function($superAdmin){
-            return $superAdmin->id;
-        });
-        if (auth()->user()->hasRole('admin')) {
-
-            $users = $data->whereNotIn('id', $superAdminIds);
-
-        }else{
-            $users = $data->all();
-        }
-
-
-        return DataTables::of($users)
-            ->addColumn('roles', function (User $user) {
-                return $user->roles->map(function ($role) {
-                    return $role->name;
-                })->implode(', ');
+        return datatables()->of($query)
+            ->addColumn('roles', function ($data) {
+                $role = $data->getRoleNames()[0];
+				switch ($role) {
+					case "admin":
+						return "Admin";
+					case "instructor":
+						return "Εισηγητής";
+					case "partner":
+						return "Partner";
+					default:
+						return "Μαθητής";
+				}
             })
-            ->addColumn('chexbox', function ($data) {
+            ->addColumn('checkbox', function ($data) {
 
                 return "<div class='icheck-primary d-inline'>
 							<input class='js-user-checkbox' data-user-id='$data->id'  type='checkbox' id='$data->first_name' autocomplete='off'>
@@ -78,17 +57,40 @@ class UsersDataTable extends DataTable {
                 $status = $data->status == 0 ? "" : "checked";
                 $statusToggle = $data->status == 0 ? 0 : 1;
 
-                return "<input  class='toggle-class' data-user-checked='$statusToggle' data-id='" . $data->id . "' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='success' autocomplete='off'/>
-					<label for='" . $data->first_name . "-toggle-checkbox' data-on-label='On' data-off-label='Off'></label>";
+                return "<input  class='toggle-class' data-user-checked='$statusToggle' data-id='$data->id' type='checkbox' id='" . $data->first_name . "-toggle-checkbox' $status data-switch='success' autocomplete='off'/>
+					<label for='" . $data->first_name . "-toggle-checkbox' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
             })
             ->editColumn('last_name', function ($data) {
 
-                return "<p>$data->last_name</p>
+				return "<a href='/dashboard/users/$data->slug' class='h5 mb-0 custom-link-primary'>$data->last_name $data->first_name</a>
+						<p class='mb-1'>$data->email</p>
 						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
-						<a href='#' class='custom-link-primary'>View</a>";
-            })
-            ->rawColumns(['roles', 'status', "activeNum", "chexbox", "courses", "last_name"])
+						<a href='#' class='custom-link-primary js-unavailable'>Delete</a>";
+			})
+			->addColumn("date", function($data) {
+
+				if ( is_null($data->email_verified_at) ) {
+					$status = ["icon" => "custom-pill-primary badge-outline-warning", "text" => "Unverified"];
+				}
+				else {
+					$status = ["icon" => "custom-pill-primary badge-outline-success", "text" => "Verified"];
+				}
+
+				$date = Carbon::parse($data->created_at)->format("d-m-Y");
+				$time = Carbon::parse($data->created_at)->format("H:i");
+
+				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+					<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
+			})
+			->filterColumn("courses.title", function($query, $keyword) {
+				
+				$query->whereHas("courses", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
+            ->rawColumns(['status', "checkbox", "courses", "last_name", "date"])
             ->setRowAttr([
                 'data-user-id' => function ($data) {
                     return $data->id;
@@ -107,8 +109,8 @@ class UsersDataTable extends DataTable {
      */
     public function query(User $model)
     {
-
-        return $model->all();
+        return User::role(["admin", "instructor", "student", "partner"])
+			->with("roles", "courses")->select("users.*");
     }
 
     /**
@@ -147,8 +149,9 @@ class UsersDataTable extends DataTable {
                 ->width(60)
                 ->addClass('text-center'),
             Column::make('id'),
-            Column::make('first_name'),
-            Column::make('status'),
+            Column::make('add your columns'),
+            Column::make('created_at'),
+            Column::make('updated_at'),
         ];
     }
 

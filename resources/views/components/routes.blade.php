@@ -5,30 +5,16 @@
             //simple routes
             userIndex: "{{ route("user.index") }}",
             //datatable routes
-            indexDatatable: "{{ route("index.datatable") }}",
             showDatatable: "{{ route("show.datatable") }}",
-            coursesInsideUsersDatatable: "{{ route("coursesInsideUsers.datatable") }}",
             destroyDatatable: "{{ route("destroy.datatable") }}",
             //ajax user routes
             changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
-            changeStatusMultipleDatatable: "{{ route("changeStatusMultiple.datatable") }}",
-            changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
             addcoursesDatatable: "{{ route("addcourses.datatable") }}",
-            destroyMultipleCoursesDatatable: "{{ route("destroyMultipleCourses.datatable") }}",
-            destroyMultipleUsersDatatable: "{{ route("destroyMultipleUsers.datatable") }}",
             courseModaDatatable: "{{ route("courseModal.datatable") }}",
             addCoursesMultipleUsersDatatable: "{{ route("addCoursesMultipleUsers.datatable") }}",
-            AddMultipleUserCourseDatatable: "{{ route("AddMultipleUserCourse.datatable") }}",
-			
-			//ajax material routes
-			
-			
+
 			// main
             addMaterialMultipleDatatable : "{{ route("addMaterialMultiple.datatable") }}",
-
-            //material
-           
-
         },
         headers:{
             csrf: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
