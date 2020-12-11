@@ -21,7 +21,7 @@ $(document).on("click", ".pagination a", async function (e) {
     }
 })
 $(".first-thread").hide();
-const eventTopBar  = () =>{
+const eventTopBar = () => {
     $(".discussions-right").on("change", ".filter-sidebar", async function () {
 
         let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
@@ -126,7 +126,7 @@ const axiosUpdateMain = (that, data) => {
 }
 
 // submit create form
-$(".js-form-create").on("click",async function (e) {
+$(".js-form-create").on("click", async function (e) {
     e.preventDefault()
     let title = $('input#post-title').val()
     let course = $('#post-course').val()
@@ -175,8 +175,8 @@ $(".js-form-reply").on("click", async function (e) {
 
         }
         return
-    }else{
-        body =  `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
+    } else {
+        body = `<span class="text-info author-reply">${$(".replay-name").text()}</span> ${body}`
 
 
     }
@@ -230,6 +230,7 @@ $(document).on("click", '.js-thread-title', async function () {
             bestAnswer()
             closedPost()
             eventTopBar()
+            onEditComment()
 
         }
 
@@ -367,7 +368,54 @@ const onDeleteComment = () => {
     })
 
 }
+//edit comment
+const onEditComment = () => {
+    $(".discussions-right").on("click", ".js-edit-comment", function (e) {
+        e.preventDefault()
+        $(".js-edit-comment").prop("disabled", true)
+        const thisContainer = $(this).closest(".main-post");
+        const commentId = this.cl
+        osest(".main-post").dataset.threadId
+        const postId = $(".main-post").data("post-id")
+        let author = thisContainer.find(".author-reply")
+        const pre = thisContainer.find("pre");
+        thisContainer.find(".cnt-body-comment").append(`
+             <div class="btn-group cnt-btn-comment my-2" role="group" >
+                 <button class="btn btn-sm mr-2 mx-2 btn-secondary btn-body-close">Close</button>
+                 <button class="btn btn-sm btn-primary btn-body-edit">Edit</button>
+            </div>`)
+        pre.replaceWith(function () {
+            thisContainer.find($(".author-reply").remove());
+            return $("<input />", {
+                "type": "text",
+                "name": "body",
+                'value': $(this).text(),
+                'class': 'form-control edit-input',
+            })
+        })
 
+        $(".btn-body-edit").on("click", async function () {
+            const {data, status} = await axios.patch(`/discussion/update/${commentId}`, {
+                postId,
+                editBody: `${author[0].outerHTML} ${$(".edit-input").val()}`
+            })
+
+            if (status == 200) {
+                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+                $(".cnt-top-bar-post").html($(data).find(".top-bar-post")) //reload topbar
+                $(".post-scrollbar-cnt").html($(data).find(".post-scrollbar")) //rolad ranger slider
+                rangeSlider();
+            }
+        })
+
+        $(".btn-body-close").on("click", function (e) {
+            $(".edit-input").replaceWith(pre);
+            thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
+            $(".cnt-btn-comment").remove();
+            $(".js-edit-comment").prop("disabled", true)
+        })
+    })
+}
 //ranger system
 const rangeSlider = () => {
 
@@ -540,7 +588,7 @@ const closedPost = () => {
 const styleClosedPost = () => {
 
 
-    if ($(".js-post-closed").hasClass("badge-danger") ||!$(".badge-danger").hasClass("d-none") ) {
+    if ($(".js-post-closed").hasClass("badge-danger") || !$(".badge-danger").hasClass("d-none")) {
         $(".ul-thread").find(".first-thread-replay").text("CLOSED").addClass("bg-danger").prop('disabled', true)
 
         $(".ul-thread").find(".first-thread-replay").mouseover(function () {
@@ -678,9 +726,6 @@ $(".discussions-left").on("click", "#filter-no-replies", async function () {
         console.log(e)
     }
 })
-
-
-
 
 
 // $R("#post-body", {

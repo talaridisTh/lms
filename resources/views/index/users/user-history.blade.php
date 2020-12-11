@@ -46,8 +46,7 @@
                 <div id="{{$course->slug}}-collapse" class="collapse"
                      aria-labelledby="headingOne" data-parent="#course-parent">
                     <div class="card-body overflow-x-auto js-subtable table-cnt ">
-                        <table  class="history-datatable table dt-responsive nowrap w-100">
-
+                        <table class="history-datatable table dt-responsive nowrap w-100">
                             <thead>
                             <tr>
                                 <th class="text-left align-middle" scope="col">
@@ -98,8 +97,9 @@
 
                                         <td class="align-middle text-left">
                                             @if(isset($material->cover))
-                                            <img src="{{$material->cover}}"  height='40' class='avatar-sm rounded-circle'
-                                                 alt="{{ $material->slug }}">
+                                                <img src="{{$material->cover}}" height='40'
+                                                     class='avatar-sm rounded-circle'
+                                                     alt="{{ $material->slug }}">
                                             @else
                                                 <h6>{{$material->title}}</h6>
                                             @endif

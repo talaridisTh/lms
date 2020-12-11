@@ -28,4 +28,14 @@
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=0dd9c2b4cdb9c3e94646",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=3fa628db19575570764a",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=7b66e45e3cb60159719a",
-    
+    "/js/index/announcement/announcement.js": "/js/index/announcement/announcement.js?id=f7ac6eca42368b995865",
+    "/js/index/app.js": "/js/index/app.js?id=c720cfb259601a954f72",
+    "/js/index/chat/message.js": "/js/index/chat/message.js?id=aaa4db1184870b5cf011",
+    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=8e468ccbcda0f7287d4d",
+    "/js/index/discussions/discussions.js": "/js/index/discussions/discussions.js?id=d811643c97faa37a5aab",
+    "/js/index/favourites/favourites.js": "/js/index/favourites/favourites.js?id=46357e69f9d48beb1ae9",
+    "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=2a33c1563faa9167479d",
+    "/js/index/history/history.js": "/js/index/history/history.js?id=a23fff36712a20f623bc",
+    "/js/index/index.js": "/js/index/index.js?id=7513f05f8f4e6e1cec62",
+    "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=f0f378bf8b086ed39289"
+}

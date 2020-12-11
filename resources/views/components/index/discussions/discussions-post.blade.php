@@ -82,10 +82,10 @@
 
             @if(auth()->id()==$post->user->id)
                 <a class="badge  ml-2 mt-2 font-10 js-post-closed cursor-pointer {{$closedBadge}}">
-                        <i class=" mdi mdi-power font-20"></i>
+                    <i class=" mdi mdi-power font-20"></i>
                 </a>
             @endif
-                <a href="#" class=" ml-3 mt-2 badge badge-danger badge-closed {{$closedbadgeShow}} font-14">Closed</a>
+            <a href="#" class=" ml-3 mt-2 badge badge-danger badge-closed {{$closedbadgeShow}} font-14">Closed</a>
 
 
         </div>
@@ -135,6 +135,7 @@
                                         <i class="font-22 mdi mdi-dots-horizontal mr-3 cursor-pointer"
                                            data-toggle="dropdown"></i>
                                         <div class="dropdown-menu dropdown-menu-animated">
+                                            <button  class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία comment</button>
                                             <a class="dropdown-item js-delete-comment" href="#">Διαγραφή comment</a>
                                         </div>
                                     </div>
@@ -142,8 +143,9 @@
 
                             </div>
                             <p class="font-12">{{$comment->created_at->diffForHumans()}}</p>
-                            <pre style="font-family:'Open Sans'"class="font-16 p-3">{!!  $comment->body!!}</pre>
-                            <hr>
+                            <div class="cnt-body-comment">
+                                <pre style="font-family:'Open Sans'" class="font-16 p-3">{!!  $comment->body!!}</pre>
+                            </div>
                             <div class="post-buttons d-flex font-18 justify-content-between mb-2">
                                 <div class="d-flex">
                                     <i data-comment-id="{{$comment->id}}"
@@ -202,6 +204,7 @@
                                             <i class="font-22 mdi mdi-dots-horizontal mr-3 cursor-pointer"
                                                data-toggle="dropdown"></i>
                                             <div class="dropdown-menu dropdown-menu-animated">
+                                                <button  class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία comment</button>
                                                 <a class="dropdown-item js-delete-comment" href="#">Διαγραφή comment</a>
                                             </div>
                                         </div>
@@ -209,8 +212,10 @@
 
                                 </div>
                                 <p class="font-12">{{$rep1->created_at->diffForHumans()}}</p>
-                                <pre style="font-family:'Open Sans'"class="font-16 p-3">{!!  $rep1->body!!}</pre>
-                                <hr>
+                                <div class="cnt-body-comment">
+                                    <pre style="font-family:'Open Sans'" class="font-16 p-3">{!!  $rep1->body!!}</pre>
+                                </div>
+                                >
                                 <div class="post-buttons d-flex font-18  mb-2">
                                     <i data-comment-id="{{$rep1->id}}"
                                        class="mdi mdi-heart mr-2 btn-reply-like {{$isLiked}}">

@@ -249,6 +249,7 @@ Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("gue
 
 
 
+Route::patch("/discussion/update/{id}", "Index\DiscussionController@editComment")->name("discussion.editComment");
 //! discussion
 Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
 Route::get("/discussion/my-question", "Index\DiscussionController@myQuestion")->name("discussion.myQuestion");

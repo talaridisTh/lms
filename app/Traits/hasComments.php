@@ -12,8 +12,8 @@ use Illuminate\Support\Str;
 trait hasComments {
 
     use MediaUploader;
-    private $image=[];
 
+    private $image = [];
 
     public function modelComment(Request $request)
     {
@@ -35,12 +35,12 @@ trait hasComments {
             "post_id" => $post->id,
             "parent_id" => $request->parentId
         ]);
+        if ($request->upload)
+        {
 
-        if ($request->upload){
-
-                $this->attachComment($request,$comment);
-
+            $this->attachComment($request, $comment);
         }
+
         return view("components.index.comments.comments", [
             "post" => $post
         ]);
@@ -49,7 +49,6 @@ trait hasComments {
     public function deleteComment(Request $request)
     {
         $postId = Comment::findOrFail($request->id)->post->id;
-
         $this->deletePhotoComment($request->id);
         Comment::where("parent_id", $request->id)->get()->each(function ($comment) {
             $this->deletePhotoComment($comment->id);
@@ -70,20 +69,22 @@ trait hasComments {
         ]);
     }
 
-    private function deletePhotoComment( $commentId){
+    private function deletePhotoComment($commentId)
+    {
         $comment = Comment::findOrFail($commentId);
-        $comment->media()->each(function ($com){
+        $comment->media()->each(function ($com) {
             $com->delete();
         });
         $comment->media()->detach();
     }
-    private function attachComment ($request,$comment){
-        foreach ($request->upload as $image){
 
-            $media = Media::where("original_name",$image)->first()->id;
+    private function attachComment($request, $comment)
+    {
+        foreach ($request->upload as $image)
+        {
 
-            $comment->media()->attach($media,["usage"=>5]);
-
+            $media = Media::where("original_name", $image)->first()->id;
+            $comment->media()->attach($media, ["usage" => 5]);
         }
     }
 

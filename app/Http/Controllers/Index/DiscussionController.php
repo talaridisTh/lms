@@ -12,7 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class DiscussionController extends Controller {
-use MediaUploader;
+
+    use MediaUploader;
+
     //
     private $course;
 
@@ -265,8 +267,24 @@ use MediaUploader;
         Post::findOrFail($postId)->update(["closed" => !$closed]);
     }
 
-    public function commentUpload(Request  $request){
-        $this->storeImage($request->filepond);
+    public function commentUpload(Request $request)
+    {
+        $this->storeImage($request->filepond, 5);
+    }
+
+    public function editComment($commentId ,Request $request)
+    {
+
+
+        Comment::find($commentId)->update([
+            "body"=>$request->editBody
+        ]);
+
+        return view("components.index.discussions.discussions-post", [
+            "post" => Post::find($request->postId),
+            "comment" => Comment::all(),
+            "courses" => $this->course
+        ]);
     }
 
 }
