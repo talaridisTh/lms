@@ -1,4 +1,7 @@
 @extends('layouts.app')
+
+
+@section('style')
 <style>
 
     .count-number {
@@ -21,7 +24,7 @@
 
 
 </style>
-
+@endsection
 
 @section('content')
     <div class="container-fluid mb-5" style="max-width: 1400px">
@@ -176,10 +179,9 @@
             </div>
 
         </div>
-
         @foreach( $arrayBanners as  $key=>  $banners)
+            <div id="card-slider-{{$key}}" class="splide">
             @if($banners->status==1)
-                <div id="card-slider-{{$key}}" class="splide">
                     <div class="splide__track">
                         <ul class="splide__list">
                             @foreach($banners->models as $banner)
@@ -196,8 +198,8 @@
                         </ul>
 
                     </div>
-                </div>
             @endif
+            </div>
 
         @endforeach
 

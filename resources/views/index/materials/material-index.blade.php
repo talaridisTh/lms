@@ -44,7 +44,7 @@ else if ($materials->script) {
        $activeContentFive="show active";
 }
 else{
-    $activeTabsSeven ="active";
+        $activeTabsSeven ="active";
        $activeContentSeven="show active";
 }
 
@@ -231,7 +231,7 @@ else{
                                 </a>
                             </li>
                         @endif
-                        @if($materials->script)
+                        @if($materials->script && json_decode($materials->fields)->script && isset(json_decode($materials->fields)->script))
                             <li class="nav-item">
                                 <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false"
                                    class="nav-link rounded-0 {{isset($activeTabsSix)?$activeTabsSix:""}}">
@@ -337,7 +337,7 @@ else{
                 <div class="col-lg-4 pl-3 template-hidden">
                     <div class="row hover-yellow px-2">
                         <div class="col-md-12   border d-flex justify-content-between"
-                             style="border-radius: 8px; padding: 9px;background-color: #E9EAEB ;">
+                             style="border-radius: 8px; padding: 9px;background-color: #E9EAEB ;"dropdown-item js-delete-comment>
                             <div class="col-md-2 d-flex align-items-center">
                                 @if($course->cover)
                                     <img height="40" width="40" class="rounded-circle" src="{{$course->cover}}" alt="">

@@ -1,4 +1,5 @@
 import utilities from '../../index/main';
+require('../../../../node_modules/lightbox2/dist/js/lightbox');
 
 if ($('meta[name=route]').attr('content') == "index.userCourse") {
     const slugCourse = $(".course-slug")[0].dataset.courseSlug
@@ -399,24 +400,24 @@ const onCloseFullScreen = () => {
 
         try {
             const {data, status} = await axios.get(window.location.href)
-
             $(".list-material").removeAttr("style")
             $(".template-single-page").html($(data).find(".template-single-page > div"));
-
             const templateLeft = $(".template-single-page")[0]
+
             const templateRight = $(".template-material-list")[0]
-
             templateRight.classList.remove("d-lg-none")
+
             templateRight.classList.add("d-lg-block")
-
             templateLeft.classList.remove("col-lg-12")
-            templateLeft.classList.add("col-lg-8")
 
+            templateLeft.classList.add("col-lg-8")
             $(".edit-preview-page-material").hide();
 
+            onInitEventHandler();
         } catch (e) {
             console.log(e)
         }
+
     })
 
 
@@ -434,10 +435,9 @@ $(document).on("click", ".js-form-reply", async function (e) {
         }
         return
     } else {
-        body = `<span class="text-info">${$(".replay-name").text()}</span> ${body}`
+        body = `<span class="text-info author-reply">${$(".replay-name").text()}</span> ${body}`
     }
 
-    console.log(this)
     const modelInfo = JSON.parse(this.dataset.model)
     const parentId = this.dataset.parent;
     const namespace = this.dataset.namespace;
@@ -461,6 +461,7 @@ $(document).on("click", ".js-form-reply", async function (e) {
             pond.removeFiles();
             delete this.dataset.upload;
             this.disabled = false
+            $(".text-reply-comment").text("Νέο μήνυμα")
         }
 
     } catch (e) {
@@ -469,7 +470,63 @@ $(document).on("click", ".js-form-reply", async function (e) {
 
 })
 
+//edit comment
+const onEditComment = () => {
+    $(".cnt-reply-list").on("click", ".js-edit-comment", function (e) {
+        e.preventDefault()
+        $(".js-edit-comment").prop("disabled", true)
+        const thisContainer = $(this).closest(".main-post");
+        const commentId = this.closest(".main-post").dataset.threadId
+        const postId = $(".hidden-post").data("model-id")
+        const namespace = $(".hidden-post").data("namespace")
+        let author = thisContainer.find(".author-reply")
+        const pre = thisContainer.find("pre");
+        thisContainer.find(".cnt-body-comment").append(`
+             <div class="btn-group cnt-btn-comment my-2" role="group" >
+                 <button class="btn btn-sm mr-2 mx-2 btn-secondary btn-body-close">Close</button>
+                 <button class="btn btn-sm btn-primary btn-body-edit">Edit</button>
+            </div>`)
+        pre.replaceWith(function () {
+            thisContainer.find($(".author-reply").remove());
+            return $("<input />", {
+                "type": "text",
+                "name": "body",
+                'value': $(this).text(),
+                'class': 'form-control edit-input',
+            })
+        })
 
+        $(".edit-input").on("keyup",function (e){
+            if(e.target.value.length){
+
+                $(".btn-body-edit").prop("disabled", false)
+            }else{
+
+                $(".btn-body-edit").prop("disabled", true)
+            }
+        })
+
+        $(".btn-body-edit").on("click", async function () {
+            const {data, status} = await axios.patch(`/model/update/${commentId}`, {
+                postId,
+                editBody: `${author[0].outerHTML} ${$(".edit-input").val()}`,
+                namespace
+            })
+
+            if (status == 200) {
+                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+
+            }
+        })
+
+        $(".btn-body-close").on("click", function (e) {
+            $(".edit-input").replaceWith(pre);
+            thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
+            $(".cnt-btn-comment").remove();
+            $(".js-edit-comment").prop("disabled", false)
+        })
+    })
+}
 const onFirstReplayBtnEvent = () => {
 
     $(document).on("click", ".first-thread-replay", function () {
@@ -567,13 +624,17 @@ const onDeleteComment = () => {
         const id = this.closest(".main-post").dataset.threadId
         const modelInfo = $(".hidden-post").data("model-info");
         try {
-            const {data, status} = await axios.post(`/model/delete`, {
+            const {data, status,comment} = await axios.post(`/model/delete`, {
                 modelInfo,
                 id
             })
 
+            if (!data.comment){
+                $(".text-reply-comment").text("Έναρξη συζήτησης")
+            }
+
             if (status == 200) {
-                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+                $(".cnt-reply-list").html($(data.view).find(".reply-list")) //reload post
 
             }
 
@@ -616,6 +677,7 @@ const onInitEventHandler = ()=>{
     onCommentReplayBtnEvent()
     onSubCommentReplayBtnEvent();
     bestAnswer();
+    onEditComment()
 }
 onInitEventHandler();
 

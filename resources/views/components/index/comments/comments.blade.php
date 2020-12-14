@@ -35,8 +35,8 @@
                                         <i class="font-22 mdi mdi-dots-horizontal mr-3 cursor-pointer"
                                            data-toggle="dropdown"></i>
                                         <div class="dropdown-menu dropdown-menu-animated">
-                                            <a class="dropdown-item js-delete-comment"
-                                               href="#">Διαγραφή comment</a>
+                                            <button  class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία comment</button>
+                                            <a class="dropdown-item js-delete-comment" href="#">Διαγραφή comment</a>
                                         </div>
                                     </div>
                                 @endif
@@ -52,7 +52,9 @@
                                     </a>
                                 @endforeach
                             </div>
-                            <p class="p-3">{!!  $comment->body!!}</p>
+                            <div class="cnt-body-comment">
+                                <pre style="font-family:'Open Sans'" class="font-16 p-3">{!!  $comment->body!!}</pre>
+                            </div>
                             <hr>
                             <div
                                 class="post-buttons d-flex font-18 justify-content-between mb-2">
@@ -115,10 +117,9 @@
                                         <div class="dropdown">
                                             <i class="font-22 mdi mdi-dots-horizontal mr-3 cursor-pointer"
                                                data-toggle="dropdown"></i>
-                                            <div
-                                                class="dropdown-menu dropdown-menu-animated">
-                                                <a class="dropdown-item js-delete-comment"
-                                                   href="#">Διαγραφή comment</a>
+                                            <div class="dropdown-menu dropdown-menu-animated">
+                                                <button  class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία comment</button>
+                                                <a class="dropdown-item js-delete-comment" href="#">Διαγραφή comment</a>
                                             </div>
                                         </div>
                                     @endif
@@ -126,15 +127,18 @@
                                 </div>
                                 <p class="font-12">{{$rep1->created_at->diffForHumans()}}</p>
                                 <div class="d-flex px-3 mt-2 mb-3">
+
                                     @foreach($rep1->media as $image)
                                         <a class="d-flex mr-2 rounded" href="{{ $image->rel_path}}"
-                                           height="100" data-lightbox="cover-comment" data-title="{{$image->name}}">
+                                           data-lightbox="cover-comment-{{$rep1->id}}" data-title="{{$image->name}}">
                                             <img class="rounded" src=" {{$image->roundedSmallCoverUrl("rel_path")}}"
                                                  alt="comment-photo">
                                         </a>
                                     @endforeach
                                 </div>
-                                <p class="p-3">{!!  $rep1->body!!}</p>
+                                <div class="cnt-body-comment">
+                                    <pre style="font-family:'Open Sans'" class="font-16 p-3">{!!  $rep1->body!!}</pre>
+                                </div>
                                 <hr>
                                 <div class="post-buttons d-flex font-18  mb-2">
                                     <i data-comment-id="{{$rep1->id}}"

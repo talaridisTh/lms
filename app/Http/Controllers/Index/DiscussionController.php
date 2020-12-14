@@ -275,7 +275,6 @@ class DiscussionController extends Controller {
     public function editComment($commentId ,Request $request)
     {
 
-
         Comment::find($commentId)->update([
             "body"=>$request->editBody
         ]);

@@ -86,7 +86,8 @@ else{
 
 
                         <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
-                            <h2 data-course-slug="{{$course->slug}}" class="display-4 text-light course-slug">{{$course->title}}</h2>
+                            <h2 data-course-slug="{{$course->slug}}"
+                                class="display-4 text-light course-slug">{{$course->title}}</h2>
                             <p class="text-light my-4 text-left">{{$course->subtitle}}</p>
                             <div class="button-course-fav my-sm-2 ">
                                 @if(count($allMaterial))
@@ -178,14 +179,16 @@ else{
                                         </a>
                                     </li>
                                 @endif
-                                @if($course->script)
-                                    <li class="nav-item">
-                                        <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0 {{isset($activeTabsFive)?$activeTabsFive:""}}">
-                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                            <span class="d-none d-md-block">Quiz</span>
-                                        </a>
-                                    </li>
+                                @if(isset(json_decode($course->fields)->script))
+                                    @if($course->script && json_decode($course->fields)->script )
+                                        <li class="nav-item">
+                                            <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false"
+                                               class="nav-link rounded-0 {{isset($activeTabsFive)?$activeTabsFive:""}}">
+                                                <i class="mdi mdi-settings-outline d-md-none d-block"></i>
+                                                <span class="d-none d-md-block">Quiz</span>
+                                            </a>
+                                        </li>
+                                    @endif
                                 @endif
 
                                 <li class="nav-item">
@@ -285,7 +288,8 @@ else{
                     </div>
                 </div>
 
-                <div class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block ":"offset-2 col-md-8 offset-2 text-left" }}">
+                <div
+                    class="{{!empty($course->description)?"col-lg-4 pl-3 d-flex justify-content-center d-lg-block ":"offset-2 col-md-8 offset-2 text-left" }}">
 
                     @if((count($announcements = $course->materials->where("type","Announcement"))>0))
                         <div class="accordion" id="courses-announcement">
@@ -307,14 +311,16 @@ else{
                                             $count = 0;
                                         @endphp
 
-                                    @foreach($announcements  as $key => $announcement)
+                                        @foreach($announcements  as $key => $announcement)
                                             <div class="single-announcement  mb-3" id="announcement-{{$key}}">
 
                                                 <div class="d-flex justify-content-between align-items-center">
-                                                    <h4 id="slide-{{$key}}" class="text-hover-underline" data-count="{{$count++}}"
+                                                    <h4 id="slide-{{$key}}" class="text-hover-underline"
+                                                        data-count="{{$count++}}"
                                                         data-toggle="modal"
                                                         data-target="#announcements-modal">{{$announcement->title}}</h4>
-                                                    <span class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
+                                                    <span
+                                                        class="font-12 text-muted">{{$announcement->created_at->format('d/m/Y')}}</span>
                                                 </div>
 
                                                 {{$announcement->description}}
@@ -340,7 +346,6 @@ else{
                                         </a>
                                     </h5>
                                 </div>
-
 
 
                                 <div id="collapse-extra-content" class="collapse show"
@@ -374,7 +379,8 @@ else{
                         </div>
                     @endif
 
-                    <ul data-course-id="{{$course->id}}" class="w-600 m-0 p-0 single-section-material"> <!-- list material -->
+                    <ul data-course-id="{{$course->id}}" class="w-600 m-0 p-0 single-section-material">
+                        <!-- list material -->
 
                         @php
                             $count = 0;  //count material
@@ -437,7 +443,9 @@ else{
                                                 <li data-material-id="{{$chapter->id}}"
                                                     data-material-priority="{{$key+1}}"
                                                     class="list-group-item border-r-0 list-material m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
-                                                    <a data-material-slug="{{$chapter->slug}}" data-material-title="{!! $chapter->title !!}" class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
+                                                    <a data-material-slug="{{$chapter->slug}}"
+                                                       data-material-title="{!! $chapter->title !!}"
+                                                       class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":""}}"
                                                        href="{{$link}}">
                                                         <div class="col-lg-2 col-1 ml-1 ">
 
@@ -454,7 +462,8 @@ else{
                                                             @endif
 
                                                         </div>
-                                                        <div class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
+                                                        <div
+                                                            class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
                                                             <h3 style="border-radius: 5px"
                                                                 class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
                                                             </h3>
@@ -483,7 +492,9 @@ else{
                                 <li data-material-id="{{$materials->id}}"
                                     data-material-priority="{{$countIfNotSection}}"
                                     class="list-group-item list-material border ">
-                                    <a data-material-slug="{{$materials->slug}}" data-material-title="{!! $materials->title!!}" class=" d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
+                                    <a data-material-slug="{{$materials->slug}}"
+                                       data-material-title="{!! $materials->title!!}"
+                                       class=" d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":""}}"
                                        href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
                                         @unlessrole("guest")
                                         <div class="col-lg-2 mr-2 col-1 ">
@@ -513,7 +524,7 @@ else{
 
                 </div>
 
-{{--                <p class="template-fullscreen">test</p>--}}
+                {{--                <p class="template-fullscreen">test</p>--}}
 
             </div>
 
@@ -542,7 +553,7 @@ else{
                                         <h3 class="mb-3 ">{{$announcement->title}}  </h3>
                                         <p>{!! $announcement->content !!}</p>
                                         <span class="font-13 font-weight-normal">
-                                            ({{$announcement->created_at->diffForHumans()}})
+                                            ({{$announcement->created_at->format('d/m/Y')}})
                                         </span>
 
                                     </div>

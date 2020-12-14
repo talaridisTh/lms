@@ -374,8 +374,7 @@ const onEditComment = () => {
         e.preventDefault()
         $(".js-edit-comment").prop("disabled", true)
         const thisContainer = $(this).closest(".main-post");
-        const commentId = this.cl
-        osest(".main-post").dataset.threadId
+        const commentId = this.closest(".main-post").dataset.threadId
         const postId = $(".main-post").data("post-id")
         let author = thisContainer.find(".author-reply")
         const pre = thisContainer.find("pre");
@@ -393,7 +392,15 @@ const onEditComment = () => {
                 'class': 'form-control edit-input',
             })
         })
+        $(".edit-input").on("keyup",function (e){
+            if(e.target.value.length){
 
+                $(".btn-body-edit").prop("disabled", false)
+            }else{
+
+                $(".btn-body-edit").prop("disabled", true)
+            }
+        })
         $(".btn-body-edit").on("click", async function () {
             const {data, status} = await axios.patch(`/discussion/update/${commentId}`, {
                 postId,
@@ -412,7 +419,7 @@ const onEditComment = () => {
             $(".edit-input").replaceWith(pre);
             thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
             $(".cnt-btn-comment").remove();
-            $(".js-edit-comment").prop("disabled", true)
+            $(".js-edit-comment").prop("disabled", false)
         })
     })
 }

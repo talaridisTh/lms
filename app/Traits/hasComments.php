@@ -3,11 +3,14 @@
 namespace App\Traits;
 
 use App\Models\Comment;
+use App\Models\Course;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Response;
+use View;
 
 trait hasComments {
 
@@ -29,6 +32,8 @@ trait hasComments {
                 "user_id" => $curator,
             ]);
         }
+
+
         $comment = Comment::create([
             "body" => $request->body,
             "user_id" => auth()->id(),
@@ -45,6 +50,16 @@ trait hasComments {
             "post" => $post
         ]);
     }
+    public function editComment($commentId ,Request $request)
+    {
+        Comment::find($commentId)->update([
+            "body"=>$request->editBody
+        ]);
+
+        return view("components.index.comments.comments", [
+            "post" =>POST::find($request->namespace::find($request->postId)->post->first()->id)
+        ]);
+    }
 
     public function deleteComment(Request $request)
     {
@@ -57,12 +72,19 @@ trait hasComments {
         if (Comment::where("post_id", $postId)->count() <= 1)
         {
             Comment::findOrFail($request->id)->post()->first()->delete();
+            $comment = 0;
         } else
         {
 
             Comment::findOrFail($request->id)->delete();
+            $comment =1;
         }
         $post = Post::where("title", $request->modelInfo["title"])->first();
+
+
+        return Response::json(['view' => View::make("components.index.comments.comments", [
+            "post" => $post
+        ])->render(), 'comment'=>$comment]);
 
         return view("components.index.comments.comments", [
             "post" => $post

@@ -185,7 +185,8 @@ else{
                                         </a>
                                     </li>
                                 @endif
-                                @if($course->script)
+                                    @if(isset(json_decode($course->fields)->script))
+                                    @if($course->script && json_decode($course->fields)->script )
                                     <li class="nav-item">
                                         <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false"
                                            class="nav-link rounded-0 {{isset($activeTabsFive)?$activeTabsFive:""}}">
@@ -194,6 +195,7 @@ else{
                                         </a>
                                     </li>
                                 @endif
+                                    @endif
 
                                 <li class="nav-item">
                                     <a href="#tabs-disscus" data-toggle="tab" aria-expanded="false"
@@ -325,7 +327,7 @@ else{
                                                         data-toggle="modal"
                                                         data-target="#announcements-modal">{{$announcement->title}}</h4>
                                                     <span
-                                                        class="font-12 text-muted">{{$announcement->created_at->diffForHumans()}}</span>
+                                                        class="font-12 text-muted">{{$announcement->created_at->format('d/m/Y')}}</span>
                                                 </div>
 
                                             </div>
@@ -563,7 +565,7 @@ else{
                                         <h3 class="mb-3 ">{{$announcement->title}}  </h3>
                                         <p>{!! $announcement->content !!}</p>
                                         <span class="font-13 font-weight-normal">
-                                            ({{$announcement->created_at->diffForHumans()}})
+                                            ({{$announcement->created_at->format('d/m/Y')}})
                                         </span>
 
                                     </div>

@@ -319,6 +319,7 @@ $(document).on("click", ".js-form-reply", async function (e) {
             pond.removeFiles();
             delete this.dataset.upload;
             this.disabled = false
+            $(".text-reply-comment").text("Νέο μήνυμα")
         }
 
     } catch (e) {
@@ -429,8 +430,12 @@ const onDeleteComment = () => {
                 id
             })
 
+            if (!data.comment){
+                $(".text-reply-comment").text("Έναρξη συζήτησης")
+            }
+
             if (status == 200) {
-                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+                $(".cnt-reply-list").html($(data.view).find(".reply-list")) //reload post
 
             }
 

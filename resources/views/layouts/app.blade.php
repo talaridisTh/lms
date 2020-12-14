@@ -17,6 +17,8 @@
     {{--//pretty-checkbox/--}}
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+{{--    <link href="node_modules/lightbox2/dist/css/lightbox.css" rel="stylesheet" />--}}
+
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
     <!--Plugin CSS file with desired skin-->
@@ -353,6 +355,7 @@
 
 <!--Plugin JavaScript file-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+{{--<script src="node_modules/lightbox2/dist/js/lightbox.js"></script>--}}
 
 
 @yield("script")
