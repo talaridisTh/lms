@@ -669,7 +669,14 @@ const onLikebtn = () => {
         }
     })
 }
+const onChangeReplyButton  =  ()=>{
+    if($(".main-post").attr("data-count")){
+        $(".text-reply-comment").text("Νέο μήνυμα")
+    }else{
 
+        $(".text-reply-comment").text("Έναρξη συζήτησης")
+    }
+}
 const onInitEventHandler = ()=>{
     onDeleteComment();
     onLikebtn();
@@ -677,6 +684,8 @@ const onInitEventHandler = ()=>{
     onCommentReplayBtnEvent()
     onSubCommentReplayBtnEvent();
     bestAnswer();
+
+    onChangeReplyButton();
     onEditComment()
 }
 onInitEventHandler();

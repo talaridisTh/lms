@@ -14,6 +14,9 @@
     <div class="form-group  mt-4 replay-bottom first-thread-replay mb-2 " data-toggle="modal"
          data-target="#new-reply">
         <p class="p-4 text-dark font-20"><i
-                class="mdi mdi-hand-pointing-down  font-18 mr-2"></i><span class=" text-reply-comment ">{{!count($course->post)?"Έναρξη συζήτησης":"Νέο μήνυμα"}}</span></p>
+                class="mdi mdi-hand-pointing-down cnt-container-reply-button font-18 mr-2"></i>
+            <span class=" text-reply-comment ">{{!count($course->post)?"Έναρξη συζήτησης":"Νέο μήνυμα"}}
+            </span>
+        </p>
     </div>
 </div>

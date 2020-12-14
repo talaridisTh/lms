@@ -14,6 +14,7 @@
                     <div class="main-post main-reply d-flex mt-1 {{$isBestAnswerCnt}}"
                          data-comment-id="{{$comment->id}}"
                          data-thread-id="{{$comment->id}}"
+                         data-count="{{$post->id}}"
                          style="background-color: rgba(0, 0, 0, 0.03)">
                         <div class="mx-3 my-2">
                             <img height="50" src="{{$comment->user->avatar}}" alt="">
