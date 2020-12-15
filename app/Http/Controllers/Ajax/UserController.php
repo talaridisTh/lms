@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Models\Course;
 use App\DataTables\Users\CoursesDataTable;
-use App\DataTables\CoursesInsideUsersDataTable;
 use App\DataTables\Users\UserCoursesDataTable;
 use App\DataTables\Users\UsersDataTable;
 use App\Models\Media;
@@ -14,7 +13,6 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use App\Mail\NewUserNotification;
 
 class UserController {
 
@@ -179,11 +177,16 @@ class UserController {
 
     }
 
-    public function sentInfo()
+    public function sentInfo(User $user)
     {
-        $user = auth()->user();
+		$password = Crypt::decryptString($user->password_encrypt);
+		$message = "Ο κωδικός σας είναι: $password";
 
-        Mail::to(auth()->user()->email)->send(new NewUserNotification(auth()->user()->fullName, Crypt::decryptString($user->password_encrypt)));
+		// Mail::raw($message, function($message) use ($user) {
+		// 	$message->to($user->email)
+		// 		->subject("Υδρόγειος Education, ανάκτηση κωδικού");
+		// });
+
     }
 
 

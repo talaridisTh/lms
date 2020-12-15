@@ -6,8 +6,8 @@ import 'filepond/dist/filepond.min.css';
 
 //! GLOBAL VAR
 //!============================================================
-const userId = $(".course-materials-list")[0].dataset.id
-const userSlug = $(".course-materials-list")[0].dataset.slug
+const userId = $("#user-name").data("user-id");
+
 const baseUrl = window.location.origin;
 const namespace = "App\\Models\\User";
 let timer = 0;
@@ -26,20 +26,17 @@ const routeLink = () => {
     });
 }
 
-//* dior8osi
-$(".js-send-message").on("click", async function ()  {
-
-    try {
-        const {status} = await axios.post("/user/sent-info")
-
-        if (status==200){
-            utilities.toastAlert('success', "Σταλθηκαν στο εμαιλ")
-            this.disabled = true;
-        }
-    }catch (e){
-        console.log(e)
-    }
-})
+function sendMailPermission() {
+	return Swal.fire({
+        title: 'Αποστολή;',
+        text: "Θέλετε να στείλετε τον κωδικό του χρήστη στο Email του;",
+        icon: "info",
+		showCancelButton: true,
+		confirmButtonColor: '#536de6',
+        confirmButtonText: 'Ναι, αποστολή!',
+        cancelButtonText: 'Άκυρο'
+    });
+}
 
 //! DATATABLES INIT
 //!============================================================
@@ -543,6 +540,49 @@ $("#user-status").on("change", function() {
 		utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
 	})
 });
+
+$(".js-send-message").on("click", sendPassword);
+
+async function sendPassword()  {
+    try {
+		$(this).off("click");
+
+		const {isConfirmed} = await sendMailPermission();
+		
+		if ( !isConfirmed ) {
+			return;
+		}
+		
+		const {status} = await axios.post(`/users-ajax/${userId}/sent-info`);
+		
+        if (status < 200 && status > 299) {
+			throw "failed";
+		}
+
+		Swal.fire({
+			title: 'Στάλθηκε',
+			text: "Ο κωδικός έχει αποσταλεί με επιτυχία!",
+			icon: "success",
+			confirmButtonColor: '#536de6',
+			confirmButtonText: 'Εντάξει!'
+		});
+
+    }catch (err){
+		console.log(err)
+
+		$(this).on("click", sendPassword);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+    }
+}
+
+
+
+
+
+
+
+
+
 
 $(".under-development").on("click", function() {
 	utilities.toastAlert("info", "Under Development");

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Ajax\UserController as UserAjaxController;
 
 Route::prefix("dashboard")->group(function() {
 
@@ -20,4 +21,8 @@ Route::prefix("dashboard")->group(function() {
 	Route::patch('users/{user}', [UserController::class, "update"]);
 
 	// Route::delete('/dashboard/bundle/{bundle}', [BundleController::class, "softDelete"])->name('bundle.softDelete');
+});
+
+Route::prefix("users-ajax")->group(function() {
+	Route::post('{user:id}/sent-info', [UserAjaxController::class, "sentInfo"]);
 });

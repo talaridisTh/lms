@@ -194,7 +194,7 @@
 					</div><!-- ./form-row @e -->
 
 					<div class="form-row"><!-- form-row @s -->
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-6 mb-md-0">
 							<label for="youtube">Youtube</label>
 							<div class="input-group">
 								<div class="input-group-prepend">
@@ -204,7 +204,7 @@
 							</div>
 						</div>
 						
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-6 mb-md-0">
 							<label for="linked-in">LinkedIn</label>
 							<div class="input-group">
 								<div class="input-group-prepend">

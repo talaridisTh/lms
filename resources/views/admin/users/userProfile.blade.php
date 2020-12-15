@@ -28,8 +28,9 @@
 						</ol>
 					</div>
 
-					<h4 class="page-title">{{ $user->last_name }} {{ $user->first_name }}</h4>
-
+					<h4 id="user-name" class="page-title" data-user-id="{{ $user->id }}">
+						{{ $user->last_name }} {{ $user->first_name }}
+					</h4>
 				</div>
 			</div>
 		</div>

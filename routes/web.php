@@ -106,7 +106,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('users/view-users', 'Ajax\UserController@index');
     Route::post('users/view-user', 'Ajax\UserController@show')->name("show.datatable");
     Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->name("courseModal.datatable");
-    Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
+    // Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
 //! Dashboard Ajax Users CRUD
     Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
