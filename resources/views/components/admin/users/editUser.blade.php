@@ -284,7 +284,7 @@
 						Επιλογές Κωδικού
 					</button>
 					<div class="dropdown-menu py-0">
-						<a class="dropdown-item py-2 under-development" href="#">Εμφάνιση</a>
+						<a id="show-password" class="dropdown-item py-2" href="#">Εμφάνιση</a>
 						<div class="dropdown-divider my-0"></div>
 						<a class="js-send-message dropdown-item py-2" href="#">Αποστολή</a>
 					</div>

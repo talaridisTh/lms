@@ -3,6 +3,7 @@ import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
+import Swal from 'sweetalert2';
 
 //! GLOBAL VAR
 //!============================================================
@@ -546,6 +547,7 @@ $(".js-send-message").on("click", sendPassword);
 async function sendPassword()  {
     try {
 		$(this).off("click");
+		$(this).on("click", successMail);
 
 		const {isConfirmed} = await sendMailPermission();
 		
@@ -559,31 +561,69 @@ async function sendPassword()  {
 			throw "failed";
 		}
 
-		Swal.fire({
-			title: 'Στάλθηκε',
-			text: "Ο κωδικός έχει αποσταλεί με επιτυχία!",
-			icon: "success",
-			confirmButtonColor: '#536de6',
-			confirmButtonText: 'Εντάξει!'
-		});
+		successMail();
 
     }catch (err){
-		console.log(err)
-
+		$(this).off("click");
 		$(this).on("click", sendPassword);
+
+		console.log(err)
 		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
     }
 }
 
+function successMail() {
+	Swal.fire({
+		title: 'Στάλθηκε',
+		text: "Ο κωδικός έχει αποσταλεί με επιτυχία!",
+		icon: "success",
+		confirmButtonColor: '#536de6',
+		confirmButtonText: 'Εντάξει!'
+	});
+}
 
+$("#show-password").on("click", function() {
+	Swal.fire({
+		title: "Επιβεβαίωση ενέργειας",
+		text: "Παρακαλώ συμπληρώστε το κωδικό εισόδου σας",
+		input: "password",
+		confirmButtonColor: '#536de6',
+		confirmButtonText: 'Επόμενο &rarr;',
+		showCancelButton: true,
+		cancelButtonText: 'Άκυρο',
+		preConfirm: (password) => {
+			return axios.post(`/users-ajax/${userId}/show-password`, {
+				password: password
+			})
+			.then( res => {
 
+				return res;
+			})
+			.catch( err => {
 
+				return err.response;
+				
+			})
+		}
+	}).then( res => {
+		const {status} = res.value;
 
-
-
-
-
+		if (status < 200 || status > 299) {
+			throw new Error(res.value.data.error);
+		}
+		
+		Swal.fire(
+			'Ο κωδικός χρήστη είναι',
+  			`${res.value.data.password}`,
+  			'info'
+		)
+	})
+	.catch(err => {
+		utilities.toastAlert("error", err.message)
+		console.log(err);
+	})
+});
 
 $(".under-development").on("click", function() {
 	utilities.toastAlert("info", "Under Development");
-})
+});

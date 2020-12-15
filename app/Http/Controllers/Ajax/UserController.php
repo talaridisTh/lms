@@ -126,13 +126,18 @@ class UserController {
         User::whereIn('id', $request->user_id)->delete();
     }
 
-    public function showPassword(Request $request)
-    {
+    public function showPassword(Request $request, User $user) {
 
-        if (Hash::check($request->password, auth()->user()->password))
+        if ( !Hash::check($request->password, auth()->user()->password) )
         {
-            return response()->json(['success' => 'successfully.']);
-        }
+            return response()->json(['error' => 'Λάθος κωδικός.'], 401);
+		}
+		
+		// $password = Crypt::decryptString($user->password_encrypt);
+
+		return response()->json([
+			"password" => Crypt::decryptString($user->password_encrypt)
+		]);
     }
 
     public function avatarUpload(Request $request)

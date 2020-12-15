@@ -114,7 +114,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('/user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers')->name("addCoursesMultipleUsers.datatable");
     Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
     Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers');
-    Route::post("/user/show-password", "Ajax\UserController@showPassword")->name("showPassword");
+    // Route::post("/user/show-password", "Ajax\UserController@showPassword")->name("showPassword");
     Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('user.avatar.upload');
 //! Dashboard Ajax Media
     Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');
