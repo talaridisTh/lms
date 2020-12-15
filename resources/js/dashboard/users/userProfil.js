@@ -14,6 +14,7 @@ let timer = 0;
 
 //! GLOBAL METHOD AND EVENT LISTENER
 //!============================================================
+//* feugei
 const routeLink = () => {
     $('.js-link').click(function () {
         $('.js-link').unbind();
@@ -25,6 +26,7 @@ const routeLink = () => {
     });
 }
 
+//* dior8osi
 $(".js-send-message").on("click", async function ()  {
 
     try {
@@ -38,74 +40,6 @@ $(".js-send-message").on("click", async function ()  {
         console.log(e)
     }
 })
-
-
-
-$(".js-link-passwordShow").click(async function () {
-    const {value: password} = await Swal.fire({
-        title: 'Εισάγετε  password διαχειριστή',
-        input: 'password',
-        inputPlaceholder: 'Password...',
-        inputAttributes: {
-            maxlength: 50,
-            autocapitalize: 'off',
-            autocorrect: 'off'
-        }
-    })
-    if (password) {
-        try {
-            const res = await axios.post("/user/show-password", {
-                password
-            })
-            if (res.data.success) {
-                console.log("AS")
-                $(".passwordShow")[0].classList.remove("d-none")
-                $(".js-link-passwordShow")[0].classList.add("d-none")
-
-            } else {
-                utilities.toastAlert('error', "Λαθος password")
-            }
-        } catch (e) {
-            utilities.toastAlert('error', "Λαθος password")
-            console.log(e)
-        }
-
-
-    }
-})
-
-$('#alertSumbit').submit(async (e) => {
-    e.preventDefault()
-    let buttonDelete = $('.js-delete');
-    const slug = buttonDelete[0].dataset.slug;
-
-    try {
-        const {value} = await utilities.toastAlertDelete("Θέλετε να διαγράψετε αυτόν τον χρήστη ")
-        if (value) {
-            // const res = await axios.post(`/dashboard/users/${slug}`, {_method: 'DELETE'})
-            utilities.toastAlert('success', "Διεγράφη")
-            window.location = `http://127.0.0.1:8000/dashboard/users`;
-        }
-
-    } catch (e) {
-        console.log(e)
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-    }
-
-
-});
-
-$(".tab-link").on("show.bs.tab", function (event) {
-
-    event.preventDefault();
-    Swal.fire(
-        'Προσοχή',
-        '<p>Θα πρέπει να αποθηκεύσετε </p>για να συνεχίσετε!',
-        'info'
-    );
-
-})
-
 
 //! DATATABLES INIT
 //!============================================================
@@ -535,32 +469,8 @@ const pond = FilePond.create(dropzone, {
 
 //! REDACTOR
 //!============================================================
-// $R.add('plugin', 'mediaLibrary', {
-//     translations: {
-//         en: {
-//             "mediaLibrary": "Media Library"
-//         }
-//     },
-//     init: function(app) {
-//         this.app = app;
-//         this.lang = app.lang;
-//         this.toolbar = app.toolbar;
-//     },
-//     start: function() {
-//         var buttonData = {
-//             title: this.lang.get("mediaLibrary"),
-//             icon: "<i class='mdi mdi-book-open-page-variant'></i>",
-//             api: "plugin.mediaLibrary.toggle"
-//         };
-//
-//         var $button = this.toolbar.addButton("mediaLibrary", buttonData);
-//     },
-//     toggle: function() {
-//         $('#gallery-content')[0].dataset.action = "summary"
-//         $('#gallery-modal').modal('show')
-//     }
-// });
-$R("#summary", {
+
+$R("#profil", {
     buttons: [
         'html', 'format',
         'bold', 'underline', 'italic',
@@ -578,10 +488,6 @@ $R("#summary", {
     },
     imageFloatMargin: '20px',
     imageUpload: "/media/upload-images",
-    // imageData: {
-    // 	// id: courseId,
-    // 	// namespace: "App\\Models\\Course"
-    // },
     callbacks: {
         upload: {
             beforeSend: function (xhr) {
@@ -619,3 +525,25 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 		}
 	});
 }
+
+$("#user-status").on("change", function() {
+
+	axios.patch("/user/changeStatus", {
+		'status': this.checked ? 1 : 0,
+		'id': this.dataset.userId
+	})
+	.then ( res => {
+		const icon = this.checked ? "success" : "info";
+		const message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+		utilities.toastAlert(icon, message);
+	})
+	.catch (err => {
+		console.log(err);
+		utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+	})
+});
+
+$(".under-development").on("click", function() {
+	utilities.toastAlert("info", "Under Development");
+})

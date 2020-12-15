@@ -52,11 +52,6 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
-    Route::get('/dashboard/users', 'UserController@index')->name('user.index');
-    Route::get('/dashboard/users/create', 'UserController@create')->name('user.create');
-    Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
-    Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
-    Route::patch('/dashboard/users/update/{user}', 'UserController@update')->name('user.update');
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
 	//! Newsletter Routes

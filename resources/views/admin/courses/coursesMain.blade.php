@@ -98,7 +98,7 @@
 							Επιλογές (0)
 						</button>
 						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
-							<div class="btn-group dropleft w-100">
+							<div class="btn-group dropleft dropleft-hover w-100">
 								<button type="button" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Αλλαγή κατάστασης
 								</button>

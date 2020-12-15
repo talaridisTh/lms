@@ -6,21 +6,8 @@
     </button>
 
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-animated py-0">
-{{--        <div class="btn-group dropleft w-100">--}}
-{{--            <button type="button" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
-{{--                Προσθήκη σε course--}}
-{{--            </button>--}}
-{{--            <div class="dropdown-menu py-0">--}}
-{{--                @foreach($activeCourses as $courses)--}}
-{{--                    <a class="dropdown-item js-multiple-update cursor-pointer py-2" data-courses-id="{{$courses->id}}">{{$courses->title}}</a>--}}
-{{--					<div class="dropdown-divider my-0"></div>--}}
-{{--                @endforeach--}}
-{{--            </div>--}}
-{{--        </div>--}}
 
-		<div class="dropdown-divider my-0"></div>
-
-        <div class="btn-group dropleft w-100">
+        <div class="btn-group dropleft dropleft-hover w-100">
             <button type="button" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				Αλλαγή κατάστασης
             </button>

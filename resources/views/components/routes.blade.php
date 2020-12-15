@@ -2,8 +2,6 @@
     // global app configuration object
     const config = {
         routes: {
-            //simple routes
-            userIndex: "{{ route("user.index") }}",
             //datatable routes
             showDatatable: "{{ route("show.datatable") }}",
             destroyDatatable: "{{ route("destroy.datatable") }}",

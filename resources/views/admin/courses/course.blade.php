@@ -747,7 +747,7 @@
 
 									<a id="remove-selection-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
 									<div class="dropdown-divider my-0"></div>
-									<div class="btn-group dropleft w-100">
+									<div class="btn-group dropleft dropleft-hover w-100">
 										<a class="dropdown-toggle dropdown-item py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Αλλαγή κατάστασης
 										</a>

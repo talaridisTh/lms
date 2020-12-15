@@ -24,100 +24,78 @@ class UserController extends Controller {
 
     public function create()
     {
-        $media = Media::where("type", 0)->paginate(18);
-        $userCourses = [];
-
-        return view('admin.users.userProfile', compact("userCourses","media"));
+        return view('admin.users.userCreate');
     }
 
     public function show(User $user)
     {
-
-
-
-        $media = Media::where("type", 0)->paginate(18);
-
-        $userIs = User::userIs($user);
-        $userCourses = $user->courses()->get();
-        $allMaterials = User::findMaterials($user->id);
-        $activities = Activity::where("causer_id", $user->id)->get();
-
-        return view('admin.users.userProfile', compact("user", "allMaterials", "userCourses", "userIs", "activities","media"));
+		//
     }
 
-    public function store(UserCreateRequest $request)
-    {
-        //
-
+    public function store(UserCreateRequest $request) {
 
         $user = new User();
-        $data = collect($request)->except("sendMail", "roles", "password_confirmation")->all();
-//        $data['password'] = Hash::make("password");
-        $data["slug"] = Str::slug($request->first_name, "-");
-        if ($request->status)
-        {
-            $data["status"] = 1;
-        } else
-        {
-            $data["status"] = 0;
-        }
-        if ($request->sendMail)
-        {
-            Mail::to(auth()->user()->email)->send(new NewUserNotification($request->email,$request->password));
-        }
-        if ($request->password)
-        {
+		$user->first_name = $request->first_name;
+		$user->last_name = $request->last_name;
+		$user->avatar = "/images/avatar-placeholder.png";
+		$user->email = $request->email;
+        $user->slug = Str::slug($request->email);
+		$user->phone = $request->phone;
+		$user->password = Hash::make($request->password);
+		$user->password_encrypt = Crypt::encryptString($request->password);
+		$user->status = isset($request->status) ? 1 : 0;
+		$user->profil = $request->profil;
+		$user->facebook_link = $request->facebook_link;
+		$user->instagram_link = $request->instagram_link;
+		$user->youtube_link = $request->youtube_link;
+		$user->linkedin_link = $request->linkedin_link;
+		$user->save();
+		
+		$user->assignRole($request->role);
 
-            $data["password_encrypt"] = Crypt::encryptString($request->password);
-            $data["password"] = Hash::make($request->password);
+        // if ($request->sendMail)
+        // {
+        //     Mail::to(auth()->user()->email)->send(new NewUserNotification($request->email,$request->password));
+        // }
 
-        }
-        $data["phone"]  = (int)$request->phone;
-
-
-
-       $request->avatar? $data["avatar"] = $request->avatar:$data["avatar"]="/images/avatar-placeholder.png";
-
-
-        $currentUser = $user->create($data)->assignRole($request->roles);
-
-
-        return redirect()->route("user.show",$currentUser->slug)->with('create', 'Ο ' . $data["first_name"] . " " . $data["last_name"] . ' δημιουργήθηκε');
+        return redirect("/dashboard/users/$user->slug");
     }
 
-    public function update(UserUpdateRequest $request, User $user)
-    {
-        //
+	public function edit(User $user) {
 
-        $user->update($request->except('roles', 'password', 'avatar', 'password_confirmation', "status", "sendMail"));
-        $data = collect($request)->except("sendMail")->all();
-        $user->syncRoles($request->roles);
+		$data = [
+			"user" => $user,
+			"userRole" => $user->getRoleNames()->first(),
+			"media" => Media::where("type", 0)->paginate(18),
+			"activities" => Activity::where("causer_id", $user->id)->get(),
+		];
 
-        $user->status = isset($request->status) ? 1 : 0;
-        $user->save();
-        if ($request->sendMail)
-        {
+        return view('admin.users.userProfile')->with($data);
+	}
 
-            Mail::to(auth()->user()->email)->send(new NewUserNotification($user->fullName, $request->password));
-        }
-        if ($request->password)
-        {
+    public function update(UserUpdateRequest $request, User $user) {
 
-            $user->update(['password_encrypt' => Crypt::encryptString($request->password)]);
-            $user->update(['password' => Hash::make(request("password"))]);
-        }
-        if ($request->avatar)
-        {
+		$user->first_name = $request->first_name;
+		$user->last_name = $request->last_name;
+		$user->email = $request->email;
+		$user->slug = Str::slug($request->email);
+		$user->phone = $request->phone;
+		$user->profil = $request->profil;
+		$user->facebook_link = $request->facebook_link;
+		$user->instagram_link = $request->instagram_link;
+		$user->youtube_link = $request->youtube_link;
+		$user->linkedin_link = $request->linkedin_link;
 
+        if ( !is_null($request->password) ) {
 
-            $user->update(['avatar' => $request->avatar]);
+            $user->password_encrypt = Crypt::encryptString($request->password);
+            $user->password = Hash::make( $request->password );
+		}
+		
+		$user->save();
+        $user->syncRoles($request->role);
 
-
-
-        }
-
-
-        return redirect()->back()->with('update', 'Ο ' . $user->fullName . ' ενημερώθηκε');
+        return redirect("/dashboard/users/$user->slug");
     }
 
     public function destroy(User $user)
@@ -131,7 +109,7 @@ class UserController extends Controller {
     public function userCourses(User $user)
     {
 
-        return view('courses/courses')->withUser($user);
+        return view('courses/courses')->with(["user" => $user]);
     }
 
 }

@@ -12,16 +12,6 @@
 
 		<link rel="stylesheet" href="{{ mix('css/dashboard/app.css') }}">
 
-{{--    <!-- Global site tag (gtag.js) - Google Analytics -->--}}
-{{--        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-179237450-1"></script>--}}
-{{--        <script>--}}
-{{--            window.dataLayer = window.dataLayer || [];--}}
-{{--            function gtag(){dataLayer.push(arguments);}--}}
-{{--            gtag('js', new Date());--}}
-
-{{--            gtag('config', 'UA-179237450-1');--}}
-{{--		</script>--}}
-
 		<style>
 			.results-cnt {
 				min-width: 315px;
@@ -84,7 +74,7 @@
 							</a>
 						</li>
 						<li class="side-nav-item">
-							<a href="{{route('user.index')}}" class="side-nav-link" draggable="false">
+							<a href="/dashboard/users" class="side-nav-link" draggable="false">
 								<i class="mdi mdi-account-multiple"></i>
 								<span>Χρήστες</span>
 							</a>

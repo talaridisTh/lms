@@ -68,6 +68,9 @@ class RouteServiceProvider extends ServiceProvider
 	protected function mapWebDashboardRoutes()
     {
 		Route::middleware(["web", "auth", "role:admin|super-admin"])
+			->group(base_path('routes/dashboard/user/web.php'));
+
+		Route::middleware(["web", "auth", "role:admin|super-admin"])
 			->group(base_path('routes/dashboard/material/web.php'));
 
         Route::middleware(["web", "auth", "role:admin|super-admin"])
