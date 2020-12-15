@@ -3405,7 +3405,7 @@ select.is-invalid {
   background-color: #33393f;
 }
 
-.dropleft:hover > .dropdown-menu {
+.dropleft-hover:hover > .dropdown-menu {
   display: block;
 }
 

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -198,14 +198,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ 14:
+/***/ 15:
 /*!*****************************************************************!*\
   !*** multi ./resources/js/dashboard/fileManager/fileManager.js ***!
   \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\dashboard\fileManager\fileManager.js */"./resources/js/dashboard/fileManager/fileManager.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\Demo LMS\resources\js\dashboard\fileManager\fileManager.js */"./resources/js/dashboard/fileManager/fileManager.js");
 
 
 /***/ })

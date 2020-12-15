@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -110,14 +110,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
-/***/ 19:
+/***/ 20:
 /*!*********************************************************!*\
   !*** multi ./resources/js/dashboard/mail/edit-email.js ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\web-developer\laravel-project\lmsdemo\resources\js\dashboard\mail\edit-email.js */"./resources/js/dashboard/mail/edit-email.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\Demo LMS\resources\js\dashboard\mail\edit-email.js */"./resources/js/dashboard/mail/edit-email.js");
 
 
 /***/ })
