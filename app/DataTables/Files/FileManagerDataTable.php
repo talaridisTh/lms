@@ -41,8 +41,6 @@ class FileManagerDataTable extends DataTable
 						<span class='mx-2'>|</span>";
 				}
 
-				// dump($data->mediaDetails);
-
 				if ( !is_null($mediaDetails) ) {
 					$id = $mediaDetails->id;
 					$title = $mediaDetails->title;

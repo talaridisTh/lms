@@ -241,7 +241,7 @@ $("#ext-table-filter").on("change", function() {
 	let label = $("#select2-ext-table-filter-container")[0];
 
 	utilities.filterStyle( label, this.value );
-	fileManagerDatatable.column(2).search( this.value ).draw();
+	fileManagerDatatable.column(3).search( this.value ).draw();
 });
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
