@@ -163,12 +163,13 @@
 
 		<div class="tab-content">
 
-			<div id="list-view" class="tab-pane show active">
+			<div id="list-view" class="tab-pane show active table-cnt">
 				<table id="file-manager-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 					<thead>
 						<tr>
 							<th class="text-center"></th>
 							<th class="text-center">Όνομα</th>
+							<th class="text-center">Public Url</th>
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
 							<th class="text-center">Ημ. Δημιουργίας</th>
@@ -179,6 +180,7 @@
 						<tr>
 							<th class="text-center"></th>
 							<th class="text-center">Όνομα</th>
+							<th class="text-center">Public Url</th>
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
 							<th class="text-center">Ημ. Δημιουργίας</th>

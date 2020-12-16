@@ -24,7 +24,6 @@ class BigDataSeeder extends Seeder {
             RoleSeeder::class,
             TopicSeeder::class,
             UserSeeder::class,
-            UtilitySeeder::class,
         ]);
 
         User::factory()->times(500)->create()

@@ -20,7 +20,8 @@ class CreateMaterialsTable extends Migration
             $table->string('subtitle')->nullable();
             $table->text('summary')->nullable();
             $table->text('description')->nullable();
-            $table->text('content')->nullable();
+			$table->text('content')->nullable();
+			$table->longText("script")->nullable();
             $table->string('cover')->nullable();
             $table->text('video_link')->nullable();
             $table->text('link')->nullable();

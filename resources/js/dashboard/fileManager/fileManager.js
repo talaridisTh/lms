@@ -88,6 +88,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	columns: [
 		{ data: "image", className: "text-center cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
+		{ data: "public_pass", name: "public_pass", className: "align-middle text-center"},
 		{ data: "ext", name: "ext", className: "align-middle text-center cursor-default"},
 		{ data: "size", name: "size", className: "align-middle text-center cursor-default" },
 		{
@@ -131,9 +132,44 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 		$(".dataTables_paginate > .pagination > li > a").attr("draggable", "false");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
-		// activeToggleInit();
+		$(".js-public-pass-toggle").on("click", togglePublicUrlHandler);
+		$(".js-copy-url").on("click", copyUrlHandler);
 	}
 });
+
+function copyUrlHandler() {
+	const url = this.dataset.url;
+
+	navigator.clipboard.writeText(url)
+	.then(function() {
+		utilities.toastAlert("success", "Copied!");
+	})
+	.catch(function() {
+		utilities.toastAlert("success", "Failed...");
+	});
+}
+
+function togglePublicUrlHandler() {
+
+	axios.patch(`/media-ajax/${this.dataset.mediaId}/toggle-public-pass`, {
+		status: this.checked ? 1 : 0
+	})
+	.then( res => {
+		const row = this.findParent(2);
+		const icon = this.checked ? "success" : "info";
+		const message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+		const urlLineSpan = row.getElementsByClassName("js-copy-url-separator")[0];
+		const copyUrl = row.getElementsByClassName("js-copy-url")[0];
+
+		copyUrl.dataset.url = res.data.url;
+		urlLineSpan.classList.toggle("d-none");
+		utilities.toastAlert(icon, message);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε");
+	})
+}
 
 //!######################################
 //! 		Grid View Functions			#

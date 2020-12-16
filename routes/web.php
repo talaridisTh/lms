@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Option;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -202,6 +200,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ['auth']], function () {
+	Route::get("/pf/{pass}/{name}", "Index\MediaController@show");
     //home index
     Route::get('/home', 'Index\HomeController@index')->name('home');
     //excehl

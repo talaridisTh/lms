@@ -133,8 +133,6 @@ class UserController {
             return response()->json(['error' => 'Λάθος κωδικός.'], 401);
 		}
 		
-		// $password = Crypt::decryptString($user->password_encrypt);
-
 		return response()->json([
 			"password" => Crypt::decryptString($user->password_encrypt)
 		]);
