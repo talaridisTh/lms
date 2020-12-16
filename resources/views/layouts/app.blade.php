@@ -178,16 +178,16 @@
 
                             <div>
                                 @hasanyrole('super-admin|admin')
-                                <div class="dropdown">
-                                    <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
-                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Guest links
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="{{route('user.showLinks')}}">All links</a>
-                                        <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
-                                    </div>
-                                </div>
+{{--                                <div class="dropdown">--}}
+{{--                                    <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"--}}
+{{--                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                                        Guest links--}}
+{{--                                    </a>--}}
+{{--                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--}}
+{{--                                        <a class="dropdown-item" href="{{route('user.showLinks')}}">All links</a>--}}
+{{--                                        <a class="dropdown-item" href="{{route('user.link')}}">create link</a>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
                                 @endhasanyrole
                             </div>
 
