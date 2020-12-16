@@ -105,6 +105,7 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
+		{ data: "title", name: "mediaDetails.title", className: "align-middle text-center cursor-default", visible: false },
 	],
 	processing: true,
 	serverSide: true,
