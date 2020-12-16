@@ -24,7 +24,7 @@ trait MediaUploader {
 		$media->type = $type;
 		$media->rel_path = "/storage/images/$date/$name->full";	//! + increment on dublicate
 		// $media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
-		$media->ext = $image->getClientOriginalExtension();
+		$media->ext = $name->extension;
 		$media->file_info = $image->getClientMimeType();
 		$media->size = $image->getSize();
 		$media->width = Image::make( $image )->width();
@@ -42,21 +42,23 @@ trait MediaUploader {
 		$temp = array_diff( $temp, [$file->getClientOriginalExtension()] );
 		$originalName = implode( ".", $temp );
 		$slug =  Str::slug( $originalName );
+		$extension = strtolower($file->getClientOriginalExtension());
 
 		$count = Media::where( "original_name", $originalName)->count();
 
 		if ( $count > 0 ) {
 			$name = $slug.( $count + 1 );
-			$fullname = $name.".".$file->getClientOriginalExtension();
+			$fullname = $name.".".$extension;
 		}
 		else {
-			$fullname = "$slug.".$file->getClientOriginalExtension();
+			$fullname = "$slug.".$extension;
 		}
 
 		return (object)[
 			"slug" => $slug,
 			"original" => $originalName,
 			"full" => $fullname,
+			"extension" => $extension
 		];
 	}
 
