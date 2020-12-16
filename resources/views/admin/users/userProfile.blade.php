@@ -3,12 +3,17 @@
 @section('css')
     <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 
+	<style>
+		.input-icon {
+			padding: 0 0.6rem;
+			border: solid #536de6;
+			border-width: 1px 1px 0;
+		}
+	</style>
 
 @endsection
 
 @section('content')
-    <x-alertMsg :msg="'update'"></x-alertMsg>
-    <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container-fruid">
 
 		<div class="row">
@@ -19,66 +24,55 @@
 							<li class="breadcrumb-item"><a href="/" class="custom-link-primary">Home</a></li>
 							<li class="breadcrumb-item"><a href="/dashboard" class="custom-link-primary">Dashboard</a></li>
 							<li class="breadcrumb-item"><a href="/dashboard/users" class="custom-link-primary">Χρήστες</a></li>
-							<li class="breadcrumb-item active">Προφίλ χρήστη</li>
+							<li class="breadcrumb-item active">{{ $user->last_name }} {{ $user->first_name }}</li>
 						</ol>
 					</div>
-                    @if(isset($user))
-					<h4 class="page-title">{{ $user->last_name }} {{ $user->first_name }}</h4>
-                    @endif
+
+					<h4 id="user-name" class="page-title" data-user-id="{{ $user->id }}">
+						{{ $user->last_name }} {{ $user->first_name }}
+					</h4>
 				</div>
 			</div>
 		</div>
 
-
         <div class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-
-                            <ul class="nav nav-tabs mb-3 d-flex">
-                                <li class="nav-item">
-                                    <a href="#settings" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0 active">
-                                        Επεξεργασία χρήστη
-                                    </a>
-                                </li>
 
 
-                                    <li class="nav-item">
-                                        <a href="#courses" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0  {{ !isset($user) ? 'tab-link text-muted' : '' }}  ">
-                                            Courses
-                                        </a>
-                                    </li>
+                    <ul class="nav nav-tabs nav-bordered mb-3">
+                        <li class="nav-item">
+                            <a href="#settings" data-toggle="tab" aria-expanded="false"
+                               class="nav-link active">
+                                Επεξεργασία
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#courses" data-toggle="tab" aria-expanded="false"
+                               class="nav-link">
+                                Courses
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#timeline" data-toggle="tab" aria-expanded="false"
+                               class="nav-link">
+                                Timeline
+                            </a>
+                        </li>
+                    </ul>
 
-
-
-                                    <li class="nav-item">
-                                        <a href="#timeline" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0  {{ !isset($user) ? 'tab-link text-muted' : '' }} ">
-                                            Timeline
-                                        </a>
-                                    </li>
-
-                            </ul>
-
-                            <div class="tab-content">
-                                <div class="tab-pane  active" id="settings">
-                                    @include("components.tabsEdit")
-                                </div>
-
-                                <div class="tab-pane  "  id="courses">
-                                    @include("components.findUserMaterial")
-                                </div>
-                                <div class="tab-pane  " id="timeline">
-                                    @include("components.timelineUser")
-                                </div>
-
-                            </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="settings">
+                            @include("components.admin.users.editUser")
                         </div>
-
+                        <div class="tab-pane"  id="courses">
+                            @include("components.findUserMaterial")
+                        </div>
+                        <div class="tab-pane" id="timeline">
+                            @include("components.timelineUser")
+                        </div>
                     </div>
+
                 </div>
                 <!-- modal -->
                 <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog"

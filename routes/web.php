@@ -52,11 +52,6 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
-    Route::get('/dashboard/users', 'UserController@index')->name('user.index');
-    Route::get('/dashboard/users/create', 'UserController@create')->name('user.create');
-    Route::get('/dashboard/users/{user}', 'UserController@show')->name('user.show');
-    Route::post('/dashboard/users/create', 'UserController@store')->name('user.store');
-    Route::patch('/dashboard/users/update/{user}', 'UserController@update')->name('user.update');
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
 
 	//! Newsletter Routes
@@ -111,7 +106,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('users/view-users', 'Ajax\UserController@index');
     Route::post('users/view-user', 'Ajax\UserController@show')->name("show.datatable");
     Route::post('/user/add-course-modal', 'Ajax\UserController@addCourseModal')->name("courseModal.datatable");
-    Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
+    // Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
 //! Dashboard Ajax Users CRUD
     Route::patch('/user/add-course', 'Ajax\UserController@addCourses')->name("addcourses.datatable");
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
@@ -119,7 +114,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('/user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers')->name("addCoursesMultipleUsers.datatable");
     Route::delete('/user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
     Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers');
-    Route::post("/user/show-password", "Ajax\UserController@showPassword")->name("showPassword");
+    // Route::post("/user/show-password", "Ajax\UserController@showPassword")->name("showPassword");
     Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('user.avatar.upload');
 //! Dashboard Ajax Media
     Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');

@@ -31,7 +31,7 @@
         <div class="row mb-2 justify-content-end">
             <div id="containerCol" class="col-sm-12">
                 <div class="text-right">
-                    <a href="{{route('user.create')}}" class="btn btn-primary mb-2"><i
+                    <a href="/dashboard/users/create" class="btn btn-primary mb-2"><i
                             class="mdi mdi-plus-circle mr-2"></i>
                         Νέος χρήστης
                     </a>
@@ -42,43 +42,26 @@
 						</button>
 					
 						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
-							{{-- <div class="btn-group dropleft">
-								<div class="dropdown-divider"></div>
-								<button type="button" id="dropdownMenuButton" class="dropdown-item dropdown-toggle" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false">
-									Προσθήκη σε course
-								</button>
-								<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-									@foreach($activeCourses as $courses)
-									<a class="dropdown-item js-multiple-update cursor-pointer"
-									   data-courses-type="{{$courses->type}}"
-										data-courses-id="{{$courses->id}}">{{$courses->title}}</a>
-									@endforeach
-								</div>
-							</div> --}}
-
-							<div class="btn-group dropleft w-100">
+							<div class="btn-group dropleft dropleft-hover w-100">
 								<button type="button" id="status-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false">
 									Αλλαγή κατάστασης
 								</button>
-								<div class="dropdown-menu" aria-labelledby="status-dropdown">
-									<a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="on">Ενεργά</a>
-									<a class="dropdown-item js-multiple-change cursor-pointer" data-courses-change="off">Μη ενεργά</a>
+								<div class="dropdown-menu py-0" aria-labelledby="status-dropdown">
+									<a class="dropdown-item js-multiple-change cursor-pointer py-2" data-courses-change="on">Ενεργά</a>
+									<a class="dropdown-item js-multiple-change cursor-pointer py-2" data-courses-change="off">Μη ενεργά</a>
 								</div>
 							</div>
 					
 							<div class="dropdown-divider m-0"></div>
 					
-							<div class="btn-group dropleft w-100">
+							<div class="btn-group dropleft dropleft-hover w-100">
 								<button type="button" id="export-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false">
 									Export
 								</button>
-								<div class="dropdown-menu" aria-labelledby="export-dropdown">
-									<a href="#" class="dropdown-item">Print</a>
-									<a href="#" id="excel-btn" class="dropdown-item">Excel</a>
-									<a href="#" class="dropdown-item">CVS </a>
+								<div class="dropdown-menu py-0" aria-labelledby="export-dropdown">
+									<a href="#" id="excel-btn" class="dropdown-item py-2">Excel</a>
 								</div>
 							</div>
 				

@@ -29,7 +29,7 @@ class UserUpdateRequest extends FormRequest {
             'email' => ['required', 'string', 'email', 'max:255'],
             'phone' => ['required'],
             'password' => ['confirmed'],
-            'roles' => 'required'
+            'role' => 'required'
         ];
     }
 

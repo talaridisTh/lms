@@ -24,17 +24,11 @@ class UserCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
             'first_name' => ['required', 'string', 'max:255',"min:3"],
             'last_name' => ['required', 'string', 'max:255',"min:3"],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'phone' => ['required'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            //'cover' => 'image|mimes:jpg,png,jpeg,gif,svg|max:2048',
-            'roles' => 'required'
-
-
-
         ];
 
 

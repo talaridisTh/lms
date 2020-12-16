@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -327,7 +327,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ful
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /*!***************************************************************!*\
   !*** multi ./resources/js/index/announcement/announcement.js ***!
   \***************************************************************/

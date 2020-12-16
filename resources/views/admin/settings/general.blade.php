@@ -222,7 +222,7 @@
 					@endphp
 					<div class="card">
 						<div class="card-header">
-							<h4 class="card-title mb-0">Social Links</h4>
+							<h4 class="card-title mb-0">Social</h4>
 						</div>
 						<div class="card-body">
 							<div class="form-group">
