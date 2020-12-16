@@ -47,19 +47,20 @@ $("#save-details-btn").on("click", function() {
 
 $("#edit-file-modal").on("show.bs.modal", function(event) {
 
-	let button = $(event.relatedTarget);
-	let id = button.data("file-id");
-	let title = button.data("title");
-	let subtitle = button.data("subtitle");
-	let caption = button.data("caption");
-	let description = button.data("description");
-	let modal = $(this);
+	const td = event.relatedTarget.parentElement;
+	const id = td.getElementsByClassName("js-id-input")[0];
+	const title = td.getElementsByClassName("js-title-input")[0];
+	const subtitle = td.getElementsByClassName("js-subtile-input")[0];
+	const caption = td.getElementsByClassName("js-caption-input")[0];
+	const description = td.getElementsByClassName("js-description-input")[0];
 
-	modal.find("#file-id").val( id );
-	modal.find("#title-input").val( title );
-	modal.find("#caption-input").val( caption );
-	modal.find("#subtitle-input").val( subtitle );
-	modal.find("#file-description-area").val( description );
+	const modal = $(this);
+
+	modal.find("#file-id").val( id.value );
+	modal.find("#title-input").val( title.value );
+	modal.find("#caption-input").val( caption.value );
+	modal.find("#subtitle-input").val( subtitle.value );
+	modal.find("#file-description-area").val( description.value );
 
 	$R("#file-description-area", 'destroy');
 	$R("#file-description-area", utilities.redactorConfig);
