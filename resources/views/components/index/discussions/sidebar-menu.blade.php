@@ -53,6 +53,10 @@
         No replies yet
     </li>
 
+    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-my-task">
+        <i class="font-18 mr-1 uil-link-h"></i>
+        My task
+    </li>
 </ul>
 
 

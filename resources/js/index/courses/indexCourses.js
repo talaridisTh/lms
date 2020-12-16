@@ -266,6 +266,7 @@ $(".js-link-material").on("click", async function (e) {
 
     const href = this.href;
     e.preventDefault()
+    $(".single-section-material").off();
     if (e.target.tagName === "SPAN" || e.target.tagName === "I") {
         return
 
@@ -303,7 +304,7 @@ document.querySelectorAll(".section").forEach((section, idx) => {
 
 $(".template-prevent").on("click", async function (e) {
     e.preventDefault();
-
+    console.log(e.target)
     $(".single-section-material").off();
     $(".single-section-material").on("click",".list-material",function (){
         $('html,body').animate({

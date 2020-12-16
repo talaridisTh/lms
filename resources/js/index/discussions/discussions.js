@@ -733,6 +733,21 @@ $(".discussions-left").on("click", "#filter-no-replies", async function () {
         console.log(e)
     }
 })
+//my task
+$(".discussions-left").on("click", "#filter-my-task", async function () {
+
+    try {
+        const {data, status} = await axios.get("/discussion/no-replies")
+
+        if (status == 200) {
+            axiosUpdateMain($(this), data)
+        }
+
+
+    } catch (e) {
+        console.log(e)
+    }
+})
 
 
 // $R("#post-body", {
