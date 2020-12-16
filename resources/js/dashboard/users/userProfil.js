@@ -343,6 +343,10 @@ $('#material-modal-shown-btn').click(() => {
 //     // $("#delete-cover-btn").removeAttr('hidden')
 // });
 
+$("#image-search").on("input", utilities.searchHandler);
+
+$(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
+
 $(".js-add-image").on("click", utilities.imageHandler);
 
 $("#change-cover-btn").on("click", function () {

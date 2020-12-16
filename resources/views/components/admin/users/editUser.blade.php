@@ -241,7 +241,7 @@
 					</div>
 
 					<div class="col-md-6 justify-content-center">
-						<button class="btn btn-danger btn-block btn-sm text-nowrap under-development">
+						<button id="reset-avatar" class="btn btn-danger btn-block btn-sm text-nowrap under-development">
 							Επαναφορά
 						</button>
 					</div>
