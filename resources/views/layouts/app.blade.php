@@ -352,6 +352,7 @@
 
     $(".edit-preview-page-course").on("click", function () {
         this.href = window.PREVIEW_PAGE_COURSE
+        console.log(this.href)
     })
 </script>
 
