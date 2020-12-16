@@ -20,7 +20,7 @@ class FileManagerDataTable extends DataTable
     public function dataTable($query)
     {
 
-		$query = Media::with('mediaDetails')->get();
+		$query = Media::where("type", "!=", 5)->with('mediaDetails')->get();
 
         return datatables()::of($query)
 			->editColumn("original_name", function($data) {
