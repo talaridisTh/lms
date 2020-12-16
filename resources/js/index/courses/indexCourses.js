@@ -304,6 +304,12 @@ document.querySelectorAll(".section").forEach((section, idx) => {
 $(".template-prevent").on("click", async function (e) {
     e.preventDefault();
 
+    $(".single-section-material").off();
+    $(".single-section-material").on("click",".list-material",function (){
+        $('html,body').animate({
+                scrollTop: $("#scrollTo").offset().top- 35},
+            'slow');
+    })
     try {
         const {data, status} = await axios.get(this.href)
 
@@ -323,7 +329,9 @@ $(".template-prevent").on("click", async function (e) {
             $(".list-material").removeAttr("style")
             $(this).closest("li").css('cssText', 'background-color: #bebebe  !important');
 
+
         }
+
 
     } catch (e) {
         console.log(e)

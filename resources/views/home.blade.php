@@ -33,9 +33,10 @@
             <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
                 <h2 class="h2-custom">Βάλτε τωρα τη Ρομποτική στο σχολείο σας</h2>
                 <div class="d-flex flex-column span-custom mb-3">
+                    <p class="p-custom">
                     <span class="mb-1">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και προγραμματισμού για παιδιά.</span>
                     <span>Μπες στο δίκτυο συνεργατών. Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</span>
-
+                    </p>
                 </div>
                 <button class="btn-custom btn btn-info btn-lg text-light  ">
                     <span>ΑΙΤΗΜΑ ΓΙΑ DEMO</span>

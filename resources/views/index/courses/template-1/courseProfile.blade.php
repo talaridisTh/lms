@@ -129,6 +129,7 @@ else{
 
         <div class="container-fluid my-3 position-relative" style="max-width: 1423px"> <!--  container info -->
 
+            <div id="scrollTo"></div>
             <div class="row template-cnt">
                 <div class="col-lg-8 template-single-page">
                     @include("components.index.user-info")

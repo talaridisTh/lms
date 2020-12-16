@@ -17,7 +17,7 @@
     {{--//pretty-checkbox/--}}
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
-{{--    <link href="node_modules/lightbox2/dist/css/lightbox.css" rel="stylesheet" />--}}
+    {{--    <link href="node_modules/lightbox2/dist/css/lightbox.css" rel="stylesheet" />--}}
 
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
@@ -84,11 +84,12 @@
 
 <div id="wrapper-custom">
 
-    <div id="header-custom" class="sticky-front p-0">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
+    <div id="header-custom" class="sticky-front p-0 navbar-light " >
 
-            @if(Auth::check())
-                <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container" style="max-width: 1440px;">
+                @if(Auth::check())
+                    <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
                 	<span class=" stop nav-logo-lg">
                             @isset($option['logo'])
                             <img class="m-2" height="60"
@@ -98,155 +99,160 @@
                 	</span>
 
 
-                </a>
+                    </a>
 
-            @endif
+                @endif
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                <ul class="navbar-nav text-right font-16 font-weight-bold">
-                    @if( !Auth::check() )
-                        <div>
-                            <a class="nav-link" href="/login" role="button" aria-haspopup="true" aria-expanded="false">
-                                Log In
-                            </a>
-                        </div>
-                        <div>
-                            <a class="nav-link" href="/register" role="button" aria-haspopup="true"
-                               aria-expanded="false">
-                                Register
-                            </a>
-                        </div>
-                    @else
-                        @unlessrole('guest')
-
-                        @hasanyrole("admin|super-admin")
-
-
-                        @if(\Request::route()->getName()== "index.userCourse")
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                    <ul class="navbar-nav text-right font-16 font-weight-bold">
+                        @if( !Auth::check() )
                             <div>
-                                <a class="nav-link edit-preview-page-course" href="" role="button" aria-haspopup="true"
+                                <a class="nav-link" href="/login" role="button" aria-haspopup="true"
                                    aria-expanded="false">
-                                    Edit this course
+                                    Log In
+                                </a>
+                            </div>
+                            <div>
+                                <a class="nav-link" href="/register" role="button" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Register
+                                </a>
+                            </div>
+                        @else
+                            @unlessrole('guest')
+
+                            @hasanyrole("admin|super-admin")
+
+
+                            @if(\Request::route()->getName()== "index.userCourse")
+                                <div>
+                                    <a class="nav-link edit-preview-page-course" href="" role="button"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Edit this course
+                                    </a>
+                                </div>
+
+
+                                <div>
+                                    <a class="nav-link edit-preview-page-material d-none" href="" role="button"
+                                       aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Edit this Material
+                                    </a>
+                                </div>
+                            @endif
+
+
+                            <div>
+                                <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Dashboard
+                                </a>
+                            </div>
+
+                            @endhasanyrole
+
+
+
+                            <div>
+                                @if(auth()->user()->courses()->count()>1 )
+                                    <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
+                                        <span>Μαθήματα</span>
+                                    </a>
+                                @elseif(auth()->user()->courses()->count()==1 )
+                                    <a
+                                        href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}"
+                                        class="nav-link">
+                                        <span>Μαθήματα</span>
+                                    </a>
+                                @else
+
+                                @endif
+                            </div>
+
+
+                            <div>
+                                @hasanyrole('super-admin|admin')
+                                <div class="dropdown">
+                                    <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Guest links
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="{{route('user.showLinks')}}">All links</a>
+                                        <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
+                                    </div>
+                                </div>
+                                @endhasanyrole
+                            </div>
+
+
+                            <div>
+                                <a class="nav-link" href="{{route('discussion.index')}}" role="button"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">
+                                    Discussions
                                 </a>
                             </div>
 
 
                             <div>
-                                <a class="nav-link edit-preview-page-material d-none" href="" role="button"
-                                   aria-haspopup="true"
-                                   aria-expanded="false">
-                                    Edit this Material
+                                <div class="dropdown">
+
+                                    <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Λογαριασμός μου
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="my-acount">
+                                        <a href="{{route('index.profile',auth()->user()->slug)}}"
+                                           class="dropdown-item side-nav-link">
+                                            <span>Προφίλ </span>
+                                        </a>
+                                        <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
+                                           class="side-nav-link dropdown-item template d-none">
+                                            <span>Αγαπημένα</span>
+                                        </a>
+                                        <a href="{{route('index.profile.history',auth()->user()->slug)}}"
+                                           class="side-nav-link dropdown-item template d-none">
+                                            <span>Ιστορικό </span>
+                                        </a>
+                                        <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
+                                           class="side-nav-link dropdown-item">
+                                            <span>Ανακοινώσεις</span>
+                                        </a>
+                                        <a href="/message" class="side-nav-link dropdown-item">
+                                            <span>Μηνύματα</span>
+                                        </a>
+                                        <a href="#" class="side-nav-link dropdown-item">
+                                            <span>Logout</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endunlessrole
+                            <div>
+                                <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
+                                   aria-expanded="false" data-toggle="tooltip" data-original-title="Έξοδος">
+
+                                    <span class="d-lg-none">Έξοδος</span>
+                                    <i class=" font-18 mdi mdi-logout"></i>
                                 </a>
                             </div>
                         @endif
 
+                    </ul>
+                </div>
 
-                        <div>
-                            <a class="nav-link" href="/dashboard" role="button" aria-haspopup="true"
-                               aria-expanded="false">
-                                Dashboard
-                            </a>
-                        </div>
-
-                        @endhasanyrole
-
-
-
-                        <div>
-                            @if(auth()->user()->courses()->count()>1 )
-                                <a href="/courses/{{ Auth::user()->slug }}" class="nav-link">
-                                    <span>Μαθήματα</span>
-                                </a>
-                            @elseif(auth()->user()->courses()->count()==1 )
-                                <a
-                                    href="{{route('index.userCourse',[auth()->user()->courses()->first()->slug])}}"
-                                    class="nav-link">
-                                    <span>Μαθήματα</span>
-                                </a>
-                            @else
-
-                            @endif
-                        </div>
-
-
-                        <div>
-                            @hasanyrole('super-admin|admin')
-                            <div class="dropdown">
-                                <a class="nav-link  dropdown-toggle" type="button" id="dropdownMenuButton"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Guest links
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="{{route('user.showLinks')}}">All links</a>
-                                    <a class="dropdown-item" href="{{route('user.link')}}">create link</a>
-                                </div>
-                            </div>
-                            @endhasanyrole
-                        </div>
-
-
-                        <div>
-                            <a class="nav-link" href="{{route('discussion.index')}}" role="button" aria-haspopup="true"
-                               aria-expanded="false">
-                                Discussions
-                            </a>
-                        </div>
-
-
-                        <div>
-                            <div class="dropdown">
-
-                                <a class="nav-link  dropdown-toggle" type="button" id="my-acount"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Λογαριασμός μου
-                                </a>
-
-                                <div class="dropdown-menu" aria-labelledby="my-acount">
-                                    <a href="{{route('index.profile',auth()->user()->slug)}}"
-                                       class="dropdown-item side-nav-link">
-                                        <span>Προφίλ </span>
-                                    </a>
-                                    <a href="{{route('index.profile.watchlist',auth()->user()->slug)}}"
-                                       class="side-nav-link dropdown-item template d-none">
-                                        <span>Αγαπημένα</span>
-                                    </a>
-                                    <a href="{{route('index.profile.history',auth()->user()->slug)}}"
-                                       class="side-nav-link dropdown-item template d-none">
-                                        <span>Ιστορικό </span>
-                                    </a>
-                                    <a href="{{route('index.profile.announcements',auth()->user()->slug)}}"
-                                       class="side-nav-link dropdown-item">
-                                        <span>Ανακοινώσεις</span>
-                                    </a>
-                                    <a href="/message" class="side-nav-link dropdown-item">
-                                        <span>Μηνύματα</span>
-                                    </a>
-                                    <a href="#" class="side-nav-link dropdown-item">
-                                        <span>Logout</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        @endunlessrole
-                        <div>
-                            <a id="logout-btn" class="nav-link" href="#" role="button" aria-haspopup="true"
-                               aria-expanded="false" data-toggle="tooltip" data-original-title="Έξοδος">
-
-                                <span class="d-lg-none">Έξοδος</span>
-                                <i class=" font-18 mdi mdi-logout"></i>
-                            </a>
-                        </div>
-                    @endif
-
-                </ul>
             </div>
-
         </nav>
-        <!-- end Topbar -->
+
+            <!-- end Topbar -->
     </div>
 
 

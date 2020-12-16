@@ -48,6 +48,7 @@
                         @forelse($course->topics as $topic)
                             <h4 style="background:{{$topic->color}} "
                                 class="color-topic-second  font-12 box-title">{{$topic->title}}</h4>
+                            @break
                         @empty
                             <div></div>
                         @endforelse
