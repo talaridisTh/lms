@@ -27,7 +27,7 @@ class FileManagerDataTable extends DataTable
 
 				$mediaDetails = $data->mediaDetails;
 				$id = "";
-				$title = $data->title;
+				$title = $data->original_name;
 				$subtitle = "";
 				$caption = "";
 				$description = "";
@@ -41,7 +41,9 @@ class FileManagerDataTable extends DataTable
 						<span class='mx-2'>|</span>";
 				}
 
-				if ( $mediaDetails ) {
+				// dump($data->mediaDetails);
+
+				if ( !is_null($mediaDetails) ) {
 					$id = $mediaDetails->id;
 					$title = $mediaDetails->title;
 					$subtitle = $mediaDetails->subtitle;
