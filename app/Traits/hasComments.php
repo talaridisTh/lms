@@ -86,11 +86,23 @@ trait hasComments {
             "post" => $post
         ])->render(), 'comment'=>$comment]);
 
-        return view("components.index.comments.comments", [
-            "post" => $post
-        ]);
+//        return view("components.index.comments.comments", [
+//            "post" => $post
+//        ]);
     }
+    public function addFiles(Request $request) {
 
+        dd($request->all());
+        $model = $request->namespace::find($request->modelId);
+
+        foreach( $request->ids as $id ) {
+            $model->media()->attach( $id, ["usage" => 3]);
+        }
+
+//        $files = $model->media()->where("type", 1)->get();
+
+//        return view('components/admin/filesTable', ['files' => $files]);
+    }
     private function deletePhotoComment($commentId)
     {
         $comment = Comment::findOrFail($commentId);

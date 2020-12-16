@@ -286,4 +286,13 @@ class DiscussionController extends Controller {
         ]);
     }
 
+    public function myTask()
+    {
+       return view("components.index.discussions.discussions-task");
+    }
+
+    public function sendTask(Request $request)
+    {
+       dd($request->all());
+    }
 }

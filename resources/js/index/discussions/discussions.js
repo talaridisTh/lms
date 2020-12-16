@@ -613,6 +613,16 @@ const styleClosedPost = () => {
     }
 }
 
+const sendTask = ()=>{
+    $(".discussions-right").on("click",".js-send-task", async function (e){
+        e.preventDefault()
+       const res = await axios.post("/discussion/task/send",{
+           "asd":"Ass"
+       })
+
+        console.log(this);
+    });
+}
 //all thread sidebar
 $(".discussions-left").on("click", "#filter-all-threads", async function () {
     try {
@@ -737,12 +747,12 @@ $(".discussions-left").on("click", "#filter-no-replies", async function () {
 $(".discussions-left").on("click", "#filter-my-task", async function () {
 
     try {
-        const {data, status} = await axios.get("/discussion/no-replies")
+        const {data, status} = await axios.get("/discussion/my-task")
 
         if (status == 200) {
-            axiosUpdateMain($(this), data)
+            $(".discussions-right").html($(data))
+            sendTask();
         }
-
 
     } catch (e) {
         console.log(e)

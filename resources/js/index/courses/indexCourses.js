@@ -327,7 +327,8 @@ $(".template-prevent").on("click", async function (e) {
             $(".nav-tabs").children().first().find("a").addClass("active")
             $(".tab-content").find(`#${href}`).addClass("active");
 
-            $(".list-material").removeAttr("style")
+            $(".list-material ").removeAttr("style")
+            $(".bg-custom").removeAttr("style")
             $(this).closest("li").css('cssText', 'background-color: #bebebe  !important');
 
 

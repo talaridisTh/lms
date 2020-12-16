@@ -17,7 +17,7 @@ class MediaController extends Controller {
 
 	private $allowedTypes = [
 		"application/octet-stream", "application/x-zip-compressed", "application/pdf",
-		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+		"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 		"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
 		"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
 		"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
@@ -77,7 +77,7 @@ class MediaController extends Controller {
 
 		$model = $request->namespace::find( $request->modelId );
 		$existingMedia = $model->media()->pluck("id")->toArray();
-		
+
 		if ( $model->media()->count() > 0 ) {
 			$validMediaIds = array_diff( $request->ids, $existingMedia );
 			$priority = $model->media()->orderBy("priority", "desc")->first()->pivot->priority;
@@ -122,7 +122,7 @@ class MediaController extends Controller {
 		else {
 			$model->cover = null;
 		}
-		
+
 		$model->save();
 
 	}
@@ -156,7 +156,7 @@ class MediaController extends Controller {
 		]);
 
 		$details = Media::find($request->id)->mediaDetails;
-		
+
 		if ( !$details ) {
 			$details = new MediaDetails();
 			$details->media_id = $request->id;
@@ -168,7 +168,7 @@ class MediaController extends Controller {
 		$details->description = $request->description;
 		$details->save();
 	}
-	
+
 	public function addFiles(Request $request) {
 
 		$model = $request->namespace::find($request->modelId);
@@ -273,7 +273,7 @@ class MediaController extends Controller {
 
 		$model = $request->namespace::find($request->id);
 		$file = $request->file;
-		
+
 		//! afairei ta antistixa arxeia
 		$allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
 
@@ -298,11 +298,11 @@ class MediaController extends Controller {
 	public function pdfUpload(Request $request) {
 
 		$file = $request->file;
-		
+
 		if ( !$file->isValid() ) {
 			abort(422);
 		}
-		
+
 		if ( $file->getClientMimeType() !== "application/pdf" ) {
 			abort(415);
 		}

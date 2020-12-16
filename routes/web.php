@@ -251,6 +251,7 @@ Route::get("/discussion/popular-week", "Index\DiscussionController@popularWeek")
 Route::get("/discussion/popular-allTime", "Index\DiscussionController@popularAllTime")->name("discussion.popularAllTime");
 Route::get("/discussion/isClosed", "Index\DiscussionController@isClosed")->name("discussion.isClosed");
 Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->name("discussion.noReplies");
+Route::get("/discussion/my-task", "Index\DiscussionController@myTask")->name("discussion.myTask");
 
 
 Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");
@@ -262,6 +263,7 @@ Route::delete("/discussion/delete/{id}", "Index\DiscussionController@delete")->n
 Route::patch("/discussion/best/{id}", "Index\DiscussionController@best")->name("discussion.best");
 Route::patch("/discussion/closed/{id}", "Index\DiscussionController@closed")->name("discussion.closed");
 Route::post("/discussion/comment/upload", "Index\DiscussionController@commentUpload")->name("discussion.commentUpload");
+Route::post("/discussion/task/send", "Index\DiscussionController@sendTask")->name("discussion.sendTask");
 //Route::post("/pagination", "Index\DiscussionController@pagination")->name("discussion.pagination");
 
 
