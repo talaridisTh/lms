@@ -491,4 +491,4 @@ onInitEventHandler();
 
 
 //pros to paron mexri n ftiaxoun ta link
-(".js-link-material").parent().addClass("d-none");
+$(".js-link-material").parent().addClass("d-none");
