@@ -20,13 +20,19 @@ class FileManagerDataTable extends DataTable
     public function dataTable($query)
     {
 
-		$query = Media::with('mediaDetails')->get();
+		$query = Media::where("type", "!=", 5)->with('mediaDetails')->get();
 
         return datatables()::of($query)
 			->editColumn("original_name", function($data) {
 
-				$details = $data->mediaDetails;
+				$mediaDetails = $data->mediaDetails;
+				$id = "";
+				$title = $data->original_name;
+				$subtitle = "";
+				$caption = "";
+				$description = "";
 				$view = "";
+				$dNone = is_null($data->public_pass) ? "d-none" : "";
 
 				if ( $data->type == 0 ) {
 					$view = "<a href='#' class='js-view-image custom-link-primary'
@@ -35,41 +41,37 @@ class FileManagerDataTable extends DataTable
 						<span class='mx-2'>|</span>";
 				}
 
-				if ( !$details ) {
-					return "
-						<a href='#' class='h5 custom-link-primary' data-toggle='modal'
-							data-target='#edit-file-modal' data-file-id='$data->id'
-							draggable='false'>
-							$data->original_name
-						</a>
-						<p>$data->name.$data->ext</p>
-						<a href='#' class='custom-link-primary' data-toggle='modal' 
-							data-target='#edit-file-modal' data-file-id='$data->id'
-							draggable='false'>Details</a>
-						<span class='mx-2'>|</span>
-						$view
-						<a href='$data->rel_path' class='custom-link-primary'
-							draggable='false' download>Download</a>";
+				if ( !is_null($mediaDetails) ) {
+					$id = $mediaDetails->id;
+					$title = $mediaDetails->title;
+					$subtitle = $mediaDetails->subtitle;
+					$caption = $mediaDetails->caption;
+					$description = $mediaDetails->description;
 				}
 
 				return "
-					<a href='#' class='h5 custom-link-primary' data-title='$details->title'
-						data-subtitle='$details->subtitle' data-caption='$details->caption'
-						data-description='$details->description' data-toggle='modal'
-						data-file-id='$data->id' data-target='#edit-file-modal'
-						draggabla='false'>
-						$details->title
+					<a href='#' class='h5 custom-link-primary' data-toggle='modal'
+						data-target='#edit-file-modal' draggable='false'>
+						$title
 					</a>
+					<div class='d-none'>
+						<input class='js-id-input' type='text' value='$id'>
+						<input class='js-title-input' type='text' value='$title'>
+						<input class='js-subtile-input' type='text' value='$subtitle'>
+						<input class='js-caption-input' type='text' value='$caption'>
+						<input class='js-description-input' type='text' value='$description'>
+					</div>
 					<p>$data->name.$data->ext</p>
 					<a href='#' class='custom-link-primary' data-toggle='modal' 
-						data-target='#edit-file-modal' data-file-id='$data->id'
-						data-title='$details->title' data-subtitle='$details->subtitle'
-						data-caption='$details->caption' data-description='$details->description'
-						draggable='false'>Details</a>
+						data-target='#edit-file-modal' draggable='false'>Edit</a>
 					<span class='mx-2'>|</span>
 					$view
 					<a href='$data->rel_path' class='custom-link-primary'
-						draggalbe='false' download>Download</a>";
+						draggalbe='false' download>Download</a>
+					<span class='mx-2 js-copy-url-separator copy-url-separator $dNone'>|</span>
+					<a href='#' class='js-copy-url copy-url custom-link-primary'
+						data-url='".url("/pf/$data->public_pass/$data->name")."'
+						draggable='false'>Copy Url</a>";
 			})
 			->addColumn('image', function($data) {
 
@@ -89,8 +91,16 @@ class FileManagerDataTable extends DataTable
 
 				return number_format($data->size / 1000000, 2, ",", ".") ."MB";
 
-			}) 
-			->rawColumns(['original_name', 'image']);
+			})
+			->editColumn("public_pass", function($data) {
+
+				$checked = is_null($data->public_pass) ? "" : "checked";
+
+				return "<input class='js-public-pass-toggle' data-media-id='$data->id'
+					type='checkbox' id='$data->name-pass-toggle' data-switch='success' $checked autocomplete='off'>
+				<label for='$data->name-pass-toggle' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
+			})
+			->rawColumns(['original_name', 'image', 'public_pass']);
     }
 
     /**

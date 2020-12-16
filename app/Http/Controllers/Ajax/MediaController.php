@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\DataTables\Files\FilesDataTable;
 use App\Traits\MediaUploader;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MediaController extends Controller {
 
@@ -134,16 +135,6 @@ class MediaController extends Controller {
 	}
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -193,51 +184,6 @@ class MediaController extends Controller {
 		$files = $model->media()->where("type", 1)->get();
 
 		return view('components/admin/filesTable', ['files' => $files]);
-	}
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Media $media)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Media $media)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Media $media)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Media  $media
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Media $media)
-    {
-        //
 	}
 
 	public function fileManagerTable(FileManagerDataTable $dataTable) {
@@ -372,6 +318,24 @@ class MediaController extends Controller {
 		else {
 			abort(415);
 		}
+	}
+
+	public function togglePublicPass(Request $request, Media $media) {
+
+		$string = Str::random(20);
+
+		if ($request->status == 1) {
+			$media->public_pass = "$string";
+		}
+		else {
+			$media->public_pass = null;
+		}
+
+		$media->save();
+
+		return response()->json([
+			"url" => $request->status == 1 ? url("/pf/$string/$media->name") : ""
+		]);
 	}
 
 	private function storeFile($file) {

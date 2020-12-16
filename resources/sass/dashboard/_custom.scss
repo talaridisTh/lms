@@ -840,8 +840,12 @@ figure > img {
 	min-height: 300px !important;
   }
 
-  .CodeMirror-scroll {
+.CodeMirror-scroll {
 	min-height: 300px !important;
 	overflow-y: auto;
 	overflow-x: auto;
-  }
+}
+
+.copy-url-separator.d-none + .copy-url {
+	display: none;
+}

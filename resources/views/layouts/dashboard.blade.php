@@ -125,32 +125,32 @@
                             </a>
                             <ul class="side-nav-second-level" aria-expanded="false">
 								<li>
-									<a href="/dashboard/general-settings">
+									<a href="/dashboard/general-settings" draggable="false">
 										<i class="font-16 mdi mdi-progress-wrench"></i>
 										General
 									</a>
                                 </li>
                                 <li>
-									<a href="/dashboard/home-carousels">
+									<a href="/dashboard/home-carousels" draggable="false">
 										<i class="font-16 mdi mdi-view-carousel-outline"></i>
 										Carousels
 									</a>
 								</li>
 								<li class="side-nav-item">
-                                    <a href="javascript: void(0);" aria-expanded="false">
+                                    <a href="javascript: void(0);" draggable="false" aria-expanded="false">
 										<i class="font-16 mdi mdi-cookie"></i>
 										<span>Policies</span>
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <ul class="side-nav-third-level" aria-expanded="false">
                                         <li>
-                                            <a href="/dashboard/options/terms-of-use">Terms of Use</a>
+                                            <a href="/dashboard/options/terms-of-use" draggable="false">Terms of Use</a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/options/privacy-policy">Privacy Policy</a>
+                                            <a href="/dashboard/options/privacy-policy" draggable="false">Privacy Policy</a>
                                         </li>
                                         <li>
-                                            <a href="/dashboard/options/cookie-policy">Cookie Policy</a>
+                                            <a href="/dashboard/options/cookie-policy" draggable="false">Cookie Policy</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -165,7 +165,7 @@
                         	    </a>
                         	    <ul class="side-nav-second-level" aria-expanded="false">
 									<li>
-										<a href="/dashboard/options">
+										<a href="/dashboard/options" draggable="false">
 											Options
 										</a>
                         	        </li>

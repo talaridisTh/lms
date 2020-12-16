@@ -3920,6 +3920,10 @@ figure > img {
   overflow-x: auto;
 }
 
+.copy-url-separator.d-none + .copy-url {
+  display: none;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0
