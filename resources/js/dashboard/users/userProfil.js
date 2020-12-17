@@ -1,5 +1,4 @@
 import utilities from '../main';
-import Dropzone from "../../../plugins/dropzone/js/dropzone";
 import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
@@ -39,6 +38,18 @@ function sendMailPermission() {
     });
 }
 
+function resetAvatarConfirm() {
+	return Swal.fire({
+		title: "Είστε σίγουρος/η;",
+		text: "Η ενέργεια θα επαναφέρει την προεπιλεγμένη εικόνα.",
+		icon: "info",
+		showCancelButton: true,
+		confirmButtonColor: '#536de6',
+        confirmButtonText: 'Ορισμός προεπιλογής',
+        cancelButtonText: 'Άκυρο'
+	})
+}
+
 //! DATATABLES INIT
 //!============================================================
 const courses = $(".course-materials-list").DataTable({
@@ -46,13 +57,12 @@ const courses = $(".course-materials-list").DataTable({
     processing: true,
     serverSide: true,
     ajax: {
-        url: config.routes.showDatatable,
-        headers: config.headers.csrf,
+        url: "/users/view-user",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
         data: {
             userId: userId
         }
-
     },
     columns: [
         {data: 'chexbox', name: 'chexbox', orderable: false},
@@ -67,7 +77,7 @@ const courses = $(".course-materials-list").DataTable({
         },
         {data: 'action', name: 'action'},
     ],
-    language: config.datatable.language,
+    language: utilities.tableLocale,
 
     drawCallback: () => {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
@@ -90,8 +100,8 @@ const addCourse = $("#datatableAddCourse").DataTable({
     serverSide: true,
 
     ajax: {
-        url: config.routes.courseModaDatatable,
-        headers: config.headers.csrf,
+        url: "/user/add-course-modal",
+        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
         data: {
             userId: userId
@@ -104,7 +114,7 @@ const addCourse = $("#datatableAddCourse").DataTable({
 
     ],
 
-    language: config.datatable.language,
+    language: utilities.tableLocale,
 
     drawCallback: () => {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
@@ -150,15 +160,14 @@ const addCourses = () => {
         const id = this.findParent(2).dataset.courseId
         const userId = this.findParent(2).dataset.userId
         try {
-            const {status} = await axios.patch(config.routes.addcoursesDatatable, {
+            const {status} = await axios.patch("/user/add-course", {
                 "course_id": id,
                 "user_id": userId,
             })
             if (status == 200) {
-                utilities.toastAlert('success', `Προσθέσατε το ένα μάθημα  στον χρήστη `)
                 utilities.resetBulk($("#user-addCourses-bulk-action-btn"), $(".js-user-profile-checkbox"));
-                courses.ajax.reload();
-                addCourse.ajax.reload();
+                courses.ajax.reload(null, false);
+                addCourse.ajax.reload(null, false);
 
             }
 
@@ -173,18 +182,18 @@ const deleteCourse = () => {
     $('.js-button-delete').unbind();
     $(".js-button-delete").click(async function () {
         try {
-            const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${this.dataset.courseTitle} απο τον χρήστη `)
+            const {value} = await utilities.toastAlertDelete(`H ενέργεια θα αφαιρέσει το course απο τον χρήστη!`)
             if (value) {
-                let {status} = await axios.delete(config.routes.destroyDatatable, {
+                let {status} = await axios.delete("/user/delete", {
                     data: {
                         'course_id': this.dataset.courseId,
                         'user_id': userId
                     }
                 })
                 if (status == 200) {
-                    utilities.toastAlert('error', `${this.dataset.courseTitle}  Διεγραφη`)
-                    courses.ajax.reload();
-                    addCourse.ajax.reload();
+                    utilities.toastAlert('info', `Αφαιρέθηκε...`)
+                    courses.ajax.reload(null, false);
+                    addCourse.ajax.reload(null, false);
                 }
             }
 
@@ -202,19 +211,16 @@ const deleteMultipleCourse = () => {
 
         let checkedBoxes = $('.js-user-checkbox:checked');
 
-        console.log(checkedBoxes)
-
         let ids = [];
 
         for (let i = 0; i < checkedBoxes.length; i++) {
             ids.push(checkedBoxes[i].dataset.courseId);
         }
-
-        console.log(checkedBoxes)
+//!!!!! na gini route
         try {
-            const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε ${ids.length}  απο τον χρήστη `)
+            const {value} = await utilities.toastAlertDelete(`Η ενέργεια θα αφαιρέσει ${ids.length} course απο τον χρήστη`)
             if (value) {
-                let {status} = await axios.delete(config.routes.destroyMultipleCoursesDatatable, {
+                let {status} = await axios.delete( "", {
                     data: {
                         'course_id': ids,
                         'user_id': userId
@@ -222,7 +228,7 @@ const deleteMultipleCourse = () => {
 
                 })
                 if (status == 200) {
-                    utilities.toastAlert('error', `${ids.length}  Διεγραφηκαν`)
+                    utilities.toastAlert('error', `Αφαιρέθηκαν`)
                     courses.ajax.reload();
                     addCourse.ajax.reload();
 
@@ -234,10 +240,6 @@ const deleteMultipleCourse = () => {
             console.log(e)
             utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
         }
-
-        //
-        // console.log(res);
-
 
     })
 }
@@ -284,15 +286,15 @@ const updateMultipleCourse = () => {
 
 
         try {
-            let {status} = await axios.patch(config.routes.addCoursesMultipleUsersDatatable, {
+            let {status} = await axios.patch("/user/multiple/add-course", {
                 'course_id': ids,
                 'user_id': checkedBoxes[0].findParent(3).dataset.userId
 
             })
             if (status == 200) {
                 utilities.toastAlert('success', `${ids.length}  Προστέθηκαν `)
-                courses.ajax.reload();
-                addCourse.ajax.reload();
+                courses.ajax.reload(null, false);
+                addCourse.ajax.reload(null, false);
                 $("#select-all-courses-profile")[0].checked = false
             }
 
@@ -336,13 +338,6 @@ $('#material-modal-shown-btn').click(() => {
     }, 200)
 });
 
-//! DROPOZONE
-//!============================================================
-// $(".js-add-image").on("click", function () {
-//     $("#cover-image").removeClass('d-none')
-//     // $("#delete-cover-btn").removeAttr('hidden')
-// });
-
 $("#image-search").on("input", utilities.searchHandler);
 
 $(".js-gallery-page-btn").on( 'click', utilities.paginationHandler);
@@ -356,59 +351,25 @@ $("#change-cover-btn").on("click", function () {
     $("#gallery-modal").modal('show');
 })
 
+$("#reset-avatar").on("click", async function() {
 
+	try {
+		const {isConfirmed} = await resetAvatarConfirm();
 
+		if ( !isConfirmed ) return;
 
+		const {status} = await axios.patch(`/users-ajax/${userId}/reset-avatar`);
 
+		if (status > 199 && status < 300) {
+			$("#cover-image").attr("src", "/images/avatar-placeholder.png" );
+		}
 
-$("#remove-cover-btn").on("click", function() {
-
-	if ( !userId ) {
-
-		let cnt = this.parentElement;
-
-		$("#cover-image").addClass("d-none");
-		$("#change-cover-btn").text("Προσθήκη")
-		$("#custom-file").val("");
-
-		cnt.classList.remove("d-flex");
-		cnt.classList.add("d-none");
-
-		return;
 	}
-
-	axios.patch( "/media/remove-cover", {
-		namespace,
-		id: userId
-	})
-	.then( res => {
-
-		let cnt = this.parentElement;
-
-		$("#cover-image").addClass("d-none");
-		$("#change-cover-btn").text("Προσθήκη")
-
-		cnt.classList.remove("d-flex");
-		cnt.classList.add("d-none");
-
-	})
-	.catch( err => {
+	catch (err) {
 		console.log(err);
-	})
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	}
 });
-
-
-
-
-
-
-
-// $("#delete-cover-btn").on("click", function () {
-
-//     $("#cover-image").addClass('d-none')
-//     $("#delete-cover-btn").attr('hidden', true)
-// })
-
 
 let dropzone = document.getElementById("file-pond");
 

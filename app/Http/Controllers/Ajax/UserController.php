@@ -78,18 +78,18 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    // public function addCoursesMultipleUsers(Request $request)
-    // {
+    public function addCoursesMultipleUsers(Request $request)
+    {
 
-    //     $courses = Course::findOrFail($request->course_id);
-    //     foreach ($courses as $course)
-    //     {
+        $courses = Course::findOrFail($request->course_id);
+        foreach ($courses as $course)
+        {
 
-    //         $course->users()->syncWithoutDetaching($request->user_id);
-    //     }
+            $course->users()->syncWithoutDetaching($request->user_id);
+        }
 
-    //     return response()->json(['success' => 'Status change successfully.']);
-    // }
+        return response()->json(['success' => 'Status change successfully.']);
+    }
 
     public function AddMultipleUserCourse(Request $request)
     {
@@ -169,16 +169,16 @@ class UserController {
 
             $image->storeAs("public/$date/images", $name);
 
-//            $img = Image::make( "storage/$date/images/". $name)->resize(138, 138)->insert( "storage/$date/images/". $name);
-//            $img->save("storage/$date/images/watermark". $name);
-
-
         }
 
         return response()->json($request->file);
+	}
+	
+	public function resetAvatar(User $user) {
 
-
-    }
+		$user->avatar = "/images/avatar-placeholder.png";
+		$user->save();
+	}
 
     public function sentInfo(User $user)
     {

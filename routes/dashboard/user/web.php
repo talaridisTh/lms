@@ -24,5 +24,6 @@ Route::prefix("dashboard")->group(function() {
 Route::prefix("users-ajax")->group(function() {
 	Route::post('{user:id}/sent-info', [UserAjaxController::class, "sentInfo"]);
     Route::post("{user:id}/show-password", [UserAjaxController::class, "showPassword"]);
+    Route::patch("{user:id}/reset-avatar", [UserAjaxController::class, "resetAvatar"]);
 
 });

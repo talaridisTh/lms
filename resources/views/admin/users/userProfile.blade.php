@@ -39,7 +39,6 @@
             <div class="row">
                 <div class="col-md-12">
 
-
                     <ul class="nav nav-tabs nav-bordered mb-3">
                         <li class="nav-item">
                             <a href="#settings" data-toggle="tab" aria-expanded="false"
@@ -89,13 +88,10 @@
                             <div class="modal-body">
                                 @include("components.addCourses")
                             </div>
-                     @include("components.admin.users.bulkActionUserAddCourses")
+							@include("components.admin.users.bulkActionUserAddCourses")
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal -->
-
-
-                </div> <!-- end col-->
 
             </div>
             <!-- end row-->
@@ -108,8 +104,6 @@
 @section('scripts')
     <script src="/assets/js/vendor/jquery.dataTables.min.js"></script>
     <script src="/assets/js/vendor/dataTables.bootstrap4.js"></script>
-    <x-routes></x-routes>
-
 
     <script src="{{ mix('js/dashboard/users/userProfil.js') }}"></script>
 
