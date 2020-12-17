@@ -1970,7 +1970,7 @@ function linkForm( type, priority) {
 						<div class="input-group-prepend">
 							<span class="input-group-text" id="prepended-video-url">https://vimeo.com/</span>
 						</div>
-						<input type="text" class="${ type === "Video" ? "js-empty" : ""} form-control" name="video" placeholder="Vimeo id" aria-label="Username" aria-describedby="prepended-video-url">
+						<input type="text" class="${ type === "Video" ? "js-empty" : ""} form-control" name="video" placeholder="vimeo-id" aria-label="Username" aria-describedby="prepended-video-url">
 					</div>
 					<input type="text" class="${ type === "Video" ? "" : "js-empty"} form-control" name="link" ${ type === "Video" ? "hidden" : ""} placeholder="Εισάγετε link..."/>
 					<div class="invalid-feedback">

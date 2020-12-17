@@ -161,9 +161,19 @@ class MaterialController extends Controller {
 
     public function update(Request $request, Material $material)
     {
+
+		//TODO to validation apo to content pernaei panta epidi
+		//TODO einai panta gemato endexomenos logo tou editor
 		$request->validate([
 			'title' => 'required',
-			'type' => 'required',
+			'video_link' => 'required_if:type,Video',
+			'link' => 'required_if:type,Link',
+			'content' => 'required_if:type,Announcement',
+		],
+		[
+			"video_link.required_if" => "Το πεδίο είναι υποχρεωτικό όταν ο Tύπος είναι Video.",
+			"link.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Link.",
+			"content.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Ανακοίνωση."
 		]);
 
         $material->update($request->except("instructors", "status"));
