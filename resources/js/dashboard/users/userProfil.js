@@ -3,6 +3,7 @@ import * as FilePond from 'filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 import Swal from 'sweetalert2';
+import { getCanVGrowWithinCell } from '@fullcalendar/core';
 
 //! GLOBAL VAR
 //!============================================================
@@ -14,17 +15,6 @@ let timer = 0;
 
 //! GLOBAL METHOD AND EVENT LISTENER
 //!============================================================
-//* feugei
-const routeLink = () => {
-    $('.js-link').click(function () {
-        $('.js-link').unbind();
-
-        let course = this.parentElement.dataset.courseId;
-
-
-        window.location = `/dashboard/course/${course}`;
-    });
-}
 
 function sendMailPermission() {
 	return Swal.fire({
@@ -47,15 +37,40 @@ function resetAvatarConfirm() {
 		confirmButtonColor: '#536de6',
         confirmButtonText: 'Ορισμός προεπιλογής',
         cancelButtonText: 'Άκυρο'
-	})
+	});
+}
+
+function removeCoursesConfirm(number) {
+	return Swal.fire({
+		title: "Είστε σίγουρος/η;",
+		text: `Θέλετε να αφαιρέσετε ${number} Course απο τον χρήστη;`,
+		icon: "info",
+		showCancelButton: true,
+		confirmButtonColor: '#536de6',
+        confirmButtonText: 'Ορισμός προεπιλογής',
+        cancelButtonText: 'Άκυρο'
+	});
+}
+
+function removeCourses(ids) {
+
+	return axios.post(`/users-ajax/${userId}/remove-courses`, {
+		ids: ids
+	});
 }
 
 //! DATATABLES INIT
 //!============================================================
 const courses = $(".course-materials-list").DataTable({
+	order: [4, "desc"],
 	searchDelay: "1000",
     processing: true,
-    serverSide: true,
+	serverSide: true,
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 0, width: "35px"},
+		{ targets: [2, 3], width: "145px"}
+	],
     ajax: {
         url: "/users/view-user",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -65,30 +80,20 @@ const courses = $(".course-materials-list").DataTable({
         }
     },
     columns: [
-        {data: 'chexbox', name: 'chexbox', orderable: false},
-        {data: 'title', name: 'title', className: "js-link cursor-pointer"},
-        {data: 'version', name: 'version', className: "js-link cursor-pointer"},
-        {data: 'students', name: 'students', className: "js-link cursor-pointer"},
-        {
-            data: 'publish_at',
-            name: "publish_at",
-            className: "align-middle text-center cursor-default",
-            searchable: false
-        },
-        {data: 'action', name: 'action'},
+        { data: 'checkbox', name: 'chexbox', className: "align-middle text-center", orderable: false },
+        { data: 'title', name: 'title', className: "cursor-pointer" },
+        { data: 'version', name: 'version', className: "cursor-pointer align-middle text-center" },
+        { data: 'publish', className: "align-middle text-center cursor-default", orderData: 4,searchable: false },
+        { data: 'publish_at', name: "publish_at", className: "align-middle text-center cursor-default", visible: false, searchable: false },
     ],
     language: utilities.tableLocale,
-
     drawCallback: () => {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-        $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-        $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-        utilities.resetBulk($("#user-profil-bulk-action-btn"), $("#select-all-courses"));
-        utilities.resetBulk($("#user-profil-bulk-action-btn"), $(".js-user-checkbox"));
+        // $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+        // $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+        utilities.resetBulk($("#multiple-course-remove"), $("#select-all-courses"), "Αφαίρεση (0)");
 
-        deleteCourse()
-        deleteMultipleCourse()
-        routeLink()
+        $(".js-button-delete").on("click", removeCourseHandler);
         checkeBoxesEventListener()
     },
 
@@ -118,26 +123,19 @@ const addCourse = $("#datatableAddCourse").DataTable({
 
     drawCallback: () => {
         $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-        $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-        $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
         utilities.resetBulk($("#user-addCourses-bulk-action-btn"), $("#select-all-courses-profile"));
         utilities.resetBulk($("#user-addCourses-bulk-action-btn"), $(".js-user-profile-checkbox"));
         addCourses()
         checkeBoxesEventListenerSecont()
         updateMultipleCourse()
 
-
     }
-
-
 });
 
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#VersionFilterMaterial', 2, courses, "#DataTables_Table_0_length label")
-utilities.filterButton('#statusFilterMaterial', 4, courses, "#DataTables_Table_0_length label")
-
+utilities.filterButton('#VersionFilterMaterial', 2, courses, "#DataTables_Table_0_length label");
 
 //!select2
 //!============================================================
@@ -148,7 +146,6 @@ $("#VersionFilterMaterial").select2({
 $(".custom-select").select2({
     minimumResultsForSearch: -1,
 });
-$("#statusFilterMaterial").select2({});
 
 //! BULK ACRTION courses TABLE
 //!============================================================
@@ -178,93 +175,44 @@ const addCourses = () => {
     })
 }
 
-const deleteCourse = () => {
-    $('.js-button-delete').unbind();
-    $(".js-button-delete").click(async function () {
-        try {
-            const {value} = await utilities.toastAlertDelete(`H ενέργεια θα αφαιρέσει το course απο τον χρήστη!`)
-            if (value) {
-                let {status} = await axios.delete("/user/delete", {
-                    data: {
-                        'course_id': this.dataset.courseId,
-                        'user_id': userId
-                    }
-                })
-                if (status == 200) {
-                    utilities.toastAlert('info', `Αφαιρέθηκε...`)
-                    courses.ajax.reload(null, false);
-                    addCourse.ajax.reload(null, false);
-                }
-            }
+async function removeCourseHandler() {
+	
+	try {
+		this.disabled = true;
 
-        } catch (e) {
-            console.log(e)
-            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-        }
+		const {isConfirmed} = await removeCoursesConfirm(1);
 
-    })
-}
+		if ( !isConfirmed ) return;
 
-const deleteMultipleCourse = () => {
-    $('.js-chexbox-delete').unbind();
-    $('.js-chexbox-delete').click(async () => {
+		console.log(this.dataset.courseId);
+		await removeCourses([this.dataset.courseId]);
 
-        let checkedBoxes = $('.js-user-checkbox:checked');
-
-        let ids = [];
-
-        for (let i = 0; i < checkedBoxes.length; i++) {
-            ids.push(checkedBoxes[i].dataset.courseId);
-        }
-//!!!!! na gini route
-        try {
-            const {value} = await utilities.toastAlertDelete(`Η ενέργεια θα αφαιρέσει ${ids.length} course απο τον χρήστη`)
-            if (value) {
-                let {status} = await axios.delete( "", {
-                    data: {
-                        'course_id': ids,
-                        'user_id': userId
-                    }
-
-                })
-                if (status == 200) {
-                    utilities.toastAlert('error', `Αφαιρέθηκαν`)
-                    courses.ajax.reload();
-                    addCourse.ajax.reload();
-
-
-                }
-            }
-
-        } catch (e) {
-            console.log(e)
-            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
-        }
-
-    })
+		courses.ajax.reload(null, false);
+		addCourse.ajax.reload(null, false);
+	}
+	catch(err) {
+		this.disabled = false;
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+	}
 }
 
 function checkeBoxesEventListener() {
 
     let minorCheckboxes = $(".js-user-checkbox");
-    let mainCheckbox = $("#select-all-courses")[0];
-    let bulkBtn = $("#user-profil-bulk-action-btn")[0];
+	let mainCheckbox = $("#select-all-courses")[0];
+    let bulkBtn = $("#multiple-course-remove")[0];
 
-    minorCheckboxes.unbind();
-
-    minorCheckboxes.change(function () {
+    minorCheckboxes.on("change", function () {
         utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
-    })
-
+    });
 }
 
 $("#select-all-courses").change(function () {
     let minorCheckboxes = $(".js-user-checkbox");
-    let bulkBtn = $("#user-profil-bulk-action-btn")[0];
-
+    let bulkBtn = $("#multiple-course-remove")[0];
 
     utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
-
 })
 
 
@@ -282,9 +230,8 @@ const updateMultipleCourse = () => {
 
         for (let i = 0; i < checkedBoxes.length; i++) {
             ids.push(checkedBoxes[i].dataset.courseId);
-        }
-
-
+		}
+	
         try {
             let {status} = await axios.patch("/user/multiple/add-course", {
                 'course_id': ids,
@@ -304,7 +251,6 @@ const updateMultipleCourse = () => {
             utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
         }
 
-
     })
 }
 
@@ -313,9 +259,6 @@ function checkeBoxesEventListenerSecont() {
     let minorCheckboxes = $(".js-user-profile-checkbox");
     let mainCheckbox = $("#select-all-courses-profile")[0];
     let bulkBtn = $("#user-addCourses-bulk-action-btn")[0];
-
-
-    minorCheckboxes.unbind();
 
     minorCheckboxes.change(function () {
         utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
@@ -606,6 +549,22 @@ $("#show-password").on("click", function() {
 	})
 });
 
-$(".under-development").on("click", function() {
-	utilities.toastAlert("info", "Under Development");
+$("#multiple-course-remove").on("click", async function() {
+	const checkboxes = $(".js-user-checkbox:checked");
+	const ids = [];
+
+	for ( let i = 0; i < checkboxes.length; i++) {
+		ids.push(checkboxes[i].dataset.courseId);
+	}
+
+	try {
+		await removeCourses(ids);
+
+		courses.ajax.reload();
+        addCourse.ajax.reload();
+	}
+	catch(err) {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε");
+	}
 });

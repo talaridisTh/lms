@@ -109,8 +109,23 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('user/add-course', 'Ajax\UserController@addCourses');
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
     Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple');
-    Route::patch('user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers');
-    Route::delete('user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
+	Route::patch('user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers');
+	
+
+
+
+
+	// Route::delete('user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
+	
+
+
+
+
+
+
+
+
+
     Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers');
     // Route::post("/user/show-password", "Ajax\UserController@showPassword")->name("showPassword");
     Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('user.avatar.upload');

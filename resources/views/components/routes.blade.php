@@ -2,8 +2,6 @@
     // global app configuration object
     const config = {
         routes: {
-            //datatable routes
-            destroyDatatable: "{{ route("destroy.datatable") }}",
             //ajax user routes
             changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
 

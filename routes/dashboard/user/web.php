@@ -27,5 +27,6 @@ Route::prefix("users-ajax")->group(function() {
     Route::patch("{user:id}/reset-avatar", [UserAjaxController::class, "resetAvatar"]);
     Route::post("confirm-password", [UserAjaxController::class, "confirmPassword"]);
     Route::delete("{user:id}/destroy", [UserAjaxController::class, "deleteUser"]);
-
+	
+    Route::post("{user:id}/remove-courses", [UserAjaxController::class, "removeCourses"]);
 });

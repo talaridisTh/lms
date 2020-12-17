@@ -357,7 +357,7 @@ function resetBulk(bulkBtn, checkbox, text = "Επιλογές  (0)") {
 
     bulkBtn.text(text);
     bulkBtn.addClass("btn-secondary");
-    bulkBtn.removeClass("btn-warning");
+    bulkBtn.removeClass("btn-warning btn-danger");
     bulkBtn.prop("disabled", true);
     checkbox.prop("checked", false);
 }

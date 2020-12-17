@@ -23,28 +23,13 @@ class UserCoursesDataTable extends DataTable {
      */
     public function dataTable($query, Request $request)
     {
-
-        if ($request->userId){
-
-            $user = User::findOrFail($request->userId);
-            $query = $user->courses()->get();
-
-
-        }else {$user = "";}
+        $query = User::find($request->userId)->courses;
 
         return DataTables::of($query)
-            ->addColumn('students', function ($data) use ($user) {
-
-                if ($user){
-
-                    return "<td>{$user->getCountStudent($data->id)}</td>";
-                }
-
-            })
-            ->addColumn('action', function ($data) {
-                return "<td><h3><i data-course-id='{$data->id}' data-course-title='{$data->title}' class=' js-button-delete h3 pt-1 uil uil-trash-alt cursor-pointer'></i></h3></td>";
-            })
-            ->addColumn('chexbox', function ($data) {
+            // ->addColumn('action', function ($data) {
+            //     return "<td><h3><i data-course-id='{$data->id}' data-course-title='{$data->title}' class=' js-button-delete h3 pt-1 uil uil-trash-alt cursor-pointer'></i></h3></td>";
+            // })
+            ->addColumn('checkbox', function ($data) {
 
                 return "<div class='icheck-primary d-inline'>
 							<input class='js-user-checkbox' data-course-id='$data->id' id='$data->slug' type='checkbox'autocomplete='off'>
@@ -53,14 +38,16 @@ class UserCoursesDataTable extends DataTable {
             })
             ->editColumn('title', function($data) {
 
-                return "<a href='/dashboard/course/$data->slug' class='h5 custom-link-primary'>$data->title</a>
+                return "<a href='/dashboard/courses/$data->slug/edit' class='h5 custom-link-primary'>$data->title</a>
 						<p class='mb-1'>$data->slug</p>
-						<a href='/dashboard/course/$data->slug' class='custom-link-primary'>Edit</a>
+						<a href='/dashboard/courses/$data->slug/edit' class='custom-link-primary'>Edit</a>
 						<span class='mx-2'>|</span>
-						<a href='#' class='custom-link-primary'>View</a>";
+						<a href='#' class='custom-link-primary'>View</a>
+						<span class='mx-2'>|</span>
+						<a href='#' class='custom-link-primary js-button-delete' data-course-id='{$data->id}'>Remove</a>";
 
             })
-            ->editColumn('publish_at', function ($data) {
+            ->addColumn('publish', function ($data) {
 
                 if ( $data->status == 1 ) {
                     if ( time() > strtotime($data->publish_at) && !is_null($data->publish_at) ) {
@@ -87,7 +74,7 @@ class UserCoursesDataTable extends DataTable {
             }, 'data-course-title' => function ($data) {
                 return $data->title;
             }])
-            ->rawColumns(['students', 'action', "chexbox","title","publish_at"]);
+            ->rawColumns(['action', "checkbox", "title", "publish"]);
     }
 
     /**

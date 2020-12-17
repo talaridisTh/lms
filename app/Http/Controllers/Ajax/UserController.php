@@ -112,15 +112,6 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    // public function destroyMultipleCourses(Request $request)
-    // {
-    //     $user = User::find($request->user_id);
-    //     $user->courses()->detach($request->course_id);
-    //     $user->watchlistCourse()->detach($request->course_id);
-
-    //     return response()->json(['success' => 'Status change successfully.']);
-    // }
-
     public function destroyMultipleUsers(Request $request)
     {
 
@@ -207,5 +198,12 @@ class UserController {
 	public function deleteUser(User $user) {
 		
 		$user->delete();
+	}
+
+	public function removeCourses(Request $request, User $user) {
+
+		foreach($request->ids as $id) {
+			$user->courses()->detach($id);
+		}
 	}
 }

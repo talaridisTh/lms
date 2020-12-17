@@ -42,13 +42,13 @@
                     <ul class="nav nav-tabs nav-bordered mb-3">
                         <li class="nav-item">
                             <a href="#settings" data-toggle="tab" aria-expanded="false"
-                               class="nav-link active">
+                               class="nav-link">
                                 Επεξεργασία
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#courses" data-toggle="tab" aria-expanded="false"
-                               class="nav-link">
+                               class="nav-link active">
                                 Courses
                             </a>
                         </li>
@@ -61,10 +61,10 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div class="tab-pane active" id="settings">
+                        <div class="tab-pane" id="settings">
                             @include("components.admin.users.editUser")
                         </div>
-                        <div class="tab-pane"  id="courses">
+                        <div class="tab-pane active"  id="courses">
                             @include("components.findUserMaterial")
                         </div>
                         <div class="tab-pane" id="timeline">
