@@ -1,9 +1,12 @@
 @extends('layouts.dashboard')
 
 @section('css')
-
-    {{-- <link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css" /> --}}
-
+	<style>
+		.form-control.is-invalid {
+			border-top-right-radius: 0.25rem !important;
+			border-bottom-right-radius: 0.25rem !important;
+		}
+	</style>
 @endsection
 
 @section('content')
@@ -260,16 +263,36 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <div class="form-group mb-3 wrapper-video">
-                                    <label for="urlMaterial">URL video</label>
-                                    <input   form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
-                                        id="urlMaterial" placeholder="vimeo-id" value="{{ old('video_link') }}" />
-                                    <div class="input-group-prepend">
-                                        <span style="top: 29px ; left: 0" class="input-group-text px-1 " id="basic-addon1">https://vimeo.com/</span>
-                                    </div>
-
+                                <div class="form-group mb-3">
+									<label for="video-id-input">Vimeo id</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="prepented-vimeo-url">https://vimeo.com/</span>
+										</div>
+										<input  form="material-create" name="video_link" type="text"
+											class="form-control @error("video_link") is-invalid @enderror"
+                                    	    id="video-id-input" placeholder="vimeo-id..." value="{{ old('video_link') }}" />
+										@error("video_link")
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
+									</div>
                                 </div>
-                                <hr>
+								<hr>
+								<div class="form-group mb-3">
+									<label for="link-input">Link url</label>
+									<input   form="material-create" name="link" type="text"
+										class="form-control @error("link") is-invalid @enderror"
+										id="link-input" placeholder="Εισάγετε link..." value="{{ old('link') }}" />
+									@error("link")
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+								
+								<hr>
                                 <div class="form-group mb-3">
                                     <label for="typeMaterial">Τύπος</label>
                                     <select data-placeholder="Επιλέξτε Topics..." id="typeMaterial" class="form-control"
@@ -283,7 +306,8 @@
 
                                     </select>
                                 </div>
-                                <hr>
+								<hr>
+							
                                 <div class="form-group mb-0">
                                     <label for="instructorMaterial">Εισηγητές</label>
                                     <select form="material-create" name="instructors[]" multiple id="instructorMaterial"

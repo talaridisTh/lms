@@ -292,34 +292,22 @@
 								</div>
 								<hr>
 
-								<div class="form-group mb-3">
-
-									{{-- <label for="video-id-input">Vimeo id</label>
-    								<div class="input-group">
-    								    <div class="input-group-prepend">
-    								        <span class="input-group-text" id="vimeo-url-label">https://vimeo.com/</span>
-    								    </div>
-										<input form="material-create" id="video-id-input" type="text" class="form-control"
-											name="video_link" placeholder="vimeo-id" aria-label="vimeo-id"
-											aria-label="vimeo-id" aria-describedby="vimeo-url-label">
-									</div> --}}
-									
-									<label for="video-id-input">Video id</label>
+								<div class="form-group mb-3">									
+									<label for="video-id-input">Vimeo id</label>
 									<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text" id="prepented-vimeo-url">https://vimeo.com/</span>
-											</div>
-											<input   form="material-create" name="video_link" type="text"
-												class="form-control @error("video_link") is-invalid @enderror"
-												id="video-id-input" placeholder="vimeo-id..." value="{{ old('video_link', $material->video_link) }}"
-												aria-label="vimeo-id" aria-describedby="vimeo-url-label"/>
-											@error("video_link")
-												<span class="invalid-feedback" role="alert">
-													<strong>{{ $message }}</strong>
-												</span>
-											@enderror
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="prepented-vimeo-url">https://vimeo.com/</span>
+										</div>
+										<input   form="material-create" name="video_link" type="text"
+											class="form-control @error("video_link") is-invalid @enderror"
+											id="video-id-input" placeholder="vimeo-id..." value="{{ old('video_link', $material->video_link) }}"
+											aria-label="vimeo-id" aria-describedby="vimeo-url-label"/>
+										@error("video_link")
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
 									</div>
-
 								</div>
 								<hr>
 
