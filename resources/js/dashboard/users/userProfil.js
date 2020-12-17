@@ -371,6 +371,23 @@ $("#reset-avatar").on("click", async function() {
 	}
 });
 
+$("#delete-user-btn").on("click", async function() {
+
+	try {
+		const result = await utilities.passwordValidation();
+
+		if ( !result.isConfirmed ) return;
+		
+		await axios.delete(`/users-ajax/${userId}/destroy`);
+
+		window.location = `/dashboard/users`;
+	}
+	catch (err) {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	}
+})
+
 let dropzone = document.getElementById("file-pond");
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);

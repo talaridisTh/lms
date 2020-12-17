@@ -9,6 +9,7 @@ use App\DataTables\Users\UsersDataTable;
 use App\Models\Media;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -192,8 +193,19 @@ class UserController {
 
     }
 
+	public function confirmPassword(Request $request) {
 
+		$isValid = Hash::check($request->password, auth()->user()->password);
 
+		if ( $isValid ) {
+			return response('Authorized', 200);
+		}
+		
+		return response('Λάθος κωδικός...', 401);
+	}
 
-
+	public function deleteUser(User $user) {
+		
+		$user->delete();
+	}
 }

@@ -292,7 +292,7 @@
 
 				<hr>
 
-				<button class="btn btn-outline-danger btn-block btn-sm">Διαγραφή λογαριασμού</button>
+				<button id="delete-user-btn" class="btn btn-outline-danger btn-block btn-sm">Διαγραφή λογαριασμού</button>
 			</div><!-- ./card-body @e -->
 		</div><!-- ./card @e -->
 
