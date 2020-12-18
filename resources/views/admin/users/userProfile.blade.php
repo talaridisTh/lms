@@ -15,7 +15,7 @@
 
 @section('content')
     <div class="container-fruid">
-
+		@include("components.admin.users.coursesModal")
 		<div class="row">
 			<div class="col-12">
 				<div class="page-title-box">
@@ -42,13 +42,13 @@
                     <ul class="nav nav-tabs nav-bordered mb-3">
                         <li class="nav-item">
                             <a href="#settings" data-toggle="tab" aria-expanded="false"
-                               class="nav-link">
+                               class="nav-link active">
                                 Επεξεργασία
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#courses" data-toggle="tab" aria-expanded="false"
-                               class="nav-link active">
+                               class="nav-link">
                                 Courses
                             </a>
                         </li>
@@ -61,11 +61,11 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div class="tab-pane" id="settings">
-                            @include("components.admin.users.editUser")
+                        <div class="tab-pane active" id="settings">
+                            @include("components.admin.users.userSettings")
                         </div>
-                        <div class="tab-pane active"  id="courses">
-                            @include("components.findUserMaterial")
+                        <div class="tab-pane"  id="courses">
+                            @include("components.admin.users.userCoursesTable")
                         </div>
                         <div class="tab-pane" id="timeline">
                             @include("components.timelineUser")
@@ -73,26 +73,6 @@
                     </div>
 
                 </div>
-                <!-- modal -->
-                <div id="primary-header-modal" class="modal fade" tabindex="-1" role="dialog"
-                     aria-labelledby="primary-header-modalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header modal-colored-header bg-primary">
-                                <h4 class="modal-title" id="primary-header-modalLabel">Προσθήκη
-                                    Courses</h4>
-                                <button type="button" class="close" data-dismiss="modal"
-                                        aria-hidden="true">×
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                @include("components.addCourses")
-                            </div>
-							@include("components.admin.users.bulkActionUserAddCourses")
-                        </div><!-- /.modal-content -->
-                    </div><!-- /.modal-dialog -->
-                </div><!-- /.modal -->
-
             </div>
             <!-- end row-->
         </div> <!-- End Content -->

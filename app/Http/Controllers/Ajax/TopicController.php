@@ -20,48 +20,33 @@ class TopicController extends Controller
         return $dataTable->render('topics.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    public function topicSearch(Request $request) {
+		$topics = Topic::where("title", "LIKE", "%$request->search%")
+			->select("id", "title")->paginate(10);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+		$result = [];
+		$result["results"] = [];
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Topic  $topic
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Topic $topic)
-    {
-        //
-    }
+		foreach($topics as $key => $topic) {
+			if ($topics->currentPage() === 1 && $key === 0) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Topic  $topic
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Topic $topic)
-    {
-        //
-    }
+				array_push($result['results'], [
+					"id" => " ",
+					"text" => "Όλα τα Topics"
+				]);
+			}
+			array_push($result['results'], [
+				"id" => $topic->title,
+				"text" => $topic->title
+			]);
+		}
+
+		$result["pagination"] = [
+			"more" => $topics->currentPage() !== $topics->lastPage()
+		];
+
+		echo json_encode($result);
+	}
 
     /**
      * Update the specified resource in storage.

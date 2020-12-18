@@ -70,13 +70,11 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function addCourses(Request $request)
-    {
-
-        $user = User::find($request->user_id);
-        $user->courses()->attach($request->course_id);
-
-        return response()->json(['success' => 'Status change successfully.']);
+    public function addCourses(Request $request, User $user) {
+		
+		foreach ($request->ids as $id ) {
+			$user->courses()->attach($id);
+		}
     }
 
     public function addCoursesMultipleUsers(Request $request)

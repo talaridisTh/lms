@@ -3,7 +3,6 @@
 namespace App\DataTables\Users;
 
 use App\Models\Course;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
@@ -20,49 +19,41 @@ class CoursesDataTable extends DataTable {
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query, Request $request)
-    {
+    public function dataTable($query, Request $request) {
 
-
-
-        if ($request->userId)
-        {
-            $user = User::findOrFail($request->userId);
-            if ($user->getRoleNames()[0] == "trial user")
-            {
-
-                $query = User::trialCourseWhereNotExist($request->userId);
-            } else
-            {
-                $query = User::courseWhereNotExist($request->userId);
-            }
-        }else {$user = "";}
-
+        $query = Course::with("topics")->whereNotIn("id", function($query) use ($request) {
+			$query->select("course_id")->from("course_user")
+				->where("user_id", $request->userId)->get();
+		});
 
         return DataTables::of($query)
             ->addColumn('chexbox', function ($data) {
 
                 return "<div class='icheck-primary d-inline'>
-							<input class='js-user-profile-checkbox' data-course-id='$data->id' id='$data->slug' type='checkbox'autocomplete='off'>
-							<label for='$data->slug' ></label>
-						</div>";
+						<input class='js-user-profile-checkbox' data-course-id='$data->id' id='$data->slug' type='checkbox'autocomplete='off'>
+						<label for='$data->slug' ></label>
+					</div>";
             })
             ->addColumn('action', function ($data) {
 
-                return "<button class='js-add-courses m-2 btn btn-primary'>Προσθήκη</button>";
-            })
+				return "<button class='js-add-courses btn btn-primary'
+					data-course-id='$data->id'>
+						Προσθήκη
+					</button>";
+			})
+			->addColumn("topics", function($data) {
+				return $data->topics->map(function($topic) {
+					return $topic->title;
+				})->implode(", ");
+			})
+			->filterColumn("topics", function($query, $keyword) {
+				
+				$query->whereHas("topics", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
 
-            ->rawColumns([ 'chexbox',"action"])
-            ->setRowAttr(['data-course-id' => function ($data) {
-                return [$data->id];
-            }, 'data-user-id' => function ($data) use($user) {
-                if($user){
-
-                    return $user->id;
-                }
-
-            }]);
-
+			})
+            ->rawColumns([ 'chexbox',"action"]);
 
     }
 

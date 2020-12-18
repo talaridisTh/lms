@@ -106,7 +106,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('user/add-course-modal', 'Ajax\UserController@addCourseModal');
     // Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
 //! Dashboard Ajax Users CRUD
-    Route::patch('user/add-course', 'Ajax\UserController@addCourses');
+    // Route::patch('user/add-course', 'Ajax\UserController@addCourses');
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
     Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple');
 	Route::patch('user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers');
@@ -137,6 +137,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //! Select2 Ajax Search
 	Route::get("courses/json-search", "Ajax\CourseController@courseSearch");
 	Route::get("bundles/json-search", "Ajax\BundleController@bundleSearch");
+	Route::get("topics/json-search", "Ajax\TopicController@topicSearch");
 
 //! Dashboard Ajax Materials Datatables
     Route::post('materials/remaining-pdf-files', 'Ajax\MaterialController@remainingPDFFiles');
