@@ -74,6 +74,9 @@ class CourseUsersDataTable extends DataTable {
 				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
 					<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
 			})
+			->filterColumn("role", function($query, $keyword) {
+				$query->whereHas("role", $keyword);
+			})
             ->setRowAttr(['data-user-id' => function ($data) {
 
                 return $data->id;

@@ -26,10 +26,7 @@ class UsersDataTable extends DataTable
 				$subquery->select('user_id')->from('course_user')
 					->where('course_id', $request->courseId)->get();
 
-			})->select(
-				'id', 'first_name', 'last_name', 'email_verified_at',
-				'email', 'phone', 'slug'
-			)->get();
+			})->with("roles")->select("users.*");
 
         return datatables()::of($query)
             ->addColumn('action', function($data) {
@@ -61,20 +58,14 @@ class UsersDataTable extends DataTable
 			})
 			->addColumn('role', function($data) {
 
+				// dump($data->getRoleNames());
 				return $data->getRoleNames()[0] === "instructor" ? "Εισηγητής" : "Μαθητής";
 
 			})
-			->rawColumns(['action', 'last_name', 'addBtn'])
-			->setRowAttr([ 'data-user-id' => function($data) {
-
-				return  $data->id;
-
-			},
-			"data-user-slug" => function($data) {
-
-				return $data->slug;
-
-			}]);
+			->filterColumn("role", function($query, $keyword) {
+				$query->whereHas("role", $keyword);
+			})
+			->rawColumns(['action', 'last_name', 'addBtn']);
     }
 
     /**

@@ -627,7 +627,6 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-default");
 
 		removeUserBtnInit();
-		userLinkInit();
 		activeUsersCheckboxInit();
 		utilities.resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
 	},
@@ -648,11 +647,10 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
-		{data: 'last_name', name: 'last_name', className: "text-left cursor-pointer js-user-link" },
-		// {data: 'first_name', name: 'first_name', className: "text-left cursor-pointer js-user-link" },
-		{data: 'email', name: 'email', className: "text-left cursor-pointer js-user-link" },
-		{data: 'phone', name: 'phone', className: "cursor-pointer js-user-link" },
-		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
+		{data: 'last_name', name: 'last_name', className: "text-left" },
+		{data: 'email', name: 'email', className: "text-left" },
+		{data: 'phone', name: 'phone' },
+		{data: 'role', name: 'roles.name' },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
@@ -672,7 +670,6 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
 		adduserBtnInit();
-		userLinkInit();
 		newUserCheckboxInit();
 		utilities.resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
 	},
@@ -1154,7 +1151,7 @@ $("#active-user-roles").on( "change", function () {
 	let label = $("#select2-active-user-roles-container")[0];
 	utilities.filterStyle( label, this.value )
 
-	courseUsersDatatable.columns(4).search( this.value ).draw();
+	courseUsersDatatable.columns(2).search( this.value ).draw();
 
 });
 
@@ -1262,18 +1259,6 @@ function activeUsersCheckboxInit() {
 
 	minorCheckboxes.on( "change", function() {
 		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
-	});
-}
-
-function userLinkInit() {
-
-	let link = $(".js-user-link");
-
-	link.on( "click", function() {
-
-		let userSlug = this.parentElement.dataset.userSlug
-
-		window.location = `/dashboard/users/${ userSlug }`;
 	});
 }
 
@@ -1835,8 +1820,8 @@ function createRoleSelect( id = "" ) {
 
 	selectElm.innerHTML = `
 		<option value="">Όλες οι ιδιότητες</option>
-		<option value="Εισηγητής">Εισηγητές</option>
-		<option value="Μαθητής">Μαθητές</option>
+		<option value="instructor">Εισηγητές</option>
+		<option value="student">Μαθητές</option>
 	`;
 
 	return selectElm;
