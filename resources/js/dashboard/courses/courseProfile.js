@@ -588,6 +588,12 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 	order: [1, "asc"],
 	processing: true,
 	serverSide: true,
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 0, width: "40px"},
+		{ targets: [2, 3], width: "160px"},
+		{ targets: 4, width: "180px"},
+	],
 	ajax: {
 		url: "/course-datatables/course-users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -597,13 +603,12 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', width: "5%", className: "text-center align-middle", orderable: false, searchable: false},
+		{data: 'action', className: "text-center align-middle", orderable: false, searchable: false},
 		{data: 'last_name', name: 'last_name', className: "text-left align-middle cursor-default" },
-		// {data: 'first_name', name: 'first_name', className: "text-left cursor-default" },
-		{data: 'email', name: 'email', className: "text-left align-middle cursor-default" },
+		{data: 'role', name: 'roles.name', className: "cursor-default align-middle" },
 		{data: 'phone', name: 'phone', className: "align-middle cursor-default" },
-		{data: 'role', name: 'role', className: "cursor-default align-middle" },
-		{data: 'btn', width: "5%", orderable: false, searchable: false },
+		{data: 'date', className: "align-middle cursor-default", orderData: 5, searchable: false },
+		{data: 'created_at', name: "users.created_at", className: "align-middle cursor-default", visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {

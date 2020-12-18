@@ -834,10 +834,9 @@
 									</div>
 								</th>
 								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Email</th>
-								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center"></th>
+								<th class="text-center">Τηλεφωνο</th>
+								<th class="text-center">Ημ. Εγγραφής</th>
 							</tr>
 						</thead>
 						<tbody class="tables-hover-effect table-text-center"></tbody>
@@ -845,10 +844,9 @@
 							<tr>
 								<th class="text-center"></th>
 								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Email</th>
-								<th class="text-center">Τηλεφωνο</th>
 								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center"></th>
+								<th class="text-center">Τηλεφωνο</th>
+								<th class="text-center">Ημ. Εγγραφής</th>
 							</tr>
 						</tfoot>
 					</table>

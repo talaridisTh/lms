@@ -9,6 +9,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Carbon;
 
 class CourseUsersDataTable extends DataTable {
 
@@ -20,7 +21,8 @@ class CourseUsersDataTable extends DataTable {
      */
     public function dataTable($query, Request $request)
     {
-		$query = Course::find( $request->courseId )->users()->with("roles")->get();
+		$query = Course::find( $request->courseId )->users()->with("roles")
+			->select("users.*");
 
         return datatables()::of($query)
             ->addColumn('action', function ($data) {
@@ -37,33 +39,41 @@ class CourseUsersDataTable extends DataTable {
 
 				$badge = "";
 
-				if ( is_null($data->email_verified_at) ) {
-					$badge .= "<span class='badge badge-outline-warning badge-pill ml-3'>Unverified</span>";
-				}
-
 				if ( $data->status === 0 ) {
-					$badge .= "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
+					$badge = "<span class='badge badge-outline-danger badge-pill ml-3'>Inactive</span>";
 				}
 
 				return "
-					<span>$data->last_name $data->first_name</span>$badge
-					<div class='mt-1'>
-						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
-					</div>
+					<a href='/dashboard/users/$data->slug' class='h5 mb-0 custom-link-primary'>
+						$data->last_name $data->first_name
+					</a>$badge
+					<p class='mb-1'>$data->email</p>
+					<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
+					<span class='mx-2'>|</span>
+					<a href='#' class='js-remove-user custom-link-primary'
+						data-user-id='$data->id'>Remove</a>
 				";
 
 			})
-            ->addColumn('btn', function ($data) {
-
-                return "
-						<a href='/dashboard/users/$data->slug' class='custom-primary'><i class='h3 pt-1 mx-2 mdi mdi-magnify cursor-pointer' data-material-id='$data->id'></i></a>
-						<i class='js-remove-user h3 px-2 pt-1 mdi mdi-delete-circle-outline cursor-pointer custom-danger' data-user-id='$data->id'></i>
-					";
-            })
             ->addColumn('role', function ($data) {
 
                 return $data->getRoleNames()[0] === "instructor" ? "Εισηγητής" : "Μαθητής";
-            })
+			})
+			->addColumn("date", function($data) {
+
+				if ( is_null($data->email_verified_at) ) {
+					$status = ["icon" => "custom-pill-primary badge-outline-warning", "text" => "Unverified"];
+				}
+				else {
+					$status = ["icon" => "custom-pill-primary badge-outline-success", "text" => "Verified"];
+				}
+
+				$date = Carbon::parse($data->created_at)->format("d-m-Y");
+				$time = Carbon::parse($data->created_at)->format("H:i");
+
+				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+					<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
+			})
             ->setRowAttr(['data-user-id' => function ($data) {
 
                 return $data->id;
@@ -71,7 +81,7 @@ class CourseUsersDataTable extends DataTable {
 
                 return $data->slug;
             }])
-            ->rawColumns(['action', 'last_name', 'btn']);
+            ->rawColumns(['action', 'last_name', 'date']);
     }
 
     /**
