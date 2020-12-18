@@ -3433,6 +3433,14 @@ select.is-invalid {
   color: #536de6 !important;
 }
 
+.custom-link-danger {
+  color: #ff5b5b !important;
+}
+
+.custom-link-danger:hover {
+  color: #d63737 !important;
+}
+
 .custom-link-muted {
   color: #8391a2;
 }

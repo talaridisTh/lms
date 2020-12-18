@@ -1,7 +1,7 @@
 {
     "/js/app.js": "/js/app.js?id=011c9e30b27b062965db",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=3fdf6a04d6ee18c3997a",
-    "/css/dashboard/app.css": "/css/dashboard/app.css?id=0725cfff21d9dda61fda",
+    "/css/dashboard/app.css": "/css/dashboard/app.css?id=dbad5c2d092a6369adb6",
     "/css/index/app.css": "/css/index/app.css?id=38752523331b9415988b",
     "/css/index/logIn.css": "/css/index/logIn.css?id=cb5b466e86115b890e65",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=e9f0a0917af891b8e644",
@@ -27,7 +27,7 @@
     "/js/dashboard/settings/settings-index.js": "/js/dashboard/settings/settings-index.js?id=8ac1317db9cde3acf52a",
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=968bec14bfd0cfbed79f",
     "/js/dashboard/users/userCreate.js": "/js/dashboard/users/userCreate.js?id=8553e2558ccc8ee8105e",
-    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=f90f24fdf4f6e7aa3d69",
+    "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=d766ea6c54288ed09e35",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=c3bc3733194431a5b143",
     "/js/index/announcement/announcement.js": "/js/index/announcement/announcement.js?id=2086adb29b1a00afeb30",
     "/js/index/app.js": "/js/index/app.js?id=b1cfb687adb654332043",

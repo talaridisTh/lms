@@ -46,9 +46,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         utilities.resetBulk($("#course-bulk-action-btn"), $("#select-all-courses"));
         utilities.resetBulk($("#course-bulk-action-btn"), $(".js-user-checkbox"));
 
-		$(".js-unavailable").on("click", function() {
-			utilities.toastAlert("info", "Προσωρινά μη διαθέσιμο");
-		});
+		$(".js-delete-user").on("click", deleteUserHandler);
 
         toogleInput();
         checkeBoxesEventListener();
@@ -144,6 +142,10 @@ $("#delete-users-btn").on("click", function() {
     axiosMultipleDelete(ids);
 
 });
+
+function deleteUserHandler() {
+	axiosMultipleDelete([this.dataset.userId]);
+}
 
 const axiosMultipleDelete = async (ids) => {
 
