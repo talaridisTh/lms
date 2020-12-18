@@ -540,6 +540,10 @@ $("#show-password").on("click", function() {
 			})
 		}
 	}).then( res => {
+
+		const {isConfirmed} = res;
+		if (!isConfirmed) return;
+		
 		const {status} = res.value;
 
 		if (status < 200 || status > 299) {
@@ -567,6 +571,10 @@ $("#multiple-course-remove").on("click", async function() {
 	}
 
 	try {
+
+		const {isConfirmed} = await removeCoursesConfirm(ids.length);
+		if (!isConfirmed) return; 
+
 		await removeCourses(ids);
 
 		courses.ajax.reload();
