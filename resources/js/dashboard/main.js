@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 Element.prototype.findParent = function (loops) {
     let parent = this;
 
@@ -355,7 +357,7 @@ function resetBulk(bulkBtn, checkbox, text = "Επιλογές  (0)") {
 
     bulkBtn.text(text);
     bulkBtn.addClass("btn-secondary");
-    bulkBtn.removeClass("btn-warning");
+    bulkBtn.removeClass("btn-warning btn-danger");
     bulkBtn.prop("disabled", true);
     checkbox.prop("checked", false);
 }
@@ -368,6 +370,27 @@ function resetAddButton(addBtn, checkbox) {
     checkbox.prop("checked", false);
 }
 
+function passwordValidation() {
+	return Swal.fire({
+		title: "Παρακαλώ εισάγεται Κωδικό",
+		input: "password",
+		showCancelButton: true,
+		confirmButtonColor: "#536de6",
+		showLoaderOnConfirm: true,
+		preConfirm: function(password) {
+			
+			return axios.post(`/users-ajax/confirm-password`, {
+				password: password
+			})
+			.then( res => {
+				return res.status;
+			})
+			.catch( err => {
+				Swal.showValidationMessage(err.response.data);
+			})
+		}
+	})
+}
 
 //!##############################################
 //!				Media Library Functions			#
@@ -625,6 +648,7 @@ export default {
 	removeImageHandler,
 	removeImages,
 	articleConfig,
-	ALLOWEDTYPES
+	ALLOWEDTYPES,
+	passwordValidation
 }
 

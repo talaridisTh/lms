@@ -66,10 +66,6 @@
 							</div>
 				
 							<div class="dropdown-divider m-0"></div>
-							
-							<a class="dropdown-item js-detach-delete py-2" href="#">Αφαίρεση άπο Course</a>
-							
-							<div class="dropdown-divider m-0"></div>
 
 							<a id="delete-users-btn" class="dropdown-item js-multiple-delete py-2" href="#">Διαγραφή επιλεγμένων</a>
 						</div>

@@ -43,8 +43,7 @@ class MediaController extends Controller {
 
 		if ( $request->search ) {
 
-			$media = DB::table("media")
-				->leftJoin("media_details", "media.id", "=", "media_details.media_id")
+			$media = Media::leftJoin("media_details", "media.id", "=", "media_details.media_id")
 				->where("media.type", 0)
 				->where("media.name", "LIKE", "%$request->search%")
 				->orWhere("media_details.title", "LIKE", "%$request->search%")
@@ -348,7 +347,7 @@ class MediaController extends Controller {
 		$media->name = $name->slug;
 		$media->type = 1;
 		$media->rel_path = "/storage/files/$date/$name->full";
-		$media->ext = $file->getClientOriginalExtension();
+		$media->ext = strtolower($file->getClientOriginalExtension());
 		$media->file_info = $file->getClientMimeType();
 		$media->size = $file->getSize();
 		$media->save();

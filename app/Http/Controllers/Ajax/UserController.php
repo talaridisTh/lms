@@ -9,6 +9,7 @@ use App\DataTables\Users\UsersDataTable;
 use App\Models\Media;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -69,27 +70,25 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function addCourses(Request $request)
+    public function addCourses(Request $request, User $user) {
+		
+		foreach ($request->ids as $id ) {
+			$user->courses()->attach($id);
+		}
+    }
+
+    public function addCoursesMultipleUsers(Request $request)
     {
 
-        $user = User::find($request->user_id);
-        $user->courses()->attach($request->course_id);
+        $courses = Course::findOrFail($request->course_id);
+        foreach ($courses as $course)
+        {
+
+            $course->users()->syncWithoutDetaching($request->user_id);
+        }
 
         return response()->json(['success' => 'Status change successfully.']);
     }
-
-    // public function addCoursesMultipleUsers(Request $request)
-    // {
-
-    //     $courses = Course::findOrFail($request->course_id);
-    //     foreach ($courses as $course)
-    //     {
-
-    //         $course->users()->syncWithoutDetaching($request->user_id);
-    //     }
-
-    //     return response()->json(['success' => 'Status change successfully.']);
-    // }
 
     public function AddMultipleUserCourse(Request $request)
     {
@@ -110,15 +109,6 @@ class UserController {
 
         return response()->json(['success' => 'Status change successfully.']);
     }
-
-    // public function destroyMultipleCourses(Request $request)
-    // {
-    //     $user = User::find($request->user_id);
-    //     $user->courses()->detach($request->course_id);
-    //     $user->watchlistCourse()->detach($request->course_id);
-
-    //     return response()->json(['success' => 'Status change successfully.']);
-    // }
 
     public function destroyMultipleUsers(Request $request)
     {
@@ -169,16 +159,16 @@ class UserController {
 
             $image->storeAs("public/$date/images", $name);
 
-//            $img = Image::make( "storage/$date/images/". $name)->resize(138, 138)->insert( "storage/$date/images/". $name);
-//            $img->save("storage/$date/images/watermark". $name);
-
-
         }
 
         return response()->json($request->file);
+	}
+	
+	public function resetAvatar(User $user) {
 
-
-    }
+		$user->avatar = "/images/avatar-placeholder.png";
+		$user->save();
+	}
 
     public function sentInfo(User $user)
     {
@@ -192,8 +182,26 @@ class UserController {
 
     }
 
+	public function confirmPassword(Request $request) {
 
+		$isValid = Hash::check($request->password, auth()->user()->password);
 
+		if ( $isValid ) {
+			return response('Authorized', 200);
+		}
+		
+		return response('Λάθος κωδικός...', 401);
+	}
 
+	public function deleteUser(User $user) {
+		
+		$user->delete();
+	}
 
+	public function removeCourses(Request $request, User $user) {
+
+		foreach($request->ids as $id) {
+			$user->courses()->detach($id);
+		}
+	}
 }

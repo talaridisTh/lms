@@ -39,6 +39,8 @@ class FilesDataTable extends DataTable
 				$icons = Media::$icons;
 
 				foreach ($icons as $type => $icon) {
+					$label = "";
+					
 					if ( fnmatch("$type*", $data->ext ) && $data->ext != "mp3") {
 						$label = "<i class='my-1 h3 mdi $icon' title='$data->ext'></i>";
 						break;

@@ -588,6 +588,12 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 	order: [1, "asc"],
 	processing: true,
 	serverSide: true,
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 0, width: "40px"},
+		{ targets: [2, 3], width: "160px"},
+		{ targets: 4, width: "180px"},
+	],
 	ajax: {
 		url: "/course-datatables/course-users",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -597,13 +603,12 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		}
 	},
 	columns: [
-		{data: 'action', width: "5%", className: "text-center align-middle", orderable: false, searchable: false},
+		{data: 'action', className: "text-center align-middle", orderable: false, searchable: false},
 		{data: 'last_name', name: 'last_name', className: "text-left align-middle cursor-default" },
-		// {data: 'first_name', name: 'first_name', className: "text-left cursor-default" },
-		{data: 'email', name: 'email', className: "text-left align-middle cursor-default" },
+		{data: 'role', name: 'roles.name', className: "cursor-default align-middle" },
 		{data: 'phone', name: 'phone', className: "align-middle cursor-default" },
-		{data: 'role', name: 'role', className: "cursor-default align-middle" },
-		{data: 'btn', width: "5%", orderable: false, searchable: false },
+		{data: 'date', className: "align-middle cursor-default", orderData: 5, searchable: false },
+		{data: 'created_at', name: "users.created_at", className: "align-middle cursor-default", visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -622,7 +627,6 @@ const courseUsersDatatable = $("#active-users-list").DataTable({
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-default");
 
 		removeUserBtnInit();
-		userLinkInit();
 		activeUsersCheckboxInit();
 		utilities.resetBulk( $("#active-users-bulk"), $("#select-all-active-users") );
 	},
@@ -643,11 +647,10 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 	},
 	columns: [
 		{data: 'action', width: "5%", orderable: false, searchable: false},
-		{data: 'last_name', name: 'last_name', className: "text-left cursor-pointer js-user-link" },
-		// {data: 'first_name', name: 'first_name', className: "text-left cursor-pointer js-user-link" },
-		{data: 'email', name: 'email', className: "text-left cursor-pointer js-user-link" },
-		{data: 'phone', name: 'phone', className: "cursor-pointer js-user-link" },
-		{data: 'role', name: 'role', className: "cursor-pointer js-user-link" },
+		{data: 'last_name', name: 'last_name', className: "text-left" },
+		{data: 'email', name: 'email', className: "text-left" },
+		{data: 'phone', name: 'phone' },
+		{data: 'role', name: 'roles.name' },
 		{data: 'addBtn', width: "5%", orderable: false, searchable: false },
 	],
 	language: utilities.tableLocale,
@@ -667,7 +670,6 @@ const addCourseUsersDatatable = $("#add-users-list").DataTable({
 		$(".js-remove-table-classes > tfoot > tr > th").removeClass("cursor-pointer");
 
 		adduserBtnInit();
-		userLinkInit();
 		newUserCheckboxInit();
 		utilities.resetAddButton( $("#add-multiple-users-btn"), $("#add-user-checkbox") );
 	},
@@ -1149,7 +1151,7 @@ $("#active-user-roles").on( "change", function () {
 	let label = $("#select2-active-user-roles-container")[0];
 	utilities.filterStyle( label, this.value )
 
-	courseUsersDatatable.columns(4).search( this.value ).draw();
+	courseUsersDatatable.columns(2).search( this.value ).draw();
 
 });
 
@@ -1257,18 +1259,6 @@ function activeUsersCheckboxInit() {
 
 	minorCheckboxes.on( "change", function() {
 		utilities.mainCheckboxSwitcher( mainCheckbox, minorCheckboxes, bulkBtn );
-	});
-}
-
-function userLinkInit() {
-
-	let link = $(".js-user-link");
-
-	link.on( "click", function() {
-
-		let userSlug = this.parentElement.dataset.userSlug
-
-		window.location = `/dashboard/users/${ userSlug }`;
 	});
 }
 
@@ -1830,8 +1820,8 @@ function createRoleSelect( id = "" ) {
 
 	selectElm.innerHTML = `
 		<option value="">Όλες οι ιδιότητες</option>
-		<option value="Εισηγητής">Εισηγητές</option>
-		<option value="Μαθητής">Μαθητές</option>
+		<option value="instructor">Εισηγητές</option>
+		<option value="student">Μαθητές</option>
 	`;
 
 	return selectElm;
@@ -1966,7 +1956,12 @@ function linkForm( type, priority) {
 			<div class="form-row">
 				<div class="form-group col-9">
 					<label>${ type } <span class="text-danger">*</span></label>
-					<input type="text" class="${ type === "Video" ? "js-empty" : ""} form-control" name="video" ${ type === "Video" ? "" : "hidden"} placeholder="Εισάγετε video link..."/>
+					<div class="input-group ${ type === "Video" ? "" : "d-none"}">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="prepended-video-url">https://vimeo.com/</span>
+						</div>
+						<input type="text" class="${ type === "Video" ? "js-empty" : ""} form-control" name="video" placeholder="vimeo-id" aria-label="Username" aria-describedby="prepended-video-url">
+					</div>
 					<input type="text" class="${ type === "Video" ? "" : "js-empty"} form-control" name="link" ${ type === "Video" ? "hidden" : ""} placeholder="Εισάγετε link..."/>
 					<div class="invalid-feedback">
 						Παρακαλώ εισάγετε link.

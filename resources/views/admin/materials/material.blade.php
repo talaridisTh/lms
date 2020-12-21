@@ -237,7 +237,12 @@
 								</div>
 								<textarea id="content-material" name="content" class="form-control" rows="5"
 									placeholder="Εισάγετε περιεχόμενο μαθήματος...">{{ old('content', $material->content) }}</textarea>
-							</div>
+								</div>
+								@error("content")
+									<span>
+										<strong>{{ $message }}</strong>
+									</span>
+								@enderror
 							<textarea name="script" id="script-area" hidden>{{ $material->script }}</textarea>
 						</form>
 
@@ -287,15 +292,37 @@
 								</div>
 								<hr>
 
-								<div class="form-group mb-3 wrapper-video">
-									<label for="urlMaterial">URL video</label>
-									<input   form="material-create" name="video_link" type="text" class=" font-14 input-video form-control"
-										id="urlMaterial" placeholder="vimeo-id" value="{{ old('video_link', $material->video_link) }}" />
-									<div class="input-group-prepend">
-										<span style="top: 29px ; left: 0" class="input-group-text px-1 " id="basic-addon1">https://vimeo.com/</span>
+								<div class="form-group mb-3">									
+									<label for="video-id-input">Vimeo id</label>
+									<div class="input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text" id="prepented-vimeo-url">https://vimeo.com/</span>
+										</div>
+										<input   form="material-create" name="video_link" type="text"
+											class="form-control @error("video_link") is-invalid @enderror"
+											id="video-id-input" placeholder="vimeo-id..." value="{{ old('video_link', $material->video_link) }}"
+											aria-label="vimeo-id" aria-describedby="vimeo-url-label"/>
+										@error("video_link")
+											<span class="invalid-feedback" role="alert">
+												<strong>{{ $message }}</strong>
+											</span>
+										@enderror
 									</div>
-
 								</div>
+								<hr>
+
+								<div class="form-group mb-3">
+									<label for="link-input">Link url</label>
+									<input   form="material-create" name="link" type="text"
+										class="form-control @error("link") is-invalid @enderror"
+										id="link-input" placeholder="Εισάγετε link..." value="{{ old('link', $material->link) }}" />
+									@error("link")
+										<span class="invalid-feedback" role="alert">
+											<strong>{{ $message }}</strong>
+										</span>
+									@enderror
+								</div>
+								
 								<hr>
 
 								<div class="form-group mb-3">

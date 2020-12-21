@@ -3433,6 +3433,14 @@ select.is-invalid {
   color: #536de6 !important;
 }
 
+.custom-link-danger {
+  color: #ff5b5b !important;
+}
+
+.custom-link-danger:hover {
+  color: #d63737 !important;
+}
+
 .custom-link-muted {
   color: #8391a2;
 }
@@ -3654,20 +3662,6 @@ figure.image-center {
   background-repeat: no-repeat;
   background-size: calc(.75em + .375rem) calc(.75em + .375rem);
   background-position: right calc( 1.6em + .1875rem) center;
-}
-
-.wrapper-video {
-  position: relative;
-}
-
-.input-video {
-  padding-left: 142px !important;
-}
-
-.wrapper-video span {
-  position: absolute;
-  left: 2px;
-  top: 36px;
 }
 
 .head-section {

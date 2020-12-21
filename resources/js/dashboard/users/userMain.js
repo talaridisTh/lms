@@ -46,9 +46,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
         utilities.resetBulk($("#course-bulk-action-btn"), $("#select-all-courses"));
         utilities.resetBulk($("#course-bulk-action-btn"), $(".js-user-checkbox"));
 
-		$(".js-unavailable").on("click", function() {
-			utilities.toastAlert("info", "Προσωρινά μη διαθέσιμο");
-		});
+		$(".js-delete-user").on("click", deleteUserHandler);
 
         toogleInput();
         checkeBoxesEventListener();
@@ -145,6 +143,10 @@ $("#delete-users-btn").on("click", function() {
 
 });
 
+function deleteUserHandler() {
+	axiosMultipleDelete([this.dataset.userId]);
+}
+
 const axiosMultipleDelete = async (ids) => {
 
     try {
@@ -215,26 +217,27 @@ $("#select-all-courses").on("change", function () {
 
 $('#excel-btn').on('click', function () {
     let checkboxes = $(".js-user-checkbox:checked");
-    let test = [];
+    let ids = [];
 
     for (var i = 0; i < checkboxes.length; i++) {
 
-        test.push(checkboxes[i].dataset.userId)
+        ids.push(checkboxes[i].dataset.userId)
 
 	}
 	
-    var arrayOfNumbers = test.map(parseFloat)
+    var arrayOfNumbers = ids.map(parseFloat)
     axiosExportUser(arrayOfNumbers, this)
 });
 
 const axiosExportUser = async (id, that) => {
 
     try {
-        const res = await axios.get(`/export/users/${id}`)
 
-        if (res.status == 200) {
-            window.location.href = `/export/users/${id}`;
-        }
+		const result = await utilities.passwordValidation();
+
+		if ( !result.isConfirmed ) return;
+		
+        window.location.href = `/export/users/${id}`;
 
     } catch (e) {
         utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")

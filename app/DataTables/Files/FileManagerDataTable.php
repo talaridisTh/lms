@@ -20,13 +20,12 @@ class FileManagerDataTable extends DataTable
     public function dataTable($query)
     {
 
-		$query = Media::where("type", "!=", 5)->with('mediaDetails')->get();
+		$query = Media::where("type", "!=", 5)->with('mediaDetails');
 
         return datatables()::of($query)
 			->editColumn("original_name", function($data) {
 
 				$mediaDetails = $data->mediaDetails;
-				$id = "";
 				$title = $data->original_name;
 				$subtitle = "";
 				$caption = "";
@@ -42,7 +41,6 @@ class FileManagerDataTable extends DataTable
 				}
 
 				if ( !is_null($mediaDetails) ) {
-					$id = $mediaDetails->id;
 					$title = $mediaDetails->title;
 					$subtitle = $mediaDetails->subtitle;
 					$caption = $mediaDetails->caption;
@@ -55,7 +53,7 @@ class FileManagerDataTable extends DataTable
 						$title
 					</a>
 					<div class='d-none'>
-						<input class='js-id-input' type='text' value='$id'>
+						<input class='js-id-input' type='text' value='$data->id'>
 						<input class='js-title-input' type='text' value='$title'>
 						<input class='js-subtile-input' type='text' value='$subtitle'>
 						<input class='js-caption-input' type='text' value='$caption'>
@@ -86,6 +84,14 @@ class FileManagerDataTable extends DataTable
 				}
 
 				return "<img class='img-fluid' style='max-width: 120px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' />";
+			})
+			->addColumn("title", function($data) {
+
+				if ( !is_null($data->mediaDetails) ) {
+
+					return $data->mediaDetails->title;
+
+				}
 			})
 			->editColumn("size", function($data) {
 

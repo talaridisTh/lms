@@ -2,14 +2,8 @@
     // global app configuration object
     const config = {
         routes: {
-            //datatable routes
-            showDatatable: "{{ route("show.datatable") }}",
-            destroyDatatable: "{{ route("destroy.datatable") }}",
             //ajax user routes
             changeStatusDatatable: "{{ route("changeStatus.datatable") }}",
-            addcoursesDatatable: "{{ route("addcourses.datatable") }}",
-            courseModaDatatable: "{{ route("courseModal.datatable") }}",
-            addCoursesMultipleUsersDatatable: "{{ route("addCoursesMultipleUsers.datatable") }}",
 
 			// main
             addMaterialMultipleDatatable : "{{ route("addMaterialMultiple.datatable") }}",

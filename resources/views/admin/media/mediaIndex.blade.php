@@ -173,6 +173,7 @@
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
 							<th class="text-center">Ημ. Δημιουργίας</th>
+							<th class="text-center">Details Title</th>
 						</tr>
 					</thead>
 					<tbody class="tables-hover-effect"></tbody>
@@ -184,6 +185,7 @@
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
 							<th class="text-center">Ημ. Δημιουργίας</th>
+							<th class="text-center">Details Title</th>
 						</tr>
 					</tfoot>
 				</table>
