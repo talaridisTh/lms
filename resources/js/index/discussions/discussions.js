@@ -389,14 +389,14 @@ const onEditComment = () => {
                 "type": "text",
                 "name": "body",
                 'value': $(this).text(),
-                'class': 'form-control edit-input',
+                'class': 'form-control edit-input ',
             })
         })
-        $(".edit-input").on("keyup",function (e){
-            if(e.target.value.length){
+        $(".edit-input").on("keyup", function (e) {
+            if (e.target.value.length) {
 
                 $(".btn-body-edit").prop("disabled", false)
-            }else{
+            } else {
 
                 $(".btn-body-edit").prop("disabled", true)
             }
@@ -612,17 +612,89 @@ const styleClosedPost = () => {
 
     }
 }
+//style collapsed
+const styleCollapse = () => {
+    $(".dashboard-box").on("click", ".headline", function () {
+        if (!$(this).closest(".card").find(".collapse").hasClass("show")) {
+            $(".card-header").removeClass("active-thread")
+            $(this).closest(".card-header").addClass("active-thread")
 
-const sendTask = ()=>{
-    $(".discussions-right").on("click",".js-send-task", async function (e){
+        } else {
+            $(".card-header").removeClass("active-thread")
+            $(this).closest(".card-header").removeClass("active-thread")
+        }
+    })
+}
+
+const sendTask = () => {
+
+    $('#subject-task').keyup(function () {
+        if ($("#subject-task").val().length) {
+            $(".js-send-task").prop('disabled', false);
+
+        } else {
+            $(".js-send-task").prop('disabled', true);
+        }
+    });
+
+    $(".discussions-right").on("click", ".js-send-task", async function (e) {
         e.preventDefault()
-       const res = await axios.post("/discussion/task/send",{
-           "asd":"Ass"
-       })
+        $(".js-send-task").prop('disabled', true);
 
-        console.log(this);
+        const {data, status} = await axios.post("/discussion/task/send", {
+            "subject": $("#subject-task").val(),
+            "curator": $("#curator-task").val(),
+            "body": $("#editor-task").val(),
+            "attachment": $("#attachment-task").val(),
+            "course": $("#curator-task option:selected").text()
+
+        })
+        if (status == 200) {
+
+            let dataAttr = $("#curator-task option:selected").text();
+            let attacmentVal = $("#attachment-task").val()
+            $(".discussions-right").html($(data))
+            if (attacmentVal) {
+                $(".show-task").addClass("active")
+                $("#upload-task-content").removeClass("active show")
+                $("#show-task-content").addClass("active show")
+                $(".upload-task").removeClass("active")
+
+                $(`#collapse-${slugify(dataAttr)}`).addClass("show")
+
+                $("html, body").animate({
+                    scrollTop: $(`#collapse-${slugify(dataAttr)} .dashboard-box-list .dashboard-box-li:last-child`).position().top
+                }, 'slow');
+            }
+
+            styleCollapse();
+            $('#subject-task').keyup(function () {
+                if ($("#subject-task").val().length) {
+                    $(".js-send-task").prop('disabled', false);
+
+                } else {
+                    $(".js-send-task").prop('disabled', true);
+                }
+            });
+
+
+        }
+
     });
 }
+
+function slugify(string) {
+    return string
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, "-")
+        .replace(/[^\w\-]+/g, "")
+        .replace(/\-\-+/g, "-")
+        .replace(/^-+/, "")
+        .replace(/-+$/, "");
+}
+
 //all thread sidebar
 $(".discussions-left").on("click", "#filter-all-threads", async function () {
     try {
@@ -750,8 +822,11 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
         const {data, status} = await axios.get("/discussion/my-task")
 
         if (status == 200) {
+            $(".ul-thread .bg-thread").removeClass("active-thread")
+            $(this).addClass("active-thread")
             $(".discussions-right").html($(data))
             sendTask();
+            styleCollapse();
         }
 
     } catch (e) {

@@ -29,70 +29,69 @@ class UserController extends Controller {
 
     public function show(User $user)
     {
-		//
+        //
     }
 
-    public function store(UserCreateRequest $request) {
+    public function store(UserCreateRequest $request)
+    {
 
         $user = new User();
-		$user->first_name = $request->first_name;
-		$user->last_name = $request->last_name;
-		$user->avatar = "/images/avatar-placeholder.png";
-		$user->email = $request->email;
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->avatar = "/images/avatar-placeholder.png";
+        $user->email = $request->email;
         $user->slug = Str::slug($request->email);
-		$user->phone = $request->phone;
-		$user->password = Hash::make($request->password);
-		$user->password_encrypt = Crypt::encryptString($request->password);
-		$user->status = isset($request->status) ? 1 : 0;
-		$user->profil = $request->profil;
-		$user->facebook_link = $request->facebook_link;
-		$user->instagram_link = $request->instagram_link;
-		$user->youtube_link = $request->youtube_link;
-		$user->linkedin_link = $request->linkedin_link;
-		$user->save();
-		
-		$user->assignRole($request->role);
-
+        $user->phone = $request->phone;
+        $user->password = Hash::make($request->password);
+        $user->password_encrypt = Crypt::encryptString($request->password);
+        $user->status = isset($request->status) ? 1 : 0;
+        $user->profil = $request->profil;
+        $user->facebook_link = $request->facebook_link;
+        $user->instagram_link = $request->instagram_link;
+        $user->youtube_link = $request->youtube_link;
+        $user->linkedin_link = $request->linkedin_link;
+        $user->save();
+        $user->assignRole($request->role);
         // if ($request->sendMail)
         // {
         //     Mail::to(auth()->user()->email)->send(new NewUserNotification($request->email,$request->password));
         // }
-
         return redirect("/dashboard/users/$user->slug");
     }
 
-	public function edit(User $user) {
+    public function edit(User $user)
+    {
 
-		$data = [
-			"user" => $user,
-			"userRole" => $user->getRoleNames()->first(),
-			"media" => Media::where("type", 0)->paginate(18),
-			"activities" => Activity::where("causer_id", $user->id)->get(),
-		];
+        $data = [
+            "user" => $user,
+            "userRole" => $user->getRoleNames()->first(),
+            "media" => Media::where("type", 0)->paginate(18),
+            "activities" => Activity::where("causer_id", $user->id)->get(),
+        ];
 
         return view('admin.users.userProfile')->with($data);
-	}
+    }
 
-    public function update(UserUpdateRequest $request, User $user) {
+    public function update(UserUpdateRequest $request, User $user)
+    {
 
-		$user->first_name = $request->first_name;
-		$user->last_name = $request->last_name;
-		$user->email = $request->email;
-		$user->slug = Str::slug($request->email);
-		$user->phone = $request->phone;
-		$user->profil = $request->profil;
-		$user->facebook_link = $request->facebook_link;
-		$user->instagram_link = $request->instagram_link;
-		$user->youtube_link = $request->youtube_link;
-		$user->linkedin_link = $request->linkedin_link;
-
-        if ( !is_null($request->password) ) {
+        $user->first_name = $request->first_name;
+        $user->last_name = $request->last_name;
+        $user->email = $request->email;
+        $user->slug = Str::slug($request->email);
+        $user->phone = $request->phone;
+        $user->profil = $request->profil;
+        $user->facebook_link = $request->facebook_link;
+        $user->instagram_link = $request->instagram_link;
+        $user->youtube_link = $request->youtube_link;
+        $user->linkedin_link = $request->linkedin_link;
+        if (!is_null($request->password))
+        {
 
             $user->password_encrypt = Crypt::encryptString($request->password);
-            $user->password = Hash::make( $request->password );
-		}
-		
-		$user->save();
+            $user->password = Hash::make($request->password);
+        }
+        $user->save();
         $user->syncRoles($request->role);
 
         return redirect("/dashboard/users/$user->slug");

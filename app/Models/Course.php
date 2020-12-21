@@ -26,6 +26,12 @@ class Course extends Model {
 
         return $this->belongsTo(User::class, "user_id");
     }
+    public function attachments()
+    {
+
+        return $this->hasMany(Attachments::class);
+    }
+
 
     public function topics()
     {

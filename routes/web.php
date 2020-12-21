@@ -263,6 +263,7 @@ Route::patch("/discussion/best/{id}", "Index\DiscussionController@best")->name("
 Route::patch("/discussion/closed/{id}", "Index\DiscussionController@closed")->name("discussion.closed");
 Route::post("/discussion/comment/upload", "Index\DiscussionController@commentUpload")->name("discussion.commentUpload");
 Route::post("/discussion/task/send", "Index\DiscussionController@sendTask")->name("discussion.sendTask");
+Route::post("/discussion/upload-task", "Index\DiscussionController@uploadTask")->name("discussion.uploadTask");
 //Route::post("/pagination", "Index\DiscussionController@pagination")->name("discussion.pagination");
 
 

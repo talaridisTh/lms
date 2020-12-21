@@ -2,19 +2,41 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Mail\EmailTask;
+use App\Models\Attachments;
 use App\Models\Comment;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
+use App\Models\Media;
 use App\Models\Post;
+use App\Models\User;
 use App\Traits\MediaUploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class DiscussionController extends Controller {
 
     use MediaUploader;
 
+    private $allowedTypes = [
+        "application/octet-stream", "application/x-zip-compressed", "application/pdf",
+        "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+        "application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+        "application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+        "application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+        "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+        "application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+        "application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+        "application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+        "application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+        "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+        "application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html", "image/png",
+        "image/jpeg"
+    ];
     //
     private $course;
 
@@ -272,11 +294,11 @@ class DiscussionController extends Controller {
         $this->storeImage($request->filepond, 5);
     }
 
-    public function editComment($commentId ,Request $request)
+    public function editComment($commentId, Request $request)
     {
 
         Comment::find($commentId)->update([
-            "body"=>$request->editBody
+            "body" => $request->editBody
         ]);
 
         return view("components.index.discussions.discussions-post", [
@@ -288,11 +310,91 @@ class DiscussionController extends Controller {
 
     public function myTask()
     {
-       return view("components.index.discussions.discussions-task");
+
+        $course = [];
+        if (auth()->user()->getRoleNames()[0] == "student")
+        {
+//            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
+            $coursesId = auth()->user()->courses->pluck("id");
+            $courseMedia = Attachments::whereIn("course_id", $coursesId)->get();
+            $course = $courseMedia->map(function ($media) {
+                return Course::findOrFail($media->course_id);
+            });
+        } elseif (auth()->user()->getRoleNames()[0] == "instructor")
+        {
+            $coursesId = Course::where("user_id",auth()->id())->pluck("id");
+            $courseMedia = Attachments::whereIn("course_id", $coursesId)->get();
+            $course = $courseMedia->map(function ($media) {
+                return Course::findOrFail($media->course_id);
+            });
+        }
+
+        return view("components.index.discussions.discussions-task", [
+            "courses" => collect($course)->unique()
+        ]);
     }
 
     public function sendTask(Request $request)
     {
-       dd($request->all());
+        $mailInfo = new \stdClass();
+        $mailInfo->subject = $request->subject;
+        $mailInfo->body = $request->body;
+        $mailInfo->sender = auth()->user();
+        $mailInfo->receiver = User::findOrFail(3);
+        $mailInfo->course = Course::where("title", $request->course)->first();
+        $mailInfo->attachment = $request->attachment;
+        Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo));
+
+        return $this->myTask();
     }
+
+    public function uploadTask(Request $request)
+    {
+        $files = $request->file;
+        $res = [];
+        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
+        foreach ($files as $key => $file)
+        {
+            if ($file->isValid())
+            {
+                if (in_array($file->getClientMimeType(), $allowedTypes))
+                {
+                    if ($file->getSize() <= 50000000)
+                    { // 50MB
+                        $media = $this->storeFile($file);
+//                        auth()->user()->media()->attach($media->id, ["usage" => 6]);
+                        $res["file-" . $key] = [
+
+                            "url" => $media->rel_path,
+                            "name" => $media->original_name . "." . $media->ext,
+                            "id" => $media->id,
+                        ];
+                    }
+                }
+            }
+        }
+
+        return response()->json($res);
+    }
+
+    private function storeFile($file)
+    {
+
+        $date = date('Y.m');
+        $name = $this->fileName($file);
+        $attachment = new Attachments();
+        $attachment->original_name = $name->original;
+        $attachment->course_id = 0;
+        $attachment->name = $name->slug;
+        $attachment->type = 6;
+        $attachment->rel_path = "/storage/attachments/$date/$name->full";
+        $attachment->ext = $file->getClientOriginalExtension();
+        $attachment->file_info = $file->getClientMimeType();
+        $attachment->size = $file->getSize();
+        $attachment->save();
+        $file->storeAs("public/attachments/$date", $name->full);
+
+        return $attachment;
+    }
+
 }

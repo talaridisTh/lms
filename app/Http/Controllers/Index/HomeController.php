@@ -11,6 +11,8 @@ use App\Models\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Schema;
 
@@ -119,10 +121,10 @@ class HomeController extends Controller {
 
     public function test()
     {
-       dd( $columns = Schema::getConnection()->getDoctrineSchemaManager()->listTableColumns('courses'));
-//        $column = Schema::getConnection()->getDoctrineColumn('table_name'', 'column_name'); //For a single column:);
 
-
+//        $url = '/storage/files/2020.12/zoom216.pdf';
+//        $datos = file_get_contents($url);
+        $file = storage_path('app/public/files/2020.12/zoom216.pdf');
 
 //
     }

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Media extends Model
 {
+    protected $guarded = [];
 	use HasFactory;
 	use UrlCreator;
 
