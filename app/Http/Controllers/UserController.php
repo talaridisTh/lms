@@ -34,7 +34,6 @@ class UserController extends Controller {
 
     public function store(UserCreateRequest $request)
     {
-
         $user = new User();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
@@ -61,12 +60,12 @@ class UserController extends Controller {
 
     public function edit(User $user)
     {
-
         $data = [
             "user" => $user,
             "userRole" => $user->getRoleNames()->first(),
             "media" => Media::where("type", 0)->paginate(18),
-            "activities" => Activity::where("causer_id", $user->id)->get(),
+			"activities" => Activity::where("causer_id", $user->id)
+				->orderBy("created_at", "desc")->limit(5)->get(),
         ];
 
         return view('admin.users.userProfile')->with($data);

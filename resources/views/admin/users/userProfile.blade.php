@@ -38,7 +38,6 @@
         <div class="content">
             <div class="row">
                 <div class="col-md-12">
-
                     <ul class="nav nav-tabs nav-bordered mb-3">
                         <li class="nav-item">
                             <a href="#settings" data-toggle="tab" aria-expanded="false"
@@ -52,12 +51,6 @@
                                 Courses
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#timeline" data-toggle="tab" aria-expanded="false"
-                               class="nav-link">
-                                Timeline
-                            </a>
-                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -67,11 +60,7 @@
                         <div class="tab-pane"  id="courses">
                             @include("components.admin.users.userCoursesTable")
                         </div>
-                        <div class="tab-pane" id="timeline">
-                            @include("components.timelineUser")
-                        </div>
                     </div>
-
                 </div>
             </div>
             <!-- end row-->
