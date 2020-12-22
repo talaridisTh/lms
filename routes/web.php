@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -311,3 +312,6 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 //!					END Index  Routes					#
 //!######################################################
 
+Route::get("/wtf", function() {
+	return view("front/index");
+});

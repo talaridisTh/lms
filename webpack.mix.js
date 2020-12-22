@@ -46,6 +46,9 @@ mix.js('resources/js/app.js', 'public/js')
 
 	.js('resources/js/dashboard/main.js', 'public/js/dashboard/')
 
+    .js('resources/js/front/app.js', 'public/js/front')
+
+
     .js('resources/js/index/courses/indexCourses.js', 'public/js/index/courses')
     .js('resources/js/index/materials/indexMaterials.js', 'public/js/index/materials')
     .js('resources/js/index/chat/message.js', 'public/js/index/chat')
@@ -56,9 +59,10 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/index/discussions/discussions.js', 'public/js/index/discussions')
     .js('resources/js/index/index.js', 'public/js/index')
 
-
-
     .js('resources/js/index/app.js', 'public/js/index')
+
+    .sass('resources/sass/front/app.scss', 'public/css/front')
+
     .sass('resources/sass/dashboard/customArticleStyle.scss', 'public/css/dashboard')
     .sass('resources/sass/dashboard/app.scss', 'public/css/dashboard')
     .sass('resources/sass/index/app.scss', 'public/css/index/')

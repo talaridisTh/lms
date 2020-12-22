@@ -74,11 +74,10 @@ class OptionSeeder extends Seeder
         Option::create([
             "name" => "Social",
             "value" => json_encode([
-                "facebook" => "https:\/\/www.facebook.com\/idrogios\/",
-                "instagram" => "https:\/\/www.instagram.com\/idrogios.education\/",
-                "twitter" => "http:\/\/www.twitter.com\/idrogiosit",
-                "youtube" => "http:\/\/www.youtube.com\/channel\/UCpMYCcBRkBGuC8yYUmggH7w",
-                "linkedIn" => "http:\/\/www.linkedin.com\/company\/idrogiosit"
+                "facebook" => "https://www.facebook.com/Darkpony.Digital/",
+                "twitter" => "https://twitter.com/darkponyltd",
+                "linkedIn" => "https://www.linkedin.com/company/darkpony-digital/",
+                "fourSquare" => "https://foursquare.com/v/darkpony/54c3442a498e342726b93ec6"
             ]),
             "slug" => "social"
         ]);
