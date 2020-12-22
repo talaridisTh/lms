@@ -312,6 +312,6 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 //!					END Index  Routes					#
 //!######################################################
 
-Route::get("/wtf", function() {
+Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });

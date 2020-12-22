@@ -1,12 +1,13 @@
 body {
 	font-family: $font-family-default;
+	overflow-x: hidden;
 }
 
 nav {
 	padding: 0.8rem 0;
 }
 
-#wrapper {
+.wrapper {
 	position: relative;
 	min-height: 100vh;
 }
@@ -23,46 +24,50 @@ footer {
 	border-top: 1px solid $orange;
 }
 
+a {
+	color: $grey-500;
+	font-weight: $font-bold;
+	&:hover {
+		text-decoration: none;
+		color: $grey-500;
+	}
+}
+
 .nav-cnt {
 	background-color: $bg-grey;
 	border-bottom: 1px solid $orange;
 }
 
-.navbar-custom {
-	> li {
-		> a {
-			position: relative;
-			color: $grey-500;
 
-			&:hover {
-				
-				> strong {
-					&::after {
-						width: 100%;
-					}
-				}
+.nav-link-custom {
+	position: relative;
+	&:hover {
+		> span {
+			&::after {
+				width: 100%;
 			}
-			> strong {
-				&::after {
-					content: "";
-					background-color: $orange;
-					position: absolute;
-					left: 0;
-					right: 0;
-					bottom: 0;
-					margin: 0 auto;
-					width: 0;
-					height: 3px;
-					transition: width 0.3s ease;
-				}
-			}
+		}
+	}
+	> span {
+		&::after {
+			content: "";
+			background-color: $orange;
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: 0 auto;
+			width: 0;
+			height: 3px;
+			transition: width 0.3s ease;
 		}
 	}
 }
 
+
 .contact-info-cnt {
 	color: $grey-500;
-	font-weight: 600;
+	font-weight: $font-semi-bold;
 	padding: 0.9rem 1rem 0.8rem;
 	p {
 		margin: 0;
@@ -73,7 +78,7 @@ footer {
 		font-size: 0.9rem;
 	}
 	p:first-child {
-		font-weight: 700;
+		font-weight: $font-bold;
 	}
 }
 
@@ -89,23 +94,45 @@ footer {
 
 .policies {
 	border-top: 1px solid $grey-300;
-	padding: 0.4rem 0;
-	a {
-		text-decoration: none;
-		&:hover {
-			color: $grey-500;
-
-			.heart {
-				background-color: rgb(226, 0, 0);
-				-webkit-animation: pulse 1.3s linear infinite;
-				animation: pulse 1.3s linear infinite;
-			}
-		}
-	}
-	span {
+	padding: 0.6rem 0;
+	* {
+		font-weight: $font-regular;
 		color: $grey-500;
 		font-size: 0.79rem;
 	}
+}
+
+.darkpony {
+	text-decoration: none;
+	font-weight: $font-regular;
+	&:hover {
+		color: $grey-500;
+
+		.heart {
+			background-color: rgb(226, 0, 0);
+			-webkit-animation: pulse 1.3s linear infinite;
+			animation: pulse 1.3s linear infinite;
+		}
+	}
+}
+
+.dropdown-item.custom-dropdown-link {
+	color: $grey-500;
+	font-weight: $font-semi-bold;
+	text-align: center;
+	&:hover {
+		// background-color: $orange-light;
+		text-decoration: none;
+		color: $grey-500;
+	}
+}
+
+.dropdown-menu.dropdown-custom {
+	// background-color: $orange-light;
+	border: 0;
+	-webkit-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
+-moz-box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
+box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.4);
 }
 
 .heart {
@@ -173,7 +200,8 @@ footer {
     }
 }
 
-.burger {
+#burger {
+	cursor: pointer;
 	div {
 		margin: 4px;
 		width: 25px;
