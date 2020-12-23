@@ -162,71 +162,43 @@
 		<div class="row mb-2">
 			<div class="col-sm-4"></div>
 			<div class="col-sm-8">
-				<div class="text-sm-right sticky-btns mb-2">
+				<div class="text-sm-right sticky-btns mb-2" draggable="false">
 					<a href="#" class="btn btn-primary user-select-auto" data-toggle="modal"
 						draggable="false" data-target="#upload-file-modal">
-						<i class="mdi mdi-plus-circle mr-2"></i>
+						<i class="mdi mdi-plus-circle mr-2" draggable="false"></i>
 						Upload
 					</a>
-					<button type="button" class="d-none custom-tabs btn btn-light"
-						draggable="false" data-custom-tab="list-view">
-						<i class="mdi mdi-format-list-bulleted-square"></i>
-					</button>
-					<button type="button" class="d-none custom-tabs btn btn-dark"
-						draggable="false" data-custom-tab="grid-view">
-						<i class="mdi mdi-view-grid-outline"></i>
-					</button>
-
 				</div>
 			</div>
 		</div><!-- ./Button Row -->
 
-		<div class="tab-content">
-
-			<div id="list-view" class="tab-pane show active table-cnt">
-				<table id="file-manager-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
-					<thead>
-						<tr>
-							<th class="text-center"></th>
-							<th class="text-center">Όνομα</th>
-							<th class="text-center">Τύπος</th>
-							<th class="text-center">Μέγεθος</th>
-							<th class="text-center">Ημ. Δημιουργίας</th>
-							<th class="text-center">Details Title</th>
-						</tr>
-					</thead>
-					<tbody class="tables-hover-effect"></tbody>
-					<tfoot>
-						<tr>
-							<th class="text-center"></th>
-							<th class="text-center">Όνομα</th>
-							<th class="text-center">Τύπος</th>
-							<th class="text-center">Μέγεθος</th>
-							<th class="text-center">Ημ. Δημιουργίας</th>
-							<th class="text-center">Details Title</th>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
-
-			<div id="grid-view" class="tab-pane">
-
-				<div class="row">
-					<div class="mx-auto col-4">
-						<div class="form-group">
-							<input id="file-search" class="form-control text-center" type="text" placeholder="Αναζήτηση..." />
-						</div>
-					</div>
-				</div>
-
-				<div id="file-manager-content">
-					@include('components.admin.gridFileManager', ['files' => $files])
-				</div>
-			</div>
+		<div id="list-view" class="tab-pane show active table-cnt">
+			<table id="file-manager-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
+				<thead>
+					<tr>
+						<th class="text-center"></th>
+						<th class="text-center">Όνομα</th>
+						<th class="text-center">Τύπος</th>
+						<th class="text-center">Μέγεθος</th>
+						<th class="text-center">Ημ. Δημιουργίας</th>
+						<th class="text-center">Details Title</th>
+					</tr>
+				</thead>
+				<tbody class="tables-hover-effect"></tbody>
+				<tfoot>
+					<tr>
+						<th class="text-center"></th>
+						<th class="text-center">Όνομα</th>
+						<th class="text-center">Τύπος</th>
+						<th class="text-center">Μέγεθος</th>
+						<th class="text-center">Ημ. Δημιουργίας</th>
+						<th class="text-center">Details Title</th>
+					</tr>
+				</tfoot>
+			</table>
 		</div>
 
 	</div>
-
 
 	<select id="ext-table-filter" class="ml-1 select2 form-control">
 		<option value="" selected>Όλοι οι Τύποι</option>

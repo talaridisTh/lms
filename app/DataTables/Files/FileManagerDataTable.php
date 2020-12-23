@@ -32,7 +32,6 @@ class FileManagerDataTable extends DataTable
 				$detailsCaption = "";
 				$detailsDescription = "";
 				$view = "";
-				$dNone = is_null($data->public_pass) ? "d-none" : "";
 				$publicUrl = !is_null($data->public_pass)
 					? url("/pf/$data->public_pass/$data->name") : "";
 
@@ -70,7 +69,7 @@ class FileManagerDataTable extends DataTable
 					<span class='mx-2'>|</span>
 					$view
 					<a href='$data->rel_path' class='custom-link-primary'
-						draggalbe='false' download>Download</a>";
+						draggable='false' download>Download</a>";
 			})
 			->addColumn('image', function($data) {
 
@@ -84,7 +83,7 @@ class FileManagerDataTable extends DataTable
 					}
 				}
 
-				return "<img class='img-fluid' style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' />";
+				return "<img class='img-fluid' style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' draggable='false'/>";
 			})
 			->addColumn("title", function($data) {
 

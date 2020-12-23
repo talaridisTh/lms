@@ -298,9 +298,6 @@
 					</select>
 				</div>
 
-				<hr>
-
-				<button id="delete-user-btn" class="btn btn-outline-danger btn-block btn-sm">Διαγραφή λογαριασμού</button>
 			</div><!-- ./card-body @e -->
 		</div><!-- ./avatar-card @e -->
 
