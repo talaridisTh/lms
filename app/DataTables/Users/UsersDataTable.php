@@ -64,10 +64,7 @@ class UsersDataTable extends DataTable {
 
 				return "<a href='/dashboard/users/$data->slug' class='h5 mb-0 custom-link-primary'>$data->last_name $data->first_name</a>
 						<p class='mb-1'>$data->email</p>
-						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>
-						<span class='mx-2'>|</span>
-						<a href='#' class='custom-link-danger js-delete-user'
-							data-user-id='$data->id'>Delete</a>";
+						<a href='/dashboard/users/$data->slug' class='custom-link-primary'>Edit</a>";
 			})
 			->addColumn("date", function($data) {
 

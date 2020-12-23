@@ -64,10 +64,6 @@
 									<a href="#" id="excel-btn" class="dropdown-item py-2">Excel</a>
 								</div>
 							</div>
-				
-							<div class="dropdown-divider m-0"></div>
-
-							<a id="delete-users-btn" class="dropdown-item js-multiple-delete py-2" href="#">Διαγραφή επιλεγμένων</a>
 						</div>
 					</div>
 					
