@@ -36,7 +36,7 @@ $("#save-details-btn").on("click", function() {
 	.then( res => {
 		utilities.toastAlert("success", "Οι αλλαγές αποθηκεύτηκαν.")
 		fileManagerDatatable.ajax.reload( null, false);
-		$("#edit-file-modal").modal('hide');
+		// $("#edit-file-modal").modal('hide');
 	})
 	.catch( err => {
 		if ( err.response.status == 422 && err.response.data.errors.title !== "undefined" ) {
@@ -53,6 +53,20 @@ $("#edit-file-modal").on("show.bs.modal", function(event) {
 	const subtitle = td.getElementsByClassName("js-subtile-input")[0];
 	const caption = td.getElementsByClassName("js-caption-input")[0];
 	const description = td.getElementsByClassName("js-description-input")[0];
+	const publicUrl = td.getElementsByClassName("js-public-url-input")[0];
+	const copyUrlBtn = document.getElementById("copy-url-button");
+	const urlToggle = document.getElementById("url-toggle");
+
+	if (publicUrl.value === "") {
+		copyUrlBtn.disabled = true;
+		$(copyUrlBtn).tooltip('disable');
+		urlToggle.checked = false;
+	}
+	else {
+		copyUrlBtn.disabled = false;
+		$(copyUrlBtn).tooltip('enable');
+		urlToggle.checked = true;
+	}
 
 	const modal = $(this);
 
@@ -61,6 +75,7 @@ $("#edit-file-modal").on("show.bs.modal", function(event) {
 	modal.find("#caption-input").val( caption.value );
 	modal.find("#subtitle-input").val( subtitle.value );
 	modal.find("#file-description-area").val( description.value );
+	modal.find("#public-url").val( publicUrl.value );
 
 	$R("#file-description-area", 'destroy');
 	$R("#file-description-area", utilities.redactorConfig);
@@ -86,26 +101,19 @@ $(".custom-tabs").on( "click", function() {
 const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 	order: [ 4, "desc" ],
 	searchDelay: "1000",
+	autoWidth: false,
+	columnDefs: [
+		{ targets: [2, 3], width: "150px"},
+		{ targets: 4, width: "200px"}
+	],
 	columns: [
 		{ data: "image", className: "text-center cursor-default", searchable: false, orderable: false },
 		{ data: "original_name", name: "original_name", className: "cursor-default align-middle"},
-		{ data: "public_pass", name: "public_pass", className: "align-middle text-center"},
 		{ data: "ext", name: "ext", className: "align-middle text-center cursor-default"},
 		{ data: "size", name: "size", className: "align-middle text-center cursor-default" },
-		{
-			data: 'created_at', name: 'created_at',
-			className: "cursor-default text-center align-middle", searchable: false,
-			render: function(data) {
-				let date = new Date(data);
-				let day = date.toLocaleDateString().replace( /[/]/g, "-");
-				let hours = `${date.getHours()}`.padStart(2, "0");
-				let minutes = `${date.getMinutes()}`.padStart(2, "0");
-
-				let time = `${hours}:${minutes}`;
-				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
-			}
-		},
+		{ data: 'created_at', name: 'created_at', orderData: 6, className: "cursor-default text-center align-middle", searchable: false },
 		{ data: "title", name: "mediaDetails.title", className: "align-middle text-center cursor-default", visible: false },
+		{ data: "id", name: "id", searchable: false, visible: false }
 	],
 	processing: true,
 	serverSide: true,
@@ -134,44 +142,8 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 		$(".dataTables_paginate > .pagination > li > a").attr("draggable", "false");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
-		$(".js-public-pass-toggle").on("click", togglePublicUrlHandler);
-		$(".js-copy-url").on("click", copyUrlHandler);
 	}
 });
-
-function copyUrlHandler() {
-	const url = this.dataset.url;
-
-	navigator.clipboard.writeText(url)
-	.then(function() {
-		utilities.toastAlert("success", "Copied!");
-	})
-	.catch(function() {
-		utilities.toastAlert("success", "Failed...");
-	});
-}
-
-function togglePublicUrlHandler() {
-
-	axios.patch(`/media-ajax/${this.dataset.mediaId}/toggle-public-pass`, {
-		status: this.checked ? 1 : 0
-	})
-	.then( res => {
-		const row = this.findParent(2);
-		const icon = this.checked ? "success" : "info";
-		const message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-		const urlLineSpan = row.getElementsByClassName("js-copy-url-separator")[0];
-		const copyUrl = row.getElementsByClassName("js-copy-url")[0];
-
-		copyUrl.dataset.url = res.data.url;
-		urlLineSpan.classList.toggle("d-none");
-		utilities.toastAlert(icon, message);
-	})
-	.catch( err => {
-		console.log(err);
-		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε");
-	})
-}
 
 //!######################################
 //! 		Grid View Functions			#
@@ -242,7 +214,7 @@ $("#ext-table-filter").on("change", function() {
 	let label = $("#select2-ext-table-filter-container")[0];
 
 	utilities.filterStyle( label, this.value );
-	fileManagerDatatable.column(3).search( this.value ).draw();
+	fileManagerDatatable.column(2).search( this.value ).draw();
 });
 
 FilePond.registerPlugin(FilePondPluginFileValidateType);
@@ -397,3 +369,45 @@ for ( let i = 0; i < dropArea.length; i++ ) {
 
 	});
 }
+
+//! den mporei na mpei sto change epidi to idio to modal 8a to allazei
+//! an mpei sto change 8a prepei na elegxo to currentTarget
+$("#url-toggle").on("click", function (event) {
+
+	const fileId = $("#file-id").val();
+
+	axios.patch(`/media-ajax/${fileId}/toggle-public-pass`, {
+		status: this.checked ? 1 : 0
+	})
+	.then( res => {
+		$("#public-url").val(res.data.url);
+
+		if (this.checked) {
+			$("#copy-url-button").prop("disabled", false);
+			$("#copy-url-button").tooltip('enable');
+		}
+		else {
+			$("#copy-url-button").prop("disabled", true);
+			$("#copy-url-button").tooltip('disable');
+		}
+
+		fileManagerDatatable.ajax.reload(null, false);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε");
+	})
+});
+
+$("#copy-url-button").on("click", function() {
+	const urlInput = $("#public-url")[0];
+	urlInput.select();
+	urlInput.setSelectionRange(0, 99999);
+
+	document.execCommand("copy");
+	$(this).attr("data-original-title", "Copied!").tooltip('show'); 
+});
+
+$("#copy-url-button").on("mouseleave", function() {
+	$(this).attr("data-original-title", "Copy to clipboard");
+});

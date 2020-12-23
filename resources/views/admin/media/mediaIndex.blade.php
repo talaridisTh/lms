@@ -81,11 +81,10 @@
 				</div>
 				<div class="modal-body">
 					<form id="store-file-details-form">
-
 						<div class="form-row">
 							<div class="form-group col-md-6">
 								<label for="title-input">Τίτλος</label>
-								<input id="title-input" type="text" class="form-control" name="title" placeholder="Εισάγετε τίτλο..." />
+								<input id="title-input" type="text" class="is-empty form-control" name="title" placeholder="Εισάγετε τίτλο..." />
 									<span class="invalid-feedback" role="alert">
 										<strong>Το πεδίο είναι υποχρεωτικό.</strong>
 									</span>
@@ -104,11 +103,32 @@
 
 						<div class="form-group">
 							<label for="file-description-area">Περιγραφή</label>
-							<textarea id="file-description-area" class="form-control" rows="3" name="description" placeholder="Εισάγετε Περιγραφή"></textarea>
+							<textarea id="file-description-area" class="is-empty form-control" rows="3" name="description" placeholder="Εισάγετε Περιγραφή"></textarea>
+							<span class="invalid-feedback" role="alert">
+								<strong>Το πεδίο είναι υποχρεωτικό.</strong>
+							</span>
 						</div>
 
 						<input id="file-id" class="form-control" type="text" name="id" value="{{ old('id') }}" hidden />
 					</form>
+
+					<div class="form-group">
+						<div class="d-flex justify-content-between">
+							<label for="public-url">Public Url</label>
+							<input id="url-toggle" class="js-url-toggle" type="checkbox" data-switch="success">
+							<label class="mb-0" for="url-toggle" data-on-label="On" data-off-label="Off"></label>
+						</div>
+						<div class="input-group">
+							<input id="public-url" readonly style="background-color: #404954;" type="text" class="form-control">
+							<div class="input-group-append">
+								<button id="copy-url-button" class="btn btn-primary" disabled style="padding: 0 0.7rem; line-height: 0.5;"
+									data-toggle="tooltip" data-placement="bottom" title="Copy to clipboard">
+									<i class="font-24 mdi mdi-clipboard-text-multiple-outline"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+
 				</div>
 				<div class="modal-footer">
 					<button id="save-details-btn" class="btn btn-primary">
@@ -169,7 +189,6 @@
 						<tr>
 							<th class="text-center"></th>
 							<th class="text-center">Όνομα</th>
-							<th class="text-center">Public Url</th>
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
 							<th class="text-center">Ημ. Δημιουργίας</th>
@@ -181,7 +200,6 @@
 						<tr>
 							<th class="text-center"></th>
 							<th class="text-center">Όνομα</th>
-							<th class="text-center">Public Url</th>
 							<th class="text-center">Τύπος</th>
 							<th class="text-center">Μέγεθος</th>
 							<th class="text-center">Ημ. Δημιουργίας</th>

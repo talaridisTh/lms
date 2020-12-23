@@ -15,6 +15,8 @@ class MediaController extends Controller
 		
 		$data = [
 			"media" => $media,
+			"title" => $media->mediaDetails->title ?? $media->original_name,
+			"caption" => $media->mediaDetails->caption ?? "",
 			"icons" => Media::$icons
 		];
 

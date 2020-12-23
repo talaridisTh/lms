@@ -8,6 +8,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Carbon;
 
 class FileManagerDataTable extends DataTable
 {
@@ -26,12 +27,14 @@ class FileManagerDataTable extends DataTable
 			->editColumn("original_name", function($data) {
 
 				$mediaDetails = $data->mediaDetails;
-				$title = $data->original_name;
-				$subtitle = "";
-				$caption = "";
-				$description = "";
+				$detailsTitle = null;
+				$detailsSubtitle = "";
+				$detailsCaption = "";
+				$detailsDescription = "";
 				$view = "";
 				$dNone = is_null($data->public_pass) ? "d-none" : "";
+				$publicUrl = !is_null($data->public_pass)
+					? url("/pf/$data->public_pass/$data->name") : "";
 
 				if ( $data->type == 0 ) {
 					$view = "<a href='#' class='js-view-image custom-link-primary'
@@ -41,35 +44,33 @@ class FileManagerDataTable extends DataTable
 				}
 
 				if ( !is_null($mediaDetails) ) {
-					$title = $mediaDetails->title;
-					$subtitle = $mediaDetails->subtitle;
-					$caption = $mediaDetails->caption;
-					$description = $mediaDetails->description;
+					$detailsTitle = $mediaDetails->title;
+					$detailsSubtitle = $mediaDetails->subtitle;
+					$detailsCaption = $mediaDetails->caption;
+					$detailsDescription = $mediaDetails->description;
 				}
+
+				$title = $detailsTitle ?? $data->original_name;
 
 				return "
 					<a href='#' class='h5 custom-link-primary' data-toggle='modal'
-						data-target='#edit-file-modal' draggable='false'>
-						$title
+						data-target='#edit-file-modal' draggable='false'>$title
 					</a>
 					<div class='d-none'>
 						<input class='js-id-input' type='text' value='$data->id'>
-						<input class='js-title-input' type='text' value='$title'>
-						<input class='js-subtile-input' type='text' value='$subtitle'>
-						<input class='js-caption-input' type='text' value='$caption'>
-						<input class='js-description-input' type='text' value='$description'>
+						<input class='js-title-input' type='text' value='$detailsTitle'>
+						<input class='js-subtile-input' type='text' value='$detailsSubtitle'>
+						<input class='js-caption-input' type='text' value='$detailsCaption'>
+						<input class='js-description-input' type='text' value='$detailsDescription'>
+						<input class='js-public-url-input' type='text' value='$publicUrl'>
 					</div>
-					<p>$data->name.$data->ext</p>
+					<p class='mb-1'>$data->name.$data->ext</p>
 					<a href='#' class='custom-link-primary' data-toggle='modal' 
 						data-target='#edit-file-modal' draggable='false'>Edit</a>
 					<span class='mx-2'>|</span>
 					$view
 					<a href='$data->rel_path' class='custom-link-primary'
-						draggalbe='false' download>Download</a>
-					<span class='mx-2 js-copy-url-separator copy-url-separator $dNone'>|</span>
-					<a href='#' class='js-copy-url copy-url custom-link-primary'
-						data-url='".url("/pf/$data->public_pass/$data->name")."'
-						draggable='false'>Copy Url</a>";
+						draggalbe='false' download>Download</a>";
 			})
 			->addColumn('image', function($data) {
 
@@ -78,12 +79,12 @@ class FileManagerDataTable extends DataTable
 				if ( $data->type !== 0 ) {
 					foreach( $icons as $type => $icon ) {
 						if ( fnmatch("$type*", $data->ext ) ) {
-							return "<i class='h3 mdi {{ $icon }}' style='font-size: 105px;' title='{{ $data->ext }}'></i>";
+							return "<i class='h3 mdi {{ $icon }}' style='font-size: 90px;' title='{{ $data->ext }}'></i>";
 						}
 					}
 				}
 
-				return "<img class='img-fluid' style='max-width: 120px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' />";
+				return "<img class='img-fluid' style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' />";
 			})
 			->addColumn("title", function($data) {
 
@@ -98,15 +99,22 @@ class FileManagerDataTable extends DataTable
 				return number_format($data->size / 1000000, 2, ",", ".") ."MB";
 
 			})
-			->editColumn("public_pass", function($data) {
+			->editColumn('created_at', function ($data) {
 
-				$checked = is_null($data->public_pass) ? "" : "checked";
+				if ( is_null($data->public_pass) ) {
+					$status = ["icon" => "badge-outline-danger", "text" => "Inactive"];
+				}
+				else {
+					$status = ["icon" => "badge-outline-success", "text" => "Active"];
+				}
 
-				return "<input class='js-public-pass-toggle' data-media-id='$data->id'
-					type='checkbox' id='$data->name-pass-toggle' data-switch='success' $checked autocomplete='off'>
-				<label for='$data->name-pass-toggle' class='mb-0' data-on-label='On' data-off-label='Off'></label>";
+				$date = Carbon::parse($data->created_at)->format("d-m-Y");
+				$time = Carbon::parse($data->created_at)->format("H:i");
+
+				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+					<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
 			})
-			->rawColumns(['original_name', 'image', 'public_pass']);
+			->rawColumns(['original_name', 'image', 'created_at']);
     }
 
     /**
