@@ -411,7 +411,7 @@ $R("#profil", {
     buttonsAddBefore: {before: 'image', buttons: ['mediaLibrary']},
     style: false,
     plugins: ["mediaLibrary", 'alignment'],
-    minHeight: '150px',
+    minHeight: '170px',
     imageResizable: true,
     imagePosition: {
         "left": "image-left",

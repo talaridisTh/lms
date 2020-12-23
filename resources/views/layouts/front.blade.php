@@ -12,15 +12,53 @@
 	<title>{{ $options->title }}</title>
 </head>
 <body>
-	{{-- <div class="side-menu">
-		<a href="#">Είσοδος</a>
-		<a href="#">Νέα</a>
-		<a href="#">Media Gallery</a>
-		<a href="#">Επικονωνία</a>
-	</div> --}}
-	<div id="wrapper">
+	
+	<div class="sidebar">
+
+		<div class="sidebar-title">
+			<a href="javascript:void(0);" class="sidebar-toggle float-right">
+				<i class="mdi mdi-close"></i>
+			</a>
+			<h5 class="m-0">Menu</h5>
+		</div>
+
+		<div class="rightbar-content h-100 d-flex flex-column justify-content-between">
+			<div>
+				<ul class="sidebar-ls mt-3 px-5 text-center">
+					<li class="nav-item">
+						<a class="nav-link-custom nav-link" href="#"><span>Νέα</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link-custom nav-link" href="#"><span>Media Gallery</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link-custom nav-link" href="#"><span>Επικοινωνία</span></a>
+					</li>						
+				</ul>
+			</div>
+			<div class="sidebar-social d-flex justify-content-around">
+				@foreach($options->social as $social => $link)
+					<a href="{{ $link }}">
+						<img src="{{ asset("images/$social.png" )}}" alt="{{ $social}}" height="30">
+					</a>
+				@endforeach
+			</div>
+			
+		</div> <!-- end padding-->
+
+		<div class="sidebar-footer text-center">
+			<p class="mb-0">{{ $options->copyright }}</p>
+			<p class="mb-0"><a href="#">Πολιτική Απορρήτου</a></p>
+			<p class="mb-0"><a class="darkpony" href="#"><span>With </span><span class="heart mx-1"></span><span> by Darkpony</span></a></p>
+		</div>
+
+	</div>
+
+	<div class="sidebar-overlay"></div>
+
+	<div class="wrapper">
 		<div class="container-fluid nav-cnt">
-			<nav class="container">
+			<nav class="container-xl">
 				{{-- <div class="row"> --}}
 				<div class="custom-row">
 					{{-- <div class="col-lg-3 col-md-3 col-sm-6 px-0"> --}}
@@ -32,24 +70,34 @@
 					</div>
 					{{-- <div class="col-lg-9 col-md-9 col-md-9 px-0 d-none d-md-block"> --}}
 					<div class="px-0 d-none d-md-block">
-						<ul class="nav navbar-custom justify-content-end mt-3">
+						<ul class="nav justify-content-end mt-3">
 							<li class="nav-item">
-								<a class="nav-link-custom nav-link" href="#"><strong>Νέα</strong></a>
+								<a class="nav-link-custom nav-link" href="#"><span>Νέα</span></a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link-custom nav-link" href="#"><strong>Media Gallery</strong></a>
+								<a class="nav-link-custom nav-link" href="#"><span>Media Gallery</span></a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link-custom nav-link" href="#"><strong>Επικοινωνία</strong></a>
+								<a class="nav-link-custom nav-link" href="#"><span>Επικοινωνία</span></a>
 							</li>
-							<li class="nav-item">
-								<a class="nav-link-custom nav-link" href="#"><strong>Είσοδος</strong></a>
+							<li class="nav-item dropdown">
+								<a id="account-btn" type="button" class="nav-link-custom nav-link dropdown-toggle" data-toggle="dropdown" href="#"><span>Είσοδος</span></a>
+								
+								
+								
+								<div class="dropdown-menu dropdown-menu-right dropdown-custom py-0" aria-labelledby="account-btn">
+									<a class="dropdown-item nav-link-custom custom-dropdown-link py-3" href="#"><span>Σύνδεση</span></a>
+									<a class="dropdown-item nav-link-custom custom-dropdown-link py-3" href="#"><span>Εγγραφή</span></a>
+								</div>
 							</li>						
 						</ul>
 					</div>
 					{{-- <div class="col-lg-9 col-md-9 col-sm-6 col-sm-auto d-block d-md-none d-flex align-items-center justify-content-end px-0"> --}}
 					<div class="d-block d-md-none d-flex align-items-center justify-content-end px-0">
-						<div class="burger">
+						
+						<a class="mr-3 mb-0 h3" href="#"><i class="mdi mdi-account-circle-outline"></i></a>
+						
+						<div id="burger">
 							<div id="one"></div>
 							<div id="two"></div>
 							<div id="three"></div>
@@ -58,14 +106,15 @@
 				</div>
 			</nav>
 		</div>
-		<main class="container">
+
+		<main class="container-xl position-relative">
 			{{-- @dump($options->social) --}}
 		</main>
 
 		<footer>
-			<div class="container">
+			<div class="container-xl">
 				<div class="row no-gutters">
-					<div class="col-lg-8 col-md-12 col-sm-12 d-flex align-items-center justify-content-center justify-content-lg-start">
+					<div class="col-lg-8 col-md-12 col-sm-12 d-flex align-items-center justify-content-start">
 						<img class="navbar-brand" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
 						<div class="contact-info-cnt">
 							<p id="city">{{ $options->contactInfo->city }}</p>
@@ -75,10 +124,10 @@
 						</div>
 					</div>
 
-					<div class="col-lg-4 col-md-12 col-sm-12 pb-2 pb-lg-0">
-						<ul class="nav justify-content-between justify-content-lg-end h-100 align-items-center">
+					<div class="col-lg-4 col-md-12 col-sm-12 d-none d-lg-block">
+						<ul class="nav justify-content-lg-end h-100 align-items-center">
 							@foreach($options->social as $social => $link)
-								<li class="nav-item ml-3">
+								<li class="nav-item @if (!$loop->first) ml-3 @endif ">
 									<a href="{{ $link }}">
 										<img src="{{ asset("images/$social.png" )}}" alt="{{ $social}}">
 									</a>
@@ -88,19 +137,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="policies">
-				<div class="container">
+			<div class="policies d-none d-md-block">
+				<div class="container-xl">
 					<div class="row">
 						<div class="col-md-4 text-center text-md-left">
-	
 							<span>{{ $options->copyright }}</span>
 						</div>
 						<div class="col-md-4 text-center">
 							<a href="#"><span>Πολιτική Απορρήτου</span></a>
-	
 						</div>
 						<div class="col-md-4 text-center text-md-right">
-							<a href="#"><span>With </span><span class="heart mx-1"></span><span> by Darkpony</span></a>
+							<a class="darkpony" href="#"><span>With </span><span class="heart mx-1"></span><span> by Darkpony</span></a>
 
 						</div>
 					</div>

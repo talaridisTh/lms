@@ -17,6 +17,17 @@ use Illuminate\Support\Facades\DB;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get("/check-activity-log", function() {
+	return DB::table("activity_log")->get();
+});
+
+Route::get("/update-activity-log-models", function() {
+
+	// DB::table("activity_log")
+	// 	->update(["causer_type" => "App\User"]);
+	DB::table("activity_log")
+		->update(["causer_type" => "App\Models\User"]);
+});
 
 Auth::routes();
 //!########################################################
@@ -313,6 +324,6 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 //!					END Index  Routes					#
 //!######################################################
 
-Route::get("/wtf", function() {
+Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });

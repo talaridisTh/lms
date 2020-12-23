@@ -221,36 +221,57 @@
     </div><!-- ./col @e -->
 
     <div class="col-xl-3 col-lg-4 col-md-12">
-		<div class="sticky pb-3">
-            <button form="edit-user-form" class="btn btn-info btn-block" type="submit">
-                Update
-            </button>
-		</div>
+		<div class="sticky pb-3"><!-- sticky @s -->
+			<div class="form-row"><!-- form-row @s -->
+				<div class="col-6">
+					<button form="edit-user-form" class="btn btn-info btn-block" type="submit">
+						Update
+					</button>
+				</div>
+				<div class="col-6"><!-- col-6 @s -->
+					<div class="btn-group w-100"><!-- btn-group @s -->
+						<button type="button" class="btn btn-warning btn-block dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Επιλογές
+						</button>
 
-		<div class="card"><!-- card @s -->
-			<h4 class="card-header">Avatar</h4>
+						<div class="dropdown-menu py-0">
+							<div class="btn-group dropleft dropleft-hover w-100">
+								<button type="button" id="status-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Αλλαγή Avatar
+								</button>
+								<div class="dropdown-menu py-0" aria-labelledby="status-dropdown">
+									<a id="change-cover-btn"
+										class="dropdown-item cursor-pointer py-2">Επιλογή</a>
+									<div class="dropdown-divider my-0"></div>
+									<a id="reset-avatar"
+										class="dropdown-item cursor-pointer py-2">Ορισμός προεπιλογής</a>
+								</div>
+							</div>
+
+							<div class="btn-group dropleft dropleft-hover w-100">
+								<button type="button" id="status-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+									Κωδικός
+								</button>
+								<div class="dropdown-menu py-0" aria-labelledby="status-dropdown">
+									<a class="js-send-message dropdown-item cursor-pointer py-2">Αποστολη</a>
+									<div class="dropdown-divider my-0"></div>
+									<a id="show-password" class="dropdown-item cursor-pointer py-2">Εμφάνιση</a>
+								</div>
+							</div>
+						</div>
+
+					</div><!-- ./btn-group @e -->
+				</div><!-- ./col-6 @e -->
+			</div><!-- ./form-row @e -->
+		</div><!-- ./sticky @e -->
+
+		<div class="card"><!-- avatar-card @s -->
 			<div class="card-body"><!-- card-body @s -->
 				<div class="row justify-content-center mb-3">
 					<img id="cover-image" src="{{ $user->thumbnailUrl("avatar") }}" style="height: 120px;" alt="Cover Image" class="rounded-circle img-thumbnail">
 				</div>
-				<div class="form-row">
-					<div class="col-md-6 d-flex justify-content-center">
-						<button id="change-cover-btn" class="btn btn-primary btn-block btn-sm text-nowrap">
-							Αλλαγή
-						</button>
-					</div>
 
-					<div class="col-md-6 justify-content-center">
-						<button id="reset-avatar" class="btn btn-danger btn-block btn-sm text-nowrap">
-							Προεπιλογή
-						</button>
-					</div>
-				</div>
-			</div><!-- ./card-body @e -->
-		</div><!-- ./card @e -->
-
-		<div class="card"><!-- card @s -->
-			<div class="card-body"><!-- card-body @s -->
 				<div class="form-row justify-content-between align-items-center">
 					<div class="col-7">
 						<label for="user-status">Κατάσταση</label>
@@ -278,24 +299,37 @@
 				</div>
 
 				<hr>
-	
-				<div class="btn-group dropleft w-100">
-					<button type="button" class="btn btn-warning btn-block dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						Επιλογές Κωδικού
-					</button>
-					<div class="dropdown-menu py-0">
-						<a id="show-password" class="dropdown-item py-2" href="#">Εμφάνιση</a>
-						<div class="dropdown-divider my-0"></div>
-						<a class="js-send-message dropdown-item py-2" href="#">Αποστολή</a>
-					</div>
-				</div>
-
-				<hr>
 
 				<button id="delete-user-btn" class="btn btn-outline-danger btn-block btn-sm">Διαγραφή λογαριασμού</button>
 			</div><!-- ./card-body @e -->
-		</div><!-- ./card @e -->
+		</div><!-- ./avatar-card @e -->
 
+		<div class="card"><!-- recent-activity-card @s -->
+			<h4 class="card-header">Recent Activity</h4>
+			<div class="card-body">
+				<div class="timeline-alt py-0">
+
+					@foreach ($activities as $activity)
+						<div class="timeline-item">
+							<i class="mdi
+								@if($activity->log_name === "login")
+									mdi-location-enter bg-success-lighten text-success
+								@else
+									mdi-location-exit bg-primary-lighten text-primary
+								@endif timeline-icon"></i>
+							<div class="timeline-item-info">
+								<span href="#" class="{{ $activity->log_name === "login" ? "text-success" : "text-primary"}} font-weight-bold mb-1 d-block">{{ ucfirst($activity->log_name) }}</span>
+								<p class="mb-0 pb-2">
+									<small class="text-muted">{{ $activity->created_at->diffForHumans() }}</small>
+								</p>
+							</div>
+						</div>
+						
+					@endforeach
+
+				</div>
+			</div><!-- ./card-body @e -->
+		</div><!-- ./recent-activity-card @e -->
     </div>
 </div>
 
