@@ -3918,6 +3918,11 @@ figure > img {
   display: none;
 }
 
+.input-icon {
+  padding: 0 0.6rem;
+  border: 1px solid #536de6;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0
