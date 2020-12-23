@@ -696,6 +696,21 @@ const sendTask = () => {
     });
 }
 
+const removeTask = ()=>{
+    $(".discussions-right").on("click",".js-remove-task", async function (e) {
+        e.preventDefault();
+        const taskId = $(this).closest(".dashboard-box-li").data("task-id")
+        try {
+           const {data,status} = await axios.delete(`/discussion/delete-task/${taskId}`)
+            if (status==200){
+                $(".discussions-right").html($(data))
+            }
+        }catch (e) {
+            console.log(e)
+        }
+    });
+}
+
 const onCompletedTask = () => {
     $(".discussions-right").off();
     $(".discussions-right").on("click", ".js-complete-task", async function () {
@@ -870,8 +885,11 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
         const {data, status} = await axios.get("/discussion/my-task")
         if (status == 200) {
             $(".discussions-right").html($(data))
+            $(".ul-thread .bg-thread").removeClass("active-thread")
+            $(this).addClass("active-thread")
             onCompletedTask();
             styleCollapse();
+            removeTask();
             if (roles.includes($(this).data("role-user"))) {
                 if (!$('#accordionExample').children().length) {
                     $(".discussions-right").hide()
@@ -891,10 +909,10 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
 
             } else {
 
-                $(".ul-thread .bg-thread").removeClass("active-thread")
-                $(this).addClass("active-thread")
-                sendTask();
-                styleCollapse();
+                // $(".ul-thread .bg-thread").removeClass("active-thread")
+                // $(this).addClass("active-thread")
+                // sendTask();
+                // styleCollapse();
 
             }
         }

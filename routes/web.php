@@ -280,6 +280,7 @@ Route::get("/discussion/isClosed", "Index\DiscussionController@isClosed")->name(
 Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->name("discussion.noReplies");
 Route::get("/discussion/my-task", "Index\DiscussionController@myTask")->name("discussion.myTask");
 Route::patch("/discussion/complete-task/{id}", "Index\DiscussionController@completeTask")->name("discussion.completeTask");
+Route::delete("/discussion/delete-task/{id}", "Index\DiscussionController@deleteTask")->name("discussion.deleteTask");
 
 
 Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");

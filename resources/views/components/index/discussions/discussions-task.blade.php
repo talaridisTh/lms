@@ -176,7 +176,7 @@
                                                                     <a href="#" class="button gray ripple-effect ico">
                                                                         <i class="uil-comments-alt"></i>
                                                                     </a>
-                                                                    <a href="#" class="button gray ripple-effect ico"><i
+                                                                    <a href="#" class="button gray ripple-effect  js-remove-task ico"><i
                                                                             class="dripicons-document-delete"></i></a>
                                                                 </div>
                                                             </li>

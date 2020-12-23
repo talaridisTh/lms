@@ -348,6 +348,14 @@ class DiscussionController extends Controller {
         return response()->json(["completed_at"=>$attachments->completed_at]);
     }
 
+    public function deleteTask($taskId)
+    {
+
+        Attachment::findOrFail($taskId)->delete();
+
+        return $this->myTask();
+    }
+
     public function sendTask(Request $request)
     {
         $mailInfo = new \stdClass();
