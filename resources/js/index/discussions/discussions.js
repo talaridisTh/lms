@@ -699,11 +699,18 @@ const sendTask = () => {
 const onCompletedTask = () => {
     $(".discussions-right").on("click", ".js-complete-task", async function () {
         const taskId = $(this).closest(".dashboard-box-li").data("task-id")
-        const {data, status} = await axios.patch(`/discussion/complete-task/${taskId}`)
-
+        const {data, status,completed_at} = await axios.patch(`/discussion/complete-task/${taskId}`)
+        console.log(data.completed_at)
         if (status===200){
-            $(".dashboard-status-button").removeClass("red").addClass("green").html(`Ελέγχθηκε ${getDate()}`)
-            $(this).text("Δεν ελέγχθηκε");
+            if (data.completed_at){
+                $(".dashboard-status-button").removeClass("red").addClass("green").html(`Ελέγχθηκε ${getDate()}`)
+                $(".js-complete-task ").removeClass("btn-outline-custom-primary").addClass("btn-outline-danger")
+                $(this).text("Δεν ελέγχθηκε");
+            }else{
+                $(".dashboard-status-button").removeClass("green").addClass("red").html(`Αναμονή..`)
+                $(".js-complete-task ").removeClass("btn-outline-danger").addClass("btn-outline-custom-primary")
+                $(this).text("Ελέγχθηκε");
+            }
         }
 
     })

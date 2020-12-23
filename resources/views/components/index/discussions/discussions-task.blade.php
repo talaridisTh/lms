@@ -120,7 +120,7 @@
 
                                                                     <!-- Details -->
                                                                     <div class="job-listing-description">
-                                                                        <h3 class="job-listing-title"><a
+                                                                        <h3 class="job-listing-title m-0"><a
                                                                                 href="#">{{$task->name}}</a> <span
                                                                                 class="dashboard-status-button {{isset($task->completed_at)?"green":"red"}}">
                                                                                 {!!isset($task->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($task->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
@@ -131,7 +131,7 @@
                                                                         <!-- Job Listing Footer -->
                                                                         <div class="job-listing-footer">
                                                                             <ul style="padding-left: 1.1rem">
-                                                                                <li>
+                                                                                <li class="my-2">
                                                                                     Ονοματεπώνυμο : {{App\Models\User::find($task->mail->user_id)->fullname}}
                                                                                 </li>
                                                                             </ul>
@@ -161,7 +161,9 @@
                                                             <!-- Buttons -->
                                                             <div class="buttons-to-right always-visible">
                                                                 @hasanyrole("admin|super-admin|instructor")
-                                                                <button class="js-complete-task btn btn-primary mr-2">Eλέγχθηκε </button>
+                                                                <button class="js-complete-task btn  {{isset($task->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
+                                                                    {{isset($task->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
+                                                                </button>
                                                                 @endhasanyrole
                                                                 <a href="#" class="button gray ripple-effect ico">
                                                                     <i class="uil-comments-alt"></i>

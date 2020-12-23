@@ -50537,6 +50537,83 @@ body[data-leftbar-theme=dark] .side-nav .side-nav-forth-level li.active > a {
   fill: #eef2f7;
 }
 
+.btn-custom-primary {
+  color: #fff;
+  background-color: #328af1;
+  border-color: #1076ed;
+}
+
+.btn-custom-primary:hover {
+  color: #fff;
+  background-color: #0f70e1;
+  border-color: #4a98f3;
+}
+
+.btn-custom-primary:focus,
+.btn-custom-primary.focus {
+  color: #fff;
+  background-color: #0f70e1;
+  border-color: #4a98f3;
+  box-shadow: 0 0 0 0.15rem rgba(52, 139, 240, 0.5);
+}
+
+.btn-custom-primary.disabled,
+.btn-custom-primary:disabled {
+  color: #fff;
+  background-color: #328af1;
+  border-color: #1076ed;
+}
+
+.btn-custom-primary:not(:disabled):not(.disabled):active,
+.btn-custom-primary:not(:disabled):not(.disabled).active,
+.show > .btn-custom-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #62a5f4;
+  border-color: #094081;
+}
+
+.btn-custom-primary:not(:disabled):not(.disabled):active:focus,
+.btn-custom-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-custom-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.15rem rgba(52, 139, 240, 0.5);
+}
+
+.btn-outline-custom-primary {
+  color: #328af1;
+  border-color: #328af1;
+}
+
+.btn-outline-custom-primary:hover {
+  color: #222222;
+  background-color: #4a98f3;
+  border-color: #328af1;
+}
+
+.btn-outline-custom-primary:focus,
+.btn-outline-custom-primary.focus {
+  box-shadow: 0 0 0 0.15rem rgba(50, 138, 241, 0.5);
+}
+
+.btn-outline-custom-primary.disabled,
+.btn-outline-custom-primary:disabled {
+  color: #328af1;
+  background-color: transparent;
+}
+
+.btn-outline-custom-primary:not(:disabled):not(.disabled):active,
+.btn-outline-custom-primary:not(:disabled):not(.disabled).active,
+.show > .btn-outline-custom-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #4a98f3;
+  border-color: #328af1;
+}
+
+.btn-outline-custom-primary:not(:disabled):not(.disabled):active:focus,
+.btn-outline-custom-primary:not(:disabled):not(.disabled).active:focus,
+.show > .btn-outline-custom-primary.dropdown-toggle:focus {
+  box-shadow: 0 0 0 0.15rem rgba(50, 138, 241, 0.5);
+}
+
 .template {
   visibility: hidden;
 }
@@ -52103,7 +52180,6 @@ ul.dashboard-box-list > li:hover {
 
 .dashboard-box .job-listing-details {
   box-shadow: none;
-  padding: 10px 0;
   align-items: center;
   flex: auto;
 }
@@ -52324,5 +52400,9 @@ ul.dashboard-box-list > li:hover {
 
 .border-left-card {
   border-left: solid 6px #6cb2eb;
+}
+
+.task-cnt .nav-tabs.nav-bordered li a.active {
+  border-bottom: 2px solid #328af1;
 }
 
