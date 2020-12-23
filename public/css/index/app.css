@@ -51167,14 +51167,14 @@ b[role=presentation] {
 
 .ul-custom li {
   font-family: OpenSans;
-  font-size: 16px;
+  padding: 5px;
+  font-size: 19px;
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
   line-height: normal;
   letter-spacing: 0.4px;
   color: #2c2f30;
-  margin-bottom: 5px;
 }
 
 .blue-title {
@@ -52320,5 +52320,9 @@ ul.dashboard-box-list > li:hover {
 .dashboard-box .boxed-list-item {
   padding: 10px 0;
   width: 100%;
+}
+
+.border-left-card {
+  border-left: solid 6px #6cb2eb;
 }
 

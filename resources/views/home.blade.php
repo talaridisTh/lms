@@ -27,7 +27,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid mb-5" style="max-width: 1400px">
+    <div class="container-fluid p-3 mb-5" style="max-width: 1400px">
         {{--row 1 --}}
         <div class="row " style="  font-family: OpenSans;">
             <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
@@ -77,7 +77,7 @@
             {{--            </div>--}}
         @endif
         {{--row 3 --}}
-        <div class="row my-5 ">
+        <div class="row my-5  ">
 
             <div class="col-lg-5 col-md-12 mt-4">
                 <h3 class="h3-custom">Θέλεις να βάλεις τη Ρομποτική στο σχολείο σου και δεν ξέρεις από που να
@@ -99,7 +99,7 @@
 
         </div>
         {{--row 4 --}}
-        <div class="row mt-9">
+        <div class="row mt-9 ">
 
             <div class="col-lg-5 mt-5">
                 <h4 style="" class="h4-custom">Εξατομικευμένη πλατφόρμα μαθημάτων ρομποτικής</h4>
@@ -107,7 +107,7 @@
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
                     sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
                 </p>
-                <ul class="ul-custom">
+                <ul class="ul-custom p-2">
                     <li class="li-custom"> HD Videos στα Ελληνικά</li>
                     <li class="li-custom">Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
                     <li class="li-custom">Kώδικα προγραμματισμού των ρομπότ</li>
@@ -129,7 +129,7 @@
 
         </div>
         {{--row 5 --}}
-        <div class="row mt-9">
+        <div class="row mt-9 ">
 
             <div class="col-lg-5 d-none d-lg-block ">
                 <div class="container  text-center  d-flex justify-content-center"
@@ -148,7 +148,7 @@
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
                     sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
                 </p>
-                <ul class="ul-custom">
+                <ul class="ul-custom p-2">
                     <li class="li-custom">Hands on Μαθήματα (και με φυσική παρουσία και εξ αποστάσεως)</li>
                     <li class="li-custom"> Εκπαιδευτικό υλικό</li>
                     <li class="li-custom"> Απόκτηση πιστοποίησης</li>
@@ -159,7 +159,7 @@
 
         </div>
         {{--row 6 --}}
-        <div class="row  mt-9">
+        <div class="row  mt-9 ">
 
             <div class="col-lg-5  mt d-flex flex-column justify-content-center">
                 <h4 style="" class="h4-custom">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς</h4>

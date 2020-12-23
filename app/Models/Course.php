@@ -29,7 +29,7 @@ class Course extends Model {
     public function attachments()
     {
 
-        return $this->hasMany(Attachments::class);
+        return $this->hasMany(Attachment::class);
     }
 
 

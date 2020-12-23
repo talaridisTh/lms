@@ -7,15 +7,16 @@
             </select>
         </div>
 
-        <div class="form-group my-1  p-1">
-            <select class="form-control bg-list-thread filter-course" id="">
-                <option>Όλα</option>
-                @foreach($courses as $key=> $course)
-                    <option>{{$courses[$key]}}</option>
-                @endforeach
-            </select>
-        </div>
+{{--        <div class="form-group my-1  p-1">--}}
+{{--            <select class="form-control bg-list-thread filter-course" id="">--}}
+{{--                <option>Όλα</option>--}}
+{{--                @foreach($courses as $key=> $course)--}}
+{{--                    <option>{{$courses[$key]}}</option>--}}
+{{--                @endforeach--}}
+{{--            </select>--}}
+{{--        </div>--}}
     </div>
+
     <div class="d-flex m-2">
         <div class="form-group my-1  p-1">
             <i class="font-24 uil-grip-horizontal-line bg-list-thread mr-1 js-hidden-body cursor-pointer js-body-active"

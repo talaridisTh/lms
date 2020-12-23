@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Mail\EmailTask;
-use App\Models\Attachments;
+use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
@@ -316,14 +316,14 @@ class DiscussionController extends Controller {
         {
 //            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
             $coursesId = auth()->user()->courses->pluck("id");
-            $courseMedia = Attachments::whereIn("course_id", $coursesId)->get();
+            $courseMedia = Attachment::whereIn("course_id", $coursesId)->get();
             $course = $courseMedia->map(function ($media) {
                 return Course::findOrFail($media->course_id);
             });
-        } elseif (auth()->user()->getRoleNames()[0] == "instructor")
+        } elseif (auth()->user()->hasAnyRole(["instructor", "admin", "super-admin"]))
         {
-            $coursesId = Course::where("user_id",auth()->id())->pluck("id");
-            $courseMedia = Attachments::whereIn("course_id", $coursesId)->get();
+            $coursesId = Course::where("user_id", auth()->id())->pluck("id");
+            $courseMedia = Attachment::whereIn("course_id", $coursesId)->get();
             $course = $courseMedia->map(function ($media) {
                 return Course::findOrFail($media->course_id);
             });
@@ -332,6 +332,20 @@ class DiscussionController extends Controller {
         return view("components.index.discussions.discussions-task", [
             "courses" => collect($course)->unique()
         ]);
+    }
+
+    public function completeTask($task)
+    {
+        $attachments = Attachment::find($task);
+        if ($attachments->completed_at)
+        {
+            $attachments->update(["completed_at" => null]);
+        } else
+        {
+
+            $attachments->update(["completed_at" => now()]);
+        }
+        return response()->json(["completed_at"=>$attachments->completed_at]);
     }
 
     public function sendTask(Request $request)
@@ -344,6 +358,7 @@ class DiscussionController extends Controller {
         $mailInfo->course = Course::where("title", $request->course)->first();
         $mailInfo->attachment = $request->attachment;
         Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo));
+        $this->storeMail($mailInfo);
 
         return $this->myTask();
     }
@@ -364,7 +379,6 @@ class DiscussionController extends Controller {
                         $media = $this->storeFile($file);
 //                        auth()->user()->media()->attach($media->id, ["usage" => 6]);
                         $res["file-" . $key] = [
-
                             "url" => $media->rel_path,
                             "name" => $media->original_name . "." . $media->ext,
                             "id" => $media->id,
@@ -382,7 +396,7 @@ class DiscussionController extends Controller {
 
         $date = date('Y.m');
         $name = $this->fileName($file);
-        $attachment = new Attachments();
+        $attachment = new Attachment();
         $attachment->original_name = $name->original;
         $attachment->course_id = 0;
         $attachment->name = $name->slug;
@@ -395,6 +409,32 @@ class DiscussionController extends Controller {
         $file->storeAs("public/attachments/$date", $name->full);
 
         return $attachment;
+    }
+
+    private function storeMail($mail)
+    {
+        $recipients = [
+            "ids" => [auth()->id()],
+            "emails" => []
+        ];
+        $mailCreated = \App\Models\Mail::create([
+            'user_id' => auth()->id(),
+            'subject' => $mail->subject,
+            'content' => $mail->body ?? auth()->user()->fullname,
+            'recipients' => json_encode($recipients),
+            'sent_at' => now()
+        ]);
+        if (isset($mail->attachment))
+        {
+            foreach (json_decode($mail->attachment) as $filePath)
+            {
+                Attachment::findOrFail($filePath->id)->update(
+                    [
+                        "mail_id" => $mailCreated->id
+                    ]
+                );
+            }
+        }
     }
 
 }

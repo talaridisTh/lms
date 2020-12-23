@@ -232,6 +232,7 @@ $(document).on("click", '.js-thread-title', async function () {
             eventTopBar()
             onEditComment()
 
+
         }
 
     } catch (e) {
@@ -614,18 +615,21 @@ const styleClosedPost = () => {
 }
 //style collapsed
 const styleCollapse = () => {
+    if (!$('#accordionExample').children().length) {
+        $(".show-task").hide()
+    }
     $(".dashboard-box").on("click", ".headline", function () {
         if (!$(this).closest(".card").find(".collapse").hasClass("show")) {
-            $(".card-header").removeClass("active-thread")
-            $(this).closest(".card-header").addClass("active-thread")
+            $(".card-header").removeClass("border-left-card")
+            $(this).closest(".card-header").addClass("border-left-card")
 
         } else {
-            $(".card-header").removeClass("active-thread")
-            $(this).closest(".card-header").removeClass("active-thread")
+            $(".card-header").removeClass("border-left-card")
+            $(this).closest(".card-header").removeClass("border-left-card")
         }
     })
 }
-
+//send task
 const sendTask = () => {
 
     $('#subject-task').keyup(function () {
@@ -638,8 +642,16 @@ const sendTask = () => {
     });
 
     $(".discussions-right").on("click", ".js-send-task", async function (e) {
+        if (!$("#file-target").children().length && !$('#editor-task').val().length) {
+            if (!$(".alert-body").length) {
+                $("<p class='alert-body p-2 bg-transparent text-danger'>* Eισάγετε εικόνα η κείμενο στο πεδίο</p>").insertAfter(".redactor-box");
+            }
+            return;
+        }
+        $(".alert-body").remove();
         e.preventDefault()
         $(".js-send-task").prop('disabled', true);
+        $(this).find(".spinner-border").removeClass("d-none");
 
         const {data, status} = await axios.post("/discussion/task/send", {
             "subject": $("#subject-task").val(),
@@ -676,6 +688,7 @@ const sendTask = () => {
                     $(".js-send-task").prop('disabled', true);
                 }
             });
+            $(this).find(".spinner-border").addClass("d-none");
 
 
         }
@@ -683,6 +696,28 @@ const sendTask = () => {
     });
 }
 
+const onCompletedTask = () => {
+    $(".discussions-right").on("click", ".js-complete-task", async function () {
+        const taskId = $(this).closest(".dashboard-box-li").data("task-id")
+        const {data, status} = await axios.patch(`/discussion/complete-task/${taskId}`)
+
+        if (status===200){
+            $(".dashboard-status-button").removeClass("red").addClass("green").html(`Ελέγχθηκε ${getDate()}`)
+            $(this).text("Δεν ελέγχθηκε");
+        }
+
+    })
+}
+function getDate (){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    var minute = today.getMinutes();
+    var hour = today.getHours();
+
+    return `<span class="text-muted font-12">(${dd}/${mm}/${yyyy}  ${hour}:${minute})</span>`
+}
 function slugify(string) {
     return string
         .toString()
@@ -818,17 +853,40 @@ $(".discussions-left").on("click", "#filter-no-replies", async function () {
 //my task
 $(".discussions-left").on("click", "#filter-my-task", async function () {
 
+
+    const roles = ["admin", "super-admin", "instructor"]
     try {
         const {data, status} = await axios.get("/discussion/my-task")
-
         if (status == 200) {
-            $(".ul-thread .bg-thread").removeClass("active-thread")
-            $(this).addClass("active-thread")
             $(".discussions-right").html($(data))
-            sendTask();
+            onCompletedTask();
             styleCollapse();
-        }
+            if (roles.includes($(this).data("role-user"))) {
+                if (!$('#accordionExample').children().length) {
+                    $(".discussions-right").hide()
+                    Swal.fire(
+                        'Προσοχή',
+                        '<p>Δεν υπάρχουν εργασίες </p>',
+                        'info'
+                    );
 
+                    const {data, status} = await axios.get("/discussion")
+                    if (status == 200) {
+                        axiosUpdateMain($("#filter-all-threads"), data)
+                        $(".discussions-right").show()
+
+                    }
+                }
+
+            } else {
+
+                $(".ul-thread .bg-thread").removeClass("active-thread")
+                $(this).addClass("active-thread")
+                sendTask();
+                styleCollapse();
+
+            }
+        }
     } catch (e) {
         console.log(e)
     }
@@ -842,7 +900,7 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
 //         'sup', 'sub', 'lists', 'file', 'link', 'image'
 //     ],
 //     style: false,
-//     plugins: [ 'alignment'],
+//     plugins: [ 'alignment']h
 //     minHeight: '150px',
 //     imageResizable: true,
 //     imagePosition : {

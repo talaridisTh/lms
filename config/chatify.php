@@ -78,7 +78,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Attachments By Default
+    | Attachment By Default
     |--------------------------------------------------------------------------
     |
     | This array contains the important default values that used in this package.

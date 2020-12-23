@@ -701,14 +701,14 @@ b[role="presentation"] {
 
     li {
         font-family: OpenSans;
-        font-size: 16px;
+        padding: 5px;
+        font-size: 19px;
         font-weight: normal;
         font-stretch: normal;
         font-style: normal;
         line-height: normal;
         letter-spacing: 0.4px;
         color: #2c2f30;
-        margin-bottom: 5px;
 
 
     }
@@ -1247,22 +1247,26 @@ img.scale {
     margin-right: 5px;
     margin-bottom: 5px;
 }
-     /* Dashboard Box
+
+
+/* Dashboard Box
 ------------------------------------- */
- .dashboard-box {
-     display: block;
-     border-radius: 4px;
-     background-color: #fff;
-     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-     margin-top: 30px;
-     position: relative;
- }
+.dashboard-box {
+    display: block;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-top: 30px;
+    position: relative;
+}
+
 
 .dashboard-box .headline {
     display: block;
     padding: 0px 30px;
     position: relative;
 }
+
 
 .dashboard-box .headline h3 {
     font-size: 16px;
@@ -1271,9 +1275,12 @@ img.scale {
     line-height: 26px;
 }
 
-.dashboard-box-li:hover{
+
+.dashboard-box-li:hover {
     background-color: rgba(0, 0, 0, 0.11);
 }
+
+
 .dashboard-box .headline h3 i {
     color: #66676b;
     font-size: 21px;
@@ -1283,21 +1290,25 @@ img.scale {
     margin-right: 4px;
 }
 
+
 /* Pixel Perfect Adjustment */
 .dashboard-box .headline h3 i.icon-material-outline-gavel {
     font-size: 20px;
 }
+
 
 .dashboard-box .headline h3 i.icon-material-outline-supervisor-account {
     font-size: 24px;
     top: 3px;
 }
 
+
 .dashboard-box .headline h3 i.icon-feather-folder-plus {
     font-size: 20px;
     top: 2px;
     margin-right: 5px;
 }
+
 
 .button.big i.icon-feather-plus {
     font-size: 20px;
@@ -1306,15 +1317,18 @@ img.scale {
     margin-right: 5px;
 }
 
+
 /* Pixel Perfect Adjustment - End */
 
 .dashboard-box .content.with-padding {
     padding: 30px;
 }
 
+
 .dashboard-box .chart {
     padding: 30px 20px 17px 18px;
 }
+
 
 .dashboard-box .headline .sort-by {
     float: none;
@@ -1326,6 +1340,7 @@ img.scale {
     z-index: 100;
     height: 33px;
 }
+
 
 .dashboard-box .headline .bootstrap-select.btn-group .dropdown-toggle .filter-option {
     font-weight: 500;
@@ -1344,9 +1359,11 @@ img.scale {
     position: relative;
 }
 
+
 .dashboard-note:last-child {
     margin-bottom: 65px;
 }
+
 
 .dashboard-note:before {
     content: "";
@@ -1360,12 +1377,14 @@ img.scale {
     border-radius: 0 0 0 4px;
 }
 
+
 .dashboard-note p {
     line-height: 24px;
     margin-bottom: 20px;
     color: #777;
     font-size: 14.7px;
 }
+
 
 .note-priority {
     background-color: #333;
@@ -1377,26 +1396,32 @@ img.scale {
     line-height: 20px;
 }
 
+
 .note-priority.high {
     background-color: #dc3139;
 }
+
 
 .note-priority.medium {
     background-color: #f59110;
 }
 
+
 .note-priority.low {
     background-color: #3fb660;
 }
+
 
 .note-footer {
     display: flex;
 }
 
+
 .note-buttons {
     align-self: center;
     margin-left: auto;
 }
+
 
 .note-buttons a {
     font-size: 16px;
@@ -1406,9 +1431,11 @@ img.scale {
     color: #888;
 }
 
+
 .note-buttons a:hover {
     color: #444;
 }
+
 
 .add-note-button {
     position: absolute;
@@ -1422,6 +1449,7 @@ img.scale {
     border-radius: 4px;
     width: calc(100% - 15px);
 }
+
 
 .add-note-button a.button {
     width: calc(100% + 15px) !important;
@@ -1437,6 +1465,7 @@ ul.dashboard-box-list {
     margin: 0;
 }
 
+
 ul.dashboard-box-list > li {
     border-bottom: 1px solid #e4e4e4;
     padding: 0;
@@ -1450,22 +1479,27 @@ ul.dashboard-box-list > li {
     transition: 0.3s;
 }
 
+
 ul.dashboard-box-list > li:last-child {
     border-bottom: none;
 }
 
+
 ul.dashboard-box-list > li:hover {
     background-color: #fcfcfc;
 }
+
 
 .dashboard-box-list .notification-text {
     font-size: 14.7px;
     flex: 1;
 }
 
+
 .dashboard-box-list .notification-icon {
     flex: 0 0 40px;
 }
+
 
 .dashboard-box-list .notification-text .star-rating {
     position: relative;
@@ -1492,10 +1526,12 @@ ul.dashboard-box-list > li:hover {
     background-color: #fff;
 }
 
+
 .dashboard-box-list .buttons-to-right.always-visible,
 .dashboard-box-list li:hover .buttons-to-right {
     opacity: 1;
 }
+
 
 .dashboard-box-list .buttons-to-right.always-visible:not(.single-right-button) {
     position: relative;
@@ -1511,6 +1547,7 @@ ul.dashboard-box-list > li:hover {
     box-shadow: none;
 }
 
+
 .dashboard-box-list .button {
     padding: 6px 15px;
     line-height: 20px;
@@ -1521,6 +1558,7 @@ ul.dashboard-box-list > li:hover {
     box-shadow: 0 3px 8px rgba(102, 103, 107, 0.15);
 }
 
+
 .dashboard-box-list .button i[class*="icon-material"] {
     font-size: 18px;
     top: 3px;
@@ -1528,34 +1566,41 @@ ul.dashboard-box-list > li:hover {
     margin-left: -2px
 }
 
+
 .dashboard-box-list .buttons-to-right .button {
     margin: 0 0 -6px 2px;
 }
 
+
 .dashboard-box-list .buttons-to-right.always-visible .button {
     margin: 0 3px 0 0;
 }
+
 
 .dashboard-box .button.red {
     background-color: #dc3139;
     box-shadow: 0 3px 8px rgba(234, 65, 81, 0.15);
 }
 
+
 .dashboard-box .button.green {
     background-color: #40b660;
     box-shadow: 0 3px 8px rgba(64, 182, 96, 0.15);
 }
+
 
 .dashboard-box .button.dark {
     background-color: #333333;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .dashboard-box .button.gray {
     background-color: #eee;
     color: #666;
     box-shadow: none;
 }
+
 
 /* Hovers */
 .dashboard-box .dashboard-box-list .button:not(.ico):hover,
@@ -1567,15 +1612,18 @@ ul.dashboard-box-list > li:hover {
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 }
 
+
 .dashboard-box .button.dark:not(.ico):hover {
     background-color: #66676b;
     box-shadow: 0 3px 8px rgba(102, 103, 107, 0.15);
 }
 
+
 .dashboard-box .button.ico {
     width: 32px;
     text-align: center;
 }
+
 
 .dashboard-box .button.ico i {
     font-size: 15px;
@@ -1584,9 +1632,11 @@ ul.dashboard-box-list > li:hover {
     position: relative;
 }
 
+
 .dashboard-box .button i.icon-material-outline-check {
     margin-left: -5px;
 }
+
 
 .dashboard-box .button.ico i[class*="icon-material"] {
     font-size: 18px;
@@ -1595,10 +1645,12 @@ ul.dashboard-box-list > li:hover {
     position: relative;
 }
 
+
 .dashboard-box-list {
     box-shadow: none;
-    margin-top: 1px!important;
+    margin-top: 1px !important;
 }
+
 
 .dashboard-box-list a.button i {
     margin: 0;
@@ -1610,6 +1662,7 @@ ul.dashboard-box-list > li:hover {
     margin-left: -2px;
 }
 
+
 .dashboard-box .mark-as-read {
     float: none;
     background-color: #f4f4f4;
@@ -1617,6 +1670,7 @@ ul.dashboard-box-list > li:hover {
     right: 30px;
     top: 18px;
 }
+
 
 .button-info {
     background: rgba(255, 255, 255, 0.25);
@@ -1633,6 +1687,7 @@ ul.dashboard-box-list > li:hover {
     margin-right: -2px;
 }
 
+
 /* Listing Status*/
 .dashboard-status-button {
     color: #fff;
@@ -1646,15 +1701,18 @@ ul.dashboard-box-list > li:hover {
     margin: 0 0 4px 4px;
 }
 
+
 .dashboard-status-button.green {
     background: #e0f5d7;
     color: #449626;
 }
 
+
 .dashboard-status-button.yellow {
     background-color: #fbf6dd;
     color: #a18d29;
 }
+
 
 .dashboard-status-button.red {
     background-color: #ffe6e6;
@@ -1673,12 +1731,14 @@ ul.dashboard-box-list > li:hover {
     margin: 0;
 }
 
+
 .invoice-list-item ul li {
     padding: 0;
     display: inline-block;
     font-size: 14.7px;
     margin-bottom: 5px;
 }
+
 
 .invoice-list-item ul li:after {
     content: "";
@@ -1690,9 +1750,11 @@ ul.dashboard-box-list > li:hover {
     margin: 0 10px;
 }
 
+
 .invoice-list-item ul li:last-child:after {
     display: none;
 }
+
 
 .invoice-list-item strong {
     font-weight: 600;
@@ -1701,6 +1763,7 @@ ul.dashboard-box-list > li:hover {
     margin-top: -2px;
     display: block;
 }
+
 
 .paid,
 .unpaid {
@@ -1714,9 +1777,11 @@ ul.dashboard-box-list > li:hover {
     top: -1px;
 }
 
+
 .paid {
     background-color: #40b660;
 }
+
 
 .unpaid {
     background-color: #dc3139;
@@ -1733,6 +1798,7 @@ ul.dashboard-box-list > li:hover {
     flex: auto;
 }
 
+
 .dashboard-box .job-listing {
     box-shadow: none;
     padding: 0;
@@ -1743,26 +1809,32 @@ ul.dashboard-box-list > li:hover {
     width: 100%;
 }
 
+
 .dashboard-box .job-listing.width-adjustment {
     max-width: 60%
 }
+
 
 .dashboard-box .job-listing h3 a {
     color: #333;
     font-size: 18px;
 }
 
+
 .dashboard-box .job-listing .job-listing-company-logo {
     max-width: 50px;
 }
+
 
 .dashboard-box .job-listing .job-listing-description {
     padding-top: 0;
 }
 
+
 .dashboard-box .job-listing:hover {
     transform: none;
 }
+
 
 .dashboard-box .job-listing .job-listing-footer {
     background-color: transparent;
@@ -1770,10 +1842,12 @@ ul.dashboard-box-list > li:hover {
     border-radius: none;
 }
 
+
 /* Jobs */
 .dashboard-box .freelancer-overview {
     padding: 15px 0;
 }
+
 
 .dashboard-box .freelancer-overview-inner {
     flex: auto;
@@ -1781,20 +1855,24 @@ ul.dashboard-box-list > li:hover {
     align-items: center;
 }
 
+
 .dashboard-box .freelancer-overview .freelancer-name {
     text-align: left;
     margin: 0 0 0 30px;
     width: 100%;
 }
 
+
 .dashboard-box .freelancer-overview .freelancer-avatar {
     margin: 0;
     width: 90px;
 }
 
+
 .dashboard-box .freelancer-overview.manage-candidates .freelancer-avatar {
     align-self: flex-start;
 }
+
 
 /* Dashboard Task Info */
 .dashboard-task-info {
@@ -1817,9 +1895,11 @@ ul.dashboard-box-list > li:hover {
     justify-content: center;
 }
 
+
 .dashboard-box li:hover .dashboard-task-info {
     background-color: #f0f0f0;
 }
+
 
 .dashboard-task-info li {
     display: inline-block;
@@ -1832,11 +1912,13 @@ ul.dashboard-box-list > li:hover {
     align-items: center;
 }
 
+
 .dashboard-task-info li:last-child {
     margin-right: 0;
     padding-right: 0;
     border: none;
 }
+
 
 .dashboard-task-info li strong {
     display: block;
@@ -1846,12 +1928,14 @@ ul.dashboard-box-list > li:hover {
     line-height: 22px;
 }
 
+
 .dashboard-task-info li span {
     display: block;
     font-size: 14px;
     color: #888;
     line-height: 20px;
 }
+
 
 /* Bid Acceptance */
 .bid-acceptance {
@@ -1867,6 +1951,7 @@ ul.dashboard-box-list > li:hover {
     margin: 0 auto;
     line-height: 20px;
 }
+
 
 .bid-acceptance span {
     font-size: 14px;
@@ -1894,6 +1979,7 @@ ul.dashboard-box-list > li:hover {
         margin-top: 20px;
     }
 }
+
 
 @media (max-width: 768px) {
     .dashboard-box .freelancer-overview .freelancer-avatar {
@@ -1942,5 +2028,10 @@ ul.dashboard-box-list > li:hover {
 .dashboard-box .boxed-list-item {
     padding: 10px 0;
     width: 100%;
+}
+
+
+.border-left-card {
+    border-left: solid 6px #6cb2eb
 }
 

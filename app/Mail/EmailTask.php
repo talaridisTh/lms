@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Attachments;
+use App\Models\Attachment;
 use App\Models\Media;
 use App\Models\Mediable;
 use Illuminate\Bus\Queueable;
@@ -39,15 +39,16 @@ class EmailTask extends Mailable {
             ->to($this->mailInfo->receiver->email)
             ->subject($this->mailInfo->subject)
             ->view('welcome');
-
-
-        if(isset($this->mailInfo->attachment)){
+        if (isset($this->mailInfo->attachment))
+        {
             foreach (json_decode($this->mailInfo->attachment) as $filePath)
             {
-                Attachments::findOrFail($filePath->id)->update(["course_id"=>$this->mailInfo->course->id]);
+                Attachment::findOrFail($filePath->id)->update(
+                    [
+                        "course_id" => $this->mailInfo->course->id
+                    ]
+                );
                 $email->attach(public_path($filePath->path));
-
-
             }
         }
 //            ->with($this->mailInfo);

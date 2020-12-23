@@ -300,7 +300,7 @@
 
                                 @foreach($socials as $social)
                                     @isset($socialMedia->$social)
-                                        <a href="{{$socialMedia->$social}}">
+                                        <a class="p-1" href="{{$socialMedia->$social}}">
                                             <img src="{{asset("images/$social.png")}}" alt="">
                                         </a>
                                     @endisset

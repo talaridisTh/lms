@@ -31,7 +31,7 @@ Route::get('/clear', function () {
 
     return redirect(route("home"));
 });
-
+//mhn ta svisis akoma mexri na teleiwsw me ta comments
 Route::get("/delete/all-post",function (){
     dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all(),\App\Models\Media::all(),\App\Models\Mediable::all()]);
     DB::table("posts")->delete();
@@ -111,13 +111,13 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
     Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple');
 	Route::patch('user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers');
-	
+
 
 
 
 
 	// Route::delete('user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
-	
+
 
 
 
@@ -268,6 +268,7 @@ Route::get("/discussion/popular-allTime", "Index\DiscussionController@popularAll
 Route::get("/discussion/isClosed", "Index\DiscussionController@isClosed")->name("discussion.isClosed");
 Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->name("discussion.noReplies");
 Route::get("/discussion/my-task", "Index\DiscussionController@myTask")->name("discussion.myTask");
+Route::patch("/discussion/complete-task/{id}", "Index\DiscussionController@completeTask")->name("discussion.completeTask");
 
 
 Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");

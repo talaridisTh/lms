@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Mail extends Model
 {
 	use HasFactory;
-	
+	protected $guarded = [];
 	//! WARNING epidi to function den exei onoma "user" i "users"
 	//! prepei na orisoume to foreing key
 	public function author() {
