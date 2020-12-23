@@ -337,6 +337,7 @@ class DiscussionController extends Controller {
     public function completeTask($task)
     {
         $attachments = Attachment::find($task);
+
         if ($attachments->completed_at)
         {
             $attachments->update(["completed_at" => null]);

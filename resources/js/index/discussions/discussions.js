@@ -632,17 +632,10 @@ const styleCollapse = () => {
 //send task
 const sendTask = () => {
 
-    $('#subject-task').keyup(function () {
-        if ($("#subject-task").val().length) {
-            $(".js-send-task").prop('disabled', false);
-
-        } else {
-            $(".js-send-task").prop('disabled', true);
-        }
-    });
+    validationUploadTest()
 
     $(".discussions-right").on("click", ".js-send-task", async function (e) {
-        if (!$("#file-target").children().length && !$('#editor-task').val().length) {
+        if (!$("#file-target").children().length && $('#editor-task').val().length <= 11) {
             if (!$(".alert-body").length) {
                 $("<p class='alert-body p-2 bg-transparent text-danger'>* Eισάγετε εικόνα η κείμενο στο πεδίο</p>").insertAfter(".redactor-box");
             }
@@ -672,22 +665,16 @@ const sendTask = () => {
                 $("#show-task-content").addClass("active show")
                 $(".upload-task").removeClass("active")
 
-                $(`#collapse-${slugify(dataAttr)}`).addClass("show")
+                $(`#collapse-${slugify(dataAttr)}`).addClass("show").prev().addClass("border-left-card")
 
                 $("html, body").animate({
                     scrollTop: $(`#collapse-${slugify(dataAttr)} .dashboard-box-list .dashboard-box-li:last-child`).position().top
                 }, 'slow');
+
             }
 
             styleCollapse();
-            $('#subject-task').keyup(function () {
-                if ($("#subject-task").val().length) {
-                    $(".js-send-task").prop('disabled', false);
-
-                } else {
-                    $(".js-send-task").prop('disabled', true);
-                }
-            });
+            validationUploadTest()
             $(this).find(".spinner-border").addClass("d-none");
 
 
@@ -696,16 +683,30 @@ const sendTask = () => {
     });
 }
 
-const removeTask = ()=>{
-    $(".discussions-right").on("click",".js-remove-task", async function (e) {
+const removeTask = () => {
+    $(".discussions-right").on("click", ".js-remove-task", async function (e) {
         e.preventDefault();
         const taskId = $(this).closest(".dashboard-box-li").data("task-id")
+        const collapseId = $(this).closest("[data-parent]").attr('id');
         try {
-           const {data,status} = await axios.delete(`/discussion/delete-task/${taskId}`)
-            if (status==200){
+            const {data, status} = await axios.delete(`/discussion/delete-task/${taskId}`)
+            if (status == 200) {
                 $(".discussions-right").html($(data))
+                validationUploadTest();
+                if ($('#accordionExample').children().length) {
+                    $("#show-task-content").addClass("active");
+                    $("#upload-task-content").removeClass("active");
+                    $(".show-task").addClass("active");
+                    $(".upload-task").removeClass("active");
+
+                    if ($(`#${collapseId}`).children().length) {
+                        $(`#${collapseId}`).addClass("show").prev().addClass("border-left-card");
+                    }
+                } else {
+                    $(".show-task").hide();
+                }
             }
-        }catch (e) {
+        } catch (e) {
             console.log(e)
         }
     });
@@ -715,14 +716,14 @@ const onCompletedTask = () => {
     $(".discussions-right").off();
     $(".discussions-right").on("click", ".js-complete-task", async function () {
         const taskId = $(this).closest(".dashboard-box-li").data("task-id")
-        const {data, status,completed_at} = await axios.patch(`/discussion/complete-task/${taskId}`)
+        const {data, status, completed_at} = await axios.patch(`/discussion/complete-task/${taskId}`)
 
-        if (status===200){
-            if (data.completed_at){
+        if (status === 200) {
+            if (data.completed_at) {
                 $(this).closest(".dashboard-box-li").find(".dashboard-status-button").removeClass("red").addClass("green").html(`Ελέγχθηκε ${getDate()}`)
                 $(this).closest(".dashboard-box-li").find(".js-complete-task ").removeClass("btn-outline-custom-primary").addClass("btn-outline-danger")
                 $(this).text("Δεν ελέγχθηκε");
-            }else{
+            } else {
                 $(this).closest(".dashboard-box-li").find(".dashboard-status-button").removeClass("green").addClass("red").html(`Αναμονή..`)
                 $(this).closest(".dashboard-box-li").find(".js-complete-task ").removeClass("btn-outline-danger").addClass("btn-outline-custom-primary")
                 $(this).text("Ελέγχθηκε");
@@ -734,7 +735,19 @@ const onCompletedTask = () => {
 
     })
 }
-function getDate (){
+
+const validationUploadTest = () => {
+    $('#subject-task').keyup(function () {
+        if ($("#subject-task").val().length) {
+            $(".js-send-task").prop('disabled', false);
+
+        } else {
+            $(".js-send-task").prop('disabled', true);
+        }
+    });
+}
+
+function getDate() {
     var today = new Date();
     var dd = String(today.getDate()).padStart(2, '0');
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -744,6 +757,7 @@ function getDate (){
 
     return `<span class="text-muted font-12">(${dd}/${mm}/${yyyy}  ${hour}:${minute})</span>`
 }
+
 function slugify(string) {
     return string
         .toString()
@@ -909,10 +923,10 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
 
             } else {
 
-                // $(".ul-thread .bg-thread").removeClass("active-thread")
-                // $(this).addClass("active-thread")
-                // sendTask();
-                // styleCollapse();
+                $(".ul-thread .bg-thread").removeClass("active-thread")
+                $(this).addClass("active-thread")
+                sendTask();
+                styleCollapse();
 
             }
         }

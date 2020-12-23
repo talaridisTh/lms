@@ -88,18 +88,20 @@
                                 @endphp
                                 @endrole
                                 <div class="card mb-0">
-                                    <div class="card-header" data-all-task="{{count($tasks)}}" data-completed-task="{{count($completedTask)}}" id="head-{{$course->id}}"
+                                    <div class="card-header" data-all-task="{{isset($tasks)?count($tasks):""}}" data-completed-task="{{isset($completedTask)?count($completedTask):""}}" id="head-{{$course->id}}"
                                          style="border-radius: 3px; ">
                                         <h5 class="m-0">
                                             <a class="custom-accordion-title d-block {{$course->slug}}"
                                                data-toggle="collapse" href="#collapse-{{$course->slug}}"
                                                aria-expanded="true" aria-controls="collapse-{{$course->slug}}"
                                                data-course-name="{{$course->title}}">
-                                                <div class="headline d-flex justify-content-between align-items-center">
+                                                <div class="headline d-flex justify-content-between align-items-center ">
                                                     <h3>
-                                                        <i class="icon-material-outline-assignment"></i> {{$course->title}}
+                                                        <i class="icon-material-outline-assignment" style="margin-left: -6px;"></i> {{$course->title}}
                                                     </h3>
-                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span class="js-num-task">{{count($completedTask)}}</span>/{{count($tasks)}} </span></h5>
+                                                    @hasanyrole('instructor|admin|super-admin')
+                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($tasks)?count($tasks):""}} </span></h5>
+                                                    @endhasanyrole
                                                 </div>
                                             </a>
                                         </h5>
@@ -126,9 +128,9 @@
 
                                                                         <!-- Details -->
                                                                         <div class="job-listing-description">
-                                                                            <h3 class="job-listing-title m-0"><a
+                                                                            <h3 class="job-listing-title m-0 "><a class="mr-2"
                                                                                     href="#">{{$task->name}}</a> <span
-                                                                                    class="dashboard-status-button {{isset($task->completed_at)?"green":"red"}}">
+                                                                                    class="dashboard-status-button m-0 p-0 {{isset($task->completed_at)?"green":"red"}}">
                                                                                 {!!isset($task->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($task->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
                                                                             </span>
                                                                             </h3>
@@ -161,7 +163,7 @@
                                                                         <span>View</span>
                                                                     </li>
                                                                     <li>
-                                                                        <strong>{{$task->created_at->format("d/m/Y")}}</strong><span>Στάλθηκε</span>
+                                                                        <strong>{{$task->created_at->format("d/m/Y (H:i)")}}</strong><span>Στάλθηκε</span>
                                                                     </li>
                                                                 </ul>
 
@@ -169,7 +171,7 @@
                                                                 <div class="buttons-to-right always-visible">
                                                                     @hasanyrole("admin|super-admin|instructor")
                                                                     <button
-                                                                        class="js-complete-task btn  {{isset($task->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
+                                                                        class="js-complete-task btn btn-sm {{isset($task->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
                                                                         {{isset($task->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
                                                                     </button>
                                                                     @endhasanyrole
