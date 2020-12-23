@@ -17,17 +17,7 @@ use Illuminate\Support\Facades\DB;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get("/check-activity-log", function() {
-	return DB::table("activity_log")->get();
-});
 
-Route::get("/update-activity-log-models", function() {
-
-	// DB::table("activity_log")
-	// 	->update(["causer_type" => "App\User"]);
-	DB::table("activity_log")
-		->update(["causer_type" => "App\Models\User"]);
-});
 
 Auth::routes();
 //!########################################################
@@ -116,30 +106,12 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('users/view-users', 'Ajax\UserController@index');
     Route::post('users/view-user', 'Ajax\UserController@show');
     Route::post('user/add-course-modal', 'Ajax\UserController@addCourseModal');
-    // Route::post('/user/sent-info', 'Ajax\UserController@sentInfo')->name("ajax.sentInfo");
 //! Dashboard Ajax Users CRUD
-    // Route::patch('user/add-course', 'Ajax\UserController@addCourses');
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
     Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple');
 	Route::patch('user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers');
 
-
-
-
-
-	// Route::delete('user/delete', 'Ajax\UserController@destroy')->name("destroy.datatable");
-
-
-
-
-
-
-
-
-
-
     Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers');
-    // Route::post("/user/show-password", "Ajax\UserController@showPassword")->name("showPassword");
     Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('user.avatar.upload');
 //! Dashboard Ajax Media
     Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');

@@ -59,8 +59,8 @@ class MailController extends Controller
 		if ($request->button === "send") {
 			foreach($users as $user) {
 				array_push($recipients["ids"], $user->id);
-				// Mail::to($user->email)
-				// 	->send(new Email($request->subject, $request->content));
+				 Mail::to($user->email)
+				 	->send(new Email($request->subject, $request->content));
 			}
 		}
 

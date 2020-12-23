@@ -27,7 +27,7 @@ class AddPublicPathToMediaTable extends Migration
     public function down()
     {
         Schema::table('media', function (Blueprint $table) {
-            $table->dropColumn("public_path");
+            $table->dropColumn("public_pass");
         });
     }
 }

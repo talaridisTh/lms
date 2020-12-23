@@ -35,12 +35,6 @@ class UserController {
         return $dataTable->render('users.addCourses');
     }
 
-    // public function coursesInsideUsers(CoursesInsideUsersDataTable $dataTable)
-    // {
-
-    //     return $dataTable->render('users.coursesInsideUsers');
-    // }
-
     public function changeStatus(Request $request)
     {
         $user = User::find($request->id);
@@ -70,11 +64,13 @@ class UserController {
         return response()->json(['success' => 'Status change successfully.']);
     }
 
-    public function addCourses(Request $request, User $user) {
-		
-		foreach ($request->ids as $id ) {
-			$user->courses()->attach($id);
-		}
+    public function addCourses(Request $request, User $user)
+    {
+
+        foreach ($request->ids as $id)
+        {
+            $user->courses()->attach($id);
+        }
     }
 
     public function addCoursesMultipleUsers(Request $request)
@@ -101,8 +97,6 @@ class UserController {
 
     public function destroy(Request $request)
     {
-
-//
         $user = User::find($request->user_id);
         $user->courses()->detach($request->course_id);
         $user->watchlistCourse()->detach($request->course_id);
@@ -116,92 +110,86 @@ class UserController {
         User::whereIn('id', $request->user_id)->delete();
     }
 
-    public function showPassword(Request $request, User $user) {
+    public function showPassword(Request $request, User $user)
+    {
 
-        if ( !Hash::check($request->password, auth()->user()->password) )
+        if (!Hash::check($request->password, auth()->user()->password))
         {
             return response()->json(['error' => 'Λάθος κωδικός.'], 401);
-		}
-		
-		return response()->json([
-			"password" => Crypt::decryptString($user->password_encrypt)
-		]);
+        }
+
+        return response()->json([
+            "password" => Crypt::decryptString($user->password_encrypt)
+        ]);
     }
 
     public function avatarUpload(Request $request)
     {
 
-
-
         $user = User::findorFail($request->userId);
-
         $date = date('m.Y');
-        $image=  $request->file;
-
-
-
-        if ( $image->isValid() )
+        $image = $request->file;
+        if ($image->isValid())
         {
             $temp = explode(".", $image->getClientOriginalName());
-
-            $name = implode("-", array_diff($temp, [ $image->getClientOriginalExtension() ]) );
-            $name =  Str::slug( $name, "-" );
-            $name .= ".". $image->getClientOriginalExtension();
-
+            $name = implode("-", array_diff($temp, [$image->getClientOriginalExtension()]));
+            $name = Str::slug($name, "-");
+            $name .= "." . $image->getClientOriginalExtension();
             $media = new Media;
             $media->original_name = $image->getClientOriginalName();
             $media->name = $name;
-            $media->rel_path = "storage/$date/images/". $name;
+            $media->rel_path = "storage/$date/images/" . $name;
             $media->ext = $image->getClientOriginalExtension();
             $media->file_info = $image->getClientMimeType();
             $media->size = $image->getSize();
             $media->save();
-
             $image->storeAs("public/$date/images", $name);
-
         }
 
         return response()->json($request->file);
-	}
-	
-	public function resetAvatar(User $user) {
+    }
 
-		$user->avatar = "/images/avatar-placeholder.png";
-		$user->save();
-	}
+    public function resetAvatar(User $user)
+    {
+        $user->avatar = "/images/avatar-placeholder.png";
+        $user->save();
+    }
 
     public function sentInfo(User $user)
     {
-		$password = Crypt::decryptString($user->password_encrypt);
-		$message = "Ο κωδικός σας είναι: $password";
-
-		// Mail::raw($message, function($message) use ($user) {
-		// 	$message->to($user->email)
-		// 		->subject("Υδρόγειος Education, ανάκτηση κωδικού");
-		// });
-
+        $password = Crypt::decryptString($user->password_encrypt);
+        $message = "Ο κωδικός σας είναι: $password";
+        Mail::raw($message, function ($message) use ($user) {
+            $message->to($user->email)
+                ->subject("Υδρόγειος Education, ανάκτηση κωδικού");
+        });
     }
 
-	public function confirmPassword(Request $request) {
+    public function confirmPassword(Request $request)
+    {
 
-		$isValid = Hash::check($request->password, auth()->user()->password);
+        $isValid = Hash::check($request->password, auth()->user()->password);
+        if ($isValid)
+        {
+            return response('Authorized', 200);
+        }
 
-		if ( $isValid ) {
-			return response('Authorized', 200);
-		}
-		
-		return response('Λάθος κωδικός...', 401);
-	}
+        return response('Λάθος κωδικός...', 401);
+    }
 
-	public function deleteUser(User $user) {
-		
-		$user->delete();
-	}
+    public function deleteUser(User $user)
+    {
 
-	public function removeCourses(Request $request, User $user) {
+        $user->delete();
+    }
 
-		foreach($request->ids as $id) {
-			$user->courses()->detach($id);
-		}
-	}
+    public function removeCourses(Request $request, User $user)
+    {
+
+        foreach ($request->ids as $id)
+        {
+            $user->courses()->detach($id);
+        }
+    }
+
 }
