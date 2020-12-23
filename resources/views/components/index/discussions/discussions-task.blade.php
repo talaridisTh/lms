@@ -9,7 +9,9 @@
         </li>
         @endrole
         <li class="nav-item">
-            <a href="#show-task-content" class="show-task nav-link   @hasanyrole("admin|super-admin|instructor") active @endhasanyrole " data-toggle="tab" aria-expanded="true">
+            <a href="#show-task-content"
+               class="show-task nav-link   @hasanyrole("admin|super-admin|instructor") active @endhasanyrole "
+               data-toggle="tab" aria-expanded="true">
                 Εργασίες
             </a>
         </li>
@@ -60,7 +62,8 @@
         </div>
         @endrole
 
-        <div class="tab-pane    @hasanyrole("admin|super-admin|instructor")   active show @endhasanyrole" id="show-task-content">
+        <div class="tab-pane    @hasanyrole("admin|super-admin|instructor")   active show @endhasanyrole"
+             id="show-task-content">
             <div class="row">
 
                 <!-- Dashboard Box -->
@@ -70,17 +73,33 @@
                         <!-- Headline -->
                         <div class="accordion" id="accordionExample">
                             @foreach($courses as $course)
+                                @hasanyrole('instructor|admin|super-admin')
+                                @php
+                                    $tasks =\App\Models\Attachment::where("course_id", $course->id )->get();
+                                    $completedTask =\App\Models\Attachment::where("course_id", $course->id )->where("completed_at", "!=" ,null)->get();
+                                @endphp
+                                @endhasanyrole
+
+                                @role("student")
+                                @php
+                                    $courseIds = auth()->user()->courses->pluck("id");
+                                      $tasks =\App\Models\Attachment::whereIn("course_id",auth()->user()->courses->pluck("id") )->get();
+
+                                @endphp
+                                @endrole
                                 <div class="card mb-0">
-                                    <div class="card-header" id="head-{{$course->id}}" style="border-radius: 3px; " >
+                                    <div class="card-header" data-all-task="{{count($tasks)}}" data-completed-task="{{count($completedTask)}}" id="head-{{$course->id}}"
+                                         style="border-radius: 3px; ">
                                         <h5 class="m-0">
                                             <a class="custom-accordion-title d-block {{$course->slug}}"
                                                data-toggle="collapse" href="#collapse-{{$course->slug}}"
                                                aria-expanded="true" aria-controls="collapse-{{$course->slug}}"
                                                data-course-name="{{$course->title}}">
-                                                <div class="headline">
+                                                <div class="headline d-flex justify-content-between align-items-center">
                                                     <h3>
                                                         <i class="icon-material-outline-assignment"></i> {{$course->title}}
                                                     </h3>
+                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span class="js-num-task">{{count($completedTask)}}</span>/{{count($tasks)}} </span></h5>
                                                 </div>
                                             </a>
                                         </h5>
@@ -95,83 +114,72 @@
                                             <div class="content">
 
                                                 <ul class="dashboard-box-list">
-                                                    @hasanyrole('instructor|admin|super-admin')
-                                                    @php
-                                                        $tasks =\App\Models\Attachment::where("course_id", $course->id )->get()
-                                                    @endphp
-                                                    @endhasanyrole
-
-                                                    @role("student")
-                                                    @php
-                                                    $courseIds = auth()->user()->courses->pluck("id");
-                                                        $tasks =\App\Models\Attachment::whereIn("course_id",auth()->user()->courses->pluck("id") )->get();
-
-                                                    @endphp
-                                                    @endrole
 
                                                     @forelse($tasks as $task)
                                                         @if($task->mail->user_id == auth()->id() && $task->course_id == $course->id)
-                                                        <li class="dashboard-box-li" data-task-id="{{$task->id}}">
-                                                            <!-- Job Listing -->
-                                                            <div class="job-listing width-adjustment">
+                                                            <li class="dashboard-box-li" data-task-id="{{$task->id}}">
+                                                                <!-- Job Listing -->
+                                                                <div class="job-listing width-adjustment">
 
-                                                                <!-- Job Listing Details -->
-                                                                <div class="job-listing-details">
+                                                                    <!-- Job Listing Details -->
+                                                                    <div class="job-listing-details">
 
-                                                                    <!-- Details -->
-                                                                    <div class="job-listing-description">
-                                                                        <h3 class="job-listing-title m-0"><a
-                                                                                href="#">{{$task->name}}</a> <span
-                                                                                class="dashboard-status-button {{isset($task->completed_at)?"green":"red"}}">
+                                                                        <!-- Details -->
+                                                                        <div class="job-listing-description">
+                                                                            <h3 class="job-listing-title m-0"><a
+                                                                                    href="#">{{$task->name}}</a> <span
+                                                                                    class="dashboard-status-button {{isset($task->completed_at)?"green":"red"}}">
                                                                                 {!!isset($task->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($task->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
                                                                             </span>
-                                                                        </h3>
+                                                                            </h3>
 
 
-                                                                        <!-- Job Listing Footer -->
-                                                                        <div class="job-listing-footer">
-                                                                            <ul style="padding-left: 1.1rem">
-                                                                                <li class="my-2">
-                                                                                    Ονοματεπώνυμο : {{App\Models\User::find($task->mail->user_id)->fullname}}
-                                                                                </li>
-                                                                            </ul>
+                                                                            <!-- Job Listing Footer -->
+                                                                            <div class="job-listing-footer">
+                                                                                <ul style="padding-left: 1.1rem">
+                                                                                    <li class="my-2">
+                                                                                        Ονοματεπώνυμο
+                                                                                        : {{App\Models\User::find($task->mail->user_id)->fullname}}
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <!-- Task Details -->
-                                                            <ul class="dashboard-task-info">
-                                                                <li>
-                                                                    <strong>{{$task->ext}}</strong>
-                                                                    <span>Τυπος</span>
-                                                                </li>
-                                                                <li>
-                                                                    <strong>
-                                                                        <i class="mdi font-16 {{\App\Models\Media::$icons[$task->ext]}}"></i>
-                                                                    </strong>
-                                                                    <span>View</span>
-                                                                </li>
-                                                                <li>
-                                                                    <strong>{{$task->created_at->format("d/m/Y")}}</strong><span>Στάλθηκε</span>
-                                                                </li>
-                                                            </ul>
+                                                                <!-- Task Details -->
+                                                                <ul class="dashboard-task-info">
+                                                                    <li>
+                                                                        <strong>{{$task->ext}}</strong>
+                                                                        <span>Τυπος</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <strong>
+                                                                            <i class="mdi font-16 {{\App\Models\Media::$icons[$task->ext]}}"></i>
+                                                                        </strong>
+                                                                        <span>View</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <strong>{{$task->created_at->format("d/m/Y")}}</strong><span>Στάλθηκε</span>
+                                                                    </li>
+                                                                </ul>
 
-                                                            <!-- Buttons -->
-                                                            <div class="buttons-to-right always-visible">
-                                                                @hasanyrole("admin|super-admin|instructor")
-                                                                <button class="js-complete-task btn  {{isset($task->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
-                                                                    {{isset($task->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
-                                                                </button>
-                                                                @endhasanyrole
-                                                                <a href="#" class="button gray ripple-effect ico">
-                                                                    <i class="uil-comments-alt"></i>
-                                                                </a>
+                                                                <!-- Buttons -->
+                                                                <div class="buttons-to-right always-visible">
+                                                                    @hasanyrole("admin|super-admin|instructor")
+                                                                    <button
+                                                                        class="js-complete-task btn  {{isset($task->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
+                                                                        {{isset($task->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
+                                                                    </button>
+                                                                    @endhasanyrole
+                                                                    <a href="#" class="button gray ripple-effect ico">
+                                                                        <i class="uil-comments-alt"></i>
+                                                                    </a>
                                                                     <a href="#" class="button gray ripple-effect ico"><i
                                                                             class="dripicons-document-delete"></i></a>
-                                                            </div>
-                                                        </li>
+                                                                </div>
+                                                            </li>
                                                         @endif
                                                     @empty
                                                         <h1>dfd</h1>
