@@ -36,7 +36,7 @@
 
                     <div class="cnt-title " style="flex:1">
                         <label class="ml-2" for="curator-task">Μάθημα </label>
-                        <select id="curator-task" class="form-control select2 ml-2 " data-toggle="select2">
+                        <select id="curator-task" class="form-control select2 ml-2 " data-toggle="select2" style="width: 18.1rem;">
                             @foreach(auth()->user()->courses as $course)
                                 <option value="{{$course->curator->id}}">{{$course->title}}</option>
                             @endforeach
