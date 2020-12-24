@@ -724,7 +724,7 @@ const onCompletedTask = () => {
     $(".discussions-right").off();
     $(".discussions-right").on("click", ".js-complete-task", async function () {
         const taskId = $(this).closest(".dashboard-box-li").data("task-id")
-        const {data, status, completed_at} = await axios.patch(`/discussion/complete-task/${taskId}`)
+        const {data, status} = await axios.patch(`/discussion/complete-task/${taskId}`)
 
         if (status === 200) {
             if (data.completed_at) {

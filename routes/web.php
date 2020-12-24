@@ -43,8 +43,6 @@ Route::get("/delete/all-post",function (){
 });
 Route::get("/delete/attachments",function (){
     DB::table("attachments")->delete();
-
-
     dump(\App\Models\Attachment::all());
 });
 //mhn ta svisis akoma mexri na teleiwsw me ta comments

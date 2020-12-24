@@ -257,9 +257,10 @@
                 upload: {
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                        $(".js-send-task").hide();
                     },
                     complete: function (response) {
-
+                        $(".js-send-task").show();
                         let attachmentFile = []
                         $(".alert-body").remove();
                         $(".redactor-file-item").each((idx, file) => {

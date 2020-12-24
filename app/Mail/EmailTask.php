@@ -49,7 +49,6 @@ class EmailTask extends Mailable {
                     ]
                 );
 
-                Attachment::where("course_id",0)->delete();
                 $email->attach(public_path($filePath->path));
             }
         }
