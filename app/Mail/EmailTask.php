@@ -19,11 +19,12 @@ class EmailTask extends Mailable {
      *
      * @return void
      */
-    public $mailInfo;
+    public $homework;
 
-    public function __construct($mailInfo)
+    public function __construct($mailInfo,$homework)
     {
         $this->mailInfo = $mailInfo;
+        $this->homework = $homework;
 //        dd( json_decode($this->mailInfo->attachment));
     }
 
@@ -34,7 +35,6 @@ class EmailTask extends Mailable {
      */
     public function build()
     {
-
         $email = $this->from($this->mailInfo->sender->email)
             ->to($this->mailInfo->receiver->email)
             ->subject($this->mailInfo->subject)
@@ -45,7 +45,8 @@ class EmailTask extends Mailable {
             {
                 Attachment::findOrFail($filePath->id)->update(
                     [
-                        "course_id" => $this->mailInfo->course->id
+                        "attachmentable_type" => "App\Models\Homework",
+                        "attachmentable_id" => $this->homework->id
                     ]
                 );
 

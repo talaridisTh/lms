@@ -11,6 +11,11 @@ class Attachment extends Model {
 
     protected $guarded = [];
 
+    public function attachmentable()
+    {
+        return $this->morphTo();
+    }
+
     public function mail()
     {
         return $this->belongsTo(Mail::class);

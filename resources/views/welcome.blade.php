@@ -1,4 +1,4 @@
 <div>
-    {!! $mailInfo->body !!}
+{{--    {!! $mailInfo->body !!}--}}
 </div>
 

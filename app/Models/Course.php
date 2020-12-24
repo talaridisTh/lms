@@ -12,8 +12,8 @@ use League\Glide\Urls\UrlBuilderFactory;
 class Course extends Model {
 
     use SoftDeletes;
-	use HasFactory;
-	use UrlCreator;
+    use HasFactory;
+    use UrlCreator;
 
     public function media()
     {
@@ -26,12 +26,12 @@ class Course extends Model {
 
         return $this->belongsTo(User::class, "user_id");
     }
+
     public function attachments()
     {
 
         return $this->hasMany(Attachment::class);
     }
-
 
     public function topics()
     {
@@ -42,7 +42,7 @@ class Course extends Model {
     public function materials()
     {
 
-        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at',"guest_status");
+        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at', "guest_status");
     }
 
     public function bundles()
@@ -121,16 +121,11 @@ class Course extends Model {
     public static function materialsOrderByPriority($courseId)
     {
 
-
-
-      return Course::find($courseId)->materials()
+        return Course::find($courseId)->materials()
             ->where("type", "!=", "Announcement")
             ->where("course_material.status", 1)
             ->orderBy("priority", 'asc')
             ->get();
-
-
-
     }
 
     public static function nextMaterial($courseId, $materialPriority)
@@ -191,13 +186,12 @@ class Course extends Model {
         }
     }
 
-    public function imageUrlSmall() {
+    public function imageUrlSmall()
+    {
         // Set complicated sign key
         $signkey = 'The strongest of all warriors are these two, patience and time...';
-
         // Create an instance of the URL builder
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
-
         // Generate a URL
         $url = $urlBuilder->getUrl($this->attributes['cover'], ["w" => 400, "h" => 225, "fit" => "crop"]);
 

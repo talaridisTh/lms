@@ -7,6 +7,7 @@ use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Course;
 use App\Http\Controllers\Controller;
+use App\Models\Homework;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
@@ -319,14 +320,14 @@ class DiscussionController extends Controller {
         {
 //            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
             $coursesId = auth()->user()->courses->pluck("id");
-            $courseMedia = Attachment::whereIn("course_id", $coursesId)->get();
+            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
             $course = $courseMedia->map(function ($media) {
                 return Course::findOrFail($media->course_id);
             });
         } elseif (auth()->user()->hasAnyRole(["instructor", "admin", "super-admin"]))
         {
             $coursesId = Course::where("user_id", auth()->id())->pluck("id");
-            $courseMedia = Attachment::whereIn("course_id", $coursesId)->get();
+            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
             $course = $courseMedia->map(function ($media) {
                 return Course::findOrFail($media->course_id);
             });
@@ -355,8 +356,14 @@ class DiscussionController extends Controller {
     public function deleteTask($taskId)
     {
 
+
+        $countAttach = Attachment::where("attachmentable_id",Attachment::findOrFail($taskId)->attachmentable_id)->count();
+        if ($countAttach==1){
+            Homework::where("id",Attachment::findOrFail($taskId)->attachmentable->id)->delete();
+        }
         Attachment::findOrFail($taskId)->delete();
-        Attachment::where("course_id",0)->delete();
+        Attachment::where("attachmentable_id",0)->delete();
+
         return $this->myTask();
     }
 
@@ -369,8 +376,8 @@ class DiscussionController extends Controller {
         $mailInfo->receiver = User::findOrFail(3);
         $mailInfo->course = Course::where("title", $request->course)->first();
         $mailInfo->attachment = $request->attachment;
-        Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo));
-        $this->storeMail($mailInfo);
+       $homework=  $this->storeHomework($mailInfo);
+        Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo,$homework));
 
         return $this->myTask();
     }
@@ -399,7 +406,6 @@ class DiscussionController extends Controller {
                 }
             }
         }
-
         return response()->json($res);
     }
 
@@ -410,7 +416,6 @@ class DiscussionController extends Controller {
         $name = $this->fileName($file);
         $attachment = new Attachment();
         $attachment->original_name = $name->original;
-        $attachment->course_id = 0;
         $attachment->name = $name->slug;
         $attachment->type = 6;
         $attachment->rel_path = "/storage/attachments/$date/$name->full";
@@ -423,30 +428,33 @@ class DiscussionController extends Controller {
         return $attachment;
     }
 
-    private function storeMail($mail)
+    private function storeHomework($mail)
     {
-        $recipients = [
-            "ids" => [auth()->id()],
-            "emails" => []
-        ];
-        $mailCreated = \App\Models\Mail::create([
-            'user_id' => auth()->id(),
+
+         $homework = Homework::create([
+            'student_id' => auth()->id(),
+            'instructor_id' => $mail->receiver->id,
             'subject' => $mail->subject,
             'content' => $mail->body ?? auth()->user()->fullname,
-            'recipients' => json_encode($recipients),
             'sent_at' => now()
         ]);
         if (isset($mail->attachment))
         {
-            foreach (json_decode($mail->attachment) as $filePath)
-            {
-                Attachment::findOrFail($filePath->id)->update(
-                    [
-                        "mail_id" => $mailCreated->id
-                    ]
-                );
-            }
+
+            Homework::find($homework->id)->update([
+               "course_id"=>$mail->course->id
+            ]);
+//            foreach (json_decode($mail->attachment) as $filePath)
+
+//            {
+//                Attachment::findOrFail($filePath->id)->update(
+//                    [
+//                        "mail_id" => $mailCreated->id
+//                    ]
+//                );
+//            }
         }
+        return    $homework;
     }
 
 }
