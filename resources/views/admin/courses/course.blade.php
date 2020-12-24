@@ -736,9 +736,9 @@
 								</div>
 							</div>
 
-							<div class="dropdown ml-2">
+							<div id="active-material-bulk-cnt" class="dropdown ml-2">
 								<button id="active-material-bulk" class="btn btn-secondary dropdown-toggle"
-									type="button" data-toggle="dropdown" data-text="Επιλογές"
+									data-toggle="dropdown" data-text="Επιλογές"
 									aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
@@ -763,14 +763,9 @@
 										<a class="dropdown-toggle dropdown-item py-2 cursor-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Μεταφορά σε Section
 										</a>
-										<div class="dropdown-menu py-0">
+										<div id="section-selection-dropdown" class="dropdown-menu py-0">
 
-											@foreach ($sections as $section)
-												
-												<a class="js-move-to-section dropdown-item py-2" href="#"
-													data-section-id="{{ $section->id }}">{{ $section->title }}</a>
-												<div class="dropdown-divider my-0"></div>
-											@endforeach
+											<!-- content builds with ajax -->
 
 										</div>
 									</div>

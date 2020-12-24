@@ -334,4 +334,33 @@ class CourseController extends Controller
 		echo json_encode($data);
 	}
 
+	public function moveToSection(Request $request, Course $course, Material $material) {
+		
+		$course->materials()->detach($request->ids);
+		$course->materials()->orderBy("priority")
+			->each( function($material) {
+				static $counter = 1;
+				$material->pivot->update(["priority" => $counter++]);
+			});
+		
+		$priority = $material->chapters()->count() + 1;
+
+		foreach($request->ids as $key => $id) {
+			$material->chapters()->attach($id, [
+				"priority" => $key + $priority,
+				"publish_at" => Carbon::now()
+			]);
+		}
+
+		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
+		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
+	}
+
+	public function courseSections(Course $course) {
+
+		return $course->materials()
+			->where("type", "Section")->select("materials.id", "materials.title")
+			->get();
+	}
+
 }

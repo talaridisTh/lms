@@ -1568,7 +1568,6 @@ function highlightCheckboxInit() {
 		const materialId = this.dataset.materialId;
 		const status = this.checked ? 1 : 0;
 
-		// console.log(this);
 		toggleHighlight([materialId], status);
 	});
 
@@ -2221,6 +2220,14 @@ function checkEmpty( container, elmClass) {
 	}
 
 	return valid;
+}
+
+function dropdownBuilder(id, title) {
+
+	return `
+		<a class="js-move-to-section dropdown-item py-2" href="#" data-section-id="${id}">${title}</a>
+		<div class="dropdown-divider my-0"></div>
+	`;
 }
 
 function createDateElm( id ) {
@@ -2888,7 +2895,7 @@ dragula( [dragArea], {})
 	});
 })
 
-$(".js-move-to-section").on("click", function() {
+function moveToSectionHandler() {
 	const sectionId = this.dataset.sectionId;
 	const materials = $(".js-course-material-checkbox:checked");
 	const ids = [];
@@ -2899,5 +2906,36 @@ $(".js-move-to-section").on("click", function() {
 		}
 	}
 
-	console.log(ids);
+	axios.post(`/course-ajax/${courseId}/move-to-section/${sectionId}`, {
+		ids
+	})
+	.then( res => {
+		$("#section-accordion").html(res.data);
+		courseMaterialsTable.ajax.reload(null, false);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+	})
+}
+
+$("#active-material-bulk-cnt").on("show.bs.dropdown", function() {
+
+	axios.get(`/course-ajax/${courseId}/sections`)
+	.then( res => {
+
+		$(".js-move-to-section").off("click", moveToSectionHandler);
+		let content = "";
+
+		for ( let i = 0; i < res.data.length; i ++ ) {
+			content += dropdownBuilder(res.data[i].id, res.data[i].title);
+		}
+
+		$("#section-selection-dropdown").html(content);
+		$(".js-move-to-section").on("click", moveToSectionHandler);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	})
 })
