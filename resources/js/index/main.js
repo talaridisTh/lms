@@ -42,13 +42,10 @@ const addWhatchlist = () => {
         );
 
 
-
-
-
     })
 }
 
-const addWhatchlistAxios = async (modelId, userId,model) => {
+const addWhatchlistAxios = async (modelId, userId, model) => {
     const heart = $(".add-watchlist")[0].children[0];
     const button = $(".add-watchlist > span")[0];
 
@@ -59,19 +56,16 @@ const addWhatchlistAxios = async (modelId, userId,model) => {
         })
 
 
-        if (res.data=="remove") {
+        if (res.data == "remove") {
             utilities.toastAlert("info", `Αφαιρέθηκε ήδη στα Αγαπημένα`)
-            heart.className="mdi mdi-heart-outline font-16 mr-2"
+            heart.className = "mdi mdi-heart-outline font-16 mr-2"
             button.textContent = "Προσθήκη στα αγαπημένα"
 
 
-
-
-        } else if (res.data=="add") {
+        } else if (res.data == "add") {
             utilities.toastAlert("success", `Προστέθηκε στα αγαπήμενα`)
-            heart.className="mdi mdi-cards-heart font-16 mr-2"
+            heart.className = "mdi mdi-cards-heart font-16 mr-2"
             button.textContent = "Αφαίρεση απο τα αγαπημένα"
-
 
 
         }
@@ -80,7 +74,6 @@ const addWhatchlistAxios = async (modelId, userId,model) => {
     }
 
 }
-
 
 
 export default {

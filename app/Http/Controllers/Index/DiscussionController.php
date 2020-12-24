@@ -111,23 +111,38 @@ class DiscussionController extends Controller {
     public function storeThread(Request $request)
     {
 
-        $request->validate([
-            "title" => "required",
-            "course" => "required",
-        ]);
-        Post::create([
-            "title" => $request->title,
-            "slug" => Str::slug($request->title, "-"),
-            "user_id" => auth()->id(),
-        ]);
-        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
-            ->paginate(10);
+        $attachment = Attachment::find(63);
 
-        return view("index.discussions.discussions", [
-            "posts" => $posts,
+     $post =   $attachment->post()->create([
+            "title" => "title",
+            "slug" => "slug",
+            "user_id" => 3,
+        ]);
+
+
+        $post = Post::findOrFail($post->id);
+        return view("components.index.discussions.discussions-task-posts", [
+            "post" => $post,
             "comment" => Comment::all(),
             "courses" => $this->course
         ]);
+//        $request->validate([
+//            "title" => "required",
+//            "course" => "required",
+//        ]);
+//        Post::create([
+//            "title" => $request->title,
+//            "slug" => Str::slug($request->title, "-"),
+//            "user_id" => auth()->id(),
+//        ]);
+//        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
+//            ->paginate(10);
+//
+//        return view("index.discussions.discussions", [
+//            "posts" => $posts,
+//            "comment" => Comment::all(),
+//            "courses" => $this->course
+//        ]);
     }
 
     public function storeReply(Request $request)
@@ -137,6 +152,8 @@ class DiscussionController extends Controller {
         $request->validate([
             "body" => "required",
         ]);
+
+
         Comment::create([
             "body" => $request->body,
             "user_id" => auth()->id(),

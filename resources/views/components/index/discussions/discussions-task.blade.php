@@ -88,19 +88,25 @@
                                 @endphp
                                 @endrole
                                 <div class="card mb-0">
-                                    <div class="card-header" data-all-task="{{isset($tasks)?count($tasks):""}}" data-completed-task="{{isset($completedTask)?count($completedTask):""}}" id="head-{{$course->id}}"
+                                    <div class="card-header" data-all-task="{{isset($tasks)?count($tasks):""}}"
+                                         data-completed-task="{{isset($completedTask)?count($completedTask):""}}"
+                                         id="head-{{$course->id}}"
                                          style="border-radius: 3px; ">
                                         <h5 class="m-0">
                                             <a class="custom-accordion-title d-block {{$course->slug}}"
                                                data-toggle="collapse" href="#collapse-{{$course->slug}}"
                                                aria-expanded="true" aria-controls="collapse-{{$course->slug}}"
                                                data-course-name="{{$course->title}}">
-                                                <div class="headline d-flex justify-content-between align-items-center ">
+                                                <div
+                                                    class="headline d-flex justify-content-between align-items-center ">
                                                     <h3>
-                                                        <i class="icon-material-outline-assignment" style="margin-left: -6px;"></i> {{$course->title}}
+                                                        <i class="icon-material-outline-assignment"
+                                                           style="margin-left: -6px;"></i> {{$course->title}}
                                                     </h3>
                                                     @hasanyrole('instructor|admin|super-admin')
-                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($tasks)?count($tasks):""}} </span></h5>
+                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span
+                                                                class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($tasks)?count($tasks):""}} </span>
+                                                    </h5>
                                                     @endhasanyrole
                                                 </div>
                                             </a>
@@ -128,8 +134,13 @@
 
                                                                         <!-- Details -->
                                                                         <div class="job-listing-description">
-                                                                            <h3 class="job-listing-title m-0 "><a class="mr-2"
-                                                                                    href="#">{{$task->name}}</a> <span
+                                                                            <h3 class="job-listing-title m-0 ">
+                                                                                <a class="mr-2" href="#">{{$task->name}}
+                                                                                    .{{$task->ext}}</a>
+                                                                                <span
+                                                                                    data-toggle="tooltip"
+                                                                                    data-placement="top"
+                                                                                    title="{{isset($task->completed_at)?"":"Aναμονή ελέγχου καθηγητή"}}!"
                                                                                     class="dashboard-status-button m-0 p-0 {{isset($task->completed_at)?"green":"red"}}">
                                                                                 {!!isset($task->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($task->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
                                                                             </span>
@@ -160,7 +171,12 @@
                                                                         <strong>
                                                                             <i class="mdi font-16 {{\App\Models\Media::$icons[$task->ext]}}"></i>
                                                                         </strong>
-                                                                        <span>View</span>
+                                                                        <a href="{{$task->rel_path}}"
+                                                                           target="_blank"
+                                                                           data-toggle="tooltip"
+                                                                           data-placement="bottom"
+                                                                           data-original-title="Προβολή {{$task->ext}}"
+                                                                           class="text-hover-underline cursor-pointer">View</a>
                                                                     </li>
                                                                     <li>
                                                                         <strong>{{$task->created_at->format("d/m/Y (H:i)")}}</strong><span>Στάλθηκε</span>
@@ -175,11 +191,19 @@
                                                                         {{isset($task->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
                                                                     </button>
                                                                     @endhasanyrole
-                                                                    <a href="#" class="button gray ripple-effect ico">
+                                                                    <a href="#"
+                                                                       data-toggle="tooltip"
+                                                                       data-placement="bottom"
+                                                                       data-original-title="Eπικοινωνία με καθηγητή"
+                                                                       class="button gray ripple-effect ico first-thread">
                                                                         <i class="uil-comments-alt"></i>
                                                                     </a>
-                                                                    <a href="#" class="button gray ripple-effect  js-remove-task ico"><i
-                                                                            class="dripicons-document-delete"></i></a>
+                                                                    <a href="#"
+                                                                       data-toggle="tooltip"
+                                                                       data-placement="bottom"
+                                                                       data-original-title="Αφαίρεση εργασιας"
+                                                                       class="button gray ripple-effect  js-remove-task ico">
+                                                                        <i class="dripicons-document-delete"></i></a>
                                                                 </div>
                                                             </li>
                                                         @endif
@@ -205,44 +229,63 @@
         </div>
     </div>
 </div>
-<script>
-    $R('#editor-task', {
-        fileUpload: '/discussion/upload-task',
-        fileAttachment: '#file-target',
-        callbacks: {
-            upload: {
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-                },
-                complete: function (response) {
+<div id="new-post-task" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="post-body">Εισάγετε ερώτηση</label>
+                    <textarea class="form-control" id="post-body" name="body" form="form-create-thread" rows="5"
+                              placeholder="Εισάγετε ερώτηση"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary  js-task-create">Post</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal-dialog -->
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+        $R('#editor-task', {
+            fileUpload: '/discussion/upload-task',
+            fileAttachment: '#file-target',
+            callbacks: {
+                upload: {
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                    },
+                    complete: function (response) {
 
-                    let attachmentFile = []
-                    $(".alert-body").remove();
-                    $(".redactor-file-item").each((idx, file) => {
-                        let dataAttr = $(file).find("a").data('file')
-                        attachmentFile.push({
-                            id: dataAttr,
-                            path: $(file).find("a").attr('href')
-                        });
+                        let attachmentFile = []
+                        $(".alert-body").remove();
+                        $(".redactor-file-item").each((idx, file) => {
+                            let dataAttr = $(file).find("a").data('file')
+                            attachmentFile.push({
+                                id: dataAttr,
+                                path: $(file).find("a").attr('href')
+                            });
 
-
-                    })
-                    if ($("#attachment-task").length) {
-                        $("#attachment-task").remove()
-                    }
-                    $("#email-form").append(
-                        $('<input >', {
-                            type: 'hidden',
-                            value: JSON.stringify(attachmentFile),
-                            id: "attachment-task"
                         })
-                    );
-                }
+                        if ($("#attachment-task").length) {
+                            $("#attachment-task").remove()
+                        }
+                        $("#email-form").append(
+                            $('<input >', {
+                                type: 'hidden',
+                                value: JSON.stringify(attachmentFile),
+                                id: "attachment-task"
+                            })
+                        );
+                    }
+
+                },
 
             },
 
-        },
+        });
 
-    });
-
-</script>
+    </script>

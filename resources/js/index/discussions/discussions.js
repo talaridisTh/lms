@@ -1,4 +1,6 @@
 //pagination event
+import Swal from "sweetalert2";
+
 $(document).on("click", ".pagination a", async function (e) {
     e.preventDefault();
     const href = this.href;
@@ -20,7 +22,7 @@ $(document).on("click", ".pagination a", async function (e) {
         onHideBody()
     }
 })
-$(".first-thread").hide();
+// $(".first-thread").hide();
 const eventTopBar = () => {
     $(".discussions-right").on("change", ".filter-sidebar", async function () {
 
@@ -283,6 +285,7 @@ $(document).on("keyup", function (e) {
 const onFirstReplayBtnEvent = () => {
 
     $(document).on("click", ".first-thread-replay", function () {
+
         let postId = $(".main-post")[0].dataset.postId;
         let parentId = 0;
 
@@ -635,7 +638,7 @@ const sendTask = () => {
     validationUploadTest()
 
     $(".discussions-right").on("click", ".js-send-task", async function (e) {
-        if (!$("#file-target").children().length && $('#editor-task').val().length <= 11) {
+        if (!$("#file-target").children().length && $('#editor-task').val().length == 11) {
             if (!$(".alert-body").length) {
                 $("<p class='alert-body p-2 bg-transparent text-danger'>* Eισάγετε εικόνα η κείμενο στο πεδίο</p>").insertAfter(".redactor-box");
             }
@@ -659,6 +662,7 @@ const sendTask = () => {
             let dataAttr = $("#curator-task option:selected").text();
             let attacmentVal = $("#attachment-task").val()
             $(".discussions-right").html($(data))
+            toastAlert("success","Επιτυχής αποστολή")
             if (attacmentVal) {
                 $(".show-task").addClass("active")
                 $("#upload-task-content").removeClass("active show")
@@ -688,26 +692,30 @@ const removeTask = () => {
         e.preventDefault();
         const taskId = $(this).closest(".dashboard-box-li").data("task-id")
         const collapseId = $(this).closest("[data-parent]").attr('id');
-        try {
-            const {data, status} = await axios.delete(`/discussion/delete-task/${taskId}`)
-            if (status == 200) {
-                $(".discussions-right").html($(data))
-                validationUploadTest();
-                if ($('#accordionExample').children().length) {
-                    $("#show-task-content").addClass("active");
-                    $("#upload-task-content").removeClass("active");
-                    $(".show-task").addClass("active");
-                    $(".upload-task").removeClass("active");
+        const {isConfirmed} = await toastAlertDelete();
+        if (isConfirmed) {
+            try {
+                const {data, status} = await axios.delete(`/discussion/delete-task/${taskId}`)
+                if (status == 200) {
+                    $(".discussions-right").html($(data))
+                    validationUploadTest();
+                    toastAlert("success","H εργασία αφαιρέθηκε")
+                    if ($('#accordionExample').children().length) {
+                        $("#show-task-content").addClass("active");
+                        $("#upload-task-content").removeClass("active");
+                        $(".show-task").addClass("active");
+                        $(".upload-task").removeClass("active");
 
-                    if ($(`#${collapseId}`).children().length) {
-                        $(`#${collapseId}`).addClass("show").prev().addClass("border-left-card");
+                        if ($(`#${collapseId}`).children().length) {
+                            $(`#${collapseId}`).addClass("show").prev().addClass("border-left-card");
+                        }
+                    } else {
+                        $(".show-task").hide();
                     }
-                } else {
-                    $(".show-task").hide();
                 }
+            } catch (e) {
+                console.log(e)
             }
-        } catch (e) {
-            console.log(e)
         }
     });
 }
@@ -723,10 +731,12 @@ const onCompletedTask = () => {
                 $(this).closest(".dashboard-box-li").find(".dashboard-status-button").removeClass("red").addClass("green").html(`Ελέγχθηκε ${getDate()}`)
                 $(this).closest(".dashboard-box-li").find(".js-complete-task ").removeClass("btn-outline-custom-primary").addClass("btn-outline-danger")
                 $(this).text("Δεν ελέγχθηκε");
+                toastAlert("success","H εργασία ελέγχθηκε")
             } else {
                 $(this).closest(".dashboard-box-li").find(".dashboard-status-button").removeClass("green").addClass("red").html(`Αναμονή..`)
                 $(this).closest(".dashboard-box-li").find(".js-complete-task ").removeClass("btn-outline-danger").addClass("btn-outline-custom-primary")
                 $(this).text("Ελέγχθηκε");
+                toastAlert("success","Αφαίρεση ελέγχου")
             }
             let completedTask = $(this).closest(".dashboard-box-list").find(".green").length;
             $(this).closest(".card").find(".js-num-task").text(completedTask)
@@ -769,6 +779,31 @@ function slugify(string) {
         .replace(/^-+/, "")
         .replace(/-+$/, "");
 }
+
+function toastAlertDelete(text, icon = "warning") {
+    return Swal.fire({
+        title: 'Είστε σίγουρος/η;',
+        text: text,
+        icon: icon,
+        showCancelButton: true,
+        confirmButtonColor: '#ff5b5b',
+        confirmButtonText: 'Ναί, διαγραφή!',
+        cancelButtonText: 'Άκυρο'
+    });
+}
+
+function toastAlert(icon, message) {
+    Swal.fire({
+        toast: 'true',
+        position: 'top-end',
+        icon: icon,
+        title: message,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
+    });
+}
+
 
 //all thread sidebar
 $(".discussions-left").on("click", "#filter-all-threads", async function () {
@@ -904,6 +939,7 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
             onCompletedTask();
             styleCollapse();
             removeTask();
+            onFirstReplayBtnEvent();
             if (roles.includes($(this).data("role-user"))) {
                 if (!$('#accordionExample').children().length) {
                     $(".discussions-right").hide()

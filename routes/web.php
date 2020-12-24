@@ -34,15 +34,20 @@ Route::get('/clear', function () {
 });
 //mhn ta svisis akoma mexri na teleiwsw me ta comments
 Route::get("/delete/all-post",function (){
-    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all(),\App\Models\Media::all(),\App\Models\Mediable::all()]);
+    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all(),\App\Models\Attachment::all()]);
     DB::table("posts")->delete();
     DB::table("likables")->delete();
 
-    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all(),\App\Models\Media::all(),\App\Models\Mediable::all()]);
+    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all()]);
 
 });
+Route::get("/delete/attachments",function (){
+    DB::table("attachments")->delete();
 
 
+    dump(\App\Models\Attachment::all());
+});
+//mhn ta svisis akoma mexri na teleiwsw me ta comments
 Route::get("/test", "Index\HomeController@test")->name("user.test");
 //!########################################################
 //! Dashboard routes
