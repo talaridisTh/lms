@@ -2887,3 +2887,17 @@ dragula( [dragArea], {})
 		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
 	});
 })
+
+$(".js-move-to-section").on("click", function() {
+	const sectionId = this.dataset.sectionId;
+	const materials = $(".js-course-material-checkbox:checked");
+	const ids = [];
+
+	for ( let i = 0; i < materials.length; i++ ) {
+		if( materials[i].dataset.materialType !== "Section" ) {
+			ids.push(materials[i].dataset.materialId);
+		}
+	}
+
+	console.log(ids);
+})
