@@ -303,3 +303,7 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });
+
+Route::get("/tailwind", function() {
+    return view("tailwind");
+});

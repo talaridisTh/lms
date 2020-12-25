@@ -1,12 +1,12 @@
-$mynewcolor:#328af1;
-
-.btn-custom-primary {
-    @include button-variant($mynewcolor, darken($mynewcolor, 7.5%), darken($mynewcolor, 10%), lighten($mynewcolor,5%), lighten($mynewcolor, 10%), darken($mynewcolor,30%));
-}
-
-.btn-outline-custom-primary {
-    @include button-outline-variant($mynewcolor, #222222, lighten($mynewcolor,5%), $mynewcolor);
-}
+//$mynewcolor:#328af1;
+//
+//.btn-custom-primary {
+//    @include button-variant($mynewcolor, darken($mynewcolor, 7.5%), darken($mynewcolor, 10%), lighten($mynewcolor,5%), lighten($mynewcolor, 10%), darken($mynewcolor,30%));
+//}
+//
+//.btn-outline-custom-primary {
+//    @include button-outline-variant($mynewcolor, #222222, lighten($mynewcolor,5%), $mynewcolor);
+//}
 
 .template {
     visibility: hidden;

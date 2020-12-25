@@ -1,0 +1,136 @@
+/* Border X get width  */
+.borderXwidth a {
+    position: relative;
+}
+
+.borderXwidth a:before, .borderXwidth a:after {
+    position: absolute;
+    opacity: 0;
+    width: 0%;
+    height: 2px;
+    content: '';
+    background: orangered;
+    transition: all 0.3s;
+}
+
+.borderXwidth a:before {
+    left: 0px;
+    top: 0px;
+}
+
+.borderXwidth a:after {
+    right: 0px;
+    bottom: 0px;
+}
+
+.borderXwidth a:not(:last-child):hover:before, .borderXwidth a:not(:last-child):hover:after {
+    opacity: 1;
+    width: 100%;
+}
+
+
+.container-oval {
+    height: 540px;
+    display: flex;
+    align-items: center;
+}
+
+.oval {
+    width: 394px;
+    height: 382px;
+    border-radius: 100%;
+    background-color: #d8d8d8;
+
+}
+
+.oval-1 {
+    right: 0;
+    top: 0;
+    width: 186px;
+    height: 180px;
+    background-color: #ebebeb;
+    border-radius: 100%;
+}
+
+.oval-2 {
+    left: -98px;
+    top: 200px;
+    width: 148px;
+    height: 143px;
+    background-color: #ebebeb;
+    border-radius: 100%;
+}
+
+.oval-3 {
+    left: -83px;
+    bottom: 77px;
+    width: 93px;
+    height: 90px;
+    background-color: #ebebeb;
+    border-radius: 100%;
+}
+
+
+/*.container-oval-2 {*/
+/*    height: 540px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+
+/*.oval {*/
+/*    width: 394px;*/
+/*    height: 394px;*/
+/*    border-radius: 100%;*/
+/*    background-color: #d8d8d8;*/
+
+/*}*/
+
+/*.oval-2 {*/
+/*    left: -61px;*/
+/*    top: 342px;*/
+/*    width: 143px;*/
+/*    height: 143px;*/
+/*    background-color: #ebebeb;*/
+/*    border-radius: 100%;*/
+/*}*/
+
+/*.oval-3 {*/
+/*    left: 350px;*/
+/*    top: 126px;*/
+/*    width: 93px;*/
+/*    height: 93px;*/
+/*    background-color: #ebebeb;*/
+/*    border-radius: 100%;*/
+/*}*/
+
+/*}*/
+
+
+/*.container-oval-3 {*/
+/*    height: 540px;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+
+/*.oval {*/
+/*    width: 394px;*/
+/*    height: 394px;*/
+/*    border-radius: 100%;*/
+/*    background-color: #d8d8d8;*/
+
+/*}*/
+
+/*.oval-2 {*/
+/*    left: -72px;*/
+/*    top: 312px;*/
+/*    width: 143px;*/
+/*    height: 143px;*/
+/*    background-color: #ebebeb;*/
+/*    border-radius: 100%;*/
+/*}*/
+
+
+/*}*/
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

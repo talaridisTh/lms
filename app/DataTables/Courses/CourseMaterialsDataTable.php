@@ -40,7 +40,8 @@ class CourseMaterialsDataTable extends DataTable
 			->addColumn('action', function($data) use ($request) {
 
 				return "<div class='icheck-primary'>
-							<input class='js-course-material-checkbox' data-material-id='$data->id' type='checkbox' id='$data->slug' autocomplete='off'>
+							<input class='js-course-material-checkbox' data-material-id='$data->id'
+								data-material-type='$data->type' type='checkbox' id='$data->slug' autocomplete='off'>
 							<label for='$data->slug'></label>
 						</div>
 						<a class='custom-primary add-material' href='#' data-material-id='$data->id' data-priority='".$data->pivot->priority."' data-toggle='modal' data-target='#add-additions-modal'>

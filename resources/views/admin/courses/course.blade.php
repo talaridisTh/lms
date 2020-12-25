@@ -96,8 +96,7 @@
 	</div><!-- ./additionnal content modal -->
 
 	<div class="modal fade" id="remainings-files-modal" tabindex="-1" role="dialog"
-		 aria-labelledby="remainings-files-modalLabel"
-		 aria-hidden="true">
+		 aria-labelledby="remainings-files-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
 				<div class="modal-header modal-colored-header bg-primary">
@@ -437,7 +436,7 @@
 
 			<div class="tab-content">
 
-				<div id="settings" class="tab-pane mb-3 show active">
+				<div id="settings" class="tab-pane mb-3">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
 							<form id="edit-course-form" action="{{ "/dashboard/courses/$course->slug" }}"
@@ -706,7 +705,7 @@
 					</div>
 				</div><!-- settings tab-pane -->
 
-				<div id="materials" class="tab-pane table-cnt mb-3">
+				<div id="materials" class="tab-pane table-cnt mb-3 show active">
 
 					<div class="row my-3">
 						<div class="col-sm-1">
@@ -737,18 +736,20 @@
 								</div>
 							</div>
 
-							<div class="dropdown ml-2">
+							<div id="active-material-bulk-cnt" class="dropdown ml-2">
 								<button id="active-material-bulk" class="btn btn-secondary dropdown-toggle"
-									type="button" data-toggle="dropdown" data-text="Επιλογές"
+									data-toggle="dropdown" data-text="Επιλογές"
 									aria-haspopup="true" aria-expanded="false" disabled>
 									Επιλογές (0)
 								</button>
 								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
 
 									<a id="remove-selection-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
+									
 									<div class="dropdown-divider my-0"></div>
+
 									<div class="btn-group dropleft dropleft-hover w-100">
-										<a class="dropdown-toggle dropdown-item py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<a class="dropdown-toggle dropdown-item py-2 cursor-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Αλλαγή κατάστασης
 										</a>
 										<div class="dropdown-menu py-0">
@@ -757,6 +758,18 @@
 											<a id="deactivate-selection" class="dropdown-item py-2" href="#">Απενεργοποίηση</a>
 										</div>
 									</div>
+
+									<div class="btn-group dropleft dropleft-hover w-100">
+										<a class="dropdown-toggle dropdown-item py-2 cursor-default" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Μεταφορά σε Section
+										</a>
+										<div id="section-selection-dropdown" class="dropdown-menu py-0">
+
+											<!-- content builds with ajax -->
+
+										</div>
+									</div>
+
 								</div>
 							</div>
 						</div>

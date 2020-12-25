@@ -2,28 +2,28 @@
 
 
 @section('style')
-<style>
+    <style>
 
-    .count-number {
-        font-weight: bold;
-        line-height: 80px;
-        text-align: center;
-        font-size: 60px;
-        font-weight: 700;
-    }
+        .count-number {
+            font-weight: bold;
+            line-height: 80px;
+            text-align: center;
+            font-size: 60px;
+            font-weight: 700;
+        }
 
-    .line {
-        border-bottom: chocolate 3px solid;
-        margin: auto;
-    }
+        .line {
+            border-bottom: chocolate 3px solid;
+            margin: auto;
+        }
 
-    .splide__slide img {
-        width: 100%;
-        height: auto;
-    }
+        .splide__slide img {
+            width: 100%;
+            height: auto;
+        }
 
 
-</style>
+    </style>
 @endsection
 
 @section('content')
@@ -34,8 +34,8 @@
                 <h2 class="h2-custom">Βάλτε τωρα τη Ρομποτική στο σχολείο σας</h2>
                 <div class="d-flex flex-column span-custom mb-3">
                     <p class="p-custom">
-                    <span class="mb-1">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και προγραμματισμού για παιδιά.</span>
-                    <span>Μπες στο δίκτυο συνεργατών. Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</span>
+                        <span class="mb-1">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και προγραμματισμού για παιδιά.</span>
+                        <span>Μπες στο δίκτυο συνεργατών. Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</span>
                     </p>
                 </div>
                 <button class="btn-custom btn btn-info btn-lg text-light  ">
@@ -182,7 +182,7 @@
         </div>
         @foreach( $arrayBanners as  $key=>  $banners)
             <div id="card-slider-{{$key}}" class="splide">
-            @if($banners->status==1)
+                @if($banners->status==1)
                     <div class="splide__track">
                         <ul class="splide__list">
                             @foreach($banners->models as $banner)
@@ -199,7 +199,7 @@
                         </ul>
 
                     </div>
-            @endif
+                @endif
             </div>
 
         @endforeach

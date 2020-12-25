@@ -48,6 +48,8 @@ Route::prefix("course-ajax")->group(function() {
 	Route::patch('{course:id}/gallery-sort', [CourseAjaxController::class, "gallerySort"]);
 	Route::patch('{course:id}/publish-material', [CourseAjaxController::class, "publishMaterial"]);
 	Route::patch('{course:id}/edit-publish', [CourseAjaxController::class, "editPublish"]);
+	Route::post("{course:id}/move-to-section/{material:id}", [CourseAjaxController::class, "moveToSection"]);
+	Route::get("{course:id}/sections", [CourseAjaxController::class, "courseSections"]);
 });
 
 Route::prefix("section-ajax")->group(function() {

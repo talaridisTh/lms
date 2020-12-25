@@ -36,7 +36,7 @@
 
                     <div class="cnt-title " style="flex:1">
                         <label class="ml-2" for="curator-task">Μάθημα </label>
-                        <select id="curator-task" class="form-control select2 ml-2 " data-toggle="select2">
+                        <select id="curator-task" class="form-control select2 ml-2 " data-toggle="select2" style="width: 18.1rem;">
                             @foreach(auth()->user()->courses as $course)
                                 <option value="{{$course->curator->id}}">{{$course->title}}</option>
                             @endforeach
@@ -75,15 +75,16 @@
                             @foreach($courses as $course)
                                 @hasanyrole('instructor|admin|super-admin')
                                 @php
-                                    $tasks =\App\Models\Attachment::where("course_id", $course->id )->get();
-                                    $completedTask =\App\Models\Attachment::where("course_id", $course->id )->where("completed_at", "!=" ,null)->get();
+                                    $tasks =\App\Models\Homework::where("course_id", $course->id )->get();
+                                    $completedTask =\App\Models\Attachment::where("attachmentable_id", $course->id )->where("completed_at", "!=" ,null)->get();
+                                    $allTask =\App\Models\Attachment::where("attachmentable_id", $course->id )->get();
                                 @endphp
                                 @endhasanyrole
 
                                 @role("student")
                                 @php
                                     $courseIds = auth()->user()->courses->pluck("id");
-                                      $tasks =\App\Models\Attachment::whereIn("course_id",auth()->user()->courses->pluck("id") )->get();
+                                      $tasks =\App\Models\Homework::whereIn("course_id",auth()->user()->courses->pluck("id") )->where("student_id",auth()->id())->get();
 
                                 @endphp
                                 @endrole
@@ -105,7 +106,7 @@
                                                     </h3>
                                                     @hasanyrole('instructor|admin|super-admin')
                                                     <h5>Eλέγχθηκαν : <span class="js-completed-task"><span
-                                                                class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($tasks)?count($tasks):""}} </span>
+                                                                class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($allTask)?count($allTask):""}} </span>
                                                     </h5>
                                                     @endhasanyrole
                                                 </div>
@@ -124,8 +125,10 @@
                                                 <ul class="dashboard-box-list">
 
                                                     @forelse($tasks as $task)
-                                                        @if($task->mail->user_id == auth()->id() && $task->course_id == $course->id)
-                                                            <li class="dashboard-box-li" data-task-id="{{$task->id}}">
+
+                                                        @foreach($task->attachments as $attachment)
+{{--                                                        @if($task->mail->user_id == auth()->id() && $task->course_id == $course->id)--}}
+                                                            <li class="dashboard-box-li" data-task-id="{{$attachment->id}}">
                                                                 <!-- Job Listing -->
                                                                 <div class="job-listing width-adjustment">
 
@@ -135,14 +138,14 @@
                                                                         <!-- Details -->
                                                                         <div class="job-listing-description">
                                                                             <h3 class="job-listing-title m-0 ">
-                                                                                <a class="mr-2" href="#">{{$task->name}}
-                                                                                    .{{$task->ext}}</a>
+                                                                                <a class="mr-2" href="#">{{$attachment->name}}
+                                                                                    .{{$attachment->ext}}</a>
                                                                                 <span
                                                                                     data-toggle="tooltip"
                                                                                     data-placement="top"
-                                                                                    title="{{isset($task->completed_at)?"":"Aναμονή ελέγχου καθηγητή"}}!"
-                                                                                    class="dashboard-status-button m-0 p-0 {{isset($task->completed_at)?"green":"red"}}">
-                                                                                {!!isset($task->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($task->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
+                                                                                    title="{{isset($attachment->completed_at)?"":"Aναμονή ελέγχου καθηγητή"}}!"
+                                                                                    class="dashboard-status-button m-0 p-0 {{isset($attachment->completed_at)?"green":"red"}}">
+                                                                                {!!isset($attachment->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($attachment->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
                                                                             </span>
                                                                             </h3>
 
@@ -152,7 +155,7 @@
                                                                                 <ul style="padding-left: 1.1rem">
                                                                                     <li class="my-2">
                                                                                         Ονοματεπώνυμο
-                                                                                        : {{App\Models\User::find($task->mail->user_id)->fullname}}
+                                                                                        : {{App\Models\User::find($task->student_id)->fullname}}
                                                                                     </li>
                                                                                 </ul>
                                                                             </div>
@@ -164,22 +167,22 @@
                                                                 <!-- Task Details -->
                                                                 <ul class="dashboard-task-info">
                                                                     <li>
-                                                                        <strong>{{$task->ext}}</strong>
+                                                                        <strong>{{$attachment->ext}}</strong>
                                                                         <span>Τυπος</span>
                                                                     </li>
                                                                     <li>
                                                                         <strong>
-                                                                            <i class="mdi font-16 {{\App\Models\Media::$icons[$task->ext]}}"></i>
+                                                                            <i class="mdi font-16 {{\App\Models\Media::$icons[$attachment->ext]}}"></i>
                                                                         </strong>
-                                                                        <a href="{{$task->rel_path}}"
+                                                                        <a href="{{$attachment->rel_path}}"
                                                                            target="_blank"
                                                                            data-toggle="tooltip"
                                                                            data-placement="bottom"
-                                                                           data-original-title="Προβολή {{$task->ext}}"
+                                                                           data-original-title="Προβολή {{$attachment->ext}}"
                                                                            class="text-hover-underline cursor-pointer">View</a>
                                                                     </li>
                                                                     <li>
-                                                                        <strong>{{$task->created_at->format("d/m/Y (H:i)")}}</strong><span>Στάλθηκε</span>
+                                                                        <strong>{{$attachment->created_at->format("d/m/Y (H:i)")}}</strong><span>Στάλθηκε</span>
                                                                     </li>
                                                                 </ul>
 
@@ -187,8 +190,8 @@
                                                                 <div class="buttons-to-right always-visible">
                                                                     @hasanyrole("admin|super-admin|instructor")
                                                                     <button
-                                                                        class="js-complete-task btn btn-sm {{isset($task->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
-                                                                        {{isset($task->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
+                                                                        class="js-complete-task btn btn-sm {{isset($attachment->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
+                                                                        {{isset($attachment->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
                                                                     </button>
                                                                     @endhasanyrole
                                                                     <a href="#"
@@ -206,7 +209,8 @@
                                                                         <i class="dripicons-document-delete"></i></a>
                                                                 </div>
                                                             </li>
-                                                        @endif
+                                                        @endforeach
+{{--                                                        @endif--}}
                                                     @empty
                                                         <h1>dfd</h1>
                                                     @endforelse
@@ -257,10 +261,10 @@
                 upload: {
                     beforeSend: function (xhr) {
                         xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-                        $(".js-send-task").hide();
+                        // $(".js-send-task").hide();
                     },
                     complete: function (response) {
-                        $(".js-send-task").show();
+                        // $(".js-send-task").show();
                         let attachmentFile = []
                         $(".alert-body").remove();
                         $(".redactor-file-item").each((idx, file) => {
