@@ -51,10 +51,9 @@ class UserController extends Controller {
         $user->linkedin_link = $request->linkedin_link;
         $user->save();
         $user->assignRole($request->role);
-        // if ($request->sendMail)
-        // {
-        //     Mail::to(auth()->user()->email)->send(new NewUserNotification($request->email,$request->password));
-        // }
+		
+		$user->sendEmailVerifycationNotification();
+
         return redirect("/dashboard/users/$user->slug");
     }
 

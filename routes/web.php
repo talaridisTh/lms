@@ -1,8 +1,6 @@
 <?php
 
 use App\Http\Controllers\Index\CourseController;
-use App\Http\Controllers\Index\HomeController;
-use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 */
 
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 //!########################################################
 //! 404
 Route::fallback(function () {

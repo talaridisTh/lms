@@ -436,7 +436,7 @@
 
 			<div class="tab-content">
 
-				<div id="settings" class="tab-pane mb-3">
+				<div id="settings" class="tab-pane mb-3 show active">
 					<div class="row">
 						<div class="col-xl-9 col-lg-7 col-md-12">
 							<form id="edit-course-form" action="{{ "/dashboard/courses/$course->slug" }}"
@@ -705,7 +705,7 @@
 					</div>
 				</div><!-- settings tab-pane -->
 
-				<div id="materials" class="tab-pane table-cnt mb-3 show active">
+				<div id="materials" class="tab-pane table-cnt mb-3">
 
 					<div class="row my-3">
 						<div class="col-sm-1">
