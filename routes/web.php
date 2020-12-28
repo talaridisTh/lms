@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,11 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+Route::get("/full-verification", function () {
+	DB::table("users")->update([
+		"email_verified_at" => Carbon::now()
+	]);
+});
 
 Auth::routes(['verify' => true]);
 //!########################################################
@@ -299,11 +305,6 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 //!######################################################
 //!					END Index  Routes					#
 //!######################################################
-
-Route::get("/building-alternative-layout", function() {
-	return view("front/index");
-});
-
 Route::get("/tailwind", function() {
     return view("tailwind-home");
 });

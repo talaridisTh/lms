@@ -284,7 +284,7 @@
 
 				<hr class="mt-1">
 
-				<div class="form-group">
+				<div class="form-group mb-0">
 					<label for="role-selection">Ιδιότητα</label>
 					<select form="edit-user-form" id="role-selection" name="role"
 						class="select2 form-control" data-toggle="select2" data-width="100%">
@@ -306,7 +306,7 @@
 			<div class="card-body">
 				<div class="timeline-alt py-0">
 
-					@foreach ($activities as $activity)
+					@forelse ($activities as $activity)
 						<div class="timeline-item">
 							<i class="mdi
 								@if($activity->log_name === "login")
@@ -321,7 +321,13 @@
 								</p>
 							</div>
 						</div>
-					@endforeach
+					@empty
+						<div class="callout callout-danger mb-0">
+							<div class="d-flex justify-content-center mb-1">
+								<h5>Δεν βρέθηκε δραστηριότητα</h5>
+							</div>
+						</div>
+					@endforelse
 
 				</div>
 			</div><!-- ./card-body @e -->
