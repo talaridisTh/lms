@@ -10,28 +10,33 @@
 <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-    />
+    <link href="{{ mix('css/index/_icon.css') }}" rel="stylesheet">
+
 
     {{--    <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">--}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap"
+        rel="stylesheet">
+
     @yield("style")
 
 </head>
-<body class="bg-gray-100 antialiased font-sans">
+<body class="bg-gray-100 antialiased font-sansu h-screen flex flex-col" style="font-family: 'Roboto', sans-serif;">
 
 <div id="app">
-    <header class="lg:px-16  px-8 bg-white py-4 shadow-md 	">
-        <div class="container mx-auto flex flex-wrap items-center">
+    <header class="lg:px-16  px-8 bg-white py-4 shadow-md" style="min-height: 50px">
+        <div class="container mx-auto flex flex-wrap items-center px-1">
             <div class="flex-1 flex justify-between items-center">
-                <a href="#" class="text-xl">demo</a>
+                <a href="#" class="text-xl">
+                    <img src="{{asset("images/logo.png")}}" alt="">
+                </a>
             </div>
 
-            <label for="menu-toggle" class="pointer-cursor md:hidden block">
+            <label for="menu-toggle" class="pointer-cursor md:hidden block menu-toggle">
                 <svg class="fill-current text-gray-900"
                      xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
                     <title>menu</title>
@@ -44,7 +49,7 @@
                 <nav>
                     <div
                         class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0 relative green borderXwidth">
-                        @hasanyrole("admin|super-admin")
+                        {{--                        @hasanyrole("admin|super-admin")--}}
                         @if(\Request::route()->getName()== "index.userCourse")
                             <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="#">edit this
                                 course</a>
@@ -52,7 +57,7 @@
                                 material</a>
                         @endif
                         <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="{{route('dashboard')}}">dashboard</a>
-                        @endrole
+                        {{--                        @endrole--}}
                         <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="">μαθηματα</a>
                         <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 bg-  bg font-medium uppercase " href="#">discussions</a>
                         <a class="bg-login transition duration-500 ease-in-out text-white rounded-full hover:bg-color-theme  md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-medium uppercase "
@@ -61,158 +66,63 @@
                 </nav>
             </div>
         </div>
+        <div class="container mx-auto mt-5  hidden toggle-cnt-menu">
+            <ul class="uppercase space-y-3 sm:hidden">
+                <li class="hover:bg-gray-300 rounded-lg p-2">dashboard</li>
+                <li class="hover:bg-gray-300 rounded-lg p-2">μαθηματα</li>
+                <li class="hover:bg-gray-300 rounded-lg p-2">discussions</li>
+                <li class="hover:bg-gray-300 rounded-lg p-2">ο λογαριασμος μου</li>
+            </ul>
+        </div>
     </header>
-    <main class="my-10 space-y-20">
+    <main class="my-7 mb-20 ">
 
-
-        <div class="sm:container xs:container-lg mx-auto flex justify-between space-x-10 p-8">
-            <div class="flex-1  space-y-6 mt-16">
-                <h2 class="md:text-6xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
-                    Βάλτε τωρα τη ρομποτική στο σχολείο σας</h2>
-                <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και
-                    προγραμματισμού για παιδιά. Μπες στο δίκτυο συνεργατών.
-                    Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</p>
-                <div class="flex sm:justify-start xs:justify-center">
-                    <button
-                        class="inline-block uppercase w-50 px-8 py-2 text-xs font-medium leading-6 text-center text-white uppercase
-                     transition bg-login rounded-xl shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none">
-                        ΑΙΤΗΜΑ ΓΙΑ DEMO
-                    </button>
-                </div>
-            </div>
-            <div class="flex-1 lg:flex xs:hidden  justify-center">
-                <img
-                    style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
-                    class="img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
-                    alt="vector-smart-object"></div>
-        </div>
-
-        <div class="sm:container xs:container-lg mx-auto flex justify-between  space-x-10 p-8">
-            <div class="flex-1  space-y-6 mt-3">
-                <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
-                    Θέλεις να βάλεις τη Ρομποτική στο σχολείο σου και δεν ξέρεις από που να ξεκινήσεις;</h2>
-                <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Θέλεις να βάλεις τη Ρομποτική στο σχολείο
-                    σου και δεν ξέρεις από που να ξεκινήσεις;</p>
-
-            </div>
-            <div class="flex-1 lg:flex xs:hidden  justify-center">
-                <img
-                    class="img-custom-index img-fluid" src="{{asset('images/group-5.png')}}"
-                    alt="vector-5">
-            </div>
-        </div>
-
-        <div class="sm:container xs:container-lg mx-auto flex justify-between items-center  space-x-10 p-8">
-            <div class="flex-1  space-y-6 mt-3">
-                <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
-                    Εξατομικευμένη πλατφόρμα μαθημάτων ρομποτικής</h2>
-                <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.
-                    Vestibulum aliquam hendrerit molestie</p>
-
-                <ul class="list-inside list-disc space-y-2 ">
-                    <li>HD Videos στα Ελληνικά</li>
-                    <li>Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
-                    <li>Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
-                    <li>Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
-                </ul>
-            </div>
-            <div class="flex-1 lg:flex xs:hidden  justify-center"
-                 style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
-                <div class="container-oval   relative">
-                    <div class="oval "></div>
-                    <div class="oval-1 absolute"></div>
-                    <div class="oval-2 absolute"></div>
-                    <div class="oval-3 absolute"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="sm:container xs:container-lg mx-auto flex justify-between  items-center space-x-10 p-8">
-            <div class="flex-1 lg:flex xs:hidden  justify-center"
-                 style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
-                <div class="container-oval mr-16  relative">
-                    <div class="oval "></div>
-                    <div class="oval-1 absolute"></div>
-                    <div class="oval-2 absolute"></div>
-                    <div class="oval-3 absolute"></div>
-                </div>
-            </div>
-
-            <div class="flex-1  space-y-6 mt-3">
-                <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
-                    Εκπαίδευση προσωπικού
-                </h2>
-                <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Lorem ipsum dolor sit amet, consectetur
-                    adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.
-                    Vestibulum aliquam hendrerit molestie.</p>
-
-                <ul class="list-inside list-disc space-y-2 ">
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet
-                        tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
-                    </li>
-                    <li>Εκπαιδευτικό υλικό</li>
-                    <li>Εκπαιδευτικό υλικό</li>
-                    <li>Εκπαιδευτή ρομποτικής</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="sm:container xs:container-lg mx-auto flex justify-between  items-center space-x-10 p-8">
-            <div class="flex-1  space-y-6 mt-3">
-                <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
-                    Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς
-                </h2>
-                <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς
-                </p>
-            </div>
-            <div class="flex-1 lg:flex xs:hidden  justify-center"
-                 style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
-                <div class="container-oval   relative">
-                    <div class="oval "></div>
-                    <div class="oval-1 absolute"></div>
-                    <div class="oval-2 absolute"></div>
-                    <div class="oval-3 absolute"></div>
-                </div>
-            </div>
-        </div>
-
-{{--        <div class="sm:container xs:container-lg mx-auto  p-8">--}}
-
-{{--            @foreach( $arrayBanners as  $key=>  $banners)--}}
-{{--                <div id="card-slider-{{$key}}" class="splide">--}}
-{{--                    @if($banners->status==1)--}}
-{{--                        <div class="splide__track">--}}
-{{--                            <ul class="splide__list">--}}
-{{--                                @foreach($banners->models as $banner)--}}
-{{--                                    @php--}}
-{{--                                        $bannerValue = key ( $banner);--}}
-{{--                                        $model =   $bannerValue::findOrFail($banner->$bannerValue);--}}
-{{--                                    @endphp--}}
-{{--                                    <li class="splide__slide p-2">--}}
-{{--                                        <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">--}}
-{{--                                        <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>--}}
-{{--                                        <p class="p-3"> {{$model->subtitle}}</p>--}}
-{{--                                    </li>--}}
-{{--                                @endforeach--}}
-{{--                            </ul>--}}
-
-{{--                        </div>--}}
-{{--                    @endif--}}
-{{--                </div>--}}
-
-{{--            @endforeach--}}
-{{--        </div>--}}
-
+        @yield("content")
 
     </main>
 
-    {{--    <footer class="absolute right-0 bottom-0 left-0 p-4  bg-white py-4 ">--}}
-    {{--        <div class="container mx-auto flex items-center justify-between">--}}
-    {{--            <div>dfsd</div>--}}
-    {{--            <div>dfsd</div>--}}
-    {{--        </div>--}}
-    {{--    </footer>--}}
+    <footer class="bg-white py-4 lg:px-16  px-8" style="min-height: 50px; margin-top:auto; box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);;
+">
+        <div class="container mx-auto flex items-center flex-wrap justify-between">
+            <div class="mr-7">
+                <a href="#" class="text-xl">
+                    <img src="{{asset("images/logo.png")}}" alt="">
+                </a>
+            </div>
+            <div class="flex-1">
+                <p class="text-base font-semibold">Θεσσαλονίκη</p>
+                <p>Παπαναστασίου 150, 54249, Χαριλάου</p>
+                <p>2310 328797 - Fax 2310 328898</p>
+            </div>
+            <div class="w-full my-3 sm:my-0 sm:w-auto">
+                <ul class="flex justify-between">
+                    <li class="nav-item ml-3  ">
+                        <a href="">
+                            <img src="{{ asset("images/facebook.png" )}}" alt="">
+                        </a>
+                    </li>
+
+                    <li class="nav-item ml-3  ">
+                        <a href="">
+                            <img src="{{ asset("images/instagram.png" )}}" alt="">
+                        </a>
+                    </li>
+
+                    <li class="nav-item ml-3  ">
+                        <a href="">
+                            <img src="{{ asset("images/youtube.png" )}}" alt="">
+                        </a>
+                    </li>
+
+                    <li class="nav-item ml-3  ">
+                        <a href="">
+                            <img src="{{ asset("images/twitter.png" )}}" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 
 </div>
 
@@ -234,7 +144,15 @@
 
     $(".edit-preview-page-course").on("click", function () {
         this.href = window.PREVIEW_PAGE_COURSE
-        console.log(this.href)
+    })
+
+
+    $(".menu-toggle").on("click",function (){
+        if( $(".toggle-cnt-menu").hasClass("hidden")){
+            $(".toggle-cnt-menu").removeClass("hidden");
+        }else{
+            $(".toggle-cnt-menu").addClass("hidden");
+        }
     })
 </script>
 

@@ -1,4 +1,3 @@
-/* Border X get width  */
 .borderXwidth a {
     position: relative;
 }
@@ -69,67 +68,6 @@
     background-color: #ebebeb;
     border-radius: 100%;
 }
-
-
-/*.container-oval-2 {*/
-/*    height: 540px;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-
-/*.oval {*/
-/*    width: 394px;*/
-/*    height: 394px;*/
-/*    border-radius: 100%;*/
-/*    background-color: #d8d8d8;*/
-
-/*}*/
-
-/*.oval-2 {*/
-/*    left: -61px;*/
-/*    top: 342px;*/
-/*    width: 143px;*/
-/*    height: 143px;*/
-/*    background-color: #ebebeb;*/
-/*    border-radius: 100%;*/
-/*}*/
-
-/*.oval-3 {*/
-/*    left: 350px;*/
-/*    top: 126px;*/
-/*    width: 93px;*/
-/*    height: 93px;*/
-/*    background-color: #ebebeb;*/
-/*    border-radius: 100%;*/
-/*}*/
-
-/*}*/
-
-
-/*.container-oval-3 {*/
-/*    height: 540px;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-
-/*.oval {*/
-/*    width: 394px;*/
-/*    height: 394px;*/
-/*    border-radius: 100%;*/
-/*    background-color: #d8d8d8;*/
-
-/*}*/
-
-/*.oval-2 {*/
-/*    left: -72px;*/
-/*    top: 312px;*/
-/*    width: 143px;*/
-/*    height: 143px;*/
-/*    background-color: #ebebeb;*/
-/*    border-radius: 100%;*/
-/*}*/
-
-
-/*}*/
-
 
 @tailwind base;
 @tailwind components;

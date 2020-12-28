@@ -4,15 +4,19 @@ namespace App\Http\Controllers\Index;
 
 use App\Models\Course;
 use App\Http\Controllers\Controller;
+use App\Models\Material;
 use App\Models\Post;
 use App\Traits\hasComments;
 use App\Models\User;
 use App\Traits\UrlCreator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class CourseController extends Controller {
-    use hasComments,UrlCreator;
+
+    use hasComments, UrlCreator;
+
     //
     public function show(Course $course)
     {
@@ -65,7 +69,6 @@ class CourseController extends Controller {
             ->where("type", "!=", "Announcement")
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
-
         if (auth()->user()->getRoleNames()[0] === "guest")
         {
 //            dd(auth()->user()->guestMaterial()->get());
@@ -85,9 +88,98 @@ class CourseController extends Controller {
             ->orderBy("priority")
             ->wherePivotIn("status", [1])->get();
 
-        return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements","post"));
+        return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements", "post"));
     }
 
+    public function showCourse(Course $course)
+    {
+        $user = auth()->user();
+        $lessons = $user->courses()->with("materials")->get()->pluck("materials")->flatten()->whereIn("type", ["Lesson", "Video", "Link"]);
+        $countMaterial = $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->map(function ($material) {
+            return count($material->chapters);
+        })->toArray();
+
+
+        return view("tailwind-course", [
+            "course" => Course::find(2),
+            "lessons" => $lessons,
+            "announcements" => $user->courses()->with("materials")->get()->pluck("materials")->flatten()->where("type", "Announcement"),
+            "sections" => $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section"),
+            "sumMaterial" => array_sum($countMaterial) + count($lessons),
+            "curator" => User::FindOrFail(isset($course->user_id)?$course->user_id:User::where("first_name","Υδρόγειος")->first()->id),
+            "fields"=>$this->getFieldsCourse($course)
+
+        ]);
+    }
+
+    public function showMaterial(Course $course ,Material $material)
+{
+
+    return view("tailwind-course-material",[
+        "material"=>$material,
+        "fields"=>$this->getFieldsMaterial($material)
+    ]);
+
+}
+
+    private function getFieldsMaterial(Material $course){
+        $courseFields = $course->fields;
+
+        $fields = new stdClass();
+        foreach(json_decode($courseFields) as $key =>  $field){
+
+            if(isset($course["$key"]) && $field){
+                $fields->$key =   $field;
+
+            }else{
+                $fields->$key =   0;
+            }
+        }
+
+        if($course->media->where("type",0)->isNotEmpty()){
+            $fields->media = 1;
+        }else{
+            $fields->media = 0;
+        }
+        if($course->media->where("type",1)->isNotEmpty()){
+            $fields->file = 1;
+        }else{
+            $fields->file = 0;
+        }
+
+        return $fields;
+
+    }
+
+
+    private function getFieldsCourse(Course $course){
+        $courseFields = $course->fields;
+
+        $fields = new stdClass();
+        foreach(json_decode($courseFields) as $key =>  $field){
+
+            if(isset($course["$key"]) && $field){
+                $fields->$key =   $field;
+
+            }else{
+                $fields->$key =   0;
+            }
+        }
+
+        if($course->media->where("type",0)->isNotEmpty()){
+            $fields->media = 1;
+        }else{
+            $fields->media = 0;
+        }
+        if($course->media->where("type",1)->isNotEmpty()){
+            $fields->file = 1;
+        }else{
+            $fields->file = 0;
+        }
+
+        return $fields;
+
+    }
     public function watchlistCourse(Request $request)
     {
 
@@ -111,5 +203,4 @@ class CourseController extends Controller {
         }
     }
 
-
-    }
+}

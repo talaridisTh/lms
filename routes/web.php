@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Index\CourseController;
+use App\Http\Controllers\Index\HomeController;
 use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -305,5 +307,9 @@ Route::get("/building-alternative-layout", function() {
 });
 
 Route::get("/tailwind", function() {
-    return view("tailwind");
+    return view("tailwind-home");
 });
+
+
+Route::get("/tailwind/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
+Route::get("/tailwind/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");

@@ -124,10 +124,10 @@ class Material extends Model {
     public static function getType($value)
     {
         $icons = [
-            "Lesson" => "mdi mdi-file-document-outline text-success",
-            "Link" => 'mdi mdi-link-variant-plus text-info',
-            "Announcement" => "mdi mdi-comment-quote-outline text-danger",
-            "Video" => "mdi mdi-camcorder text-primary",
+            "Lesson" => "mdi  mdi-book-open-page-variant mr-1",
+            "Link" => 'mdi  mdi-book-open-page-variant mr-1',
+            "Video" => "mdi  mdi-motion-play-outline",
+            "Pdf" =>"mdi  mdi-file-pdf"
 
         ];
         foreach ($icons as $type => $icon)

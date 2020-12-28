@@ -66,6 +66,7 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/dashboard/customArticleStyle.scss', 'public/css/dashboard')
     .sass('resources/sass/dashboard/app.scss', 'public/css/dashboard')
     .sass('resources/sass/index/app.scss', 'public/css/index/')
+    .sass('resources/sass/index/_icon.scss', 'public/css/index/')
     .sass('resources/sass/index/logIn.scss', 'public/css/index/')
     .postCss("resources/css/app.css", "public/css", [
         require("tailwindcss"),
