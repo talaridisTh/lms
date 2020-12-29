@@ -52,7 +52,7 @@ $(".spa-click").on("click", async function (e) {
 
     try {
         const {data, status} = await axios.get(href)
-
+        console.log(href)
         if (status == 200) {
             $(".spa-click").removeClass("bg-gray-400")
             $(this).addClass("bg-gray-400")

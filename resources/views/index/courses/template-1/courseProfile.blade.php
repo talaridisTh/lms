@@ -292,7 +292,7 @@
                                                     <span
                                                         class="px-5 py-2i">{{\Str::limit($section->title,50,"...")}}</span>
                                                 </label>
-                                                @foreach($section->chapters()->where("type","!=","Announcement")->where("type","!=","PDF")->get() as $chapter)
+                                                @foreach($section->chapters()->where("type","!=","Announcement")->get() as $chapter)
                                                     <div
                                                         class="tab-content space-x-2 text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
                                                         style="padding-left: 15px;padding-right: 15px;"
@@ -301,7 +301,7 @@
                                                     >
                                                         <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
                                                         <a class="mt-1 flex-1 " href="">
-                                                            <span class="ml-3">{{$chapter->title}}</span>
+                                                            <span class="ml-4">{{$chapter->title}}</span>
                                                         </a>
                                                         <span class="mt-1"><i
                                                                 class=" mr-3 {{$chapter->getType($chapter->type)}}"></i></span>

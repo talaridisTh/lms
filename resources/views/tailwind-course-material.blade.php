@@ -23,7 +23,7 @@
 
             @elseif($material->type=="PDF")
                 @php
-                    $pdf = $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first()
+                        $pdf = $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first();
                 @endphp
                 <embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%"
                        height="100%" style="height: 100vh"/>
@@ -44,7 +44,7 @@
                 <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->media==0?"hidden":""}}">
                     <a href="#fourth">Media</a>
                 </li>
-                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}">
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$material->type!="PDF"? $fields->script==0?"hidden":"":""}}">
                         <a href="#quiz">Quiz</a>
                     </li>
                 <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a
@@ -77,9 +77,9 @@
                 <div id="fourth" class="hidden p-4">
                     {!! $material->summary !!}
                 </div>
-                <div id="quiz" class="hidden p-4">
-                    {!! $material->script !!}
-                </div>
+{{--                <div id="quiz" class="hidden p-4">--}}
+{{--                    {!! $material->script !!}--}}
+{{--                </div>--}}
                 <div id="disscussion" class="hidden p-4">
                     Συζήτηση
                 </div>

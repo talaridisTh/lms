@@ -94,7 +94,7 @@ class CourseController extends Controller {
     public function showCourse(Course $course)
     {
         $user = auth()->user();
-        $lessons = $user->courses()->with("materials")->get()->pluck("materials")->flatten()->whereIn("type", ["Lesson", "Video", "Link"])->unique("slug");
+        $lessons = $user->courses()->with("materials")->get()->pluck("materials")->flatten()->whereIn("type", ["Lesson", "Video", "Link","PDF"])->unique("slug");
         $countMaterial = $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->map(function ($material) {
             return count($material->chapters);
         })->toArray();
