@@ -122,7 +122,10 @@ class CourseController extends Controller {
     public function userCourses()
     {
 
-        return view("tailwind-user-courses");
+
+        return view("tailwind-user-courses",[
+            "courses"=>auth()->user()->courses
+        ]);
     }
 
     private function getFieldsMaterial(Material $course)

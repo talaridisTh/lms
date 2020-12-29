@@ -10,7 +10,7 @@ module.exports = {
             colors: {
                 'login': '#0fb4d3',
                 'color-theme': 'orangered',
-                'indigo-dark': '#202e78',
+                'bg-cnt': '#202e78',
             },
             borderWidth: {
                 DEFAULT: '1px',

@@ -35,13 +35,13 @@
 <div id="app" class="flex flex-col min-h-screen" style="height: auto !important;">
 
     <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md" style="min-height: 50px">
+
         <div class="container mx-auto flex flex-wrap items-center px-1">
             <div class="flex-1 flex justify-between items-center">
                 <a href="/tailwind" class="text-xl">
                     <img class="logo" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
-
             <label for="menu-toggle" class="pointer-cursor md:hidden block menu-toggle">
                 <svg class="fill-current text-gray-900"
                      xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
@@ -50,7 +50,6 @@
                 </svg>
             </label>
             <input class="hidden" type="checkbox" id="menu-toggle"/>
-
             <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
                 <nav>
                     <div
@@ -79,12 +78,12 @@
                                         <i class=" ml-2 mdi mdi-logout"></i></li>
                                 </ul>
                             </div>
-
                         </div>
                     </div>
                 </nav>
             </div>
         </div>
+
         <div class="container mx-auto mt-5  hidden toggle-cnt-menu">
             <ul class="uppercase space-y-3 sm:hidden">
                 <li class="hover:bg-gray-300 rounded-lg p-2">dashboard</li>
@@ -101,8 +100,11 @@
 
     </main>
 
+
+
     <footer class="bg-white py-4 lg:px-16  px-8"
             style="min-height: 50px;  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
+
         <div class="container mx-auto flex items-center flex-wrap justify-between">
             <div class="mr-7">
                 <a href="#" class="text-xl">
@@ -127,6 +129,7 @@
                 </ul>
             </div>
         </div>
+
     </footer>
 
 </div>

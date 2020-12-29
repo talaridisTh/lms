@@ -78,7 +78,7 @@
             transition: opacity .7s ease;
         }
     </style>
-    <article class="mdc:container lg:container mx-auto flex flex-col  pt-5 rounded-xl"
+    <article class="mdc:container lg:container mx-auto flex flex-col  pt-5 rounded-xl "
              style="background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)">
         <section class="flex xl:justify-between justify-around flex-wrap  px-8">
             <figure class="w-64 h-64  my-8 relative lg:mr-16">
@@ -90,7 +90,7 @@
                 </div>
             </figure>
             <section
-                class="flex ml-0 lg:ml-10  xl:order-none w-full lg:order-last order-none  xl:flex-1 my-8 space-y-8 p-4 pt-0  flex-col  items-center lg:items-start text-white">
+                class="flex ml-0 lg:ml-10 xl:order-none w-full lg:order-last order-none xl:flex-1 my-8 space-y-8 p-4 pt-0 flex-col items-center lg:items-start text-white">
                 {{--                {{dd($course->topics)}}--}}
                 @if(count($course->topics)>0)
                     <h3 class="px-6 py-2 text-center border-1 border-white rounded-full">{{$course->topics->first()->title}}</h3>
