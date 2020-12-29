@@ -1,4 +1,4 @@
-@extends("tailwind")
+@extends("layouts.app"))
 
 @section("content")
 
@@ -222,7 +222,7 @@
                 </div>
             </div>
         </section>
-        <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10 spa-list-material">
+        <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10 spa-list-material px-5">
             <div class="row">
                 <div class="col">
                     <div class="tabs">
@@ -260,10 +260,10 @@
                                     data-type="{{$lesson->type}}"
                                 >
                                     <span class="mt-1">{{$loop->index+1}}</span>
-                                    <a class="mt-1" href="">
+                                    <a class="mt-1 flex-1 ml-4" href="">
                                         <span>{{$lesson->title}}</span>
                                     </a>
-                                    <i class="mt-1 {{$lesson->getType($lesson->type)}}"></i>
+                                    <i class="mt-1 mr-3 {{$lesson->getType($lesson->type)}}"></i>
                                 </div>
                             @endforeach
                         </div>

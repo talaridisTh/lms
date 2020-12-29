@@ -1,4 +1,4 @@
-@extends("tailwind")
+@extends("layouts.app")
 
 @section("content")
     <article class="mdc:container mx-auto flex flex-col spa-cnt-material">
@@ -44,8 +44,9 @@
                 <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->media==0?"hidden":""}}">
                     <a href="#fourth">Media</a>
                 </li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}">
-                    <a href="#quiz">Quiz</a></li>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}">
+                        <a href="#quiz">Quiz</a>
+                    </li>
                 <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a
                         href="#disscussion">Συζήτηση</a>
                 </li>
@@ -118,7 +119,7 @@
             });
         });
 
-        $("#tabs").children().not( ".hidden" ).first().children().first().attr("id","default-tab")
+        $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab")
 
         document.getElementById("default-tab").click();
 
@@ -128,7 +129,6 @@
 
         const overlay = document.querySelector('.modal-overlay')
         overlay.addEventListener('click', toggleModal)
-
 
 
     </script>

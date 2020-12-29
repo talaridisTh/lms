@@ -1,604 +1,413 @@
 @extends("layouts.app")
 
-@section("style")
-        <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">
-
-
-@endsection
-@php
-    //background
-
-        $bgColor = $course->topics->count() > 0 ? $course->topics->first()->color : "";
-
-    //count Material
-        $countMaterial= $allMaterial->where("type","Lesson")->count()+
-        $allMaterial->where("type","Section")->map(function ($chapter){
-           $countSingleChapter =  $chapter->chapters->map(function($singleChapter){
-                  if($singleChapter->getOriginal('pivot_status')==1){
-                        return $singleChapter;
-                  }
-            })->reject(function ($name) {
-                return empty($name);
-            });
-            return count($countSingleChapter->where("type","Lesson"));
-        })->first();
-        $textMaterial = $countMaterial>1? $countMaterial.' Μαθήματα':$countMaterial.' Μάθημα';
-
-
-    //count extra
-        $countExtra= $allMaterial->where("type","!=","Lesson")->where("type","!=","Announcement")->where("type","!=","Section")->count()+
-        $allMaterial->where("type","Section")->map(function ($chapter){
-              $countSingleExtraChapter =  $chapter->chapters->map(function($singleExtraChapter){
-                  if($singleExtraChapter->getOriginal('pivot_status')==1){
-                        return $singleExtraChapter;
-                  }
-            })->reject(function ($name) {
-                return empty($name);
-            });
-            return count($countSingleExtraChapter->where("type","!=","Lesson")->where("type","!=","Announcement"));
-        })->first();
-        $textExtra = $countExtra>1? $countExtra.' Βοηθητικά Αρχεία':$countExtra.' Βοηθητικό Αρχείο';
-
-
-if (json_decode($course->fields)->summary){
-    $activeTabsOne ="active";
-    $activeContentOne="show active";
-
-}else if (json_decode($course->fields)->description) {
-       $activeTabsTwo ="active";
-       $activeContentTwo="show active";
-}
-else if(count($course->media->where("type","!=",0))>0) {
-       $activeTabsThree ="active";
-       $activeContentThree="show active";
-}
-else if(count($course->media->where("type","!=",1))>0) {
-       $activeTabsFour ="active";
-       $activeContentFour="show active";
-}
-else if ($course->script) {
-       $activeTabsFive ="active";
-       $activeContentFive="show active";
-}
-else{
-    $activeTabsSix ="active";
-       $activeContentSix="show active";
-}
-
-@endphp
 @section("content")
 
-
-    <div class="content-page mt-1"><!-- breadcrumb -->
-
-
-        <div class="container-xl mb-3" style="max-width: 1705px"> <!-- container banner -->
-
-            <div class="row defalt-color-topic box-material-up px-5 pt-4 pb-2 px-lg-2 px-xl-5"
-                 style="background:{{$bgColor}}"> <!-- row top banner -->
-                <div class="col-md-12">
-                    <div class="row align-items-center text-center  ">
+    <style>
+        .avatar {
+            border: solid 4px #00000017;
+            border-left-color: transparent;
+            padding: 2px;
+            display: inline-block;
+            border-radius: 50%;
+            position: relative;
 
 
-                        <div class="col-md-6 col-lg-4 col-xl-3 mb-2">
-                            @if($course->cover)
-                                <img class="rounded-circle" src="{{($course->roundedMediumCoverUrl())}}"
-                                     alt="course-logo">
-                            @endif
-                        </div>
+            transform: rotate(-88deg);
+            -ms-transform: rotate(-88deg);
+            -webkit-transform: rotate(-88deg);
+        }
 
+        .avatar img {
+            display: block;
+            border-radius: 50%;
 
-                        <div class="col-md-6 mb-md-4 col-lg-4 col-xl-6">
-                            <h2 data-course-slug="{{$course->slug}}"
-                                class="display-4 text-light course-slug">{{$course->title}}</h2>
-                            <p class="text-light my-4 text-left">{{$course->subtitle}}</p>
-                            <div class="button-course-fav my-sm-2 template">
-                                @if(count($allMaterial))
-                                    <a href="{{route('index.material.show',[$course->slug,$allMaterial->first()->slug])}}"
-                                       class=" mr-2 px-4 mb-xl-0 mb-md-2 btn-begin btn bghover btn"
-                                       style="background:white">Έναρξη
-                                    </a>
-                                @endif
-                                @unlessrole("guest")
-                                <button
-                                    data-model="course" data-model-id="{{$course->id}}" data-user-id="{{auth()->id()}}"
-                                    class=" my-2 my-sm-0 color-topic-second add-watchlist box-watchlist px-3 box-title btn bghover btn-secontary ">
-                                    <i class="font-16
-                                        {{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"mdi mdi-heart-outline":"mdi mdi-cards-heart"}}">
-                                    </i>
-                                    <span>{{!count(auth()->user()->watchlistCourse->whereIn("title",$course->title))?"  Προσθήκη στα αγαπημένα":"Αφαίρεση απο τα αγαπημένα"}}</span>
-                                </button>
-                                @endunlessrole
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- end row top banner -->
+            transform: rotate(+88deg);
+            -ms-transform: rotate(+88deg);
+            -webkit-transform: rotate(+88deg);
+        }
 
-            <div class="row p-2 box-material-down  color-topic-second" style="background:{{$bgColor}}">
+        .avatar:before, .avatar:after {
+            content: '';
+            /*position:absolute;*/
+            background: #fff;
+            z-index: -1;
+
+            transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        .avatar:before {
+            height: 4px;
+            top: 50%;
+            left: 2px;
+            right: -5px;
+            margin-top: -2px;
+        }
+
+        .avatar:after {
+            width: 4px;
+            left: 50%;
+            top: 2px;
+            bottom: -5px;
+            margin-left: -2px;
+        }
+
+        .announcement li::before {
+            content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+            color: #ffffff94; /* Change the color */
+            font-weight: bold; /* If you want it to be bold */
+            display: inline-block; /* Needed to add space between the bullet and the text */
+            width: 1em; /* Also needed for space (tweak if needed) */
+        }
+
+        .bullet:before {
+            content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
+            color: black; /* Change the color */
+            font-weight: bold; /* If you want it to be bold */
+            display: inline-block; /* Needed to add space between the bullet and the text */
+            width: 1em; /* Also needed for space (tweak if needed) */
+            margin-left: -1em; /* Also needed for space (tweak if needed) */
+        }
+
+        .em-padding {
+            padding-bottom: 0.2em;
+            padding-top: 0.2em;
+        }
+        .modal {
+            transition: opacity .7s ease;
+        }
+    </style>
+    <article class="mdc:container lg:container mx-auto flex flex-col  pt-5 rounded-xl "
+             style="background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)">
+        <section class="flex xl:justify-between justify-around flex-wrap  px-8">
+            <figure class="w-64 h-64  my-8 relative lg:mr-16">
                 <div
-                    class="col-md-12 col-xl-5  px-md-5 d-flex  {{count($course->topics)>0? "justify-content-between":"justify-content-around"}} text-light">
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textMaterial}}  </span>
-                    <span><i class="mdi mdi-book-open-page-variant"></i> {{$textExtra}}  </span>
-                    @foreach($topics as $topic)
-                        <span class="topic-title d-none d-sm-block  border px-2">{{$topic}}</span>
-                    @endforeach
+                    class="group avatar w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table cursor-pointer border">
+                    <img src="{{$course->cover}}"
+                         class="p-3 rounded-full object-cover object-center w-full h-full visible group-hover:hidden"
+                         alt="{{$course->title}}">
                 </div>
-            </div>
+            </figure>
+            <section
+                class="flex ml-0 lg:ml-10 xl:order-none w-full lg:order-last order-none xl:flex-1 my-8 space-y-8 p-4 pt-0 flex-col items-center lg:items-start text-white">
+                {{--                {{dd($course->topics)}}--}}
+                @if(count($course->topics)>0)
+                    <h3 class="px-6 py-2 text-center border-1 border-white rounded-full">{{$course->topics->first()->title}}</h3>
+                @endif
+                <section class="flex flex-col w-full space-y-4">
+                    <h2 class="sm:text-4xl text-center lg:text-left font-weight-semibold xl:w-4/5 text-2xl">{{$course->title}}</h2>
+                    <p class="text-md sm:text-center lg:text-left font-weight-normal xl:w-3/5">{{\Str::limit($course->subtitle,150,"...")}}</p>
+                </section>
+            </section>
+            <aside
+                class="bg-opacity-10 w-full xl:w-1/4 lg:w-1/2 mt-1 bg-black rounded-xl mb-7 flex flex-col items-start">
+                <ul class="bg-white px-4 mx-4 mt-6 mb-0 py-2 rounded-full ">
+                    <li class="text-black font-semibold list-disc list-inside ">Τελευταίες Ανακοινώσεις</li>
+                </ul>
+                <ul class="my-6 h-full px-4 w-full space-y-4 announcement">
+                    @forelse($announcements as $key =>$announcement)
+                        <li class="text-black font-medium flex  ">
+                            <span class="text-white font-medium flex-1 ">{{$announcement->title}}</span>
+                            <span class="font-normal text-white">{{$announcement->created_at->format("d/m/Y")}}</span>
+                        </li>
 
-        </div> <!-- end container banner -->
+                        @if($loop->index ==3)
+                            @break;
+                        @endif
 
-        <div class="container-fluid my-3 position-relative" style="max-width: 1423px"> <!--  container info -->
-
-            <div id="scrollTo"></div>
-            <div class="row template-cnt">
-                <div class="col-lg-8 template-single-page">
-                    @include("components.index.user-info")
-                    <div class="row ">
-                        <div class="col-lg-12 template-col-12">
-
-
-                            {{--//min svisti to thelw gia na allazei to single page--}}
-                            <style>
-                                .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-                                    color: #fff;
-                                    background: linear-gradient(
-                                        315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%);
-                                }
-                            </style>
-
-
-                            <ul class="nav nav-tabs mb-3">
-                                @if($course->summary && json_decode($course->fields)->summary)
-                                    <li class="nav-item ">
-                                        <a href="#tabs-summary" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0 {{isset($activeTabsOne)?$activeTabsOne:""}}">
-                                            <i class="mdi mdi-home-variant d-md-none d-block"></i>
-                                            <span class="d-none d-md-block">Πληροφορίες</span>
-                                        </a>
-                                    </li>
-                                @endif
-                                @if($course->description && json_decode($course->fields)->description)
-                                    <li class="nav-item">
-                                        <a href="#tabs-description" data-toggle="tab" aria-expanded="true"
-                                           class="nav-link rounded-0 {{isset($activeTabsTwo)?$activeTabsTwo:""}}">
-                                            <i class="mdi mdi-account-circle d-md-none d-block"></i>
-                                            <span class="d-none d-md-block">Περίληψη</span>
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if(count($course->media->where("type","!=",0))>0)
-                                    <li class="nav-item">
-                                        <a href="#tabs-files" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0 {{isset($activeTabsThree)?$activeTabsThree:""}}">
-                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                            <span class="d-none d-md-block">Αρχεία</span>
-                                        </a>
-                                    </li>
-                                @endif
-
-                                @if(count($course->media->where("type","!=",1))>0)
-                                    <li class="nav-item">
-                                        <a href="#tabs-media" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0 {{isset($activeTabsFour)?$activeTabsFour:""}}">
-                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                            <span class="d-none d-md-block">Media</span>
-                                        </a>
-                                    </li>
-                                @endif
-                                    @if(isset(json_decode($course->fields)->script))
-                                    @if($course->script && json_decode($course->fields)->script )
-                                    <li class="nav-item">
-                                        <a href="#tabs-quiz" data-toggle="tab" aria-expanded="false"
-                                           class="nav-link rounded-0 {{isset($activeTabsFive)?$activeTabsFive:""}}">
-                                            <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                            <span class="d-none d-md-block">Quiz</span>
-                                        </a>
-                                    </li>
-                                @endif
-                                    @endif
-
-                                <li class="nav-item">
-                                    <a href="#tabs-disscus" data-toggle="tab" aria-expanded="false"
-                                       class="nav-link rounded-0 {{isset($activeTabsSix)?$activeTabsSix:""}}">
-                                        <i class="mdi mdi-settings-outline d-md-none d-block"></i>
-                                        <span class="d-none d-md-block">Συζήτηση</span>
-                                    </a>
-                                </li>
-                            </ul>
-
-
-                            <div class="tab-content">
-                                <div class="tab-pane {{isset($activeContentOne)?$activeContentOne:""}}"
-                                     id="tabs-summary">
-                                    <div class="p-2"> {!! $course->summary !!}</div>
-                                </div>
-
-                                <div class="tab-pane {{isset($activeContentTwo)?$activeContentTwo:""}}"
-                                     id="tabs-description">
-                                    <div class="p-2"> {!! $course->description !!}</div>
-                                </div>
-
-                                <div class="tab-pane {{isset($activeContentThree)?$activeContentThree:""}}"
-                                     id="tabs-files">
-                                    <div class="tab-pane show active" id="profile">
-                                        <div class="accordion custom-accordion my-2" id="extra-content">
-                                            <div class="card mb-0">
-
-                                                <div id="collapse-extra-content" class="collapse show"
-                                                     aria-labelledby="head-extra-content" data-parent="#extra-content">
-                                                    <div class="card-body" style="padding: 30px">
-                                                        @foreach($course->media->where("type","!=",0) as $media)
-
-                                                            @if($media->ext=="mp3")
-
-                                                                <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
-                                                                   data-audio-status="paused"></i>
-                                                                <audio class="js-audio">
-                                                                    <source src="{{ $media->rel_path }}"
-                                                                            type="{{ $media->file_info }}">
-                                                                </audio>
-                                                                <span
-                                                                    class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
-                                                            @else
-
-                                                                <div class="d-flex flex-column">
-
-                                                                    <a target="_blank" href="{{url($media->rel_path)}}">
-                                                                        <i class="h3 mdi {{$course->getIcon($media->ext)}}"></i>
-                                                                        <span
-                                                                            class=" ml-3">
-                                                             {{isset($media->mediaDetails)? $media->mediaDetails->title:$media->original_name}}.{{$media->ext}}
-                                                        </span>
-                                                                    </a>
-                                                                </div>
-                                                            @endif
-                                                        @endforeach
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="tab-pane {{isset($activeContentFour)?$activeContentFour:""}}"
-                                     id="tabs-media">
-                                    <div class="col-md-12 my-1">
-                                        <div class="d-flex flex-wrap ">
-                                            @foreach($course->media->where("type","!=",1) as $media)
-
-                                                <a href="{{$media->rel_path}} " data-lightbox="image-1">
-                                                    <img class="d-block m-1"
-                                                         src="{{$media->roundedMediumCoverUrl("rel_path")}}"
-                                                         alt="First slide">
-                                                </a>
-
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="tab-pane {{isset($activeContentFive)?$activeContentFive:""}}"
-                                     id="tabs-quiz">
-                                    {!! $course->script !!}
-                                </div>
-
-                                <div class="tab-pane {{isset($activeContentSix)?$activeContentSix:""}}"
-                                     id="tabs-disscus">
-                                    @include("components.index.comments.comments-main",["model"=>$course,"namespace"=>"App\Models\Course"])
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-
+                    @empty
+                        <li class="text-black font-medium flex  ">
+                            <span class="text-white font-medium flex-1 ">Δεν υπάρχουν ανακοινώσεις</span>
+                        </li>
+                    @endforelse
+                </ul>
+                <div class="flex px-4 text-white py-3 justify-end bg-opacity-20 bg-black w-full rounded-b-xl">
+                    <p class="font-light text-sm modal-button">Όλες οι ανακοινώσεις <i class="ml-2 dripicons-chevron-right "></i></p>
                 </div>
+            </aside>
+        </section>
+        <section class="flex lg:px-16 px-9 text-white py-4 justify-between lg:justify-start  lg:space-x-10
+         bg-opacity-20 bg-black w-full rounded-b-xl">
+            <p><i class="mdi mdi-book-open-page-variant mr-1"></i>{{$sumMaterial}} Μαθήματα</p>
+            <p><i class="mdi mdi-book-open-page-variant mr-1"></i>{{count($course->media)}} Βοηθητικά αρχεία</p>
+        </section>
+    </article>
 
-                <div class="col-lg-4 pl-3 d-flex justify-content-center d-lg-block template-material-list">
-                    @if((count($announcements = $course->materials->where("type","Announcement"))>0))
-                        <div class="accordion mb-2" id="courses-announcement">
-                            <div class="card mb-0">
-                                <div class="card-header alert-danger" id="heading-announcement">
-                                    <h5 class="m-0">
-                                        <a class="custom-accordion-title d-block pt-2 pb-2"
-                                           data-toggle="collapse" href="#collapseOne"
-                                           aria-expanded="true" aria-controls="collapseOne">
-                                            Ανακοινώσεις
-                                        </a>
-                                    </h5>
-                                </div>
-
-                                <div id="collapseOne" class="collapse show"
-                                     aria-labelledby="heading-announcement" data-parent="#courses-announcement">
-                                    <div class="card-body py-1 cnt-announcement" data-simplebar
-                                         style="max-height: 200px;">
-                                        @php
-                                            $count = 0;
-                                        @endphp
-                                        @foreach($announcements  as $key => $announcement)
-                                            <div class="single-announcement cursor-pointer  mb-3"
-                                                 id="announcement-{{$key}}">
-
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <h4 id="slide-{{$key}}" class="text-hover-underline" data-count="{{$count++}}"
-                                                        data-toggle="modal"
-                                                        data-target="#announcements-modal">{{$announcement->title}}</h4>
-                                                    <span
-                                                        class="font-12 text-muted">{{$announcement->created_at->format('d/m/Y')}}</span>
-                                                </div>
-
-                                            </div>
-                                            <hr style="border-top: black">
-                                        @endforeach
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    @if(count($course->media->where("type","!=",0))>0)
-                        <div class="accordion custom-accordion my-2" id="extra-content">
-                            <div class="card mb-0">
-
-                                <div class="card-header p-1" id="head-extra-content">
-                                    <h5 class="m-0 pl-2">
-                                        <a class="custom-accordion-title d-block py-1"
-                                           data-toggle="collapse" href="#collapse-extra-content"
-                                           aria-expanded="true" aria-controls="collapse-extra-content">
-                                            Βοηθητικά Αρχεία
-                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
-                                        </a>
-                                    </h5>
-                                </div>
-
-
-                                <div id="collapse-extra-content" class="collapse show"
-                                     aria-labelledby="head-extra-content"
-                                     data-parent="#extra-content">
-                                    <div class="card-body" style="padding: 30px">
-                                        @foreach($course->media->where("type","!=",0) as $media)
-                                            @if($media->ext=="mp3")
-                                                <i class="js-audio-btn my-1 h3 mdi mdi-play-circle-outline custom-link-primary cursor-pointer"
-                                                   data-audio-status="paused"></i>
-                                                <audio class="js-audio">
-                                                    <source src="{{ $media->rel_path }}" type="{{ $media->file_info }}">
-                                                </audio>
-                                                <span class=" ml-3">{{$media->original_name}}.{{$media->ext}}</span>
-                                            @else
-                                                <div class="d-flex flex-column">
-                                                    <a target="_blank" href="{{url($media->rel_path)}}">
-                                                        <i class="h3 mdi {{$course->getIcon($media->ext)}}"></i>
-                                                        <span
-                                                            class=" ml-3">
-                                                              {{isset($media->mediaDetails)? $media->mediaDetails->title:$media->original_name}}.{{$media->ext}}
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    @endif
-
-
-                    <ul data-course-id="{{$course->id}}" class="w-600 m-0 p-0 single-section-material">
-                        <!-- list material -->
-
-                        @php
-                            $count = 0;  //count material
-                            $countIfNotSection = 0
-                        @endphp
-
-                        @foreach($allMaterial as $key => $materials)
-
-                            @php
-                                $materials->type==="Section"?"":++$countIfNotSection;
-                                $active =  auth()->user()->witchlist() ->where('material_id',$materials->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
-                                $activeClass = isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":$countIfNotSection; //ean to exei dei bazi tik allis arithmo
-                                $hover = isset($active)? "data-hover='hover'" :''; //bazei dataset hover ean to exei dei
-                                $highlight = $materials->pivot->highlight?"bg-custom":"list-material"
-
-                            @endphp
-
-
-                            @if($materials->type==="Section"  ) {{--elenxi an to mathima einai section--}}
-
-                            @php
-                                --$count;//den metraei count an einai section
-                            @endphp
-
-
-
-                            <div class="accordion section mb-2" id="{{$materials->slug}}"> <!-- list section -->
-                                <div class="card mb-0 bg-transparent">
-                                    <a class="custom-accordion-title d-block "
-                                       data-toggle="collapse" href="#{{$materials->slug}}-collapse"
-                                       aria-expanded="true" aria-controls="{{$materials->slug}}-collapse">
-                                        <div class="card-header d-flex align-center mt-2  head-section"
-                                             id="{{$materials->slug}}-head">
-                                            <h5 class="w-100 m-0 d-flex align-center">
-                                                <span class="section-name d-flex align-items-center"
-                                                      class="mr-2">Ενότητα {{$key -$count+1 }} :</span>
-                                                <span class="d-flex align-items-center"> {{$materials->title}}</span>
-                                            </h5>
-                                            <i class="mdi mdi-chevron-down accordion-arrow"></i>
-                                        </div>
-                                    </a>
-
-                                    <div id="{{$materials->slug}}-collapse" class="collapse "
-                                         aria-labelledby="{{$materials->slug}}-head"
-                                         data-parent="#{{$materials->slug}}">
-                                        <div class="p-0 card-body">
-                                            <ul class="section-list p-0" data-course-id="{{$course->id}}"
-                                                class="my-2 p-0"><!-- list chapter -->
-                                                @php $countChapter = 0;  @endphp
-                                                @foreach($materials->chapters->where("type", "!=", "Announcement") as $key => $chapter)  {{--foreach gia na bri ta chapter--}}
-
-                                                @if($chapter->getOriginal('pivot_status')==1)  {{--emganizei ta chapter me status 1 --}}
-
-                                                <style>
-
-                                                </style>
-                                                @php
-
-                                                    $active =  auth()->user()->witchlist()->where('material_id',$chapter->id)->where('course_id',$course->id)->first(); //blepei an o xristis exei dei to mathima
-                                                    $link = route('index.material.show',[$course->slug,$chapter->slug]); //orizi route
-                                                    $hover=  isset($active)? "data-hover='hover'" :''; //bazei dataset hover ean to exei dei
-                                                    $activeClassMaterial=  isset($active)?"<i class='text-danger h4 mdi mdi-check-bold'></i>":++$countChapter; //ean to exei dei bazi tik allis arithmo
-                                                    $highlight = $chapter->pivot->highlight?"bg-custom":"list-material"
-                                                @endphp
-
-                                                <li data-material-id="{{$chapter->id}}"
-                                                    data-material-priority="{{$key+1}}"
-                                                    class="list-group-item border-r-0 list-single-material {{$highlight}} m-0 {{$chapter->title==$materials->title? "list-material-select border-orange":""}}  ">
-                                                    <a data-material-slug="{{$chapter->slug}}"
-                                                       data-material-title="{!! $chapter->title !!}"
-                                                       class="d-flex align-items-center {{ $chapter->type=="Link"?"js-link-material":"template-prevent"}}"
-                                                       href="{{$link}}">
-                                                        <div class="col-lg-2 col-1 ml-1 ">
-
-                                                            @if($chapter->title==$materials->title) {{--blepw to current chapter --}}
-                                                            <i style="margin:-8px;"
-                                                               class="  now-play rounded-circle mdi h1 mdi-play-circle-outline"></i>
-                                                            @else
-                                                                <div class="col-sm-2 col-1 mt-1 mr-2 ">
-                                                                    <span {{$hover}} style="margin:-20px;"
-                                                                          class="material-count template">
-                                                                     {!! $activeClassMaterial!!}
-                                                                    </span>
-                                                                </div>
-                                                            @endif
-
-                                                        </div>
-                                                        <div
-                                                            class="col-lg-8 col-10 js-alert d-flex flex-column  align-items-center">
-                                                            <h3 style="border-radius: 5px"
-                                                                class="font-16 mt-1 text-black font-weight-bold">   {!! $chapter->title !!}
-                                                            </h3>
-                                                            <span style="word-break: break-all"
-                                                                  class="font-12 text-dark">{!! $chapter->subtitle !!}</span>
-                                                        </div>
-                                                        <div class="col-lg-2 col-1 js-alert">
-                                                        <span class="">
-                                                            <i class=" font-24 text-black {{App\Models\Material::getType($chapter->type)}}"></i> {{--bazei to icon anti gia to type--}}
-                                                        </span>
-                                                        </div>
-                                                    </a>
-                                                </li>
-
-                                                @endif
-
-                                                @endforeach
-                                            </ul><!--END list chapter -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> <!-- END list section -->
-
-                            @else
-
-                                <li data-material-id="{{$materials->id}}"
-                                    data-material-priority="{{$countIfNotSection}}"
-                                    class="list-group-item {{$highlight}} border ">
-                                    <a data-material-slug="{{$materials->slug}}"
-                                       data-material-title="{!! $materials->title!!}"
-                                       class=" d-flex align-items-center {{ $materials->type=="Link"?"js-link-material":"template-prevent"}}"
-                                       href="{{$materials->type=="Link"?"$materials->link":route('index.material.show',[$course->slug,$materials->slug])}}">
-                                        @unlessrole("guest")
-                                        <div class="col-lg-2 mr-2 col-1 ">
-                                            <div>
-                                            <span {{$hover}} class="material-count template">
-                                                <span>{!! $activeClass!!}</span>
-                                            </span>
-                                            </div>
-                                        </div>
-                                        @endunlessrole
-
-                                        <div class="col-lg-8 align-items-center col-10 d-flex flex-column">
-                                            <h3 style="border-radius: 5px"
-                                                class="font-16 text-left text-md-center text-lg-left  text-black font-weight-bold"> {!! $materials->title!!}</h3>
-                                            <span style="word-break: break-all"
-                                                  class="font-12 text-dark d-none d-lg-block">    {!! $materials->subtitle !!}</span>
-                                        </div>
-                                        <div class="col-lg-2 col-1 p-0  js-alert">
-                                            <i class=" font-24 text-black {{App\Models\Material::getType($materials->type)}}"></i>
-                                        </div>
-                                    </a>
-                                </li>
+    <article class="mdc:container lg:container mx-auto flex flex-wrap mt-7">
+        <div id="scrollTo"></div>
+        <section class="w-full lg:w-7/10 spa-cnt">
+            <section class="bg-gray-200 rounded-xl flex  space-x-6 p-8">
+                <figure
+                    class="group hidden  md:table w-32 h-32 rounded-full overflow-hidden text-center bg-purple table cursor-pointer ">
+                    <img src="{{$curator->avatar}}"
+                         class=" rounded-full object-cover object-center w-full h-full visible group-hover:hidden"
+                         alt="avatar-curator">
+                </figure>
+                <section class="space-y-4">
+                    <section class="flex justify-between">
+                        <h5 class="ml-1"><span class="text-lg font-bold">Εισηγητής</span> <span
+                                class="font-semibold">- {{$curator->fullname}}</span>
+                        </h5>
+                        <figure class="text-xl items-center space-x-3 flex hidden">
+                            @if($curator->facebook_link)
+                                <img src="{{asset("images/facebook-1.png")}}" alt="">
                             @endif
+                            @if($curator->instagram_link)
+                                <img src="{{asset("images/linked-in.png")}}" alt="">
+                            @endif
+                            @if($curator->linkedin_link)
+                                <img src="{{asset("images/twitter-1.png")}}" alt="">
+                            @endif
+                            @if($curator->youtube_link)
+                                <img src="{{asset("images/twitter-1.png")}}" alt="">
+                            @endif
+                        </figure>
 
+                    </section>
+                    <p class="w-11/12 ml-1">{{$curator->profil}} </p>
+                </section>
+            </section>
+            <div class="rounded mx-auto mt-7">
+                <!-- Tabs -->
+                <ul id="tabs" class="inline-flex px-1 w-full border-b space-x-1">
+                    <li class="bg-white px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px {{$fields->description==0?"hidden":""}}">
+                        <a  href="#first">Πληροφορίες</a></li>
+                    <li class="px-4 text-gray-80 bg-gray-100 font-semibold py-2 rounded-t {{$fields->summary==0?"hidden":""}}"><a
+                            href="#second">Περίληψη</a></li>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->file==0?"hidden":""}}"><a href="#third">Αρχεία</a>
+                    </li>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->media==0?"hidden":""}}"><a href="#fourth">Media</a>
+                    </li>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}"><a href="#quiz">Quiz</a></li>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t hidden"><a href="#disscussion">Συζήτηση</a>
+                    </li>
+                </ul>
+
+                <!-- Tab Contents -->
+                <div id="tab-contents" class="ml-1 border-1 border-gray-200">
+                    <div id="first" class=" hidden p-4">
+                        {!! $course->description !!}
+                    </div>
+                    <div id="second" class="hidden p-4">
+                        {!! $course->summary !!}
+                    </div>
+                    <div id="third" class="hidden p-4">
+                        @foreach($course->media->where("type",1) as $file)
+                            <div
+                                class="text-gray-600 ml-2 flex w-1/2 items-center justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
+                                <a class=" p-2" href="{{$file->rel_path}}" target="_blank">
+                                    <span>{{$file->original_name}}.{{$file->ext}}</span>
+                                </a>
+                                <a href="{{$file->rel_path}}" download>
+                                    <i class="mdi-24px mdi mdi-cloud-download-outline mr-2"></i>
+                                </a>
+                            </div>
                         @endforeach
-                    </ul>  <!-- end list material -->
-
+                        {{--                    {!! $course->media->where("type",1) !!}--}}
+                    </div>
+                    <figure id="fourth" class="hidden p-4 flex flex-wrap space-x-4">
+                        @foreach($course->media->where("type",0) as $file)
+                            <a href="{{$file->rel_path}} " data-lightbox="image-1">
+                                <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}" alt="{{$file->name}}">
+                            </a>
+                        @endforeach
+                    </figure>
+                    <div id="quiz" class="hidden p-4">
+                        {!! $course->script !!}
+                    </div>
+                    <div id="disscussion" class="hidden p-4">
+                        Συζήτηση
+                    </div>
                 </div>
-
             </div>
-
-        </div> <!--  container info -->
-
-    </div>
-
-    <div class="modal fade" id="announcements-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myLargeModalLabel">Ανακοινώσεις</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body" style="overflow: hidden">
-                    <div class="swiper-container-announcements">
-                        <!-- Additional required wrapper -->
-                        <div class="swiper-wrapper">
-                            <!-- Slides -->
-                            @foreach($announcements  as $key => $announcement)
-                                <div class="swiper-slide">
-                                    <div style="word-wrap: break-word"
-                                         class="px-5 d-flex flex-column justify-content-center">
-                                        <h3 class="mb-3 ">{{$announcement->title}}  </h3>
-                                        <p>{!! $announcement->content !!}</p>
-                                        <span class="font-13 font-weight-normal">
-                                            ({{$announcement->created_at->format('d/m/Y')}})
-                                        </span>
-
-                                    </div>
+        </section>
+        <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10 spa-list-material px-5">
+            <div class="row">
+                <div class="col">
+                    <div class="tabs">
+                        <div class="tab bg-gray-200 px-4 em-padding">
+                            <input type="checkbox" id="extra-file">
+                            <label class="tab-label text-black list-disc text-lg p-4" for="extra-file"><span
+                                    class="bullet">Βοηθητικά αρχεία</span></label>
+                            @foreach($course->media->where("type",1) as $file)
+                                <div
+                                    class="tab-content text-gray-600 ml-2 flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
+                                    <a class="mt-2" href="{{$file->rel_path}}" target="_blank">
+                                        <span>{{$file->original_name}}.{{$file->ext}}</span>
+                                    </a>
+                                    <a href="{{$file->rel_path}}" download>
+                                        <i class="mdi-24px mdi mdi-cloud-download-outline mr-2"></i>
+                                    </a>
                                 </div>
                             @endforeach
-                        <!-- Slides -->
                         </div>
-                        <!-- If we need pagination -->
-                        <div class="swiper-pagination"></div>
-
-                        <!-- If we need navigation buttons -->
-                        <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-
-                        <!-- If we need scrollbar -->
-                        <div class="swiper-scrollbar"></div>
                     </div>
                 </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-    @include("components.index.comments.comments-form")
-@endsection
+            </div>
 
+            <div class="row">
+                <div class="col">
+                    <div class="tabs">
+                        <div class="tab bg-gray-200 px-4 em-padding">
+                            <input type="checkbox" id="material-file">
+                            <label class="tab-label text-black list-disc text-lg p-4" for="material-file"><span
+                                    class="bullet">Μαθήματα</span></label>
+                            @foreach($lessons as $lesson)
+                                <div
+                                    class="tab-content text-gray-600 ml-2 flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
+                                    data-href="{{$lesson->type=="Link"?$lesson->link:route('index.showMaterial',[$course->slug,$lesson->slug])}}"
+                                    data-type="{{$lesson->type}}"
+                                >
+                                    <span class="mt-1">{{$loop->index+1}}</span>
+                                    <a class="mt-1 flex-1 " href="">
+                                        <span class="ml-4">{{$lesson->title}}</span>
+                                    </a>
+                                    <i class="mt-1 mr-3 {{$lesson->getType($lesson->type)}}"></i>
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="tabs ">
+                        <div class="tab bg-gray-200 px-4 ">
+                            <input type="checkbox" id="sections">
+                            <label class="tab-label text-black list-disc text-lg p-4" for="sections"><span
+                                    class="bullet">Ενότητες</span></label>
+                            <div class="tab-content text-gray-600 p-0 m-0 space-y-1" style="padding:0!important;">
+                                @foreach($sections as $key=> $section)
+                                    @if(count($section->chapters))
+                                        <div class="tabs " style="box-shadow: none!important;">
+                                            <div class="tab bg-gray-200 p-0 mb-3">
+                                                <input type="checkbox" id="section-{{$section->slug}}">
+                                                <label
+                                                    class="tab-label text-black list-disc text-sm {{$section->pivot->highlight? "bg-blue-300" :"bg-white"}}  pr-5 items-center rounded-lg"
+                                                    for="section-{{$section->slug}}">
+                                                <span
+                                                    class="border-r-1 border-gray-400 px-5 py-4">Ενότητες {{$loop->index+1}}</span>
+                                                    <span
+                                                        class="px-5 py-2i">{{\Str::limit($section->title,50,"...")}}</span>
+                                                </label>
+                                                @foreach($section->chapters()->where("type","!=","Announcement")->where("type","!=","PDF")->get() as $chapter)
+                                                    <div
+                                                        class="tab-content space-x-2 text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
+                                                        style="padding-left: 15px;padding-right: 15px;"
+                                                        data-href="{{$chapter->type=="Link"?$chapter->link:route('index.showMaterial',[$course->slug,$chapter->slug])}}"
+                                                        data-type="{{$chapter->type}}"
+                                                    >
+                                                        <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
+                                                        <a class="mt-1 flex-1 " href="">
+                                                            <span class="ml-3">{{$chapter->title}}</span>
+                                                        </a>
+                                                        <span class="mt-1"><i
+                                                                class=" mr-3 {{$chapter->getType($chapter->type)}}"></i></span>
+                                                    </div>
+                                                @endforeach
+
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endforeach
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+    </article>
+
+
+    <div class="modal  opacity-0 pointer-events-none absolute w-full h-full top-0 left-0 flex items-start justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-black opacity-25 top-0 left-0 cursor-pointer"></div>
+        <div class="absolute rounded overflow-hidden mt-10 w-1/2 bg-white h-auto h rounded-sm shadow-lg flex flex-col p-10 text-2xl">
+            <div class="swiper-container-announcements">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    @foreach($announcements  as $key => $announcement)
+                        <div class="swiper-slide w-full">
+                            <div
+                                class="px-10 space-y-4 flex flex-col justify-center break-words w-5/6">
+                                <h3 class="mb-3 text-2xl font-bold">{{$announcement->title}}  </h3>
+                                <p class="text-base">{!! $announcement->content !!}</p>
+                                <span class="text-base font-semibold">
+                                            ({{$announcement->created_at->format('d/m/Y')}})
+                                        </span>
+                            </div>
+                        </div>
+                @endforeach
+                <!-- Slides -->
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </div>
+    </div>
+
+
+@endsection
 
 @section("script")
-
-
     <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
+    <script>
+        let tabsContainer = document.querySelector("#tabs");
+
+        let tabTogglers = tabsContainer.querySelectorAll("a");
+
+        tabTogglers.forEach(function (toggler) {
+            toggler.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                let tabName = this.getAttribute("href");
+
+                let tabContents = document.querySelector("#tab-contents");
+
+                for (let i = 0; i < tabContents.children.length; i++) {
+                    tabTogglers[i].parentElement.classList.add("bg-gray-200");
+                    tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px");
+                    tabContents.children[i].classList.remove("hidden");
+                    if ("#" + tabContents.children[i].id === tabName) {
+                        tabTogglers[i].parentElement.classList.add("bg-white");
+                        tabTogglers[i].parentElement.classList.remove("bg-gray-200");
+                        continue;
+                    }
+                    tabContents.children[i].classList.add("hidden");
+
+                }
+                e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px", "bg-white");
+            });
+        });
+
+        $("#tabs").children().not( ".hidden" ).first().children().first().attr("id","default-tab")
+
+        document.getElementById("default-tab").click();
 
 
+        const button = document.querySelector('.modal-button')
+        button.addEventListener('click', toggleModal)
+
+        const overlay = document.querySelector('.modal-overlay')
+        overlay.addEventListener('click', toggleModal)
+
+        function toggleModal () {
+            const modal = document.querySelector('.modal')
+            modal.classList.toggle('opacity-0')
+            modal.classList.toggle('pointer-events-none')
+        }
+
+    </script>
 
 @endsection
-

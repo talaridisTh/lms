@@ -99,7 +99,7 @@ class CourseController extends Controller {
             return count($material->chapters);
         })->toArray();
 
-        return view("tailwind-course", [
+        return view("index.courses.template-1.courseProfile", [
             "course" => Course::find(2),
             "lessons" => $lessons,
             "announcements" => $user->courses()->with("materials")->get()->pluck("materials")->flatten()->where("type", "Announcement")->unique("slug"),

@@ -1,178 +1,140 @@
-@extends('layouts.app')
+@extends("layouts.app")
+
+@section("content")
 
 
-@section('style')
-    <style>
-
-        .count-number {
-            font-weight: bold;
-            line-height: 80px;
-            text-align: center;
-            font-size: 60px;
-            font-weight: 700;
-        }
-
-        .line {
-            border-bottom: chocolate 3px solid;
-            margin: auto;
-        }
-
-        .splide__slide img {
-            width: 100%;
-            height: auto;
-        }
-
-
-    </style>
-@endsection
-
-@section('content')
-    <div class="container-fluid p-3 mb-5" style="max-width: 1400px">
-        {{--row 1 --}}
-        <div class="row " style="  font-family: OpenSans;">
-            <div class="col-lg-5 col-md-7 d-flex flex-column text-center text-sm-left justify-content-center">
-                <h2 class="h2-custom">Βάλτε τωρα τη Ρομποτική στο σχολείο σας</h2>
-                <div class="d-flex flex-column span-custom mb-3">
-                    <p class="p-custom">
-                        <span class="mb-1">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και προγραμματισμού για παιδιά.</span>
-                        <span>Μπες στο δίκτυο συνεργατών. Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</span>
-                    </p>
-                </div>
-                <button class="btn-custom btn btn-info btn-lg text-light  ">
-                    <span>ΑΙΤΗΜΑ ΓΙΑ DEMO</span>
+    <div class="sm:container xs:container-lg mx-auto flex justify-between space-x-10 p-8">
+        <div class="flex-1  space-y-6 mt-16">
+            <h2 class="md:text-6xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
+                Βάλτε τωρα τη ρομποτική στο σχολείο σας</h2>
+            <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και
+                προγραμματισμού για παιδιά. Μπες στο δίκτυο συνεργατών.
+                Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</p>
+            <div class="flex sm:justify-start xs:justify-center">
+                <button
+                    class="inline-block uppercase w-50 px-8 py-2 text-xs font-medium leading-6 text-center text-white uppercase
+                     transition bg-login rounded-xl shadow ripple hover:shadow-lg hover:bg-color-theme focus:outline-none">
+                    ΑΙΤΗΜΑ ΓΙΑ DEMO
                 </button>
             </div>
+        </div>
+        <div class="flex-1 lg:flex xs:hidden  justify-center">
+            <img
+                style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
+                class="img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
+                alt="vector-smart-object"></div>
+    </div>
 
-            <div class="col-lg-7 col-md-5  d-none d-md-block">
-                <div class="container text-center">
-                    <img
-                        style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
-                        class="img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
-                        alt="vector-smart-object">
-                </div>
-            </div>
+    <div class="sm:container xs:container-lg mx-auto flex justify-between  space-x-10 p-8">
+        <div class="flex-1  space-y-6 mt-3">
+            <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
+                Θέλεις να βάλεις τη Ρομποτική στο σχολείο σου και δεν ξέρεις από που να ξεκινήσεις;</h2>
+            <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Θέλεις να βάλεις τη Ρομποτική στο σχολείο
+                σου και δεν ξέρεις από που να ξεκινήσεις;</p>
 
         </div>
-
-
-        {{--row 3 --}}
-        <div class="row my-5  ">
-
-            <div class="col-lg-5 col-md-12 mt-4">
-                <h3 class="h3-custom">Θέλεις να βάλεις τη Ρομποτική στο σχολείο σου και δεν ξέρεις από που να
-                    ξεκινήσεις;</h3>
-                <p class="p-custom">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet
-                    tempor
-                    nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
-                </p>
-            </div>
-
-            <div class="col-lg-7 col-md-12  ">
-                <div class="container text-center">
-                    <img
-                        class="img-custom-index img-fluid" src="{{asset('images/group-5.png')}}"
-                        alt="vector-5">
-                </div>
-            </div>
-
+        <div class="flex-1 lg:flex xs:hidden  justify-center">
+            <img
+                class="img-custom-index img-fluid" src="{{asset('images/group-5.png')}}"
+                alt="vector-5">
         </div>
-        {{--row 4 --}}
-        <div class="row mt-9 ">
+    </div>
 
-            <div class="col-lg-5 mt-5">
-                <h4 style="" class="h4-custom">Εξατομικευμένη πλατφόρμα μαθημάτων ρομποτικής</h4>
-                <p class="p-custom">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
-                    sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
-                </p>
-                <ul class="ul-custom p-2">
-                    <li class="li-custom"> HD Videos στα Ελληνικά</li>
-                    <li class="li-custom">Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
-                    <li class="li-custom">Kώδικα προγραμματισμού των ρομπότ</li>
-                    <li class="li-custom"> Αρχεία κατασκευής για τους μαθητές μέσα από την πλατφόρμα.</li>
-                </ul>
-            </div>
+    <div class="sm:container xs:container-lg mx-auto flex justify-between items-center  space-x-10 p-8">
+        <div class="flex-1  space-y-6 mt-3">
+            <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
+                Εξατομικευμένη πλατφόρμα μαθημάτων ρομποτικής</h2>
+            <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.
+                Vestibulum aliquam hendrerit molestie</p>
 
-            <div class="offset-2 col-lg-5  d-none d-lg-block">
-                <div class="container  text-center  d-flex justify-content-center"
-                     style=" background: url('{{asset('images/group-32.png')}}'); background-position: right;background-repeat: no-repeat; ">
-                    <div class="container-oval   position-relative">
-                        <div class="oval "></div>
-                        <div class="oval-1 position-absolute"></div>
-                        <div class="oval-2 position-absolute"></div>
-                        <div class="oval-3 position-absolute"></div>
-                    </div>
-                </div>
-            </div>
-
+            <ul class="list-inside list-disc space-y-2 ">
+                <li>HD Videos στα Ελληνικά</li>
+                <li>Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
+                <li>Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
+                <li>Πίστες για τα ρομπότ, αρχεία κατασκευής</li>
+            </ul>
         </div>
-        {{--row 5 --}}
-        <div class="row mt-9 ">
-
-            <div class="col-lg-5 d-none d-lg-block ">
-                <div class="container  text-center  d-flex justify-content-center"
-                     style=" background: url('{{asset('images/group-32.png')}}'); background-position: right;background-repeat: no-repeat; ">
-                    <div class="container-oval-2 position-relative">
-                        <div class="oval "></div>
-                        <div class="oval-2 position-absolute"></div>
-                        <div class="oval-3 position-absolute"></div>
-                    </div>
-                </div>
+        <div class="flex-1 lg:flex xs:hidden  justify-center"
+             style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
+            <div class="container-oval   relative">
+                <div class="oval "></div>
+                <div class="oval-1 absolute"></div>
+                <div class="oval-2 absolute"></div>
+                <div class="oval-3 absolute"></div>
             </div>
-
-            <div class="offset-lg-2  col-lg-5 d-flex flex-column justify-content-center">
-                <h4 style="" class="h4-custom">Εκπαίδευση προσωπικού</h4>
-                <p class="p-custom">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
-                    sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
-                </p>
-                <ul class="ul-custom p-2">
-                    <li class="li-custom">Hands on Μαθήματα (και με φυσική παρουσία και εξ αποστάσεως)</li>
-                    <li class="li-custom"> Εκπαιδευτικό υλικό</li>
-                    <li class="li-custom"> Απόκτηση πιστοποίησης</li>
-                    <li class="li-custom"> Εκπαιδευτή ρομποτικής</li>
-                </ul>
-            </div>
-
-
         </div>
-        {{--row 6 --}}
-        <div class="row  mt-9 ">
+    </div>
 
-            <div class="col-lg-5  mt d-flex flex-column justify-content-center">
-                <h4 style="" class="h4-custom">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς</h4>
-                <p class="p-custom">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh,
-                    sit amet tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
-                </p>
+    <div class="sm:container xs:container-lg mx-auto flex justify-between  items-center space-x-10 p-8">
+        <div class="flex-1 lg:flex xs:hidden  justify-center"
+             style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
+            <div class="container-oval mr-16  relative">
+                <div class="oval "></div>
+                <div class="oval-1 absolute"></div>
+                <div class="oval-2 absolute"></div>
+                <div class="oval-3 absolute"></div>
             </div>
-
-            <div class="offset-2 col-lg-5   d-none d-lg-block ">
-                <div class="container  text-center  d-flex justify-content-center"
-                     style=" background: url('{{asset('images/group-32.png')}}'); background-position: right;background-repeat: no-repeat; ">
-                    <div class="container-oval-3   position-relative">
-                        <div class="oval "></div>
-                        <div class="oval-2 position-absolute"></div>
-                    </div>
-                </div>
-            </div>
-
         </div>
+
+        <div class="flex-1  space-y-6 mt-3">
+            <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
+                Εκπαίδευση προσωπικού
+            </h2>
+            <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Maecenas varius tortor nibh, sit amet tempor nibh finibus et. Aenean eu enim justo.
+                Vestibulum aliquam hendrerit molestie.</p>
+
+            <ul class="list-inside list-disc space-y-2 ">
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius tortor nibh, sit amet
+                    tempor nibh finibus et. Aenean eu enim justo. Vestibulum aliquam hendrerit molestie.
+                </li>
+                <li>Εκπαιδευτικό υλικό</li>
+                <li>Εκπαιδευτικό υλικό</li>
+                <li>Εκπαιδευτή ρομποτικής</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="sm:container xs:container-lg mx-auto flex justify-between  items-center space-x-10 p-8">
+        <div class="flex-1  space-y-6 mt-3">
+            <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
+                Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς
+            </h2>
+            <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη
+                διάρκεια της χρονιάς
+            </p>
+        </div>
+        <div class="flex-1 lg:flex xs:hidden  justify-center"
+             style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
+            <div class="container-oval   relative">
+                <div class="oval "></div>
+                <div class="oval-1 absolute"></div>
+                <div class="oval-2 absolute"></div>
+                <div class="oval-3 absolute"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sm:container xs:container-lg mx-auto space-y-20 p-8">
+
         @foreach( $arrayBanners as  $key=>  $banners)
             <div id="card-slider-{{$key}}" class="splide">
                 @if($banners->status==1)
-                    <div class="splide__track">
+                    <div class="splide__track mx-3">
                         <ul class="splide__list">
                             @foreach($banners->models as $banner)
                                 @php
                                     $bannerValue = key ( $banner);
                                     $model =   $bannerValue::findOrFail($banner->$bannerValue);
                                 @endphp
-                                <li class="splide__slide p-2">
+                                <li class="splide__slide p-5 space-y-4  bg-gray-200 shadow-inner shadow-2xl">
                                     <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
-                                    <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>
-                                    <p class="p-3"> {{$model->subtitle}}</p>
+                                    <div class="space-y-4">
+                                        <h2 class="text-lg font-semibold">{{$model->title}}</h2>
+                                        <p class="font-normal text-base"> {{$model->subtitle}}</p>
+
+                                    </div>
                                 </li>
                             @endforeach
                         </ul>
@@ -182,10 +144,10 @@
             </div>
 
         @endforeach
-
     </div>
-@endsection
 
+
+@endsection
 @section("script")
 
     <script src="{{ mix('js/index/index.js') }}"></script>

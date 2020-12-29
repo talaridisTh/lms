@@ -212,7 +212,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 Route::group(['middleware' => ['auth']], function () {
 	Route::get("/pf/{pass}/{name}", "Index\MediaController@show");
     //home index
-    Route::get('/home', 'Index\HomeController@index')->name('home');
+//    Route::get('/home', 'Index\HomeController@index')->name('home');
     //excehl
     Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
     Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
@@ -311,10 +311,10 @@ Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });
 
-Route::get("/tailwind",[HomeController::class,"tempIndex"]);
+Route::get("/",[HomeController::class,"index"])->name('home');
 
 
 
-Route::get("/tailwind/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
-Route::get("/tailwind/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
-Route::get("/tailwind/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
+Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
+Route::get("/home/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
+Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");

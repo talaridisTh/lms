@@ -1,4 +1,4 @@
-@extends("tailwind")
+@extends("layouts.app")
 
 @section("content")
 
