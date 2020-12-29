@@ -20,13 +20,17 @@ use Illuminate\Support\Carbon;
 |
 */
 
+Route::get("email/verify/{id}/{hash}", 'Auth\VerificationController@verify')->name("email.verify");
+Route::get("auth/verify", 'Auth\VerificationController@show')->name("email.verify.show");
+Route::post("send/email-verification", 'Auth\VerificationController@sendEmailVerification')->name("send.email.verification");
+
 Route::get("/full-verification", function () {
 	DB::table("users")->update([
 		"email_verified_at" => Carbon::now()
 	]);
 });
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 //!########################################################
 //! 404
 Route::fallback(function () {
