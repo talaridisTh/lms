@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Index\CourseController;
+use App\Http\Controllers\Index\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -310,11 +311,10 @@ Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });
 
-Route::get("/tailwind",[HomeController::class,"index"]);
-Route::get("/tailwind", function() {
-    return view("tailwind-home");
-});
+Route::get("/tailwind",[HomeController::class,"tempIndex"]);
+
 
 
 Route::get("/tailwind/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
+Route::get("/tailwind/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
 Route::get("/tailwind/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");

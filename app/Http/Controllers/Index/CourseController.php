@@ -99,87 +99,98 @@ class CourseController extends Controller {
             return count($material->chapters);
         })->toArray();
 
-
         return view("tailwind-course", [
             "course" => Course::find(2),
             "lessons" => $lessons,
             "announcements" => $user->courses()->with("materials")->get()->pluck("materials")->flatten()->where("type", "Announcement")->unique("slug"),
             "sections" => $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->unique("slug"),
             "sumMaterial" => array_sum($countMaterial) + count($lessons),
-            "curator" => User::FindOrFail(isset($course->user_id)?$course->user_id:User::where("first_name","Υδρόγειος")->first()->id),
-            "fields"=>$this->getFieldsCourse($course)
-
+            "curator" => User::FindOrFail(isset($course->user_id) ? $course->user_id : User::where("first_name", "Υδρόγειος")->first()->id),
+            "fields" => $this->getFieldsCourse($course)
         ]);
     }
 
-    public function showMaterial(Course $course ,Material $material)
-{
+    public function showMaterial(Course $course, Material $material)
+    {
 
-    return view("tailwind-course-material",[
-        "material"=>$material,
-        "fields"=>$this->getFieldsMaterial($material)
-    ]);
+        return view("tailwind-course-material", [
+            "material" => $material,
+            "fields" => $this->getFieldsMaterial($material)
+        ]);
+    }
 
-}
+    public function userCourses()
+    {
 
-    private function getFieldsMaterial(Material $course){
+        return view("tailwind-user-courses");
+    }
+
+    private function getFieldsMaterial(Material $course)
+    {
         $courseFields = $course->fields;
-
         $fields = new stdClass();
-        foreach(json_decode($courseFields) as $key =>  $field){
+        foreach (json_decode($courseFields) as $key => $field)
+        {
 
-            if(isset($course["$key"]) && $field){
-                $fields->$key =   $field;
-
-            }else{
-                $fields->$key =   0;
+            if (isset($course["$key"]) && $field)
+            {
+                $fields->$key = $field;
+            } else
+            {
+                $fields->$key = 0;
             }
         }
-
-        if($course->media->where("type",0)->isNotEmpty()){
+        if ($course->media->where("type", 0)->isNotEmpty())
+        {
             $fields->media = 1;
-        }else{
+        } else
+        {
             $fields->media = 0;
         }
-        if($course->media->where("type",1)->isNotEmpty()){
+        if ($course->media->where("type", 1)->isNotEmpty())
+        {
             $fields->file = 1;
-        }else{
+        } else
+        {
             $fields->file = 0;
         }
 
         return $fields;
-
     }
 
-
-    private function getFieldsCourse(Course $course){
+    private function getFieldsCourse(Course $course)
+    {
         $courseFields = $course->fields;
-
         $fields = new stdClass();
-        foreach(json_decode($courseFields) as $key =>  $field){
+        foreach (json_decode($courseFields) as $key => $field)
+        {
 
-            if(isset($course["$key"]) && $field){
-                $fields->$key =   $field;
-
-            }else{
-                $fields->$key =   0;
+            if (isset($course["$key"]) && $field)
+            {
+                $fields->$key = $field;
+            } else
+            {
+                $fields->$key = 0;
             }
         }
-
-        if($course->media->where("type",0)->isNotEmpty()){
+        if ($course->media->where("type", 0)->isNotEmpty())
+        {
             $fields->media = 1;
-        }else{
+        } else
+        {
             $fields->media = 0;
         }
-        if($course->media->where("type",1)->isNotEmpty()){
+        if ($course->media->where("type", 1)->isNotEmpty())
+        {
             $fields->file = 1;
-        }else{
+        } else
+        {
             $fields->file = 0;
         }
 
         return $fields;
-
     }
+
     public function watchlistCourse(Request $request)
     {
 

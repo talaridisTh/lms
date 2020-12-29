@@ -10,7 +10,7 @@
 
     <title>{{ $options->title }}</title>
     <!-- App favicon -->
-        <link rel="shortcut icon" href="{{$options->logo}}">
+    <link rel="shortcut icon" href="{{$options->logo}}">
 
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
@@ -29,9 +29,11 @@
     @yield("style")
 
 </head>
-<body class="bg-gray-100 antialiased font-sansu h-screen flex flex-col" style="font-family: 'Roboto', sans-serif;">
+<body class="bg-gray-100 antialiased"
+      style="font-family: 'Roboto', sans-serif;">
 
-<div id="app">
+<div id="app" class="flex flex-col min-h-screen" style="height: auto !important;">
+
     <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md" style="min-height: 50px">
         <div class="container mx-auto flex flex-wrap items-center px-1">
             <div class="flex-1 flex justify-between items-center">
@@ -62,10 +64,23 @@
                         @endif
                         <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="{{route('dashboard')}}">dashboard</a>
                         @endrole
-                        <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="">μαθηματα</a>
+                        <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase "
+                           href="{{route('index.userCourses',auth()->user()->id)}}">μαθηματα</a>
                         <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm  font-medium uppercase " href="#">discussions</a>
-                        <a class="bg-login transition duration-500 ease-in-out text-white rounded-full hover:bg-color-theme  md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-medium uppercase "
-                           href="#">ο λογαριασμος μου</a>
+                        <div class="login-cnt relative">
+                            <a class="bg-login  transition duration-500 ease-in-out text-white rounded-full hover:bg-color-theme
+                         md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-medium uppercase "
+                               href="#">ο λογαριασμος μου
+                            </a>
+                            <div class="login-dropdown absolute left-2/4 hidden opacity-0 mt-2">
+                                <ul class="absolute left-0 top-0  p-2 rounded-lg shadow-lg bg-white z-10 border  group-hover:block">
+                                    {{--                                    <li class="hover:bg-gray-200 py-2 px-10">eisodos</li>--}}
+                                    <li id="logout-btn" class="cursor-pointer hover:bg-gray-200 py-2 px-10 flex ">Έξοδος
+                                        <i class=" ml-2 mdi mdi-logout"></i></li>
+                                </ul>
+                            </div>
+
+                        </div>
                     </div>
                 </nav>
             </div>
@@ -79,14 +94,15 @@
             </ul>
         </div>
     </header>
-    <main class="my-7 mb-20 ">
+
+    <main class="my-7 mb-20 flex-grow">
 
         @yield("content")
 
     </main>
 
-    <footer class="bg-white py-4 lg:px-16  px-8" style="min-height: 50px; margin-top:auto; box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);;
-">
+    <footer class="bg-white py-4 lg:px-16  px-8"
+            style="min-height: 50px;  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
         <div class="container mx-auto flex items-center flex-wrap justify-between">
             <div class="mr-7">
                 <a href="#" class="text-xl">
@@ -135,7 +151,9 @@
         this.href = window.PREVIEW_PAGE_COURSE
     })
 
-    window.onscroll = function() {scrollFunction()};
+    window.onscroll = function () {
+        scrollFunction()
+    };
 
     function scrollFunction() {
         const $header = document.getElementById('header');
@@ -145,24 +163,24 @@
         if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
             $('header').addClass('h-16 flex items-center').removeClass("py-4");
             $('.logo').addClass('h-11');
-            $('.bg-login').addClass('md:p-3').removeClass("md:p-4");
+            $('.bg-login').first().addClass('md:p-3').removeClass("md:p-4");
+            $(".login-dropdown").addClass("opacity-0 hidden")
         } else {
             $('header').removeClass('h-16 flex items-center').addClass("py-4");
             $('.logo').removeClass('h-11');
-            $('.bg-login').removeClass('md:p-3').addClass("md:p-4");
+            $('.bg-login').first().removeClass('md:p-3').addClass("md:p-4");
         }
     }
 
+    $(document).on('click', function (event) {
+        if (!$(event.target).is('.bg-login')) {
+            $(".login-dropdown").addClass("opacity-0 hidden")
+        }
+    });
 
-    // $(window).scroll(function(){
-    //     if($(document).scrollTop() > 50) {
-    //         $('header').addClass('h-16 flex items-center').removeClass("py-4");
-    //         $('.logo').addClass('h-11');
-    //     } else {
-    //         $('header').removeClass('h-16 flex items-center').addClass("py-4");
-    //         $('.logo').removeClass('h-11');
-    //     }
-    // });
+    $(".login-cnt").on("click", function () {
+        $(".login-dropdown").toggleClass("transition-all opacity-100").toggleClass("opacity-0 hidden")
+    })
 
     $(".menu-toggle").on("click", function () {
         if ($(".toggle-cnt-menu").hasClass("hidden")) {

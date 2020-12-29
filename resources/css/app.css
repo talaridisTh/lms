@@ -22,7 +22,7 @@
     bottom: 0px;
 }
 
-.borderXwidth a:not(:last-child):hover:before, .borderXwidth a:not(:last-child):hover:after {
+.borderXwidth a:not(.login-cnt a ):hover:before, .borderXwidth a:not(.login-cnt a):hover:after {
     opacity: 1;
     width: 100%;
 }

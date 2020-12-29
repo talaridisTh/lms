@@ -13,7 +13,7 @@
             <div class="flex sm:justify-start xs:justify-center">
                 <button
                     class="inline-block uppercase w-50 px-8 py-2 text-xs font-medium leading-6 text-center text-white uppercase
-                     transition bg-login rounded-xl shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none">
+                     transition bg-login rounded-xl shadow ripple hover:shadow-lg hover:bg-color-theme focus:outline-none">
                     ΑΙΤΗΜΑ ΓΙΑ DEMO
                 </button>
             </div>

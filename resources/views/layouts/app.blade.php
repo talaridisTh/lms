@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <title>{{$option["title"]}}</title>
+{{--    <title>{{$option["title"]}}</title>--}}
     <meta name="route" content="{{\Request::route()->getName()}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="{{$option["description"]}}" name="description"/>
+{{--    <meta content="{{$option["description"]}}" name="description"/>--}}
     <meta content="Coderthemes" name="author"/>
     <!-- App favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
@@ -91,9 +91,9 @@
                 @if(Auth::check())
                     <a href="{{auth()->user()->getRoleNames()[0]=="guest"? "#": route('home')}}" class="topnav-logo">
                 	<span class=" stop nav-logo-lg">
-                            @isset($option['logo'])
+                            @isset($options->logo)
                             <img class="m-2" height="60"
-                                 src="{{$option['logo']}}"
+                                 src="{{$options->logo}}"
                                  alt="">
                         @endisset
                 	</span>
@@ -261,11 +261,7 @@
         @yield('content')
     </div>
 
-    @php
-        $contactInfo = json_decode( $option["contactInfo"]);
-        $socialMedia = json_decode( $option["social"]);
-        $socials = ["facebook","instagram","twitter","youtube","linkedIn"];
-    @endphp
+
 
     <footer class="footer-alt border-top bg-light pb-0" style="    margin-bottom: -19px;">
         <div class="container" style="max-width: 1440px;">
@@ -274,38 +270,34 @@
                     <div class="row align-items-center">
                         <div class="col-md-10 col-sm-12 d-flex justify-content-center justify-content-md-start">
                            	<span class=" stop nav-logo-lg">
-                                @isset($option['logo'])
+                                @isset($options->logo)
                                     <img class="m-2" height="60"
-                                         src="{{$option['logo']}}"
+                                         src="{{$options->logo}}"
                                          alt="">
                                 @endisset
                 	        </span>
                             <h4 class="text-left font-weight-bold font-19 mb-0" style="color: #585d63">
                                 {{isset($contactInfo->city)?$contactInfo->city:""}}
                                 <p class="text-left d-flex flex-column font-14" style="color: #585d63">
-                                        <span>
-                                            {{isset($contactInfo->address)?$contactInfo->address.",":""}}
-                                            {{isset($contactInfo->zipCode)?$contactInfo->zipCode.",":""}}
-                                        </span>
-                                    <span>
-                                            {{isset($contactInfo->email)?$contactInfo->email:""}}
-                                        </span>
-                                    <span>{{isset($contactInfo->phone)?$contactInfo->phone:""}}
-                                        {{isset($contactInfo->fax)?$contactInfo->fax:""}}</span>
+                                    <div class="contact-info-cnt">
+                                <p id="city">{{ $options->contactInfo->city }}</p>
+                                <p id="address">{{ $options->contactInfo->address }}, {{ $options->contactInfo->zipCode }}</p>
+                                <p>{{ $options->contactInfo->email }}</p>
+                                <p>{{ $options->contactInfo->phone }}, {{ $options->contactInfo->fax }}</p>
+                        </div>
                                 </p>
                             </h4>
                         </div>
                         <div class=" col-md-2 col-sm-12">
                             <div class="d-flex justify-content-between px-3 ">
 
-                                @foreach($socials as $social)
-                                    @isset($socialMedia->$social)
-                                        <a class="p-1" href="{{$socialMedia->$social}}">
-                                            <img src="{{asset("images/$social.png")}}" alt="">
+                                @foreach($options->social as $social => $link)
+                                    <a class="nav-item @if (!$loop->first) ml-3 @endif ">
+                                        <a href="{{ $link }}">
+                                            <img src="{{ asset("images/$social.png" )}}" alt="{{ $social}}">
                                         </a>
-                                    @endisset
+                                    </a>
                                 @endforeach
-
 
                             </div>
                         </div>
@@ -317,7 +309,7 @@
         <hr class="border mt-2" style="opacity: 0.4;">
         <div class="container-fluid  pb-2" style="max-width: 1705px;">
             <div class="row align-items-center">
-                <div class="col-sm-6  col-md-4">{{$option["copyright"]}}</div>
+{{--                <div class="col-sm-6  col-md-4">{{$option["copyright"]}}</div>--}}
                 <div class="col-sm-6 col-md-4">Πολιτική Απορρήτου</div>
 
 
