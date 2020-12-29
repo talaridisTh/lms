@@ -6,6 +6,7 @@ import Splide from '@splidejs/splide';
 
 document.addEventListener( 'DOMContentLoaded', function () {
     new Splide( '#card-slider-primary', {
+        gap       : 10,
         perPage    : 3,
         breakpoints: {
             600: {
@@ -18,6 +19,7 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
 document.addEventListener( 'DOMContentLoaded', function () {
     new Splide( '#card-slider-secondary', {
+        gap       : 10,
         perPage    : 3,
         breakpoints: {
             600: {
@@ -27,34 +29,6 @@ document.addEventListener( 'DOMContentLoaded', function () {
 
     } ).mount();
 } );
-
-
-
-
-function animateValue($obj, start, end, duration) {
-    var range = end - start;
-    var current = start;
-    var increment = end > start? 1 : -1;
-    var stepTime = Math.abs(Math.floor(duration / range));
-    var timer = setInterval(function() {
-        current += increment;
-        $obj.text(current);
-        if (current == end) {
-            // $obj.text($obj.text()+'+');
-            clearInterval(timer);
-        }
-    }, stepTime);
-}
-
-
-for (let i = 1; i <=$('.count-number').length ; i++) {
-    var $number = $(`.count-number-${i}`),
-        start = $number.attr('data-start')*1,
-        end = $number.attr('data-end')*1;
-
-
-    animateValue($number, start, end, 500);
-}
 
 
 

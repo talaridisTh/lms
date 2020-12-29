@@ -2,8 +2,8 @@
 @import "../../theme/scss/custom/plugins/icons/materialdesignicons";
 @import "../../theme/scss/custom/plugins/icons/unicons";
 
-
-
+@import "~lightbox2/dist/css/lightbox.css";
+@import "~@splidejs/splide/dist/css/themes/splide-sea-green.min.css";
 input {
     position: absolute;
     opacity: 0;

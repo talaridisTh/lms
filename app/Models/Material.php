@@ -125,9 +125,9 @@ class Material extends Model {
     {
         $icons = [
             "Lesson" => "mdi  mdi-book-open-page-variant mr-1",
-            "Link" => 'mdi  mdi-book-open-page-variant mr-1',
-            "Video" => "mdi  mdi-motion-play-outline",
-            "Pdf" =>"mdi  mdi-file-pdf"
+            "Link" => 'mdi  mdi-satellite-uplink mr-1 text-red-500',
+            "Video" => "mdi  mdi-motion-play-outline  mr-1",
+            "Pdf" =>"mdi  mdi-file-pdf  mr-1"
 
         ];
         foreach ($icons as $type => $icon)

@@ -3,12 +3,16 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    {{--    <title>{{$option["title"]}}</title>--}}
     <meta name="route" content="{{\Request::route()->getName()}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {{--    <meta content="{{$option["description"]}}" name="description"/>--}}
-<!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <meta content="{{ $options->description }}" name="description">
+
+
+    <title>{{ $options->title }}</title>
+    <!-- App favicon -->
+        <link rel="shortcut icon" href="{{$options->logo}}">
+
+
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <link href="{{ mix('css/index/_icon.css') }}" rel="stylesheet">
 
@@ -28,11 +32,11 @@
 <body class="bg-gray-100 antialiased font-sansu h-screen flex flex-col" style="font-family: 'Roboto', sans-serif;">
 
 <div id="app">
-    <header class="lg:px-16  px-8 bg-white py-4 shadow-md" style="min-height: 50px">
+    <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md" style="min-height: 50px">
         <div class="container mx-auto flex flex-wrap items-center px-1">
             <div class="flex-1 flex justify-between items-center">
-                <a href="#" class="text-xl">
-                    <img src="{{asset("images/logo.png")}}" alt="">
+                <a href="/tailwind" class="text-xl">
+                    <img class="logo" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
 
@@ -49,7 +53,7 @@
                 <nav>
                     <div
                         class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0 relative green borderXwidth">
-                        {{--                        @hasanyrole("admin|super-admin")--}}
+                        @hasanyrole("admin|super-admin")
                         @if(\Request::route()->getName()== "index.userCourse")
                             <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="#">edit this
                                 course</a>
@@ -57,9 +61,9 @@
                                 material</a>
                         @endif
                         <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="{{route('dashboard')}}">dashboard</a>
-                        {{--                        @endrole--}}
+                        @endrole
                         <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="">μαθηματα</a>
-                        <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 bg-  bg font-medium uppercase " href="#">discussions</a>
+                        <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm  font-medium uppercase " href="#">discussions</a>
                         <a class="bg-login transition duration-500 ease-in-out text-white rounded-full hover:bg-color-theme  md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-medium uppercase "
                            href="#">ο λογαριασμος μου</a>
                     </div>
@@ -86,39 +90,24 @@
         <div class="container mx-auto flex items-center flex-wrap justify-between">
             <div class="mr-7">
                 <a href="#" class="text-xl">
-                    <img src="{{asset("images/logo.png")}}" alt="">
+                    <img class="" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
             <div class="flex-1">
-                <p class="text-base font-semibold">Θεσσαλονίκη</p>
-                <p>Παπαναστασίου 150, 54249, Χαριλάου</p>
-                <p>2310 328797 - Fax 2310 328898</p>
+                <p class="text-base font-semibold">{{ $options->contactInfo->city }}</p>
+                <p>{{ $options->contactInfo->address }}, {{ $options->contactInfo->zipCode }}</p>
+                <p>{{ $options->contactInfo->email }}</p>
+                <p>{{ $options->contactInfo->phone }}, {{ $options->contactInfo->fax }}</p>
             </div>
             <div class="w-full my-3 sm:my-0 sm:w-auto">
-                <ul class="flex justify-between">
-                    <li class="nav-item ml-3  ">
-                        <a href="">
-                            <img src="{{ asset("images/facebook.png" )}}" alt="">
-                        </a>
-                    </li>
-
-                    <li class="nav-item ml-3  ">
-                        <a href="">
-                            <img src="{{ asset("images/instagram.png" )}}" alt="">
-                        </a>
-                    </li>
-
-                    <li class="nav-item ml-3  ">
-                        <a href="">
-                            <img src="{{ asset("images/youtube.png" )}}" alt="">
-                        </a>
-                    </li>
-
-                    <li class="nav-item ml-3  ">
-                        <a href="">
-                            <img src="{{ asset("images/twitter.png" )}}" alt="">
-                        </a>
-                    </li>
+                <ul class="flex space-x-3">
+                    @foreach($options->social as $social => $link)
+                        <li>
+                            <a href="{{ $link }}">
+                                <img src="{{ asset("images/$social.png" )}}" alt="{{ $social}}" height="30">
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -146,11 +135,39 @@
         this.href = window.PREVIEW_PAGE_COURSE
     })
 
+    window.onscroll = function() {scrollFunction()};
 
-    $(".menu-toggle").on("click",function (){
-        if( $(".toggle-cnt-menu").hasClass("hidden")){
+    function scrollFunction() {
+        const $header = document.getElementById('header');
+        if (!$header) {
+            return;
+        }
+        if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+            $('header').addClass('h-16 flex items-center').removeClass("py-4");
+            $('.logo').addClass('h-11');
+            $('.bg-login').addClass('md:p-3').removeClass("md:p-4");
+        } else {
+            $('header').removeClass('h-16 flex items-center').addClass("py-4");
+            $('.logo').removeClass('h-11');
+            $('.bg-login').removeClass('md:p-3').addClass("md:p-4");
+        }
+    }
+
+
+    // $(window).scroll(function(){
+    //     if($(document).scrollTop() > 50) {
+    //         $('header').addClass('h-16 flex items-center').removeClass("py-4");
+    //         $('.logo').addClass('h-11');
+    //     } else {
+    //         $('header').removeClass('h-16 flex items-center').addClass("py-4");
+    //         $('.logo').removeClass('h-11');
+    //     }
+    // });
+
+    $(".menu-toggle").on("click", function () {
+        if ($(".toggle-cnt-menu").hasClass("hidden")) {
             $(".toggle-cnt-menu").removeClass("hidden");
-        }else{
+        } else {
             $(".toggle-cnt-menu").addClass("hidden");
         }
     })

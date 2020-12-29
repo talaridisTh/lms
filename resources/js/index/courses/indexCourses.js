@@ -1,22 +1,76 @@
+import Swiper from 'swiper/bundle'; //slider.js
+import 'swiper/swiper-bundle.css'; // slider.css
+import "lightbox2/dist/js/lightbox" //lightbox
+
+var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
+    // Optional parameters
+
+
+    // If we need pagination
+    pagination: {
+        el: '.swiper-pagination-announcements',
+        draggable: true,
+    },
+
+
+    // Navigation arrows
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+
+    // And if we need scrollbar
+    scrollbar: {
+        el: '.swiper-scrollbar-announcements',
+    },
+    keyboard: {
+        enabled: true,
+        onlyInViewport: false,
+    },
+})//init slider
 
 
 $(".spa-click").on("click", async function (e) {
     e.preventDefault();
-    console.log($(this).data("href"))
+    const href = $(this).data("href")
 
+    if ($(this).data("type") == "Link") {
+        $('.spa-cnt').html($(""));
+        const {value} = await Swal.fire({
+            icon: 'question',
+            html: "Mεταφερθείτε στο Link!" + "<br>" + href,
+            showCancelButton: true,
+            confirmButtonText: 'Εντάξει',
+            cancelButtonText: "Ακύρωση "
+        })
+        if (value) {
+            window.open(href, '_target');
+
+        }
+        return;
+    }
 
     try {
-        const {data, status} = await axios.get($(this).data("href"))
+        const {data, status} = await axios.get(href)
 
         if (status == 200) {
+            $(".spa-click").removeClass("bg-gray-400")
+            $(this).addClass("bg-gray-400")
 
             $('.spa-cnt').html($(data).find(".spa-cnt-material"))
+
             $('html,body').animate({
-                    scrollTop: $("#scrollTo").offset().top- 30},
+                    scrollTop: $("#scrollTo").offset().top - 30
+                },
                 'slow');
+
+            if ($(".spa-cnt").next().hasClass("lg:mt-0")) {
+                $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0")
+            }
+            initTabs();
             // templateHandler(data, this);
-            // onFullScreen();
-            // onCloseFullScreen();
+            onFullScreen();
+            onCloseFullScreen();
             // onPreviewMaterial();
             // onInitEventHandler();
             // initFilepond();
@@ -36,14 +90,84 @@ $(".spa-click").on("click", async function (e) {
     } catch (e) {
         console.log(e)
     }
-})
+})  //create container spa
+
+const onCloseFullScreen = () => {
+
+    $(".js-close-fullscreen").on("click", async function () {
+        try {
+            const {data, status} = await axios.get(window.location.href)
+            if (status == 200) {
+                $('.spa-cnt').html($(data).find(".spa-cnt > *"))
+                $(".spa-click").removeClass("bg-gray-400")
+                $(".spa-cnt").addClass("lg:w-7/10")
+                $(".spa-list-material").removeClass("hidden lg:mt-16 lg:mt-0").addClass("lg:mt-0")
+                initTabs();
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    })
+} // close spa
+
+const onFullScreen = () => {
+
+    $(".js-open-fullscreen").on("click", async function () {
+        $(".spa-cnt").toggleClass("lg:w-7/10")
+        $(".spa-list-material").toggleClass("hidden")
+
+        $(this).toggleClass("mdi-window-maximize  mdi-dock-window")
 
 
+    })
+}  // fullscreen spa
+
+const initTabs = () => {
+    let tabsContainer = document.querySelector("#tabs");
+    let tabTogglers = tabsContainer.querySelectorAll("a");
+
+    tabTogglers.forEach(function (toggler) {
+        toggler.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            let tabName = this.getAttribute("href");
+
+            let tabContents = document.querySelector("#tab-contents");
+
+            for (let i = 0; i < tabContents.children.length; i++) {
+                tabTogglers[i].parentElement.classList.add("bg-gray-200");
+                tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px");
+                tabContents.children[i].classList.remove("hidden");
+                if ("#" + tabContents.children[i].id === tabName) {
+                    tabTogglers[i].parentElement.classList.add("bg-white");
+                    tabTogglers[i].parentElement.classList.remove("bg-gray-200");
+                    continue;
+                }
+                tabContents.children[i].classList.add("hidden");
+
+            }
+            e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px", "bg-white");
+        });
+    });
+
+    $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab")
+
+    document.getElementById("default-tab").click();
+} // create tabs
+initTabs();
 
 
+const button = document.querySelector('.modal-button')
+button.addEventListener('click', toggleModal)
 
+const overlay = document.querySelector('.modal-overlay')
+overlay.addEventListener('click', toggleModal)
 
-
+function toggleModal() {
+    const modal = document.querySelector('.modal')
+    modal.classList.toggle('opacity-0')
+    modal.classList.toggle('pointer-events-none')
+} // create modal
 
 
 // import utilities from '../../index/main';

@@ -94,7 +94,7 @@ class CourseController extends Controller {
     public function showCourse(Course $course)
     {
         $user = auth()->user();
-        $lessons = $user->courses()->with("materials")->get()->pluck("materials")->flatten()->whereIn("type", ["Lesson", "Video", "Link"]);
+        $lessons = $user->courses()->with("materials")->get()->pluck("materials")->flatten()->whereIn("type", ["Lesson", "Video", "Link"])->unique("slug");
         $countMaterial = $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->map(function ($material) {
             return count($material->chapters);
         })->toArray();
@@ -103,8 +103,8 @@ class CourseController extends Controller {
         return view("tailwind-course", [
             "course" => Course::find(2),
             "lessons" => $lessons,
-            "announcements" => $user->courses()->with("materials")->get()->pluck("materials")->flatten()->where("type", "Announcement"),
-            "sections" => $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section"),
+            "announcements" => $user->courses()->with("materials")->get()->pluck("materials")->flatten()->where("type", "Announcement")->unique("slug"),
+            "sections" => $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->unique("slug"),
             "sumMaterial" => array_sum($countMaterial) + count($lessons),
             "curator" => User::FindOrFail(isset($course->user_id)?$course->user_id:User::where("first_name","Υδρόγειος")->first()->id),
             "fields"=>$this->getFieldsCourse($course)

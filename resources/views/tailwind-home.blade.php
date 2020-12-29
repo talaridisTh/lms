@@ -101,7 +101,8 @@
             <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
                 Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς
             </h2>
-            <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς
+            <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Υποστήριξη των συνεργαζόμενων κέντρων κατά τη
+                διάρκεια της χρονιάς
             </p>
         </div>
         <div class="flex-1 lg:flex xs:hidden  justify-center"
@@ -115,32 +116,39 @@
         </div>
     </div>
 
-    {{--        <div class="sm:container xs:container-lg mx-auto  p-8">--}}
+    <div class="sm:container xs:container-lg mx-auto space-y-20 p-8">
 
-    {{--            @foreach( $arrayBanners as  $key=>  $banners)--}}
-    {{--                <div id="card-slider-{{$key}}" class="splide">--}}
-    {{--                    @if($banners->status==1)--}}
-    {{--                        <div class="splide__track">--}}
-    {{--                            <ul class="splide__list">--}}
-    {{--                                @foreach($banners->models as $banner)--}}
-    {{--                                    @php--}}
-    {{--                                        $bannerValue = key ( $banner);--}}
-    {{--                                        $model =   $bannerValue::findOrFail($banner->$bannerValue);--}}
-    {{--                                    @endphp--}}
-    {{--                                    <li class="splide__slide p-2">--}}
-    {{--                                        <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">--}}
-    {{--                                        <h2 class="p-3 pb-0 mb-0">{{$model->title}}</h2>--}}
-    {{--                                        <p class="p-3"> {{$model->subtitle}}</p>--}}
-    {{--                                    </li>--}}
-    {{--                                @endforeach--}}
-    {{--                            </ul>--}}
+        @foreach( $arrayBanners as  $key=>  $banners)
+            <div id="card-slider-{{$key}}" class="splide">
+                @if($banners->status==1)
+                    <div class="splide__track mx-3">
+                        <ul class="splide__list">
+                            @foreach($banners->models as $banner)
+                                @php
+                                    $bannerValue = key ( $banner);
+                                    $model =   $bannerValue::findOrFail($banner->$bannerValue);
+                                @endphp
+                                <li class="splide__slide p-5 space-y-4  bg-gray-200 shadow-inner shadow-2xl">
+                                    <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
+                                    <div class="space-y-4">
+                                    <h2 class="text-lg font-semibold">{{$model->title}}</h2>
+                                        <p class="font-normal text-base"> {{$model->subtitle}}</p>
 
-    {{--                        </div>--}}
-    {{--                    @endif--}}
-    {{--                </div>--}}
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
 
-    {{--            @endforeach--}}
-    {{--        </div>--}}
+                    </div>
+                @endif
+            </div>
+
+        @endforeach
+    </div>
 
 
+@endsection
+@section("script")
+
+    <script src="{{ mix('js/index/index.js') }}"></script>
 @endsection

@@ -306,9 +306,7 @@ Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });
 
-Route::get("/tailwind", function() {
-    return view("tailwind-home");
-});
+Route::get("/tailwind",[HomeController::class,"index"]);
 
 
 Route::get("/tailwind/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");

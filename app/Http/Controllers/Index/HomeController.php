@@ -26,21 +26,10 @@ class HomeController extends Controller {
     public function index(Material $material)
     {
 
-        //na ta travaw apo ton option
-//        $arrayBanners = get_object_vars(json_decode(Utility::first()->banners));
         $arrayBanners = json_decode(Option::where("name","Index Carousels")->pluck("value")->first());
-
         $arrayBanners = collect($arrayBanners);
 
-//        $bannersPrimary = $arrayBanners["primary"]->models;
-//        $bannersSecondary = $arrayBanners["secondary"]->models;
-        $chart = [
-            "courses" => Course::all()->count(),
-            'material' => Material::all()->count(),
-            'user' => Role::find(2)->users->count(),
-        ];
-
-        return view('home', compact('material', 'chart',"arrayBanners"));
+        return view("tailwind-home", compact("arrayBanners"));
     }
 
 //    public function createLinkStore(Request $request)

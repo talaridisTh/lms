@@ -74,6 +74,9 @@
             padding-bottom: 0.2em;
             padding-top: 0.2em;
         }
+        .modal {
+            transition: opacity .7s ease;
+        }
     </style>
     <article class="mdc:container lg:container mx-auto flex flex-col  pt-5 rounded-xl"
              style="background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)">
@@ -81,9 +84,9 @@
             <figure class="w-64 h-64  my-8 relative lg:mr-16">
                 <div
                     class="group avatar w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table cursor-pointer border">
-                    <img src="https://placeimg.com/640/480/any"
+                    <img src="{{$course->cover}}"
                          class="p-3 rounded-full object-cover object-center w-full h-full visible group-hover:hidden"
-                         alt="">
+                         alt="{{$course->title}}">
                 </div>
             </figure>
             <section
@@ -102,7 +105,7 @@
                 <ul class="bg-white px-4 mx-4 mt-6 mb-0 py-2 rounded-full ">
                     <li class="text-black font-semibold list-disc list-inside ">Τελευταίες Ανακοινώσεις</li>
                 </ul>
-                <ul class="my-6  px-4 w-full space-y-4 announcement">
+                <ul class="my-6 h-full px-4 w-full space-y-4 announcement">
                     @forelse($announcements as $key =>$announcement)
                         <li class="text-black font-medium flex  ">
                             <span class="text-white font-medium flex-1 ">{{$announcement->title}}</span>
@@ -120,7 +123,7 @@
                     @endforelse
                 </ul>
                 <div class="flex px-4 text-white py-3 justify-end bg-opacity-20 bg-black w-full rounded-b-xl">
-                    <p class="font-light text-sm">Όλες οι ανακοινώσεις <i class="ml-2 dripicons-chevron-right "></i></p>
+                    <p class="font-light text-sm modal-button">Όλες οι ανακοινώσεις <i class="ml-2 dripicons-chevron-right "></i></p>
                 </div>
             </aside>
         </section>
@@ -137,9 +140,9 @@
             <section class="bg-gray-200 rounded-xl flex  space-x-6 p-8">
                 <figure
                     class="group hidden  md:table w-32 h-32 rounded-full overflow-hidden text-center bg-purple table cursor-pointer ">
-                    <img src="https://placeimg.com/640/480/any"
+                    <img src="{{$curator->avatar}}"
                          class=" rounded-full object-cover object-center w-full h-full visible group-hover:hidden"
-                         alt="">
+                         alt="avatar-curator">
                 </figure>
                 <section class="space-y-4">
                     <section class="flex justify-between">
@@ -203,9 +206,13 @@
                         @endforeach
 {{--                    {!! $course->media->where("type",1) !!}--}}
                     </div>
-                    <div id="fourth" class="hidden p-4">
-                    {!! $course->summary !!}
-                    </div>
+                    <figure id="fourth" class="hidden p-4 flex flex-wrap space-x-4">
+                        @foreach($course->media->where("type",0) as $file)
+                            <a href="{{$file->rel_path}} " data-lightbox="image-1">
+                                  <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}" alt="{{$file->name}}">
+                            </a>
+                        @endforeach
+                    </figure>
                     <div id="quiz" class="hidden p-4">
                     {!! $course->script !!}
                     </div>
@@ -215,7 +222,7 @@
                 </div>
             </div>
         </section>
-        <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10">
+        <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10 spa-list-material">
             <div class="row">
                 <div class="col">
                     <div class="tabs">
@@ -223,7 +230,7 @@
                             <input type="checkbox" id="extra-file">
                             <label class="tab-label text-black list-disc text-lg p-4" for="extra-file"><span
                                     class="bullet">Βοηθητικά αρχεία</span></label>
-                            @foreach($course->media as $file)
+                            @foreach($course->media->where("type",1) as $file)
                                 <div
                                     class="tab-content text-gray-600 ml-2 flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
                                     <a class="mt-2" href="{{$file->rel_path}}" target="_blank">
@@ -248,7 +255,10 @@
                                     class="bullet">Μαθήματα</span></label>
                             @foreach($lessons as $lesson)
                                 <div
-                                    class="tab-content text-gray-600 ml-2 flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click">
+                                    class="tab-content text-gray-600 ml-2 flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
+                                    data-href="{{$lesson->type=="Link"?$lesson->link:route('index.showMaterial',[$course->slug,$lesson->slug])}}"
+                                    data-type="{{$lesson->type}}"
+                                >
                                     <span class="mt-1">{{$loop->index+1}}</span>
                                     <a class="mt-1" href="">
                                         <span>{{$lesson->title}}</span>
@@ -286,7 +296,8 @@
                                                     <div
                                                         class="tab-content space-x-2 text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
                                                         style="padding-left: 15px;padding-right: 15px;"
-                                                        data-href="{{route('index.showMaterial',[$course->slug,$chapter->slug])}}"
+                                                        data-href="{{$chapter->type=="Link"?$chapter->link:route('index.showMaterial',[$course->slug,$chapter->slug])}}"
+                                                        data-type="{{$chapter->type}}"
                                                     >
                                                         <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
                                                         <span
@@ -302,9 +313,6 @@
                                 @endforeach
 
                             </div>
-                            {{--                            <div class="tab-content text-gray-600 ml-2">--}}
-                            {{--                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum, reiciendis!--}}
-                            {{--                            </div>--}}
                         </div>
                     </div>
                 </div>
@@ -312,6 +320,42 @@
         </aside>
 
     </article>
+
+
+    <div class="modal  opacity-0 pointer-events-none absolute w-full h-full top-0 left-0 flex items-start justify-center">
+        <div class="modal-overlay absolute w-full h-full bg-black opacity-25 top-0 left-0 cursor-pointer"></div>
+        <div class="absolute rounded overflow-hidden mt-10 w-1/2 bg-white h-auto h rounded-sm shadow-lg flex flex-col p-10 text-2xl">
+            <div class="swiper-container-announcements">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    @foreach($announcements  as $key => $announcement)
+                        <div class="swiper-slide w-full">
+                            <div
+                                 class="px-10 space-y-4 flex flex-col justify-center break-words w-5/6">
+                                <h3 class="mb-3 text-2xl font-bold">{{$announcement->title}}  </h3>
+                                <p class="text-base">{!! $announcement->content !!}</p>
+                                <span class="text-base font-semibold">
+                                            ({{$announcement->created_at->format('d/m/Y')}})
+                                        </span>
+                            </div>
+                        </div>
+                @endforeach
+                <!-- Slides -->
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+
+                <!-- If we need scrollbar -->
+                <div class="swiper-scrollbar"></div>
+            </div>
+        </div>
+    </div>
+
 
 @endsection
 
@@ -349,6 +393,19 @@
          $("#tabs").children().not( ".hidden" ).first().children().first().attr("id","default-tab")
 
         document.getElementById("default-tab").click();
+
+
+        const button = document.querySelector('.modal-button')
+        button.addEventListener('click', toggleModal)
+
+        const overlay = document.querySelector('.modal-overlay')
+        overlay.addEventListener('click', toggleModal)
+
+        function toggleModal () {
+            const modal = document.querySelector('.modal')
+            modal.classList.toggle('opacity-0')
+            modal.classList.toggle('pointer-events-none')
+        }
 
     </script>
 

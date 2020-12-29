@@ -1,10 +1,17 @@
 @extends("tailwind")
 
 @section("content")
-    <article class="container mx-auto flex flex-col spa-cnt-material">
+    <article class="mdc:container mx-auto flex flex-col spa-cnt-material">
+
+        <section class="flex justify-between mb-7 items-center">
+            <h2 class="text-4xl ">{{$material->title}}</h2>
+            <div class="flex space-x-2">
+                <i class="mdi text-xl  mdi-window-maximize js-open-fullscreen cursor-pointer"></i>
+                <i class="mdi text-xl  mdi-close-box-multiple js-close-fullscreen cursor-pointer"></i>
+            </div>
+        </section>
 
         <figure>
-            <h2 class="text-4xl mb-7">{{$material->title}}</h2>
             @if($material->video_link)
                 <div class="relative block h-0 p-0 overflow-hidden" style="padding-top:56.25%;">
                     <iframe class="absolute top-0 left-0 bottom-0 w-full h-full"
@@ -20,13 +27,8 @@
                 @endphp
                 <embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%"
                        height="100%" style="height: 100vh"/>
-
             @else
-
-
-
             @endif
-
         </figure>
         <section class="rounded  mt-7">
             <!-- Tabs -->
@@ -44,7 +46,8 @@
                 </li>
                 <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}">
                     <a href="#quiz">Quiz</a></li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a href="#disscussion">Συζήτηση</a>
+                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a
+                        href="#disscussion">Συζήτηση</a>
                 </li>
             </ul>
 
@@ -83,4 +86,51 @@
         </section>
 
     </article>
+@endsection
+@section("script")
+    <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
+    <script>
+        let tabsContainer = document.querySelector("#tabs");
+
+        let tabTogglers = tabsContainer.querySelectorAll("a");
+
+        tabTogglers.forEach(function (toggler) {
+            toggler.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                let tabName = this.getAttribute("href");
+
+                let tabContents = document.querySelector("#tab-contents");
+
+                for (let i = 0; i < tabContents.children.length; i++) {
+                    tabTogglers[i].parentElement.classList.add("bg-gray-200");
+                    tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px");
+                    tabContents.children[i].classList.remove("hidden");
+                    if ("#" + tabContents.children[i].id === tabName) {
+                        tabTogglers[i].parentElement.classList.add("bg-white");
+                        tabTogglers[i].parentElement.classList.remove("bg-gray-200");
+                        continue;
+                    }
+                    tabContents.children[i].classList.add("hidden");
+
+                }
+                e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px", "bg-white");
+            });
+        });
+
+        $("#tabs").children().not( ".hidden" ).first().children().first().attr("id","default-tab")
+
+        document.getElementById("default-tab").click();
+
+
+        const button = document.querySelector('.modal-button')
+        button.addEventListener('click', toggleModal)
+
+        const overlay = document.querySelector('.modal-overlay')
+        overlay.addEventListener('click', toggleModal)
+
+
+
+    </script>
+
 @endsection

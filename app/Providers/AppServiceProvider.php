@@ -43,8 +43,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(["admin.users.*","admin.users.userCreate"],RoleComposer::class);
-        View::composer(['layouts.app',"home"],OptionComposer::class);
+        View::composer(['*',"*"],OptionComposer::class);
 
         Carbon::setLocale(env('LOCALE', 'el_GR'));
 
