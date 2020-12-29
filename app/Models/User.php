@@ -10,6 +10,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Notifications\EmailVerifyNotification;
 
 class User extends Authenticatable {
 
@@ -334,7 +335,9 @@ class User extends Authenticatable {
        return $like;
     }
 
-
-
+	public function sendEmailVerifycationNotification()
+    {
+        $this->notify(new EmailVerifyNotification);
+    }
 
 }

@@ -1,13 +1,12 @@
 <?php
 
 use App\Http\Controllers\Index\CourseController;
-use App\Http\Controllers\Index\HomeController;
-use App\Models\Option;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +19,13 @@ use Illuminate\Support\Facades\DB;
 |
 */
 
+Route::get("/full-verification", function () {
+	DB::table("users")->update([
+		"email_verified_at" => Carbon::now()
+	]);
+});
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 //!########################################################
 //! 404
 Route::fallback(function () {
@@ -307,6 +311,9 @@ Route::get("/building-alternative-layout", function() {
 });
 
 Route::get("/tailwind",[HomeController::class,"index"]);
+Route::get("/tailwind", function() {
+    return view("tailwind-home");
+});
 
 
 Route::get("/tailwind/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
