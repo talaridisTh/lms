@@ -21,16 +21,23 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap"
-        rel="stylesheet">
+{{--    <link rel="preconnect" href="https://fonts.gstatic.com">--}}
+{{--    <link--}}
+{{--        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap"--}}
+{{--        rel="stylesheet">--}}
+
+    <style>
+        @font-face {
+            font-family: Helvetica;
+            src: url('{{asset('/fonts/Helvetica.tff')}}');
+        }
+    </style>
 
     @yield("style")
 
 </head>
 <body class="bg-gray-100 antialiased"
-      style="font-family: 'Roboto', sans-serif;">
+      style="font-family: 'Helvetica', sans-serif;">
 
 <div id="app" class="flex flex-col min-h-screen" style="height: auto !important;">
 
@@ -56,19 +63,19 @@
                         class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0 relative green borderXwidth">
                         @hasanyrole("admin|super-admin")
                         @if(\Request::route()->getName()== "index.userCourse")
-                            <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="#">edit this
+                            <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="#">edit this
                                 course</a>
-                            <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="#">edit this
+                            <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="#">edit this
                                 material</a>
                         @endif
-                        <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="{{route('dashboard')}}">dashboard</a>
+                        <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="{{route('dashboard')}}">dashboard</a>
                         @endrole
-                        <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase "
+                        <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase "
                            href="{{route('index.userCourses',auth()->user()->id)}}">μαθηματα</a>
-                        <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm  font-medium uppercase hidden " href="#">discussions</a>
+                        <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm  font-bold uppercase hidden " href="#">discussions</a>
                         <div class="login-cnt relative">
                             <a class="bg-login  transition duration-500 ease-in-out text-white rounded-full hover:bg-color-theme
-                         md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-medium uppercase "
+                         md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-bold uppercase "
                                href="#">ο λογαριασμος μου
                             </a>
                             <div class="login-dropdown absolute left-2/4 hidden opacity-0 mt-2">

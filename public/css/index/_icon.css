@@ -30036,6 +30036,6 @@ input:checked + .tab-label::after {
 
 input:checked ~ .tab-content {
   max-height: 100vh;
-  padding: 0.5em;
+  padding: 0.5rem 1rem;
 }
 

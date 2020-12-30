@@ -56,19 +56,19 @@
                         class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0 relative green borderXwidth">
                         @hasanyrole("admin|super-admin")
                         @if(\Request::route()->getName()== "index.userCourse")
-                            <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="#">edit this
+                            <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="#">edit this
                                 course</a>
-                            <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="#">edit this
+                            <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="#">edit this
                                 material</a>
                         @endif
-                        <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase " href="{{route('dashboard')}}">dashboard</a>
+                        <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="{{route('dashboard')}}">dashboard</a>
                         @endrole
-                        <a class="md:p-4 py-3 px-0 block text-sm font-medium uppercase "
+                        <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase "
                            href="{{route('index.userCourses',auth()->user()->id)}}">μαθηματα</a>
-                        <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm  font-medium uppercase " href="#">discussions</a>
+                        <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm  font-bold uppercase " href="#">discussions</a>
                         <div class="login-cnt relative">
                             <a class="bg-login  transition duration-500 ease-in-out text-white rounded-full hover:bg-color-theme
-                         md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-medium uppercase "
+                         md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-bold uppercase "
                                href="#">ο λογαριασμος μου
                             </a>
                             <div class="login-dropdown absolute left-2/4 hidden opacity-0 mt-2">

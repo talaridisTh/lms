@@ -74,6 +74,7 @@
             padding-bottom: 0.2em;
             padding-top: 0.2em;
         }
+
         .modal {
             transition: opacity .7s ease;
         }
@@ -123,7 +124,8 @@
                     @endforelse
                 </ul>
                 <div class="flex px-4 text-white py-3 justify-end bg-opacity-20 bg-black w-full rounded-b-xl">
-                    <p class="font-light text-sm modal-button">Όλες οι ανακοινώσεις <i class="ml-2 dripicons-chevron-right "></i></p>
+                    <p class="font-light text-sm modal-button cursor-pointer">Όλες οι ανακοινώσεις <i
+                            class="ml-2 dripicons-chevron-right "></i></p>
                 </div>
             </aside>
         </section>
@@ -165,22 +167,27 @@
                         </figure>
 
                     </section>
-                    <p class="w-11/12 ml-1">{{$curator->profil}} </p>
+                    <p class="w-11/12 ml-1">{!!$curator->profil!!} </p>
                 </section>
             </section>
             <div class="rounded mx-auto mt-7">
                 <!-- Tabs -->
                 <ul id="tabs" class="inline-flex px-1 w-full border-b space-x-1">
                     <li class="bg-white px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px {{$fields->description==0?"hidden":""}}">
-                        <a  href="#first">Πληροφορίες</a></li>
-                    <li class="px-4 text-gray-80 bg-gray-100 font-semibold py-2 rounded-t {{$fields->summary==0?"hidden":""}}"><a
+                        <a href="#first">Πληροφορίες</a></li>
+                    <li class="px-4 text-gray-80 bg-gray-100 font-semibold py-2 rounded-t {{$fields->summary==0?"hidden":""}}">
+                        <a
                             href="#second">Περίληψη</a></li>
-                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->file==0?"hidden":""}}"><a href="#third">Αρχεία</a>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->file==0?"hidden":""}}">
+                        <a href="#third">Αρχεία</a>
                     </li>
-                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->media==0?"hidden":""}}"><a href="#fourth">Media</a>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->media==0?"hidden":""}}">
+                        <a href="#fourth">Media</a>
                     </li>
-                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}"><a href="#quiz">Quiz</a></li>
-                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t hidden"><a href="#disscussion">Συζήτηση</a>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}">
+                        <a href="#quiz">Quiz</a></li>
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t hidden"><a
+                            href="#disscussion">Συζήτηση</a>
                     </li>
                 </ul>
 
@@ -200,7 +207,7 @@
                                     <span>{{$file->original_name}}.{{$file->ext}}</span>
                                 </a>
                                 <a href="{{$file->rel_path}}" download>
-                                    <i class="mdi-24px mdi mdi-cloud-download-outline mr-2"></i>
+                                    <i class="mdi-24px mdi mdi-cloud-download-outline mr-1"></i>
                                 </a>
                             </div>
                         @endforeach
@@ -209,7 +216,8 @@
                     <figure id="fourth" class="hidden p-4 flex flex-wrap space-x-4">
                         @foreach($course->media->where("type",0) as $file)
                             <a href="{{$file->rel_path}} " data-lightbox="image-1">
-                                <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}" alt="{{$file->name}}">
+                                <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}"
+                                     alt="{{$file->name}}">
                             </a>
                         @endforeach
                     </figure>
@@ -222,110 +230,123 @@
                 </div>
             </div>
         </section>
-        <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10 spa-list-material px-5">
-            <div class="row">
-                <div class="col">
-                    <div class="tabs">
-                        <div class="tab bg-gray-200 px-4 em-padding">
-                            <input type="checkbox" id="extra-file">
-                            <label class="tab-label text-black list-disc text-lg p-4" for="extra-file"><span
-                                    class="bullet">Βοηθητικά αρχεία</span></label>
-                            @foreach($course->media->where("type",1) as $file)
-                                <div
-                                    class="tab-content text-gray-600 ml-2 flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
-                                    <a class="mt-2" href="{{$file->rel_path}}" target="_blank">
-                                        <span>{{$file->original_name}}.{{$file->ext}}</span>
-                                    </a>
-                                    <a href="{{$file->rel_path}}" download>
-                                        <i class="mdi-24px mdi mdi-cloud-download-outline mr-2"></i>
-                                    </a>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10 spa-list-material lg:pl-10">
+            @if($course->media->where("type",1)->count())
+                <div class="row">
+                    <div class="col">
+                        <div class="tabs">
+                            <div class="tab bg-gray-200 px-4 em-padding">
+                                <input type="checkbox" id="extra-file">
+                                <label class="tab-label text-black list-disc text-lg p-4" for="extra-file"><span
+                                        class="bullet">Βοηθητικά αρχεία</span></label>
+                                @foreach($course->media->where("type",1) as $file)
+                                    <div
+                                        class="tab-content text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
+                                        <a class="mt-2" href="{{$file->rel_path}}" target="_blank">
+                                            <span>{{$file->original_name}}.{{$file->ext}}</span>
+                                        </a>
+                                        <a href="{{$file->rel_path}}" download>
+                                            <i class="mdi-24px mdi mdi-cloud-download-outline mr-1"></i>
+                                        </a>
 
-            <div class="row">
-                <div class="col">
-                    <div class="tabs">
-                        <div class="tab bg-gray-200 px-4 em-padding">
-                            <input type="checkbox" id="material-file">
-                            <label class="tab-label text-black list-disc text-lg p-4" for="material-file"><span
-                                    class="bullet">Μαθήματα</span></label>
-                            @foreach($lessons as $lesson)
-                                <div
-                                    class="tab-content text-gray-600 ml-2 flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
-                                    data-href="{{$lesson->type=="Link"?$lesson->link:route('index.showMaterial',[$course->slug,$lesson->slug])}}"
-                                    data-type="{{$lesson->type}}"
-                                >
-                                    <span class="mt-1">{{$loop->index+1}}</span>
-                                    <a class="mt-1 flex-1 " href="">
-                                        <span class="ml-4">{{$lesson->title}}</span>
-                                    </a>
-                                    <i class="mt-1 mr-3 {{$lesson->getType($lesson->type)}}"></i>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col">
-                    <div class="tabs ">
-                        <div class="tab bg-gray-200 px-4 ">
-                            <input type="checkbox" id="sections">
-                            <label class="tab-label text-black list-disc text-lg p-4" for="sections"><span
-                                    class="bullet">Ενότητες</span></label>
-                            <div class="tab-content text-gray-600 p-0 m-0 space-y-1" style="padding:0!important;">
-                                @foreach($sections as $key=> $section)
-                                    @if(count($section->chapters))
-                                        <div class="tabs " style="box-shadow: none!important;">
-                                            <div class="tab bg-gray-200 p-0 mb-3">
-                                                <input type="checkbox" id="section-{{$section->slug}}">
-                                                <label
-                                                    class="tab-label text-black list-disc text-sm {{$section->pivot->highlight? "bg-blue-300" :"bg-white"}}  pr-5 items-center rounded-lg"
-                                                    for="section-{{$section->slug}}">
-                                                <span
-                                                    class="border-r-1 border-gray-400 px-5 py-4">Ενότητες {{$loop->index+1}}</span>
-                                                    <span
-                                                        class="px-5 py-2i">{{\Str::limit($section->title,50,"...")}}</span>
-                                                </label>
-                                                @foreach($section->chapters()->where("type","!=","Announcement")->get() as $chapter)
-                                                    <div
-                                                        class="tab-content space-x-2 text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
-                                                        style="padding-left: 15px;padding-right: 15px;"
-                                                        data-href="{{$chapter->type=="Link"?$chapter->link:route('index.showMaterial',[$course->slug,$chapter->slug])}}"
-                                                        data-type="{{$chapter->type}}"
-                                                    >
-                                                        <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
-                                                        <a class="mt-1 flex-1 " href="">
-                                                            <span class="ml-4">{{$chapter->title}}</span>
-                                                        </a>
-                                                        <span class="mt-1"><i
-                                                                class=" mr-3 {{$chapter->getType($chapter->type)}}"></i></span>
-                                                    </div>
-                                                @endforeach
-
-                                            </div>
-                                        </div>
+                                    </div>
+                                    @if($loop->last)
+                                        <div></div>
                                     @endif
                                 @endforeach
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
+            @if($lessons->count())
+                <div class="row">
+                    <div class="col">
+                        <div class="tabs">
+                            <div class="tab bg-gray-200 px-4 em-padding">
+                                <input type="checkbox" id="material-file">
+                                <label class="tab-label text-black list-disc text-lg p-4" for="material-file"><span
+                                        class="bullet">Μαθήματα</span></label>
+                                @foreach($lessons as $lesson)
+                                    <div
+                                        class="tab-content text-gray-600  flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
+                                        data-href="{{$lesson->type=="Link"?$lesson->link:route('index.showMaterial',[$course->slug,$lesson->slug])}}"
+                                        data-type="{{$lesson->type}}"
+                                    >
+                                        <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
+                                        <a class="mt-1 flex-1 " href="">
+                                            <span class="ml-4">{{$lesson->title}}</span>
+                                        </a>
+                                        <i class="mt-1 mr-1 {{$lesson->getType($lesson->type)}}"></i>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
+            @if($sections->count())
+                <div class="row">
+                    <div class="col">
+                        <div class="tabs ">
+                            <div class="tab bg-gray-200 px-4 ">
+                                <input type="checkbox" id="sections">
+                                <label class="tab-label text-black list-disc text-lg p-4" for="sections"><span
+                                        class="bullet">Ενότητες</span></label>
+                                <div class="tab-content text-gray-600 p-0 m-0 space-y-1" style="padding:0!important;">
+                                    @foreach($sections as $key=> $section)
+                                        @if(count($section->chapters))
+                                            <div class="tabs " style="box-shadow: none!important;">
+                                                <div class="tab bg-gray-200 p-0 mb-3">
+                                                    <input type="checkbox" id="section-{{$section->slug}}">
+                                                    <label
+                                                        class="tab-label mb-2 text-black list-disc text-sm {{$section->pivot->highlight? "bg-blue-300" :"bg-white"}}  pr-5 items-center rounded-lg"
+                                                        for="section-{{$section->slug}}">
+                                                <span
+                                                    class="border-r-1 border-gray-400 px-5 py-4">Ενότητες {{$loop->index+1}}</span>
+                                                        <span
+                                                            class="px-5 py-2i">{{\Str::limit($section->title,50,"...")}}</span>
+                                                    </label>
+                                                    @foreach($section->chapters()->where("type","!=","Announcement")->get() as $chapter)
+                                                        <div
+                                                            class="tab-content text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
+                                                            style="padding-left: 15px;padding-right: 15px;"
+                                                            data-href="{{$chapter->type=="Link"?$chapter->link:route('index.showMaterial',[$course->slug,$chapter->slug])}}"
+                                                            data-type="{{$chapter->type}}"
+                                                        >
+                                                            <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
+                                                            <a class="mt-1 flex-1 " href="">
+                                                                <span class="ml-4">{{$chapter->title}}</span>
+                                                            </a>
+                                                            <span class="mt-1"><i
+                                                                    class=" mr-1 {{$chapter->getType($chapter->type)}}"></i></span>
+                                                        </div>
+                                                    @endforeach
+
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @endforeach
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
         </aside>
 
     </article>
 
 
-    <div class="modal  opacity-0 pointer-events-none absolute w-full h-full top-0 left-0 flex items-start justify-center">
+    <div
+        class="modal opacity-0 pointer-events-none absolute w-full h-full top-0 left-0 flex items-start justify-center" style="z-index: 99999">
         <div class="modal-overlay absolute w-full h-full bg-black opacity-25 top-0 left-0 cursor-pointer"></div>
-        <div class="absolute rounded overflow-hidden mt-10 w-1/2 bg-white h-auto h rounded-sm shadow-lg flex flex-col p-10 text-2xl">
+        <div
+            class="absolute rounded overflow-hidden mt-10 w-1/2 bg-white h-auto h rounded-sm shadow-lg flex flex-col p-10 text-2xl">
             <div class="swiper-container-announcements">
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
@@ -391,22 +412,11 @@
             });
         });
 
-        $("#tabs").children().not( ".hidden" ).first().children().first().attr("id","default-tab")
+        $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab")
 
         document.getElementById("default-tab").click();
 
 
-        const button = document.querySelector('.modal-button')
-        button.addEventListener('click', toggleModal)
-
-        const overlay = document.querySelector('.modal-overlay')
-        overlay.addEventListener('click', toggleModal)
-
-        function toggleModal () {
-            const modal = document.querySelector('.modal')
-            modal.classList.toggle('opacity-0')
-            modal.classList.toggle('pointer-events-none')
-        }
 
     </script>
 

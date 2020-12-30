@@ -100,7 +100,7 @@ class CourseController extends Controller {
         })->toArray();
 
         return view("index.courses.template-1.courseProfile", [
-            "course" => Course::find(2),
+            "course" => Course::find($course->id),
             "lessons" => $lessons,
             "announcements" => $user->courses()->with("materials")->get()->pluck("materials")->flatten()->where("type", "Announcement")->unique("slug"),
             "sections" => $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->unique("slug"),
