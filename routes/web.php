@@ -324,6 +324,11 @@ Route::get("/material-db-check-up", function() {
 	return Material::all();
 });
 
+Route::get("/mediable-db-check-up", function() {
+	return DB::table("mediables")->get();
+});
+
+
 Route::get("/media-db-check-up", function() {
 	return Media::all();
 });
