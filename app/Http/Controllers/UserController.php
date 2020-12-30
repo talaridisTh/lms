@@ -51,7 +51,7 @@ class UserController extends Controller {
         $user->save();
         $user->assignRole($request->role);
 		
-		// $user->notify(new NewUserNotification);
+		$user->notify(new NewUserNotification);
 
         return redirect("/dashboard/users/$user->slug");
     }

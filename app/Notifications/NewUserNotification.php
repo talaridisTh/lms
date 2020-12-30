@@ -48,7 +48,8 @@ class NewUserNotification extends Notification
      */
     public function toMail($notifiable)
     {
-		$url = $this->verificationUrl($notifiable);
+		// $url = $this->verificationUrl($notifiable);
+		$url = url("/login");
 		$password = Crypt::decryptString($notifiable->password_encrypt);
 
 		return (new MailMessage)
@@ -56,8 +57,8 @@ class NewUserNotification extends Notification
 			->greeting("Καλώς ήρθατε!")
 			->line("Για την είσοδο σας μπορείτε να χρησιμοποιήσεται το email σας: ". $notifiable->email)
 			->line("Ο κωδικός σας είναι: $password")
-			->line("Για να ενεργοποιήσεται τον λογαριασμό σας κάντε κλίκ στον παρακάτω σύνδεσμο.")
-            ->action('Ενεργοποίηση λογαριασμού', $url)
+			->line("Για να συνδεθείτε κάντε κλίκ στον παρακάτω σύνδεσμο.")
+            ->action('Σύνδεση', $url)
 			->salutation("Ευχαριστούμε.");
     }
 
