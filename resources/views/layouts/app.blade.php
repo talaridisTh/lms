@@ -36,7 +36,7 @@
     @yield("style")
 
 </head>
-<body class="bg-gray-100 antialiased"
+<body class="h-full  antialiased"
       style="font-family: 'Helvetica', sans-serif;">
 
 <div id="app" class="flex flex-col min-h-screen" style="height: auto !important;">

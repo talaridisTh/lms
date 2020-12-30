@@ -186,23 +186,32 @@
                     </li>
                     <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->script==0?"hidden":""}}">
                         <a href="#quiz">Quiz</a></li>
-                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t hidden"><a
+                    <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a
                             href="#disscussion">Συζήτηση</a>
                     </li>
                 </ul>
 
                 <!-- Tab Contents -->
-                <div id="tab-contents" class="ml-1 border-1 border-gray-200">
-                    <div id="first" class=" hidden p-4">
+                <div id="tab-contents" class="ml-1 border-1 border-gray-200 py-3 px-10">
+                    <div id="first" class=" hidden py-7 px-4">
+                        <ul class="list-disc mb-2 list-inside">
+                            <li class="font-bold">Πληροφορίες</li>
+                        </ul>
                         {!! $course->description !!}
                     </div>
-                    <div id="second" class="hidden p-4">
+                    <div id="second" class="hidden py-7 px-4 list-inside">
+                        <ul class="list-disc mb-2 list-inside">
+                            <li class="font-bold">Περίληψη</li>
+                        </ul>
                         {!! $course->summary !!}
                     </div>
-                    <div id="third" class="hidden p-4">
+                    <div id="third" class="hidden py-7 px-4">
+                        <ul class="list-disc mb-2 list-inside">
+                            <li class="font-bold">Αρχεία</li>
+                        </ul>
                         @foreach($course->media->where("type",1) as $file)
                             <div
-                                class="text-gray-600 ml-2 flex w-1/2 items-center justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
+                                class="text-gray-600 px-2 flex w-1/2 items-center justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
                                 <a class=" p-2" href="{{$file->rel_path}}" target="_blank">
                                     <span>{{$file->original_name}}.{{$file->ext}}</span>
                                 </a>
@@ -213,7 +222,10 @@
                         @endforeach
                         {{--                    {!! $course->media->where("type",1) !!}--}}
                     </div>
-                    <figure id="fourth" class="hidden p-4 flex flex-wrap space-x-4">
+                    <figure id="fourth" class="hidden py-7 px-4 flex flex-wrap space-x-4">
+                        <ul class="list-disc mb-2 list-inside w-full">
+                            <li class="font-bold">Media</li>
+                        </ul>
                         @foreach($course->media->where("type",0) as $file)
                             <a href="{{$file->rel_path}} " data-lightbox="image-1">
                                 <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}"
@@ -221,10 +233,16 @@
                             </a>
                         @endforeach
                     </figure>
-                    <div id="quiz" class="hidden p-4">
+                    <div id="quiz" class="hidden py-7 px-4">
+                        <ul class="list-disc mb-2 list-inside ">
+                            <li class="font-bold">Quiz</li>
+                        </ul>
                         {!! $course->script !!}
                     </div>
-                    <div id="disscussion" class="hidden p-4">
+                    <div id="disscussion" class="py-7 px-4">
+                        <ul class="list-disc mb-2 list-inside">
+                            <li class="font-bold">Συζήτηση</li>
+                        </ul>
                         Συζήτηση
                     </div>
                 </div>
@@ -274,11 +292,13 @@
                                         data-href="{{$lesson->type=="Link"?$lesson->link:route('index.showMaterial',[$course->slug,$lesson->slug])}}"
                                         data-type="{{$lesson->type}}"
                                     >
-                                        <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
-                                        <a class="mt-1 flex-1 " href="">
-                                            <span class="ml-4">{{$lesson->title}}</span>
+                                        <span style="flex-basis: 10%;"
+                                              class="mt-1 font-semibold">{{$loop->index+1}}</span>
+                                        <a class="mt-1  flex-1" href="">
+                                            <span class="">{{$lesson->title}}</span>
                                         </a>
-                                        <i class="mt-1 mr-1 {{$lesson->getType($lesson->type)}}"></i>
+                                        <i style="flex-basis: 10%;"
+                                           class="mt-1 mr-1 text-right  {{$lesson->getType($lesson->type)}}"></i>
                                     </div>
                                 @endforeach
                             </div>
@@ -305,9 +325,9 @@
                                                         class="tab-label mb-2 text-black list-disc text-sm {{$section->pivot->highlight? "bg-blue-300" :"bg-white"}}  pr-5 items-center rounded-lg"
                                                         for="section-{{$section->slug}}">
                                                 <span
-                                                    class="border-r-1 border-gray-400 px-5 py-4">Ενότητες {{$loop->index+1}}</span>
+                                                    class="border-r-1 border-gray-400 px-5 py-4">Ενότητες {{++$countSection}}</span>
                                                         <span
-                                                            class="px-5 py-2i">{{\Str::limit($section->title,50,"...")}}</span>
+                                                            class="px-5 py-2 flex-1">{{\Str::limit($section->title,50,"...")}}</span>
                                                     </label>
                                                     @foreach($section->chapters()->where("type","!=","Announcement")->get() as $chapter)
                                                         <div
@@ -316,12 +336,14 @@
                                                             data-href="{{$chapter->type=="Link"?$chapter->link:route('index.showMaterial',[$course->slug,$chapter->slug])}}"
                                                             data-type="{{$chapter->type}}"
                                                         >
-                                                            <span class="mt-1 font-semibold">{{$loop->index+1}}</span>
-                                                            <a class="mt-1 flex-1 " href="">
-                                                                <span class="ml-4">{{$chapter->title}}</span>
+                                                            <span style="flex-basis: 10%;"
+                                                                  class="mt-1 font-semibold">{{$loop->index+1}}</span>
+                                                            <a class="mt-1 flex-1 px-1" href="">
+                                                                <span class="">{{$chapter->title}}</span>
                                                             </a>
-                                                            <span class="mt-1"><i
-                                                                    class=" mr-1 {{$chapter->getType($chapter->type)}}"></i></span>
+                                                            <span class="mt-1">
+                                                                <i style="flex-basis: 10%;"
+                                                                   class="text-right mr-1 {{$chapter->getType($chapter->type)}}"></i></span>
                                                         </div>
                                                     @endforeach
 
@@ -343,7 +365,8 @@
 
 
     <div
-        class="modal opacity-0 pointer-events-none absolute w-full h-full top-0 left-0 flex items-start justify-center" style="z-index: 99999">
+        class="modal opacity-0 pointer-events-none absolute w-full h-full top-0 left-0 flex items-start justify-center"
+        style="z-index: 99999">
         <div class="modal-overlay absolute w-full h-full bg-black opacity-25 top-0 left-0 cursor-pointer"></div>
         <div
             class="absolute rounded overflow-hidden mt-10 w-1/2 bg-white h-auto h rounded-sm shadow-lg flex flex-col p-10 text-2xl">
@@ -415,7 +438,6 @@
         $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab")
 
         document.getElementById("default-tab").click();
-
 
 
     </script>

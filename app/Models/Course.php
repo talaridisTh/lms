@@ -45,6 +45,13 @@ class Course extends Model {
         return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at', "guest_status");
     }
 
+    public function activeMaterials()
+    {
+        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at', "guest_status")
+            ->wherePivot("status", 1)
+            ->wherePivot("publish_at", "<=", now());
+    }
+
     public function bundles()
     {
 

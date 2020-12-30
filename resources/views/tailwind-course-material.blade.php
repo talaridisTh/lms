@@ -53,14 +53,23 @@
             </ul>
 
             <!-- Tab Contents -->
-            <div id="tab-contents" class="ml-1 border-1 border-gray-200">
-                <div id="first" class=" hidden p-4">
+            <div id="tab-contents" class="ml-1 border-1 border-gray-200  px-10 pb-5">
+                <div id="first" class=" hidden py-7 px-4">
+                    <ul class="list-disc mb-2 list-inside">
+                        <li class="font-bold">Πληροφορίες</li>
+                    </ul>
                     {!! $material->description !!}
                 </div>
-                <div id="second" class="hidden p-4">
+                <div id="second" class="hidden py-7 px-4">
+                    <ul class="list-disc mb-2 list-inside">
+                        <li class="font-bold">Περίληψη</li>
+                    </ul>
                     {!! $material->summary !!}
                 </div>
-                <div id="third" class="hidden p-4">
+                <div id="third" class="hidden py-7 px-4">
+                    <ul class="list-disc mb-2 list-inside">
+                        <li class="font-bold">Αρχεία</li>
+                    </ul>
                     @foreach($material->media->where("type",1) as $file)
                         <div
                             class="text-gray-600 ml-2 flex w-1/2 items-center justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
@@ -74,13 +83,27 @@
                     @endforeach
                     {{--                    {!! $material->media->where("type",1) !!}--}}
                 </div>
-                <div id="fourth" class="hidden p-4">
-                    {!! $material->summary !!}
+                <figure id="fourth" class="hidden py-7 px-4 flex flex-wrap space-x-4">
+                    <ul class="list-disc mb-2 list-inside w-full">
+                        <li class="font-bold">Media</li>
+                    </ul>
+                    @foreach($material->media->where("type",0) as $file)
+                        <a href="{{$file->rel_path}} " data-lightbox="image-1">
+                            <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}"
+                                 alt="{{$file->name}}">
+                        </a>
+                    @endforeach
+                </figure>
+                <div id="quiz" class="hidden py-7 px-4">
+                    <ul class="list-disc mb-2 list-inside ">
+                        <li class="font-bold">Quiz</li>
+                    </ul>
+                    {!! $material->script !!}
                 </div>
-{{--                <div id="quiz" class="hidden p-4">--}}
-{{--                    {!! $material->script !!}--}}
-{{--                </div>--}}
-                <div id="disscussion" class="hidden p-4">
+                <div id="disscussion" class="hidden py-7 px-4">
+                    <ul class="list-disc mb-2 list-inside">
+                        <li class="font-bold">Συζήτηση</li>
+                    </ul>
                     Συζήτηση
                 </div>
             </div>
