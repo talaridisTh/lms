@@ -4,14 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Mail\NewUserNotification;
 use App\Models\Media;
 use App\Models\User;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity;
+use App\Notifications\NewUserNotification;
 
 class UserController extends Controller {
 
@@ -52,7 +51,7 @@ class UserController extends Controller {
         $user->save();
         $user->assignRole($request->role);
 		
-		$user->sendEmailVerifycationNotification();
+		// $user->notify(new NewUserNotification);
 
         return redirect("/dashboard/users/$user->slug");
     }

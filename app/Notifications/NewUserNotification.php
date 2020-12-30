@@ -6,12 +6,11 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use App\Models\Option;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\URL;
-use Illuminate\Http\Request;
 
-class EmailVerifyNotification extends Notification
+class NewUserNotification extends Notification
 {
     use Queueable;
 
@@ -27,17 +26,7 @@ class EmailVerifyNotification extends Notification
      */
     public function __construct()
     {
-        $this->title = Option::where("name", "Title")->first()->value
-			?? "Darkpony Digital";
-
-		$this->description = Option::where("name", "Description")->first()->value
-			?? "Demo Project";
-
-        $this->logo = Option::where("name", "Logo")->first()->value
-			?? "/images/darkpony-logo.png";
-
-		$this->copyright = Option::where("name", "Copyright")->first()->value
-			?? "DARKPONY. ALL RIGHTS RESERVED";
+        //
     }
 
     /**
@@ -59,18 +48,17 @@ class EmailVerifyNotification extends Notification
      */
     public function toMail($notifiable)
     {
+		$url = $this->verificationUrl($notifiable);
+		$password = Crypt::decryptString($notifiable->password_encrypt);
 
-			$title = $this->title;
-			$description = $this->description;
-			$logo = $this->logo;
-			$copyright = $this->copyright;
-			$url = $this->verificationUrl($notifiable);
-
-
-        return (new MailMessage)
-			->view("admin.mail.templates.newUserNotification", compact([
-				"url", "title", "description", "logo", "copyright"
-			]));
+		return (new MailMessage)
+			->subject("Ενεργοποίηση λογαριασμού")
+			->greeting("Καλώς ήρθατε!")
+			->line("Για την είσοδο σας μπορείτε να χρησιμοποιήσεται το email σας: ". $notifiable->email)
+			->line("Ο κωδικός σας είναι: $password")
+			->line("Για να ενεργοποιήσεται τον λογαριασμό σας κάντε κλίκ στον παρακάτω σύνδεσμο.")
+            ->action('Ενεργοποίηση λογαριασμού', $url)
+			->salutation("Ευχαριστούμε.");
     }
 
     /**

@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Models\User;
+use App\Notifications\NewUserNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +25,14 @@ use Illuminate\Support\Carbon;
 Route::get("email/verify/{id}/{hash}", 'Auth\VerificationController@verify')->name("email.verify");
 Route::get("auth/verify", 'Auth\VerificationController@show')->name("email.verify.show");
 Route::post("send/email-verification", 'Auth\VerificationController@sendEmailVerification')->name("send.email.verification");
+
+
+Route::get('/notification', function () {
+    $user = User::find(8);
+
+    return (new NewUserNotification($user))
+                ->toMail($user);
+});
 
 Route::get("/full-verification", function () {
 	DB::table("users")->update([
