@@ -68,7 +68,7 @@ class MaterialController extends Controller {
 		$material->video_link = $request->video_link;
 		$material->link = $request->link;
 		$material->type = $request->type;
-		$material->slug = Str::slug($request->title, '-');
+		$material->slug = $material->createSlug($request->title);
 		$material->status = isset($request->status) ? 1 : 0;
 		$material->fields = json_encode($fields);
 
@@ -119,7 +119,7 @@ class MaterialController extends Controller {
 		$material->subtitle = $request->subtitle;
 		$material->description = $request->description;
 		$material->type = "PDF";
-		$material->slug = Str::slug($request->title, '-');
+		$material->slug = $material->createSlug($request->title);
 		$material->status = isset($request->status) ? 1 : 0;
 		$material->fields = json_encode($fields);
 		$material->save();
@@ -188,14 +188,15 @@ class MaterialController extends Controller {
 			"content.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Ανακοίνωση."
 		]);
 
-        $material->update($request->except("instructors", "status"));
+        $material->update($request->except("instructors", "status", "slug"));
 
+		$material->slug = $material->createSlug($request->title, $material->id);
         $material->status = isset($request->status) ? 1 : 0;
         $material->save();
 
         $material->users()->sync($request->instructors);
 
-        return redirect()->back()->with('update', 'Το μάθημα  ' . $material->title . ' ενημερώθηκε');
+		return redirect( "/dashboard/materials/$material->slug/edit" );
     }
 
     public function destroy(Request $request,Material $material)
@@ -251,4 +252,29 @@ class MaterialController extends Controller {
 		return $course;
 	}
 
+	// private function createSlug($title, $id = 0)
+    // {
+    //     $slug = STR::slug($title);
+    //     $allSlugs = $this->getRelatedSlugs($slug, $id);
+    //     if ( ! $allSlugs->contains('slug', $slug) ){
+    //         return $slug;
+    //     }
+
+    //     $i = 2;
+    //     $exist = true;
+    //     do {
+    //         $newSlug = $slug . '-' . $i;
+    //         if (!$allSlugs->contains('slug', $newSlug)) {
+    //             $exist = false;
+    //             return $newSlug;
+    //         }
+    //         $i++;
+    //     } while ($exist);
+    // }
+
+	// protected function getRelatedSlugs($slug, $id = 0)
+    // {
+    //     return Material::select('slug')->where('slug', 'like', $slug.'%')
+    //     	->where('id', '<>', $id)->get();
+    // }
 }

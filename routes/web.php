@@ -319,20 +319,3 @@ Route::get("/",[HomeController::class,"index"])->name('home');
 Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
 Route::get("/home/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
 Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
-
-Route::get("/material-db-check-up", function() {
-	return Material::all();
-});
-
-Route::get("/mediable-db-check-up", function() {
-	return DB::table("mediables")->get();
-});
-
-
-Route::get("/media-db-check-up", function() {
-	return Media::all();
-});
-
-Route::get("/media-details-db-check-up", function() {
-	return MediaDetails::all();
-});

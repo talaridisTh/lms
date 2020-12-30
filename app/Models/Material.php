@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SlugCreator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use League\Glide\Urls\UrlBuilderFactory;
@@ -11,6 +12,7 @@ class Material extends Model {
 
 	use HasFactory;
 	use UrlCreator;
+	use SlugCreator;
 
     protected $guarded = [];
 
@@ -35,13 +37,7 @@ class Material extends Model {
     {
 
         return $this->belongsToMany(Course::class)->withPivot('status', 'priority');
-    }
-
-    // public function coursesMaterial()
-    // {
-
-    //     return $this->hasMany(CourseMaterial::class);
-    // }
+	}
 
     public function media()
     {
@@ -87,19 +83,6 @@ class Material extends Model {
     {
         return "slug";
     }
-
-//    public function priority($material, $course)
-//    {
-//
-//
-//
-//        return $test = DB::table('course_material')
-//            ->where("course_id", $course)
-//            ->where("material_id", $material)
-//            ->select("priority")
-//            ->first();
-//
-//    }
 
     public static function getIcon($value)
     {

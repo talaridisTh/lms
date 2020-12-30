@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\SlugCreator;
 use App\Traits\UrlCreator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,9 +12,7 @@ use League\Glide\Urls\UrlBuilderFactory;
 
 class Course extends Model {
 
-    use SoftDeletes;
-    use HasFactory;
-    use UrlCreator;
+    use SoftDeletes, HasFactory, UrlCreator, SlugCreator;
 
     public function media()
     {
