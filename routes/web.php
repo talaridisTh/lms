@@ -2,14 +2,15 @@
 
 use App\Http\Controllers\Index\CourseController;
 use App\Http\Controllers\Index\HomeController;
+use App\Models\Material;
+use App\Models\Media;
+use App\Models\MediaDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
-use App\Models\User;
-use App\Notifications\NewUserNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,14 +26,6 @@ use App\Notifications\NewUserNotification;
 Route::get("email/verify/{id}/{hash}", 'Auth\VerificationController@verify')->name("email.verify");
 Route::get("auth/verify", 'Auth\VerificationController@show')->name("email.verify.show");
 Route::post("send/email-verification", 'Auth\VerificationController@sendEmailVerification')->name("send.email.verification");
-
-
-Route::get('/notification', function () {
-    $user = User::find(8);
-
-    return (new NewUserNotification($user))
-                ->toMail($user);
-});
 
 Route::get("/full-verification", function () {
 	DB::table("users")->update([
@@ -321,14 +314,20 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 //!					END Index  Routes					#
 //!######################################################
 
-Route::get("/building-alternative-layout", function() {
-	return view("front/index");
-});
-
 Route::get("/",[HomeController::class,"index"])->name('home');
-
-
 
 Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
 Route::get("/home/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
 Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
+
+Route::get("/material-db-check-up", function() {
+	return Material::all();
+});
+
+Route::get("/media-db-check-up", function() {
+	return Media::all();
+});
+
+Route::get("/media-details-db-check-up", function() {
+	return MediaDetails::all();
+});
