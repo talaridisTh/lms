@@ -307,7 +307,7 @@
                 </div>
             @endif
 
-            @if($sections->count())
+            @if($isSectionExist->isNotEmpty())
                 <div class="row">
                     <div class="col">
                         <div class="tabs ">
@@ -317,7 +317,7 @@
                                         class="bullet">Ενότητες</span></label>
                                 <div class="tab-content text-gray-600 p-0 m-0 space-y-1" style="padding:0!important;">
                                     @foreach($sections as $key=> $section)
-                                        @if(count($section->chapters))
+                                        @if(count($section->activeChapters))
                                             <div class="tabs " style="box-shadow: none!important;">
                                                 <div class="tab bg-gray-200 p-0 mb-3">
                                                     <input type="checkbox" id="section-{{$section->slug}}">
@@ -329,7 +329,7 @@
                                                         <span
                                                             class="px-5 py-2 flex-1">{{\Str::limit($section->title,50,"...")}}</span>
                                                     </label>
-                                                    @foreach($section->chapters()->where("type","!=","Announcement")->get() as $chapter)
+                                                    @foreach($section->activeChapters()->where("type","!=","Announcement")->get() as $chapter)
                                                         <div
                                                             class="tab-content text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
                                                             style="padding-left: 15px;padding-right: 15px;"

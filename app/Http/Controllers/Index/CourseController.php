@@ -94,22 +94,26 @@ class CourseController extends Controller {
     public function showCourse(Course $course)
     {
         $user = auth()->user();
-        $lessons = $user->courses()->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->whereIn("type", ["Lesson", "Video", "Link", "PDF"])->unique("slug");
-        $countMaterial = $user->courses()->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->map(function ($material) {
+        $lessons = $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->whereIn("type", ["Lesson", "Video", "Link", "PDF"])->unique("slug");
+        $countMaterial = $user->courses()->where("courses.id", $course->id)->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->map(function ($material) {
             return count($material->chapters);
         })->toArray();
+        $sections = $user->courses()->where("courses.id", $course->id)->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
+        $isSectionExist = $sections->map(function ($section) {
+            return $section->activeChapters;
+        });
 
 
-//        dd($user->courses()->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug"));
         return view("index.courses.template-1.courseProfile", [
             "course" => Course::find($course->id),
             "lessons" => $lessons,
-            "announcements" => $user->courses()->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Announcement")->unique("slug"),
-            "sections" => $user->courses()->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug"),
+            "announcements" => $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Announcement")->unique("slug"),
+            "sections" => $sections,
             "sumMaterial" => array_sum($countMaterial) + count($lessons),
             "curator" => User::FindOrFail(isset($course->user_id) ? $course->user_id : User::where("first_name", "Υδρόγειος")->first()->id),
             "fields" => $this->getFieldsCourse($course),
-            "countSection" => 0
+            "countSection" => 0,
+            "isSectionExist" =>$isSectionExist->flatten()
         ]);
     }
 

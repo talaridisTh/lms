@@ -21,6 +21,15 @@ class Material extends Model {
             "section_id", "material_id"
         )->withPivot('status', 'priority', 'highlight', 'publish_at');
     }
+    public function activeChapters()
+    {
+        return $this->belongsToMany(
+            Material::class, "material_section",
+            "section_id", "material_id"
+        )->withPivot('status', 'priority', 'highlight', 'publish_at')
+            ->wherePivot("status", 1)
+            ->wherePivot("publish_at", "<=", now());
+    }
 
     public function courses()
     {
