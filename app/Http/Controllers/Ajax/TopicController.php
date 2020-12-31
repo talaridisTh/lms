@@ -58,11 +58,11 @@ class TopicController extends Controller
     public function update(Request $request, Topic $topic)
     {
 		$request->validate([
-			'title' => 'required|unique:topics'
+			'title' => 'required|unique:topics,title,'.$topic->id
 		]);
 
 		$topic->title = $request->title;
-		$topic->slug = Str::slug($request->title, "-");
+		$topic->slug = Str::slug($request->title);
 		$topic->save();
 
     }
