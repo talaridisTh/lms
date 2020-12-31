@@ -34,7 +34,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
 		{ data: "phone", name: "phone", className: "align-middle text-center" }, //5
         { data: "email", name: "email", visible: false }, // 6
         { data: 'status', name: 'status', className: "align-middle text-center" }, // 7
-        { data: 'date', name: 'users.created_at', className: "text-center" }, // 8
+        { data: 'date', name: 'users.created_at', className: "text-center align-middle" }, // 8
     ],
     language: utilities.tableLocale,
     drawCallback: () => {
