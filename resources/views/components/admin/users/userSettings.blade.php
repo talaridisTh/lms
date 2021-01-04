@@ -235,7 +235,7 @@
 							Επιλογές
 						</button>
 
-						<div class="dropdown-menu py-0">
+						<div class="dropdown-menu  dropdown-menu-right py-0">
 							<div class="btn-group dropleft dropleft-hover w-100">
 								<button type="button" id="status-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 									Αλλαγή Avatar

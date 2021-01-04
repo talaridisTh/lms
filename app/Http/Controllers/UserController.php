@@ -6,6 +6,7 @@ use App\Http\Requests\UserCreateRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\Media;
 use App\Models\User;
+use App\Notifications\ChangedPasswordNotification;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -71,7 +72,6 @@ class UserController extends Controller {
 
     public function update(UserUpdateRequest $request, User $user)
     {
-
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
@@ -81,14 +81,18 @@ class UserController extends Controller {
         $user->facebook_link = $request->facebook_link;
         $user->instagram_link = $request->instagram_link;
         $user->youtube_link = $request->youtube_link;
-        $user->linkedin_link = $request->linkedin_link;
-        if (!is_null($request->password))
-        {
+		$user->linkedin_link = $request->linkedin_link;
+		
+        if (!is_null($request->password)) {
 
             $user->password_encrypt = Crypt::encryptString($request->password);
-            $user->password = Hash::make($request->password);
-        }
-        $user->save();
+			$user->password = Hash::make($request->password);
+			
+			$user->notify(new ChangedPasswordNotification);
+		}
+		
+		$user->save();
+
         $user->syncRoles($request->role);
 
         return redirect("/dashboard/users/$user->slug");
