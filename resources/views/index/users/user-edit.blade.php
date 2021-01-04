@@ -2,7 +2,7 @@
 
 
 @section("content")
-    <article class="container lg:min-h-screen	 mx-auto">
+    <article class="container user-slug lg:min-h-screen mx-auto" data-user-slug="{{auth()->user()->slug}}">
 
         <div class="-intro-x breadcrumb mr-auto hidden sm:flex my-4 p-1"><!-- BEGIN: breadcrumb -->
             <a href="{{route('home')}}" class="">Home</a>
@@ -10,9 +10,9 @@
             <a href="" class="breadcrumb--active">Profile</a>
         </div><!-- END: breadcrumb -->
 
-        <section class="flex flex-wrap space-x-10"><!-- BEGIN: container user-profil -->
+        <section class="flex flex-wrap space-x-10" id="cnt-sidebars"><!-- BEGIN: container user-profil -->
 
-            <aside class="flex-1 flex flex-col space-y-6 p-6  bg-card-color rounded-lg">
+            <aside class="flex-1 flex flex-col space-y-6 p-6 left-sidebar bg-card-color rounded-lg">
                 <!-- BEGIN: left sidebar user profil -->
 
                 <figure class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
@@ -175,14 +175,19 @@
                             <div class="tab-content__pane active border pt-0 px-6 py-4" id="settings-user">
                                 <div class="intro-y box lg:mt-5 capitalize space-y-4">
                                     <div>
-                                        <label>όνομα</label>
+                                        <label>όνομα</label><span class="ml-5 js-validation"></span>
                                         <input type="text" class="input w-full border mt-2"
+                                               id="user-update-name"
+                                               value="{{$user->first_name}}"
                                                placeholder="Eισάγετε όνομα">
                                     </div>
 
                                     <div>
                                         <label>επιθετο</label>
-                                        <input type="text" class="input w-full border mt-2"
+                                        <input type="text"
+                                               value="{{$user->last_name}}"
+                                               id="user-update-last"
+                                               class="input w-full border mt-2"
                                                placeholder="Eισάγετε όνομα">
                                     </div>
 
@@ -195,6 +200,8 @@
                                                 @
                                             </div>
                                             <input type="text" class="input pl-12 w-full border col-span-4"
+                                                   id="user-update-email"
+                                                   value="{{$user->email}}"
                                                    placeholder="Eισάγετε email">
                                         </div>
                                     </div>
@@ -208,6 +215,8 @@
                                                 <i class="" data-feather="phone"></i>
                                             </div>
                                             <input type="text" class="input pl-12 w-full border col-span-4"
+                                                   id="user-update-phone"
+                                                  value="{{$user->phone}}"
                                                    placeholder="Eισάγετε Τηλέφωνο">
                                         </div>
                                     </div>
@@ -216,6 +225,7 @@
                                         <label>password</label>
                                         <input type="text"
                                                class="input w-full border mt-2"
+                                               id="user-update-password"
                                                placeholder="6-15 χαρακτήρες">
                                         <div class="w-full grid grid-cols-12 gap-4 h-1 mt-3">
                                             <div class="col-span-3 hidden h-full rounded bg-theme-9"></div>
@@ -231,6 +241,7 @@
                                         <label>re password</label>
                                         <input type="text"
                                                class="input w-full border  mt-2"
+                                               id="user-update-repassword"
                                                placeholder="6-15 χαρακτήρες">
                                         <div class="text-theme-12 hidden mt-2">Attempting to reconnect to server...
                                         </div>
@@ -251,6 +262,8 @@
                                                 <i data-feather="facebook"></i>
                                             </div>
                                             <input type="text" class="input pl-12 w-full border col-span-4"
+                                                   id="user-update-facebook"
+                                                   value="{{$user->facebook_link}}"
                                                    placeholder="Eισάγετε link">
                                         </div>
                                     </div>
@@ -263,6 +276,8 @@
                                                 <i data-feather="instagram"></i>
                                             </div>
                                             <input type="text" class="input pl-12 w-full border col-span-4"
+                                                   id="user-update-instagram"
+                                                   value="{{$user->instagram_link}}"
                                                    placeholder="Eισάγετε link">
                                         </div>
                                     </div>
@@ -275,6 +290,8 @@
                                                 <i data-feather="linkedin"></i>
                                             </div>
                                             <input type="text" class="input pl-12 w-full border col-span-4"
+                                                   id="user-update-linkedin"
+                                                   value="{{$user->linkedin}}"
                                                    placeholder="Eισάγετε link">
                                         </div>
                                     </div>
@@ -287,6 +304,8 @@
                                                 <i data-feather="youtube"></i>
                                             </div>
                                             <input type="text" class="input pl-12 w-full border col-span-4"
+                                                   id="user-update-youtube"
+                                                   value="{{$user->youtube_link}}"
                                                    placeholder="Eισάγετε link">
                                         </div>
                                     </div>
@@ -296,9 +315,9 @@
                             </div>
 
                             <button
-                                class="inline-block mt-3 px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-700 rounded shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
+                                class="js-update-submit inline-block ml-7 mt-3 px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-700 rounded shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
                             >
-                                Primary
+                                UPDATE
                             </button>
                         </div><!-- END: tab content -->
                     </div>

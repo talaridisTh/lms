@@ -1,3 +1,8 @@
+import Swal from "sweetalert2";
+
+const feather = require('feather-icons')
+
+
 $(".js-strong-password").on("input", function (e) {
     console.log(this.parentElement.parentElement.children[1].children)
     const validateChild = this.parentElement.parentElement.children[1].children;
@@ -26,4 +31,50 @@ $(".js-strong-password").on("input", function (e) {
     }
 
 
+})
+
+
+$(".js-update-submit").on("click",async function (){
+    let userSlug = $("#user-slug").data("user-slug");
+    let name = $("#user-update-name").val()
+    let last = $("#user-update-last").val()
+    let email = $("#user-update-email").val()
+    let phone = $("#user-update-phone").val()
+    let password = $("#user-update-password").val()
+    let repassword = $("#user-update-repassword").val()
+    let facebook = $("#user-update-facebook").val()
+    let instagram = $("#user-update-instagram").val()
+    let linkedin = $("#user-update-linkedin").val()
+    let youtube = $("#user-update-youtube").val()
+
+
+
+
+    const {data,status}  = await axios.post(`/home/account/${userSlug}/update`,{
+        name,
+        last,
+        email,
+        phone,
+        password,
+        repassword,
+        facebook,
+        instagram,
+        linkedin,
+        youtube
+    })
+
+    if (status==200){
+        $(".left-sidebar").html($(data).find(".left-sidebar > *"))
+        feather.replace()
+
+            await  Swal.fire({
+                toast: 'true',
+                position: 'top-end',
+                icon: "success",
+                title: `${name} ${last} ενημερώθηκε!`,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+        })
+    }
 })

@@ -296,6 +296,8 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
     Route::get("/home/courses/{user}", [CourseController::class ,"userCourses"])->name("index.userCourses");
     Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
     Route::get("/home/account/{user}",[UserController::class,"index"])->name("index.account");
+    Route::post("/home/account/{user}/update",[UserController::class,"update"])->name("index.update");
+
 //    Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
 //! Course
     Route::post('/model/comment', 'Index\CourseController@modelComment')->name("index.modelComment")->withoutMiddleware(['verifyCourse']);

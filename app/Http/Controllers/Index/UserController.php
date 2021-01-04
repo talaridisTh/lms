@@ -43,12 +43,43 @@ class UserController extends Controller {
         $socialLinks = [$user->facebook_link, $user->instagram_link, $user->linkedin_link, $user->youtube_link];
         return view("index.users.user-edit", [
             "user" => $user,
-            "courses" => auth()->user()->courses,
+            "courses" => $user->courses,
             "existSocials"=>$this->arrayIsNotEmpty($socialLinks),
             "sumMaterials"=>$this->getMaterial($user)["countMaterials"],
             "sumCourses"=>$user->courses()->count(),
             "sumBundles"=>$user->bundles()->count()
         ]);
+    }
+
+    public function update(Request $request)
+    {
+
+        auth()->user()->update([
+           "first_name"=>$request->name,
+           "last_name"=>$request->last,
+           "email"=>$request->email,
+           "phone"=>$request->phone,
+//           "password"=>$request->password,
+           "facebook_link"=>$request->facebook,
+           "instagram_link"=>$request->instagram,
+           "linkedin_link"=>$request->linkedin,
+           "youtube_link"=>$request->youtube
+       ]);
+
+
+        $user = auth()->user();
+        $socialLinks = [$user->facebook_link, $user->instagram_link, $user->linkedin_link, $user->youtube_link];
+        return view("index.users.user-edit", [
+            "user" => $user,
+            "courses" => $user->courses,
+            "existSocials"=>$this->arrayIsNotEmpty($socialLinks),
+            "sumMaterials"=>$this->getMaterial($user)["countMaterials"],
+            "sumCourses"=>$user->courses()->count(),
+            "sumBundles"=>$user->bundles()->count()
+        ]);
+
+
+
     }
 
     private function arrayIsNotEmpty($arr)
