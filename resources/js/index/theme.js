@@ -13,6 +13,9 @@ window.Swal = require('sweetalert2');
 window.$R = require('../../plugins/redactor/redactor');
 require('../../plugins/redactor/plugins/alignment/alignment');
 // require('../../theme/js/app');
+
+
+
 import './theme/bootstrap'
 import './theme/mobile-menu'
 
