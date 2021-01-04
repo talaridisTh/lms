@@ -13,18 +13,11 @@
     <link rel="shortcut icon" href="{{$options->logo}}">
 
 
-    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-    <link href="{{ mix('css/index/_icon.css') }}" rel="stylesheet">
+{{--    <link href="{{ mix('css/app.css') }}" rel="stylesheet">--}}
+    <link href="{{ mix('css/index/theme.css') }}" rel="stylesheet">
 
 
-    {{--    <link rel="stylesheet" href="{{ mix('css/index/app.css') }}">--}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
-
-{{--    <link rel="preconnect" href="https://fonts.gstatic.com">--}}
-{{--    <link--}}
-{{--        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,300;1,400&display=swap"--}}
-{{--        rel="stylesheet">--}}
 
     <style>
         @font-face {
@@ -39,9 +32,11 @@
 <body class="h-full  antialiased"
       style="font-family: 'Helvetica', sans-serif;">
 
-<div id="app" class="flex flex-col min-h-screen" style="height: auto !important;">
+<div id="app" class=" relative" style="height: auto !important;">
 
-    <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md" style="min-height: 50px">
+
+
+    <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative" style="min-height: 50px">
 
         <div class="container mx-auto flex flex-wrap items-center px-1">
             <div class="flex-1 flex justify-between items-center">
@@ -49,57 +44,141 @@
                     <img class="logo" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
-            <label for="menu-toggle" class="pointer-cursor md:hidden block menu-toggle">
-                <svg class="fill-current text-gray-900"
-                     xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-                    <title>menu</title>
-                    <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-                </svg>
-            </label>
-            <input class="hidden" type="checkbox" id="menu-toggle"/>
+
             <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
-                <nav>
-                    <div
-                        class="md:flex items-center justify-between text-base text-gray-700 pt-4 md:pt-0 relative green borderXwidth">
+                <!-- BEGIN: Top Menu -->
+                <nav class="top-nav">
+                    <ul>
+                        <li class="orange-line">
+                            <a href="{{route('dashboard')}}" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="tool"></i> </div>
+                                <div class="top-menu__title ">Dashboard </div>
+                            </a>
+                        </li>
                         @hasanyrole("admin|super-admin")
                         @if(\Request::route()->getName()== "index.userCourse")
-                            <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="#">edit this
-                                course</a>
-                            <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="#">edit this
-                                material</a>
-                        @endif
-                        <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase " href="{{route('dashboard')}}">dashboard</a>
-                        @endrole
-                        <a class="md:p-4 py-3 px-0 block text-sm font-bold uppercase "
-                           href="{{route('index.userCourses',auth()->user()->id)}}">μαθηματα</a>
-                        <a class="md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm  font-bold uppercase hidden " href="#">discussions</a>
-                        <div class="login-cnt relative">
-                            <a class="bg-login  transition duration-500 ease-in-out text-white rounded-full hover:bg-color-theme
-                         md:p-4 py-3 px-0 block md:mb-0 mb-2 text-sm font-bold uppercase "
-                               href="#">ο λογαριασμος μου
+                        <li>
+                            <a href="#" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="home"></i> </div>
+                                <div class="top-menu__title"> edit this course </div>
                             </a>
-                            <div class="login-dropdown absolute left-2/4 hidden opacity-0 mt-2">
-                                <ul class="absolute left-0 top-0  p-2 rounded-lg shadow-lg bg-white z-10 border  group-hover:block">
-                                    {{--                                    <li class="hover:bg-gray-200 py-2 px-10">eisodos</li>--}}
-                                    <li id="logout-btn" class="cursor-pointer hover:bg-gray-200 py-2 px-10 flex ">Έξοδος
-                                        <i class=" ml-2 mdi mdi-logout"></i></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                        </li>
+                        <li  class="orange-line">>
+                            <a href="#" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="home"></i> </div>
+                                <div class="top-menu__title"> Edit this material </div>
+                            </a>
+                        </li>
+                        @endif
+                        @endhasanyrole
+                        <li  class="orange-line">
+                            <a href="{{route('index.userCourses',auth()->id())}}" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="home"></i> </div>
+                                <div class="top-menu__title"> Μαθήματα </div>
+                            </a>
+                        </li>
+                        <li class="hidden orange-line">
+                            <a href="#" class="top-menu">
+                                <div class="top-menu__icon"> <i data-feather="home"></i> </div>
+                                <div class="top-menu__title"> Discussions </div>
+                            </a>
+                        </li>
+                        <li class="bg-login rounded-xl" >
+                            <a href="javascript:;" class="top-menu" style="color: white!important;">
+                                <div class="top-menu__icon"> <i data-feather="hard-drive"></i> </div>
+                                <div class="top-menu__title"> Ο λογαριασμος μου <i data-feather="chevron-down" class="top-menu__sub-icon"></i> </div>
+                            </a>
+                            <ul class="py-2 mt-6">
+                                <li  class="orange-line">
+                                    <a href="{{route('index.account',auth()->user()->slug)}}" class="top-menu">
+                                        <div class="top-menu__icon"> <i data-feather="user"></i> </div>
+                                        <div class="top-menu__title"> My account </div>
+                                    </a>
+                                </li>
+{{--                                <li  class="orange-line">--}}
+{{--                                    <a href="top-menu-light-slider.html" class="top-menu">--}}
+{{--                                        <div class="top-menu__icon"> <i data-feather="activity"></i> </div>--}}
+{{--                                        <div class="top-menu__title"> Slider </div>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+                                <li id="logout-btn" class="orange-line">
+                                    <a href="top-menu-light-image-zoom.html" class="top-menu">
+                                        <div class="top-menu__icon"> <i data-feather="log-out"></i> </div>
+                                        <div class="top-menu__title"> Έξοδος </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
                 </nav>
+                <!-- END: Top Menu -->
             </div>
         </div>
+        <!-- BEGIN: Mobile Menu -->
+        <div class="mobile-menu md:hidden">
+            <div class="mobile-menu-bar">
+                <a href="" class="flex mr-auto"></a>
+                <a href="#" id="mobile-menu-toggler" class="absolute right-8 top-12"> <i data-feather="bar-chart-2" class="w-8 h-8 text-black transform -rotate-90"></i> </a>
+            </div>
+            <ul class="burger-menu py-5 hidden">
+                <li>
+                    <a href="{{route('dashboard')}}" class="menu">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> Dashboard </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('dashboard')}}" class="menu">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> edit this course </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('dashboard')}}" class="menu">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> Edit this material </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('dashboard')}}" class="menu">
+                        <div class="menu__icon"> <i data-feather="home"></i> </div>
+                        <div class="menu__title"> Discussions </div>
+                    </a>
+                </li>
 
-        <div class="container mx-auto mt-5  hidden toggle-cnt-menu">
-            <ul class="uppercase space-y-3 sm:hidden">
-                <li class="hover:bg-gray-300 rounded-lg p-2">dashboard</li>
-                <li class="hover:bg-gray-300 rounded-lg p-2">μαθηματα</li>
-                <li class="hover:bg-gray-300 rounded-lg p-2">discussions</li>
-                <li class="hover:bg-gray-300 rounded-lg p-2">ο λογαριασμος μου</li>
+                <li >
+                    <a href="javascript:;" class="menu">
+                        <div class="menu__icon"> <i data-feather="box"></i> </div>
+                        <div class="menu__title"> Ο λογαριασμος μου <i data-feather="chevron-down" class="menu__sub-icon"></i> </div>
+                    </a>
+                    <ul class="">
+                        <li>
+                            <a href="index.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Side Menu </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="simple-menu-light-dashboard.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Simple Menu </div>
+                            </a>
+                        </li>
+                        <li id="logout-btn">
+                            <a href="top-menu-light-dashboard.html" class="menu">
+                                <div class="menu__icon"> <i data-feather="activity"></i> </div>
+                                <div class="menu__title"> Έξοδος</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
             </ul>
         </div>
+        <!-- END: Mobile Menu -->
     </header>
+
+
 
     <main class="my-7 mb-20 flex-grow">
 
@@ -149,7 +228,8 @@
 <!-- bundle -->
 <script src="/assets/js/vendor.min.js"></script>
 <script src="/assets/js/app.min.js"></script>
-<script src="{{ mix('js/app.js') }}"></script>
+{{--<script src="{{ mix('js/app.js') }}"></script>--}}
+<script src="{{ mix('js/index/theme.js') }}"></script>
 <script>
     $('#logout-btn').click(function () {
         event.preventDefault();
@@ -161,9 +241,9 @@
         this.href = window.PREVIEW_PAGE_COURSE
     })
 
-    window.onscroll = function () {
-        scrollFunction()
-    };
+    // window.onscroll = function () {
+    //     scrollFunction()
+    // };
 
     function scrollFunction() {
         const $header = document.getElementById('header');

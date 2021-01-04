@@ -9,7 +9,7 @@
 		<meta name="description" content="ΥΔΡΟΓΕΙΟΣ EDUCATION">
 
 		<!-- App css -->
-		<link rel="stylesheet" href="{{ mix("css/index/app.css") }}">
+		<link rel="stylesheet" href="{{ mix("css/index/logIn.css") }}">
     </head>
 
     <body class="pb-0">
@@ -130,7 +130,7 @@
 		</div>
 
 
-		<script src="{{ mix("js/index/app.js") }}"></script>
+{{--		<script src="{{ mix("js/index/app.js") }}"></script>--}}
     </body>
 
 </html>

@@ -1,10 +1,8 @@
 @extends('layouts.dashboard')
 
-@section('css')
-@endsection
 
 @section('content')
-	
+
 	<!-- start page title -->
 	<div class="row">
 		<div class="col-12">
@@ -49,7 +47,7 @@
 										</div>
 									</div>
 								</div>
-	
+
 								<div class="col-sm-6 col-xl-3">
 									<div class="card shadow-none m-0 border-left">
 										<div class="card-body text-center">
@@ -59,7 +57,7 @@
 										</div>
 									</div>
 								</div>
-	
+
 								<div class="col-sm-6 col-xl-3">
 									<div class="card shadow-none m-0 border-left">
 										<div class="card-body text-center">
@@ -69,13 +67,13 @@
 										</div>
 									</div>
 								</div>
-	
+
 							</div> <!-- end row -->
 						</div>
 					</div> <!-- end card-box-->
 				</div> <!-- end col-->
 			</div><!-- end row-->
-			
+
 			<div class="card">
 				<div class="pb-2 card-body">
 					<h5 class="card-title text-center mb-3">Μαθητές ανα μήνα</h5>
@@ -87,11 +85,11 @@
 
 			<div class="row">
 				<div class="col-lg-6 col-xl-4 mb-3">
-					
+
 					<div class="card h-100">
 						<div class="pb-0 card-body {{ $topCourses->isEmpty() ? "d-none " : "d-flex " }}flex-column justify-content-start align-items-center">
 							<h5 class="card-title text-center" style="margin-bottom: 1.79rem;">Δημοφιλέστερα Courses</h5>
-					
+
 							<div style="width:400px; height: 300px;">
 								<canvas id="top-courses" width="400" height="300"></canvas>
 							</div>
@@ -104,7 +102,7 @@
 							</div>
 						</div>
 					</div>
-					
+
 					@foreach ($topCourses as $course)
 						<span class="js-top-courses" data-title="{{ $course->title }}"
 							data-students="{{ $course->students }}"></span>
@@ -150,7 +148,7 @@
 											</td>
 											<td>
 												@if ( is_null($course->user_id) )
-													<p class="text-center mb-0">-</p>	
+													<p class="text-center mb-0">-</p>
 												@else
 													{{ $course->curator->last_name }} {{ $course->curator->first_name }}
 												@endif
@@ -238,7 +236,7 @@
 						<span class="js-top-bundles" data-title="{{ $bundle->title }}"
 							data-students="{{ $bundle->students }}"></span>
 					@endforeach
-				</div>				
+				</div>
 			</div>
 
 		</div>

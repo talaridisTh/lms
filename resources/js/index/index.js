@@ -5,6 +5,7 @@ import 'swiper/swiper-bundle.css';
 import Splide from '@splidejs/splide';
 import Grid from '@splidejs/splide-extension-grid';
 
+
 const CURRENT_ROUTE = $('meta[name=route]').attr('content');
 
 if (CURRENT_ROUTE == "home") {
@@ -40,7 +41,7 @@ if (CURRENT_ROUTE == "index.userCourses") {
         new Splide("#lessons-slide", {
             grid: {
                 rows: 2,
-                cols: 4,
+                cols: 3,
             },
             breakpoints: {
                 1588: {

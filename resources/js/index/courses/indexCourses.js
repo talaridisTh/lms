@@ -3,23 +3,20 @@ import 'swiper/swiper-bundle.css'; // slider.css
 import "lightbox2/dist/js/lightbox" //lightbox
 
 var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
-    // Optional parameters
+    autoHeight: true, //enable auto height
 
-
-    // If we need pagination
     pagination: {
         el: '.swiper-pagination-announcements',
         draggable: true,
     },
 
 
-    // Navigation arrows
     navigation: {
         nextEl: '.swiper-button-next',
         prevEl: '.swiper-button-prev',
     },
 
-    // And if we need scrollbar
+
     scrollbar: {
         el: '.swiper-scrollbar-announcements',
     },
@@ -168,6 +165,8 @@ function toggleModal() {
     modal.classList.toggle('opacity-0')
     modal.classList.toggle('pointer-events-none')
 } // create modal
+
+
 
 
 // import utilities from '../../index/main';

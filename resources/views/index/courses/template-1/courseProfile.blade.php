@@ -2,83 +2,7 @@
 
 @section("content")
 
-    <style>
-        .avatar {
-            border: solid 4px #00000017;
-            border-left-color: transparent;
-            padding: 2px;
-            display: inline-block;
-            border-radius: 50%;
-            position: relative;
 
-
-            transform: rotate(-88deg);
-            -ms-transform: rotate(-88deg);
-            -webkit-transform: rotate(-88deg);
-        }
-
-        .avatar img {
-            display: block;
-            border-radius: 50%;
-
-            transform: rotate(+88deg);
-            -ms-transform: rotate(+88deg);
-            -webkit-transform: rotate(+88deg);
-        }
-
-        .avatar:before, .avatar:after {
-            content: '';
-            /*position:absolute;*/
-            background: #fff;
-            z-index: -1;
-
-            transform: rotate(-45deg);
-            -ms-transform: rotate(-45deg);
-            -webkit-transform: rotate(-45deg);
-        }
-
-        .avatar:before {
-            height: 4px;
-            top: 50%;
-            left: 2px;
-            right: -5px;
-            margin-top: -2px;
-        }
-
-        .avatar:after {
-            width: 4px;
-            left: 50%;
-            top: 2px;
-            bottom: -5px;
-            margin-left: -2px;
-        }
-
-        .announcement li::before {
-            content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-            color: #ffffff94; /* Change the color */
-            font-weight: bold; /* If you want it to be bold */
-            display: inline-block; /* Needed to add space between the bullet and the text */
-            width: 1em; /* Also needed for space (tweak if needed) */
-        }
-
-        .bullet:before {
-            content: "\2022"; /* Add content: \2022 is the CSS Code/unicode for a bullet */
-            color: black; /* Change the color */
-            font-weight: bold; /* If you want it to be bold */
-            display: inline-block; /* Needed to add space between the bullet and the text */
-            width: 1em; /* Also needed for space (tweak if needed) */
-            margin-left: -1em; /* Also needed for space (tweak if needed) */
-        }
-
-        .em-padding {
-            padding-bottom: 0.2em;
-            padding-top: 0.2em;
-        }
-
-        .modal {
-            transition: opacity .7s ease;
-        }
-    </style>
     <article class="mdc:container lg:container mx-auto flex flex-col  pt-5 rounded-xl "
              style="background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)">
         <section class="flex xl:justify-between justify-around flex-wrap  px-8">
@@ -132,7 +56,7 @@
         <section class="flex lg:px-16 px-9 text-white py-4 justify-between lg:justify-start  lg:space-x-10
          bg-opacity-20 bg-black w-full rounded-b-xl">
             <p><i class="mdi mdi-book-open-page-variant mr-1"></i>{{$sumMaterial}} Μαθήματα</p>
-            <p><i class="mdi mdi-book-open-page-variant mr-1"></i>{{count($course->media)}} Βοηθητικά αρχεία</p>
+            <p><i class="mdi mdi-book-open-page-variant mr-1"></i>{{count($course->media->where("type",1))}} Βοηθητικά αρχεία</p>
         </section>
     </article>
 
@@ -254,7 +178,7 @@
                     <div class="col">
                         <div class="tabs">
                             <div class="tab bg-gray-200 px-4 em-padding">
-                                <input type="checkbox" id="extra-file">
+                                <input class="input-tab" type="checkbox" id="extra-file">
                                 <label class="tab-label text-black list-disc text-lg p-4" for="extra-file"><span
                                         class="bullet">Βοηθητικά αρχεία</span></label>
                                 @foreach($course->media->where("type",1) as $file)
@@ -283,7 +207,7 @@
                     <div class="col">
                         <div class="tabs">
                             <div class="tab bg-gray-200 px-4 em-padding">
-                                <input type="checkbox" id="material-file">
+                                <input class="input-tab" type="checkbox" id="material-file">
                                 <label class="tab-label text-black list-disc text-lg p-4" for="material-file"><span
                                         class="bullet">Μαθήματα</span></label>
                                 @foreach($lessons as $lesson)
@@ -312,7 +236,7 @@
                     <div class="col">
                         <div class="tabs ">
                             <div class="tab bg-gray-200 px-4 ">
-                                <input type="checkbox" id="sections">
+                                <input class="input-tab" type="checkbox" id="sections">
                                 <label class="tab-label text-black list-disc text-lg p-4" for="sections"><span
                                         class="bullet">Ενότητες</span></label>
                                 <div class="tab-content text-gray-600 p-0 m-0 space-y-1" style="padding:0!important;">
@@ -320,7 +244,7 @@
                                         @if(count($section->activeChapters))
                                             <div class="tabs " style="box-shadow: none!important;">
                                                 <div class="tab bg-gray-200 p-0 mb-3">
-                                                    <input type="checkbox" id="section-{{$section->slug}}">
+                                                    <input class="input-tab" type="checkbox" id="section-{{$section->slug}}">
                                                     <label
                                                         class="tab-label mb-2 text-black list-disc text-sm {{$section->pivot->highlight? "bg-blue-300" :"bg-white"}}  pr-5 items-center rounded-lg"
                                                         for="section-{{$section->slug}}">
@@ -369,20 +293,30 @@
         style="z-index: 99999">
         <div class="modal-overlay absolute w-full h-full bg-black opacity-25 top-0 left-0 cursor-pointer"></div>
         <div
-            class="absolute rounded overflow-hidden mt-10 w-1/2 bg-white h-auto h rounded-sm shadow-lg flex flex-col p-10 text-2xl">
+            class="absolute rounded overflow-hidden mt-10 w-1/2 bg-white h-auto h rounded-sm shadow-lg flex flex-col  text-2xl">
             <div class="swiper-container-announcements">
                 <!-- Additional required wrapper -->
                 <div class="swiper-wrapper">
                     <!-- Slides -->
                     @foreach($announcements  as $key => $announcement)
                         <div class="swiper-slide w-full">
-                            <div
-                                class="px-10 space-y-4 flex flex-col justify-center break-words w-5/6">
-                                <h3 class="mb-3 text-2xl font-bold">{{$announcement->title}}  </h3>
-                                <p class="text-base">{!! $announcement->content !!}</p>
-                                <span class="text-base font-semibold">
-                                            ({{$announcement->created_at->format('d/m/Y')}})
-                                        </span>
+                            <div class=" w-full lg:flex">
+
+                                <div
+                                    class=" my-7  space-y-7  bg-white rounded-b lg:rounded-b-none lg:rounded-r  flex flex-col justify-between leading-normal">
+                                    <div class=" px-16">
+                                        <div class="text-black font-bold text-xl ">{{$announcement->title}}
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="px-16 w-11/12 break-words">
+                                        <p class="text-grey-darker text-base  ">{!!$announcement->content!!}</p>
+                                    </div>
+                                    <hr>
+                                    <div class="px-16 ">
+                                        <p class="text-sm text-grey-dark">Aug 18</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                 @endforeach
@@ -406,40 +340,6 @@
 
 @section("script")
     <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
-    <script>
-        let tabsContainer = document.querySelector("#tabs");
 
-        let tabTogglers = tabsContainer.querySelectorAll("a");
-
-        tabTogglers.forEach(function (toggler) {
-            toggler.addEventListener("click", function (e) {
-                e.preventDefault();
-
-                let tabName = this.getAttribute("href");
-
-                let tabContents = document.querySelector("#tab-contents");
-
-                for (let i = 0; i < tabContents.children.length; i++) {
-                    tabTogglers[i].parentElement.classList.add("bg-gray-200");
-                    tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px");
-                    tabContents.children[i].classList.remove("hidden");
-                    if ("#" + tabContents.children[i].id === tabName) {
-                        tabTogglers[i].parentElement.classList.add("bg-white");
-                        tabTogglers[i].parentElement.classList.remove("bg-gray-200");
-                        continue;
-                    }
-                    tabContents.children[i].classList.add("hidden");
-
-                }
-                e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px", "bg-white");
-            });
-        });
-
-        $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab")
-
-        document.getElementById("default-tab").click();
-
-
-    </script>
 
 @endsection

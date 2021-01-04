@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss')
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -46,33 +47,38 @@ mix.js('resources/js/app.js', 'public/js')
 
 	.js('resources/js/dashboard/main.js', 'public/js/dashboard/')
 
-    .js('resources/js/front/app.js', 'public/js/front')
+    // .js('resources/js/front/app.js', 'public/js/front')
 
-
+    .js('resources/js/index/user/user-edit.js', 'public/js/index/user')
     .js('resources/js/index/courses/indexCourses.js', 'public/js/index/courses')
     .js('resources/js/index/materials/indexMaterials.js', 'public/js/index/materials')
     .js('resources/js/index/chat/message.js', 'public/js/index/chat')
     .js('resources/js/index/guest/guest.js', 'public/js/index/guest')
-    .js('resources/js/index/favourites/favourites.js', 'public/js/index/favourites')
-    .js('resources/js/index/history/history.js', 'public/js/index/history')
-    .js('resources/js/index/announcement/announcement.js', 'public/js/index/announcement')
     .js('resources/js/index/discussions/discussions.js', 'public/js/index/discussions')
     .js('resources/js/index/index.js', 'public/js/index')
 
-    .js('resources/js/index/app.js', 'public/js/index')
+    .js('resources/js/index/theme.js', 'public/js/index')
 
-    .sass('resources/sass/front/app.scss', 'public/css/front')
+    // .sass('resources/sass/front/app.scss', 'public/css/front')
 
     .sass('resources/sass/dashboard/customArticleStyle.scss', 'public/css/dashboard')
     .sass('resources/sass/dashboard/app.scss', 'public/css/dashboard')
-    .sass('resources/sass/index/app.scss', 'public/css/index/')
-    .sass('resources/sass/index/_icon.scss', 'public/css/index/')
+
+
+    .sass('resources/sass/index/theme.scss', 'public/css/index/')
+    .options({
+        processCssUrls: false,
+        postCss: [ tailwindcss('./tailwind.config.js') ],
+    })
+    // .sass('resources/sass/index/custom.scss', 'public/css/index/')
     .sass('resources/sass/index/logIn.scss', 'public/css/index/')
-    .postCss("resources/css/app.css", "public/css", [
-        require("tailwindcss"),
-    ])
+    // .postCss("resources/css/app.css", "public/css", [
+    //     require("tailwindcss"),
+    // ])
     .browserSync("http://127.0.0.1:8000/")
     .sourceMaps()
 	.disableSuccessNotifications()
-	.version();
 
+if (mix.inProduction) {
+    mix.version()
+}

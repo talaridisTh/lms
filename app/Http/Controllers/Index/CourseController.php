@@ -18,109 +18,30 @@ class CourseController extends Controller {
     use hasComments, UrlCreator;
 
     //
-    public function show(Course $course)
-    {
-
-        $topics = [];
-        foreach (auth()->user()->courses as $course)
-        {
-//           $topics =Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
-            array_push($topics, Course::with('topics', "materials")->find($course->id)->topics()->pluck("title", "id")->toArray());
-        }
-//
-        $arrayTopics = collect($topics)->mapWithKeys(function ($q) {
-            return $q;
-        });
-        if (request()->idsTopic == "reset" || !request()->ajax())
-        {
-            $allCourses = auth()->user()->courses;
-
-            return view("index.courses.courses", [
-                'arrayTopics' => $arrayTopics,
-                'allCourses' => $allCourses]);
-        } else
-        {
-
-            $queryAllCourse = DB::table('courses')
-                ->select("courses.*")
-                ->join("course_user", "course_user.course_id", "=", "courses.id")
-                ->join("topicables", "topicables.topicable_id", "=", "courses.id")
-                ->join("topics", "topicables.topic_id", "=", "topics.id")
-                ->where('course_user.user_id', "=", auth()->user()->id)
-                ->where("topicables.topicable_type", "like", '%Course%')
-                ->where("topics.id", "=", request()->idsTopic)
-                ->get();
-//
-            $allCourses = $queryAllCourse->map(function ($test) {
-                return Course::whereIn('id', [$test->id])->get();
-            });
-
-            return view("index.courses.courses", [
-                'arrayTopics' => $arrayTopics,
-                'allCourses' => $allCourses->flatten(1)]);
-        }
-    }
-
-    public function userCourse(Course $course)
-    {
-        $post = Post::where("title", $course->title)->first();
-        $topics = Course::with('topics')->find($course->id)->topics()->pluck("title")->toArray();
-        $lastMaterial = $course->materials()
-            ->where("type", "!=", "Announcement")
-            ->orderBy("priority")
-            ->wherePivotIn("status", [1])->get();
-        if (auth()->user()->getRoleNames()[0] === "guest")
-        {
-//            dd(auth()->user()->guestMaterial()->get());
-            $allMaterial = auth()->user()->guestMaterial()
-                ->where("type", "!=", "Announcement")
-                ->wherePivotIn("course_id", [$course->id])
-                ->get();
-        } else
-        {
-            $allMaterial = $course->materials()
-                ->where("type", "!=", "Announcement")
-                ->orderBy("priority")
-                ->wherePivotIn("status", [1])->get();
-        }
-        $announcements = $course->materials()
-            ->where("type", "Announcement")
-            ->orderBy("priority")
-            ->wherePivotIn("status", [1])->get();
-
-        return view($course->template, compact('course', "lastMaterial", "topics", "allMaterial", "announcements", "post"));
-    }
-
     public function showCourse(Course $course)
     {
-        $user = auth()->user();
-        $lessons = $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->whereIn("type", ["Lesson", "Video", "Link", "PDF"])->unique("slug");
-        $countMaterial = $user->courses()->where("courses.id", $course->id)->wherehas("materials")->get()->pluck("materials")->flatten()->where("type", "Section")->map(function ($material) {
-            return count($material->chapters);
-        })->toArray();
-        $sections = $user->courses()->where("courses.id", $course->id)->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
-        $isSectionExist = $sections->map(function ($section) {
-            return $section->activeChapters;
-        });
 
+        $user = auth()->user();
+        $sections = $user->courses()->where("courses.id", $course->id)->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
+        $materials = $this->getMaterial($user, $sections, $course);
 
         return view("index.courses.template-1.courseProfile", [
             "course" => Course::find($course->id),
-            "lessons" => $lessons,
+            "lessons" => $materials["lessons"],
             "announcements" => $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Announcement")->unique("slug"),
             "sections" => $sections,
-            "sumMaterial" => array_sum($countMaterial) + count($lessons),
+            "sumMaterial" => count($materials["section"]) + count($materials["lessons"]),
             "curator" => User::FindOrFail(isset($course->user_id) ? $course->user_id : User::where("first_name", "Υδρόγειος")->first()->id),
             "fields" => $this->getFieldsCourse($course),
             "countSection" => 0,
-            "isSectionExist" =>$isSectionExist->flatten()
+            "isSectionExist" => $materials["section"]->flatten()
         ]);
     }
 
     public function showMaterial(Course $course, Material $material)
     {
 
-        return view("tailwind-course-material", [
+        return view("index.courses.template-1.course-material", [
             "material" => $material,
             "fields" => $this->getFieldsMaterial($material)
         ]);
@@ -128,12 +49,28 @@ class CourseController extends Controller {
 
     public function userCourses()
     {
+        $courses = auth()->user()->courses;
+        $user = auth()->user();
+        $countLessons = [];
+        foreach ($courses as $course)
+        {
+            $sections = $user
+                ->courses()
+                ->where("courses.id", $course->id)->wherehas("activeMaterials")->get()
+                ->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
+            $materials = $this->getMaterial($user, $sections, $course);
+            $countMaterial = count($materials["section"]) + count($materials["lessons"]);
+            $countLessons[$course->slug] = ["lesson"=>$countMaterial,"extra-file"=>$course->media()->where("type",1)->count()];
+        }
 
-        return view("tailwind-user-courses", [
-            "courses" => auth()->user()->courses
+
+        return view("index.users.user-courses", [
+            "courses" => $courses,
+            "countLessons"=>$countLessons
         ]);
     }
 
+//todo  na ta allaksw auta
     private function getFieldsMaterial(Material $course)
     {
         $courseFields = $course->fields;
@@ -198,6 +135,24 @@ class CourseController extends Controller {
         }
 
         return $fields;
+    }
+
+    private function getMaterial($user, $sections, $course)
+    {
+        $lessons = $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->whereIn("type", ["Lesson", "Video", "Link", "PDF"])->unique("slug");
+        $countMaterial = $user->courses()->where("courses.id", $course->id)->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->map(function ($material) {
+            return count($material->chapters);
+        })->toArray();
+        $isSectionExist = $sections->map(function ($section) {
+            if ($section->activeChapters->isNotEmpty())
+            {
+                return $section->activeChapters;
+            }
+        })->reject(function ($name) {
+            return empty($name);
+        });
+
+        return ["lessons" => $lessons, "section" => $isSectionExist];
     }
 
     public function watchlistCourse(Request $request)

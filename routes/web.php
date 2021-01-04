@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Index\CourseController;
 use App\Http\Controllers\Index\HomeController;
+use App\Http\Controllers\Index\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -264,8 +265,8 @@ Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("gue
 
 
 
-Route::patch("/discussion/update/{id}", "Index\DiscussionController@editComment")->name("discussion.editComment");
 //! discussion
+Route::patch("/discussion/update/{id}", "Index\DiscussionController@editComment")->name("discussion.editComment");
 Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
 Route::get("/discussion/my-question", "Index\DiscussionController@myQuestion")->name("discussion.myQuestion");
 Route::get("/discussion/participation", "Index\DiscussionController@participation")->name("discussion.participation");
@@ -297,7 +298,12 @@ Route::post("/discussion/upload-task", "Index\DiscussionController@uploadTask")-
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
-    Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
+    Route::get("/",[HomeController::class,"index"])->name('home');
+    Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
+    Route::get("/home/courses/{user}", [CourseController::class ,"userCourses"])->name("index.userCourses");
+    Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
+    Route::get("/home/account/{user}",[UserController::class,"index"])->name("index.account");
+//    Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
 //! Course
     Route::post('/model/comment', 'Index\CourseController@modelComment')->name("index.modelComment")->withoutMiddleware(['verifyCourse']);
     Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
@@ -325,10 +331,7 @@ Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });
 
-Route::get("/",[HomeController::class,"index"])->name('home');
-
-
-
-Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
-Route::get("/home/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
-Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
+//Route::get("/",[HomeController::class,"index"])->name('home');
+//Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
+//Route::get("/home/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
+//Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");

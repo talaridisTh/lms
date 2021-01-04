@@ -7842,7 +7842,7 @@ ArticleEditor.add('module', 'input', {
                 instance.setEmpty();
                 return;
             }
-            // partial selected
+            // theme selected
             else if (!this.app.selection.isCollapsed()) {
                 e.preventDefault();
                 if (instance.getType() === 'code') {
