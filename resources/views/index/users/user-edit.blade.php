@@ -30,7 +30,7 @@
 
                 <div>
                     <p class="text-black text-base font-semibold capitalize">Bio</p>
-                    <p>{{$user->profil}}
+                    <p>{!!$user->profil!!}
                         <span class="text-blue-800 cursor-pointer">More...</span>
                     </p>
                 </div>

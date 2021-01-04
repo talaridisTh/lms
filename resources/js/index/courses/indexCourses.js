@@ -57,7 +57,7 @@ $(".spa-click").on("click", async function (e) {
             $('.spa-cnt').html($(data).find(".spa-cnt-material"))
 
             $('html,body').animate({
-                    scrollTop: $("#scrollTo").offset().top - 30
+                    scrollTop: $("#scrollTo").offset().top -150
                 },
                 'slow');
 
