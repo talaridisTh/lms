@@ -68,18 +68,11 @@ class UsersDataTable extends DataTable {
 			})
 			->addColumn("date", function($data) {
 
-				if ( is_null($data->email_verified_at) ) {
-					$status = ["icon" => "custom-pill-primary badge-outline-warning", "text" => "Unverified"];
-				}
-				else {
-					$status = ["icon" => "custom-pill-primary badge-outline-success", "text" => "Verified"];
-				}
-
 				$date = Carbon::parse($data->created_at)->format("d-m-Y");
 				$time = Carbon::parse($data->created_at)->format("H:i");
 
-				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
-					<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
+				return "<p class='js-date mb-0'>$date</p>
+					<p class='js-time mb-0'>$time</p>";
 			})
 			->filterColumn("courses.title", function($query, $keyword) {
 				

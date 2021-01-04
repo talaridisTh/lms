@@ -290,8 +290,8 @@ function updateTopic(input) {
         })
         .catch(err => {
             if (err.response.status == 422) {
-                utilities.toastAlert("info", "Πρέπει να δώσετε τίτλο...");
-                input.value = input.defaultValue;
+                utilities.toastAlert("info", "Το topic ήδη υπάρχει...");
+                // input.value = input.defaultValue;
             } else {
 
                 console.log(err.response.status);

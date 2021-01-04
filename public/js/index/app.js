@@ -81,7 +81,11 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
+<<<<<<< HEAD
 /******/ 	return __webpack_require__(__webpack_require__.s = 32);
+=======
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
+>>>>>>> 4e08ed3e50cd8b6147780425ff53681f52863e95
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -93,18 +97,26 @@
 /*! no exports provided */
 /***/ (function(module, exports) {
 
+<<<<<<< HEAD
 eval("throw new Error(\"Module build failed (from ./node_modules/babel-loader/lib/index.js):\\nError: ENOENT: no such file or directory, open 'C:\\\\Users\\\\arxi-\\\\OneDrive\\\\Υπολογιστής\\\\lmsdemo-master\\\\resources\\\\js\\\\index\\\\app.js'\");//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIuL3Jlc291cmNlcy9qcy9pbmRleC9hcHAuanMuanMiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///./resources/js/index/app.js\n");
 
 /***/ }),
 
 /***/ 32:
+=======
+eval("try {\n  window.Popper = __webpack_require__(/*! popper.js */ \"./node_modules/popper.js/dist/esm/popper.js\")[\"default\"];\n  window.$ = window.jQuery = __webpack_require__(/*! jquery */ \"./node_modules/jquery/dist/jquery.js\");\n\n  __webpack_require__(/*! bootstrap */ \"./node_modules/bootstrap/dist/js/bootstrap.js\");\n} catch (e) {}//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9yZXNvdXJjZXMvanMvaW5kZXgvYXBwLmpzPzE5MmUiXSwibmFtZXMiOlsid2luZG93IiwiUG9wcGVyIiwicmVxdWlyZSIsIiQiLCJqUXVlcnkiLCJlIl0sIm1hcHBpbmdzIjoiQUFBQSxJQUFJO0FBQ0FBLFFBQU0sQ0FBQ0MsTUFBUCxHQUFnQkMsbUJBQU8sQ0FBQyw4REFBRCxDQUFQLFdBQWhCO0FBQ0FGLFFBQU0sQ0FBQ0csQ0FBUCxHQUFXSCxNQUFNLENBQUNJLE1BQVAsR0FBZ0JGLG1CQUFPLENBQUMsb0RBQUQsQ0FBbEM7O0FBRUFBLHFCQUFPLENBQUMsZ0VBQUQsQ0FBUDtBQUNILENBTEQsQ0FLRSxPQUFPRyxDQUFQLEVBQVUsQ0FBRSIsImZpbGUiOiIuL3Jlc291cmNlcy9qcy9pbmRleC9hcHAuanMuanMiLCJzb3VyY2VzQ29udGVudCI6WyJ0cnkge1xyXG4gICAgd2luZG93LlBvcHBlciA9IHJlcXVpcmUoJ3BvcHBlci5qcycpLmRlZmF1bHQ7XHJcbiAgICB3aW5kb3cuJCA9IHdpbmRvdy5qUXVlcnkgPSByZXF1aXJlKCdqcXVlcnknKTtcclxuXHJcbiAgICByZXF1aXJlKCdib290c3RyYXAnKTtcclxufSBjYXRjaCAoZSkge31cclxuXHJcblxyXG4iXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///./resources/js/index/app.js\n");
+
+/***/ }),
+
+/***/ 35:
+>>>>>>> 4e08ed3e50cd8b6147780425ff53681f52863e95
 /*!*****************************************!*\
   !*** multi ./resources/js/index/app.js ***!
   \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\app.js */"./resources/js/index/app.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\Demo LMS\resources\js\index\app.js */"./resources/js/index/app.js");
 
 
 /***/ })

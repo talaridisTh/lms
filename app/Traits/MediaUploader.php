@@ -23,7 +23,6 @@ trait MediaUploader {
 		$media->name = $name->slug;
 		$media->type = $type;
 		$media->rel_path = "/storage/images/$date/$name->full";	//! + increment on dublicate
-		// $media->thumbnail_path = "/storage/thumbnails/$date/$fullname";
 		$media->ext = $name->extension;
 		$media->file_info = $image->getClientMimeType();
 		$media->size = $image->getSize();

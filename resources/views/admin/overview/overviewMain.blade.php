@@ -32,8 +32,8 @@
 									<div class="card shadow-none m-0 border-left">
 										<div class="card-body text-center">
 											<i class="dripicons-user-group text-muted" style="font-size: 24px;"></i>
-											<h3><sup>{{ $activeStudents }}</sup>/<sub>{{ $totalStudents }}</sub></h3>
-											<p class="text-muted font-15 mb-0">Σύνολο Μαθητών</p>
+											<h3>{{ $activeStudents }}</h3>
+											<p class="text-muted font-15 mb-0">Ενεργοί Μαθητές</p>
 										</div>
 									</div>
 								</div>
@@ -42,8 +42,8 @@
 									<div class="card shadow-none m-0 border-left">
 										<div class="card-body text-center">
 											<i class="uil uil-books text-muted" style="font-size: 24px;"></i>
-											<h3><sup>{{ $activeCourses }}</sup>/<sub>{{ $totalCourses }}</sub></h3>
-											<p class="text-muted font-15 mb-0">Σύνολο Course</p>
+											<h3>{{ $activeCourses }}</h3>
+											<p class="text-muted font-15 mb-0">Ενεργά Course</p>
 										</div>
 									</div>
 								</div>
@@ -52,8 +52,8 @@
 									<div class="card shadow-none m-0 border-left">
 										<div class="card-body text-center">
 											<i class="mdi mdi-book-open-page-variant text-muted" style="font-size: 24px;"></i>
-											<h3><sup>{{ $activeLessons }}</sup>/<sub>{{ $totalLessons }}</sub></h3>
-											<p class="text-muted font-15 mb-0">Σύνολο Μαθημάτων</p>
+											<h3>{{ $activeLessons }}</h3>
+											<p class="text-muted font-15 mb-0">Ενεργά Μαθήματα</p>
 										</div>
 									</div>
 								</div>
@@ -62,8 +62,8 @@
 									<div class="card shadow-none m-0 border-left">
 										<div class="card-body text-center">
 											<i class="mdi mdi-chart-bubble text-muted" style="font-size: 24px;"></i>
-											<h3><sup>{{ $activeBundles }}</sup>/<sub>{{ $totalBundles }}</sub></h3>
-											<p class="text-muted font-15 mb-0">Σύνολο Bundle</p>
+											<h3>{{ $activeBundles }}</h3>
+											<p class="text-muted font-15 mb-0">Ενεργά Bundle</p>
 										</div>
 									</div>
 								</div>

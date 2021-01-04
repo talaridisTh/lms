@@ -83,6 +83,9 @@ class BundleController extends Controller
 
     public function update(Request $request, Bundle $bundle)
     {
+		$request->validate([
+			'title' => 'required|unique:bundles,title,'. $bundle->id
+		]);
 
 		if ( isset($request->save) ) {
 			if ( $request->publishDate ) {

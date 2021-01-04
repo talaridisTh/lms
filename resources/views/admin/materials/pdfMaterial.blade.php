@@ -122,7 +122,7 @@
 					<div class="row">
 						<div class="col-xl-9 col-lg-8 col-md-12">
 
-							<form id="edit-pdf-material" action="/dashboard/materials/update/{{ $material->slug }}" method="post" autocomplete="off">
+							<form id="edit-pdf-material" action="/dashboard/materials/{{ $material->slug }}" method="post" autocomplete="off">
 								
 								@csrf
 								@method('PATCH')

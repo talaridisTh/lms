@@ -128,7 +128,7 @@ new Chart(newStudentsCanvas, {
     data: {
 		labels: months,
 		datasets: [{
-			label: "Ενεργοί - Επιβεβαιωμένοι",
+			label: "Μαθητές",
 			data: students,
 			lineTension: 0,
 			borderColor: "rgb(83, 109, 230)",
@@ -155,7 +155,6 @@ new Chart(newStudentsCanvas, {
 					color: "#464f5b"
 				}
 			}],
-			
 			yAxes: [{
 				ticks: {
 					fontColor: "#8391a2",

@@ -66,7 +66,7 @@ class CourseController extends Controller
 		$course->description = $request->description;
 		$course->script = $request->script;
 		$course->status = 0;
-		$course->slug = Str::slug($request->title, "-");
+		$course->slug = $course->createSlug($request->title);
 		$course->fields = json_encode($fields);
 		$course->publish_at = $publishDate;
 		$course->user_id = $request->curator;
@@ -161,6 +161,7 @@ class CourseController extends Controller
 		$course->user_id = $request->curator;
 		$course->status = $status;
 		$course->slug = Str::slug($request->title, "-");
+		$course->slug = $course->createSlug($request->title, $course->id);
 		$course->version = $request->version;
 		$course->template = $request->template;
 		$course->save();
@@ -211,15 +212,11 @@ class CourseController extends Controller
 
 	public function clone(Request $request) {
 
-		$request->validate([
-			'title' => 'required|unique:courses'
-		]);
-
 		$course = Course::find( $request->id );
 		$course->load( "materials", "topics" );
 		$newCourse = $course->replicate();
 		$newCourse->title = $request->title;
-		$newCourse->slug = Str::slug($request->title, "-");
+		$newCourse->slug = $course->createSlug($request->title);
 
 		$newCourse->push();
 
