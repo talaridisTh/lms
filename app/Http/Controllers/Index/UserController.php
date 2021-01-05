@@ -9,6 +9,7 @@ use App\DataTables\WatchlistCourseDatatable;
 use App\DataTables\WatchlistMaterialDatatable;
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Traits\MediaUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
@@ -17,26 +18,7 @@ use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller {
 
-    //
-    public function watchlistDatatable(WatchlistCourseDatatable $datatable)
-    {
-        return $datatable->render('watchlist.datatable');
-    }
-
-    public function watchlistMaterialDatatable(WatchlistMaterialDatatable $datatable)
-    {
-        return $datatable->render('watchlistMaterial.datatable');
-    }
-
-    public function historyCourseDatatable(HistoryCourseDatatable $datatable)
-    {
-        return $datatable->render('historyCourse.datatable');
-    }
-
-    public function historyMaterialDatatable(HistoryMaterialDatatable $datatable)
-    {
-        return $datatable->render('historyMaterial.datatable');
-    }
+    use MediaUploader;
 
     public function index()
     {
@@ -56,6 +38,8 @@ class UserController extends Controller {
 
     public function update(Request $request)
     {
+        $user = auth()->user();
+        $socialLinks = [$user->facebook_link, $user->instagram_link, $user->linkedin_link, $user->youtube_link];
         $validator = Validator::make($request->all(), [
             "name" => "required|min:2|max:20",
             "last" => "required|min:2|max:20",
@@ -67,7 +51,6 @@ class UserController extends Controller {
         if ($validator->fails())
         {
             return redirect()->back()->withErrors($validator);
-
         }
         auth()->user()->update([
             "first_name" => $request->name,
@@ -84,9 +67,6 @@ class UserController extends Controller {
 //            {
 //
 //            }
-        $user = auth()->user();
-        $socialLinks = [$user->facebook_link, $user->instagram_link, $user->linkedin_link, $user->youtube_link];
-
         return view("index.users.user-edit", [
             "user" => $user,
             "courses" => $user->courses,
@@ -95,6 +75,19 @@ class UserController extends Controller {
             "sumCourses" => $user->courses()->count(),
             "sumBundles" => $user->bundles()->count()
         ]);
+    }
+
+    public function uploadAvatar(Request $request)
+    {
+
+        $cover = $this->storeImage($request->file);
+
+        auth()->user()->update([
+            "avatar"=>$cover->rel_path
+        ]);
+
+        return view("index.users.user-cover",["user"=>auth()->user()]);
+
     }
 
     private function arrayIsNotEmpty($arr)

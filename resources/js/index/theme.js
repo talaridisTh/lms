@@ -22,6 +22,7 @@ import './theme/mobile-menu'
 // Components
 import './theme/feather'
 import './theme/tab'
+import './theme/tippy'
 // import './theme/modal'
 
 //jQuery

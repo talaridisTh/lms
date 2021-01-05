@@ -41,7 +41,7 @@
         <div class="container mx-auto flex flex-wrap items-center px-1">
             <div class="flex-1 flex justify-between items-center">
                 <a href="/tailwind" class="text-xl">
-                    <img class="logo" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
+                    <img class="logo h-20 w-20" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
 
@@ -194,7 +194,7 @@
         <div class="container mx-auto flex items-center flex-wrap justify-between">
             <div class="mr-7">
                 <a href="#" class="text-xl">
-                    <img class="" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
+                    <img class="h-20 w-20" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
             <div class="flex-1">

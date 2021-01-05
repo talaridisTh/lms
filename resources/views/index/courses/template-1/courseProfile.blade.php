@@ -48,7 +48,7 @@
                     @endforelse
                 </ul>
                 <div class="flex px-4 text-white py-3 justify-end bg-opacity-20 bg-black w-full rounded-b-xl">
-                    <p class="font-light text-sm modal-button cursor-pointer">Όλες οι ανακοινώσεις <i
+                    <p class="font-light text-sm modal-button cursor-pointer" >Όλες οι ανακοινώσεις <i
                             class="ml-2 dripicons-chevron-right "></i></p>
                 </div>
             </aside>

@@ -2,7 +2,8 @@
 
 
 @section("content")
-    <article class="container user-slug lg:min-h-screen mx-auto" data-user-slug="{{auth()->user()->slug}}">
+    <article class="container cnt-update-user user-slug lg:min-h-screen mx-auto"
+             data-user-slug="{{auth()->user()->slug}}">
 
         <div class="-intro-x breadcrumb mr-auto hidden sm:flex my-4 p-1"><!-- BEGIN: breadcrumb -->
             <a href="{{route('home')}}" class="">Home</a>
@@ -15,12 +16,9 @@
             <aside class="flex-1 flex flex-col space-y-6 p-6 left-sidebar bg-card-color rounded-lg">
                 <!-- BEGIN: left sidebar user profil -->
 
-                <figure class="w-20 h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
-                    <img alt="user-avatar" class="rounded-full" src="https://placeimg.com/200/200/any">
-                    <div
-                        class="absolute mb-1 mr-1 flex items-center justify-center top-0 right-0 bg-theme-1 rounded-full p-2">
-                        <i class="w-4 h-4 text-white" data-feather="camera"></i>
-                    </div>
+
+                <figure class="w-20 cnt-user-avatar h-20 sm:w-24 sm:h-24 flex-none lg:w-32 lg:h-32 image-fit relative">
+                    @include("index.users.user-cover",["user"=>$user])
                 </figure>
 
                 <section class="capitalize">

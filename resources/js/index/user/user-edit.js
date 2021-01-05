@@ -1,6 +1,5 @@
 import Swal from "sweetalert2";
 import utilities from "../../dashboard/main";
-
 import feather from 'feather-icons';
 
 const initRedactor = () => {
@@ -16,6 +15,30 @@ const initRedactor = () => {
     });
 }
 initRedactor()
+
+const onChangeAvatar = () =>{
+    let userSlug = $("#user-slug").data("user-slug");
+    $(".cnt-update-user").on("change","#file-pond", async function (e) {
+        var formData = new FormData();
+        var imagefile = document.querySelector('#file-pond');
+        formData.append("file", imagefile.files[0]);
+
+       const {data,status}  = await axios.post(`/home/account/${userSlug}/upload-avatar`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+
+        if (status==200){
+
+            $(".cnt-user-avatar").html($(data));
+            feather.replace()
+            utilities.toastAlert("success","Το Cover άλλαξε")
+
+        }
+    })
+}
+onChangeAvatar();
 
 
 $(".js-strong-password").on("input", function (e) {
@@ -83,20 +106,16 @@ $(".col-span-12").on("click", ".js-update-submit", async function () {
         $(".left-sidebar").html($(data).find(".left-sidebar > *"))
         $(".col-span-12").html($(data).find(".col-span-12 > *"))
 
-
         initRedactor()
+        onChangeAvatar()
         feather.replace()
-
 
         if ($(".has-error").length) {
             await utilities.toastAlert("warning", `υπάρχουν ${$(".has-error").length} σφάλματα`)
-
-        } else {
-            await utilities.toastAlert("success", `${name} ${last} ενημερώθηκε!`)
-
+            return;
         }
+        await utilities.toastAlert("success", `${name} ${last} ενημερώθηκε!`)
 
-    } else {
-        console.log("sss")
+
     }
 })

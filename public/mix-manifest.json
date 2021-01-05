@@ -2,7 +2,7 @@
     "/js/app.js": "/js/app.js?id=505487671ca776b95ac1",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=fe3970d56624fe06f3a4",
     "/css/dashboard/app.css": "/css/dashboard/app.css?id=761ac32e250ede97a697",
-    "/css/index/theme.css": "/css/index/theme.css?id=7b5e4f438dab2abbb189",
+    "/css/index/theme.css": "/css/index/theme.css?id=84cdd3fedef779faa250",
     "/css/index/logIn.css": "/css/index/logIn.css?id=b18ab969c9de2baac976",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=93f17a8c26911e43b028",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=945808edfd6c00d014f2",
@@ -35,6 +35,6 @@
     "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=16fc3762d5c0c047b9ff",
     "/js/index/index.js": "/js/index/index.js?id=7c5127cd4855fe0d5807",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=67b899cac0b99d0cb56e",
-    "/js/index/theme.js": "/js/index/theme.js?id=552efa11d70f9fc68ace",
-    "/js/index/user/user-edit.js": "/js/index/user/user-edit.js?id=859328407e1b4db6d8fe"
+    "/js/index/theme.js": "/js/index/theme.js?id=fdf1b59c110e066fbe29",
+    "/js/index/user/user-edit.js": "/js/index/user/user-edit.js?id=bc1e2e362adc60553ed6"
 }
