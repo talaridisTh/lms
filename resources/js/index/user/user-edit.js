@@ -41,7 +41,7 @@ $(".js-update-submit").on("click",async function (){
     let email = $("#user-update-email").val()
     let phone = $("#user-update-phone").val()
     let password = $("#user-update-password").val()
-    let repassword = $("#user-update-repassword").val()
+    let password_confirmation = $("#user-update-repassword").val()
     let facebook = $("#user-update-facebook").val()
     let instagram = $("#user-update-instagram").val()
     let linkedin = $("#user-update-linkedin").val()
@@ -56,7 +56,7 @@ $(".js-update-submit").on("click",async function (){
         email,
         phone,
         password,
-        repassword,
+        password_confirmation,
         facebook,
         instagram,
         linkedin,

@@ -53,22 +53,37 @@ class UserController extends Controller {
 
     public function update(Request $request)
     {
+//        dd($request->all());
+//        $request->validate([
+//            // ... other stuff
+//            "first"=>"required|min:2|max:20",
+//            "last"=>"required|min:2|max:20",
+//            'phone' => 'required|numeric|phone_number|size:11',
+//            'email' => "unique:users,email,auth()->id(),id",
+//            'password' => 'confirmed|required',
+//            "profil"=>"min:5|max:100",
+//
+//        ]);
 
         auth()->user()->update([
            "first_name"=>$request->name,
            "last_name"=>$request->last,
            "email"=>$request->email,
            "phone"=>$request->phone,
-//           "password"=>$request->password,
            "facebook_link"=>$request->facebook,
            "instagram_link"=>$request->instagram,
            "linkedin_link"=>$request->linkedin,
            "youtube_link"=>$request->youtube
        ]);
 
+        if ($request->password){
+
+        }
 
         $user = auth()->user();
         $socialLinks = [$user->facebook_link, $user->instagram_link, $user->linkedin_link, $user->youtube_link];
+
+
         return view("index.users.user-edit", [
             "user" => $user,
             "courses" => $user->courses,

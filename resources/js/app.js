@@ -7,7 +7,7 @@ window.$R = require('../plugins/redactor/redactor');
 require('../plugins/redactor/plugins/alignment/alignment');
 
 
-// require('../theme/js/app');
+require('../theme/js/app');
 // require('../theme/js/vendor');
 
 

@@ -32,7 +32,7 @@
 <body class="h-full  antialiased"
       style="font-family: 'Helvetica', sans-serif;">
 
-<div id="app" class=" relative" style="height: auto !important;">
+<div id="app" class=" flex flex-col h-screen relative" style="height: auto !important;">
 
 
 

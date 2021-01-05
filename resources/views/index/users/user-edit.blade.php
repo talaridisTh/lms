@@ -31,7 +31,7 @@
                 <div>
                     <p class="text-black text-base font-semibold capitalize">Bio</p>
                     <p>{!!$user->profil!!}
-                        <span class="text-blue-800 cursor-pointer">More...</span>
+{{--                        <span class="text-blue-800 cursor-pointer">More...</span>--}}
                     </p>
                 </div>
 
@@ -171,11 +171,11 @@
                             </div>
                         </div>
 
-                        <div class="tab-content" style="padding:0;"><!-- BEGIN: tab content -->
+                        <div class="tab-content contents" style="padding:0;"><!-- BEGIN: tab content -->
                             <div class="tab-content__pane active border pt-0 px-6 py-4" id="settings-user">
                                 <div class="intro-y box lg:mt-5 capitalize space-y-4">
                                     <div>
-                                        <label>όνομα</label><span class="ml-5 js-validation"></span>
+                                        <label class="font-bold">όνομα</label><span class="ml-5 js-validation"></span>
                                         <input type="text" class="input w-full border mt-2"
                                                id="user-update-name"
                                                value="{{$user->first_name}}"
@@ -183,7 +183,7 @@
                                     </div>
 
                                     <div>
-                                        <label>επιθετο</label>
+                                        <label class="font-bold">επίθετο</label>
                                         <input type="text"
                                                value="{{$user->last_name}}"
                                                id="user-update-last"
@@ -192,7 +192,7 @@
                                     </div>
 
                                     <div>
-                                        <label class="">Email</label>
+                                        <label class="font-bold">Email</label>
                                         <div class="mt-2 relative">
                                             <div
                                                 class="absolute rounded-l w-10 h-full flex items-center
@@ -207,7 +207,7 @@
                                     </div>
 
                                     <div>
-                                        <label class="">Τηλέφωνο</label>
+                                        <label class="font-bold">Τηλέφωνο</label>
                                         <div class="mt-2 relative">
                                             <div
                                                 class="absolute rounded-l w-10 h-full flex items-center
@@ -222,10 +222,11 @@
                                     </div>
 
                                     <div>
-                                        <label>password</label>
+                                        <label class="font-bold">password</label>
                                         <input type="text"
                                                class="input w-full border mt-2"
                                                id="user-update-password"
+                                               name="password"
                                                placeholder="6-15 χαρακτήρες">
                                         <div class="w-full grid grid-cols-12 gap-4 h-1 mt-3">
                                             <div class="col-span-3 hidden h-full rounded bg-theme-9"></div>
@@ -238,14 +239,20 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <label>re password</label>
+                                        <label class="font-bold">re-password</label>
                                         <input type="text"
                                                class="input w-full border  mt-2"
                                                id="user-update-repassword"
+                                               name="password_confirmation"
                                                placeholder="6-15 χαρακτήρες">
                                         <div class="text-theme-12 hidden mt-2">Attempting to reconnect to server...
                                         </div>
                                     </div>
+
+{{--                                    <div class="mt-3">--}}
+{{--                                        <label for="" class="font-bold">Bio</label>--}}
+{{--                                        <textarea name="profile" id="user-update-profil" cols="30" rows="10"></textarea>--}}
+{{--                                    </div>--}}
 
 
                                 </div>
