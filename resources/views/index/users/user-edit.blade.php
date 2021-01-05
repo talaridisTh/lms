@@ -249,10 +249,10 @@
                                         </div>
                                     </div>
 
-{{--                                    <div class="mt-3">--}}
-{{--                                        <label for="" class="font-bold">Bio</label>--}}
-{{--                                        <textarea name="profile" id="user-update-profil" cols="30" rows="10"></textarea>--}}
-{{--                                    </div>--}}
+                                    <div class="mt-3">
+                                        <label for="" class="font-bold">Bio</label>
+                                        <textarea name="profile" id="user-update-profile" cols="30" rows="10"></textarea>
+                                    </div>
 
 
                                 </div>

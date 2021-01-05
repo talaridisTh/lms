@@ -1,7 +1,18 @@
 import Swal from "sweetalert2";
+import utilities from "../../dashboard/main";
 
-const feather = require('feather-icons')
+import feather from 'feather-icons';
 
+$R("#user-update-profile", {
+    buttons: [
+        'html', 'undo', 'redo', 'format',
+        'bold', 'underline', 'italic', 'deleted',
+        'sup', 'sub', 'lists', 'file', 'link', 'image'
+    ],
+    style: false,
+    plugins: ['alignment'],
+    minHeight: '150px',
+});
 
 $(".js-strong-password").on("input", function (e) {
     console.log(this.parentElement.parentElement.children[1].children)
@@ -34,7 +45,7 @@ $(".js-strong-password").on("input", function (e) {
 })
 
 
-$(".js-update-submit").on("click",async function (){
+$(".js-update-submit").on("click", async function () {
     let userSlug = $("#user-slug").data("user-slug");
     let name = $("#user-update-name").val()
     let last = $("#user-update-last").val()
@@ -48,9 +59,7 @@ $(".js-update-submit").on("click",async function (){
     let youtube = $("#user-update-youtube").val()
 
 
-
-
-    const {data,status}  = await axios.post(`/home/account/${userSlug}/update`,{
+    const {data, status} = await axios.post(`/home/account/${userSlug}/update`, {
         name,
         last,
         email,
@@ -63,18 +72,18 @@ $(".js-update-submit").on("click",async function (){
         youtube
     })
 
-    if (status==200){
+    if (status == 200) {
         $(".left-sidebar").html($(data).find(".left-sidebar > *"))
         feather.replace()
 
-            await  Swal.fire({
-                toast: 'true',
-                position: 'top-end',
-                icon: "success",
-                title: `${name} ${last} ενημερώθηκε!`,
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
+        await Swal.fire({
+            toast: 'true',
+            position: 'top-end',
+            icon: "success",
+            title: `${name} ${last} ενημερώθηκε!`,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
         })
     }
 })
