@@ -31,7 +31,7 @@
                 <div>
                     <p class="text-black text-base font-semibold capitalize">Bio</p>
                     <p>{!!$user->profil!!}
-{{--                        <span class="text-blue-800 cursor-pointer">More...</span>--}}
+                        {{--                        <span class="text-blue-800 cursor-pointer">More...</span>--}}
                     </p>
                 </div>
 
@@ -173,9 +173,19 @@
 
                         <div class="tab-content contents" style="padding:0;"><!-- BEGIN: tab content -->
                             <div class="tab-content__pane active border pt-0 px-6 py-4" id="settings-user">
-                                <div class="intro-y box lg:mt-5 capitalize space-y-4">
+                                <div class="intro-y box lg:mt-5  space-y-4">
                                     <div>
-                                        <label class="font-bold">όνομα</label><span class="ml-5 js-validation"></span>
+
+                                        <div class="flex">
+                                            <label class="font-bold">όνομα</label>
+                                            <span
+                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                            @error('name')
+                                                <strong class="has-error">*{{ $message }}</strong>
+                                            @enderror
+                                        </span>
+                                        </div>
+
                                         <input type="text" class="input w-full border mt-2"
                                                id="user-update-name"
                                                value="{{$user->first_name}}"
@@ -183,7 +193,17 @@
                                     </div>
 
                                     <div>
-                                        <label class="font-bold">επίθετο</label>
+
+                                        <div class="flex">
+                                            <label class="font-bold">Επίθετο </label>
+                                            <span
+                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                            @error('last')
+                                                <strong class="has-error">*{{ $message }}</strong>
+                                            @enderror
+                                        </span>
+                                        </div>
+
                                         <input type="text"
                                                value="{{$user->last_name}}"
                                                id="user-update-last"
@@ -192,7 +212,17 @@
                                     </div>
 
                                     <div>
-                                        <label class="font-bold">Email</label>
+
+                                        <div class="flex">
+                                            <label class="font-bold">Email </label>
+                                            <span
+                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                            @error('email')
+                                                <strong class="has-error">*{{ $message }}</strong>
+                                            @enderror
+                                        </span>
+                                        </div>
+
                                         <div class="mt-2 relative">
                                             <div
                                                 class="absolute rounded-l w-10 h-full flex items-center
@@ -207,7 +237,17 @@
                                     </div>
 
                                     <div>
-                                        <label class="font-bold">Τηλέφωνο</label>
+
+                                        <div class="flex">
+                                            <label class="font-bold">Τηλέφωνο </label>
+                                            <span
+                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                            @error('phone')
+                                                <strong class="has-error">*{{ $message }}</strong>
+                                            @enderror
+                                        </span>
+                                        </div>
+
                                         <div class="mt-2 relative">
                                             <div
                                                 class="absolute rounded-l w-10 h-full flex items-center
@@ -216,13 +256,23 @@
                                             </div>
                                             <input type="text" class="input pl-12 w-full border col-span-4"
                                                    id="user-update-phone"
-                                                  value="{{$user->phone}}"
+                                                   value="{{$user->phone}}"
                                                    placeholder="Eισάγετε Τηλέφωνο">
                                         </div>
                                     </div>
 
                                     <div>
-                                        <label class="font-bold">password</label>
+
+                                        <div class="flex">
+                                            <label class="font-bold">Password </label>
+                                            <span
+                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                            @error('password')
+                                                <strong class="has-error">*{{ $message }}</strong>
+                                            @enderror
+                                        </span>
+                                        </div>
+
                                         <input type="text"
                                                class="input w-full border mt-2"
                                                id="user-update-password"
@@ -250,8 +300,19 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <label for="" class="font-bold">Bio</label>
-                                        <textarea name="profile" id="user-update-profile" cols="30" rows="10"></textarea>
+
+                                        <div class="flex">
+                                            <label class="font-bold">Bio </label>
+                                            <span
+                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                            @error('profil')
+                                                <strong class="has-error">*{{ $message }}</strong>
+                                            @enderror
+                                        </span>
+                                        </div>
+
+                                        <textarea name="profile" id="user-update-profile" cols="30"
+                                                  rows="10">{{$user->profil}}</textarea>
                                     </div>
 
 

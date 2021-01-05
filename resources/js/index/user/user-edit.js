@@ -3,16 +3,20 @@ import utilities from "../../dashboard/main";
 
 import feather from 'feather-icons';
 
-$R("#user-update-profile", {
-    buttons: [
-        'html', 'undo', 'redo', 'format',
-        'bold', 'underline', 'italic', 'deleted',
-        'sup', 'sub', 'lists', 'file', 'link', 'image'
-    ],
-    style: false,
-    plugins: ['alignment'],
-    minHeight: '150px',
-});
+const initRedactor = () => {
+    $R("#user-update-profile", {
+        buttons: [
+            'html', 'undo', 'redo', 'format',
+            'bold', 'underline', 'italic', 'deleted',
+            'sup', 'sub', 'lists', 'file', 'link', 'image'
+        ],
+        style: false,
+        plugins: ['alignment'],
+        minHeight: '150px',
+    });
+}
+initRedactor()
+
 
 $(".js-strong-password").on("input", function (e) {
     console.log(this.parentElement.parentElement.children[1].children)
@@ -45,7 +49,7 @@ $(".js-strong-password").on("input", function (e) {
 })
 
 
-$(".js-update-submit").on("click", async function () {
+$(".col-span-12").on("click", ".js-update-submit", async function () {
     let userSlug = $("#user-slug").data("user-slug");
     let name = $("#user-update-name").val()
     let last = $("#user-update-last").val()
@@ -53,6 +57,7 @@ $(".js-update-submit").on("click", async function () {
     let phone = $("#user-update-phone").val()
     let password = $("#user-update-password").val()
     let password_confirmation = $("#user-update-repassword").val()
+    let profil = $("#user-update-profile").val()
     let facebook = $("#user-update-facebook").val()
     let instagram = $("#user-update-instagram").val()
     let linkedin = $("#user-update-linkedin").val()
@@ -66,24 +71,32 @@ $(".js-update-submit").on("click", async function () {
         phone,
         password,
         password_confirmation,
+        profil,
         facebook,
         instagram,
         linkedin,
         youtube
     })
 
+
     if (status == 200) {
         $(".left-sidebar").html($(data).find(".left-sidebar > *"))
+        $(".col-span-12").html($(data).find(".col-span-12 > *"))
+
+
+        initRedactor()
         feather.replace()
 
-        await Swal.fire({
-            toast: 'true',
-            position: 'top-end',
-            icon: "success",
-            title: `${name} ${last} ενημερώθηκε!`,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        })
+
+        if ($(".has-error").length) {
+            await utilities.toastAlert("warning", `υπάρχουν ${$(".has-error").length} σφάλματα`)
+
+        } else {
+            await utilities.toastAlert("success", `${name} ${last} ενημερώθηκε!`)
+
+        }
+
+    } else {
+        console.log("sss")
     }
 })
