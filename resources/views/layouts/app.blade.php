@@ -12,11 +12,7 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{$options->logo}}">
 
-
-{{--    <link href="{{ mix('css/app.css') }}" rel="stylesheet">--}}
     <link href="{{ mix('css/index/theme.css') }}" rel="stylesheet">
-
-
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
     <style>
@@ -38,10 +34,10 @@
 
     <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative" style="min-height: 50px">
 
-        <div class="container mx-auto flex flex-wrap items-center px-1">
+        <div class="container mx-auto flex flex-wrap items-center px-1 intro-x">
             <div class="flex-1 flex justify-between items-center">
                 <a href="/tailwind" class="text-xl">
-                    <img class="logo h-20 w-20" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
+                    <img class="logo" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
 
@@ -49,7 +45,7 @@
                 <!-- BEGIN: Top Menu -->
                 <nav class="top-nav">
                     <ul>
-                        <li class="orange-line">
+                        <li class="orange-line intro-x">
                             <a href="{{route('dashboard')}}" class="top-menu">
                                 <div class="top-menu__icon"> <i data-feather="tool"></i> </div>
                                 <div class="top-menu__title ">Dashboard </div>
@@ -71,19 +67,19 @@
                         </li>
                         @endif
                         @endhasanyrole
-                        <li  class="orange-line">
+                        <li  class="orange-line intro-x">
                             <a href="{{route('index.userCourses',auth()->id())}}" class="top-menu">
                                 <div class="top-menu__icon"> <i data-feather="home"></i> </div>
                                 <div class="top-menu__title"> Μαθήματα </div>
                             </a>
                         </li>
-                        <li class="hidden orange-line">
+                        <li class="hidden orange-line intro-x">
                             <a href="#" class="top-menu">
                                 <div class="top-menu__icon"> <i data-feather="home"></i> </div>
                                 <div class="top-menu__title"> Discussions </div>
                             </a>
                         </li>
-                        <li class="bg-login rounded-xl" >
+                        <li class="bg-login rounded-xl intro-x" >
                             <a href="javascript:;" class="top-menu" style="color: white!important;">
                                 <div class="top-menu__icon"> <i data-feather="hard-drive"></i> </div>
                                 <div class="top-menu__title"> Ο λογαριασμος μου <i data-feather="chevron-down" class="top-menu__sub-icon"></i> </div>

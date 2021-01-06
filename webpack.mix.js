@@ -47,8 +47,6 @@ mix.js('resources/js/app.js', 'public/js')
 
 	.js('resources/js/dashboard/main.js', 'public/js/dashboard/')
 
-    // .js('resources/js/front/app.js', 'public/js/front')
-
     .js('resources/js/index/user/user-edit.js', 'public/js/index/user')
     .js('resources/js/index/courses/indexCourses.js', 'public/js/index/courses')
     .js('resources/js/index/materials/indexMaterials.js', 'public/js/index/materials')
@@ -59,24 +57,17 @@ mix.js('resources/js/app.js', 'public/js')
 
     .js('resources/js/index/theme.js', 'public/js/index')
 
-    // .sass('resources/sass/front/app.scss', 'public/css/front')
-
     .sass('resources/sass/dashboard/customArticleStyle.scss', 'public/css/dashboard')
     .sass('resources/sass/dashboard/app.scss', 'public/css/dashboard')
-
-
     .sass('resources/sass/index/theme.scss', 'public/css/index/')
     .options({
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.config.js') ],
     })
-    // .sass('resources/sass/index/custom.scss', 'public/css/index/')
     .sass('resources/sass/index/logIn.scss', 'public/css/index/')
-    // .postCss("resources/css/app.css", "public/css", [
-    //     require("tailwindcss"),
-    // ])
+    .copy('resources/theme/images', 'public/theme/images')
     .browserSync("http://127.0.0.1:8000/")
-    .sourceMaps()
+    // .sourceMaps()
 	.disableSuccessNotifications()
 
 if (mix.inProduction) {

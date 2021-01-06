@@ -33,7 +33,7 @@
         <div class="splide__track mx-4">
             <ul class="splide__list">
                 @foreach($courses as $course)
-                    <li class="splide__slide mx-4">
+                    <li class="splide__slide mx-4 intro-y">
                         <article class="container mb-5"
                                  style="grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));">
                             <div class="card \expanded-card border-none  flex pr-4"

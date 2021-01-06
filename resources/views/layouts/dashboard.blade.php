@@ -324,7 +324,7 @@
 <!-- /Right-bar -->
 <!-- bundle -->
 <script src="/assets/js/vendor.min.js"></script>
-{{-- <script src="/assets/js/app.min.js"></script> --}}
+{{-- <script src="/assets/js/app.min.js"></script>--}}
 <script src="{{ mix('js/app.js') }}"></script>
 <script src="{{ mix('js/dashboard/dashboard.js') }}"></script>
 

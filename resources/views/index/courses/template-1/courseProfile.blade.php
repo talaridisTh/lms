@@ -32,7 +32,7 @@
                 </ul>
                 <ul class="my-6 h-full px-4 w-full space-y-4 announcement">
                     @forelse($announcements as $key =>$announcement)
-                        <li class="text-black font-medium flex  ">
+                        <li class="text-black font-medium flex ">
                             <span class="text-white font-medium flex-1 ">{{$announcement->title}}</span>
                             <span class="font-normal text-white">{{$announcement->created_at->format("d/m/Y")}}</span>
                         </li>
@@ -174,7 +174,7 @@
         </section>
         <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-3/10 spa-list-material lg:pl-10">
             @if($course->media->where("type",1)->count())
-                <div class="row">
+                <div class="row intr-y">
                     <div class="col">
                         <div class="tabs">
                             <div class="tab bg-gray-200 px-4 em-padding">
@@ -203,7 +203,7 @@
             @endif
 
             @if($lessons->count())
-                <div class="row">
+                <div class="row intro-y">
                     <div class="col">
                         <div class="tabs">
                             <div class="tab bg-gray-200 px-4 em-padding">
@@ -212,7 +212,7 @@
                                         class="bullet">Μαθήματα</span></label>
                                 @foreach($lessons as $lesson)
                                     <div
-                                        class="tab-content text-gray-600  flex  justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
+                                        class="tab-content text-gray-600 zoom-in flex justify-between  rounded-lg  hover:text-black cursor-pointer spa-click"
                                         data-href="{{$lesson->type=="Link"?$lesson->link:route('index.showMaterial',[$course->slug,$lesson->slug])}}"
                                         data-type="{{$lesson->type}}"
                                     >
@@ -232,7 +232,7 @@
             @endif
 
             @if($isSectionExist->isNotEmpty())
-                <div class="row">
+                <div class="row intro-y">
                     <div class="col">
                         <div class="tabs ">
                             <div class="tab bg-gray-200 px-4 ">
@@ -255,7 +255,7 @@
                                                     </label>
                                                     @foreach($section->activeChapters()->where("type","!=","Announcement")->get() as $chapter)
                                                         <div
-                                                            class="tab-content text-gray-600 flex justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer spa-click"
+                                                            class="tab-content text-gray-600 flex justify-between zoom-in hover:text-black cursor-pointer spa-click"
                                                             style="padding-left: 15px;padding-right: 15px;"
                                                             data-href="{{$chapter->type=="Link"?$chapter->link:route('index.showMaterial',[$course->slug,$chapter->slug])}}"
                                                             data-type="{{$chapter->type}}"

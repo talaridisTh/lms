@@ -240,12 +240,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get("/user/link", "Ajax\HomeController@createLink")->name("user.link");
     Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
     Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
-    Route::get('/partner-links', function (Request $request) {
-        if (!$request->hasValidSignature())
-        {
-            abort(401);
-        }
-    })->name('link');
+
 });
 
 //! GUEST AJAX
@@ -327,12 +322,8 @@ Route::get("/building-alternative-layout", function() {
 	return view("front/index");
 });
 
-//Route::get("/",[HomeController::class,"index"])->name('home');
-//Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
-//Route::get("/home/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
-//Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
-Route::get("/",[HomeController::class,"index"])->name('home');
 
-Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
-Route::get("/home/{user}/courses", [CourseController::class ,"userCourses"])->name("index.userCourses");
-Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
+
+Route::get("/temp-login", function() {
+    return view("auth.temp-login");
+});

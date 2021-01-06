@@ -27,6 +27,9 @@
 
 //Breakpoint
 @import 'theme/breakpoint';
+
+//animated
+@import "theme/intro";
 // Components
 @import 'theme/tailwind';
 @import 'theme/custom';
@@ -41,6 +44,11 @@
 @import 'theme/boxed-tabs';
 @import 'theme/input';
 @import 'theme/tippy';
+@import 'theme/login';
+@import 'theme/button';
+@import 'theme/zoom-in';
+@import 'theme/zoom-vanilla';
+@import 'theme/checkbox';
 //@import 'theme/modal';
 
 
