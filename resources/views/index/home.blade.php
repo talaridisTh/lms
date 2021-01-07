@@ -5,7 +5,7 @@
 
     <div class="space-y-20">
 
-        <div class="sm:container xs:container-lg mx-auto flex justify-between  space-x-10 p-8">
+        <div class="sm:container xs:container-lg mx-auto max-w-1xl flex justify-between  space-x-10 p-8">
             <div class="flex-1  space-y-6 mt-16">
                 <h2 class="md:text-6xl xs:text-4xl sm:text-left xs:text-center intro-y font-semibold sm:text-left xs:text-center ">
                     Βάλτε τωρα τη ρομποτική στο σχολείο σας</h2>
@@ -27,7 +27,7 @@
                     alt="vector-smart-object"></div>
         </div>
 
-        <div class="sm:container xs:container-lg mx-auto flex justify-between   space-x-10 p-8">
+        <div class="sm:container xs:container-lg mx-auto max-w-1xl flex justify-between   space-x-10 p-8">
             <div class="flex-1  space-y-6 mt-3">
                 <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
                     Θέλεις να βάλεις τη Ρομποτική στο σχολείο σου και δεν ξέρεις από που να ξεκινήσεις;</h2>
@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <div class="sm:container xs:container-lg mx-auto flex justify-between  items-center  space-x-10 p-8">
+        <div class="sm:container xs:container-lg mx-auto max-w-1xl flex justify-between  items-center  space-x-10 p-8">
             <div class="flex-1  space-y-6 mt-3">
                 <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
                     Εξατομικευμένη πλατφόρμα μαθημάτων ρομποτικής</h2>
@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="sm:container xs:container-lg mx-auto flex justify-between  items-center space-x-10 p-8">
+        <div class="sm:container xs:container-lg mx-auto max-w-1xl flex justify-between  items-center space-x-10 p-8">
             <div class="flex-1 lg:flex xs:hidden  justify-center"
                  style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
                 <div class="container-oval mr-16  relative">
@@ -98,7 +98,7 @@
             </div>
         </div>
 
-        <div class="sm:container xs:container-lg mx-auto flex justify-between  items-center space-x-10 p-8">
+        <div class="sm:container xs:container-lg mx-auto max-w-1xl flex justify-between  items-center space-x-10 p-8">
             <div class="flex-1  space-y-6 mt-3">
                 <h2 class="md:text-4xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
                     Υποστήριξη των συνεργαζόμενων κέντρων κατά τη διάρκεια της χρονιάς
@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        <div class="sm:container xs:container-lg mx-auto space-y-20 p-8">
+        <div class="sm:container xs:container-lg mx-auto max-w-1xl space-y-20 p-8">
 
             @foreach( $arrayBanners as  $key=>  $banners)
                 <div id="card-slider-{{$key}}" class="splide">

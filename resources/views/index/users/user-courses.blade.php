@@ -43,7 +43,7 @@
                                     class="expanded-card space-y-4 w-3/6 h-64 mr-4 rounded-xl flex flex-col justify-between items-center py-5 px-4 flex-shrink-0"
                                     style="box-shadow: rgba(0, 0, 0, 0.17) 0px 4px 9px 0px;">
                                     <a href="{{route('index.showCourse',$course->slug)}}"
-                                       class="w-full bg-black-transparent-10  hover:text-grey-darkest rounded-full  leading-none px-4 text-white uppercase text-2xs text-center">
+                                       class="w-full bg-black-transparent-10  hover:text-grey-darkest rounded-full  leading-none px-4 text-white  text-2xs text-center">
                                         {{count($course->topics)?$course->topics->first()->title:"Γενικά"}}
                                     </a>
                                     <a href="{{route('index.showCourse',$course->slug)}}"
@@ -68,14 +68,14 @@
                                              src="{{$course->roundedMediumCoverUrl("cover")}}
                                                  "></a>
                                 </div>
-                                <div class=" relative flex flex-col justify-around my-5">
+                                <div class="cnt-card relative flex flex-col justify-around my-5">
                                     <h3 class=" inline-flex items-start lg:items-center lg:h-12 text-base  link">
                                         <a href="{{route('index.showCourse',$course->slug)}}">
                                             {!! \Str::limit($course->title,20 , "...")!!}
                                         </a></h3>
                                     <div
                                         class=" text-xs text-black-transparent-60  lg:mb-auto mt-5">
-                                        <p class="">{!! \Str::limit($course->summary,100 , "...")!!} </p>
+                                        <p class="">{!! $course->subtitle!!} </p>
                                     </div>
                                     <div class="hidden lg:flex expanded-card-meta text-grey-dark text-2xs">
                                     <div class=" flex items-center mr-4 text-xs	 space-x-3 text-gray-500">
@@ -108,6 +108,10 @@
 @endsection
 @section("script")
     <script src="{{ mix('js/index/index.js') }}"></script>
+
+    <script>
+       $(".cnt-card img").hide();
+    </script>
 
 @endsection
 

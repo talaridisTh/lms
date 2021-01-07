@@ -34,7 +34,7 @@
 
     <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative " style="">
 
-        <div class="container mx-auto flex flex-wrap items-center px-1 intro-x">
+        <div class="container mx-auto max-w-1xl flex flex-wrap items-center px-1 intro-x">
             <div class="flex-1 flex justify-between items-center">
                 <a href="/tailwind" class="text-xl">
                     <img class="logo" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
@@ -44,7 +44,7 @@
             <div class="hidden md:flex md:items-center md:w-auto w-full" id="menu">
                 <!-- BEGIN: Top Menu -->
                 <nav class="top-nav">
-                    <ul>
+                    <ul class="p-0">
                         <li class="orange-line intro-x">
                             <a href="{{route('dashboard')}}" class="top-menu">
                                 <div class="top-menu__icon"> <i data-feather="tool"></i> </div>
@@ -176,7 +176,7 @@
 
 
 
-    <main class="my-7 mb-20 flex-grow">
+    <main class="my-7 mb-20 flex-grow mx-5 xl:mx-0">
 
         @yield("content")
 
@@ -187,10 +187,10 @@
     <footer class="bg-white py-4 lg:px-16  px-8"
             style=";  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
 
-        <div class="container mx-auto flex items-center flex-wrap justify-between">
+        <div class="container mx-auto max-w-1xl flex items-center flex-wrap justify-between">
             <div class="mr-7">
                 <a href="#" class="text-xl">
-                    <img class="h-20 w-20" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
+                    <img class="" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
             <div class="flex-1">

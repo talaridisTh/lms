@@ -1,6 +1,6 @@
 <div id="scrollTo"></div>
-<section class="w-full lg:w-7/10 spa-cnt">
-    <section class="bg-gray-200 rounded-xl flex  space-x-6 p-8">
+<section class="w-full lg:w-4/6 spa-cnt">
+    <section class="bg-gray-200 rounded-xl flex  space-x-6 px-8 py-6">
         <figure
             class="group hidden  md:table w-32 h-32 rounded-full overflow-hidden text-center bg-purple table cursor-pointer ">
             <img src="{{$curator->avatar}}"
@@ -33,7 +33,7 @@
     </section>
     <div class="rounded mx-auto mt-7">
         <!-- Tabs -->
-        <ul id="tabs" class="inline-flex px-1 w-full border-b space-x-1">
+        <ul id="tabs" class="inline-flex px-1 w-full space-x-1">
             @if(get_class($model)=="App\Models\Material")
                 <li class="bg-white px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px {{$fields->content==0?"hidden":""}}">
                     <a href="#content">Content</a>
@@ -61,28 +61,20 @@
         <div id="tab-contents" class="ml-1 border-1 border-gray-200 py-3 px-10">
             @if(get_class($model)=="App\Models\Material")
                 <div id="content" class=" hidden py-7 px-4">
-                    <ul class="list-disc mb-2 list-inside">
-                        <li class="font-bold">Content</li>
-                    </ul>
+
                     {!! $model->content !!}
                 </div>
             @endif
-            <div id="first" class=" hidden py-7 px-4">
-                <ul class="list-disc mb-2 list-inside">
-                    <li class="font-bold">Πληροφορίες</li>
-                </ul>
+            <div id="first" class=" hidden py-6 px-4">
+
                 {!! $model->description !!}
             </div>
-            <div id="second" class="hidden py-7 px-4 list-inside">
-                <ul class="list-disc mb-2 list-inside">
-                    <li class="font-bold">Περίληψη</li>
-                </ul>
+            <div id="second" class="hidden py-6 px-4 list-inside">
+
                 {!! $model->summary !!}
             </div>
-            <div id="third" class="hidden py-7 px-4">
-                <ul class="list-disc mb-2 list-inside">
-                    <li class="font-bold">Αρχεία</li>
-                </ul>
+            <div id="third" class="hidden py-6 px-4">
+
                 @foreach($model->media->where("type",1) as $file)
                     <div
                         class="text-gray-600 px-2 flex w-1/2 items-center justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
@@ -96,10 +88,8 @@
                 @endforeach
                 {{--                    {!! $model->media->where("type",1) !!}--}}
             </div>
-            <figure id="fourth" class="hidden py-7 px-4 flex flex-wrap space-x-4">
-                <ul class="list-disc mb-2 list-inside w-full">
-                    <li class="font-bold">Media</li>
-                </ul>
+            <figure id="fourth" class="hidden py-6 px-4 flex flex-wrap space-x-4">
+
                 @foreach($model->media->where("type",0) as $file)
                     <a href="{{$file->rel_path}} " data-lightbox="image-1">
                         <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}"
@@ -107,16 +97,12 @@
                     </a>
                 @endforeach
             </figure>
-            <div id="quiz" class="hidden py-7 px-4">
-                <ul class="list-disc mb-2 list-inside ">
-                    <li class="font-bold">Quiz</li>
-                </ul>
+            <div id="quiz" class="hidden py-6 px-4">
+
                 {!! $model->script !!}
             </div>
-            <div id="disscussion" class="py-7 px-4">
-                <ul class="list-disc mb-2 list-inside">
-                    <li class="font-bold">Συζήτηση</li>
-                </ul>
+            <div id="disscussion" class="py-6 px-4">
+
                 Συζήτηση
             </div>
         </div>
