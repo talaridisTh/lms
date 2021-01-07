@@ -26,7 +26,6 @@
 	</div>
 	<!-- end page title -->
 
-    <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container content-width table-cnt">
         <div class="row mb-2 justify-content-end">
             <div id="containerCol" class="col-sm-12">
@@ -40,7 +39,7 @@
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Επιλογές (0)
 						</button>
-					
+
 						<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0">
 							<div class="btn-group dropleft dropleft-hover w-100">
 								<button type="button" id="status-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown"
@@ -52,9 +51,9 @@
 									<a class="dropdown-item js-multiple-change cursor-pointer py-2" data-courses-change="off">Μη ενεργά</a>
 								</div>
 							</div>
-					
+
 							<div class="dropdown-divider m-0"></div>
-					
+
 							<div class="btn-group dropleft dropleft-hover w-100">
 								<button type="button" id="export-dropdown" class="dropdown-item dropdown-toggle py-2" data-toggle="dropdown"
 									aria-haspopup="true" aria-expanded="false">
@@ -66,7 +65,7 @@
 							</div>
 						</div>
 					</div>
-					
+
                 </div>
             </div>
         </div>

@@ -24,7 +24,6 @@
 	</div>
 	<!-- end page title -->
 
-    <x-alertMsg :msg="'create'"></x-alertMsg>
     <div class="container table-cnt content-width">
 
 		<div class="row mb-2">
@@ -43,7 +42,7 @@
 				</div>
             </div>
         </div>
-        
+
 		<table id="materials-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
