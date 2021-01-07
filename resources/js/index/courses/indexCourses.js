@@ -61,6 +61,7 @@ $(".spa-click").on("click", async function (e) {
                 },
                 'slow');
 
+                $(".cnt-curator").remove();
             if ($(".spa-cnt").next().hasClass("lg:mt-0")) {
                 $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0")
             }

@@ -119,7 +119,7 @@ class Material extends Model {
             "Lesson" => "mdi  mdi-book-open-page-variant ",
             "Link" => 'mdi  mdi-satellite-uplink mr-1 text-red-500',
             "Video" => "mdi  mdi-motion-play-outline  ",
-            "Pdf" =>"mdi  mdi-file-pdf  "
+            "PDF" =>"mdi  mdi-file-pdf-outline mr-1"
 
         ];
         foreach ($icons as $type => $icon)

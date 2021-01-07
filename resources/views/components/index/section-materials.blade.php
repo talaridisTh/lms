@@ -47,6 +47,7 @@
                                 <a class="mt-1  flex-1" href="">
                                     <span class="">{{$lesson->title}}</span>
                                 </a>
+
                                 <i style="flex-basis: 10%;"
                                    class="mt-1 mr-1 text-right  {{$lesson->getType($lesson->type)}}"></i>
                             </div>

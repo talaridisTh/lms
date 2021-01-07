@@ -175,7 +175,7 @@
 
 								<div class="form-group col-lg-6">
 									<label for="titleMaterial">Τίτλος <span class="text-danger"> *</span></label>
-									<input name="title" id="titleMaterial" type="text" 
+									<input name="title" id="titleMaterial" type="text"
 										class="form-control @error("title") is-invalid @enderror"
 										placeholder="Εισάγετε τίτλο..." value="{{ old('title', $material->title) }}" />
 									@error("title")
@@ -268,13 +268,14 @@
 							<button form="material-create" id="store-material-btn" class="btn btn-info" type="submit">
 								Update
 							</button>
-							
-							@if( count($material->courses) > 0 && $material->type != "Link" && $material->type != "Announcement" )
-								<a target="_blank" href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"
-									id="preview-btn" class="btn btn-warning">
-									<i class="mdi mdi-eye"></i>
-								</a>
-							@endif
+
+{{--                            {{dd([$material->courses->first()->slug,$material->slug])}}--}}
+{{--							@if( count($material->courses) > 0 && $material->type != "Link" && $material->type != "Announcement" )--}}
+{{--								<a target="_blank" href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"--}}
+{{--									id="preview-btn" class="btn btn-warning">--}}
+{{--									<i class="mdi mdi-eye"></i>--}}
+{{--								</a>--}}
+{{--							@endif--}}
 
 						</div><!-- ./Βuttons -->
 
@@ -292,7 +293,7 @@
 								</div>
 								<hr>
 
-								<div class="form-group mb-3">									
+								<div class="form-group mb-3">
 									<label for="video-id-input">Vimeo id</label>
 									<div class="input-group">
 										<div class="input-group-prepend">
@@ -322,7 +323,7 @@
 										</span>
 									@enderror
 								</div>
-								
+
 								<hr>
 
 								<div class="form-group mb-3">
@@ -389,7 +390,7 @@
 			<div class="tab-pane" id="courses-tabs">
 				@include("components.admin.materials.tabsCourses")
 			</div>
-			
+
 			<div id="media-tab" class="tab-pane">
 				<div class="row">
 					<div class="col-xl-9 col-lg-8 col-md-12">

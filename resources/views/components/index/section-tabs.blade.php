@@ -1,6 +1,6 @@
 <div id="scrollTo"></div>
 <section class="w-full lg:w-4/6 spa-cnt">
-    <section class="bg-gray-200 rounded-xl flex  space-x-6 px-8 py-6">
+    <section class="bg-gray-200 cnt-curator rounded-xl flex  space-x-6 px-8 py-6">
         <figure
             class="group hidden  md:table w-32 h-32 rounded-full overflow-hidden text-center bg-purple table cursor-pointer ">
             <img src="{{$curator->avatar}}"

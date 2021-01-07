@@ -24,6 +24,7 @@
             @elseif($material->type=="PDF")
                 @php
                     $pdf = $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first();
+
                 @endphp
                 <embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%"
                        height="100%" style="height: 100vh"/>
@@ -31,88 +32,18 @@
             @endif
         </figure>
 
-        <section class="rounded  mt-7">
-            <!-- Tabs -->
-            <ul id="tabs" class="inline-flex w-full border-b space-x-1">
-                <li class="bg-white px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px {{$fields->description==0?"hidden":""}}">
-                    <a href="#first">Πληροφορίες</a></li>
-                <li class="px-4 text-gray-80 bg-gray-100 font-semibold py-2 rounded-t {{$fields->summary==0?"hidden":""}}">
-                    <a
-                        href="#second">Περίληψη</a></li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->file==0?"hidden":""}}">
-                    <a href="#third">Αρχεία</a>
-                </li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$fields->media==0?"hidden":""}}">
-                    <a href="#fourth">Media</a>
-                </li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t {{$material->type!="PDF"? $fields->script==0?"hidden":"":""}}">
-                    <a href="#quiz">Quiz</a>
-                </li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a
-                        href="#disscussion">Συζήτηση</a>
-                </li>
-            </ul>
-
-            <!-- Tab Contents -->
-            <div id="tab-contents" class="ml-1 border-1 border-gray-200  px-10 pb-5">
-                <div id="first" class=" hidden py-7 px-4">
-                    <ul class="list-disc mb-2 list-inside">
-                        <li class="font-bold">Πληροφορίες</li>
-                    </ul>
-                    {!! $material->description !!}
-                </div>
-                <div id="second" class="hidden py-7 px-4">
-                    <ul class="list-disc mb-2 list-inside">
-                        <li class="font-bold">Περίληψη</li>
-                    </ul>
-                    {!! $material->summary !!}
-                </div>
-                <div id="third" class="hidden py-7 px-4">
-                    <ul class="list-disc mb-2 list-inside">
-                        <li class="font-bold">Αρχεία</li>
-                    </ul>
-                    @foreach($material->media->where("type",1) as $file)
-                        <div
-                            class="text-gray-600 ml-2 flex w-1/2 items-center justify-between hover:bg-gray-400 rounded-lg hover:text-white cursor-pointer">
-                            <a class=" p-2" href="{{$file->rel_path}}" target="_blank">
-                                <span>{{$file->original_name}}.{{$file->ext}}</span>
-                            </a>
-                            <a href="{{$file->rel_path}}" download>
-                                <i class="mdi-24px mdi mdi-cloud-download-outline mr-2"></i>
-                            </a>
-                        </div>
-                    @endforeach
-                </div>
-                <figure id="fourth" class="hidden py-7 px-4 flex flex-wrap space-x-4">
-                    <ul class="list-disc mb-2 list-inside w-full">
-                        <li class="font-bold">Media</li>
-                    </ul>
-                    @foreach($material->media->where("type",0) as $file)
-                        <a href="{{$file->rel_path}} " data-lightbox="image-1">
-                            <img class="rounded-lg" src="{{$file->roundedMediumCoverUrl("rel_path")}}"
-                                 alt="{{$file->name}}">
-                        </a>
-                    @endforeach
-                </figure>
-                <div id="quiz" class="hidden py-7 px-4">
-                    <ul class="list-disc mb-2 list-inside ">
-                        <li class="font-bold">Quiz</li>
-                    </ul>
-                    {!! $material->script !!}
-                </div>
-                <div id="disscussion" class="hidden py-7 px-4">
-                    <ul class="list-disc mb-2 list-inside">
-                        <li class="font-bold">Συζήτηση</li>
-                    </ul>
-                    Συζήτηση
-                </div>
-            </div>
-        </section>
+        <x-index.section-tabs
+            :curator=$curator
+            :fields="$fields"
+            :model="$material"
+        >
+        </x-index.section-tabs>
 
     </article>
 @endsection
 @section("script")
     <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
+
 
 
 @endsection

@@ -24771,6 +24771,7 @@ $(".spa-click").on("click", /*#__PURE__*/function () {
               $('html,body').animate({
                 scrollTop: $("#scrollTo").offset().top - 150
               }, 'slow');
+              $(".cnt-curator").remove();
 
               if ($(".spa-cnt").next().hasClass("lg:mt-0")) {
                 $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0");

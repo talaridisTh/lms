@@ -42,6 +42,7 @@ class CourseController extends Controller {
     {
 
         return view("index.courses.template-1.course-material", [
+            "curator" => User::FindOrFail(isset($course->user_id) ? $course->user_id : User::where("first_name", "Υδρόγειος")->first()->id),
             "material" => $material,
             "fields" => $this->getFields($material)
         ]);
