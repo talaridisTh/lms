@@ -98,7 +98,7 @@ const onCloseFullScreen = () => {
             if (status == 200) {
                 $('.spa-cnt').html($(data).find(".spa-cnt > *"))
                 $(".spa-click").removeClass("bg-gray-400")
-                $(".spa-cnt").addClass("lg:w-7/10")
+                $(".spa-cnt").addClass("lg:w-4/6")
                 $(".spa-list-material").removeClass("hidden lg:mt-16 lg:mt-0").addClass("lg:mt-0")
                 initTabs();
             }
@@ -111,7 +111,7 @@ const onCloseFullScreen = () => {
 const onFullScreen = () => {
 
     $(".js-open-fullscreen").on("click", async function () {
-        $(".spa-cnt").toggleClass("lg:w-7/10")
+        $(".spa-cnt").toggleClass("lg:w-4/6")
         $(".spa-list-material").toggleClass("hidden")
 
         $(this).toggleClass("mdi-window-maximize  mdi-dock-window")
