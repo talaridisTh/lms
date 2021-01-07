@@ -548,8 +548,8 @@
 										}
 										else {
 											$tooltip = [
-												"color" => "bg-info", 
-												"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>", 
+												"color" => "bg-info",
+												"icon" => "<i class='mdi mdi-24px mdi-clock-outline'></i>",
 												"text" => "Scheduled"
 											];
 											$storeBtn = [ "color" => "btn-primary", "text" => "Save"];
@@ -592,7 +592,7 @@
 								</button>
 
 								<a id="preview-btn"
-									href="/courses/course/{{ $course->slug }}"
+									href="/home/course/{{ $course->slug }}"
 									class="btn btn-warning" target="_blank">
 									<i class="mdi mdi-eye"></i>
 								</a>
@@ -699,7 +699,7 @@
 								</div>
 							</div>
 
-							
+
 
 						</div>
 					</div>
@@ -745,7 +745,7 @@
 								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
 
 									<a id="remove-selection-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
-									
+
 									<div class="dropdown-divider my-0"></div>
 
 									<div class="btn-group dropleft dropleft-hover w-100">
@@ -907,7 +907,7 @@
 									</strong>
 								</small>
 							</p>
-										
+
 							<h5>Βοηθητικά Αρχεία</h5>
 							<div class="bg-light mb-0">
 								<div class="pt-2 px-2">
@@ -970,7 +970,7 @@
 					</div>
 
 
-					
+
 
 				</div>
 			</div><!-- tab-content -->
