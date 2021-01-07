@@ -30,6 +30,7 @@
             @else
             @endif
         </figure>
+
         <section class="rounded  mt-7">
             <!-- Tabs -->
             <ul id="tabs" class="inline-flex w-full border-b space-x-1">
@@ -112,47 +113,6 @@
 @endsection
 @section("script")
     <script src="{{ mix('js/index/courses/indexCourses.js') }}"></script>
-    {{--    <script>--}}
-    {{--        let tabsContainer = document.querySelector("#tabs");--}}
 
-    {{--        let tabTogglers = tabsContainer.querySelectorAll("a");--}}
-
-    {{--        tabTogglers.forEach(function (toggler) {--}}
-    {{--            toggler.addEventListener("click", function (e) {--}}
-    {{--                e.preventDefault();--}}
-
-    {{--                let tabName = this.getAttribute("href");--}}
-
-    {{--                let tabContents = document.querySelector("#tab-contents");--}}
-
-    {{--                for (let i = 0; i < tabContents.children.length; i++) {--}}
-    {{--                    tabTogglers[i].parentElement.classList.add("bg-gray-200");--}}
-    {{--                    tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px");--}}
-    {{--                    tabContents.children[i].classList.remove("hidden");--}}
-    {{--                    if ("#" + tabContents.children[i].id === tabName) {--}}
-    {{--                        tabTogglers[i].parentElement.classList.add("bg-white");--}}
-    {{--                        tabTogglers[i].parentElement.classList.remove("bg-gray-200");--}}
-    {{--                        continue;--}}
-    {{--                    }--}}
-    {{--                    tabContents.children[i].classList.add("hidden");--}}
-
-    {{--                }--}}
-    {{--                e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px", "bg-white");--}}
-    {{--            });--}}
-    {{--        });--}}
-
-    {{--        $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab")--}}
-
-    {{--        document.getElementById("default-tab").click();--}}
-
-
-    {{--        const button = document.querySelector('.modal-button')--}}
-    {{--        button.addEventListener('click', toggleModal)--}}
-
-    {{--        const overlay = document.querySelector('.modal-overlay')--}}
-    {{--        overlay.addEventListener('click', toggleModal)--}}
-
-
-    {{--    </script>--}}
 
 @endsection

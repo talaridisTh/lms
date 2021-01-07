@@ -28,11 +28,11 @@
 <body class="h-full  antialiased"
       style="font-family: 'Helvetica', sans-serif;">
 
-<div id="app" class=" flex flex-col h-screen relative" style="height: auto !important;">
+<div id="app" class=" flex flex-col h-screen relative" style="">
 
 
 
-    <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative" style="min-height: 50px">
+    <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative " style="">
 
         <div class="container mx-auto flex flex-wrap items-center px-1 intro-x">
             <div class="flex-1 flex justify-between items-center">
@@ -185,7 +185,7 @@
 
 
     <footer class="bg-white py-4 lg:px-16  px-8"
-            style="min-height: 50px;  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
+            style=";  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
 
         <div class="container mx-auto flex items-center flex-wrap justify-between">
             <div class="mr-7">
@@ -247,14 +247,14 @@
             return;
         }
         if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-            $('header').addClass('h-16 flex items-center').removeClass("py-4");
+            // $('header').addClass('h-16 flex items-center').removeClass("py-4");
             $('.logo').addClass('h-11');
-            $('.bg-login').first().addClass('md:p-3').removeClass("md:p-4");
+            // $('.bg-login').first().addClass('md:p-3').removeClass("md:p-4");
             $(".login-dropdown").addClass("opacity-0 hidden")
         } else {
-            $('header').removeClass('h-16 flex items-center').addClass("py-4");
+            // $('header').removeClass('h-16 flex items-center').addClass("py-4");
             $('.logo').removeClass('h-11');
-            $('.bg-login').first().removeClass('md:p-3').addClass("md:p-4");
+            // $('.bg-login').first().removeClass('md:p-3').addClass("md:p-4");
         }
     }
 

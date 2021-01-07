@@ -1,9 +1,13 @@
+const plugin = require('tailwindcss/plugin')
+
+
 module.exports = {
     purge: [
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
     ],
+    important: true,
     darkMode: false, // or 'media' or 'class'
     theme: {
         extend: {

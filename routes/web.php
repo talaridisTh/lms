@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Index\CourseController;
 use App\Http\Controllers\Index\HomeController;
+use App\Http\Controllers\Index\MaterialController;
 use App\Http\Controllers\Index\UserController;
 use App\Models\Material;
 use App\Models\Media;
@@ -23,17 +24,14 @@ use Illuminate\Support\Carbon;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get("email/verify/{id}/{hash}", 'Auth\VerificationController@verify')->name("email.verify");
 Route::get("auth/verify", 'Auth\VerificationController@show')->name("email.verify.show");
 Route::post("send/email-verification", 'Auth\VerificationController@sendEmailVerification')->name("send.email.verification");
-
 Route::get("/full-verification", function () {
-	DB::table("users")->update([
-		"email_verified_at" => Carbon::now()
-	]);
+    DB::table("users")->update([
+        "email_verified_at" => Carbon::now()
+    ]);
 });
-
 Auth::routes();
 //!########################################################
 //! 404
@@ -48,15 +46,13 @@ Route::get('/clear', function () {
     return redirect(route("home"));
 });
 //mhn ta svisis akoma mexri na teleiwsw me ta comments
-Route::get("/delete/all-post",function (){
-    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all(),\App\Models\Attachment::all()]);
+Route::get("/delete/all-post", function () {
+    dump([App\Models\Post::all(), \App\Models\Comment::all(), \App\Models\Likable::all(), \App\Models\Attachment::all()]);
     DB::table("posts")->delete();
     DB::table("likables")->delete();
-
-    dump( [App\Models\Post::all(),\App\Models\Comment::all(),\App\Models\Likable::all()]);
-
+    dump([App\Models\Post::all(), \App\Models\Comment::all(), \App\Models\Likable::all()]);
 });
-Route::get("/delete/attachments",function (){
+Route::get("/delete/attachments", function () {
     DB::table("attachments")->delete();
     dump(\App\Models\Attachment::all());
 });
@@ -71,22 +67,19 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
-
-	//! Newsletter Routes
-	Route::get('/dashboard/email', 'MailController@composeEmail');
-
-	//! Mail Routes
-	Route::get('/dashboard/email', 'MailController@index');
-	Route::get('/dashboard/email/compose/{mail:id?}', 'MailController@composeEmail');
-	Route::get('/dashboard/email/{mail:id}', 'MailController@show');
-	Route::post('/dashboard/email', 'MailController@sendNewsletter');
-	Route::delete('/dashboard/email/{mail:id}/delete', 'MailController@delete');
-	Route::post('email/select-users', 'Ajax\MailController@selectUsersDatatable');
-	Route::post('email/recipients-data-table', 'Ajax\MailController@recipeintsDatatable');
-	Route::post('email/data-table', 'Ajax\MailController@mailsDataTable');
-	Route::post('email/delete', 'Ajax\MailController@delete');
-
-	//! media Routes
+    //! Newsletter Routes
+    Route::get('/dashboard/email', 'MailController@composeEmail');
+    //! Mail Routes
+    Route::get('/dashboard/email', 'MailController@index');
+    Route::get('/dashboard/email/compose/{mail:id?}', 'MailController@composeEmail');
+    Route::get('/dashboard/email/{mail:id}', 'MailController@show');
+    Route::post('/dashboard/email', 'MailController@sendNewsletter');
+    Route::delete('/dashboard/email/{mail:id}/delete', 'MailController@delete');
+    Route::post('email/select-users', 'Ajax\MailController@selectUsersDatatable');
+    Route::post('email/recipients-data-table', 'Ajax\MailController@recipeintsDatatable');
+    Route::post('email/data-table', 'Ajax\MailController@mailsDataTable');
+    Route::post('email/delete', 'Ajax\MailController@delete');
+    //! media Routes
     Route::get("/media", "MediaController@index")->name("media.index");
     //! Topic Routes
     Route::get('/dashboard/topics', 'TopicController@index')->name('topic.index');
@@ -95,25 +88,21 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::get('/dashboard/search', 'DashboardController@dashboardSearch');
     //! Dashboard Home Content
     Route::get('/dashboard/home-carousels', 'OptionController@showCarousels');
-
     Route::get('/dashboard/general-settings', 'OptionController@index');
-	Route::post('/dashboard/general-settings/update', 'OptionController@update');
-
-	Route::get('/dashboard/options/{slug}', 'OptionController@editPolicies')
-		->where("slug", "terms-of-use|privacy-policy|cookie-policy");
-	Route::post('/dashboard/options/{option}/update', 'OptionController@updatePolicies');
-
-	//! Dev Options Routes
-	Route::get("/dashboard/dev-tools/template-config", "OptionController@templateConfig");
-	Route::get("/dashboard/options", "OptionController@devIndex");
-	Route::get("/dashboard/option/create-json", "OptionController@createJson");
-	Route::post("/dashboard/option/store-json", "OptionController@storeJson");
-	Route::post("/dashboard/option/store", "OptionController@store");
-	Route::get("/dashboard/option/{option:id}/show-json", "OptionController@showJson");
-	Route::patch("/dashboard/option/{option:id}/update-json", "OptionController@jsonUpdate");
-	Route::patch("option/{option:id}/update", "Ajax\OptionController@update");
-	Route::delete("option/{option:id}", "Ajax\OptionController@destroy");
-
+    Route::post('/dashboard/general-settings/update', 'OptionController@update');
+    Route::get('/dashboard/options/{slug}', 'OptionController@editPolicies')
+        ->where("slug", "terms-of-use|privacy-policy|cookie-policy");
+    Route::post('/dashboard/options/{option}/update', 'OptionController@updatePolicies');
+    //! Dev Options Routes
+    Route::get("/dashboard/dev-tools/template-config", "OptionController@templateConfig");
+    Route::get("/dashboard/options", "OptionController@devIndex");
+    Route::get("/dashboard/option/create-json", "OptionController@createJson");
+    Route::post("/dashboard/option/store-json", "OptionController@storeJson");
+    Route::post("/dashboard/option/store", "OptionController@store");
+    Route::get("/dashboard/option/{option:id}/show-json", "OptionController@showJson");
+    Route::patch("/dashboard/option/{option:id}/update-json", "OptionController@jsonUpdate");
+    Route::patch("option/{option:id}/update", "Ajax\OptionController@update");
+    Route::delete("option/{option:id}", "Ajax\OptionController@destroy");
 //!======================================================
 //! 			End Dashboard Routes					|
 //!======================================================
@@ -127,35 +116,27 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //! Dashboard Ajax Users CRUD
     Route::patch('/user/changeStatus', 'Ajax\UserController@changeStatus')->name("changeStatus.datatable");
     Route::patch('/user/multiple/changeStatus', 'Ajax\UserController@changeStatusMultiple');
-	Route::patch('user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers');
-
+    Route::patch('user/multiple/add-course', 'Ajax\UserController@addCoursesMultipleUsers');
     Route::delete('/user/multiple/users/delete', 'Ajax\UserController@destroyMultipleUsers');
     Route::post('/users/avatar/upload', 'Ajax\UserController@avatarUpload')->name('user.avatar.upload');
 //! Dashboard Ajax Media
     Route::get('/users/media/{mediaItem}/{size?}', 'MediaController@showMedia')->name('api.media.show');
     Route::post("file-details-store", "Ajax\MediaController@store")->name("file.details.store");
     Route::patch("media/remove-cover", "Ajax\MediaController@removeCover");
-
 //! Select2 Ajax Search
-	Route::get("courses/json-search", "Ajax\CourseController@courseSearch");
-	Route::get("bundles/json-search", "Ajax\BundleController@bundleSearch");
-	Route::get("topics/json-search", "Ajax\TopicController@topicSearch");
-
+    Route::get("courses/json-search", "Ajax\CourseController@courseSearch");
+    Route::get("bundles/json-search", "Ajax\BundleController@bundleSearch");
+    Route::get("topics/json-search", "Ajax\TopicController@topicSearch");
 //! Dashboard Ajax Materials Datatables
     Route::post('materials/remaining-pdf-files', 'Ajax\MaterialController@remainingPDFFiles');
-
-	//? courses
+    //? courses
     Route::post('materials/material-types', 'Ajax\MaterialController@materialTypes');
-	Route::post('materials/add-additionnal-content', 'Ajax\MaterialController@addContent');
-
-	//? fail
+    Route::post('materials/add-additionnal-content', 'Ajax\MaterialController@addContent');
+    //? fail
     // Route::delete('/materials/multiple/delete', 'Ajax\MaterialController@destroyMultipleMaterials')->name("destroyMultipleMaterials.datatable");
-	Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMaterialMultiple')->name("addMaterialMultiple.datatable");
+    Route::patch('/materials/multiple/add-material', 'Ajax\MaterialController@addMaterialMultiple')->name("addMaterialMultiple.datatable");
     // Route::patch('/materials/multiple/changeStatus', 'Ajax\MaterialController@changeStatusMultiple')->name("changeStatusMultipleMaterial.datatable");;
-
-
-	Route::patch('materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive');
-
+    Route::patch('materials/toggle-active/{material}', 'Ajax\MaterialController@toggleActive');
 //! Dashboard Ajax Materials CRUD
     Route::patch('materials/toggle-status/{material}', 'Ajax\MaterialController@toggleStatus');
     Route::delete('/materials/multiple/course/delete', 'Ajax\MaterialController@destroyMultipleCourse')->name("destroyMultipleCourse.datatable");
@@ -165,11 +146,9 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('materials/gallery-upload', 'Ajax\MaterialController@galleryUpload')->name('user.gallery.upload');
     Route::patch('material/images-sort', 'Ajax\MaterialController@gallerySort');
     Route::patch("materials/edit-chapter/{material}", "Ajax\MaterialController@editChapter");
-	Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
-
+    Route::post("materials/add-materials", "Ajax\MaterialController@addMaterials");
     Route::patch('material/{material:id}/toggle-editors', 'Ajax\MaterialController@toggleEditors');
     Route::patch('material/{material:id}/change-pdf', 'Ajax\MaterialController@changePDF');
-
 //! Dashboard Topics Datatables
     Route::post('topics/topics-datatable', 'Ajax\TopicController@index');
 //! Dashboard Ajax Topic CRUD
@@ -201,13 +180,11 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::post('edit-carousels/simple-courses-datatable', 'Ajax\OptionController@simpleCoursesDatatable');
     Route::post('edit-carousels/simple-bundles-datatable', 'Ajax\OptionController@simpleBundlesDatatable');
 //! Dashboard Home Banner Update
-	Route::patch('edit-carousels/banners-update', 'Ajax\OptionController@updateBanners');
-
+    Route::patch('edit-carousels/banners-update', 'Ajax\OptionController@updateBanners');
 //! Options Datatable
-	Route::post('options/main-datatable', 'Ajax\OptionController@mainDatatable');
-
+    Route::post('options/main-datatable', 'Ajax\OptionController@mainDatatable');
 //! Glide Images
-	Route::get('img/{path}', 'MediaController@show')->where('path', '.*');
+    Route::get('img/{path}', 'MediaController@show')->where('path', '.*');
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
@@ -218,7 +195,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ['auth']], function () {
-	Route::get("/pf/{pass}/{name}", "Index\MediaController@show");
+    Route::get("/pf/{pass}/{name}", "Index\MediaController@show");
     //home index
 //    Route::get('/home', 'Index\HomeController@index')->name('home');
     //excehl
@@ -235,14 +212,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/watchlist-datatable/material', 'Index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
     Route::post('/history-datatable', 'Index\UserController@historyDatatable')->name("datatable.history");
     Route::post('/history-datatable/material', 'Index\UserController@historyMaterialDatatable')->name("datatable.historyMaterial");
-
 //! GUEST INDEX
     Route::get("/user/link", "Ajax\HomeController@createLink")->name("user.link");
     Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
     Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
-
 });
-
 //! GUEST AJAX
 Route::post("/guest/course", "Ajax\HomeController@guestCourse")->name("guest.course");
 Route::post("/guest/instructor", "Ajax\HomeController@guestInstructor")->name("guest.instructor");
@@ -250,9 +224,6 @@ Route::post("/guest/instructor-course", "Ajax\HomeController@guestInstructorCour
 Route::post("/guest/instructor-material", "Ajax\HomeController@guestInstructorMaterial")->name("guest.instructorMaterial");
 Route::post("/guest/create/guest-user", "Ajax\HomeController@createGuestUser")->name("guest.createGuestUser");
 Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("guest.tempLink");
-
-
-
 //! discussion
 Route::patch("/discussion/update/{id}", "Index\DiscussionController@editComment")->name("discussion.editComment");
 Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
@@ -266,8 +237,6 @@ Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->na
 Route::get("/discussion/my-task", "Index\DiscussionController@myTask")->name("discussion.myTask");
 Route::patch("/discussion/complete-task/{id}", "Index\DiscussionController@completeTask")->name("discussion.completeTask");
 Route::delete("/discussion/delete-task/{id}", "Index\DiscussionController@deleteTask")->name("discussion.deleteTask");
-
-
 Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");
 Route::post("/discussion/search", "Index\DiscussionController@search")->name("discussion.search");
 Route::post("/discussion/post/store-thread", "Index\DiscussionController@storeThread")->name("discussion.thread");
@@ -280,50 +249,30 @@ Route::post("/discussion/comment/upload", "Index\DiscussionController@commentUpl
 Route::post("/discussion/task/send", "Index\DiscussionController@sendTask")->name("discussion.sendTask");
 Route::post("/discussion/upload-task", "Index\DiscussionController@uploadTask")->name("discussion.uploadTask");
 //Route::post("/pagination", "Index\DiscussionController@pagination")->name("discussion.pagination");
-
-
-
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
-    Route::get("/",[HomeController::class,"index"])->name('home');
-    Route::get("/course/{course}", [CourseController::class ,"showCourse"])->name("index.showCourse");
-    Route::get("/home/courses/{user}", [CourseController::class ,"userCourses"])->name("index.userCourses");
-    Route::get("/course/{course}/{material}", [CourseController::class ,"showMaterial"])->name("index.showMaterial");
-    Route::get("/home/account/{user}",[UserController::class,"index"])->name("index.account");
-    Route::post("/home/account/{user}/update",[UserController::class,"update"])->name("index.update");
-    Route::post("/home/account/{user}/upload-avatar",[UserController::class,"uploadAvatar"])->name("index.uploadAvatar");
-
+    Route::get("/", [HomeController::class, "index"])->name('home');
+    Route::get("/home/course/{course}", [CourseController::class, "showCourse"])->name("index.showCourse");
+    Route::get("/home/courses/{user}", [CourseController::class, "userCourses"])->name("index.userCourses");
+    Route::get("/home/course/{course}/{material}", [CourseController::class, "showMaterial"])->name("index.showMaterial");
+    Route::get("/home/account/{user}", [UserController::class, "index"])->name("index.account");
+    Route::post("/home/account/{user}/update", [UserController::class, "update"])->name("index.update");
+    Route::post("/home/account/{user}/upload-avatar", [UserController::class, "uploadAvatar"])->name("index.uploadAvatar");
+    Route::get("home/material/", [MaterialController::class,'material'])->name("index.material");
 //    Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
 //! Course
     Route::post('/model/comment', 'Index\CourseController@modelComment')->name("index.modelComment")->withoutMiddleware(['verifyCourse']);
     Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
     Route::post("/model/delete", "Index\CourseController@deleteComment")->name("index.deleteComment")->withoutMiddleware(['verifyCourse']);
     Route::patch("/model/update/{id}", "Index\CourseController@editComment")->name("index.editComment")->withoutMiddleware(['verifyCourse']);
-
-//! Material index  ajax
-    Route::patch('/add-watchlist/course', 'Index\CourseController@watchlistCourse')->name('index.watchlist.course');
-    //! Material index
-    Route::get("/material/{course}/{materials}", "Index\MaterialController@show")->name("index.material.show");
-    Route::get("/dummy-course/{materials}", "Index\MaterialController@dummyPage")->name("dummyPage.material.show");
-//! Material index  ajax
-    Route::patch('/add-watchlist/material', 'Index\MaterialController@watchlistMaterial')->name('index.watchlist.material');
-    Route::patch('/add-witchlist/material', 'Index\MaterialController@addWitchlist');
 });
-
-
-
-
 //!######################################################
 //!					END Index  Routes					#
 //!######################################################
-
-Route::get("/building-alternative-layout", function() {
-	return view("front/index");
+Route::get("/building-alternative-layout", function () {
+    return view("front/index");
 });
-
-
-
-Route::get("/temp-login", function() {
+Route::get("/temp-login", function () {
     return view("auth.temp-login");
 });

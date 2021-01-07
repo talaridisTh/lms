@@ -5,25 +5,25 @@
 
     <div class="space-y-20">
 
-        <div class="sm:container xs:container-lg mx-auto flex justify-between intro-y space-x-10 p-8">
+        <div class="sm:container xs:container-lg mx-auto flex justify-between  space-x-10 p-8">
             <div class="flex-1  space-y-6 mt-16">
-                <h2 class="md:text-6xl xs:text-4xl sm:text-left xs:text-center font-semibold sm:text-left xs:text-center ">
+                <h2 class="md:text-6xl xs:text-4xl sm:text-left xs:text-center intro-y font-semibold sm:text-left xs:text-center ">
                     Βάλτε τωρα τη ρομποτική στο σχολείο σας</h2>
-                <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και
+                <p class="md:text-2xl xs:text-xl sm:text-left xs:text-center intro-y">Ολοκληρωμένα μαθήματα Ρομποτικής, STEM και
                     προγραμματισμού για παιδιά. Μπες στο δίκτυο συνεργατών.
                     Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</p>
                 <div class="flex sm:justify-start xs:justify-center">
                     <button
-                        class="inline-block uppercase w-50 px-8 py-2 text-xs font-medium leading-6 text-center text-white uppercase
+                        class="inline-block uppercase w-50 px-8 intro-y py-2 text-xs font-medium leading-6 text-center text-white uppercase
                      transition bg-login rounded-xl shadow ripple hover:shadow-lg hover:bg-color-theme focus:outline-none">
                         ΑΙΤΗΜΑ ΓΙΑ DEMO
                     </button>
                 </div>
             </div>
-            <div class="flex-1 lg:flex xs:hidden  justify-center">
+            <div class="flex-1 lg:flex xs:hidden  justify-center ">
                 <img
                     style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
-                    class="img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
+                    class="intro-y img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
                     alt="vector-smart-object"></div>
         </div>
 

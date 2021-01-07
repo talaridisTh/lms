@@ -45970,7 +45970,39 @@ var initFilepond = function initFilepond() {
 };
 
 initFilepond();
-_index_main__WEBPACK_IMPORTED_MODULE_1__["default"].addWhatchlist(); //! CAROUSEL-swiper
+
+var initTabs = function initTabs() {
+  var tabsContainer = document.querySelector("#tabs");
+  var tabTogglers = tabsContainer.querySelectorAll("a");
+  tabTogglers.forEach(function (toggler) {
+    toggler.addEventListener("click", function (e) {
+      e.preventDefault();
+      var tabName = this.getAttribute("href");
+      var tabContents = document.querySelector("#tab-contents");
+
+      for (var i = 0; i < tabContents.children.length; i++) {
+        tabTogglers[i].parentElement.classList.add("bg-gray-200");
+        tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px");
+        tabContents.children[i].classList.remove("hidden");
+
+        if ("#" + tabContents.children[i].id === tabName) {
+          tabTogglers[i].parentElement.classList.add("bg-white");
+          tabTogglers[i].parentElement.classList.remove("bg-gray-200");
+          continue;
+        }
+
+        tabContents.children[i].classList.add("hidden");
+      }
+
+      e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px", "bg-white");
+    });
+  });
+  $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab");
+  document.getElementById("default-tab").click();
+}; // create tabs
+
+
+initTabs(); //! CAROUSEL-swiper
 //!============================================================
 
 var swiper = new swiper__WEBPACK_IMPORTED_MODULE_8__["default"]('.swiper-container', {
@@ -46038,193 +46070,19 @@ $('#announcements-modal').on('shown.bs.modal', function (e) {
   swiperAnnouncements.update();
   swiperAnnouncements.slideTo(countSlider);
 });
-$(".js-audio-btn").click(function () {
-  var cnt = this.parentElement;
-  var audio = cnt.getElementsByClassName("js-audio")[0];
-
-  if (this.dataset.audioStatus == "paused") {
-    this.classList.remove("mdi-play-circle-outline");
-    this.classList.add("mdi-pause-circle-outline");
-    this.dataset.audioStatus = "playing";
-    audio.currentTime = 0;
-    audio.play();
-  } else {
-    this.classList.remove("mdi-pause-circle-outline");
-    this.classList.add("mdi-play-circle-outline");
-    this.dataset.audioStatus = "paused";
-    audio.pause();
-  }
-});
-$(".js-link-material").on("click", /*#__PURE__*/function () {
+$(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
-    var href, _yield$Swal$fire, value;
+    var body, modelInfo, parentId, namespace, upload, _yield$axios$post, data, status;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            href = this.href;
-            e.preventDefault();
-            console.log(e.target.tagName);
-
-            if (!(e.target.tagName === "SPAN" || e.target.tagName === "I")) {
-              _context.next = 7;
-              break;
-            }
-
-            return _context.abrupt("return");
-
-          case 7:
-            _context.next = 9;
-            return Swal.fire({
-              icon: 'question',
-              html: "Mεταφερθείτε στο Link!" + "<br>" + href,
-              showCancelButton: true,
-              confirmButtonText: 'Εντάξει',
-              cancelButtonText: "Ακύρωση "
-            });
-
-          case 9:
-            _yield$Swal$fire = _context.sent;
-            value = _yield$Swal$fire.value;
-
-            if (value) {
-              console.log(href);
-              window.open(href, '_target');
-            }
-
-          case 12:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, this);
-  }));
-
-  return function (_x) {
-    return _ref.apply(this, arguments);
-  };
-}());
-$(".material-count").on("click", function (e) {
-  event.preventDefault();
-  axiosAddWitchlist(this.findParent(5).dataset.courseId, this.findParent(4).dataset.materialId, this.findParent(4).dataset.materialPriority, this);
-  console.log(this);
-}).on('mouseenter', function () {
-  var _this = this;
-
-  setTimeout(function () {
-    if (!_this.dataset.hover) {
-      _this.innerHTML = "<i style='opacity: 0.6' class='text-danger  h4 mdi mdi-check-bold'></i>";
-    }
-  }, 150);
-}).on('mouseleave', function () {
-  var _this2 = this;
-
-  setTimeout(function () {
-    if (!_this2.dataset.hover) {
-      _this2.innerHTML = "".concat(_this2.findParent(4).dataset.materialPriority);
-    }
-  }, 150);
-});
-$(".js-watchlist-btn").on("click", function () {
-  console.log(this);
-  axiosAddWitchlist(this.dataset.courseId, this.dataset.materialId, null, this);
-});
-
-var axiosAddWitchlist = /*#__PURE__*/function () {
-  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(courseId, materialId) {
-    var materialPriority,
-        that,
-        btnWatchlist,
-        _yield$axios$patch,
-        data,
-        _args2 = arguments;
-
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-      while (1) {
-        switch (_context2.prev = _context2.next) {
-          case 0:
-            materialPriority = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : null;
-            that = _args2.length > 3 ? _args2[3] : undefined;
-            btnWatchlist = $(".js-watchlist-btn")[0];
-            _context2.prev = 3;
-            _context2.next = 6;
-            return axios.patch("/add-witchlist/material", {
-              courseId: courseId,
-              materialId: materialId
-            });
-
-          case 6:
-            _yield$axios$patch = _context2.sent;
-            data = _yield$axios$patch.data;
-
-            if (data === "remove") {
-              that.innerHTML = "".concat(materialPriority);
-
-              if (!materialPriority) {
-                btnWatchlist.innerHTML = "<span class='font-16'>Το έχω δει</span>";
-                btnWatchlist.style.backgroundColor = null;
-                btnWatchlist.classList.remove("bg-white");
-              }
-
-              delete that.dataset.hover;
-            } else {
-              that.innerHTML = "<i class='text-danger h4 mdi mdi-check-bold'></i>";
-              that.dataset.hover = "hover";
-
-              if (!materialPriority) {
-                btnWatchlist.innerHTML = "<span class='text-dark font-16'>Δεν το έχω δει</span>";
-                btnWatchlist.style.backgroundColor = "white";
-              }
-            }
-
-            _context2.next = 14;
-            break;
-
-          case 11:
-            _context2.prev = 11;
-            _context2.t0 = _context2["catch"](3);
-            console.log(_context2.t0);
-
-          case 14:
-          case "end":
-            return _context2.stop();
-        }
-      }
-    }, _callee2, null, [[3, 11]]);
-  }));
-
-  return function axiosAddWitchlist(_x2, _x3) {
-    return _ref2.apply(this, arguments);
-  };
-}();
-
-$(".list-material-select")[0].findParent(3).classList.add("show"); // $(".list-material-select")[0].findParent(4).children[0].children[0].classList.add("bg-list")
-
-document.querySelectorAll('.section-list').forEach(function (sectionList) {
-  if (!sectionList.children.length) {
-    console.log(sectionList.findParent(4).remove());
-  } else {}
-});
-document.querySelectorAll(".section").forEach(function (section, idx) {
-  console.log(section.findChild(5).innerHTML = "\u0395\u03BD\u03CC\u03C4\u03B7\u03C4\u03B1 ".concat(idx + 1, ": &nbsp "));
-});
-var href = $(".nav-tabs").children().first().find("a").attr("href").substring(1);
-$(".nav-tabs").children().first().find("a").addClass("active");
-$(".tab-content").find("#".concat(href)).addClass("active");
-$(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
-    var body, modelInfo, parentId, namespace, upload, _yield$axios$post, data, status;
-
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
             e.preventDefault();
             body = $('textarea#reply-body').val();
 
             if (body) {
-              _context3.next = 7;
+              _context.next = 7;
               break;
             }
 
@@ -46233,7 +46091,7 @@ $(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
               $("<p class='text-danger mt-2 validate-form-post'>*Tο πεδίο είναι απαραίτητο</p>").insertAfter("#reply-body");
             }
 
-            return _context3.abrupt("return");
+            return _context.abrupt("return");
 
           case 7:
             body = "<span class=\"text-info\">".concat($(".replay-name").text(), "</span> ").concat(body);
@@ -46247,8 +46105,8 @@ $(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
             upload = typeof this.dataset.upload == "undefined" ? [] : JSON.parse(this.dataset.upload);
             this.disabled = true;
             $(".validate-form-post").remove();
-            _context3.prev = 15;
-            _context3.next = 18;
+            _context.prev = 15;
+            _context.next = 18;
             return axios.post("/model/comment", {
               modelInfo: modelInfo,
               body: body,
@@ -46258,7 +46116,7 @@ $(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
             });
 
           case 18:
-            _yield$axios$post = _context3.sent;
+            _yield$axios$post = _context.sent;
             data = _yield$axios$post.data;
             status = _yield$axios$post.status;
 
@@ -46273,24 +46131,24 @@ $(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
               $(".text-reply-comment").text("Νέο μήνυμα");
             }
 
-            _context3.next = 27;
+            _context.next = 27;
             break;
 
           case 24:
-            _context3.prev = 24;
-            _context3.t0 = _context3["catch"](15);
-            console.log(_context3.t0);
+            _context.prev = 24;
+            _context.t0 = _context["catch"](15);
+            console.log(_context.t0);
 
           case 27:
           case "end":
-            return _context3.stop();
+            return _context.stop();
         }
       }
-    }, _callee3, this, [[15, 24]]);
+    }, _callee, this, [[15, 24]]);
   }));
 
-  return function (_x4) {
-    return _ref3.apply(this, arguments);
+  return function (_x) {
+    return _ref.apply(this, arguments);
   };
 }());
 
@@ -46328,12 +46186,12 @@ var onSubCommentReplayBtnEvent = function onSubCommentReplayBtnEvent() {
 };
 
 var bestAnswer = function bestAnswer() {
-  $(".cnt-list-content").on("click", ".js-best-answer", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
-    var commentId, model, _yield$axios$patch2, data, status;
+  $(".cnt-list-content").on("click", ".js-best-answer", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    var commentId, model, _yield$axios$patch, data, status;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context4.prev = _context4.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info");
             $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt");
@@ -46351,57 +46209,57 @@ var bestAnswer = function bestAnswer() {
             $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
             commentId = $(this).closest(".main-post").data("threadId");
             model = $(".hidden-post").data("model-info").id;
-            _context4.prev = 6;
-            _context4.next = 9;
+            _context2.prev = 6;
+            _context2.next = 9;
             return axios.patch("/discussion/best/".concat(commentId), {
               model: model
             });
 
           case 9:
-            _yield$axios$patch2 = _context4.sent;
-            data = _yield$axios$patch2.data;
-            status = _yield$axios$patch2.status;
+            _yield$axios$patch = _context2.sent;
+            data = _yield$axios$patch.data;
+            status = _yield$axios$patch.status;
 
             if (status == 200) {}
 
-            _context4.next = 18;
+            _context2.next = 18;
             break;
 
           case 15:
-            _context4.prev = 15;
-            _context4.t0 = _context4["catch"](6);
-            console.log(_context4.t0);
+            _context2.prev = 15;
+            _context2.t0 = _context2["catch"](6);
+            console.log(_context2.t0);
 
           case 18:
           case "end":
-            return _context4.stop();
+            return _context2.stop();
         }
       }
-    }, _callee4, this, [[6, 15]]);
+    }, _callee2, this, [[6, 15]]);
   })));
 };
 
 var onDeleteComment = function onDeleteComment() {
   $(".cnt-reply-list").on("click", ".js-delete-comment", /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(e) {
+    var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
       var id, modelInfo, _yield$axios$post2, data, status;
 
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context5.prev = _context5.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               e.preventDefault();
               id = this.closest(".main-post").dataset.threadId;
               modelInfo = $(".hidden-post").data("model-info");
-              _context5.prev = 3;
-              _context5.next = 6;
+              _context3.prev = 3;
+              _context3.next = 6;
               return axios.post("/model/delete", {
                 modelInfo: modelInfo,
                 id: id
               });
 
             case 6:
-              _yield$axios$post2 = _context5.sent;
+              _yield$axios$post2 = _context3.sent;
               data = _yield$axios$post2.data;
               status = _yield$axios$post2.status;
 
@@ -46413,44 +46271,44 @@ var onDeleteComment = function onDeleteComment() {
                 $(".cnt-reply-list").html($(data.view).find(".reply-list")); //reload post
               }
 
-              _context5.next = 16;
+              _context3.next = 16;
               break;
 
             case 13:
-              _context5.prev = 13;
-              _context5.t0 = _context5["catch"](3);
-              console.log(_context5.t0);
+              _context3.prev = 13;
+              _context3.t0 = _context3["catch"](3);
+              console.log(_context3.t0);
 
             case 16:
             case "end":
-              return _context5.stop();
+              return _context3.stop();
           }
         }
-      }, _callee5, this, [[3, 13]]);
+      }, _callee3, this, [[3, 13]]);
     }));
 
-    return function (_x5) {
-      return _ref5.apply(this, arguments);
+    return function (_x2) {
+      return _ref3.apply(this, arguments);
     };
   }());
 };
 
 var onLikebtn = function onLikebtn() {
-  $(".cnt-reply-list").on("click", ".btn-reply-like", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-    var _yield$axios$patch3, data, status;
+  $(".cnt-reply-list").on("click", ".btn-reply-like", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+    var _yield$axios$patch2, data, status;
 
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
       while (1) {
-        switch (_context6.prev = _context6.next) {
+        switch (_context4.prev = _context4.next) {
           case 0:
-            _context6.prev = 0;
-            _context6.next = 3;
+            _context4.prev = 0;
+            _context4.next = 3;
             return axios.patch("/discussion/like-comment/".concat(this.dataset.commentId));
 
           case 3:
-            _yield$axios$patch3 = _context6.sent;
-            data = _yield$axios$patch3.data;
-            status = _yield$axios$patch3.status;
+            _yield$axios$patch2 = _context4.sent;
+            data = _yield$axios$patch2.data;
+            status = _yield$axios$patch2.status;
 
             if (status == 200) {
               if (data) {
@@ -46462,20 +46320,20 @@ var onLikebtn = function onLikebtn() {
               }
             }
 
-            _context6.next = 12;
+            _context4.next = 12;
             break;
 
           case 9:
-            _context6.prev = 9;
-            _context6.t0 = _context6["catch"](0);
-            console.log(_context6.t0);
+            _context4.prev = 9;
+            _context4.t0 = _context4["catch"](0);
+            console.log(_context4.t0);
 
           case 12:
           case "end":
-            return _context6.stop();
+            return _context4.stop();
         }
       }
-    }, _callee6, this, [[0, 9]]);
+    }, _callee4, this, [[0, 9]]);
   })));
 };
 

@@ -56,10 +56,47 @@ const initFilepond = () => {
         allowReorder: true
     });
 }
-
 initFilepond();
 
-utilities.addWhatchlist()
+const initTabs = () => {
+    let tabsContainer = document.querySelector("#tabs");
+    let tabTogglers = tabsContainer.querySelectorAll("a");
+
+    tabTogglers.forEach(function (toggler) {
+        toggler.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            let tabName = this.getAttribute("href");
+
+            let tabContents = document.querySelector("#tab-contents");
+
+            for (let i = 0; i < tabContents.children.length; i++) {
+                tabTogglers[i].parentElement.classList.add("bg-gray-200");
+                tabTogglers[i].parentElement.classList.remove("border-t", "border-r", "border-l", "-mb-px");
+                tabContents.children[i].classList.remove("hidden");
+                if ("#" + tabContents.children[i].id === tabName) {
+                    tabTogglers[i].parentElement.classList.add("bg-white");
+                    tabTogglers[i].parentElement.classList.remove("bg-gray-200");
+                    continue;
+                }
+                tabContents.children[i].classList.add("hidden");
+
+            }
+            e.target.parentElement.classList.add("border-t", "border-r", "border-l", "-mb-px", "bg-white");
+        });
+    });
+
+    $("#tabs").children().not(".hidden").first().children().first().attr("id", "default-tab")
+
+    document.getElementById("default-tab").click();
+} // create tabs
+initTabs();
+
+
+
+
+
+
 
 
 //! CAROUSEL-swiper
@@ -141,142 +178,9 @@ $('#announcements-modal').on('shown.bs.modal', function (e) {
 });
 
 
-$(".js-audio-btn").click(function () {
-    let cnt = this.parentElement;
-    let audio = cnt.getElementsByClassName("js-audio")[0];
-
-    if (this.dataset.audioStatus == "paused") {
-        this.classList.remove("mdi-play-circle-outline");
-        this.classList.add("mdi-pause-circle-outline");
-        this.dataset.audioStatus = "playing";
-
-        audio.currentTime = 0;
-        audio.play();
-    } else {
-        this.classList.remove("mdi-pause-circle-outline");
-        this.classList.add("mdi-play-circle-outline");
-        this.dataset.audioStatus = "paused";
-
-        audio.pause();
-    }
-})
-
-$(".js-link-material").on("click", async function (e) {
-
-    const href = this.href;
-    e.preventDefault()
-    console.log(e.target.tagName)
-    if (e.target.tagName === "SPAN" || e.target.tagName === "I") {
-        return
-
-    } else {
-        const {value} = await Swal.fire({
-            icon: 'question',
-            html: "Mεταφερθείτε στο Link!" + "<br>" + href,
-            showCancelButton: true,
-            confirmButtonText: 'Εντάξει',
-            cancelButtonText: "Ακύρωση "
-        })
-        if (value) {
-            console.log(href)
-            window.open(href, '_target');
-
-        }
-    }
 
 
-})
 
-$(".material-count").on("click", function (e) {
-    event.preventDefault();
-
-    axiosAddWitchlist(
-        this.findParent(5).dataset.courseId,
-        this.findParent(4).dataset.materialId,
-        this.findParent(4).dataset.materialPriority,
-        this
-    )
-
-    console.log(this)
-
-
-}).on('mouseenter', function () {
-    setTimeout(() => {
-        if (!this.dataset.hover) {
-            this.innerHTML = "<i style='opacity: 0.6' class='text-danger  h4 mdi mdi-check-bold'></i>"
-        }
-    }, 150)
-}).on('mouseleave', function () {
-    setTimeout(() => {
-        if (!this.dataset.hover) {
-
-            this.innerHTML = `${this.findParent(4).dataset.materialPriority}`
-        }
-    }, 150)
-
-});
-
-$(".js-watchlist-btn").on("click", function () {
-    console.log(this)
-
-    axiosAddWitchlist(this.dataset.courseId, this.dataset.materialId, null, this)
-})
-
-const axiosAddWitchlist = async (courseId, materialId, materialPriority = null, that) => {
-    const btnWatchlist = $(".js-watchlist-btn")[0];
-    try {
-        const {data} = await axios.patch(`/add-witchlist/material`, {
-            courseId,
-            materialId
-        })
-        if (data === "remove") {
-            that.innerHTML = `${materialPriority}`
-            if (!materialPriority) {
-                btnWatchlist.innerHTML = "<span class='font-16'>Το έχω δει</span>"
-                btnWatchlist.style.backgroundColor = null
-                btnWatchlist.classList.remove("bg-white")
-            }
-
-            delete that.dataset.hover
-
-        } else {
-            that.innerHTML = "<i class='text-danger h4 mdi mdi-check-bold'></i>"
-            that.dataset.hover = "hover"
-            if (!materialPriority) {
-                btnWatchlist.innerHTML = "<span class='text-dark font-16'>Δεν το έχω δει</span>"
-                btnWatchlist.style.backgroundColor = "white"
-            }
-        }
-
-    } catch (e) {
-        console.log(e)
-    }
-}
-
-$(".list-material-select")[0].findParent(3).classList.add("show")
-
-// $(".list-material-select")[0].findParent(4).children[0].children[0].classList.add("bg-list")
-
-
-document.querySelectorAll('.section-list').forEach(sectionList=>{
-    if(!sectionList.children.length){
-        console.log(sectionList.findParent(4).remove())
-    }else{
-
-    }
-
-
-})
-document.querySelectorAll(".section").forEach((section,idx)=>{
-
-    console.log(section.findChild(5).innerHTML = `Ενότητα ${idx+1}: &nbsp `)
-})
-
-
-let href = $(".nav-tabs").children().first().find("a").attr( "href").substring(1);
-
-$(".nav-tabs").children().first().find("a").addClass("active")
-$(".tab-content").find(`#${href}`).addClass("active");
 
 
 $(document).on("click", ".js-form-reply", async function (e) {
