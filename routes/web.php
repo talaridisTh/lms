@@ -46,6 +46,12 @@ Route::get('/clear', function () {
     return redirect(route("home"));
 });
 //mhn ta svisis akoma mexri na teleiwsw me ta comments
+
+Route::get("/all-material", function () {
+
+    return DB::table("materials");
+});
+
 Route::get("/delete/all-post", function () {
     dump([App\Models\Post::all(), \App\Models\Comment::all(), \App\Models\Likable::all(), \App\Models\Attachment::all()]);
     DB::table("posts")->delete();
