@@ -49,7 +49,11 @@ Route::get('/clear', function () {
 
 Route::get("/all-material", function () {
 
-    return DB::table("materials");
+    dd(DB::table("materials")->get());
+});
+Route::get("/all-materials", function () {
+
+    return DB::table("materials")->get();
 });
 
 Route::get("/delete/all-post", function () {
