@@ -210,7 +210,15 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 });
+//! GUEST AJAX
 
+//! discussion
+Route::patch("/discussion/update/{id}", "Index\DiscussionController@editComment")->name("discussion.editComment");
+Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
+Route::get("/discussion/my-question", "Index\DiscussionController@myQuestion")->name("discussion.myQuestion");
+Route::get("/discussion/participation", "Index\DiscussionController@participation")->name("discussion.participation");
+Route::get("/discussion/best-answer", "Index\DiscussionController@bestAnswer")->name("discussion.bestAnswer");
+Route::get("/discussion/popular-week", "Index\DiscussionController@popularWeek")->name("discussion.popularWeek");
 Route::get("/discussion/popular-allTime", "Index\DiscussionController@popularAllTime")->name("discussion.popularAllTime");
 Route::get("/discussion/isClosed", "Index\DiscussionController@isClosed")->name("discussion.isClosed");
 Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->name("discussion.noReplies");

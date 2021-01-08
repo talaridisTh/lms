@@ -44,14 +44,14 @@
                 <!-- BEGIN: Top Menu -->
                 <nav class="top-nav">
                     <ul class="p-0">
-                        @hasanyrole("admin|super-admin")
                         <li class="orange-line intro-x">
                             <a href="{{route('dashboard')}}" class="top-menu">
                                 <div class="top-menu__icon"><i data-feather="tool"></i></div>
                                 <div class="top-menu__title ">Dashboard</div>
                             </a>
                         </li>
-                    @if(\Request::route()->getName()== "index.userCourse")
+                        @hasanyrole("admin|super-admin")
+                        @if(\Request::route()->getName()== "index.userCourse")
                             <li>
                                 <a href="#" class="top-menu">
                                     <div class="top-menu__icon"><i data-feather="home"></i></div>
@@ -122,7 +122,6 @@
                 </a>
             </div>
             <ul class="burger-menu py-5 hidden">
-                @hasanyrole("admin|super-admin")
                 <li>
                     <a href="{{route('dashboard')}}" class="menu">
                         <div class="menu__icon"><i data-feather="home"></i></div>
@@ -141,7 +140,6 @@
                         <div class="menu__title"> Edit this material</div>
                     </a>
                 </li>
-                @endhasanyrole
 
                 <li>
                     <a href="{{route('dashboard')}}" class="menu">
