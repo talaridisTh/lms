@@ -44,14 +44,14 @@
                 <!-- BEGIN: Top Menu -->
                 <nav class="top-nav">
                     <ul class="p-0">
+                        @hasanyrole("admin|super-admin")
                         <li class="orange-line intro-x">
                             <a href="{{route('dashboard')}}" class="top-menu">
                                 <div class="top-menu__icon"><i data-feather="tool"></i></div>
                                 <div class="top-menu__title ">Dashboard</div>
                             </a>
                         </li>
-                        @hasanyrole("admin|super-admin")
-                        @if(\Request::route()->getName()== "index.userCourse")
+                    @if(\Request::route()->getName()== "index.userCourse")
                             <li>
                                 <a href="#" class="top-menu">
                                     <div class="top-menu__icon"><i data-feather="home"></i></div>
@@ -72,14 +72,14 @@
                                 <div class="top-menu__title"> Μαθήματα</div>
                             </a>
                         </li>
-                        @hasanyrole("super-admin")
+
                         <li class=" orange-line intro-x">
                             <a href="{{route('discussion.index')}}" class="top-menu">
                                 <div class="top-menu__icon"><i data-feather="home"></i></div>
                                 <div class="top-menu__title"> Discussions</div>
                             </a>
                         </li>
-                        @endhasanyrole
+
                         <li class="bg-login rounded-xl intro-x">
                             <a href="javascript:;" class="top-menu" style="color: white!important;">
                                 <div class="top-menu__icon"><i data-feather="hard-drive"></i></div>
@@ -122,6 +122,7 @@
                 </a>
             </div>
             <ul class="burger-menu py-5 hidden">
+                @hasanyrole("admin|super-admin")
                 <li>
                     <a href="{{route('dashboard')}}" class="menu">
                         <div class="menu__icon"><i data-feather="home"></i></div>
@@ -140,14 +141,15 @@
                         <div class="menu__title"> Edit this material</div>
                     </a>
                 </li>
-                @hasanyrole("super-admin")
+                @endhasanyrole
+
                 <li>
                     <a href="{{route('dashboard')}}" class="menu">
                         <div class="menu__icon"><i data-feather="home"></i></div>
                         <div class="menu__title"> Discussions</div>
                     </a>
                 </li>
-                @endhasanyrole
+
                 <li>
                     <a href="javascript:;" class="menu">
                         <div class="menu__icon"><i data-feather="box"></i></div>

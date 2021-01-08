@@ -46,10 +46,6 @@ Route::get('/clear', function () {
     return redirect(route("home"));
 });
 //mhn ta svisis akoma mexri na teleiwsw me ta comments
-Route::get("/all-material", function () {
-
-    dd(DB::table("materials")->get(), DB::table("courses")->get());
-});
 Route::get("/all-materials", function () {
 
     return DB::table("materials")->get();
@@ -61,8 +57,10 @@ Route::get("/delete/all-post", function () {
     dump([App\Models\Post::all(), \App\Models\Comment::all(), \App\Models\Likable::all()]);
 });
 Route::get("/delete/attachments", function () {
+    dump(\App\Models\Attachment::all(), \App\Models\Homework::all());
     DB::table("attachments")->delete();
-    dump(\App\Models\Attachment::all());
+    DB::table("homeworks")->delete();
+    dump(\App\Models\Attachment::all(), \App\Models\Homework::all());
 });
 //mhn ta svisis akoma mexri na teleiwsw me ta comments
 Route::get("/test", "Index\HomeController@test")->name("user.test");
@@ -209,36 +207,10 @@ Route::group(['middleware' => ['auth']], function () {
     //excehl
     Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
     Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
-//user-profile index
-    Route::get('/{user}/profile', 'Index\UserController@index')->name('index.profile');
-    Route::patch('/{user}/profile/update', 'Index\UserController@update')->name('index.profile.update');
-    Route::get('/{user}/profile/announcements', 'Index\UserController@ShowAnnouncements')->name('index.profile.announcements');
-    Route::get('/{user}/profile/watchlist', 'Index\UserController@watchlist')->name('index.profile.watchlist');
-    Route::get('/{user}/profile/history', 'Index\UserController@history')->name('index.profile.history');
-// -----Datatable//Watchlist
-    Route::post('/watchlist-datatable', 'Index\UserController@watchlistDatatable')->name("datatable.watchlist");
-    Route::post('/watchlist-datatable/material', 'Index\UserController@watchlistMaterialDatatable')->name("datatable.watchlistMaterial");
-    Route::post('/history-datatable', 'Index\UserController@historyDatatable')->name("datatable.history");
-    Route::post('/history-datatable/material', 'Index\UserController@historyMaterialDatatable')->name("datatable.historyMaterial");
-//! GUEST INDEX
-    Route::get("/user/link", "Ajax\HomeController@createLink")->name("user.link");
-    Route::post("/user/link/store", "Index\HomeController@createLinkStore")->name("user.linkStore");
-    Route::get("/user/view-link", "Index\HomeController@showLinks")->name("user.showLinks");
+
+
 });
-//! GUEST AJAX
-Route::post("/guest/course", "Ajax\HomeController@guestCourse")->name("guest.course");
-Route::post("/guest/instructor", "Ajax\HomeController@guestInstructor")->name("guest.instructor");
-Route::post("/guest/instructor-course", "Ajax\HomeController@guestInstructorCourse")->name("guest.instructorCourse");
-Route::post("/guest/instructor-material", "Ajax\HomeController@guestInstructorMaterial")->name("guest.instructorMaterial");
-Route::post("/guest/create/guest-user", "Ajax\HomeController@createGuestUser")->name("guest.createGuestUser");
-Route::get("/guest/temp/link/{user}", "Ajax\HomeController@tempLink")->name("guest.tempLink");
-//! discussion
-Route::patch("/discussion/update/{id}", "Index\DiscussionController@editComment")->name("discussion.editComment");
-Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
-Route::get("/discussion/my-question", "Index\DiscussionController@myQuestion")->name("discussion.myQuestion");
-Route::get("/discussion/participation", "Index\DiscussionController@participation")->name("discussion.participation");
-Route::get("/discussion/best-answer", "Index\DiscussionController@bestAnswer")->name("discussion.bestAnswer");
-Route::get("/discussion/popular-week", "Index\DiscussionController@popularWeek")->name("discussion.popularWeek");
+
 Route::get("/discussion/popular-allTime", "Index\DiscussionController@popularAllTime")->name("discussion.popularAllTime");
 Route::get("/discussion/isClosed", "Index\DiscussionController@isClosed")->name("discussion.isClosed");
 Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->name("discussion.noReplies");
@@ -260,18 +232,18 @@ Route::post("/discussion/upload-task", "Index\DiscussionController@uploadTask")-
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
-    Route::get("/", [HomeController::class, "index"])->name('home');
+    Route::get("/", [HomeController::class, "index"])->name('home')->withoutMiddleware(['verifyCourse']);
     Route::get("/home/course/{course}", [CourseController::class, "showCourse"])->name("index.showCourse");
-    Route::get("/home/courses/{user}", [CourseController::class, "userCourses"])->name("index.userCourses");
+    Route::get("/home/courses/{user}", [CourseController::class, "userCourses"])->name("index.userCourses")->withoutMiddleware(['verifyCourse']);
     Route::get("/home/course/{course}/{material}", [CourseController::class, "showMaterial"])->name("index.showMaterial");
-    Route::get("/home/account/{user}", [UserController::class, "index"])->name("index.account");
-    Route::post("/home/account/{user}/update", [UserController::class, "update"])->name("index.update");
-    Route::post("/home/account/{user}/upload-avatar", [UserController::class, "uploadAvatar"])->name("index.uploadAvatar");
+    Route::get("/home/account/{user}", [UserController::class, "index"])->name("index.account")->withoutMiddleware(['verifyCourse']);
+    Route::post("/home/account/{user}/update", [UserController::class, "update"])->name("index.update")->withoutMiddleware(['verifyCourse']);
+    Route::post("/home/account/{user}/upload-avatar", [UserController::class, "uploadAvatar"])->name("index.uploadAvatar")->withoutMiddleware(['verifyCourse']);
     Route::get("home/material/", [MaterialController::class, 'material'])->name("index.material");
 //    Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
 //! Course
     Route::post('/model/comment', 'Index\CourseController@modelComment')->name("index.modelComment")->withoutMiddleware(['verifyCourse']);
-    Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse");
+    Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse")->withoutMiddleware(['verifyCourse']);
     Route::post("/model/delete", "Index\CourseController@deleteComment")->name("index.deleteComment")->withoutMiddleware(['verifyCourse']);
     Route::patch("/model/update/{id}", "Index\CourseController@editComment")->name("index.editComment")->withoutMiddleware(['verifyCourse']);
 });
@@ -281,6 +253,4 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
 Route::get("/building-alternative-layout", function () {
     return view("front/index");
 });
-Route::get("/temp-login", function () {
-    return view("auth.temp-login");
-});
+
