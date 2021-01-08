@@ -30,15 +30,15 @@ $(".first-thread").hide();
 const eventTopBar = () => {
     $(".discussions-right").on("change", ".filter-sidebar", async function () {
 
-        let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
-        let option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value
+        // let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
+        let option = $(".filter-sidebar").find(":selected").val()
+        // console.log($(".filter-sidebar").find(":selected").text())
 
         let filterName = $(".active-thread").attr('id').replace("filter-", "")
         filterName = filterName == "all-threads" ? "" : filterName;
         const {data, status} = await axios.get(`/discussion/${filterName}`, {
             params: {
                 option,
-                course
             }
         })
 

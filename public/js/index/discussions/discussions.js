@@ -6539,25 +6539,25 @@ $(".first-thread").hide();
 
 var eventTopBar = function eventTopBar() {
   $(".discussions-right").on("change", ".filter-sidebar", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-    var course, option, filterName, _yield$axios$get2, data, status;
+    var option, filterName, _yield$axios$get2, data, status;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value;
-            option = $(".filter-sidebar")[0].options[$(".filter-sidebar")[0].selectedIndex].value;
+            // let course = $(".filter-course")[0].options[$(".filter-course")[0].selectedIndex].value
+            option = $(".filter-sidebar").find(":selected").val(); // console.log($(".filter-sidebar").find(":selected").text())
+
             filterName = $(".active-thread").attr('id').replace("filter-", "");
             filterName = filterName == "all-threads" ? "" : filterName;
-            _context2.next = 6;
+            _context2.next = 5;
             return axios.get("/discussion/".concat(filterName), {
               params: {
-                option: option,
-                course: course
+                option: option
               }
             });
 
-          case 6:
+          case 5:
             _yield$axios$get2 = _context2.sent;
             data = _yield$axios$get2.data;
             status = _yield$axios$get2.status;
@@ -6567,7 +6567,7 @@ var eventTopBar = function eventTopBar() {
               onHideBody();
             }
 
-          case 10:
+          case 9:
           case "end":
             return _context2.stop();
         }
