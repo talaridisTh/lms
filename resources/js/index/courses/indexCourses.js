@@ -25,6 +25,17 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
         onlyInViewport: false,
     },
 })//init slider
+const fixPaddingTabs  = ()=>{
+    let containdClass =[];
+    $("#tabs li").each(function( el,index ) {
+        containdClass.push($(index).hasClass("hidden"));
+    });
+    if(containdClass.filter(Boolean).length>=5){
+        $("#tab-contents").toggleClass("ml-1 ml-2")
+    }
+}
+fixPaddingTabs();
+
 
 
 $(".spa-click").on("click", async function (e) {
@@ -65,7 +76,12 @@ $(".spa-click").on("click", async function (e) {
             if ($(".spa-cnt").next().hasClass("lg:mt-0")) {
                 $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0")
             }
+            console.log($(".spa-tabs"))
+            $(".spa-tabs")[1].classList.remove("lg:w-4/6")
+            $(".spa-tabs")[1].classList.remove("w-full")
+            $(".spa-tabs")[1].classList.add("w-auto")
             initTabs();
+            fixPaddingTabs();
             // templateHandler(data, this);
             onFullScreen();
             onCloseFullScreen();

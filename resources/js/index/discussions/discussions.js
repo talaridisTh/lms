@@ -518,30 +518,34 @@ const handlerReply = () => {
 //handler best answer
 const bestAnswer = () => {
     $(".discussions-right").on("click", ".js-best-answer", async function () {
-        $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
+        // $(".badge-best").addClass("d-none")
+        // $(this).closest(".main-post").find(".badge-best").removeClass("d-none");
 
-        $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
 
 
-        if ($(this).hasClass("is-active-best")) {
+            $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
 
-            $(this).closest(".main-post").addClass("best-answer-cnt")
+            $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
 
-            $(this).removeClass("is-active-best text-info").addClass("text-success")
 
-            $(this).parent().append('<a href="#" class="ml-3 mt-2 badge badge-success badge-best font-14">Best Answer</a>\n');
-        } else {
+            if ($(this).hasClass("is-active-best")) {
 
-            $(this).closest(".main-post").removeClass("best-answer-cnt")
+                $(this).closest(".main-post").addClass("best-answer-cnt")
 
-            $(this).removeClass("text-success").addClass("is-active-best text-info")
+                $(this).removeClass("is-active-best text-info").addClass("text-success")
 
-            $(this).parent().find(".badge-best").remove()
+                $(this).parent().append('<a href="#" class="ml-3 mt-2 badge badge-success badge-best font-14">Best Answer</a>\n');
+            } else {
 
-        }
+                $(this).closest(".main-post").removeClass("best-answer-cnt")
 
-        $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
+                $(this).removeClass("text-success").addClass("is-active-best text-info")
 
+                $(this).parent().find(".badge-best").remove()
+
+            }
+
+            $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
 
         let commentId = $(this).closest(".main-post").data("threadId")
         let postId = $(".main-post")[0].dataset.postId;
@@ -583,7 +587,7 @@ const closedPost = () => {
                 $(".js-comment-reply").toggleClass("d-none")
                 $(".js-sub-comment-reply").toggleClass("d-none")
                 $(".discussions-right").find(".first-thread-replay").toggleClass("d-none")
-                $(".ul-thread").find(".first-thread-replay").toggleText('CLOSED', 'ΑΠΑΝΤΗΣΗ').toggleClass("bg-danger");
+                $(".first-thread-replay").toggleClass("bg-danger cursor-not-allowed");
                 styleClosedPost()
             }
 
@@ -662,7 +666,7 @@ const sendTask = () => {
             let dataAttr = $("#curator-task option:selected").text();
             let attacmentVal = $("#attachment-task").val()
             $(".discussions-right").html($(data))
-            toastAlert("success","Επιτυχής αποστολή")
+            toastAlert("success", "Επιτυχής αποστολή")
             if (attacmentVal) {
                 $(".show-task").addClass("active")
                 $("#upload-task-content").removeClass("active show")
@@ -699,7 +703,7 @@ const removeTask = () => {
                 if (status == 200) {
                     $(".discussions-right").html($(data))
                     validationUploadTest();
-                    toastAlert("success","H εργασία αφαιρέθηκε")
+                    toastAlert("success", "H εργασία αφαιρέθηκε")
                     if ($('#accordionExample').children().length) {
                         $("#show-task-content").addClass("active");
                         $("#upload-task-content").removeClass("active");
@@ -731,20 +735,23 @@ const onCompletedTask = () => {
                 $(this).closest(".dashboard-box-li").find(".dashboard-status-button").removeClass("red").addClass("green").html(`Ελέγχθηκε ${getDate()}`)
                 $(this).closest(".dashboard-box-li").find(".js-complete-task ").removeClass("btn-outline-custom-primary").addClass("btn-outline-danger")
                 $(this).text("Δεν ελέγχθηκε");
-                toastAlert("success","H εργασία ελέγχθηκε")
+                toastAlert("success", "H εργασία ελέγχθηκε")
             } else {
                 $(this).closest(".dashboard-box-li").find(".dashboard-status-button").removeClass("green").addClass("red").html(`Αναμονή..`)
                 $(this).closest(".dashboard-box-li").find(".js-complete-task ").removeClass("btn-outline-danger").addClass("btn-outline-custom-primary")
                 $(this).text("Ελέγχθηκε");
-                toastAlert("success","Αφαίρεση ελέγχου")
+                toastAlert("success", "Αφαίρεση ελέγχου")
             }
-            let completedTask = $(this).closest(".dashboard-box-list").find(".green").length;
-            $(this).closest(".card").find(".js-num-task").text(completedTask)
+            // let completedTask = $(this).closest(".dashboard-box-list").find(".green").length;
+            //
+            //
+            // $(this).closest(".card").find(".js-num-task").text(completedTask)
 
         }
 
     })
 }
+
 
 const validationUploadTest = () => {
     $('#subject-task').keyup(function () {

@@ -9,31 +9,34 @@ import Grid from '@splidejs/splide-extension-grid';
 const CURRENT_ROUTE = $('meta[name=route]').attr('content');
 
 if (CURRENT_ROUTE == "home") {
-    document.addEventListener('DOMContentLoaded', function () {
-        new Splide('#card-slider-primary', {
-            gap: 10,
-            perPage: 3,
-            breakpoints: {
-                600: {
-                    perPage: 1,
-                }
-            },
+    if ($("#card-slider-primary").length) {
+        document.addEventListener('DOMContentLoaded', function () {
+            new Splide('#card-slider-primary', {
+                gap: 10,
+                perPage: 3,
+                breakpoints: {
+                    600: {
+                        perPage: 1,
+                    }
+                },
 
-        }).mount();
-    });
+            }).mount();
+        });
+    }
+    if ($("#card-slider-sectondary").length) {
+        document.addEventListener('DOMContentLoaded', function () {
+            new Splide('#card-slider-secondary', {
+                gap: 10,
+                perPage: 3,
+                breakpoints: {
+                    600: {
+                        perPage: 1,
+                    }
+                },
 
-    document.addEventListener('DOMContentLoaded', function () {
-        new Splide('#card-slider-secondary', {
-            gap: 10,
-            perPage: 3,
-            breakpoints: {
-                600: {
-                    perPage: 1,
-                }
-            },
-
-        }).mount();
-    });
+            }).mount();
+        });
+    }
 }
 
 if (CURRENT_ROUTE == "index.userCourses") {

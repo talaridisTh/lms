@@ -46,16 +46,14 @@ Route::get('/clear', function () {
     return redirect(route("home"));
 });
 //mhn ta svisis akoma mexri na teleiwsw me ta comments
-
 Route::get("/all-material", function () {
 
-    dd(DB::table("materials")->get() , DB::table("courses")->get() );
+    dd(DB::table("materials")->get(), DB::table("courses")->get());
 });
 Route::get("/all-materials", function () {
 
     return DB::table("materials")->get();
 });
-
 Route::get("/delete/all-post", function () {
     dump([App\Models\Post::all(), \App\Models\Comment::all(), \App\Models\Likable::all(), \App\Models\Attachment::all()]);
     DB::table("posts")->delete();
@@ -269,7 +267,7 @@ Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
     Route::get("/home/account/{user}", [UserController::class, "index"])->name("index.account");
     Route::post("/home/account/{user}/update", [UserController::class, "update"])->name("index.update");
     Route::post("/home/account/{user}/upload-avatar", [UserController::class, "uploadAvatar"])->name("index.uploadAvatar");
-    Route::get("home/material/", [MaterialController::class,'material'])->name("index.material");
+    Route::get("home/material/", [MaterialController::class, 'material'])->name("index.material");
 //    Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
 //! Course
     Route::post('/model/comment', 'Index\CourseController@modelComment')->name("index.modelComment")->withoutMiddleware(['verifyCourse']);

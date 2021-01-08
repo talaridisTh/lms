@@ -23525,28 +23525,33 @@ __webpack_require__.r(__webpack_exports__);
 var CURRENT_ROUTE = $('meta[name=route]').attr('content');
 
 if (CURRENT_ROUTE == "home") {
-  document.addEventListener('DOMContentLoaded', function () {
-    new _splidejs_splide__WEBPACK_IMPORTED_MODULE_3___default.a('#card-slider-primary', {
-      gap: 10,
-      perPage: 3,
-      breakpoints: {
-        600: {
-          perPage: 1
+  if ($("#card-slider-primary").length) {
+    document.addEventListener('DOMContentLoaded', function () {
+      new _splidejs_splide__WEBPACK_IMPORTED_MODULE_3___default.a('#card-slider-primary', {
+        gap: 10,
+        perPage: 3,
+        breakpoints: {
+          600: {
+            perPage: 1
+          }
         }
-      }
-    }).mount();
-  });
-  document.addEventListener('DOMContentLoaded', function () {
-    new _splidejs_splide__WEBPACK_IMPORTED_MODULE_3___default.a('#card-slider-secondary', {
-      gap: 10,
-      perPage: 3,
-      breakpoints: {
-        600: {
-          perPage: 1
+      }).mount();
+    });
+  }
+
+  if ($("#card-slider-sectondary").length) {
+    document.addEventListener('DOMContentLoaded', function () {
+      new _splidejs_splide__WEBPACK_IMPORTED_MODULE_3___default.a('#card-slider-secondary', {
+        gap: 10,
+        perPage: 3,
+        breakpoints: {
+          600: {
+            perPage: 1
+          }
         }
-      }
-    }).mount();
-  });
+      }).mount();
+    });
+  }
 }
 
 if (CURRENT_ROUTE == "index.userCourses") {

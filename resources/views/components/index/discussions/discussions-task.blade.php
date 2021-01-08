@@ -105,9 +105,9 @@
                                                            style="margin-left: -6px;"></i> {{$course->title}}
                                                     </h3>
                                                     @hasanyrole('instructor|admin|super-admin')
-                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span
-                                                                class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($allTask)?count($allTask):""}} </span>
-                                                    </h5>
+{{--                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span--}}
+{{--                                                                class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($allTask)?count($allTask):""}} </span>--}}
+{{--                                                    </h5>--}}
                                                     @endhasanyrole
                                                 </div>
                                             </a>

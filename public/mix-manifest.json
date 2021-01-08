@@ -1,9 +1,9 @@
 {
-    "/js/app.js": "/js/app.js?id=9e70577d0436297c8209",
+    "/js/app.js": "/js/app.js?id=2eb82bd882a3bdb70418",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=fe3970d56624fe06f3a4",
     "/css/dashboard/app.css": "/css/dashboard/app.css?id=761ac32e250ede97a697",
     "/css/index/theme.css": "/css/index/theme.css?id=353af1125bb6a80baa13",
-    "/css/index/logIn.css": "/css/index/logIn.css?id=b18ab969c9de2baac976",
+    "/css/index/temp.css": "/css/index/temp.css?id=d1353cb3d7f4aef9d8f8",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=3c84d4b21ddc32a80efc",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=247d88ff9b8a5f3a6614",
     "/js/dashboard/courses/courseProfile.js": "/js/dashboard/courses/courseProfile.js?id=310c1cb46b9db3b7e150",
@@ -30,11 +30,11 @@
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=dad2290485c199bca48f",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=c47fca3905c13e096101",
     "/js/index/chat/message.js": "/js/index/chat/message.js?id=372ec970ae50c0366dbb",
-    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=bc1db12122d6cb3d2857",
-    "/js/index/discussions/discussions.js": "/js/index/discussions/discussions.js?id=10e7ac6c1e4b5bf32a1c",
+    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=2b42dfd3e996ecc53a39",
+    "/js/index/discussions/discussions.js": "/js/index/discussions/discussions.js?id=ab82e0db3959a2395c40",
     "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=dfc0c520448cd0f685d9",
-    "/js/index/index.js": "/js/index/index.js?id=b4fdabdd6ee4692b5c07",
+    "/js/index/index.js": "/js/index/index.js?id=d4099ca54c665548484d",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=ed28b951f03cce3282b4",
-    "/js/index/theme.js": "/js/index/theme.js?id=ffeaab510802046c8d34",
+    "/js/index/theme.js": "/js/index/theme.js?id=4c6fb6049b91006045a6",
     "/js/index/user/user-edit.js": "/js/index/user/user-edit.js?id=acebce15afd339204c09"
 }

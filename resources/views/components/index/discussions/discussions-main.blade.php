@@ -1,4 +1,4 @@
-<div class="filter-thread d-flex justify-content-between stick bg-light mt-2">
+<div class="filter-thread d-flex justify-content-between mb-5 stick bg-light mt-2">
     <div class="d-flex m-2">
         <div class="form-group my-1 p-1">
             <select class="form-control bg-list-thread filter-sidebar" id="">
@@ -27,7 +27,7 @@
 
         <div class="form-group my-1  p-1 position-relative">
             <i class="uil-search position-absolute global-search"></i>
-                <input type="text" class="form-control bg-list-thread js-search-post pl-4" placeholder="Πάτα &quot;/&quot; για αναζήτηση">
+                <input type="text" class="form-control bg-list-thread js-search-post pl-10" placeholder="Πάτα &quot;/&quot; για αναζήτηση">
         </div>
     </div>
 </div>
@@ -36,15 +36,15 @@
     <ul class="threads-main-list p-0 mt-3">
         @forelse($posts  as $post)
 
-            <li class="d-flex list-unstyled bg-list-thread px-3 py-2 mb-3 single-thread" data-post-id="{{$post->id}}">
+            <li class="d-flex list-unstyled bg-list-thread px-6 py-4 mb-5 single-thread" data-post-id="{{$post->id}}">
 
                 <div class="mr-2 d-flex align-items-center ">
-                    <img src="{{$post->user->avatar}}" class="avatar-sm rounded" alt="">
+                    <img src="{{$post->user->thumbnailUrl("avatar")}}" class="avatar-sm rounded" alt="">
                 </div>
 
                 <div class="container-fluid ">
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-7 space-y-2">
                             <h4 class="text-hover-underline cursor-pointer js-thread-title">{{Str::limit($post->title,35,'...')}}</h4>
                             <p class="text-dark d-none js-post-body">{{Str::limit($post->body,120,'...')}}</p>
                             <p>

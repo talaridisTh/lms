@@ -4785,6 +4785,8 @@ var bestAnswer = function bestAnswer() {
       while (1) {
         switch (_context11.prev = _context11.next) {
           case 0:
+            // $(".badge-best").addClass("d-none")
+            // $(this).closest(".main-post").find(".badge-best").removeClass("d-none");
             $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info");
             $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt");
 
@@ -4857,7 +4859,7 @@ var closedPost = function closedPost() {
               $(".js-comment-reply").toggleClass("d-none");
               $(".js-sub-comment-reply").toggleClass("d-none");
               $(".discussions-right").find(".first-thread-replay").toggleClass("d-none");
-              $(".ul-thread").find(".first-thread-replay").toggleText('CLOSED', 'ΑΠΑΝΤΗΣΗ').toggleClass("bg-danger");
+              $(".first-thread-replay").toggleClass("bg-danger cursor-not-allowed");
               styleClosedPost();
             }
 
@@ -5064,7 +5066,7 @@ var removeTask = function removeTask() {
 var onCompletedTask = function onCompletedTask() {
   $(".discussions-right").off();
   $(".discussions-right").on("click", ".js-complete-task", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15() {
-    var taskId, _yield$axios$patch5, data, status, completedTask;
+    var taskId, _yield$axios$patch5, data, status;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
       while (1) {
@@ -5090,10 +5092,11 @@ var onCompletedTask = function onCompletedTask() {
                 $(this).closest(".dashboard-box-li").find(".js-complete-task ").removeClass("btn-outline-danger").addClass("btn-outline-custom-primary");
                 $(this).text("Ελέγχθηκε");
                 toastAlert("success", "Αφαίρεση ελέγχου");
-              }
+              } // let completedTask = $(this).closest(".dashboard-box-list").find(".green").length;
+              //
+              //
+              // $(this).closest(".card").find(".js-num-task").text(completedTask)
 
-              completedTask = $(this).closest(".dashboard-box-list").find(".green").length;
-              $(this).closest(".card").find(".js-num-task").text(completedTask);
             }
 
           case 7:

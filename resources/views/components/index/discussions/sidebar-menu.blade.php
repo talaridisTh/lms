@@ -12,48 +12,48 @@
     }
 </style>
 <ul class="ul-thread stick">
-    <li class="py-2 px-4 mt-2 mb-4 list-unstyled first-thread mb-2" data-toggle="modal" data-target="#new-threads">
+    <li class="py-4 px-8 mx-2 mt-2 mb-8 list-unstyled first-thread mb-2" data-toggle="modal" data-target="#new-threads">
         NEO POST
     </li>
 
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread active-thread" id="filter-all-threads">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread active-thread" id="filter-all-threads">
         <i class="font-18 font-18 mr-1 uil-notebooks"></i>
         Όλα τα Post
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread " id="filter-my-question">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread " id="filter-my-question">
         <i class="font-18 mr-1 uil-question-circle"></i>
         Οι Ερωτήσεις μου
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread " id="filter-participation">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread " id="filter-participation">
         <i class="font-18 mr-1 uil-volume"></i>
         Η συμμετοχή μου
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-best-answer">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread" id="filter-best-answer">
         <i class="font-18 mr-1 uil-check-circle"></i>
         My Best Answers
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread">
         <i class="font-18 mr-1 uil-star"></i>
         Following
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-popular-week">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread" id="filter-popular-week">
         <i class="font-18 mr-1 uil-star"></i>
         Popular This Week
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-popular-allTime">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread" id="filter-popular-allTime">
         <i class="font-18 mr-1 uil-star"></i>
         Popular All time
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-isClosed">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread" id="filter-isClosed">
         <i class=" mdi mdi-power mr-1 font-18"></i>
         Closed
     </li>
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread" id="filter-no-replies">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread" id="filter-no-replies">
         <i class="font-18 mr-1 uil-link-h"></i>
         No replies yet
     </li>
 
-    <li class="py-2 px-3 m-1 list-unstyled bg-thread" data-role-user="{{auth()->user()->getRoleNames()[0]}}" id="filter-my-task">
+    <li class="py-4 px-6 m-2 list-unstyled bg-thread" data-role-user="{{auth()->user()->getRoleNames()[0]}}" id="filter-my-task">
         <i class="font-18 mr-1 uil-link-h"></i>
         My task
     </li>
@@ -134,7 +134,7 @@
             <div class="modal-body ">
                 <div class="position-relative">
                     <i class="uil-search position-absolute global-search"></i>
-                    <input type="text" class="form-control bg-list-thread js-search-post css-search-snippet pl-4"
+                    <input type="text" class="form-control bg-list-thread js-search-post css-search-snippet pl-10"
                            placeholder="Αναζήτηση">
                 </div>
 

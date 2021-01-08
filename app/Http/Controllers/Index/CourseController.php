@@ -41,6 +41,14 @@ class CourseController extends Controller {
     public function showMaterial(Course $course, Material $material)
     {
 
+        if($material->type =="Video"){
+            $material->update(["fields"=>null]);
+        }
+        if($material->type =="PDF"){
+            $description = json_decode($material->fields)->description;
+            $material->update(["fields"=>["description"=>$description]]);
+
+        }
         return view("index.courses.template-1.course-material", [
             "curator" => User::FindOrFail(isset($course->user_id) ? $course->user_id : User::where("first_name", "Υδρόγειος")->first()->id),
             "material" => $material,
@@ -73,7 +81,19 @@ class CourseController extends Controller {
     private function getFields($course)
     {
 
-        $courseFields = $course->fields;
+        if($course->type =="Video"){
+            return ;
+        }
+        elseif($course->type =="PDF"){
+            $courseFields = json_encode($course->fields);
+
+        }else{
+            $courseFields = $course->fields;
+
+        }
+
+
+//        dd($courseFields);
         $fields = new stdClass();
         foreach (json_decode($courseFields) as $key => $field)
         {
@@ -100,6 +120,7 @@ class CourseController extends Controller {
         {
             $fields->file = 0;
         }
+
 
         return $fields;
     }

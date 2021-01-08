@@ -112,7 +112,6 @@ class DiscussionController extends Controller {
     public function storeThread(Request $request)
     {
 
-
         $request->validate([
             "title" => "required",
             "course" => "required",
@@ -121,6 +120,8 @@ class DiscussionController extends Controller {
             "title" => $request->title,
             "slug" => Str::slug($request->title, "-"),
             "user_id" => auth()->id(),
+            "postable_type" => "App\Models\Course",
+            "postable_id" =>Course::where("title",$request->course)->first()->id
         ]);
         $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
             ->paginate(10);
@@ -139,8 +140,6 @@ class DiscussionController extends Controller {
         $request->validate([
             "body" => "required",
         ]);
-
-
         Comment::create([
             "body" => $request->body,
             "user_id" => auth()->id(),
@@ -282,7 +281,7 @@ class DiscussionController extends Controller {
     public function best($commentId, Request $request)
     {
         $best = Comment::findOrFail($commentId)->best;
-        Comment::where("post_id", $request->model)->update(["best" => 0]);
+        Comment::where("post_id", $request->postId)->update(["best" => 0]);
         Comment::findOrFail($commentId)->update(["best" => !$best]);
     }
 
@@ -341,7 +340,6 @@ class DiscussionController extends Controller {
     public function completeTask($task)
     {
         $attachments = Attachment::find($task);
-
         if ($attachments->completed_at)
         {
             $attachments->update(["completed_at" => null]);
@@ -350,19 +348,20 @@ class DiscussionController extends Controller {
 
             $attachments->update(["completed_at" => now()]);
         }
-        return response()->json(["completed_at"=>$attachments->completed_at]);
+
+        return response()->json(["completed_at" => $attachments->completed_at]);
     }
 
     public function deleteTask($taskId)
     {
 
-
-        $countAttach = Attachment::where("attachmentable_id",Attachment::findOrFail($taskId)->attachmentable_id)->count();
-        if ($countAttach==1){
-            Homework::where("id",Attachment::findOrFail($taskId)->attachmentable->id)->delete();
+        $countAttach = Attachment::where("attachmentable_id", Attachment::findOrFail($taskId)->attachmentable_id)->count();
+        if ($countAttach == 1)
+        {
+            Homework::where("id", Attachment::findOrFail($taskId)->attachmentable->id)->delete();
         }
         Attachment::findOrFail($taskId)->delete();
-        Attachment::where("attachmentable_id",0)->delete();
+        Attachment::where("attachmentable_id", 0)->delete();
 
         return $this->myTask();
     }
@@ -376,8 +375,8 @@ class DiscussionController extends Controller {
         $mailInfo->receiver = User::findOrFail(3);
         $mailInfo->course = Course::where("title", $request->course)->first();
         $mailInfo->attachment = $request->attachment;
-       $homework=  $this->storeHomework($mailInfo);
-        Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo,$homework));
+        $homework = $this->storeHomework($mailInfo);
+        Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo, $homework));
 
         return $this->myTask();
     }
@@ -406,6 +405,7 @@ class DiscussionController extends Controller {
                 }
             }
         }
+
         return response()->json($res);
     }
 
@@ -431,7 +431,7 @@ class DiscussionController extends Controller {
     private function storeHomework($mail)
     {
 
-         $homework = Homework::create([
+        $homework = Homework::create([
             'student_id' => auth()->id(),
             'instructor_id' => $mail->receiver->id,
             'subject' => $mail->subject,
@@ -442,10 +442,9 @@ class DiscussionController extends Controller {
         {
 
             Homework::find($homework->id)->update([
-               "course_id"=>$mail->course->id
+                "course_id" => $mail->course->id
             ]);
 //            foreach (json_decode($mail->attachment) as $filePath)
-
 //            {
 //                Attachment::findOrFail($filePath->id)->update(
 //                    [
@@ -454,7 +453,8 @@ class DiscussionController extends Controller {
 //                );
 //            }
         }
-        return    $homework;
+
+        return $homework;
     }
 
 }

@@ -3,35 +3,34 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
+
     <meta name="route" content="{{\Request::route()->getName()}}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="{{ $options->description }}" name="description">
-
-
-    <title>{{ $options->title }}</title>
+    <meta content="Coderthemes" name="author"/>
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{$options->logo}}">
+    <link rel="shortcut icon" href="assets/images/favicon.ico">
 
-    <link href="{{ mix('css/index/theme.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+
     <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
-    <style>
-        @font-face {
-            font-family: Helvetica;
-            src: url('{{asset('/fonts/Helvetica.tff')}}');
-        }
-    </style>
+    <link rel="stylesheet" href="{{ mix('css/index/temp.css') }}">
+    <link href="{{ mix('css/index/theme.css') }}" rel="stylesheet">
 
     @yield("style")
 
+
+
 </head>
-<body class="h-full  antialiased"
-      style="font-family: 'Helvetica', sans-serif;">
 
-<div id="app" class=" flex flex-col h-screen relative" style="">
+<body style="font-family: 'Helvetica', sans-serif; " class="loading" data-layout="detached"
+      data-layout-config='{"leftSidebarCondensed":false,"darkMode":true, "showRightSidebarOnStart": true}'>
 
+<!-- Topbar Start -->
 
-    <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative " style="">
+<div id="wrapper-custom">
+
+    <header id="header" class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative mb-4" style="">
 
         <div class="container mx-auto max-w-1xl flex flex-wrap items-center px-1 intro-x">
             <div class="flex-1 flex justify-between items-center">
@@ -178,71 +177,23 @@
         <!-- END: Mobile Menu -->
     </header>
 
+    <!-- Begin page -->
+    <div id="content-custom" style="min-height: 73vh;">
+        @yield('content')
+    </div>
 
-    <main class="my-7 mb-20 flex-grow mx-5 xl:mx-0">
-
-        @yield("content")
-
-    </main>
-
-
-    <footer class="bg-white py-4 lg:px-16  px-8"
-            style=";  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
-
-        <div class="container mx-auto max-w-1xl flex items-center flex-wrap justify-between">
-            <div class="mr-7">
-                <a href="#" class="text-xl">
-                    <img class="" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
-                </a>
-            </div>
-            <div class="flex-1">
-                <p class="text-base font-semibold">{{ $options->contactInfo->city }}</p>
-                <p>{{ $options->contactInfo->address }}, {{ $options->contactInfo->zipCode }}</p>
-                <p>{{ $options->contactInfo->email }}</p>
-                <p>{{ $options->contactInfo->phone }}, {{ $options->contactInfo->fax }}</p>
-            </div>
-            <div class="w-full my-3 sm:my-0 sm:w-auto">
-                <ul class="flex space-x-3">
-                    @foreach($options->social as $social => $link)
-                        <li>
-                            <a href="{{ $link }}">
-                                <img src="{{ asset("images/$social.png" )}}" alt="{{ $social}}" height="30">
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            </div>
-        </div>
-
-    </footer>
 
 </div>
 
 
-<form id="logout-form" action="{{ route('logout') }}" method="POST">
-    @csrf
-</form>
-
 <!-- bundle -->
 <script src="/assets/js/vendor.min.js"></script>
 <script src="/assets/js/app.min.js"></script>
-{{--<script src="{{ mix('js/app.js') }}"></script>--}}
-<script src="{{ mix('js/index/theme.js') }}"></script>
-<script>
-    $('#logout-btn').click(function () {
-        event.preventDefault();
-        $('#logout-form').submit();
-    })
-
-    $(".edit-preview-page-course").on("click", function () {
-        this.href = window.PREVIEW_PAGE_COURSE
-    })
-
-
-</script>
+<script src="{{ mix('js/app.js') }}"></script>
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 
 

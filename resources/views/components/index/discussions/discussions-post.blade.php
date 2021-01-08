@@ -72,33 +72,37 @@
     $closedBtn = $post->closed?"d-none":"";
 @endphp
 
-<div class="main-post d-flex mt-2" data-post-id="{{$post->id}}" style="background-color: rgba(0, 0, 0, 0.1)">
-    <div class="mx-3 my-2">
-        <img height="80" src="{{$post->user->avatar}}" alt="">
+<div class="main-post items-center d-flex py-8 space-x-6" data-post-id="{{$post->id}}" style="background-color: rgba(0, 0, 0, 0.1)">
+    <div class="mx-3 mx-5">
+        <img width="80" height="80" src="{{$post->user->roundedMediumCoverUrl("avatar")}}" alt="">
     </div>
-    <div>
-        <div class="d-flex align-items-center">
-            <h3 class="mt-2 mb-1 font-18 ">{{$post->user->fullName}}</h3>
+    <div class="space-y-5">
+        <div>
+            <div class="d-flex align-items-center">
+                <h3 class=" font-18 ">{{$post->user->fullName}}</h3>
 
-            @if(auth()->id()==$post->user->id)
-                <a class="badge  ml-2 mt-2 font-10 js-post-closed cursor-pointer {{$closedBadge}}">
-                    <i class=" mdi mdi-power font-20"></i>
-                </a>
-            @endif
-            <a href="#" class=" ml-3 mt-2 badge badge-danger badge-closed {{$closedbadgeShow}} font-14">Closed</a>
+                @if(auth()->id()==$post->user->id)
+                    <a class="badge  ml-2 mt-2 font-10 js-post-closed cursor-pointer {{$closedBadge}}">
+                        <i class=" mdi mdi-power font-20"></i>
+                    </a>
+                @endif
+                <a href="#" class=" ml-3 mt-2 badge badge-danger badge-closed {{$closedbadgeShow}} font-14">Closed</a>
 
 
+            </div>
+            <p class="font-12">{{$post->created_at->diffForHumans()}}</p>
         </div>
-        <p class="font-12">{{$post->created_at->diffForHumans()}}</p>
-        <h2 class="bg-thread px-3 py-3 font-16 text-dark d-inline-block mr-2 mb-4">{{$post->title}}</h2>
-        <p>{{$post->body}}</p>
+        <div>
+            <h2 class="bg-thread font-16 text-dark d-inline-block px-3 py-2">{{$post->title}}</h2>
+            <p>{{$post->body}}</p>
+        </div>
     </div>
 </div>
 
-<div class="cnt-reply-list">
+<div class="cnt-reply-list mt-6">
     @isset($post->comments)
         @php  $countPost =0   @endphp
-        <div class="d-flex flex-column reply-list">
+        <div class="d-flex flex-column reply-list space-y-6">
             @foreach($post->comments as $comment)
                 @php
                     $isLiked = auth()->user()->commentIsLiked($comment)?"like-class":"";
@@ -111,12 +115,12 @@
 
                 @if ( !$comment->parent_id )
                     @php  $countPost =$countPost+1   @endphp
-                    <div class="main-post main-reply d-flex mt-1 {{$isBestAnswerCnt}}" id="reply-{{$countPost}}"
+                    <div class="main-post main-reply d-flex py-5 space-x-6 {{$isBestAnswerCnt}}" id="reply-{{$countPost}}"
                          data-comment-id="{{$comment->id}}"
                          data-thread-id="{{$comment->id}}"
                          style="background-color: rgba(0, 0, 0, 0.03)">
                         <div class="mx-3 my-2">
-                            <img height="50" src="{{$comment->user->avatar}}" alt="">
+                            <img height="80" width="80" src="{{$comment->user->avatar}}" alt="">
                         </div>
                         <div class="cnt-list-content">
                             <div class="d-flex justify-content-between align-items-center">
@@ -135,7 +139,9 @@
                                         <i class="font-22 mdi mdi-dots-horizontal mr-3 cursor-pointer"
                                            data-toggle="dropdown"></i>
                                         <div class="dropdown-menu dropdown-menu-animated">
-                                            <button  class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία comment</button>
+                                            <button class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία
+                                                comment
+                                            </button>
                                             <a class="dropdown-item js-delete-comment" href="#">Διαγραφή comment</a>
                                         </div>
                                     </div>
@@ -176,12 +182,12 @@
                             $isBestAnswerBadge = $rep1->best?"":"d-none"
                         @endphp
 
-                        <div class="main-post d-flex mt-1 ml-5 js-reply-body {{$isBestAnswerCnt}}"
+                        <div class="main-post d-flex py-5 ml-10 js-reply-body space-x-6 {{$isBestAnswerCnt}}"
                              data-comment-id="{{$comment->id}}"
                              data-thread-id="{{$rep1->id}}"
                              style="background-color: rgba(0, 0, 0, 0.03)">
                             <div class="mx-3 my-2">
-                                <img height="50" src="{{$rep1->user->avatar}}" alt="">
+                                <img width="80" height="80" src="{{$rep1->user->avatar}}" alt="">
                             </div>
                             <div class="cnt-list-content">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -192,7 +198,7 @@
                                                data-toggle="tooltip"
                                                data-placement="top"
                                                title="Best Answer"
-                                               class="{{$isBestAnswerBtn}} js-best-answer is-active-best cursor-pointer font-20 mt-2 ml-3 text-info mdi mdi-alpha-b-circle"></i>
+                                               class="{{$isBestAnswerBtn}} js-best-answer  cursor-pointer font-20 mt-2 ml-3  mdi mdi-alpha-b-circle"></i>
                                         @endif
                                         <a href="#"
                                            class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best
@@ -204,7 +210,9 @@
                                             <i class="font-22 mdi mdi-dots-horizontal mr-3 cursor-pointer"
                                                data-toggle="dropdown"></i>
                                             <div class="dropdown-menu dropdown-menu-animated">
-                                                <button  class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία comment</button>
+                                                <button class="btn dropdown-item js-edit-comment" href="#">Επεξεργασία
+                                                    comment
+                                                </button>
                                                 <a class="dropdown-item js-delete-comment" href="#">Διαγραφή comment</a>
                                             </div>
                                         </div>
@@ -215,7 +223,7 @@
                                 <div class="cnt-body-comment">
                                     <pre style="font-family:'Open Sans'" class="font-16 p-3">{!!  $rep1->body!!}</pre>
                                 </div>
-                                >
+
                                 <div class="post-buttons d-flex font-18  mb-2">
                                     <i data-comment-id="{{$rep1->id}}"
                                        class="mdi mdi-heart mr-2 btn-reply-like {{$isLiked}}">
@@ -239,7 +247,7 @@
 </div>
 
 
-<div class="form-group  mt-4 replay-bottom first-thread-replay mb-2 {{$closedHide}}" data-toggle="modal"
+<div class="form-group  mt-7 replay-bottom first-thread-replay mb-4 {{$closedHide}}" data-toggle="modal"
      data-target="#new-reply">
-    <p class="p-4 text-dark  font-20"><i class="mdi mdi-hand-pointing-down font-18 mr-2"></i> Απαντησε στο Post</p>
+    <p class="p-8 text-dark  font-20"><i class="mdi mdi-hand-pointing-down font-18 mr-4"></i> Απαντησε στο Post</p>
 </div>

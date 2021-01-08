@@ -1,12 +1,29 @@
-//$mynewcolor:#328af1;
-//
-//.btn-custom-primary {
-//    @include button-variant($mynewcolor, darken($mynewcolor, 7.5%), darken($mynewcolor, 10%), lighten($mynewcolor,5%), lighten($mynewcolor, 10%), darken($mynewcolor,30%));
-//}
-//
-//.btn-outline-custom-primary {
-//    @include button-outline-variant($mynewcolor, #222222, lighten($mynewcolor,5%), $mynewcolor);
-//}
+//! Icons
+@import "../../theme/scss/custom/plugins/icons/dripicons";
+@import "../../theme/scss/custom/plugins/icons/materialdesignicons";
+@import "../../theme/scss/custom/plugins/icons/unicons";
+
+@import "../../plugins/dropzone/css/dropzone.css";
+@import "../../plugins/redactor/redactor.css";
+//!slider
+@import "../../../node_modules/@splidejs/splide/dist/css/themes/splide-sea-green.min.css";
+
+//!slider
+@import "~lightbox2/dist/css/lightbox.css";
+
+//! Theme
+@import "../../theme/scss/app-modern.scss";
+
+$mynewcolor:#328af1;
+
+.btn-custom-primary {
+    @include button-variant($mynewcolor, darken($mynewcolor, 7.5%), darken($mynewcolor, 10%), lighten($mynewcolor,5%), lighten($mynewcolor, 10%), darken($mynewcolor,30%));
+}
+
+.btn-outline-custom-primary {
+    @include button-outline-variant($mynewcolor, #222222, lighten($mynewcolor,5%), $mynewcolor);
+}
+
 
 .template {
     visibility: hidden;

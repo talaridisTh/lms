@@ -64,7 +64,7 @@ mix.js('resources/js/app.js', 'public/js')
         processCssUrls: false,
         postCss: [ tailwindcss('./tailwind.config.js') ],
     })
-    .sass('resources/sass/index/logIn.scss', 'public/css/index/')
+    .sass('resources/sass/index/temp.scss', 'public/css/index/')
     .copy('resources/theme/images', 'public/theme/images')
     .browserSync("http://127.0.0.1:8000/")
     // .sourceMaps()
