@@ -12,7 +12,7 @@
     }
 </style>
 <ul class="ul-thread stick">
-    <li class="py-4 px-8 mx-2 mt-2 mb-8 list-unstyled first-thread mb-2" data-toggle="modal" data-target="#new-threads">
+    <li class="py-4 px-8 mx-2 mt-2 mb-8 list-unstyled first-thread mb-2 " data-toggle="modal" data-target="#new-threads">
         NEO POST
     </li>
 

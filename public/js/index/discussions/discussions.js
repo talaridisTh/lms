@@ -6534,7 +6534,8 @@ $(document).on("click", ".pagination a", /*#__PURE__*/function () {
   return function (_x) {
     return _ref.apply(this, arguments);
   };
-}()); // $(".first-thread").hide();
+}());
+$(".first-thread").hide();
 
 var eventTopBar = function eventTopBar() {
   $(".discussions-right").on("change", ".filter-sidebar", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {

@@ -26,7 +26,7 @@ $(document).on("click", ".pagination a", async function (e) {
         onHideBody()
     }
 })
-// $(".first-thread").hide();
+$(".first-thread").hide();
 const eventTopBar = () => {
     $(".discussions-right").on("change", ".filter-sidebar", async function () {
 
