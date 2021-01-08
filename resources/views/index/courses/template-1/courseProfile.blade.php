@@ -15,7 +15,7 @@
                 </div>
             </figure>
             <section
-                class="flex ml-0  xl:order-none w-full lg:order-last order-none xl:flex-1 mb-16 space-y-8 p-4 pt-0 flex-col items-center lg:items-start text-white">
+                class="flex ml-0  xl:order-none w-full lg:order-last order-none xl:flex-1  space-y-8 p-4 pt-0 flex-col items-center lg:items-start text-white">
                 {{--                {{dd($course->topics)}}--}}
                 @if(count($course->topics)>0)
                     <h3 class="px-6 py-2 text-center border-1 border-white rounded-full">{{$course->topics->first()->title}}</h3>
@@ -26,7 +26,7 @@
                 </section>
             </section>
             <aside
-                class="bg-opacity-10 w-full xl:w-3/10 lg:w-1/2 mt-1 bg-black rounded-xl  flex flex-col items-start">
+                class="bg-opacity-10 w-full xl:w-3/10 lg:w-1/2  bg-black rounded-xl  flex flex-col items-start">
                 <ul class="bg-white px-4 mx-4 mt-6 mb-0 py-2 rounded-full ">
                     <li class="text-black font-semibold  ">Τελευταίες Ανακοινώσεις</li>
                 </ul>

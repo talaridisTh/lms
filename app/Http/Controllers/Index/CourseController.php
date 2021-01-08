@@ -45,8 +45,20 @@ class CourseController extends Controller {
             $material->update(["fields"=>null]);
         }
         if($material->type =="PDF"){
-            $description = json_decode($material->fields)->description;
+            $description = isset(json_decode($material->fields)->description)?1:0;
             $material->update(["fields"=>["description"=>$description]]);
+
+        }
+        if($material->type =="Lesson"){
+            $fields = [
+                "summary" => isset(json_decode($material->fields)->summary)?json_decode($material->fields)->summary:0,
+                "description" => isset(json_decode($material->fields)->description)?json_decode($material->fields)->description:0,
+                "content" => isset(json_decode($material->fields)->content)?json_decode($material->fields)->content:0,
+                "script" => isset(json_decode($material->fields)->script)?json_decode($material->fields)->script:0,
+            ];
+
+            $fieldsEncode = json_encode($fields);
+            $material->update(["fields"=>$fieldsEncode]);
 
         }
         return view("index.courses.template-1.course-material", [
@@ -87,7 +99,8 @@ class CourseController extends Controller {
         elseif($course->type =="PDF"){
             $courseFields = json_encode($course->fields);
 
-        }else{
+        }
+        else{
             $courseFields = $course->fields;
 
         }

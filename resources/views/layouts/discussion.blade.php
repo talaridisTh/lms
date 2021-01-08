@@ -34,8 +34,8 @@
 
         <div class="container mx-auto max-w-1xl flex flex-wrap items-center px-1 intro-x">
             <div class="flex-1 flex justify-between items-center">
-                <a href="/tailwind" class="text-xl">
-                    <img class="logo" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
+                <a href="/tailwind" class="">
+                    <img class="" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
                 </a>
             </div>
 

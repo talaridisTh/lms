@@ -1,6 +1,10 @@
 //pagination event
 import Swal from "sweetalert2";
+import feather from "feather-icons";
 
+$( document ).ready(function() {
+    feather.replace()
+});
 $(document).on("click", ".pagination a", async function (e) {
     e.preventDefault();
     const href = this.href;
