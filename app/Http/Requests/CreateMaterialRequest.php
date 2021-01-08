@@ -24,9 +24,19 @@ class CreateMaterialRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'			=> 'required|string|max:50',
-            'subtitle' 		=> 'required',
-
+            'title' => 'required',
+			'video_link' => 'required_if:type,Video',
+			'link' => 'required_if:type,Link',
+			'content' => 'required_if:type,Announcement',
         ];
-    }
+	}
+	
+	public function messages()
+	{
+		return [
+			"video_link.required_if" => "Το πεδίο είναι υποχρεωτικό όταν ο Tύπος είναι Video.",
+			"link.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Link.",
+			"content.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Ανακοίνωση."
+		];
+	}
 }

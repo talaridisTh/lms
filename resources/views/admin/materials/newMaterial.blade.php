@@ -216,7 +216,7 @@
                                     placeholder="Εισάγετε περιγραφή...">{{ old('description') }}</textarea>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-0">
 								<div class="d-flex justify-content-between align-items-center">
 									<label for="material-content">Περιεχόμενο</label>
 									<input id="content-toggle" data-switch="success"
@@ -225,11 +225,16 @@
 								</div>
                                 <textarea id="material-content" name="content" class="form-control" rows="5"
                                     placeholder="Εισάγετε περιεχόμενο...">{{ old('content') }}</textarea>
-                            </div>
+							</div>
+							@error("content")
+								<span class="custom-error" role="alert">
+									<strong>{{ $message }}</strong>
+								</span>
+							@enderror
 
 							<textarea id="script-area" name="script" hidden>{{ old("script") }}</textarea>
 							
-							<div class="d-flex justify-content-between">
+							<div class="d-flex justify-content-between mt-2">
 								<label>Script</label>
 								<input id="script-toggle" class="js-editors-toggle"
 									data-field="script" type="checkbox" data-switch="success" name="scriptEditor">
