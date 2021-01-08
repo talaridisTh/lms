@@ -72,12 +72,14 @@
                                 <div class="top-menu__title"> Μαθήματα</div>
                             </a>
                         </li>
+                        @hasanyrole("super-admin")
                         <li class=" orange-line intro-x">
                             <a href="{{route('discussion.index')}}" class="top-menu">
                                 <div class="top-menu__icon"><i data-feather="home"></i></div>
                                 <div class="top-menu__title"> Discussions</div>
                             </a>
                         </li>
+                        @endhasanyrole
                         <li class="bg-login rounded-xl intro-x">
                             <a href="javascript:;" class="top-menu" style="color: white!important;">
                                 <div class="top-menu__icon"><i data-feather="hard-drive"></i></div>
@@ -138,13 +140,14 @@
                         <div class="menu__title"> Edit this material</div>
                     </a>
                 </li>
+                @hasanyrole("super-admin")
                 <li>
                     <a href="{{route('dashboard')}}" class="menu">
                         <div class="menu__icon"><i data-feather="home"></i></div>
                         <div class="menu__title"> Discussions</div>
                     </a>
                 </li>
-
+                @endhasanyrole
                 <li>
                     <a href="javascript:;" class="menu">
                         <div class="menu__icon"><i data-feather="box"></i></div>

@@ -9,7 +9,8 @@ use App\Models\Media;
 use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Str;
+use App\Http\Requests\CreateMaterialRequest;
+use App\Http\Requests\UpdateMaterialRequest;
 
 class MaterialController extends Controller {
 
@@ -34,23 +35,8 @@ class MaterialController extends Controller {
         return view('admin/materials/newMaterial')->with($data);
 	}
 
-    public function store(Request $request)
+    public function store(CreateMaterialRequest $request)
     {
-		//TODO to validation apo to content pernaei panta epidi
-		//TODO einai panta gemato endexomenos logo tou editor
-		//TODO na mpei se request gia na figoun apo edo
-		$request->validate([
-			'title' => 'required',
-			'video_link' => 'required_if:type,Video',
-			'link' => 'required_if:type,Link',
-			'content' => 'required_if:type,Announcement',
-		],
-		[
-			"video_link.required_if" => "Το πεδίο είναι υποχρεωτικό όταν ο Tύπος είναι Video.",
-			"link.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Link.",
-			"content.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Ανακοίνωση."
-		]);
-
 		$fields = [
 			"summary" => isset($request->summaryField) ? 1 : 0,
 			"description" => isset($request->descriptionField) ? 1 : 0,
@@ -171,30 +157,19 @@ class MaterialController extends Controller {
         return view('admin.materials.material')->with($data);
     }
 
-    public function update(Request $request, Material $material)
+    public function update(UpdateMaterialRequest $request, Material $material)
     {
-
-		//TODO to validation apo to content pernaei panta epidi
-		//TODO einai panta gemato endexomenos logo tou editor
-		$request->validate([
-			'title' => 'required',
-			'video_link' => 'required_if:type,Video',
-			'link' => 'required_if:type,Link',
-			'content' => 'required_if:type,Announcement',
-		],
-		[
-			"video_link.required_if" => "Το πεδίο είναι υποχρεωτικό όταν ο Tύπος είναι Video.",
-			"link.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Link.",
-			"content.required_if" => "To πεδίο είναι υποχρεωτικό όταν ο Τύπος είναι Ανακοίνωση."
-		]);
-
         $material->update($request->except("instructors", "status", "slug"));
 
 		$material->slug = $material->createSlug($request->title, $material->id);
         $material->status = isset($request->status) ? 1 : 0;
         $material->save();
 
-        $material->users()->sync($request->instructors);
+		$material->users()->sync($request->instructors);
+		
+		if ( $request->type === "PDF" ) {
+			return redirect( "/dashboard/pdf/$material->slug/edit" );
+		}
 
 		return redirect( "/dashboard/materials/$material->slug/edit" );
     }
@@ -252,29 +227,4 @@ class MaterialController extends Controller {
 		return $course;
 	}
 
-	// private function createSlug($title, $id = 0)
-    // {
-    //     $slug = STR::slug($title);
-    //     $allSlugs = $this->getRelatedSlugs($slug, $id);
-    //     if ( ! $allSlugs->contains('slug', $slug) ){
-    //         return $slug;
-    //     }
-
-    //     $i = 2;
-    //     $exist = true;
-    //     do {
-    //         $newSlug = $slug . '-' . $i;
-    //         if (!$allSlugs->contains('slug', $newSlug)) {
-    //             $exist = false;
-    //             return $newSlug;
-    //         }
-    //         $i++;
-    //     } while ($exist);
-    // }
-
-	// protected function getRelatedSlugs($slug, $id = 0)
-    // {
-    //     return Material::select('slug')->where('slug', 'like', $slug.'%')
-    //     	->where('id', '<>', $id)->get();
-    // }
 }
