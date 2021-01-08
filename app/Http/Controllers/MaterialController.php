@@ -194,7 +194,11 @@ class MaterialController extends Controller {
         $material->status = isset($request->status) ? 1 : 0;
         $material->save();
 
-        $material->users()->sync($request->instructors);
+		$material->users()->sync($request->instructors);
+		
+		if ( $request->type === "PDF" ) {
+			return redirect( "/dashboard/pdf/$material->slug/edit" );
+		}
 
 		return redirect( "/dashboard/materials/$material->slug/edit" );
     }
@@ -252,29 +256,4 @@ class MaterialController extends Controller {
 		return $course;
 	}
 
-	// private function createSlug($title, $id = 0)
-    // {
-    //     $slug = STR::slug($title);
-    //     $allSlugs = $this->getRelatedSlugs($slug, $id);
-    //     if ( ! $allSlugs->contains('slug', $slug) ){
-    //         return $slug;
-    //     }
-
-    //     $i = 2;
-    //     $exist = true;
-    //     do {
-    //         $newSlug = $slug . '-' . $i;
-    //         if (!$allSlugs->contains('slug', $newSlug)) {
-    //             $exist = false;
-    //             return $newSlug;
-    //         }
-    //         $i++;
-    //     } while ($exist);
-    // }
-
-	// protected function getRelatedSlugs($slug, $id = 0)
-    // {
-    //     return Material::select('slug')->where('slug', 'like', $slug.'%')
-    //     	->where('id', '<>', $id)->get();
-    // }
 }
