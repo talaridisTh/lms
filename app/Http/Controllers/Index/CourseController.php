@@ -6,7 +6,7 @@ use App\Models\Course;
 use App\Http\Controllers\Controller;
 use App\Models\Material;
 use App\Models\Post;
-use App\Traits\hasComments;
+use App\Traits\HasComments;
 use App\Models\User;
 use App\Traits\UrlCreator;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ use stdClass;
 
 class CourseController extends Controller {
 
-    use hasComments, UrlCreator;
+    use HasComments, UrlCreator;
 
     //
     public function showCourse(Course $course)

@@ -14,7 +14,7 @@ use App\Notifications\NewUserNotification;
 
 class User extends Authenticatable {
 
-    use Notifiable, HasRoles, HasFactory, UrlCreator ;
+    use Notifiable, HasRoles, HasFactory, UrlCreator;
 
     /**
      * The attributes that are mass assignable.

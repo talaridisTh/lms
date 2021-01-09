@@ -5,8 +5,8 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
-class RouteServiceProvider extends ServiceProvider
-{
+class RouteServiceProvider extends ServiceProvider {
+
     /**
      * This namespace is applied to your controller routes.
      *
@@ -31,7 +31,6 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //
-
         parent::boot();
     }
 
@@ -43,12 +42,10 @@ class RouteServiceProvider extends ServiceProvider
     public function map()
     {
         $this->mapApiRoutes();
-
-		$this->mapWebRoutes();
-
-		$this->mapWebDashboardRoutes();
-
-
+        $this->mapWebRoutes();
+        $this->mapWebDashboardRoutes();
+        $this->mapWebIndexRoutes();
+        $this->mapDatabaseRoutes();
     }
 
     /**
@@ -63,25 +60,37 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
             ->namespace($this->namespace)
             ->group(base_path('routes/web.php'));
-	}
-	
-	protected function mapWebDashboardRoutes()
+    }
+
+    protected function mapDatabaseRoutes(){
+
+        route::middleware(['web', "auth","role:super-admin"])
+            ->group(base_path('routes/database/checkDB.php'));
+    }
+
+    protected function mapWebIndexRoutes()
     {
-		Route::middleware(["web", "auth", "role:admin|super-admin"])
-			->group(base_path('routes/dashboard/user/web.php'));
+        route::middleware(['web', "auth"])
+            ->group(base_path('routes/index/discussion/web.php'));
 
-		Route::middleware(["web", "auth", "role:admin|super-admin"])
-			->group(base_path('routes/dashboard/material/web.php'));
+        route::middleware(['web', "auth"])
+            ->group(base_path('routes/index/home/web.php'));
 
+    }
+
+    protected function mapWebDashboardRoutes()
+    {
         Route::middleware(["web", "auth", "role:admin|super-admin"])
-			->group(base_path('routes/dashboard/course/web.php'));
-			
-		Route::middleware(["web", "auth", "role:admin|super-admin"])
-			->group(base_path('routes/dashboard/bundle/web.php'));
-		
-		Route::middleware(["web", "auth", "role:admin|super-admin"])
-			->group(base_path('routes/dashboard/media/web.php'));
-	}
+            ->group(base_path('routes/dashboard/user/web.php'));
+        Route::middleware(["web", "auth", "role:admin|super-admin"])
+            ->group(base_path('routes/dashboard/material/web.php'));
+        Route::middleware(["web", "auth", "role:admin|super-admin"])
+            ->group(base_path('routes/dashboard/course/web.php'));
+        Route::middleware(["web", "auth", "role:admin|super-admin"])
+            ->group(base_path('routes/dashboard/bundle/web.php'));
+        Route::middleware(["web", "auth", "role:admin|super-admin"])
+            ->group(base_path('routes/dashboard/media/web.php'));
+    }
 
     /**
      * Define the "api" routes for the application.
@@ -97,4 +106,5 @@ class RouteServiceProvider extends ServiceProvider
             ->namespace($this->namespace)
             ->group(base_path('routes/api.php'));
     }
+
 }

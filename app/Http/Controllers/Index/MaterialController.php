@@ -6,14 +6,14 @@ use App\Models\Course;
 use App\Http\Controllers\Controller;
 use App\Models\Material;
 use App\Models\Post;
-use App\Traits\hasComments;
+use App\Traits\HasComments;
 use App\Models\User;
 use Illuminate\Http\Request;
 use stdClass;
 
 class MaterialController extends Controller {
 
-    use hasComments;
+    use HasComments;
 
     public function material(Course $course, Material $material)
     {

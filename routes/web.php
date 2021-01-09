@@ -24,6 +24,20 @@ use Illuminate\Support\Carbon;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+//!########################################################
+//! 404
+/*todo na gini 404 selida*/
+Route::fallback(function () {
+    return redirect(route("home"));
+});
+Route::get('/clear', function () {
+    Artisan::call('cache:clear');
+
+    return redirect(route("home"));
+});
+//!######################################################
+//!					middleware				            #
 Route::get("email/verify/{id}/{hash}", 'Auth\VerificationController@verify')->name("email.verify");
 Route::get("auth/verify", 'Auth\VerificationController@show')->name("email.verify.show");
 Route::post("send/email-verification", 'Auth\VerificationController@sendEmailVerification')->name("send.email.verification");
@@ -32,43 +46,24 @@ Route::get("/full-verification", function () {
         "email_verified_at" => Carbon::now()
     ]);
 });
-Auth::routes();
-//!########################################################
-//! 404
-Route::fallback(function () {
-    return redirect(route("home"));
-});
-//!########################################################
-//! clear catch
-Route::get('/clear', function () {
-    Artisan::call('cache:clear');
 
-    return redirect(route("home"));
-});
-//mhn ta svisis akoma mexri na teleiwsw me ta comments
-Route::get("/all-materials", function () {
 
-    return DB::table("materials")->get();
-});
-Route::get("/delete/all-post", function () {
-    dump([App\Models\Post::all(), \App\Models\Comment::all(), \App\Models\Likable::all(), \App\Models\Attachment::all()]);
-    DB::table("posts")->delete();
-    DB::table("likables")->delete();
-    dump([App\Models\Post::all(), \App\Models\Comment::all(), \App\Models\Likable::all()]);
-});
-Route::get("/delete/attachments", function () {
-    dump(\App\Models\Attachment::all(), \App\Models\Homework::all());
-    DB::table("attachments")->delete();
-    DB::table("homeworks")->delete();
-    dump(\App\Models\Attachment::all(), \App\Models\Homework::all());
-});
-//mhn ta svisis akoma mexri na teleiwsw me ta comments
-Route::get("/test", "Index\HomeController@test")->name("user.test");
+
+
+
+
+
+
+
+
 //!########################################################
 //! Dashboard routes
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
+    Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
+    Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
+
 
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
@@ -194,71 +189,10 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
-//!######################################################
-//!					Index  Routes					#
-//!######################################################
+
 });
-//!######################################################
-//!					middleware				            #
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get("/pf/{pass}/{name}", "Index\MediaController@show");
-    //home index
-//    Route::get('/home', 'Index\HomeController@index')->name('home');
-    //excehl
-    Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
-    Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
-
 
 });
-//! GUEST AJAX
-
-//! discussion
-Route::patch("/discussion/update/{id}", "Index\DiscussionController@editComment")->name("discussion.editComment");
-Route::get("/discussion", "Index\DiscussionController@index")->name("discussion.index");
-Route::get("/discussion/my-question", "Index\DiscussionController@myQuestion")->name("discussion.myQuestion");
-Route::get("/discussion/participation", "Index\DiscussionController@participation")->name("discussion.participation");
-Route::get("/discussion/best-answer", "Index\DiscussionController@bestAnswer")->name("discussion.bestAnswer");
-Route::get("/discussion/popular-week", "Index\DiscussionController@popularWeek")->name("discussion.popularWeek");
-Route::get("/discussion/popular-allTime", "Index\DiscussionController@popularAllTime")->name("discussion.popularAllTime");
-Route::get("/discussion/isClosed", "Index\DiscussionController@isClosed")->name("discussion.isClosed");
-Route::get("/discussion/no-replies", "Index\DiscussionController@noReplies")->name("discussion.noReplies");
-Route::get("/discussion/my-task", "Index\DiscussionController@myTask")->name("discussion.myTask");
-Route::patch("/discussion/complete-task/{id}", "Index\DiscussionController@completeTask")->name("discussion.completeTask");
-Route::delete("/discussion/delete-task/{id}", "Index\DiscussionController@deleteTask")->name("discussion.deleteTask");
-Route::get("/discussion/{id}", "Index\DiscussionController@show")->name("discussion.show");
-Route::post("/discussion/search", "Index\DiscussionController@search")->name("discussion.search");
-Route::post("/discussion/post/store-thread", "Index\DiscussionController@storeThread")->name("discussion.thread");
-Route::post("/discussion/post/store-reply", "Index\DiscussionController@storeReply")->name("discussion.reply");
-Route::patch("/discussion/like-comment/{id}", "Index\DiscussionController@likeComment")->name("discussion.likeComment");
-Route::delete("/discussion/delete/{id}", "Index\DiscussionController@delete")->name("discussion.delete");
-Route::patch("/discussion/best/{id}", "Index\DiscussionController@best")->name("discussion.best");
-Route::patch("/discussion/closed/{id}", "Index\DiscussionController@closed")->name("discussion.closed");
-Route::post("/discussion/comment/upload", "Index\DiscussionController@commentUpload")->name("discussion.commentUpload");
-Route::post("/discussion/task/send", "Index\DiscussionController@sendTask")->name("discussion.sendTask");
-Route::post("/discussion/upload-task", "Index\DiscussionController@uploadTask")->name("discussion.uploadTask");
-//Route::post("/pagination", "Index\DiscussionController@pagination")->name("discussion.pagination");
-//!######################################################
-//!					middleware				            #
-Route::group(['middleware' => ["auth", "verifyCourse"]], function () {
-    Route::get("/", [HomeController::class, "index"])->name('home')->withoutMiddleware(['verifyCourse']);
-    Route::get("/home/course/{course}", [CourseController::class, "showCourse"])->name("index.showCourse");
-    Route::get("/home/courses/{user}", [CourseController::class, "userCourses"])->name("index.userCourses")->withoutMiddleware(['verifyCourse']);
-    Route::get("/home/course/{course}/{material}", [CourseController::class, "showMaterial"])->name("index.showMaterial");
-    Route::get("/home/account/{user}", [UserController::class, "index"])->name("index.account")->withoutMiddleware(['verifyCourse']);
-    Route::post("/home/account/{user}/update", [UserController::class, "update"])->name("index.update")->withoutMiddleware(['verifyCourse']);
-    Route::post("/home/account/{user}/upload-avatar", [UserController::class, "uploadAvatar"])->name("index.uploadAvatar")->withoutMiddleware(['verifyCourse']);
-    Route::get("home/material/", [MaterialController::class, 'material'])->name("index.material");
-//    Route::get('/courses/{user}', 'Index\CourseController@show')->name("index.courses")->withoutMiddleware(['verifyCourse']);
-//! Course
-    Route::post('/model/comment', 'Index\CourseController@modelComment')->name("index.modelComment")->withoutMiddleware(['verifyCourse']);
-    Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse")->withoutMiddleware(['verifyCourse']);
-    Route::post("/model/delete", "Index\CourseController@deleteComment")->name("index.deleteComment")->withoutMiddleware(['verifyCourse']);
-    Route::patch("/model/update/{id}", "Index\CourseController@editComment")->name("index.editComment")->withoutMiddleware(['verifyCourse']);
-});
-//!######################################################
-//!					END Index  Routes					#
-//!######################################################
-Route::get("/building-alternative-layout", function () {
-    return view("front/index");
-});
-

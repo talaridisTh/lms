@@ -36,6 +36,11 @@ class HomeController extends Controller {
     public function test()
     {
 
+        $article = User::find(1);
+
+            dd($article->withAll());
+
+        dd($article->relationships());
 //        $url = '/storage/files/2020.12/zoom216.pdf';
 //        $datos = file_get_contents($url);
         $file = storage_path('app/public/files/2020.12/zoom216.pdf');

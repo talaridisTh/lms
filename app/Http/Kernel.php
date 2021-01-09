@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckDatabase;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -67,5 +68,6 @@ class Kernel extends HttpKernel
 		'role' => \App\Http\Middleware\RoleMiddleware::class,
 		'verifyCourse' => \App\Http\Middleware\VerifyCourses::class,
 		'superAdmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
+        "checkDatabase"=>\App\Http\Middleware\CheckDatabase::class,
     ];
 }
