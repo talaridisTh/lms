@@ -7,6 +7,7 @@ use App\Http\Controllers\Index\UserController;
 use App\Models\Material;
 use App\Models\Media;
 use App\Models\MediaDetails;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -25,17 +26,33 @@ use Illuminate\Support\Carbon;
 |
 */
 Auth::routes();
-//!########################################################
 //! 404
 /*todo na gini 404 selida*/
 Route::fallback(function () {
     return redirect(route("home"));
 });
+
+
 Route::get('/clear', function () {
     Artisan::call('cache:clear');
 
     return redirect(route("home"));
 });
+
+
+Route::get("create-json/task", function () {
+    $models = User::all();
+    $models->each(function ($item) {
+        $item->update(
+            ['seen' => '{
+                    "seen_message": 0,
+                     "seen_task": 0
+                    }'
+            ]);
+    });
+});
+
+
 //!######################################################
 //!					middleware				            #
 Route::get("email/verify/{id}/{hash}", 'Auth\VerificationController@verify')->name("email.verify");
@@ -48,14 +65,6 @@ Route::get("/full-verification", function () {
 });
 
 
-
-
-
-
-
-
-
-
 //!########################################################
 //! Dashboard routes
 //!######################################################
@@ -63,8 +72,6 @@ Route::get("/full-verification", function () {
 Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
     Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
     Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
-
-
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
     //! User Routes
     Route::delete('/dashboard/users/{user}', 'UserController@destroy')->name('user.destroy');
@@ -189,7 +196,6 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
-
 });
 
 Route::group(['middleware' => ['auth']], function () {

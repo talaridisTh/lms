@@ -24717,6 +24717,11 @@ var swiperAnnouncements = new swiper_bundle__WEBPACK_IMPORTED_MODULE_1__["defaul
   }
 }); //init slider
 
+$('.test-an').click(swiperAnnouncements, function () {
+  toggleModal();
+  swiperAnnouncements.slideTo($(this).data("swiper-count"));
+}); //specific swipper slider
+
 var fixPaddingTabs = function fixPaddingTabs() {
   var containdClass = [];
   $("#tabs li").each(function (el, index) {
@@ -24932,6 +24937,7 @@ var overlay = document.querySelector('.modal-overlay');
 overlay.addEventListener('click', toggleModal);
 
 function toggleModal() {
+  swiperAnnouncements.slideTo(0);
   var modal = document.querySelector('.modal');
   modal.classList.toggle('opacity-0');
   modal.classList.toggle('pointer-events-none');

@@ -47,6 +47,12 @@ class User extends Authenticatable {
         'updated_at',
         // your other new column
     ];
+    protected $attributes = [
+        'seen' => '{
+            "seen_message": 0,
+            "seen_task": 0
+        }'
+    ];
 
 	public function mails() {
 

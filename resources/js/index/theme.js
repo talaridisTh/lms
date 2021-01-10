@@ -17,7 +17,6 @@ require('../../plugins/redactor/plugins/alignment/alignment');
 // require('../../theme/js/app');
 
 
-
 import './theme/bootstrap'
 import './theme/mobile-menu'
 
@@ -29,19 +28,39 @@ import './theme/tippy'
 
 //jQuery
 $.fn.extend({
-    toggleText: function (a, b){
+    toggleText: function (a, b) {
         const that = this;
-        if (that.text() != a && that.text() != b){
+        if (that.text() != a && that.text() != b) {
             that.text(a);
-        }
-        else
-        if (that.text() == a){
+        } else if (that.text() == a) {
             that.text(b);
-        }
-        else
-        if (that.text() == b){
+        } else if (that.text() == b) {
             that.text(a);
         }
         return this;
     }
 });
+
+$(".js-message-seen").on("click", async function () {
+    try {
+        const {status} = await axios.patch("home/message/update");
+
+        if (status == 200) {
+            $(".js-message-badge").remove();
+        }
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+$(".js-task-seen").on("click", async function () {
+    try {
+        const {status} = await axios.patch("home/task/update");
+
+        // if (status == 200) {
+        //     $(".js-message-badge").remove();
+        // }
+    } catch (e) {
+        console.log(e)
+    }
+})

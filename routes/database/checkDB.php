@@ -52,5 +52,4 @@ Route::prefix("deleteDB")->middleware("checkDatabase")->group(function () {
     })->name("delete.database.id");
 
 });
-//mhn ta svisis akoma mexri na teleiwsw me ta comments
 Route::get("/test", [HomeController::class, "test"])->name("user.test");

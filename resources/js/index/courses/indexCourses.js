@@ -25,17 +25,27 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
         onlyInViewport: false,
     },
 })//init slider
-const fixPaddingTabs  = ()=>{
-    let containdClass =[];
-    $("#tabs li").each(function( el,index ) {
+
+$('.test-an').click(swiperAnnouncements,function(){
+    toggleModal();
+    swiperAnnouncements.slideTo($(this).data("swiper-count"));
+})//specific swipper slider
+
+
+
+
+
+
+const fixPaddingTabs = () => {
+    let containdClass = [];
+    $("#tabs li").each(function (el, index) {
         containdClass.push($(index).hasClass("hidden"));
     });
-    if(containdClass.filter(Boolean).length>=5){
+    if (containdClass.filter(Boolean).length >= 5) {
         $("#tab-contents").toggleClass("ml-1 ml-2")
     }
 }
 fixPaddingTabs();
-
 
 
 $(".spa-click").on("click", async function (e) {
@@ -68,11 +78,11 @@ $(".spa-click").on("click", async function (e) {
             $('.spa-cnt').html($(data).find(".spa-cnt-material"))
 
             $('html,body').animate({
-                    scrollTop: $("#scrollTo").offset().top -150
+                    scrollTop: $("#scrollTo").offset().top - 150
                 },
                 'slow');
 
-                $(".cnt-curator").remove();
+            $(".cnt-curator").remove();
             if ($(".spa-cnt").next().hasClass("lg:mt-0")) {
                 $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0")
             }
@@ -178,12 +188,12 @@ const overlay = document.querySelector('.modal-overlay')
 overlay.addEventListener('click', toggleModal)
 
 function toggleModal() {
+    swiperAnnouncements.slideTo(0);
     const modal = document.querySelector('.modal')
     modal.classList.toggle('opacity-0')
     modal.classList.toggle('pointer-events-none')
+
 } // create modal
-
-
 
 
 // import utilities from '../../index/main';
@@ -287,6 +297,7 @@ function toggleModal() {
 // $(".cnt-announcement").on("click", function (e) {
 //     countSlider = $(e.target).data("count")
 // })
+
 // $('#announcements-modal').on('shown.bs.modal', function (e) {
 //     swiperAnnouncements.update();
 //     var $invoker = $(e.relatedTarget);

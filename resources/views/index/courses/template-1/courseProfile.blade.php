@@ -32,7 +32,7 @@
                 </ul>
                 <ul class="my-6 h-full px-4 w-full space-y-4 announcement">
                     @forelse($announcements as $key =>$announcement)
-                        <li class="text-black font-medium flex ">
+                        <li class="text-black font-medium flex test-an cursor-pointer" data-swiper-count="{{$loop->index}}">
                             <span class="text-white font-medium flex-1 ">{{$announcement->title}}</span>
                             <span class="font-normal text-white">{{$announcement->created_at->format("d/m/Y")}}</span>
                         </li>

@@ -25,27 +25,37 @@ class HomeController extends Controller {
 
     public function index(Material $material)
     {
-        $arrayBanners = json_decode(Option::where("name","Index Carousels")->pluck("value")->first());
+        $arrayBanners = json_decode(Option::where("name", "Index Carousels")->pluck("value")->first());
         $arrayBanners = collect($arrayBanners);
 
         return view("index.home", compact("arrayBanners"));
 
     }
 
+    public function updateSeenMessage()
+    {
+        auth()->user()->update(["seen->seen_message" => 0]);
+    }
+
+    public function updateTaskMessage()
+    {
+        auth()->user()->update(["seen->seen_task" => 0]);
+    }
 
     public function test()
     {
 
-        $article = User::find(1);
+        $models = User::all();
+        $models->each(function ($item) {
+            $item->update(
+                ['seen' => '{
+                    "seen_message": 0,
+                     "seen_task": 0
+                    }'
+                ]);
+        });
+        dd(User::all());
 
-            dd($article->withAll());
-
-        dd($article->relationships());
-//        $url = '/storage/files/2020.12/zoom216.pdf';
-//        $datos = file_get_contents($url);
-        $file = storage_path('app/public/files/2020.12/zoom216.pdf');
-
-//
     }
 
 }
