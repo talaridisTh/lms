@@ -46,7 +46,7 @@ class OptionComposer {
             "description" => $description,
             "contactInfo" => json_decode($contactInfo),
             "social" =>   json_decode($social),
-            "seen"=>json_decode(auth()->user()->seen)
+            "seen"=>auth()->user() ?json_decode(auth()->user()->seen):""
         ];
 
         $view->with("options", $options);
