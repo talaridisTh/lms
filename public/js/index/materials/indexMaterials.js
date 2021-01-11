@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 28);
+/******/ 	return __webpack_require__(__webpack_require__.s = 29);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -46361,14 +46361,14 @@ $(".js-link-material").parent().addClass("d-none");
 
 /***/ }),
 
-/***/ 28:
+/***/ 29:
 /*!**************************************************************!*\
   !*** multi ./resources/js/index/materials/indexMaterials.js ***!
   \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\materials\indexMaterials.js */"./resources/js/index/materials/indexMaterials.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\materials\indexMaterials.js */"./resources/js/index/materials/indexMaterials.js");
 
 
 /***/ })

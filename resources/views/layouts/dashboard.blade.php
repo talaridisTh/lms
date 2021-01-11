@@ -80,6 +80,12 @@
                         <i class="mdi mdi-account-multiple"></i>
                         <span>Χρήστες</span>
                     </a>
+				</li>
+				<li class="side-nav-item">
+                    <a href="/dashboard/homeworks" class="side-nav-link" draggable="false">
+                        <i class="mdi mdi-facebook-workplace"></i>
+                        <span>Εργασίες</span>
+                    </a>
                 </li>
                 <li class="side-nav-item">
                     <a href="/dashboard/materials" class="side-nav-link" draggable="false">

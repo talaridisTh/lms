@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 26);
+/******/ 	return __webpack_require__(__webpack_require__.s = 27);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7201,14 +7201,14 @@ $(".col-span-12").on("click", ".js-update-submit", /*#__PURE__*/_asyncToGenerato
 
 /***/ }),
 
-/***/ 26:
+/***/ 27:
 /*!****************************************************!*\
   !*** multi ./resources/js/index/user/user-edit.js ***!
   \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\user\user-edit.js */"./resources/js/index/user/user-edit.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\user\user-edit.js */"./resources/js/index/user/user-edit.js");
 
 
 /***/ })

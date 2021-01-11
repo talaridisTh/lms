@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 31);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -5108,14 +5108,14 @@ var addWhatchlistAxios = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 30:
+/***/ 31:
 /*!*************************************************!*\
   !*** multi ./resources/js/index/guest/guest.js ***!
   \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\guest\guest.js */"./resources/js/index/guest/guest.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\guest\guest.js */"./resources/js/index/guest/guest.js");
 
 
 /***/ })

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7983,14 +7983,14 @@ $(".discussions-left").on("click", "#filter-my-task", /*#__PURE__*/_asyncToGener
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /*!*************************************************************!*\
   !*** multi ./resources/js/index/discussions/discussions.js ***!
   \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\discussions\discussions.js */"./resources/js/index/discussions/discussions.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\discussions\discussions.js */"./resources/js/index/discussions/discussions.js");
 
 
 /***/ })

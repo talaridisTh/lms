@@ -1,14 +1,6 @@
 <?php
 
-use App\Http\Controllers\Index\CourseController;
-use App\Http\Controllers\Index\HomeController;
-use App\Http\Controllers\Index\MaterialController;
-use App\Http\Controllers\Index\UserController;
-use App\Models\Material;
-use App\Models\Media;
-use App\Models\MediaDetails;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -70,6 +62,10 @@ Route::get("/full-verification", function () {
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
+
+	Route::get("/dashboard/homeworks", "HomeworkController@index");
+	Route::post("homeworks-datatable/main", "HomeworkController@indexDataTable");
+
     Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
     Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");

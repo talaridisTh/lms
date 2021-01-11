@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -22016,14 +22016,14 @@ if(( false?undefined:_typeof(module))==='object'&&module.exports){module.exports
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /*!*******************************************!*\
   !*** multi ./resources/js/index/theme.js ***!
   \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\theme.js */"./resources/js/index/theme.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\theme.js */"./resources/js/index/theme.js");
 
 
 /***/ })

@@ -11,7 +11,15 @@ class Homework extends Model
     use HasFactory;
     protected $guarded = [];
 
+	public function student() {
 
+		return $this->belongsTo(User::class, "student_id");
+	}
+
+	public function course() {
+
+		return $this->belongsTo(Course::class);
+	}
 
     public function attachments()
     {

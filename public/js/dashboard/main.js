@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -3828,14 +3828,14 @@ function resetGalleryBtns(bulk, checkboxes) {
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /*!**********************************************!*\
   !*** multi ./resources/js/dashboard/main.js ***!
   \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\main.js */"./resources/js/dashboard/main.js");
 
 
 /***/ })

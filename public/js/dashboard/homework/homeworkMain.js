@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 14);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -3276,6 +3276,173 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 
 /***/ }),
 
+/***/ "./resources/js/dashboard/homework/homeworkMain.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/dashboard/homework/homeworkMain.js ***!
+  \*********************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
+
+var homeworksDatatable = $("#homeworks-datatable").DataTable({
+  order: [3, "desc"],
+  searchDelay: "1000",
+  processing: true,
+  serverSide: true,
+  autoWidth: false,
+  columnDefs: [{
+    targets: 0,
+    width: "40px"
+  }, {
+    targets: 2,
+    width: "250px"
+  }, {
+    targets: 3,
+    width: "180px"
+  }],
+  ajax: {
+    url: "/homeworks-datatable/main",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type: "post",
+    data: function data(d) {
+      return $.extend({}, d, {
+        startDate: startDate($("#homework-date-range")[0]),
+        endDate: endDate($("#homework-date-range")[0])
+      });
+    }
+  },
+  columns: [{
+    data: 'action',
+    name: 'action',
+    className: "align-middle text-center",
+    orderable: false
+  }, {
+    data: 'student',
+    name: 'student.last_name'
+  }, {
+    data: 'course',
+    name: 'course.title',
+    className: "align-middle text-center"
+  }, {
+    data: 'created_at',
+    name: 'homeworks.created_at',
+    className: "align-middle text-center cursor-default",
+    render: function render(data) {
+      var date = new Date(data);
+      var day = date.toLocaleDateString().replace(/[/]/g, "-");
+      var hours = "".concat(date.getHours()).padStart(2, "0");
+      var minutes = "".concat(date.getMinutes()).padStart(2, "0");
+      var time = "".concat(hours, ":").concat(minutes);
+      return "<p class=\"mb-0\">".concat(day, "</p><p class=\"mb-0\">").concat(time, "</p>");
+    }
+  }],
+  language: _main__WEBPACK_IMPORTED_MODULE_0__["default"].tableLocale,
+  fnInitComplete: function fnInitComplete(oSettings, json) {
+    var lenthSelection = $("select[name='homeworks-datatable_length']");
+    lenthSelection.addClass("select2");
+    lenthSelection.select2({
+      minimumResultsForSearch: -1
+    });
+  },
+  drawCallback: function drawCallback() {
+    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"); // $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+    // $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+
+    $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+  }
+});
+var searchFieldLabel = $("#homeworks-datatable_filter > label > input")[0];
+var dateInput = createDateElm();
+dateInput.appendBefore(searchFieldLabel);
+var dateRange = $("#homework-date-range");
+dateRange.daterangepicker(_main__WEBPACK_IMPORTED_MODULE_0__["default"].datePickerConfig);
+dateRange.on("apply.daterangepicker", function (event, picker) {
+  var startDate = picker.startDate.format('DD/MM/YYYY');
+  var endDate = picker.endDate.format('DD/MM/YYYY');
+  this.classList.add("select2-selected");
+  this.value = "".concat(startDate, " - ").concat(endDate);
+  homeworksDatatable.ajax.reload();
+});
+dateRange.on('cancel.daterangepicker', function (event, picker) {
+  this.classList.remove("select2-selected");
+  dateInput.value = "";
+  homeworksDatatable.ajax.reload();
+});
+
+function startDate(input) {
+  var dateInput = input;
+
+  if (!dateInput || dateInput.value == "") {
+    return "";
+  }
+
+  var dateInputValue = dateInput.value.split(" - ");
+  var firstDate = dateInputValue[0].split("/").reverse().join("-");
+  return firstDate;
+}
+
+function endDate(input) {
+  var dateInput = input;
+
+  if (!dateInput || dateInput.value == "") {
+    return "";
+  }
+
+  var dateInputValue = dateInput.value.split(" - ");
+  var secondDate = dateInputValue[1].split("/").reverse().join("-");
+  return secondDate;
+}
+
+function createDateElm() {
+  var input = document.createElement("input");
+  input.classList.add("form-control", "date", "d-inline-block", "ml-1");
+  input.id = "homework-date-range";
+  input.dataset.toggle = "date-picker";
+  input.dataset.cancelClass = "btn-secondary";
+  input.style.height = "31.96px";
+  input.style.width = "195px";
+  input.placeholder = "Επιλέξτε ημερομηνίες...";
+  return input;
+}
+
+function createSelect(id) {
+  var selectElm = document.createElement("select");
+  selectElm.classList.add("ml-1", "select2");
+  selectElm.id = id;
+  return selectElm;
+}
+
+var tablesLengthLabel = $("#homeworks-datatable_length")[0];
+var courseFilter = createSelect("course-select");
+tablesLengthLabel.append(courseFilter);
+$("#course-select").select2({
+  placeholder: "Όλα τα Courses",
+  width: "150px",
+  ajax: {
+    url: "/courses/json-search",
+    delay: 1000,
+    dataType: "json",
+    data: function data(params) {
+      return {
+        search: params.term,
+        page: params.page || 1
+      };
+    }
+  }
+});
+$("#course-select").on("change", function () {
+  var label = $("#select2-course-select-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value.trim());
+  homeworksDatatable.column(2).search(this.value).draw();
+});
+
+/***/ }),
+
 /***/ "./resources/js/dashboard/main.js":
 /*!****************************************!*\
   !*** ./resources/js/dashboard/main.js ***!
@@ -3828,41 +3995,14 @@ function resetGalleryBtns(bulk, checkboxes) {
 
 /***/ }),
 
-/***/ "./resources/js/dashboard/users/userCreate.js":
-/*!****************************************************!*\
-  !*** ./resources/js/dashboard/users/userCreate.js ***!
-  \****************************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
-//!######################################
-//! 				Imports				#
-//!######################################
-
-$R("#profil", _main__WEBPACK_IMPORTED_MODULE_0__["default"].redactorConfig);
-$(".tab-link").on("show.bs.tab", function (event) {
-  event.preventDefault();
-  Swal.fire({
-    icon: 'info',
-    title: 'Προσοχή!',
-    html: "<p class=\"mb-0\">\u0398\u03B1 \u03C0\u03C1\u03AD\u03C0\u03B5\u03B9 \u03BD\u03B1 \u03B1\u03C0\u03BF\u03B8\u03B7\u03BA\u03B5\u03CD\u03C3\u03B5\u03C4\u03B5 \u03C4\u03BF\u03BD \u03C7\u03C1\u03AE\u03C3\u03C4\u03B7</p>\u03B3\u03B9\u03B1 \u03BD\u03B1 \u03C3\u03C5\u03BD\u03B5\u03C7\u03AF\u03C3\u03B5\u03C4\u03B5!",
-    confirmButtonColor: '#536de6'
-  });
-});
-
-/***/ }),
-
-/***/ 14:
-/*!**********************************************************!*\
-  !*** multi ./resources/js/dashboard/users/userCreate.js ***!
-  \**********************************************************/
+/***/ 18:
+/*!***************************************************************!*\
+  !*** multi ./resources/js/dashboard/homework/homeworkMain.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\users\userCreate.js */"./resources/js/dashboard/users/userCreate.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\homework\homeworkMain.js */"./resources/js/dashboard/homework/homeworkMain.js");
 
 
 /***/ })

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 21);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -4282,14 +4282,14 @@ function resetGalleryBtns(bulk, checkboxes) {
 
 /***/ }),
 
-/***/ 20:
+/***/ 21:
 /*!*********************************************************!*\
   !*** multi ./resources/js/dashboard/mail/edit-email.js ***!
   \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\mail\edit-email.js */"./resources/js/dashboard/mail/edit-email.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\mail\edit-email.js */"./resources/js/dashboard/mail/edit-email.js");
 
 
 /***/ })

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -5497,14 +5497,14 @@ _theme_js_vendor_dragula_min_js__WEBPACK_IMPORTED_MODULE_1___default()([primaryC
 
 /***/ }),
 
-/***/ 22:
+/***/ 23:
 /*!************************************************************!*\
   !*** multi ./resources/js/dashboard/settings/home-page.js ***!
   \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
 
 
 /***/ })

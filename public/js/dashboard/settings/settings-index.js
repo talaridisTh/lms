@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -4780,14 +4780,14 @@ function swalDelete() {
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /*!*****************************************************************!*\
   !*** multi ./resources/js/dashboard/settings/settings-index.js ***!
   \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\settings\settings-index.js */"./resources/js/dashboard/settings/settings-index.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\settings\settings-index.js */"./resources/js/dashboard/settings/settings-index.js");
 
 
 /***/ })
