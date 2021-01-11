@@ -24721,19 +24721,19 @@ $('.test-an').click(swiperAnnouncements, function () {
   toggleModal();
   swiperAnnouncements.slideTo($(this).data("swiper-count"));
 }); //specific swipper slider
+//
+//
+// const fixPaddingTabs = () => {
+//     let containdClass = [];
+//     $("#tabs li").each(function (el, index) {
+//         containdClass.push($(index).hasClass("hidden"));
+//     });
+//     if (containdClass.filter(Boolean).length >= 5) {
+//         $("#tab-contents").toggleClass("ml-1 ml-2")
+//     }
+// }
+// fixPaddingTabs();
 
-var fixPaddingTabs = function fixPaddingTabs() {
-  var containdClass = [];
-  $("#tabs li").each(function (el, index) {
-    containdClass.push($(index).hasClass("hidden"));
-  });
-
-  if (containdClass.filter(Boolean).length >= 5) {
-    $("#tab-contents").toggleClass("ml-1 ml-2");
-  }
-};
-
-fixPaddingTabs();
 $(".spa-click").on("click", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
     var href, _yield$Swal$fire, value, _yield$axios$get, data, status;
@@ -24798,8 +24798,8 @@ $(".spa-click").on("click", /*#__PURE__*/function () {
               $(".spa-tabs")[1].classList.remove("lg:w-4/6");
               $(".spa-tabs")[1].classList.remove("w-full");
               $(".spa-tabs")[1].classList.add("w-auto");
-              initTabs();
-              fixPaddingTabs(); // templateHandler(data, this);
+              initTabs(); // fixPaddingTabs();
+              // templateHandler(data, this);
 
               onFullScreen();
               onCloseFullScreen(); // onPreviewMaterial();

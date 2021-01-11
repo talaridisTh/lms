@@ -34,18 +34,18 @@ $('.test-an').click(swiperAnnouncements,function(){
 
 
 
-
-
-const fixPaddingTabs = () => {
-    let containdClass = [];
-    $("#tabs li").each(function (el, index) {
-        containdClass.push($(index).hasClass("hidden"));
-    });
-    if (containdClass.filter(Boolean).length >= 5) {
-        $("#tab-contents").toggleClass("ml-1 ml-2")
-    }
-}
-fixPaddingTabs();
+//
+//
+// const fixPaddingTabs = () => {
+//     let containdClass = [];
+//     $("#tabs li").each(function (el, index) {
+//         containdClass.push($(index).hasClass("hidden"));
+//     });
+//     if (containdClass.filter(Boolean).length >= 5) {
+//         $("#tab-contents").toggleClass("ml-1 ml-2")
+//     }
+// }
+// fixPaddingTabs();
 
 
 $(".spa-click").on("click", async function (e) {
@@ -91,7 +91,7 @@ $(".spa-click").on("click", async function (e) {
             $(".spa-tabs")[1].classList.remove("w-full")
             $(".spa-tabs")[1].classList.add("w-auto")
             initTabs();
-            fixPaddingTabs();
+            // fixPaddingTabs();
             // templateHandler(data, this);
             onFullScreen();
             onCloseFullScreen();

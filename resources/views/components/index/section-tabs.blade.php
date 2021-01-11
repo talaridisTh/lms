@@ -36,35 +36,35 @@
         </section>
         <div class="rounded mx-auto mt-7">
             <!-- Tabs -->
-            <ul id="tabs" class="inline-flex px-1 w-full space-x-1">
+            <ul id="tabs" class="inline-flex px-1 w-full ">
 
                 @if(get_class($model)=="App\Models\Material")
-                    <li class="bg-white px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px
+                    <li class="bg-white px-4 mr-1 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px
                 {{isset($fields->content)?$fields->content==0?"hidden":"":"hidden"}}">
                         <a href="#content">Content</a>
                     </li>
                 @endif
-                <li class="bg-white px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px
+                <li class="bg-white px-4 mr-1 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t border-t border-r border-l -mb-px
                 {{isset($fields->description)?$fields->description==0?"hidden":"":"hidden"}}">
 
                     <a href="#first">Πληροφορίες</a>
                 </li>
-                <li class="px-4 text-gray-80 bg-gray-100 font-semibold py-2 rounded-t
+                <li class="px-4 mr-1 text-gray-80 bg-gray-100 font-semibold py-2 rounded-t
                 {{isset($fields->summary)?$fields->summary==0?"hidden":"":"hidden"}}">
                     <a
                         href="#second">Περίληψη</a></li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t
+                <li class="px-4 mr-1 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t
                 {{isset($fields->file)?$fields->file==0?"hidden":"":"hidden"}}">
                     <a href="#third">Αρχεία</a>
                 </li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t
+                <li class="px-4 mr-1 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t
                 {{isset($fields->media)?$fields->media==0?"hidden":"":"hidden"}}">
                     <a href="#fourth">Media</a>
                 </li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t
+                <li class="px-4 mr-1 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t
                 {{isset($fields->script)?$fields->script==0?"hidden":"":"hidden"}}">
                     <a href="#quiz">Quiz</a></li>
-                <li class="px-4 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a
+                <li class="px-4 mr-1 text-gray-80 bg-gray-200 font-semibold py-2 rounded-t "><a
                         href="#disscussion">Συζήτηση</a>
                 </li>
             </ul>

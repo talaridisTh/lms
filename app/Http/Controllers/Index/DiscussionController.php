@@ -372,7 +372,7 @@ class DiscussionController extends Controller {
         $mailInfo->subject = $request->subject;
         $mailInfo->body = $request->body;
         $mailInfo->sender = auth()->user();
-        $mailInfo->receiver = User::findOrFail(3);
+        $mailInfo->receiver = User::findOrFail($request->curator);
         $mailInfo->course = Course::where("title", $request->course)->first();
         $mailInfo->attachment = $request->attachment;
         $homework = $this->storeHomework($mailInfo);
