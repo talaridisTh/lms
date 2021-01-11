@@ -37,6 +37,7 @@ class UserController extends Controller {
         $user = new User();
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
+        $user->name = $request->last_name ." ". $request->first_name;
         $user->avatar = "/images/avatar-placeholder.png";
         $user->email = $request->email;
         $user->slug = Str::slug($request->email);
@@ -74,6 +75,7 @@ class UserController extends Controller {
     {
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
+        $user->name = $request->last_name ." ". $request->first_name;
         $user->email = $request->email;
         $user->slug = Str::slug($request->email);
         $user->phone = $request->phone;
@@ -87,11 +89,14 @@ class UserController extends Controller {
 
             $user->password_encrypt = Crypt::encryptString($request->password);
 			$user->password = Hash::make($request->password);
+			$user->save();
 			
 			$user->notify(new ChangedPasswordNotification);
 		}
+		else {
+			$user->save();
+		}
 		
-		$user->save();
 
         $user->syncRoles($request->role);
 
