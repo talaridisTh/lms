@@ -47,12 +47,8 @@ class HomeController extends Controller {
 
         $models = User::all();
         $models->each(function ($item) {
-            $item->update(
-                ['seen' => '{
-                    "seen_message": 0,
-                     "seen_task": 0
-                    }'
-                ]);
+            $item->update(["dark_mode"=>1]);
+            $item->update(["name"=>$item->first_name." ".$item->last_name]);
         });
         dd(User::all());
 
