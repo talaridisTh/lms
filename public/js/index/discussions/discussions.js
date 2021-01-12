@@ -7070,7 +7070,7 @@ var onEditComment = function onEditComment() {
     var postId = $(".main-post").data("post-id");
     var author = thisContainer.find(".author-reply");
     var pre = thisContainer.find("pre");
-    thisContainer.find(".cnt-body-comment").append("\n             <div class=\"btn-group cnt-btn-comment my-2\" role=\"group\" >\n                 <button class=\"btn btn-sm mr-2 mx-2 btn-secondary btn-body-close\">Close</button>\n                 <button class=\"btn btn-sm btn-primary btn-body-edit\">Edit</button>\n            </div>");
+    thisContainer.find(".cnt-body-comment").append("\n             <div class=\"btn-group cnt-btn-comment my-3 space-x-3\" role=\"group\" >\n                 <button class=\"px-2 py-1 rounded-lg text-black bg-gray-300 btn-body-close\">Close</button>\n                 <button class=\"px-3 py-1 rounded-lg bg-blue-300 text-black btn-body-edit\">Edit</button>\n            </div>");
     pre.replaceWith(function () {
       thisContainer.find($(".author-reply").remove());
       return $("<input />", {

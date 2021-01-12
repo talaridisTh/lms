@@ -1,6 +1,12 @@
 import Swiper from 'swiper/bundle'; //slider.js
 import 'swiper/swiper-bundle.css'; // slider.css
 import "lightbox2/dist/js/lightbox" //lightbox
+import feather from "feather-icons"; //icon feather
+import * as FilePond from 'filepond';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css';
+
+feather.replace();
 
 var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
     autoHeight: true, //enable auto height
@@ -31,21 +37,6 @@ $('.test-an').click(swiperAnnouncements, function () {
     swiperAnnouncements.slideTo($(this).data("swiper-count"));
 })//specific swipper slider
 
-
-//
-//
-// const fixPaddingTabs = () => {
-//     let containdClass = [];
-//     $("#tabs li").each(function (el, index) {
-//         containdClass.push($(index).hasClass("hidden"));
-//     });
-//     if (containdClass.filter(Boolean).length >= 5) {
-//         $("#tab-contents").toggleClass("ml-1 ml-2")
-//     }
-// }
-// fixPaddingTabs();
-
-
 $(".spa-click").on("click", async function (e) {
     e.preventDefault();
     const href = $(this).data("href")
@@ -68,7 +59,6 @@ $(".spa-click").on("click", async function (e) {
 
     try {
         const {data, status} = await axios.get(href)
-        console.log(href)
         if (status == 200) {
             $(".spa-click").removeClass("bg-gray-400")
             $(this).addClass("bg-gray-400")
@@ -85,11 +75,6 @@ $(".spa-click").on("click", async function (e) {
                 $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0")
             }
 
-
-            // for (let i = 2; i < $("body .modal").length; i++) {
-            //     console.log(i)
-            //     $("body .modal")[i].remove();
-            // }
 
             $(".spa-tabs")[1].classList.remove("lg:w-4/6")
             $(".spa-tabs")[1].classList.remove("w-full")
@@ -177,11 +162,12 @@ const initTabs = () => {
 } // create tabs
 initTabs();
 
-
 const button = document.querySelector('.modal-button-custom')
+
 button.addEventListener('click', toggleModal)
 
 const overlay = document.querySelector('.modal-overlay-custom')
+
 overlay.addEventListener('click', toggleModal)
 
 function toggleModal() {
@@ -191,6 +177,45 @@ function toggleModal() {
     modal.classList.toggle('pointer-events-none')
 
 } // create modal
+
+FilePond.setOptions({
+    maxFiles: 6,
+    allowMultiple: true,
+    className: "js-filepond-file-dragging",
+    labelIdle: "<i class=\"mdi text-black mdi-upload mr-4\"></i><span  class='text-black'>Ανέβασμα εργασίας</span>",
+    allowReorder: true,
+    credits: false,
+
+    chunkUploads: true
+
+});
+
+let dropzone = document.querySelector(".filepond-task");
+const pond = FilePond.create(dropzone, {
+    server: {
+        url: window.location.origin,
+        process: {
+            url: '/discussion/upload-task',
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+            },
+            addfile: (formData) => {
+                formData.append('Hello', 'World');
+                return formData;
+            }
+        }
+
+    },
+
+    onprocessfiles: function () {
+
+
+    },
+    onaddfile: function (error, file) {
+        console.log('File added', file);
+    },
+
+});
 
 
 // import utilities from '../../index/main';
@@ -668,6 +693,7 @@ $(document).on("click", ".js-form-reply", async function (e) {
             delete this.dataset.upload;
             this.disabled = false
             $(".text-reply-comment").text("Νέο μήνυμα")
+            feather.replace()
         }
 
     } catch (e) {
@@ -678,27 +704,31 @@ $(document).on("click", ".js-form-reply", async function (e) {
 
 //edit comment
 const onEditComment = () => {
-    $(".cnt-reply-list").on("click", ".js-edit-comment", function (e) {
+
+    $(document).on("click", ".js-edit-comment", function (e) {
+
         e.preventDefault()
-        $(".js-edit-comment").prop("disabled", true)
-        const thisContainer = $(this).closest(".main-post");
-        const commentId = this.closest(".main-post").dataset.threadId
-        const postId = $(".hidden-post").data("model-id")
-        const namespace = $(".hidden-post").data("namespace")
+        $(".dropdown").addClass("hidden");
+        $(".dropdown-box__content").addClass("hidden");
+
+        const thisContainer = $(`.comment-${$(this).data("class-comment")}`)
+        const commentId = thisContainer.data('threadId');
+        const postId = $(".hidden-post").data("model-id");
+        const namespace = $(".hidden-post").data("namespace");
         let author = thisContainer.find(".author-reply")
         const pre = thisContainer.find("pre");
         thisContainer.find(".cnt-body-comment").append(`
-             <div class="btn-group cnt-btn-comment my-2" role="group" >
-                 <button class="btn btn-sm mr-2 mx-2 btn-secondary btn-body-close">Close</button>
-                 <button class="btn btn-sm btn-primary btn-body-edit">Edit</button>
+             <div class="btn-group cnt-btn-comment my-2 space-x-3" role="group" >
+                <button class="px-2 py-1 rounded-md text-black bg-gray-300 hover:bg-gray-500 btn-body-close">Close</button>
+                 <button class="px-3 py-1 rounded-md bg-blue-300 hover:bg-blue-500 text-black btn-body-edit">Edit</button>
             </div>`)
         pre.replaceWith(function () {
-            thisContainer.find($(".author-reply").remove());
-            return $("<input />", {
-                "type": "text",
+
+            return $("<textarea  />", {
+                // "type": "text",
                 "name": "body",
-                'value': $(this).text(),
-                'class': 'form-control edit-input',
+                'value': $(pre).text(),
+                'class': 'edit-input focus:outline-none focus:ring focus:border-blue-300 shadow-inner bg-white w-full rounded-md  text-grey-darkest flex-1 p-2 mt-4 bg-transparent',
             })
         })
 
@@ -713,6 +743,7 @@ const onEditComment = () => {
         })
 
         $(".btn-body-edit").on("click", async function () {
+
             const {data, status} = await axios.patch(`/model/update/${commentId}`, {
                 postId,
                 editBody: `${author[0].outerHTML} ${$(".edit-input").val()}`,
@@ -722,14 +753,17 @@ const onEditComment = () => {
             if (status == 200) {
                 $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
 
+                $(".dropdown").removeClass("hidden");
+                $(".dropdown-box__content").removeClass("hidden");
+                feather.replace()
             }
         })
 
         $(".btn-body-close").on("click", function (e) {
             $(".edit-input").replaceWith(pre);
-            thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
             $(".cnt-btn-comment").remove();
-            $(".js-edit-comment").prop("disabled", false)
+            $(".dropdown").removeClass("hidden");
+            $(".dropdown-box__content").removeClass("hidden");
         })
     })
 }
@@ -825,9 +859,10 @@ const bestAnswer = () => {
 
 const onDeleteComment = () => {
 
-    $(".cnt-reply-list").on("click", ".js-delete-comment", async function (e) {
+    $(document).on("click", ".js-delete-comment", async function (e) {
         e.preventDefault();
-        const id = this.closest(".main-post").dataset.threadId
+        const thisContainer = $(`.comment-${$(this).data("class-comment")}`)
+        const id = thisContainer.data('thread-id')
         const modelInfo = $(".hidden-post").data("model-info");
         try {
             const {data, status, comment} = await axios.post(`/model/delete`, {
@@ -842,7 +877,10 @@ const onDeleteComment = () => {
             if (status == 200) {
                 $(".cnt-reply-list").html($(data.view).find(".reply-list")) //reload post
 
+                feather.replace()
+                $(".dropdown-box").hide();
             }
+
 
         } catch (e) {
             console.log(e)

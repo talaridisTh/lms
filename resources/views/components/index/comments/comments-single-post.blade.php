@@ -7,7 +7,7 @@
 @endphp
 
 
-<div class="main-post main-reply flex mt-2 bg-gray-200 py-5 px-3 {{$class}} rounded-xl {{$isBestAnswerCnt}}"
+<div class="main-post main-reply flex mt-2 bg-gray-200 py-5 px-3 {{$class}} rounded-xl {{$isBestAnswerCnt}} comment-{{$comment->id}}"
      data-comment-id="{{$comment->id}}"
      data-thread-id="{{$comment->id}}"
      data-count="{{$post->id}}">
@@ -38,7 +38,8 @@
                         <div class="dropdown-box__content box dark:bg-dark-1 p-2">
                             <a href=""
                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white
-                                   dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md js-edit-comment">
+                                   dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md js-edit-comment"
+                               data-class-comment="{{$comment->id}}">
                                 <i data-feather="edit-2"
                                    class="w-4 h-4 mr-2"></i>
                                 <span class="text-sm">
@@ -47,7 +48,8 @@
                             </a>
                             <a href=""
                                class="flex items-center block p-2 transition duration-300 ease-in-out bg-white
-                                    dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md js-delete-comment">
+                                    dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md js-delete-comment"
+                               data-class-comment="{{$comment->id}}">
                                 <i data-feather="trash"
                                    class="w-4 h-4 mr-2"></i>
                                 <span class="text-sm">
@@ -95,7 +97,7 @@
                         data-target="#new-reply">Aπάντηση
                 </a>
             </div>
-            <div class="single-post-show d-none">
+            <div class="single-post-show hidden">
                 <i class="uil-align-left bg-list-thread  cursor-pointer"></i>
             </div>
         </div>

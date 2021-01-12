@@ -2,7 +2,7 @@
 import Swal from "sweetalert2";
 import feather from "feather-icons";
 
-$( document ).ready(function() {
+$(document).ready(function () {
     feather.replace()
 });
 $(document).on("click", ".pagination a", async function (e) {
@@ -387,9 +387,9 @@ const onEditComment = () => {
         let author = thisContainer.find(".author-reply")
         const pre = thisContainer.find("pre");
         thisContainer.find(".cnt-body-comment").append(`
-             <div class="btn-group cnt-btn-comment my-2" role="group" >
-                 <button class="btn btn-sm mr-2 mx-2 btn-secondary btn-body-close">Close</button>
-                 <button class="btn btn-sm btn-primary btn-body-edit">Edit</button>
+             <div class="btn-group cnt-btn-comment my-3 space-x-3" role="group" >
+                 <button class="px-2 py-1 rounded-lg text-black bg-gray-300 btn-body-close">Close</button>
+                 <button class="px-3 py-1 rounded-lg bg-blue-300 text-black btn-body-edit">Edit</button>
             </div>`)
         pre.replaceWith(function () {
             thisContainer.find($(".author-reply").remove());
@@ -526,30 +526,29 @@ const bestAnswer = () => {
         // $(this).closest(".main-post").find(".badge-best").removeClass("d-none");
 
 
+        $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
 
-            $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
-
-            $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
+        $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
 
 
-            if ($(this).hasClass("is-active-best")) {
+        if ($(this).hasClass("is-active-best")) {
 
-                $(this).closest(".main-post").addClass("best-answer-cnt")
+            $(this).closest(".main-post").addClass("best-answer-cnt")
 
-                $(this).removeClass("is-active-best text-info").addClass("text-success")
+            $(this).removeClass("is-active-best text-info").addClass("text-success")
 
-                $(this).parent().append('<a href="#" class="ml-3 mt-2 badge badge-success badge-best font-14">Best Answer</a>\n');
-            } else {
+            $(this).parent().append('<a href="#" class="ml-3 mt-2 badge badge-success badge-best font-14">Best Answer</a>\n');
+        } else {
 
-                $(this).closest(".main-post").removeClass("best-answer-cnt")
+            $(this).closest(".main-post").removeClass("best-answer-cnt")
 
-                $(this).removeClass("text-success").addClass("is-active-best text-info")
+            $(this).removeClass("text-success").addClass("is-active-best text-info")
 
-                $(this).parent().find(".badge-best").remove()
+            $(this).parent().find(".badge-best").remove()
 
-            }
+        }
 
-            $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
+        $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
 
         let commentId = $(this).closest(".main-post").data("threadId")
         let postId = $(".main-post")[0].dataset.postId;

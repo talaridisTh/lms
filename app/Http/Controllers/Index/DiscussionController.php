@@ -388,14 +388,7 @@ class DiscussionController extends Controller {
             Homework::find($homework->id)->update([
                 "course_id" => $mail->course->id
             ]);
-//            foreach (json_decode($mail->attachment) as $filePath)
-//            {
-//                Attachment::findOrFail($filePath->id)->update(
-//                    [
-//                        "mail_id" => $mailCreated->id
-//                    ]
-//                );
-//            }
+
         }
 
         return $homework;
@@ -403,22 +396,34 @@ class DiscussionController extends Controller {
 
     public function uploadTask(Request $request)
     {
-        $files = $request->file;
         $res = [];
-//        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
-        foreach ($files as $key => $file) {
-            if ($file->isValid()) {
+        if (isset($request->filepond)) {
+            if ($request->filepond->isValid()) {
 
-                if ($file->getSize() <= 50000000) { // 50MB
-                    $media = $this->storeFile($file);
-//                        auth()->user()->media()->attach($media->id, ["usage" => 6]);
-                    $res["file-" . $key] = [
-                        "url" => $media->rel_path,
-                        "name" => $media->original_name . "." . $media->ext,
-                        "id" => $media->id,
-                    ];
+                if ($request->filepond->getSize() <= 50000000) { // 50MB
+                    $media = $this->storeFile($request->filepond);
+
                 }
 
+            }
+
+        } else {
+            $files = $request->file;
+//        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
+            foreach ($files as $key => $file) {
+                if ($file->isValid()) {
+
+                    if ($file->getSize() <= 50000000) { // 50MB
+                        $media = $this->storeFile($file);
+//                        auth()->user()->media()->attach($media->id, ["usage" => 6]);
+                        $res["file-" . $key] = [
+                            "url" => $media->rel_path,
+                            "name" => $media->original_name . "." . $media->ext,
+                            "id" => $media->id,
+                        ];
+                    }
+
+                }
             }
         }
 
