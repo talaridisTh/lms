@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="description" content="ΥΔΡΟΓΕΙΟΣ EDUCATION">
 
-    <link rel="shortcut icon" href="{{$options->logo}}">
+    <link rel="shortcut icon" href="http://s2.googleusercontent.com/s2/favicons?domain_url=https://idrogios.com">
 
     <title>ΥΔΡΟΓΕΙΟΣ EDUCATION</title>
     <!-- BEGIN: CSS Assets-->

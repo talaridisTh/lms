@@ -23,20 +23,20 @@
 @import "~@splidejs/splide/dist/css/themes/splide-sea-green.min.css";
 @import "../../plugins/redactor/redactor.css";
 
-
-
+// Fonts
+@import 'theme/fonts/roboto.scss';
 //Breakpoint
 @import 'theme/breakpoint';
 
 //animated
 @import "theme/intro";
+@import 'theme/zoom-in';
 // Components
 @import 'theme/tailwind';
 @import 'theme/custom';
 @import 'theme/top-nav';
 @import 'theme/mobile-menu';
 @import 'theme/breadcrumbs';
-//@import 'theme/image-fit';
 @import 'theme/tab';
 @import 'theme/pos-dropdown';
 @import 'theme/pos';
@@ -46,9 +46,7 @@
 @import 'theme/tippy';
 @import 'theme/login';
 @import 'theme/button';
-@import 'theme/zoom-in';
-//@import 'theme/zoom-vanilla';
-//@import 'theme/checkbox';
-//@import 'theme/modal';
+@import 'theme/dropdown';
+@import 'theme/modal';
 
 

@@ -2,34 +2,35 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8"/>
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <meta name="route" content="{{\Request::route()->getName()}}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="{{ $options->description }}" name="description">
+    <meta name="csrf-token"
+          content="{{ csrf_token() }}"/>
+    <meta name="route"
+          content="{{\Request::route()->getName()}}">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta content="{{ $options->description }}"
+          name="description">
 
 
     <title>{{ $options->title }}</title>
     <!-- App favicon -->
-    <link rel="shortcut icon" href="http://s2.googleusercontent.com/s2/favicons?domain_url=https://idrogios.com">
+    <link rel="shortcut icon"
+          href="http://s2.googleusercontent.com/s2/favicons?domain_url=https://idrogios.com">
 
-    <link href="{{ mix('css/index/theme.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="node_modules/@splidejs/splide/dist/css/splide.min.css">
+    <link href="{{ mix('css/index/theme.css') }}"
+          rel="stylesheet">
+    <link rel="stylesheet"
+          href="node_modules/@splidejs/splide/dist/css/splide.min.css">
 
-    <style>
-        @font-face {
-            font-family: Helvetica;
-            src: url('{{asset('/fonts/Helvetica.tff')}}');
-        }
-
-    </style>
 
     @yield("style")
 
 </head>
-<body class="h-full  antialiased"
-      style="font-family: 'Helvetica', sans-serif;">
+<body class="h-full  antialiased">
 
-<div id="app" class=" flex flex-col h-screen relative" style="">
+<div id="app"
+     class=" flex flex-col h-screen relative"
+     style="">
 
     @include("components.index.header",['logo'=>"logo"])
 
@@ -45,8 +46,12 @@
 
         <div class="container mx-auto max-w-1xl flex items-center flex-wrap justify-between">
             <div class="mr-7">
-                <a href="#" class="text-xl">
-                    <img class="" src="{{ $options->logo }}" alt="{{ $options->title }}" height="80">
+                <a href="#"
+                   class="text-xl">
+                    <img class=""
+                         src="{{ $options->logo }}"
+                         alt="{{ $options->title }}"
+                         height="80">
                 </a>
             </div>
             <div class="flex-1">
@@ -60,7 +65,9 @@
                     @foreach($options->social as $social => $link)
                         <li>
                             <a href="{{ $link }}">
-                                <img src="{{ asset("images/$social.png" )}}" alt="{{ $social}}" height="30">
+                                <img src="{{ asset("images/$social.png" )}}"
+                                     alt="{{ $social}}"
+                                     height="30">
                             </a>
                         </li>
                     @endforeach
@@ -73,7 +80,9 @@
 </div>
 
 
-<form id="logout-form" action="{{ route('logout') }}" method="POST">
+<form id="logout-form"
+      action="{{ route('logout') }}"
+      method="POST">
     @csrf
 </form>
 
@@ -96,7 +105,8 @@
 </script>
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 <script>
     var modals = [];

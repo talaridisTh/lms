@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\Comment;
-use App\Models\Course;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
@@ -47,6 +46,15 @@ trait HasComments {
         ]);
     }
 
+    private function attachComment($request, $comment)
+    {
+        foreach ($request->upload as $image) {
+
+            $media = Media::where("original_name", $image)->first()->id;
+            $comment->media()->attach($media, ["usage" => 5]);
+        }
+    }
+
     public function editComment($commentId, Request $request)
     {
         Comment::find($commentId)->update([
@@ -84,6 +92,15 @@ trait HasComments {
 //        ]);
     }
 
+    private function deletePhotoComment($commentId)
+    {
+        $comment = Comment::findOrFail($commentId);
+        $comment->media()->each(function ($com) {
+            $com->delete();
+        });
+        $comment->media()->detach();
+    }
+
     public function addFiles(Request $request)
     {
 
@@ -94,24 +111,6 @@ trait HasComments {
         }
 //        $files = $model->media()->where("type", 1)->get();
 //        return view('components/admin/filesTable', ['files' => $files]);
-    }
-
-    private function deletePhotoComment($commentId)
-    {
-        $comment = Comment::findOrFail($commentId);
-        $comment->media()->each(function ($com) {
-            $com->delete();
-        });
-        $comment->media()->detach();
-    }
-
-    private function attachComment($request, $comment)
-    {
-        foreach ($request->upload as $image) {
-
-            $media = Media::where("original_name", $image)->first()->id;
-            $comment->media()->attach($media, ["usage" => 5]);
-        }
     }
 
 }

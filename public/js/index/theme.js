@@ -20711,6 +20711,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _theme_tab__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./theme/tab */ "./resources/js/index/theme/tab.js");
 /* harmony import */ var _theme_tab__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_theme_tab__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _theme_tippy__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./theme/tippy */ "./resources/js/index/theme/tippy.js");
+/* harmony import */ var _theme_dropdown__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./theme/dropdown */ "./resources/js/index/theme/dropdown.js");
+/* harmony import */ var _theme_modal__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./theme/modal */ "./resources/js/index/theme/modal.js");
+/* harmony import */ var _theme_modal__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_theme_modal__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _theme_show_modal__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./theme/show-modal */ "./resources/js/index/theme/show-modal.js");
+/* harmony import */ var _theme_show_modal__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_theme_show_modal__WEBPACK_IMPORTED_MODULE_8__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -20739,8 +20744,10 @@ __webpack_require__(/*! ../../plugins/redactor/plugins/alignment/alignment */ ".
 
 
 
- // import './theme/modal'
-//jQuery
+
+
+
+ //jQuery
 
 $.fn.extend({
   toggleText: function toggleText(a, b) {
@@ -20841,6 +20848,157 @@ window.cash = cash_dom__WEBPACK_IMPORTED_MODULE_0___default.a;
 
 /***/ }),
 
+/***/ "./resources/js/index/theme/dropdown.js":
+/*!**********************************************!*\
+  !*** ./resources/js/index/theme/dropdown.js ***!
+  \**********************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _popperjs_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @popperjs/core */ "./node_modules/@popperjs/core/lib/index.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+
+(function (cash) {
+  "use strict"; // Hide dropdown
+
+  function hide() {
+    cash(".dropdown-box").each( /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var _this = this;
+
+      var randId;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              if (!(cash(this).attr("id") !== undefined && cash('[data-dropdown-replacer="' + cash(this).attr("id") + '"]').length && cash(this).data("dropdown-programmatically") === undefined)) {
+                _context.next = 7;
+                break;
+              }
+
+              randId = cash(this).attr("id"); // Animate dropdown
+
+              cash(this).removeClass("show");
+              _context.next = 5;
+              return setTimeout(function () {
+                // Move modal element to body
+                cash('[data-dropdown-replacer="' + randId + '"]').replaceWith(_this); // Reset attribute
+
+                cash(_this).removeAttr("style");
+                cash(_this).removeAttr("data-popper-placement");
+              }, 200);
+
+            case 5:
+              _context.next = 8;
+              break;
+
+            case 7:
+              if (cash(this).attr("id") !== undefined && !cash('[data-dropdown-replacer="' + cash(this).attr("id") + '"]').length && cash(this).hasClass("show") && cash(this).data("dropdown-programmatically") === undefined) {
+                cash(this).remove();
+              } else if (cash(this).data("dropdown-programmatically") == "initiate") {
+                // Set programmatically attribute state
+                cash(this).attr("data-dropdown-programmatically", "showed");
+              } else if (cash(this).data("dropdown-programmatically") == "showed") {
+                // Remove programmatically attribute state
+                cash(this).removeAttr("data-dropdown-programmatically");
+              }
+
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    })));
+  } // Show dropdown
+
+
+  function show(dropdown) {
+    var dropdownBox = cash(dropdown).find(".dropdown-box").first();
+    var dropdownToggle = cash(dropdown).find(".dropdown-toggle");
+    var placement = cash(dropdown).data("placement") ? cash(dropdown).data("placement") : "bottom-end";
+    var randId = "_" + Math.random().toString(36).substr(2, 9); // Hide dropdown
+
+    hide();
+
+    if (cash(dropdownBox).length) {
+      // Set dropdown width
+      cash(dropdown).css("position") == "static" ? cash(dropdown).css("position", "relative") : "";
+      cash(dropdownBox).css("width", cash(dropdownBox).css("width")); // Move modal element to body
+
+      cash('<div data-dropdown-replacer="' + randId + '"></div>').insertAfter(dropdownBox);
+      cash(dropdownBox).attr("id", randId).appendTo("body"); // Init popper
+
+      Object(_popperjs_core__WEBPACK_IMPORTED_MODULE_1__["createPopper"])(dropdownToggle[0], dropdownBox[0], {
+        placement: placement
+      }); // Show dropdown
+
+      cash(dropdownBox).addClass("show");
+    }
+  } // Toggle dropdown programmatically
+
+
+  function toggleProgrammatically(dropdown) {
+    var dropdownBox = cash(dropdown).find(".dropdown-box").first();
+
+    if (cash(dropdownBox).length) {
+      showProgrammatically(dropdown);
+    } else {
+      hide();
+    }
+  } // Show dropdown programmatically
+
+
+  function showProgrammatically(dropdown) {
+    if (cash(dropdown).find(".dropdown-box").length) {
+      cash(dropdown).find(".dropdown-box").attr("data-dropdown-programmatically", "initiate");
+    } else {
+      var randId = cash("[data-dropdown-replacer]").data("dropdown-replacer");
+      cash("#" + randId).attr("data-dropdown-programmatically", "initiate");
+    }
+
+    show(dropdown);
+  } // Dropdown event listener
+
+
+  cash("body").on("click", function (event) {
+    var dropdown = cash(event.target).closest(".dropdown");
+    var dropdownToggle = cash(dropdown).find(".dropdown-toggle");
+    var dropdownBox = cash(dropdown).find(".dropdown-box").first();
+    var activeDropdownBox = cash(event.target).closest(".dropdown-box").first();
+    var dismissButton = cash(event.target).data("dismiss");
+
+    if (!cash(dropdown).length && !cash(activeDropdownBox).length || cash(dropdownToggle).length && !cash(dropdownBox).length || dismissButton == "dropdown") {
+      // Hide dropdown
+      hide();
+    } else if (!cash(activeDropdownBox).length) {
+      // Show dropdown
+      show(dropdown);
+    }
+  });
+
+  cash.fn.dropdown = function (event) {
+    if (event == "show") {
+      showProgrammatically(this);
+    } else if (event == "hide") {
+      hide(this);
+    } else if (event == "toggle") {
+      toggleProgrammatically(this);
+    }
+  };
+})(cash);
+
+/***/ }),
+
 /***/ "./resources/js/index/theme/feather.js":
 /*!*********************************************!*\
   !*** ./resources/js/index/theme/feather.js ***!
@@ -20913,6 +21071,192 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }
+  });
+})(cash);
+
+/***/ }),
+
+/***/ "./resources/js/index/theme/modal.js":
+/*!*******************************************!*\
+  !*** ./resources/js/index/theme/modal.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function (cash) {
+  // Show or hide global event listener
+  var events = []; // Get highest z-index
+
+  function getHighestZindex() {
+    var zIndex = 52;
+    cash('.modal').each(function () {
+      if (cash(this).css('z-index') !== 'auto' && cash(this).css('z-index') > zIndex) {
+        zIndex = parseInt(cash(this).css('z-index'));
+      }
+    });
+    return zIndex;
+  } // Get scrollbar width
+
+
+  function getScrollbarWidth(el) {
+    return window.innerWidth - cash(el)[0].clientWidth;
+  } // Show modal with z-index
+
+
+  function show(el) {
+    // Move modal element to body
+    cash('<div class="data-replace" data-modal-replacer="' + cash(el).attr('id') + '"></div>').insertAfter(el);
+    cash(el).css({
+      'margin-top': 0,
+      'margin-left': 0
+    });
+    cash(el).appendTo('body'); // Show modal by highest z-index
+
+    setTimeout(function () {
+      cash(el).addClass('show').css('z-index', getHighestZindex() + 1);
+    }, 200); // Setting up modal scroll
+    // cash('body').css('padding-right', (parseInt(cash('body').css('padding-right')) + getScrollbarWidth('html')) + 'px')
+    // .addClass('overflow-y-hidden')
+
+    cash('.modal').removeClass('overflow-y-auto').css('padding-left', '0px');
+    cash(el).addClass('overflow-y-auto').css('padding-left', getScrollbarWidth(el) + 'px').addClass(cash('.modal.show').length ? 'modal__overlap' : ''); // Trigger callback function
+
+    events.forEach(function (val, key) {
+      if (cash(el).attr('id') == cash(val.el).attr('id') && val.event == 'on.show') {
+        events[key].triggerCallback = true;
+      }
+    });
+
+    if ($("body .modal").length > 1) {
+      $("body .modal").first().remove();
+    }
+
+    if ($(".data-replace").length > 1) {
+      $(".data-replace").first().remove();
+    }
+  } // Hide modal & remove modal scroll
+
+
+  function hide(el) {
+    if (cash(el).hasClass('modal') && cash(el).hasClass('show')) {
+      cash(el).removeClass('show');
+      setTimeout(function () {
+        cash(el).removeAttr('style').removeClass('modal__overlap').removeClass('overflow-y-auto'); // Add scroll to highest z-index modal if exist
+
+        cash('.modal').each(function () {
+          if (parseInt(cash(this).css('z-index')) === getHighestZindex()) {
+            cash(this).addClass('overflow-y-auto').css('padding-left', getScrollbarWidth(this) + 'px');
+          }
+        }); // Return back scroll to body if no more modal showed up
+
+        if (getHighestZindex() == 52) {
+          cash('body').removeClass('overflow-y-hidden').css('padding-right', '');
+        } // Return back modal element to it's first place
+
+
+        cash('[data-modal-replacer="' + cash(el).attr('id') + '"]').replaceWith(el);
+      }, 200); // Trigger callback function
+
+      events.forEach(function (val, key) {
+        if (cash(el).attr('id') == cash(val.el).attr('id') && val.event == 'on.hide') {
+          events[key].triggerCallback = true;
+        }
+      });
+    }
+  } // Toggle modal
+
+
+  function toggle(el) {
+    if (cash(el).hasClass('modal') && cash(el).hasClass('show')) {
+      hide(el);
+    } else {
+      show(el);
+    }
+  } // On show
+
+
+  function onShow(el, callback) {
+    events[events.length] = {
+      el: el,
+      event: 'on.show',
+      triggerCallback: false,
+      callback: callback
+    };
+  } // On hide
+
+
+  function onHide(el, callback) {
+    events[events.length] = {
+      el: el,
+      event: 'on.hide',
+      triggerCallback: false,
+      callback: callback
+    };
+  } // Show modal
+
+
+  cash('body').on('click', 'a[data-toggle="modal"]', function () {
+    show(cash(this).attr('data-target'));
+  }); // Hide modal
+
+  cash('body').on('click', function (event) {
+    hide(event.target);
+  }); // Dismiss modal by link
+
+  cash('body').on('click', '[data-dismiss="modal"]', function () {
+    var modal = cash(this).closest('.modal')[0];
+    hide(modal);
+  }); // Detect show or hide event
+
+  setInterval(function () {
+    events.forEach(function (val, key) {
+      if (val.event == 'on.show' && val.triggerCallback) {
+        val.callback();
+        events[key].triggerCallback = false;
+      } else if (val.event == 'on.hide' && val.triggerCallback) {
+        val.callback();
+        events[key].triggerCallback = false;
+      }
+    });
+  }, 300);
+
+  cash.fn.modal = function (event, callback) {
+    if (event == 'show') {
+      show(this);
+    } else if (event == 'hide') {
+      hide(this);
+    } else if (event == 'toggle') {
+      toggle(this);
+    } else if (event == 'on.show') {
+      onShow(this, callback);
+    } else if (event == 'on.hide') {
+      onHide(this, callback);
+    }
+  };
+})(cash);
+
+/***/ }),
+
+/***/ "./resources/js/index/theme/show-modal.js":
+/*!************************************************!*\
+  !*** ./resources/js/index/theme/show-modal.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+(function (cash) {
+  "use strict"; // Show modal
+
+  cash('#programmatically-show-modal').on('click', function () {
+    cash('#programmatically-modal').modal('show');
+  }); // Hide modal
+
+  cash('#programmatically-hide-modal').on('click', function () {
+    cash('#programmatically-modal').modal('hide');
+  }); // Toggle modal
+
+  cash('#programmatically-toggle-modal').on('click', function () {
+    cash('#programmatically-modal').modal('toggle');
   });
 })(cash);
 

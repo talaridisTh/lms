@@ -6,11 +6,11 @@ use App\Traits\UrlCreator;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
-{
-    use HasFactory,UrlCreator;
+class Post extends Model {
 
-    protected $guarded= [];
+    use HasFactory, UrlCreator;
+
+    protected $guarded = [];
 
     public function user()
     {
@@ -21,6 +21,7 @@ class Post extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
@@ -30,9 +31,10 @@ class Post extends Model
     {
         return $this->morphTo();
     }
+
     public function getCourse()
     {
-        return $this->course?$this->course->title:"General";
+        return $this->course ? $this->course->title : "General";
 
     }
 
@@ -40,4 +42,5 @@ class Post extends Model
     {
         return $this->morphToMany(User::class, 'likable');
     }
+
 }

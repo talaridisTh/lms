@@ -34,8 +34,8 @@ Route::prefix("discussion")->name("discussion.")->group(function () {
 Route::prefix("model")->name("index.")->group(function () {
 
 //    Route::get('/courses/course/{course}', 'Index\CourseController@userCourse')->name("index.userCourse")->withoutMiddleware(['verifyCourse']);
-    Route::post('/model/comment', [CourseController::class, 'modelComment'])->name("modelComment")->withoutMiddleware(['verifyCourse']);
-    Route::post("/model/delete", [CourseController::class, 'deleteComment'])->name("deleteComment")->withoutMiddleware(['verifyCourse']);
-    Route::patch("/model/update/{id}", [CourseController::class, 'editComment'])->name("editComment")->withoutMiddleware(['verifyCourse']);
+    Route::post('comment', [CourseController::class, 'modelComment'])->name("modelComment")->withoutMiddleware(['verifyCourse']);
+    Route::post("delete", [CourseController::class, 'deleteComment'])->name("deleteComment")->withoutMiddleware(['verifyCourse']);
+    Route::patch("update/{id}", [CourseController::class, 'editComment'])->name("editComment")->withoutMiddleware(['verifyCourse']);
 
 });

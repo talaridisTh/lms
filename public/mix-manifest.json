@@ -2,7 +2,7 @@
     "/js/app.js": "/js/app.js?id=2eb82bd882a3bdb70418",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=fe3970d56624fe06f3a4",
     "/css/dashboard/app.css": "/css/dashboard/app.css?id=761ac32e250ede97a697",
-    "/css/index/theme.css": "/css/index/theme.css?id=353af1125bb6a80baa13",
+    "/css/index/theme.css": "/css/index/theme.css?id=f903b3e9a5534bc899b2",
     "/css/index/temp.css": "/css/index/temp.css?id=d1353cb3d7f4aef9d8f8",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=3c84d4b21ddc32a80efc",
     "/js/dashboard/bundles/bundlesMain.js": "/js/dashboard/bundles/bundlesMain.js?id=247d88ff9b8a5f3a6614",
@@ -30,11 +30,11 @@
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=dad2290485c199bca48f",
     "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=c47fca3905c13e096101",
     "/js/index/chat/message.js": "/js/index/chat/message.js?id=372ec970ae50c0366dbb",
-    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=9f2f8afcb51236a20149",
+    "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=6f5f457c5c6f32fb38b3",
     "/js/index/discussions/discussions.js": "/js/index/discussions/discussions.js?id=22786aca82df95969b95",
     "/js/index/guest/guest.js": "/js/index/guest/guest.js?id=dfc0c520448cd0f685d9",
     "/js/index/index.js": "/js/index/index.js?id=d4099ca54c665548484d",
     "/js/index/materials/indexMaterials.js": "/js/index/materials/indexMaterials.js?id=ed28b951f03cce3282b4",
-    "/js/index/theme.js": "/js/index/theme.js?id=983c1b6302018a94ec21",
+    "/js/index/theme.js": "/js/index/theme.js?id=168f6f01f2c8c4200471",
     "/js/index/user/user-edit.js": "/js/index/user/user-edit.js?id=acebce15afd339204c09"
 }

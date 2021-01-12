@@ -1,22 +1,29 @@
-<div class="col-md-12 px-2">
-    <div class="cnt-disscus rounded" style="background-color: rgba(0, 0, 0, 0.08) !important;">
-        <h4 class="p-3">Συζήτηση</h4>
+<div class=" w-full">
 
-    </div>
-
-    <div class="hidden-post" data-model-id="{{$model->id}}" data-namespace="{{$namespace}}" data-model-slug="{{$model->slug}}"
+    <div class="hidden-post"
+         data-model-id="{{$model->id}}"
+         data-namespace="{{$namespace}}"
+         data-model-slug="{{$model->slug}}"
          data-model-info="{{$model}}"></div>
-
 </div>
-
-<div class="col-md-12">
-    @include("components.index.comments.comments")
-    <div class="form-group  mt-4 replay-bottom first-thread-replay mb-2 " data-toggle="modal"
-         data-target="#new-reply">
-        <p class="p-4 text-dark font-20"><i
-                class="mdi mdi-hand-pointing-down cnt-container-reply-button font-18 mr-2"></i>
-            <span class=" text-reply-comment ">{{!count($course->post)?"Έναρξη συζήτησης":"Νέο μήνυμα"}}
+<div class="w-full">
+    <a href="#"
+       data-toggle="modal"
+       data-target="#new-reply">
+        <div class="form-group border-dotted border-2 cursor-pointer transition duration-500 ease-in-out hover:border-blue-600
+                hover:bg-gray-200 border-transparent rounded-xl my-6 replay-bottom first-thread-replay">
+            <!-- BEGIN: textarea -->
+            <p class="p-8 text-black ">
+                <i class="mdi mdi-hand-pointing-down cnt-container-reply-button  mr-4"></i>
+                <span class=" text-reply-comment ">{{!count($model->post)?"Έναρξη συζήτησης":"Νέο μήνυμα"}}
             </span>
-        </p>
-    </div>
+            </p>
+        </div><!-- END: texarea -->
+    </a>
+
+    @include("components.index.comments.comments-form")
+
+
+    @include("components.index.comments.comments")
+
 </div>

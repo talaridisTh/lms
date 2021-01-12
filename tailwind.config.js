@@ -3,13 +3,15 @@ const plugin = require('tailwindcss/plugin')
 
 module.exports = {
     purge: [
-        './resources/**/*.blade.php',
-        './resources/**/*.js',
-        './resources/**/*.vue',
+        './resources/index/*.blade.php',
+        './resources/index/*.js',
     ],
     important: true,
     darkMode: false, // or 'media' or 'class'
     theme: {
+        fontFamily: {
+            'sans': ['Roboto', 'Helvetica', 'Arial', 'sans-serif']
+        },
         extend: {
             colors: {
                 'login': '#0fb4d3',
@@ -86,7 +88,7 @@ module.exports = {
                 '3': '3 3 0%',
             },
             maxWidth: {
-                "1xl":"1348px",
+                "1xl": "1348px",
                 '1/4': '25%',
                 '1/2': '50%',
                 '3/4': '75%',
@@ -104,9 +106,13 @@ module.exports = {
         },
 
 
-
         variants: {
-            extend: {},
+            extend: {
+                borderStyle: ['hover', 'focus'],
+                fontWeight: ['hover', 'focus'],
+                borderWidth: ['hover', 'focus'],
+            },
+
         },
         plugins: [],
     }

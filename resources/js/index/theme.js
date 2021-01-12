@@ -24,7 +24,9 @@ import './theme/mobile-menu'
 import './theme/feather'
 import './theme/tab'
 import './theme/tippy'
-// import './theme/modal'
+import './theme/dropdown'
+import './theme/modal'
+import './theme/show-modal'
 
 //jQuery
 $.fn.extend({

@@ -3,14 +3,18 @@
     <ul class="nav nav-tabs nav-bordered mb-3">
         @role("student")
         <li class="nav-item">
-            <a href="#upload-task-content" class="upload-task nav-link active" data-toggle="tab" aria-expanded="false">
+            <a href="#upload-task-content"
+               class="upload-task nav-link active"
+               data-toggle="tab"
+               aria-expanded="false">
                 Αποστολή
             </a>
         </li>
         @endrole
         <li class="nav-item">
             <a href="#show-task-content"
-               class="show-task nav-link   @hasanyrole(" admin|super-admin|instructor") active @endhasanyrole "
+               class="show-task nav-link   @hasanyrole("
+               admin|super-admin|instructor") active @endhasanyrole "
             data-toggle="tab" aria-expanded="true">
             Εργασίες
             </a>
@@ -19,24 +23,36 @@
 
     <div class="tab-content">
         @role("student")
-        <div class="tab-pane  show active" id="upload-task-content">
-            <form id="email-form" action="{{route('discussion.sendTask')}}" method="POST" autocomplete="off"
+        <div class="tab-pane  show active"
+             id="upload-task-content">
+            <form id="email-form"
+                  action="{{route('discussion.sendTask')}}"
+                  method="POST"
+                  autocomplete="off"
                   enctype="multipart/form-data">
 
             @csrf
 
             <!--element -->
                 <div class="form-group d-flex">
-                    <div class="cnt-title " style="flex:1.7">
+                    <div class="cnt-title "
+                         style="flex:1.7">
                         <label for="subject-task">Θέμα</label>
-                        <input id="subject-task" class="form-control " type="text"
-                               placeholder="Εισάγετε θέμα..." name="subject"
+                        <input id="subject-task"
+                               class="form-control "
+                               type="text"
+                               placeholder="Εισάγετε θέμα..."
+                               name="subject"
                                value=""/>
                     </div>
 
-                    <div class="cnt-title " style="flex:1">
-                        <label class="ml-2" for="curator-task">Μάθημα </label>
-                        <select id="curator-task" class="form-control select2 ml-2 " data-toggle="select2"
+                    <div class="cnt-title "
+                         style="flex:1">
+                        <label class="ml-2"
+                               for="curator-task">Μάθημα </label>
+                        <select id="curator-task"
+                                class="form-control select2 ml-2 "
+                                data-toggle="select2"
                                 style="width: 18.1rem;">
                             @foreach(auth()->user()->courses as $course)
                                 <option value="{{$course->curator->id}}">{{$course->title}}</option>
@@ -48,22 +64,30 @@
                 <div class="form-group">
                     <label for="editor">Περιεχόμενο</label>
                     <textarea class="form-control "
-                              id="editor-task" placeholder="Εισάγετε περιεχόμενο..."
-                              name="content" rows="5">
+                              id="editor-task"
+                              placeholder="Εισάγετε περιεχόμενο..."
+                              name="content"
+                              rows="5">
                     </textarea>
                 </div>
 
-                <div id="file-target" class="my-3"></div>
+                <div id="file-target"
+                     class="my-3"></div>
 
-                <button class="btn btn-primary js-send-task" type="button" disabled>
-                    <span class="spinner-border spinner-border-sm mr-1 d-none" role="status" aria-hidden="true"></span>
+                <button class="btn btn-primary js-send-task"
+                        type="button"
+                        disabled>
+                    <span class="spinner-border spinner-border-sm mr-1 d-none"
+                          role="status"
+                          aria-hidden="true"></span>
                     Αποστολή
                 </button>
             </form>
         </div>
         @endrole
 
-        <div class="tab-pane    @hasanyrole(" admin|super-admin|instructor
+        <div class="tab-pane    @hasanyrole("
+             admin|super-admin|instructor
         ") active show @endhasanyrole"
         id="show-task-content">
         <div class="row">
@@ -73,7 +97,8 @@
                 <div class="dashboard-box margin-top-0">
 
                     <!-- Headline -->
-                    <div class="accordion" id="accordionExample">
+                    <div class="accordion"
+                         id="accordionExample">
                         @foreach($courses as $course)
                             @hasanyrole('instructor|admin|super-admin')
                             @php
@@ -92,14 +117,17 @@
                             @endphp
                             @endrole
                             <div class="card mb-0">
-                                <div class="card-header" data-all-task="{{isset($tasks)?count($tasks):""}}"
+                                <div class="card-header"
+                                     data-all-task="{{isset($tasks)?count($tasks):""}}"
                                      data-completed-task="{{isset($completedTask)?count($completedTask):""}}"
                                      id="head-{{$course->id}}"
                                      style="border-radius: 3px; ">
                                     <h5 class="m-0">
                                         <a class="custom-accordion-title d-block {{$course->slug}}"
-                                           data-toggle="collapse" href="#collapse-{{$course->slug}}"
-                                           aria-expanded="true" aria-controls="collapse-{{$course->slug}}"
+                                           data-toggle="collapse"
+                                           href="#collapse-{{$course->slug}}"
+                                           aria-expanded="true"
+                                           aria-controls="collapse-{{$course->slug}}"
                                            data-course-name="{{$course->title}}">
                                             <div
                                                     class="headline d-flex justify-content-between align-items-center ">
@@ -118,8 +146,10 @@
                                 </div>
 
 
-                                <div id="collapse-{{$course->slug}}" class="collapse"
-                                     aria-labelledby="head-{{$course->id}}" data-parent="#accordionExample">
+                                <div id="collapse-{{$course->slug}}"
+                                     class="collapse"
+                                     aria-labelledby="head-{{$course->id}}"
+                                     data-parent="#accordionExample">
 
                                     <div class="card-body p-0">
 
@@ -129,9 +159,10 @@
 
                                                 @forelse($tasks as $task)
 
-                                                @foreach($task->attachments as $attachment)
+                                                    @foreach($task->attachments as $attachment)
                                                         {{--                                                        @if($task->mail->user_id == auth()->id() && $task->course_id == $course->id)--}}
-                                                        <li class="dashboard-box-li" data-task-id="{{$attachment->id}}">
+                                                        <li class="dashboard-box-li"
+                                                            data-task-id="{{$attachment->id}}">
                                                             <!-- Job Listing -->
                                                             <div class="job-listing width-adjustment">
 
@@ -216,7 +247,6 @@
                                                     @endforeach
                                                     {{--                                                        @endif--}}
                                                 @empty
-                                                    <h1>dfd</h1>
                                                 @endforelse
 
                                             </ul>
@@ -238,19 +268,33 @@
 </div>
 </div>
 
-<div id="new-post-task" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+<div id="new-post-task"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable"
+         role="document">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="form-group">
                     <label for="post-body">Εισάγετε ερώτηση</label>
-                    <textarea class="form-control" id="post-body" name="body" form="form-create-thread" rows="5"
+                    <textarea class="form-control"
+                              id="post-body"
+                              name="body"
+                              form="form-create-thread"
+                              rows="5"
                               placeholder="Εισάγετε ερώτηση"></textarea>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary  js-task-create">Post</button>
+                <button type="button"
+                        class="btn btn-light"
+                        data-dismiss="modal">Close
+                </button>
+                <button type="button"
+                        class="btn btn-primary  js-task-create">Post
+                </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

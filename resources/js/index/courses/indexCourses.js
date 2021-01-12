@@ -26,12 +26,10 @@ var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
     },
 })//init slider
 
-$('.test-an').click(swiperAnnouncements,function(){
+$('.test-an').click(swiperAnnouncements, function () {
     toggleModal();
     swiperAnnouncements.slideTo($(this).data("swiper-count"));
 })//specific swipper slider
-
-
 
 
 //
@@ -86,7 +84,13 @@ $(".spa-click").on("click", async function (e) {
             if ($(".spa-cnt").next().hasClass("lg:mt-0")) {
                 $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0")
             }
-            console.log($(".spa-tabs"))
+
+
+            // for (let i = 2; i < $("body .modal").length; i++) {
+            //     console.log(i)
+            //     $("body .modal")[i].remove();
+            // }
+
             $(".spa-tabs")[1].classList.remove("lg:w-4/6")
             $(".spa-tabs")[1].classList.remove("w-full")
             $(".spa-tabs")[1].classList.add("w-auto")
@@ -96,16 +100,8 @@ $(".spa-click").on("click", async function (e) {
             onFullScreen();
             onCloseFullScreen();
             // onPreviewMaterial();
-            // onInitEventHandler();
+            onInitEventHandler();
             // initFilepond();
-            //
-            // let href = $(".nav-tabs").children().first().find("a").attr("href").substring(1);
-            // $(".nav-tabs").children().first().find("a").addClass("active")
-            // $(".tab-content").find(`#${href}`).addClass("active");
-            //
-            // $(".list-material ").removeAttr("style")
-            // $(".bg-custom").removeAttr("style")
-            // $(this).closest("li").css('cssText', 'background-color: #bebebe  !important');
 
 
         }
@@ -127,6 +123,7 @@ const onCloseFullScreen = () => {
                 $(".spa-cnt").addClass("lg:w-4/6")
                 $(".spa-list-material").removeClass("hidden lg:mt-16 lg:mt-0").addClass("lg:mt-0")
                 initTabs();
+                onInitEventHandler();
             }
         } catch (e) {
             console.log(e)
@@ -181,15 +178,15 @@ const initTabs = () => {
 initTabs();
 
 
-const button = document.querySelector('.modal-button')
+const button = document.querySelector('.modal-button-custom')
 button.addEventListener('click', toggleModal)
 
-const overlay = document.querySelector('.modal-overlay')
+const overlay = document.querySelector('.modal-overlay-custom')
 overlay.addEventListener('click', toggleModal)
 
 function toggleModal() {
     swiperAnnouncements.slideTo(0);
-    const modal = document.querySelector('.modal')
+    const modal = document.querySelector('.modal-custom')
     modal.classList.toggle('opacity-0')
     modal.classList.toggle('pointer-events-none')
 
@@ -631,273 +628,275 @@ function toggleModal() {
 //
 //
 // }
-// $(document).on("click", ".js-form-reply", async function (e) {
-//     e.preventDefault()
-//     let body = $('textarea#reply-body').val()
-//
-//
-//     if (!body) {
-//         if (!$(".validate-form-post").length) {
-//             $('#new-reply').modal('show');
-//             $("<p class='text-danger mt-2 validate-form-post'>*Tο πεδίο είναι απαραίτητο</p>").insertAfter("#reply-body");
-//
-//         }
-//         return
-//     } else {
-//         body = `<span class="text-info author-reply">${$(".replay-name").text()}</span> ${body}`
-//     }
-//
-//     const modelInfo = JSON.parse(this.dataset.model)
-//     const parentId = this.dataset.parent;
-//     const namespace = this.dataset.namespace;
-//     // delete this.dataset.upload;
-//     let upload = typeof this.dataset.upload == "undefined" ? [] : JSON.parse(this.dataset.upload);
-//     this.disabled = true
-//     $(".validate-form-post").remove();
-//     try {
-//         const {data, status} = await axios.post(`/model/comment`, {
-//             modelInfo,
-//             body,
-//             namespace,
-//             parentId,
-//             upload
-//
-//         });
-//         if (status == 200) {
-//             $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
-//             $('#new-reply').modal('hide')
-//             $('#form-create-reply')[0].reset()
-//             pond.removeFiles();
-//             delete this.dataset.upload;
-//             this.disabled = false
-//             $(".text-reply-comment").text("Νέο μήνυμα")
-//         }
-//
-//     } catch (e) {
-//         console.log(e)
-//     }
-//
-// })
-//
-// //edit comment
-// const onEditComment = () => {
-//     $(".cnt-reply-list").on("click", ".js-edit-comment", function (e) {
-//         e.preventDefault()
-//         $(".js-edit-comment").prop("disabled", true)
-//         const thisContainer = $(this).closest(".main-post");
-//         const commentId = this.closest(".main-post").dataset.threadId
-//         const postId = $(".hidden-post").data("model-id")
-//         const namespace = $(".hidden-post").data("namespace")
-//         let author = thisContainer.find(".author-reply")
-//         const pre = thisContainer.find("pre");
-//         thisContainer.find(".cnt-body-comment").append(`
-//              <div class="btn-group cnt-btn-comment my-2" role="group" >
-//                  <button class="btn btn-sm mr-2 mx-2 btn-secondary btn-body-close">Close</button>
-//                  <button class="btn btn-sm btn-primary btn-body-edit">Edit</button>
-//             </div>`)
-//         pre.replaceWith(function () {
-//             thisContainer.find($(".author-reply").remove());
-//             return $("<input />", {
-//                 "type": "text",
-//                 "name": "body",
-//                 'value': $(this).text(),
-//                 'class': 'form-control edit-input',
-//             })
-//         })
-//
-//         $(".edit-input").on("keyup",function (e){
-//             if(e.target.value.length){
-//
-//                 $(".btn-body-edit").prop("disabled", false)
-//             }else{
-//
-//                 $(".btn-body-edit").prop("disabled", true)
-//             }
-//         })
-//
-//         $(".btn-body-edit").on("click", async function () {
-//             const {data, status} = await axios.patch(`/model/update/${commentId}`, {
-//                 postId,
-//                 editBody: `${author[0].outerHTML} ${$(".edit-input").val()}`,
-//                 namespace
-//             })
-//
-//             if (status == 200) {
-//                 $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
-//
-//             }
-//         })
-//
-//         $(".btn-body-close").on("click", function (e) {
-//             $(".edit-input").replaceWith(pre);
-//             thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
-//             $(".cnt-btn-comment").remove();
-//             $(".js-edit-comment").prop("disabled", false)
-//         })
-//     })
-// }
-// const onFirstReplayBtnEvent = () => {
-//
-//     $(document).on("click", ".first-thread-replay", function () {
-//         let model = $(".hidden-post").data("model-info");
-//         let namespace = $(".hidden-post").data("namespace");
-//
-//
-//         $("#new-reply").find(".replay-name").text("");
-//         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
-//         $(".js-form-reply")[0].dataset.parent = 0
-//         $(".js-form-reply")[0].dataset.namespace = namespace;
-//
-//     })
-//
-// }
-//
-// const onCommentReplayBtnEvent = () => {
-//     $(".cnt-reply-list").on("click", ".js-comment-reply", function () {
-//         let model = $(".hidden-post").data("model-info");
-//         let parentId = this.closest(".main-post").dataset.commentId;
-//         let author = $(this).closest(".main-post").find(".author-post-name").text()
-//
-//         $("#new-reply").find(".replay-name").text(`@${author}`);
-//         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
-//         $(".js-form-reply")[0].dataset.parent = parentId
-//     })
-// }
-//
-// const onSubCommentReplayBtnEvent = () => {
-//     $(".cnt-reply-list").on("click", ".js-sub-comment-reply", function () {
-//         let model = $(".hidden-post").data("model-info");
-//         let parentId = this.closest(".main-post").dataset.commentId;
-//         let author = $(this).closest(".main-post").find(".author-post-name").text()
-//
-//         $("#new-reply").find(".replay-name").text(`@${author}`);
-//         $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
-//         $(".js-form-reply")[0].dataset.parent = parentId
-//     })
-// }
-//
-//
-// const bestAnswer = () => {
-//     $(".cnt-list-content").on("click", ".js-best-answer", async function () {
-//         $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
-//
-//         $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
-//
-//
-//         if ($(this).hasClass("is-active-best")) {
-//
-//             $(this).closest(".main-post").addClass("best-answer-cnt")
-//
-//             $(this).removeClass("is-active-best text-info").addClass("text-success")
-//
-//             $(this).parent().append('<a href="#" class="ml-3 mt-2 badge badge-success badge-best font-14">Best Answer</a>\n');
-//         } else {
-//
-//             $(this).closest(".main-post").removeClass("best-answer-cnt")
-//
-//             $(this).removeClass("text-success").addClass("is-active-best text-info")
-//
-//             $(this).parent().find(".badge-best").remove()
-//
-//         }
-//
-//         $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
-//
-//
-//         let commentId = $(this).closest(".main-post").data("threadId")
-//         let model = $(".hidden-post").data("model-info").id;
-//
-//         try {
-//
-//             const {data, status} = await axios.patch(`/discussion/best/${commentId}`, {
-//                 model
-//             })
-//
-//             if (status == 200) {
-//
-//             }
-//
-//         } catch (e) {
-//             console.log(e)
-//         }
-//
-//     })
-//
-//
-// }
-//
-// const onDeleteComment = () => {
-//
-//     $(".cnt-reply-list").on("click", ".js-delete-comment", async function (e) {
-//         e.preventDefault();
-//         const id = this.closest(".main-post").dataset.threadId
-//         const modelInfo = $(".hidden-post").data("model-info");
-//         try {
-//             const {data, status,comment} = await axios.post(`/model/delete`, {
-//                 modelInfo,
-//                 id
-//             })
-//
-//             if (!data.comment){
-//                 $(".text-reply-comment").text("Έναρξη συζήτησης")
-//             }
-//
-//             if (status == 200) {
-//                 $(".cnt-reply-list").html($(data.view).find(".reply-list")) //reload post
-//
-//             }
-//
-//         } catch (e) {
-//             console.log(e)
-//         }
-//     })
-//
-// }
-//
-// const onLikebtn = () => {
-//     $(".cnt-reply-list").on("click", ".btn-reply-like", async function () {
-//         try {
-//             const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
-//
-//             if (status == 200) {
-//                 if (data) {
-//                     this.classList.add("like-class")
-//
-//                     this.firstElementChild.innerHTML.trim().length == 0 ?
-//                         this.firstElementChild.innerHTML = parseInt(1) :
-//                         this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) + 1
-//                 } else {
-//                     this.classList.remove("like-class")
-//                     this.firstElementChild.innerHTML.trim() == "1" ?
-//                         this.firstElementChild.innerHTML = "" :
-//                         this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) - 1
-//                 }
-//             }
-//         } catch (e) {
-//             console.log(e)
-//         }
-//     })
-// }
-// const onChangeReplyButton  =  ()=>{
-//     if($(".main-post").attr("data-count")){
-//         $(".text-reply-comment").text("Νέο μήνυμα")
-//     }else{
-//
-//         $(".text-reply-comment").text("Έναρξη συζήτησης")
-//     }
-// }
-// const onInitEventHandler = ()=>{
-//     onDeleteComment();
-//     onLikebtn();
-//     onFirstReplayBtnEvent()
-//     onCommentReplayBtnEvent()
-//     onSubCommentReplayBtnEvent();
-//     bestAnswer();
-//
-//     onChangeReplyButton();
-//     onEditComment()
-// }
-// onInitEventHandler();
+$(document).on("click", ".js-form-reply", async function (e) {
+    e.preventDefault()
+    let body = $('textarea#reply-body').val()
+
+
+    if (!body) {
+        if (!$(".validate-form-post").length) {
+            $('#new-reply').modal('show');
+            $("<p class='text-red-400 mt-4 validate-form-post'>*Tο πεδίο είναι απαραίτητο</p>").insertAfter("#reply-body");
+
+        }
+        return
+    } else {
+        body = `<span class="text-blue-500 author-reply">${$(".replay-name").text()}</span> ${body}`
+    }
+
+    const modelInfo = JSON.parse(this.dataset.model)
+    const parentId = this.dataset.parent;
+    const namespace = this.dataset.namespace;
+    // delete this.dataset.upload;
+    let upload = typeof this.dataset.upload == "undefined" ? [] : JSON.parse(this.dataset.upload);
+    this.disabled = true
+    $(".validate-form-post").remove();
+    try {
+        const {data, status} = await axios.post(`/model/comment`, {
+            modelInfo,
+            body,
+            namespace,
+            parentId,
+            upload
+
+        });
+        if (status == 200) {
+            $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+            $('#new-reply').modal('hide')
+            $('#form-create-reply')[0].reset()
+            // pond.removeFiles();
+            delete this.dataset.upload;
+            this.disabled = false
+            $(".text-reply-comment").text("Νέο μήνυμα")
+        }
+
+    } catch (e) {
+        console.log(e)
+    }
+
+})
+
+//edit comment
+const onEditComment = () => {
+    $(".cnt-reply-list").on("click", ".js-edit-comment", function (e) {
+        e.preventDefault()
+        $(".js-edit-comment").prop("disabled", true)
+        const thisContainer = $(this).closest(".main-post");
+        const commentId = this.closest(".main-post").dataset.threadId
+        const postId = $(".hidden-post").data("model-id")
+        const namespace = $(".hidden-post").data("namespace")
+        let author = thisContainer.find(".author-reply")
+        const pre = thisContainer.find("pre");
+        thisContainer.find(".cnt-body-comment").append(`
+             <div class="btn-group cnt-btn-comment my-2" role="group" >
+                 <button class="btn btn-sm mr-2 mx-2 btn-secondary btn-body-close">Close</button>
+                 <button class="btn btn-sm btn-primary btn-body-edit">Edit</button>
+            </div>`)
+        pre.replaceWith(function () {
+            thisContainer.find($(".author-reply").remove());
+            return $("<input />", {
+                "type": "text",
+                "name": "body",
+                'value': $(this).text(),
+                'class': 'form-control edit-input',
+            })
+        })
+
+        $(".edit-input").on("keyup", function (e) {
+            if (e.target.value.length) {
+
+                $(".btn-body-edit").prop("disabled", false)
+            } else {
+
+                $(".btn-body-edit").prop("disabled", true)
+            }
+        })
+
+        $(".btn-body-edit").on("click", async function () {
+            const {data, status} = await axios.patch(`/model/update/${commentId}`, {
+                postId,
+                editBody: `${author[0].outerHTML} ${$(".edit-input").val()}`,
+                namespace
+            })
+
+            if (status == 200) {
+                $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
+
+            }
+        })
+
+        $(".btn-body-close").on("click", function (e) {
+            $(".edit-input").replaceWith(pre);
+            thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
+            $(".cnt-btn-comment").remove();
+            $(".js-edit-comment").prop("disabled", false)
+        })
+    })
+}
+
+const onFirstReplayBtnEvent = () => {
+
+    $(document).on("click", ".first-thread-replay", function () {
+        let model = $(".hidden-post").data("model-info");
+        let namespace = $(".hidden-post").data("namespace");
+
+
+        $("#new-reply").find(".replay-name").text("");
+        $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
+        $(".js-form-reply")[0].dataset.parent = 0
+        $(".js-form-reply")[0].dataset.namespace = namespace;
+
+    })
+
+}
+
+const onCommentReplayBtnEvent = () => {
+    $(".cnt-reply-list").on("click", ".js-comment-reply", function () {
+        let model = $(".hidden-post").data("model-info");
+        let parentId = this.closest(".main-post").dataset.commentId;
+        let author = $(this).closest(".main-post").find(".author-post-name").text()
+
+        $("#new-reply").find(".replay-name").text(`@${author}`);
+        $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
+        $(".js-form-reply")[0].dataset.parent = parentId
+    })
+}
+
+const onSubCommentReplayBtnEvent = () => {
+    $(".cnt-reply-list").on("click", ".js-sub-comment-reply", function () {
+        let model = $(".hidden-post").data("model-info");
+        let parentId = this.closest(".main-post").dataset.commentId;
+        let author = $(this).closest(".main-post").find(".author-post-name").text()
+
+        $("#new-reply").find(".replay-name").text(`@${author}`);
+        $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
+        $(".js-form-reply")[0].dataset.parent = parentId
+    })
+}
+
+const bestAnswer = () => {
+    $(".cnt-list-content").on("click", ".js-best-answer", async function () {
+        $(".js-best-answer").not($(this)).removeClass("is-active-best").addClass("is-active-best text-info")
+
+        $(".js-best-answer").not($(this)).closest(".main-post").removeClass("best-answer-cnt")
+
+
+        if ($(this).hasClass("is-active-best")) {
+
+            $(this).closest(".main-post").addClass("best-answer-cnt")
+
+            $(this).removeClass("is-active-best text-info").addClass("text-success")
+
+            $(this).parent().append('<a href="#" class="ml-3 mt-2 badge badge-success badge-best font-14">Best Answer</a>\n');
+        } else {
+
+            $(this).closest(".main-post").removeClass("best-answer-cnt")
+
+            $(this).removeClass("text-success").addClass("is-active-best text-info")
+
+            $(this).parent().find(".badge-best").remove()
+
+        }
+
+        $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
+
+
+        let commentId = $(this).closest(".main-post").data("threadId")
+        let model = $(".hidden-post").data("model-info").id;
+
+        try {
+
+            const {data, status} = await axios.patch(`/discussion/best/${commentId}`, {
+                model
+            })
+
+            if (status == 200) {
+
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+
+    })
+
+
+}
+
+const onDeleteComment = () => {
+
+    $(".cnt-reply-list").on("click", ".js-delete-comment", async function (e) {
+        e.preventDefault();
+        const id = this.closest(".main-post").dataset.threadId
+        const modelInfo = $(".hidden-post").data("model-info");
+        try {
+            const {data, status, comment} = await axios.post(`/model/delete`, {
+                modelInfo,
+                id
+            })
+
+            if (!data.comment) {
+                $(".text-reply-comment").text("Έναρξη συζήτησης")
+            }
+
+            if (status == 200) {
+                $(".cnt-reply-list").html($(data.view).find(".reply-list")) //reload post
+
+            }
+
+        } catch (e) {
+            console.log(e)
+        }
+    })
+
+}
+
+const onLikebtn = () => {
+    $(".cnt-reply-list").on("click", ".btn-reply-like", async function () {
+        try {
+            const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
+
+            if (status == 200) {
+                if (data) {
+                    this.classList.add("text-red-700")
+
+                    this.firstElementChild.innerHTML.trim().length == 0 ?
+                        this.firstElementChild.innerHTML = parseInt(1) :
+                        this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) + 1
+                } else {
+                    this.classList.remove("text-red-700")
+                    this.firstElementChild.innerHTML.trim() == "1" ?
+                        this.firstElementChild.innerHTML = "" :
+                        this.firstElementChild.innerHTML = parseInt(this.firstElementChild.innerHTML) - 1
+                }
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    })
+}
+
+const onChangeReplyButton = () => {
+    if ($(".main-post").attr("data-count")) {
+        $(".text-reply-comment").text("Νέο μήνυμα")
+    } else {
+
+        $(".text-reply-comment").text("Έναρξη συζήτησης")
+    }
+}
+
+const onInitEventHandler = () => {
+    onDeleteComment();
+    onLikebtn();
+    onFirstReplayBtnEvent()
+    onCommentReplayBtnEvent()
+    onSubCommentReplayBtnEvent();
+    bestAnswer();
+    onChangeReplyButton();
+    onEditComment()
+}
+
+onInitEventHandler();
 //
 //
 //

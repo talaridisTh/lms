@@ -1,4 +1,4 @@
-(function(cash) {
+(function (cash) {
 
     // Show or hide global event listener
     let events = []
@@ -6,7 +6,7 @@
     // Get highest z-index
     function getHighestZindex() {
         let zIndex = 52
-        cash('.modal').each(function() {
+        cash('.modal').each(function () {
             if (cash(this).css('z-index') !== 'auto' && cash(this).css('z-index') > zIndex) {
                 zIndex = parseInt(cash(this).css('z-index'))
             }
@@ -22,8 +22,9 @@
 
     // Show modal with z-index
     function show(el) {
+
         // Move modal element to body
-        cash('<div data-modal-replacer="' + cash(el).attr('id') + '"></div>').insertAfter(el)
+        cash('<div class="data-replace" data-modal-replacer="' + cash(el).attr('id') + '"></div>').insertAfter(el)
         cash(el).css({
             'margin-top': 0,
             'margin-left': 0
@@ -36,8 +37,8 @@
         }, 200)
 
         // Setting up modal scroll
-        cash('body').css('padding-right', (parseInt(cash('body').css('padding-right')) + getScrollbarWidth('html')) + 'px')
-            .addClass('overflow-y-hidden')
+        // cash('body').css('padding-right', (parseInt(cash('body').css('padding-right')) + getScrollbarWidth('html')) + 'px')
+        // .addClass('overflow-y-hidden')
         cash('.modal').removeClass('overflow-y-auto')
             .css('padding-left', '0px')
         cash(el).addClass('overflow-y-auto')
@@ -45,11 +46,20 @@
             .addClass(cash('.modal.show').length ? 'modal__overlap' : '')
 
         // Trigger callback function
-        events.forEach(function(val, key) {
+        events.forEach(function (val, key) {
             if (cash(el).attr('id') == cash(val.el).attr('id') && val.event == 'on.show') {
                 events[key].triggerCallback = true
             }
         })
+        if ($("body .modal").length > 1) {
+
+            $("body .modal").first().remove();
+        }
+        if ($(".data-replace").length > 1) {
+
+            $(".data-replace").first().remove();
+        }
+
     }
 
     // Hide modal & remove modal scroll
@@ -63,7 +73,7 @@
                     .removeClass('overflow-y-auto')
 
                 // Add scroll to highest z-index modal if exist
-                cash('.modal').each(function() {
+                cash('.modal').each(function () {
                     if (parseInt(cash(this).css('z-index')) === getHighestZindex()) {
                         cash(this).addClass('overflow-y-auto')
                             .css('padding-left', getScrollbarWidth(this) + 'px')
@@ -81,7 +91,7 @@
             }, 200)
 
             // Trigger callback function
-            events.forEach(function(val, key) {
+            events.forEach(function (val, key) {
                 if (cash(el).attr('id') == cash(val.el).attr('id') && val.event == 'on.hide') {
                     events[key].triggerCallback = true
                 }
@@ -119,24 +129,26 @@
     }
 
     // Show modal
-    cash('body').on('click', 'a[data-toggle="modal"]', function() {
+    cash('body').on('click', 'a[data-toggle="modal"]', function () {
         show(cash(this).attr('data-target'))
     })
 
     // Hide modal
-    cash('body').on('click', function(event) {
+    cash('body').on('click', function (event) {
         hide(event.target)
     })
 
     // Dismiss modal by link
-    cash('body').on('click', '[data-dismiss="modal"]', function() {
+    cash('body').on('click', '[data-dismiss="modal"]', function () {
         let modal = cash(this).closest('.modal')[0]
         hide(modal)
+
+
     })
 
     // Detect show or hide event
-    setInterval(function() {
-        events.forEach(function(val, key) {
+    setInterval(function () {
+        events.forEach(function (val, key) {
             if (val.event == 'on.show' && val.triggerCallback) {
                 val.callback()
                 events[key].triggerCallback = false
@@ -147,7 +159,7 @@
         })
     }, 300)
 
-    cash.fn.modal = function(event, callback) {
+    cash.fn.modal = function (event, callback) {
         if (event == 'show') {
             show(this)
         } else if (event == 'hide') {

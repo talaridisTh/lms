@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Http\Controllers\Controller;
 use App\Mail\EmailTask;
 use App\Models\Attachment;
 use App\Models\Comment;
 use App\Models\Course;
-use App\Http\Controllers\Controller;
 use App\Models\Homework;
-use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
 use App\Traits\MediaUploader;
@@ -121,7 +120,7 @@ class DiscussionController extends Controller {
             "slug" => Str::slug($request->title, "-"),
             "user_id" => auth()->id(),
             "postable_type" => "App\Models\Course",
-            "postable_id" =>Course::where("title",$request->course)->first()->id
+            "postable_id" => Course::where("title", $request->course)->first()->id
         ]);
         $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
             ->paginate(10);
@@ -267,11 +266,9 @@ class DiscussionController extends Controller {
     {
 
         $comment = Comment::findOrFail($commentId);
-        if (auth()->user()->commentIsLiked($comment))
-        {
+        if (auth()->user()->commentIsLiked($comment)) {
             auth()->user()->likeComment()->detach($comment);
-        } else
-        {
+        } else {
             auth()->user()->likeComment()->attach($comment);
         }
 
@@ -311,40 +308,12 @@ class DiscussionController extends Controller {
         ]);
     }
 
-    public function myTask()
-    {
-
-        $course = [];
-        if (auth()->user()->getRoleNames()[0] == "student")
-        {
-//            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
-            $coursesId = auth()->user()->courses->pluck("id");
-            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
-            $course = $courseMedia->map(function ($media) {
-                return Course::findOrFail($media->course_id);
-            });
-        } elseif (auth()->user()->hasAnyRole(["instructor", "admin", "super-admin"]))
-        {
-            $coursesId = Course::where("user_id", auth()->id())->pluck("id");
-            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
-            $course = $courseMedia->map(function ($media) {
-                return Course::findOrFail($media->course_id);
-            });
-        }
-
-        return view("components.index.discussions.discussions-task", [
-            "courses" => collect($course)->unique()
-        ]);
-    }
-
     public function completeTask($task)
     {
         $attachments = Attachment::find($task);
-        if ($attachments->completed_at)
-        {
+        if ($attachments->completed_at) {
             $attachments->update(["completed_at" => null]);
-        } else
-        {
+        } else {
 
             $attachments->update(["completed_at" => now()]);
         }
@@ -356,14 +325,37 @@ class DiscussionController extends Controller {
     {
 
         $countAttach = Attachment::where("attachmentable_id", Attachment::findOrFail($taskId)->attachmentable_id)->count();
-        if ($countAttach == 1)
-        {
+        if ($countAttach == 1) {
             Homework::where("id", Attachment::findOrFail($taskId)->attachmentable->id)->delete();
         }
         Attachment::findOrFail($taskId)->delete();
         Attachment::where("attachmentable_id", 0)->delete();
 
         return $this->myTask();
+    }
+
+    public function myTask()
+    {
+
+        $course = [];
+        if (auth()->user()->getRoleNames()[0] == "student") {
+//            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
+            $coursesId = auth()->user()->courses->pluck("id");
+            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
+            $course = $courseMedia->map(function ($media) {
+                return Course::findOrFail($media->course_id);
+            });
+        } elseif (auth()->user()->hasAnyRole(["instructor", "admin", "super-admin"])) {
+            $coursesId = Course::where("user_id", auth()->id())->pluck("id");
+            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
+            $course = $courseMedia->map(function ($media) {
+                return Course::findOrFail($media->course_id);
+            });
+        }
+
+        return view("components.index.discussions.discussions-task", [
+            "courses" => collect($course)->unique()
+        ]);
     }
 
     public function sendTask(Request $request)
@@ -381,28 +373,52 @@ class DiscussionController extends Controller {
         return $this->myTask();
     }
 
+    private function storeHomework($mail)
+    {
+
+        $homework = Homework::create([
+            'student_id' => auth()->id(),
+            'instructor_id' => $mail->receiver->id,
+            'subject' => $mail->subject,
+            'content' => $mail->body ?? auth()->user()->fullname,
+            'sent_at' => now()
+        ]);
+        if (isset($mail->attachment)) {
+
+            Homework::find($homework->id)->update([
+                "course_id" => $mail->course->id
+            ]);
+//            foreach (json_decode($mail->attachment) as $filePath)
+//            {
+//                Attachment::findOrFail($filePath->id)->update(
+//                    [
+//                        "mail_id" => $mailCreated->id
+//                    ]
+//                );
+//            }
+        }
+
+        return $homework;
+    }
+
     public function uploadTask(Request $request)
     {
         $files = $request->file;
         $res = [];
-        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
-        foreach ($files as $key => $file)
-        {
-            if ($file->isValid())
-            {
-                if (in_array($file->getClientMimeType(), $allowedTypes))
-                {
-                    if ($file->getSize() <= 50000000)
-                    { // 50MB
-                        $media = $this->storeFile($file);
+//        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
+        foreach ($files as $key => $file) {
+            if ($file->isValid()) {
+
+                if ($file->getSize() <= 50000000) { // 50MB
+                    $media = $this->storeFile($file);
 //                        auth()->user()->media()->attach($media->id, ["usage" => 6]);
-                        $res["file-" . $key] = [
-                            "url" => $media->rel_path,
-                            "name" => $media->original_name . "." . $media->ext,
-                            "id" => $media->id,
-                        ];
-                    }
+                    $res["file-" . $key] = [
+                        "url" => $media->rel_path,
+                        "name" => $media->original_name . "." . $media->ext,
+                        "id" => $media->id,
+                    ];
                 }
+
             }
         }
 
@@ -426,35 +442,6 @@ class DiscussionController extends Controller {
         $file->storeAs("public/attachments/$date", $name->full);
 
         return $attachment;
-    }
-
-    private function storeHomework($mail)
-    {
-
-        $homework = Homework::create([
-            'student_id' => auth()->id(),
-            'instructor_id' => $mail->receiver->id,
-            'subject' => $mail->subject,
-            'content' => $mail->body ?? auth()->user()->fullname,
-            'sent_at' => now()
-        ]);
-        if (isset($mail->attachment))
-        {
-
-            Homework::find($homework->id)->update([
-                "course_id" => $mail->course->id
-            ]);
-//            foreach (json_decode($mail->attachment) as $filePath)
-//            {
-//                Attachment::findOrFail($filePath->id)->update(
-//                    [
-//                        "mail_id" => $mailCreated->id
-//                    ]
-//                );
-//            }
-        }
-
-        return $homework;
     }
 
 }

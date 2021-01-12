@@ -13,7 +13,8 @@
 
         <figure>
             @if($material->video_link)
-                <div class="relative block h-0 p-0 overflow-hidden" style="padding-top:56.25%;">
+                <div class="relative block h-0 p-0 overflow-hidden"
+                     style="padding-top:56.25%;">
                     <iframe class="absolute top-0 left-0 bottom-0 w-full h-full"
                             src="https://player.vimeo.com/video/{{$material->video_link}}"
                             frameborder="0"
@@ -26,20 +27,25 @@
                     $pdf = $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first();
 
                 @endphp
-            @isset($pdf->rel_path)
-                <embed id="pdf-embed" src="{{ $pdf->rel_path }}" type="application/pdf" width="100%"
-                       height="100%" style="height: 100vh"/>
+                @isset($pdf->rel_path)
+                    <embed id="pdf-embed"
+                           src="{{ $pdf->rel_path }}"
+                           type="application/pdf"
+                           width="100%"
+                           height="100%"
+                           style="height: 100vh"/>
                 @else
-                <p>Δεν υπάρχει PDF</p>
+                    <p>Δεν υπάρχει PDF</p>
                 @endisset
             @else
             @endif
         </figure>
 
         <x-index.section-tabs
-            :curator=$curator
-            :fields="$fields"
-            :model="$material"
+                :curator=$curator
+                :fields="$fields"
+                :model="$material"
+                :post="$post"
         >
         </x-index.section-tabs>
 
