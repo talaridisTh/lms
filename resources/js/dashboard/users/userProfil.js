@@ -139,6 +139,60 @@ const addCourse = $("#datatableAddCourse").DataTable({
     }
 });
 
+const homeworksDatatable = $("#homeworks-datatable").DataTable({
+	order: [2, "desc"],
+	searchDelay: "1000",
+	processing: true,
+	serverSide: true,
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 1, width: "250px"},
+		{ targets: 2, width: "180px"}
+	],
+	ajax: {
+		url: "/users-ajax/homeworks-datatable",
+		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+		type: "post",
+		data: {
+            userId: userId
+        }
+	},
+	columns: [
+		{ data: 'subject', name: 'subject', className: "align-middle" },
+		{ data: 'course', name: 'course.title', className: "align-middle text-center",},
+		{
+			data: 'created_at',
+			name: 'homeworks.created_at',
+			className: "align-middle text-center cursor-default",
+			render: function(data) {
+				let date = new Date(data);
+				let day = date.toLocaleDateString().replace( /[/]/g, "-");
+				let hours = `${date.getHours()}`.padStart(2, "0");
+				let minutes = `${date.getMinutes()}`.padStart(2, "0");
+
+				let time = `${hours}:${minutes}`;
+				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
+			}
+		},
+	],
+	language: utilities.tableLocale,
+	fnInitComplete: function( oSettings, json ) {
+		let lenthSelection = $("select[name='homeworks-datatable_length']");
+		lenthSelection.addClass("select2");
+
+		lenthSelection.select2({
+			minimumResultsForSearch: -1,
+		});
+	},
+	drawCallback:function(){
+		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+		// $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		// $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+
+	}
+});
+
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
@@ -592,4 +646,28 @@ $("#select-all-courses-profile").on("change", function() {
 	const addBtn = $("#add-multiple-courses-btn")[0];
 
 	utilities.minorCheckboxSwitcher( this, checkboxes, addBtn );
-})
+});
+
+$("#view-homework-modal").on("show.bs.modal", function(event) {
+	
+	const button = $(event.relatedTarget);
+	const id = button.data("id");
+
+	axios.get(`/homework-ajax/${id}`)
+		.then( res => {
+			$(this).find("#homework-content").html(res.data);
+		})
+		.catch( err => {
+			console.log(err);
+			utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+		})
+});
+
+$("#view-homework-modal").on("hidden.bs.modal", function() {
+
+	const placeholder = `<div class="d-flex justify-content-center py-4">
+		<div class="spinner-border avatar-md text-primary" role="status"></div>
+	</div>`
+
+	$(this).find("#homework-content").html(placeholder);
+});

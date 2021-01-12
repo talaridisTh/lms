@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Ajax;
 
 use App\Models\Course;
 use App\DataTables\Users\CoursesDataTable;
+use App\DataTables\Users\HomeworksDataTable as UserHomeworksDatatable;
 use App\DataTables\Users\UserCoursesDataTable;
 use App\DataTables\Users\UsersDataTable;
 use App\Models\Media;
@@ -33,7 +34,12 @@ class UserController {
     {
 
         return $dataTable->render('users.addCourses');
-    }
+	}
+	
+	public function useHomeworksDatatable(UserHomeworksDatatable $datatable) {
+		
+		return $datatable->render('users.homeworks');
+	}
 
     public function changeStatus(Request $request)
     {

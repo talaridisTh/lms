@@ -185,4 +185,4 @@ $("#view-homework-modal").on("hidden.bs.modal", function() {
 	</div>`
 
 	$(this).find("#homework-content").html(placeholder);
-})
+});
