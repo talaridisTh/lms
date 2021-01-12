@@ -28911,6 +28911,65 @@ var addCourse = $("#datatableAddCourse").DataTable({
     addCourses();
     checkeBoxesEventListenerSecont();
   }
+});
+var homeworksDatatable = $("#homeworks-datatable").DataTable({
+  order: [2, "desc"],
+  searchDelay: "1000",
+  processing: true,
+  serverSide: true,
+  autoWidth: false,
+  columnDefs: [{
+    targets: 1,
+    width: "250px"
+  }, {
+    targets: 2,
+    width: "180px"
+  }],
+  ajax: {
+    url: "/users-ajax/homeworks-datatable",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type: "post",
+    data: {
+      userId: userId
+    }
+  },
+  columns: [{
+    data: 'subject',
+    name: 'subject',
+    className: "align-middle"
+  }, {
+    data: 'course',
+    name: 'course.title',
+    className: "align-middle text-center"
+  }, {
+    data: 'created_at',
+    name: 'homeworks.created_at',
+    className: "align-middle text-center cursor-default",
+    render: function render(data) {
+      var date = new Date(data);
+      var day = date.toLocaleDateString().replace(/[/]/g, "-");
+      var hours = "".concat(date.getHours()).padStart(2, "0");
+      var minutes = "".concat(date.getMinutes()).padStart(2, "0");
+      var time = "".concat(hours, ":").concat(minutes);
+      return "<p class=\"mb-0\">".concat(day, "</p><p class=\"mb-0\">").concat(time, "</p>");
+    }
+  }],
+  language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
+  fnInitComplete: function fnInitComplete(oSettings, json) {
+    var lenthSelection = $("select[name='homeworks-datatable_length']");
+    lenthSelection.addClass("select2");
+    lenthSelection.select2({
+      minimumResultsForSearch: -1
+    });
+  },
+  drawCallback: function drawCallback() {
+    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"); // $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+    // $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+
+    $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+  }
 }); //! GLOBAL FUNCTION Filter
 //!============================================================
 
@@ -29465,6 +29524,22 @@ $("#select-all-courses-profile").on("change", function () {
   var checkboxes = $(".js-user-profile-checkbox");
   var addBtn = $("#add-multiple-courses-btn")[0];
   _main__WEBPACK_IMPORTED_MODULE_1__["default"].minorCheckboxSwitcher(this, checkboxes, addBtn);
+});
+$("#view-homework-modal").on("show.bs.modal", function (event) {
+  var _this2 = this;
+
+  var button = $(event.relatedTarget);
+  var id = button.data("id");
+  axios.get("/homework-ajax/".concat(id)).then(function (res) {
+    $(_this2).find("#homework-content").html(res.data);
+  })["catch"](function (err) {
+    console.log(err);
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+  });
+});
+$("#view-homework-modal").on("hidden.bs.modal", function () {
+  var placeholder = "<div class=\"d-flex justify-content-center py-4\">\n\t\t<div class=\"spinner-border avatar-md text-primary\" role=\"status\"></div>\n\t</div>";
+  $(this).find("#homework-content").html(placeholder);
 });
 
 /***/ }),

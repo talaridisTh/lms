@@ -14,6 +14,25 @@
 @endsection
 
 @section('content')
+
+	<div class="modal fade" id="view-homework-modal" tabindex="-1" role="dialog"
+		aria-labelledby="view-homework-modalLabel" aria-hidden="true"><!-- View Homework Modal @s-->
+		<div class="modal-dialog modal-dialog-centered " role="document">
+			<div class="modal-content">
+				<div id="homework-content" class="modal-body p-0"><!-- Modal-Body @s-->
+
+					<div class="d-flex justify-content-center py-4">
+						<div class="spinner-border avatar-md text-primary" role="status"></div>
+					</div>
+
+				</div><!-- ./Modal-Body @e-->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+				</div>
+			</div>
+		</div>
+	</div><!-- ./View Homework Modal @e-->
+
     <div class="container-fruid">
 		@include("components.admin.users.coursesModal")
 		<div class="row">
@@ -50,7 +69,15 @@
                                class="nav-link">
                                 Courses
                             </a>
-                        </li>
+						</li>
+						@if ($userRole === "student")
+							<li class="nav-item">
+								<a href="#homeworks" data-toggle="tab" aria-expanded="false"
+								class="nav-link">
+									Εργασίες
+								</a>
+							</li>
+						@endif
                     </ul>
 
                     <div class="tab-content">
@@ -59,6 +86,27 @@
                         </div>
                         <div class="tab-pane"  id="courses">
                             @include("components.admin.users.userCoursesTable")
+                        </div>
+                        <div class="tab-pane"  id="homeworks">
+
+                            <table id="homeworks-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
+								<thead>
+									<tr>
+										<th class="text-center">Θέμα</th>
+										<th class="text-center">Course</th>
+										<th class="text-center">Ημ. Καταχώρισης</th>
+									</tr>
+								</thead>
+								<tbody class="tables-hover-effect"></tbody>
+								<tfoot>
+									<tr>
+										<th class="text-center">Θέμα</th>
+										<th class="text-center">Course</th>
+										<th class="text-center">Ημ. Καταχώρισης</th>
+									</tr>
+								</tfoot>
+							</table>
+
                         </div>
                     </div>
                 </div>

@@ -30,4 +30,6 @@ Route::prefix("users-ajax")->group(function() {
 	
 	Route::patch('{user:id}/add-courses', [UserAjaxController::class, "addCourses"]);
     Route::post("{user:id}/remove-courses", [UserAjaxController::class, "removeCourses"]);
+	
+	Route::post("/homeworks-datatable", [UserAjaxController::class, "useHomeworksDatatable"]);
 });

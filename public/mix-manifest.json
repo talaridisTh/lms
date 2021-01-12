@@ -1,7 +1,7 @@
 {
     "/js/app.js": "/js/app.js?id=2eb82bd882a3bdb70418",
     "/css/dashboard/customArticleStyle.css": "/css/dashboard/customArticleStyle.css?id=fe3970d56624fe06f3a4",
-    "/css/dashboard/app.css": "/css/dashboard/app.css?id=761ac32e250ede97a697",
+    "/css/dashboard/app.css": "/css/dashboard/app.css?id=55bb20351f844a5d4ca3",
     "/css/index/theme.css": "/css/index/theme.css?id=97c9ec930985c13f85f5",
     "/css/index/temp.css": "/css/index/temp.css?id=d1353cb3d7f4aef9d8f8",
     "/js/dashboard/bundles/bundleProfile.js": "/js/dashboard/bundles/bundleProfile.js?id=3c84d4b21ddc32a80efc",
@@ -29,7 +29,7 @@
     "/js/dashboard/topics/topicsMain.js": "/js/dashboard/topics/topicsMain.js?id=643a0e837947b325e3d5",
     "/js/dashboard/users/userCreate.js": "/js/dashboard/users/userCreate.js?id=10a2eef4f470a8888029",
     "/js/dashboard/users/userMain.js": "/js/dashboard/users/userMain.js?id=dad2290485c199bca48f",
-    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=c47fca3905c13e096101",
+    "/js/dashboard/users/userProfil.js": "/js/dashboard/users/userProfil.js?id=1cfd32799498d27eeeae",
     "/js/index/chat/message.js": "/js/index/chat/message.js?id=b068d76bc7b064b444ac",
     "/js/index/courses/indexCourses.js": "/js/index/courses/indexCourses.js?id=f764a76c3e44012a4b2d",
     "/js/index/discussions/discussions.js": "/js/index/discussions/discussions.js?id=4eee88a6a6acd1fcdb7b",
