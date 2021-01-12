@@ -22,6 +22,8 @@ trait IconFinder {
 			"sb3" => "mdi-cat text-orange",
 			"zip" => "mdi-folder-zip-outline text-warning",
 			"rar" => "mdi-folder-zip-outline text-warning",
+			"jpg" => "mdi-file-image-outline",
+			"jpeg" => "mdi-file-image-outline",
 		];
 		
 		foreach( $icons as $type => $icon ) {
