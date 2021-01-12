@@ -22367,7 +22367,7 @@ if(( false?undefined:_typeof(module))==='object'&&module.exports){module.exports
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\theme.js */"./resources/js/index/theme.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\theme.js */"./resources/js/index/theme.js");
 
 
 /***/ })

@@ -7208,7 +7208,7 @@ $(".col-span-12").on("click", ".js-update-submit", /*#__PURE__*/_asyncToGenerato
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\user\user-edit.js */"./resources/js/index/user/user-edit.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\user\user-edit.js */"./resources/js/index/user/user-edit.js");
 
 
 /***/ })

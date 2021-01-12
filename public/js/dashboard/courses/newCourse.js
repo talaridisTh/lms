@@ -55431,7 +55431,7 @@ ArticleEditor.add('plugin', 'reorder', {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\courses\newCourse.js */"./resources/js/dashboard/courses/newCourse.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\courses\newCourse.js */"./resources/js/dashboard/courses/newCourse.js");
 
 
 /***/ })
