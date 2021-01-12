@@ -49,23 +49,16 @@
 		<table id="homeworks-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
-					<th class="text-center">
-						<div class='icheck-primary d-inline'>
-							<input type='checkbox' id='select-all-courses' autocomplete='off'>
-							<label for='select-all-courses'></label>
-						</div>
-					</th>
 					<th class="text-center">Μαθητής</th>
-					<th class="text-center">Courses</th>
+					<th class="text-center">Course</th>
 					<th class="text-center">Ημ. Καταχώρισης</th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
 			<tfoot>
 				<tr>
-					<th class="text-center"></th>
 					<th class="text-center">Μαθητής</th>
-					<th class="text-center">Courses</th>
+					<th class="text-center">Course</th>
 					<th class="text-center">Ημ. Καταχώρισης</th>
 				</tr>
 			</tfoot>

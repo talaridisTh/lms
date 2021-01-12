@@ -31,15 +31,6 @@ class HomeworksDataTable extends DataTable
 
         return datatables()
             ->eloquent($query)
-			->addColumn('action', function($homework) {
-
-				$random = Str::random(10);
-
-				return "<div class='icheck-primary d-inline'>
-						<input type='checkbox' id='$random' autocomplete='off'>
-						<label for='$random'></label>
-					</div>";
-			})
 			->addColumn("student", function($homework) {
 				
 				return "<p class='mb-0'><a class='h5 custom-link-primary' href='/dashboard/users/". $homework->student->slug ."'>".$homework->student->fullname."</a></p>
@@ -51,7 +42,7 @@ class HomeworksDataTable extends DataTable
 
 				return $homework->course->title;
 			})
-			->rawColumns(["action", "student"]);
+			->rawColumns(["student"]);
     }
 
     /**

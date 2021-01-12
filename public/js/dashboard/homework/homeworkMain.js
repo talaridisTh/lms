@@ -3288,19 +3288,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
 
 var homeworksDatatable = $("#homeworks-datatable").DataTable({
-  order: [3, "desc"],
+  order: [2, "desc"],
   searchDelay: "1000",
   processing: true,
   serverSide: true,
   autoWidth: false,
   columnDefs: [{
-    targets: 0,
-    width: "40px"
-  }, {
-    targets: 2,
+    targets: 1,
     width: "250px"
   }, {
-    targets: 3,
+    targets: 2,
     width: "180px"
   }],
   ajax: {
@@ -3317,11 +3314,6 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
     }
   },
   columns: [{
-    data: 'action',
-    name: 'action',
-    className: "align-middle text-center",
-    orderable: false
-  }, {
     data: 'student',
     name: 'student.last_name'
   }, {
@@ -3438,7 +3430,7 @@ $("#course-select").select2({
 $("#course-select").on("change", function () {
   var label = $("#select2-course-select-container")[0];
   _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value.trim());
-  homeworksDatatable.column(2).search(this.value).draw();
+  homeworksDatatable.column(1).search(this.value).draw();
 });
 $("#view-homework-modal").on("show.bs.modal", function (event) {
   var _this = this;

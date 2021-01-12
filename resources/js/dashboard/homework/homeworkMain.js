@@ -1,15 +1,14 @@
 import utilities from "../main";
 
 const homeworksDatatable = $("#homeworks-datatable").DataTable({
-	order: [3, "desc"],
+	order: [2, "desc"],
 	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	autoWidth: false,
 	columnDefs: [
-		{ targets: 0, width: "40px"},
-		{ targets: 2, width: "250px"},
-		{ targets: 3, width: "180px"}
+		{ targets: 1, width: "250px"},
+		{ targets: 2, width: "180px"}
 	],
 	ajax: {
 		url: "/homeworks-datatable/main",
@@ -23,7 +22,6 @@ const homeworksDatatable = $("#homeworks-datatable").DataTable({
 		}
 	},
 	columns: [
-		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'student', name: 'student.last_name' },
 		{ data: 'course', name: 'course.title', className: "align-middle text-center",},
 		{
@@ -162,7 +160,7 @@ $("#course-select").on("change", function () {
 	const label = $("#select2-course-select-container")[0];
 
 	utilities.filterStyle( label, this.value.trim() );
-	homeworksDatatable.column(2).search( this.value ).draw();
+	homeworksDatatable.column(1).search( this.value ).draw();
 });
 
 $("#view-homework-modal").on("show.bs.modal", function(event) {
