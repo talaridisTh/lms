@@ -28,7 +28,7 @@ class HomeworksDataTable extends DataTable
 					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
 			});
 		}
-		
+
         return datatables()
             ->eloquent($query)
 			->addColumn('action', function($homework) {
@@ -42,8 +42,10 @@ class HomeworksDataTable extends DataTable
 			})
 			->addColumn("student", function($homework) {
 				
-				return "<p class='mb-0'>".$homework->student->fullname."</p>
-					<p class='mb-0'>".$homework->subject."</p>";
+				return "<p class='mb-0'><a class='h5 custom-link-primary' href='/dashboard/users/". $homework->student->slug ."'>".$homework->student->fullname."</a></p>
+					<p class='mb-0'>".$homework->subject."</p>
+					<a class='js-view-homework custom-link-primary' href='#'
+						data-toggle='modal' data-target='#view-homework-modal' data-id='$homework->id'>View</a>";
 			})
 			->addColumn("course", function($homework) {
 

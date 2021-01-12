@@ -3350,9 +3350,9 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
     });
   },
   drawCallback: function drawCallback() {
-    $(".dataTables_paginate > .pagination").addClass("pagination-rounded"); // $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-    // $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-
+    $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+    $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+    $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
     $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
   }
 });
@@ -3439,6 +3439,22 @@ $("#course-select").on("change", function () {
   var label = $("#select2-course-select-container")[0];
   _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value.trim());
   homeworksDatatable.column(2).search(this.value).draw();
+});
+$("#view-homework-modal").on("show.bs.modal", function (event) {
+  var _this = this;
+
+  var button = $(event.relatedTarget);
+  var id = button.data("id");
+  axios.get("/homework-ajax/".concat(id)).then(function (res) {
+    $(_this).find("#homework-content").html(res.data);
+  })["catch"](function (err) {
+    console.log(err);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+  });
+});
+$("#view-homework-modal").on("hidden.bs.modal", function () {
+  var placeholder = "<div class=\"d-flex justify-content-center py-4\">\n\t\t<div class=\"spinner-border avatar-md text-primary\" role=\"status\"></div>\n\t</div>";
+  $(this).find("#homework-content").html(placeholder);
 });
 
 /***/ }),

@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
 	Route::get("/dashboard/homeworks", "HomeworkController@index");
 	Route::post("homeworks-datatable/main", "HomeworkController@indexDataTable");
+	Route::get("homework-ajax/{homework:id}", "HomeworkController@homeworkContent");
 
     Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
     Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");

@@ -52,8 +52,8 @@ const homeworksDatatable = $("#homeworks-datatable").DataTable({
 	},
 	drawCallback:function(){
 		$(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-		// $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-		// $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+		$(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 
 	}
@@ -164,3 +164,27 @@ $("#course-select").on("change", function () {
 	utilities.filterStyle( label, this.value.trim() );
 	homeworksDatatable.column(2).search( this.value ).draw();
 });
+
+$("#view-homework-modal").on("show.bs.modal", function(event) {
+	
+	const button = $(event.relatedTarget);
+	const id = button.data("id");
+
+	axios.get(`/homework-ajax/${id}`)
+		.then( res => {
+			$(this).find("#homework-content").html(res.data);
+		})
+		.catch( err => {
+			console.log(err);
+			utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+		})
+});
+
+$("#view-homework-modal").on("hidden.bs.modal", function() {
+
+	const placeholder = `<div class="d-flex justify-content-center py-4">
+		<div class="spinner-border avatar-md text-primary" role="status"></div>
+	</div>`
+
+	$(this).find("#homework-content").html(placeholder);
+})

@@ -74,7 +74,7 @@
 						<i class="mdi mdi-content-save mr-1"></i>
 						Δημιουργία
 					</button>
-					<button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
 			</div>
 		</div>
