@@ -311,7 +311,7 @@ class User extends Authenticatable {
     // $user->fullName  // Onoma Epitheto
     public function getFullNameAttribute()
     {
-        return $this->attributes['first_name'] . ' ' . $this->attributes['last_name'];
+        return $this->attributes['last_name'] . ' ' . $this->attributes['first_name'];
     }
 
     public function getRouteKeyName()

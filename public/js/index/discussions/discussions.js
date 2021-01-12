@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7983,7 +7983,7 @@ $(".discussions-left").on("click", "#filter-my-task", /*#__PURE__*/_asyncToGener
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /*!*************************************************************!*\
   !*** multi ./resources/js/index/discussions/discussions.js ***!
   \*************************************************************/

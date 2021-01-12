@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -4780,7 +4780,7 @@ function swalDelete() {
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /*!*****************************************************************!*\
   !*** multi ./resources/js/dashboard/settings/settings-index.js ***!
   \*****************************************************************/
