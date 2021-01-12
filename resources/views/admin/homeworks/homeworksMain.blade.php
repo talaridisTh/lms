@@ -3,16 +3,20 @@
 @section('css')
 	<link href="/assets/css/vendor/dataTables.bootstrap4.css" rel="stylesheet" type="text/css"/>
 
+	<style>
+		.custom-border-bottom {
+			border-bottom: 1px solid #515c69;
+		}
+	</style>
 @endsection
 
 @section('content')
 
-	{{-- @dump($homework) --}}
 	<div class="modal fade" id="view-homework-modal" tabindex="-1" role="dialog"
 		aria-labelledby="view-homework-modalLabel" aria-hidden="true"><!-- View Homework Modal @s-->
-		<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-dialog modal-dialog-centered " role="document">
 			<div class="modal-content">
-				<div id="homework-content" class="modal-body"><!-- Modal-Body @s-->
+				<div id="homework-content" class="modal-body p-0"><!-- Modal-Body @s-->
 
 					<div class="d-flex justify-content-center py-4">
 						<div class="spinner-border avatar-md text-primary" role="status"></div>
@@ -26,7 +30,6 @@
 		</div>
 	</div><!-- ./View Homework Modal @e-->
 	
-
 	<div class="container content-width">
 		<div class="row">
 			<div class="col-12">

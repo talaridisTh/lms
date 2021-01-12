@@ -10,8 +10,7 @@ class HomeworkController extends Controller
 {
     public function index() {
 
-		$homework = Homework::find(5)->load("student", "course", "attachments");
-		return view("admin/homeworks/homeworksMain")->with(["homework" => $homework]);
+		return view("admin/homeworks/homeworksMain");
 	}
 
 	public function indexDataTable(HomeworksDataTable $datatable) {
