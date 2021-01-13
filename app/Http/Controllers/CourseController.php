@@ -11,6 +11,7 @@ use App\Traits\MediaUploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Models\User;
 
 class CourseController extends Controller {
 
@@ -30,7 +31,7 @@ class CourseController extends Controller {
         $data = [
             'topics' => Topic::all(),
             'media' => Media::where("type", 0)->orderBy("id", "desc")->paginate(18),
-            'instructors' => Role::find(2)->users,
+            'instructors' => User::role(["admin", "instructor"])->where("status", 1)->orderBy("last_name")->get(),
             "templates" => json_decode($templates->value)
         ];
 
@@ -103,7 +104,7 @@ class CourseController extends Controller {
             "gallery" => $course->media()->wherePivot("usage", "!=", 3)->orderBy("priority")->get(),
             'courseTopics' => $course->topics()->pluck("topics.id")->toArray(),
             'topics' => Topic::all(),
-            'instructors' => Role::find(2)->users,
+            'instructors' => User::role(["admin", "instructor"])->where("status", 1)->orderBy("last_name")->get(),
             'publish' => is_null($course->publish_at) ? null : Carbon::parse($course->publish_at)->format("d-m-Y H:i"),
             "files" => $course->media()->where("type", 1)->get(),
             "sections" => $course->materials()->where("type", "Section")->orderBy("priority")->get(),
