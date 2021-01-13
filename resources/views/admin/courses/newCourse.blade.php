@@ -297,11 +297,16 @@
 											@if ( old("curator") != "" && old("curator") == $instructor->id )
 												<option value="{{ $instructor->id }}"
 													selected>
-													{{ $instructor->first_name }} {{ $instructor->last_name }}
+													{{ $instructor->fullName }}
+												</option>
+											@elseIf ( $instructor->id == Auth::user()->id )
+												<option value="{{ $instructor->id }}"
+													selected>
+													{{ $instructor->fullName }}
 												</option>
 											@else
 												<option value="{{ $instructor->id }}">
-													{{ $instructor->first_name }} {{ $instructor->last_name }}
+													{{ $instructor->fullName }}
 												</option>
 											@endif
 

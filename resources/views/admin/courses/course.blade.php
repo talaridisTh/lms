@@ -656,18 +656,16 @@
 										@foreach ($instructors as $instructor)
 
 											@if ( old("curator") != "" && old("curator") == $instructor->id )
-												<option value="{{ $instructor->id }}"
-													selected>
-													{{ $instructor->first_name }} {{ $instructor->last_name }}
+												<option value="{{ $instructor->id }}" selected>
+													{{ $instructor->fullName }}
 												</option>
-											@elseif ( old("curator") == "" && $instructor->id == $course->user_id )
-												<option value="{{ $instructor->id }}"
-													selected>
-													{{ $instructor->first_name }} {{ $instructor->last_name }}
+											@elseif ( old("curator", $course->user_id) == $instructor->id )
+												<option value="{{ $instructor->id }}" selected>
+													{{ $instructor->fullName }}
 												</option>
 											@else
 												<option value="{{ $instructor->id }}">
-													{{ $instructor->first_name }} {{ $instructor->last_name }}
+													{{ $instructor->fullName }}
 												</option>
 											@endif
 
