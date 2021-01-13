@@ -27,6 +27,7 @@ import './theme/tippy'
 import './theme/dropdown'
 import './theme/modal'
 import './theme/show-modal'
+import './theme/dropzone'
 
 //jQuery
 $.fn.extend({
@@ -45,7 +46,9 @@ $.fn.extend({
 
 $(".js-message-seen").on("click", async function () {
     try {
-        const {status} = await axios.patch("home/message/update");
+        const {
+            status
+        } = await axios.patch("home/message/update");
 
         if (status == 200) {
             $(".js-message-badge").remove();
@@ -57,7 +60,9 @@ $(".js-message-seen").on("click", async function () {
 
 $(".js-task-seen").on("click", async function () {
     try {
-        const {status} = await axios.patch("home/task/update");
+        const {
+            status
+        } = await axios.patch("home/task/update");
 
         // if (status == 200) {
         //     $(".js-message-badge").remove();

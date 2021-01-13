@@ -307,20 +307,12 @@
 }
 
 
-//filepod and comments css
-.filepond--root {
-  font-family: 'Roboto' !important;
-  height: 89px;
-  margin: 0 !important;
-}
+//dropzone and comments css
 
 
-.bg-filepond {
+.bg-dropzone {
   background-color: #eee;
   border-radius: 0.5em;
 }
 
 
-.filepond--root .filepond--drop-label {
-  min-height: 5.75em !important;
-}

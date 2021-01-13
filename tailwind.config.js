@@ -82,6 +82,10 @@ module.exports = {
             transitionProperty: {
                 'height': 'height'
             },
+            transitionDuration: {
+                '0': '0ms',
+                '2000': '2000ms',
+            },
             flex: {
                 '1.5': '1.5 1.5 0%',
                 '2': '2 2 0%',

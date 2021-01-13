@@ -17346,10 +17346,6 @@ body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-s
   border-color: #f1f1f1;
 }
 
-.dropdown-menu {
-  box-shadow: 0 0 35px 0 rgba(49, 57, 66, 0.5);
-}
-
 .dropdown-menu-animated {
   -webkit-animation-name: DropDownSlide;
           animation-name: DropDownSlide;
@@ -17415,7 +17411,7 @@ body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-s
   padding: 15px 0 9px;
   display: block;
   border: 1px solid transparent;
-  color: #aab8c5;
+  color: #cfd5db;
 }
 
 .dropdown-icon-item img {
@@ -17431,7 +17427,7 @@ body[data-layout=topnav] .container-fluid, body[data-layout=topnav] .container-s
 
 .dropdown-icon-item:hover {
   background-color: #4d5764;
-  color: #e4e4e4;
+  color: #4d5764;
 }
 
 .arrow-none:after {

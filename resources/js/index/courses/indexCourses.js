@@ -2,9 +2,8 @@ import Swiper from 'swiper/bundle'; //slider.js
 import 'swiper/swiper-bundle.css'; // slider.css
 import "lightbox2/dist/js/lightbox" //lightbox
 import feather from "feather-icons"; //icon feather
-import * as FilePond from 'filepond';
-import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-import 'filepond/dist/filepond.min.css';
+import "../../../../resources/theme/js/vendor/dropzone.min"
+
 
 feather.replace();
 
@@ -178,44 +177,34 @@ function toggleModal() {
 
 } // create modal
 
-FilePond.setOptions({
-    maxFiles: 6,
-    allowMultiple: true,
-    className: "js-filepond-file-dragging",
-    labelIdle: "<i class=\"mdi text-black mdi-upload mr-4\"></i><span  class='text-black'>Ανέβασμα εργασίας</span>",
-    allowReorder: true,
-    credits: false,
+$(".dropzone-task").dropzone(
+    {
+        url: "/discussion/upload-task",
+        parallelUploads: 10,
+        uploadMultiple: true,
+        init: function () {
+            this.on("addedfile", function (file) {
 
-    chunkUploads: true
 
-});
+            });
+        },
+        totaluploadprogress: function (progress) {
+            let bar = document.getElementById("the-progress-div")
+            $(".cnt-task-bar").removeClass("invisible");
+            setTimeout(function () {
+                bar.classList.remove('w-0');
+                bar.classList.add('w-full');
+            }, 500);
 
-let dropzone = document.querySelector(".filepond-task");
-const pond = FilePond.create(dropzone, {
-    server: {
-        url: window.location.origin,
-        process: {
-            url: '/discussion/upload-task',
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
-            },
-            addfile: (formData) => {
-                formData.append('Hello', 'World');
-                return formData;
-            }
+            setTimeout(function () {
+                $(".cnt-task-bar").addClass("invisible");
+            }, 2000);
+
+
         }
 
-    },
-
-    onprocessfiles: function () {
-
-
-    },
-    onaddfile: function (error, file) {
-        console.log('File added', file);
-    },
-
-});
+    }
+);
 
 
 // import utilities from '../../index/main';
