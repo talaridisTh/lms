@@ -20801,7 +20801,7 @@ $(".js-message-seen").on("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_
     }
   }, _callee, null, [[0, 8]]);
 })));
-$(".js-task-seen").on("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+$(document).on("click", ".js-task-seen", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
   var _yield$axios$patch2, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {

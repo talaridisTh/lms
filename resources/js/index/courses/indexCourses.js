@@ -79,6 +79,8 @@ $(".spa-click").on("click", async function (e) {
             $(".spa-tabs")[1].classList.remove("w-full")
             $(".spa-tabs")[1].classList.add("w-auto")
             initTabs();
+            $(".cnt-dropzone").addClass("hidden").removeClass("flex-1");
+
             // fixPaddingTabs();
             // templateHandler(data, this);
             onFullScreen();
@@ -106,6 +108,8 @@ const onCloseFullScreen = () => {
                 $(".spa-click").removeClass("bg-gray-400")
                 $(".spa-cnt").addClass("lg:w-4/6")
                 $(".spa-list-material").removeClass("hidden lg:mt-16 lg:mt-0").addClass("lg:mt-0")
+                $(".cnt-dropzone").removeClass("hidden").addClass("flex-1");
+                initDropzone()
                 initTabs();
                 onInitEventHandler();
             }
@@ -177,35 +181,46 @@ function toggleModal() {
 
 } // create modal
 
-$(".dropzone-task").dropzone(
-    {
-        url: "/discussion/upload-task",
-        parallelUploads: 10,
-        uploadMultiple: true,
-        init: function () {
-            this.on("addedfile", function (file) {
+const initDropzone = () => {
+    $(".dropzone-task").dropzone(
+        {
+            url: "/discussion/task/send",
+            parallelUploads: 10,
+            uploadMultiple: true,
+            paramName: "attachment",
+            init: function () {
+                this.on("addedfile", function (file) {
 
 
-            });
-        },
-        totaluploadprogress: function (progress) {
-            let bar = document.getElementById("the-progress-div")
-            $(".cnt-task-bar").removeClass("invisible");
-            setTimeout(function () {
-                bar.classList.remove('w-0');
-                bar.classList.add('w-full');
-            }, 500);
+                });
+                this.on("sending", function (file, xhr, formData) {
+                    const model = $(".dropzone-task").data("model")
+                    formData.append("subject", model.title);
+                    formData.append("body", model.title);
+                    formData.append("curator", model.user_id);
+                    // formData.append("receiver", model.user_id);
+                    formData.append("course", model.title);
+                    formData.append("dropzone", model.id);
+                });
+            },
 
-            setTimeout(function () {
-                $(".cnt-task-bar").addClass("invisible");
-            }, 2000);
+            totaluploadprogress: function (progress) {
+                let bar = document.getElementById("the-progress-div")
+                $(".cnt-task-bar").removeClass("invisible");
+                setTimeout(function () {
+                    bar.classList.remove('w-0');
+                    bar.classList.add('w-full');
+                }, 500);
 
+                setTimeout(function () {
+                    $(".cnt-task-bar").addClass("invisible");
+                }, 2000);
+            }
 
         }
-
-    }
-);
-
+    );
+}
+initDropzone()
 
 // import utilities from '../../index/main';
 // require('../../../../node_modules/lightbox2/dist/js/lightbox');

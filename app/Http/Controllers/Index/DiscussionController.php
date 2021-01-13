@@ -360,6 +360,7 @@ class DiscussionController extends Controller {
 
     public function sendTask(Request $request)
     {
+//        dd($request->all());
         $mailInfo = new \stdClass();
         $mailInfo->subject = $request->subject;
         $mailInfo->body = $request->body;
@@ -368,7 +369,11 @@ class DiscussionController extends Controller {
         $mailInfo->course = Course::where("title", $request->course)->first();
         $mailInfo->attachment = $request->attachment;
         $homework = $this->storeHomework($mailInfo);
-        Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo, $homework));
+        if (isset($request->dropzone)) {
+            $ids = $this->uploadTask($request);
+
+        }
+        Mail::to(auth()->user()->email)->send(new EmailTask($mailInfo, $homework, isset($ids->original) ? $ids->original : null));
 
         return $this->myTask();
     }
@@ -397,7 +402,7 @@ class DiscussionController extends Controller {
     public function uploadTask(Request $request)
     {
         $res = [];
-        $files = $request->file;
+        $files = isset($request->file) ? $request->file : $request->attachment;
 //        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
         foreach ($files as $key => $file) {
             if ($file->isValid()) {

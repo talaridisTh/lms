@@ -11,9 +11,12 @@
                      alt="avatar-curator">
             </figure>
             <section class="space-y-4">
-                <section class="flex justify-between">
-                    <h5 class="ml-1"><span class="text-lg font-bold">Εισηγητής</span> <span
-                                class="font-semibold">- {{$curator->fullname}}</span>
+                <section class="flex justify-between users-mail-task"
+                         data-auth="{{auth()->user()->id}}"
+                         data-instructor="{{$curator->email}}">
+                    <h5 class="ml-1">
+                        <span class="text-lg font-bold">Εισηγητής</span>
+                        <span class="font-semibold">- {{$curator->fullname}}</span>
                     </h5>
                     <figure class="text-xl items-center space-x-3 flex hidden">
                         @if($curator->facebook_link)

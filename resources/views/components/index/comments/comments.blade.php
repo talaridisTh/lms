@@ -9,8 +9,7 @@
                 {{--                {{dump($post)}}--}}
 
                 @if ( !$comment->parent_id )
-                    @include("components.index.comments.comments-single-post",["comment"=>$comment,"class"=>""])
-                @endif
+                    @include("components.index.comments.comments-single-post",["comment"=>$comment,"class"=>""]) @endif
 
                 @if ( $comment->replies )
                     @foreach($comment->replies as $rep1)

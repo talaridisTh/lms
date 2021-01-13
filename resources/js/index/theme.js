@@ -58,7 +58,7 @@ $(".js-message-seen").on("click", async function () {
     }
 })
 
-$(".js-task-seen").on("click", async function () {
+$(document).on("click", ".js-task-seen", async function () {
     try {
         const {
             status

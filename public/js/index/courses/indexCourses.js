@@ -27243,7 +27243,8 @@ $(".spa-click").on("click", /*#__PURE__*/function () {
               $(".spa-tabs")[1].classList.remove("lg:w-4/6");
               $(".spa-tabs")[1].classList.remove("w-full");
               $(".spa-tabs")[1].classList.add("w-auto");
-              initTabs(); // fixPaddingTabs();
+              initTabs();
+              $(".cnt-dropzone").addClass("hidden").removeClass("flex-1"); // fixPaddingTabs();
               // templateHandler(data, this);
 
               onFullScreen();
@@ -27295,6 +27296,8 @@ var onCloseFullScreen = function onCloseFullScreen() {
               $(".spa-click").removeClass("bg-gray-400");
               $(".spa-cnt").addClass("lg:w-4/6");
               $(".spa-list-material").removeClass("hidden lg:mt-16 lg:mt-0").addClass("lg:mt-0");
+              $(".cnt-dropzone").removeClass("hidden").addClass("flex-1");
+              initDropzone();
               initTabs();
               onInitEventHandler();
             }
@@ -27382,25 +27385,39 @@ function toggleModal() {
 } // create modal
 
 
-$(".dropzone-task").dropzone({
-  url: "/discussion/upload-task",
-  parallelUploads: 10,
-  uploadMultiple: true,
-  init: function init() {
-    this.on("addedfile", function (file) {});
-  },
-  totaluploadprogress: function totaluploadprogress(progress) {
-    var bar = document.getElementById("the-progress-div");
-    $(".cnt-task-bar").removeClass("invisible");
-    setTimeout(function () {
-      bar.classList.remove('w-0');
-      bar.classList.add('w-full');
-    }, 500);
-    setTimeout(function () {
-      $(".cnt-task-bar").addClass("invisible");
-    }, 2000);
-  }
-}); // import utilities from '../../index/main';
+var initDropzone = function initDropzone() {
+  $(".dropzone-task").dropzone({
+    url: "/discussion/task/send",
+    parallelUploads: 10,
+    uploadMultiple: true,
+    paramName: "attachment",
+    init: function init() {
+      this.on("addedfile", function (file) {});
+      this.on("sending", function (file, xhr, formData) {
+        var model = $(".dropzone-task").data("model");
+        formData.append("subject", model.title);
+        formData.append("body", model.title);
+        formData.append("curator", model.user_id); // formData.append("receiver", model.user_id);
+
+        formData.append("course", model.title);
+        formData.append("dropzone", model.id);
+      });
+    },
+    totaluploadprogress: function totaluploadprogress(progress) {
+      var bar = document.getElementById("the-progress-div");
+      $(".cnt-task-bar").removeClass("invisible");
+      setTimeout(function () {
+        bar.classList.remove('w-0');
+        bar.classList.add('w-full');
+      }, 500);
+      setTimeout(function () {
+        $(".cnt-task-bar").addClass("invisible");
+      }, 2000);
+    }
+  });
+};
+
+initDropzone(); // import utilities from '../../index/main';
 // require('../../../../node_modules/lightbox2/dist/js/lightbox');
 //
 // if ($('meta[name=route]').attr('content') == "index.userCourse") {

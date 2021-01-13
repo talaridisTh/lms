@@ -3,11 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Attachment;
-use App\Models\Media;
-use App\Models\Mediable;
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -21,11 +17,13 @@ class EmailTask extends Mailable {
      * @return void
      */
     public $homework;
+    public $ids;
 
-    public function __construct($mailInfo,$homework)
+    public function __construct($mailInfo, $homework, $ids)
     {
         $this->mailInfo = $mailInfo;
         $this->homework = $homework;
+        $this->ids = $ids;
 //        dd( json_decode($this->mailInfo->attachment));
     }
 
@@ -40,21 +38,30 @@ class EmailTask extends Mailable {
             ->to($this->mailInfo->receiver->email)
             ->subject($this->mailInfo->subject)
             ->view('index.mail.task');
-        if (isset($this->mailInfo->attachment))
-        {
-            foreach (json_decode($this->mailInfo->attachment) as $filePath)
-            {
+        if (isset($this->mailInfo->attachment) && !isset($this->ids)) {
+            foreach (json_decode($this->mailInfo->attachment) as $filePath) {
                 $amount = json_decode($this->mailInfo->receiver->seen)->seen_task + 1;
                 $this->mailInfo->receiver->update(['seen->seen_task' => $amount]);
-
                 Attachment::findOrFail($filePath->id)->update(
                     [
                         "attachmentable_type" => "App\Models\Homework",
                         "attachmentable_id" => $this->homework->id
                     ]
                 );
-
                 $email->attach(public_path($filePath->path));
+            }
+        } elseif (isset($this->ids)) {
+            foreach ($this->ids as $filePath) {
+
+                $amount = json_decode($this->mailInfo->receiver->seen)->seen_task + 1;
+                $this->mailInfo->receiver->update(['seen->seen_task' => $amount]);
+                Attachment::findOrFail($filePath["id"])->update(
+                    [
+                        "attachmentable_type" => "App\Models\Homework",
+                        "attachmentable_id" => $this->homework->id
+                    ]
+                );
+                $email->attach(public_path($filePath["url"]));
             }
         }
 //            ->with($this->mailInfo);

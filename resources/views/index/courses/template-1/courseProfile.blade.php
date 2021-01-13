@@ -1,5 +1,11 @@
 @extends("layouts.app")
-
+@section("style")
+    <style>
+        .dz-preview, .dz-file-preview {
+            display: none;
+        }
+    </style>
+@endsection
 @section("content")
 
 

@@ -136,6 +136,8 @@
     @endif
 
     Swal.queue(modals);
+
+
 </script>
 
 
