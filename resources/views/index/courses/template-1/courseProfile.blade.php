@@ -28,11 +28,11 @@
                 @endif
                 <section class="flex flex-col w-full space-y-4">
                     <h2 class="sm:text-4xl text-center lg:text-left font-weight-semibold xl:w-4/5 text-2xl">{{$course->title}}</h2>
-                    <p class="text-md sm:text-center lg:text-left font-weight-normal xl:w-3/5">{{\Str::limit($course->subtitle,150,"...")}}</p>
+                    <p class="text-md xs:text-center lg:text-left font-weight-normal xl:w-3/5">{{\Str::limit($course->subtitle,150,"...")}}</p>
                 </section>
             </section>
             <aside
-                    class="bg-opacity-10 w-full xl:w-3/10 lg:w-1/2  bg-black rounded-xl  flex flex-col items-start">
+                    class="bg-opacity-10 w-full xl:w-3/10 lg:w-1/2  bg-black rounded-xl mb-4 lg:mb-0 flex flex-col items-start">
                 <ul class="bg-white px-4 mx-4 mt-6 mb-0 py-2 rounded-full ">
                     <li class="text-black font-semibold  ">Τελευταίες Ανακοινώσεις</li>
                 </ul>

@@ -45,7 +45,7 @@
             style=";  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
 
         <div class="container mx-auto max-w-1xl flex items-center flex-wrap justify-between">
-            <div class="mr-7">
+            <div class="mr-7 flex-1 ">
                 <a href="#"
                    class="text-xl">
                     <img class=""
@@ -61,7 +61,7 @@
                 <p>{{ $options->contactInfo->phone }}, {{ $options->contactInfo->fax }}</p>
             </div>
             <div class="w-full my-3 sm:my-0 sm:w-auto">
-                <ul class="flex space-x-3">
+                <ul class="flex justify-center space-x-3">
                     @foreach($options->social as $social => $link)
                         <li>
                             <a href="{{ $link }}">

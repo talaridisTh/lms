@@ -6,12 +6,16 @@
              data-user-slug="{{auth()->user()->slug}}">
 
         <div class="-intro-x breadcrumb mr-auto hidden sm:flex my-4 p-1"><!-- BEGIN: breadcrumb -->
-            <a href="{{route('home')}}" class="">Home</a>
-            <i data-feather="chevron-right" class="breadcrumb__icon"></i>
-            <a href="" class="breadcrumb--active">Profile</a>
+            <a href="{{route('home')}}"
+               class="">Home</a>
+            <i data-feather="chevron-right"
+               class="breadcrumb__icon"></i>
+            <a href=""
+               class="breadcrumb--active">Profile</a>
         </div><!-- END: breadcrumb -->
 
-        <section class="flex flex-wrap space-x-10" id="cnt-sidebars"><!-- BEGIN: container user-profil -->
+        <section class="flex flex-wrap space-x-10"
+                 id="cnt-sidebars"><!-- BEGIN: container user-profil -->
 
             <aside class="flex-1 flex flex-col space-y-6 p-6 left-sidebar bg-card-color rounded-lg">
                 <!-- BEGIN: left sidebar user profil -->
@@ -43,7 +47,8 @@
                             <div class="flex space-x-10">
                                 <div class="flex items-center p-2 rounded-full"
                                      style="background-color: rgba(40, 92, 247, 0.2) !important;">
-                                    <i class="font-2xl text-blue-700" data-feather="facebook"></i>
+                                    <i class="font-2xl text-blue-700"
+                                       data-feather="facebook"></i>
                                 </div>
                                 <div class="">
                                     <p class="text-sm text-gray-500">Facebook</p>
@@ -56,7 +61,8 @@
                             <div class="flex space-x-10">
                                 <div class="flex items-center p-2 rounded-full"
                                      style="background: rgba(243, 161, 161, 0.3) !important;">
-                                    <i class="font-2xl text-pink-600" data-feather="instagram"></i>
+                                    <i class="font-2xl text-pink-600"
+                                       data-feather="instagram"></i>
                                 </div>
                                 <div class="">
                                     <p class="text-sm text-gray-500">Instagram</p>
@@ -68,7 +74,8 @@
                             <div class="flex space-x-10">
                                 <div class="flex items-center p-2 rounded-full"
                                      style="background-color: rgba(57, 175, 209, 0.13) !important;">
-                                    <i class="font-2xl text-teal-900" data-feather="linkedin"></i>
+                                    <i class="font-2xl text-teal-900"
+                                       data-feather="linkedin"></i>
                                 </div>
                                 <div class="">
                                     <p class="text-sm text-gray-500">linkedin</p>
@@ -80,7 +87,8 @@
                             <div class="flex space-x-10">
                                 <div class="flex items-center p-2 rounded-full"
                                      style="background-color: rgba(255, 0, 0, 0.3) !important;">
-                                    <i class="font-2xl text-red-700" data-feather="youtube"></i>
+                                    <i class="font-2xl text-red-700"
+                                       data-feather="youtube"></i>
                                 </div>
                                 <div class="">
                                     <p class="text-sm text-gray-500">youtube</p>
@@ -92,7 +100,7 @@
                     <hr class="my-4">
                 @endif
 
-                <div class="space-y-4">
+                <div class="space-y-4 hidden">
                     <h4 class="text-black text-base font-semibold capitalize">Μαθήματα</h4>
 
                     <div class="space-y-2">
@@ -125,28 +133,35 @@
 
             <section class="flex-2 space-y-6"> <!-- BEGIN: header right sidebar -->
 
-                <header class="flex flex-wrap space-x-5 capitalize"><!-- BEGIN: top right sidebar count materelials -->
-                    <div class="bg-card-color rounded-lg flex-1 flex justify-between px-4 py-6 items-center">
-                        <div class="p-4 rounded-full" style="background-color: rgba(0, 255, 0, 0.2) !important;">
-                            <i class="text-green-700 p-0 m-0" data-feather="book"></i>
+                <header class="flex xs:flex-wrap sm:flex-nowrap xs:space-x-0 sm:space-x-5 capitalize">
+                    <!-- BEGIN: top right sidebar count materelials -->
+                    <div class="bg-card-color   rounded-lg flex-1 flex justify-between px-4 py-6 items-center">
+                        <div class="p-4 rounded-full xs"
+                             style="background-color: rgba(0, 255, 0, 0.2) !important;">
+                            <i class="text-green-700 p-0 m-0"
+                               data-feather="book"></i>
                         </div>
                         <div class="text-center">
                             <p class="text-lg font-semibold">courses</p>
                             <p class="text-lg font-semibold">{{$sumCourses}}</p>
                         </div>
                     </div>
-                    <div class="bg-card-color rounded-lg flex-1 flex justify-between px-4 py-6 items-center">
-                        <div class="p-4 rounded-full" style="background-color: rgba(75,0,130, 0.2) !important;">
-                            <i class="text-indigo-700 p-0 m-0" data-feather="book-open"></i>
+                    <div class="bg-card-color   rounded-lg flex-1 flex justify-between px-4 py-6 items-center">
+                        <div class="p-4 rounded-full"
+                             style="background-color: rgba(75,0,130, 0.2) !important;">
+                            <i class="text-indigo-700 p-0 m-0"
+                               data-feather="book-open"></i>
                         </div>
                         <div class="text-center">
                             <p class="text-lg font-semibold">Μαθήματα</p>
                             <p class="text-lg font-semibold">{{$sumMaterials}}</p>
                         </div>
                     </div>
-                    <div class="bg-card-color rounded-lg flex-1 flex justify-between px-4 py-6 items-center">
-                        <div class="p-4 rounded-full" style="background-color: rgba(255, 255, 0, 0.2) !important;">
-                            <i class="text-yellow-700 p-0 m-0" data-feather="bookmark"></i>
+                    <div class="bg-card-color  rounded-lg flex-1 flex justify-between px-4 py-6 items-center">
+                        <div class="p-4 rounded-full"
+                             style="background-color: rgba(255, 255, 0, 0.2) !important;">
+                            <i class="text-yellow-700 p-0 m-0"
+                               data-feather="bookmark"></i>
                         </div>
                         <div class="text-center">
                             <p class="text-lg font-semibold">Bundles</p>
@@ -158,33 +173,40 @@
                 <section>
                     <!-- BEGIN: tabs -->
                     <div class="col-span-12 lg:col-span-4">
-                        <div class="intro-y pr-1 w-4/12">
+                        <div class="intro-y pr-1 xs-w-full md:w-4/12">
                             <div class="box ">
                                 <div class="pos__tabs nav-tabs justify-center flex space-x-2">
-                                    <a data-toggle="tab" data-target="#settings-user" href="javascript:;"
+                                    <a data-toggle="tab"
+                                       data-target="#settings-user"
+                                       href="javascript:;"
                                        class="flex-1 py-2 rounded-md text-center border border-b-0 border-gray-300 active rounded-b-none text-lg">Στοιχεία</a>
-                                    <a data-toggle="tab" data-target="#social-link" href="javascript:;"
+                                    <a data-toggle="tab"
+                                       data-target="#social-link"
+                                       href="javascript:;"
                                        class="flex-1 py-2 rounded-md border border-b-0 border-gray-300  text-center text-lg rounded-b-none">Social</a>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="tab-content contents" style="padding:0;"><!-- BEGIN: tab content -->
-                            <div class="tab-content__pane active border pt-0 px-6 py-4" id="settings-user">
+                        <div class="tab-content contents"
+                             style="padding:0;"><!-- BEGIN: tab content -->
+                            <div class="tab-content__pane active border xs:pt-4 pt-0 px-6 py-4"
+                                 id="settings-user">
                                 <div class="intro-y box lg:mt-5  space-y-4">
                                     <div>
 
                                         <div class="flex">
                                             <label class="font-bold">όνομα</label>
                                             <span
-                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                                    class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
                                             @error('name')
                                                 <strong class="has-error">*{{ $message }}</strong>
                                             @enderror
                                         </span>
                                         </div>
 
-                                        <input type="text" class="input w-full border mt-2"
+                                        <input type="text"
+                                               class="input w-full border mt-2"
                                                id="user-update-name"
                                                value="{{$user->first_name}}"
                                                placeholder="Eισάγετε όνομα">
@@ -195,7 +217,7 @@
                                         <div class="flex">
                                             <label class="font-bold">Επίθετο </label>
                                             <span
-                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                                    class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
                                             @error('last')
                                                 <strong class="has-error">*{{ $message }}</strong>
                                             @enderror
@@ -214,7 +236,7 @@
                                         <div class="flex">
                                             <label class="font-bold">Email </label>
                                             <span
-                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                                    class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
                                             @error('email')
                                                 <strong class="has-error">*{{ $message }}</strong>
                                             @enderror
@@ -223,11 +245,12 @@
 
                                         <div class="mt-2 relative">
                                             <div
-                                                class="absolute rounded-l w-10 h-full flex items-center
+                                                    class="absolute rounded-l w-10 h-full flex items-center
                                              justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
                                                 @
                                             </div>
-                                            <input type="text" class="input pl-12 w-full border col-span-4"
+                                            <input type="text"
+                                                   class="input pl-12 w-full border col-span-4"
                                                    id="user-update-email"
                                                    value="{{$user->email}}"
                                                    placeholder="Eισάγετε email">
@@ -239,7 +262,7 @@
                                         <div class="flex">
                                             <label class="font-bold">Τηλέφωνο </label>
                                             <span
-                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                                    class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
                                             @error('phone')
                                                 <strong class="has-error">*{{ $message }}</strong>
                                             @enderror
@@ -248,11 +271,13 @@
 
                                         <div class="mt-2 relative">
                                             <div
-                                                class="absolute rounded-l w-10 h-full flex items-center
+                                                    class="absolute rounded-l w-10 h-full flex items-center
                                              justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
-                                                <i class="" data-feather="phone"></i>
+                                                <i class=""
+                                                   data-feather="phone"></i>
                                             </div>
-                                            <input type="text" class="input pl-12 w-full border col-span-4"
+                                            <input type="text"
+                                                   class="input pl-12 w-full border col-span-4"
                                                    id="user-update-phone"
                                                    value="{{$user->phone}}"
                                                    placeholder="Eισάγετε Τηλέφωνο">
@@ -264,7 +289,7 @@
                                         <div class="flex">
                                             <label class="font-bold">Password </label>
                                             <span
-                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                                    class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
                                             @error('password')
                                                 <strong class="has-error">*{{ $message }}</strong>
                                             @enderror
@@ -281,7 +306,7 @@
                                             <div class="col-span-3 hidden h-full rounded bg-theme-9"></div>
                                             <div class="col-span-3 hidden h-full rounded bg-theme-9"></div>
                                             <div
-                                                class="col-span-3  hidden h-full rounded bg-gray-200 dark:bg-dark-1"></div>
+                                                    class="col-span-3  hidden h-full rounded bg-gray-200 dark:bg-dark-1"></div>
                                         </div>
                                         <div class="text-theme-9 hidden mt-2">Strong password</div>
                                     </div>
@@ -302,14 +327,16 @@
                                         <div class="flex">
                                             <label class="font-bold">Bio </label>
                                             <span
-                                                class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
+                                                    class="ml-5 rounded-md errorLog text-xs flex items-center  text-theme-6">
                                             @error('profil')
                                                 <strong class="has-error">*{{ $message }}</strong>
                                             @enderror
                                         </span>
                                         </div>
 
-                                        <textarea name="profile" id="user-update-profile" cols="30"
+                                        <textarea name="profile"
+                                                  id="user-update-profile"
+                                                  cols="30"
                                                   rows="10">{{$user->profil}}</textarea>
                                     </div>
 
@@ -317,17 +344,19 @@
                                 </div>
                             </div>
 
-                            <div class="tab-content__pane border px-6 py-4" id="social-link">
+                            <div class="tab-content__pane border px-6 py-4"
+                                 id="social-link">
                                 <div class="intro-y box lg:mt-5 capitalize space-y-4 ">
 
                                     <div>
                                         <div class="mt-2 relative">
                                             <div
-                                                class="absolute rounded-l w-10 h-full flex items-center
+                                                    class="absolute rounded-l w-10 h-full flex items-center
                                              justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
                                                 <i data-feather="facebook"></i>
                                             </div>
-                                            <input type="text" class="input pl-12 w-full border col-span-4"
+                                            <input type="text"
+                                                   class="input pl-12 w-full border col-span-4"
                                                    id="user-update-facebook"
                                                    value="{{$user->facebook_link}}"
                                                    placeholder="Eισάγετε link">
@@ -337,11 +366,12 @@
                                     <div>
                                         <div class="mt-2 relative">
                                             <div
-                                                class="absolute rounded-l w-10 h-full flex items-center
+                                                    class="absolute rounded-l w-10 h-full flex items-center
                                              justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
                                                 <i data-feather="instagram"></i>
                                             </div>
-                                            <input type="text" class="input pl-12 w-full border col-span-4"
+                                            <input type="text"
+                                                   class="input pl-12 w-full border col-span-4"
                                                    id="user-update-instagram"
                                                    value="{{$user->instagram_link}}"
                                                    placeholder="Eισάγετε link">
@@ -351,11 +381,12 @@
                                     <div>
                                         <div class="mt-2 relative">
                                             <div
-                                                class="absolute rounded-l w-10 h-full flex items-center
+                                                    class="absolute rounded-l w-10 h-full flex items-center
                                              justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
                                                 <i data-feather="linkedin"></i>
                                             </div>
-                                            <input type="text" class="input pl-12 w-full border col-span-4"
+                                            <input type="text"
+                                                   class="input pl-12 w-full border col-span-4"
                                                    id="user-update-linkedin"
                                                    value="{{$user->linkedin}}"
                                                    placeholder="Eισάγετε link">
@@ -365,11 +396,12 @@
                                     <div>
                                         <div class="mt-2 relative">
                                             <div
-                                                class="absolute rounded-l w-10 h-full flex items-center
+                                                    class="absolute rounded-l w-10 h-full flex items-center
                                              justify-center bg-gray-100 dark:bg-dark-1 dark:border-dark-4 border text-gray-600">
                                                 <i data-feather="youtube"></i>
                                             </div>
-                                            <input type="text" class="input pl-12 w-full border col-span-4"
+                                            <input type="text"
+                                                   class="input pl-12 w-full border col-span-4"
                                                    id="user-update-youtube"
                                                    value="{{$user->youtube_link}}"
                                                    placeholder="Eισάγετε link">
@@ -381,7 +413,7 @@
                             </div>
 
                             <button
-                                class="js-update-submit inline-block ml-7 mt-3 px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-700 rounded shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
+                                    class="js-update-submit inline-block ml-7 mt-3 px-6 py-2 text-xs font-medium leading-6 text-center text-white uppercase transition bg-blue-700 rounded shadow ripple hover:shadow-lg hover:bg-blue-800 focus:outline-none"
                             >
                                 UPDATE
                             </button>

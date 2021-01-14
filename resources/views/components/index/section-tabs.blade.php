@@ -1,5 +1,5 @@
 <div id="scrollTo"></div>
-<section class="w-full spa-tabs lg:w-4/6 spa-cnt">
+<section class="w-full spa-tabs lg:w-4/6 spa-cnt order-2 md:order-none">
     <div class="spa-material">
 
 

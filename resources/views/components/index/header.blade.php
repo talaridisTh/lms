@@ -2,8 +2,8 @@
         class="lg:px-16 z-50 sticky top-0 px-8 bg-white py-4 shadow-md relative "
         style="">
 
-    <div class="container mx-auto max-w-1xl flex flex-wrap items-center px-1 intro-x">
-        <div class="flex-1 flex justify-between items-center">
+    <div class="container w-2/3 sm:w-full  mx-auto max-w-1xl inline-flex sm:flex flex-wrap items-center px-1 intro-x">
+        <div class="xs:w-1/2 w-full flex-1 xl:inline-flex flex justify-between items-center">
             <a href="/tailwind"
                class="text-xl">
                 <img class="{{$logo}}"
@@ -129,62 +129,48 @@
         </div>
         <ul class="burger-menu py-5 hidden">
             @hasanyrole("admin|super-admin")
-            <li>
+            <li class="hover:bg-gray-200 rounded-lg">
                 <a href="{{route('dashboard')}}"
                    class="menu">
                     <div class="menu__icon"><i data-feather="home"></i></div>
                     <div class="menu__title"> Dashboard</div>
                 </a>
             </li>
-            <li>
+            <li class="hover:bg-gray-200 rounded-lg">
                 <a href="{{route('dashboard')}}"
                    class="menu">
                     <div class="menu__icon"><i data-feather="home"></i></div>
                     <div class="menu__title"> edit this course</div>
                 </a>
             </li>
-            <li>
+            <li class="hover:bg-gray-200 rounded-lg">
                 <a href="{{route('dashboard')}}"
                    class="menu">
                     <div class="menu__icon"><i data-feather="home"></i></div>
                     <div class="menu__title"> Edit this material</div>
                 </a>
             </li>
-
             @endhasanyrole
-            <li>
+            <li class="hover:bg-gray-200 rounded-lg">
                 <a href="{{route('dashboard')}}"
                    class="menu">
                     <div class="menu__icon"><i data-feather="home"></i></div>
                     <div class="menu__title"> Discussions</div>
-                    <span class="absolute top-0 right-0 inline-flex items-center justify-center
+                    <span class="absolute top-0 right-0 inline-flex items-center justify-center"></span>
 
-                    </a>
-                </li>
-
-                <li>
-                    <a href="
-                          javascript:;" class="menu">
+                </a>
+            </li>
+            <li class="hover:bg-gray-200 rounded-lg">
+                <a href="javascript:;"
+                   class="menu">
                     <div class="menu__icon"><i data-feather="box"></i></div>
-                    <div class="menu__title"> Ο λογαριασμος μου <i data-feather="chevron-down"
-                                                                   class="menu__sub-icon"></i></div>
+                    <div class="menu__title"> Ο λογαριασμος μου
+                        <i data-feather="chevron-down"
+                           class="menu__sub-icon"></i></div>
                 </a>
                 <ul class="">
-                    <li>
-                        <a href="index.html"
-                           class="menu">
-                            <div class="menu__icon"><i data-feather="activity"></i></div>
-                            <div class="menu__title"> Side Menu</div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="simple-menu-light-dashboard.html"
-                           class="menu">
-                            <div class="menu__icon"><i data-feather="activity"></i></div>
-                            <div class="menu__title"> Simple Menu</div>
-                        </a>
-                    </li>
-                    <li id="logout-btn">
+                    <li id="logout-btn"
+                        class="bg-gray-300">
                         <a href="top-menu-light-dashboard.html"
                            class="menu">
                             <div class="menu__icon"><i data-feather="activity"></i></div>
