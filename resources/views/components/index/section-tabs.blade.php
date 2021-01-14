@@ -78,7 +78,7 @@
             </ul>
             <!-- Tab Contents -->
             <div id="tab-contents"
-                 class="ml-1 border-1 border-gray-200 py-3 px-10">
+                 class="ml-1 border-1 border-gray-200 py-3 px-2 sm:px-10">
                 @if(get_class($model)=="App\Models\Material")
                     <div id="content"
                          class=" hidden py-7 px-4">
