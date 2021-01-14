@@ -7028,17 +7028,14 @@ function resetGalleryBtns(bulk, checkboxes) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
-/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _dashboard_main__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../dashboard/main */ "./resources/js/dashboard/main.js");
-/* harmony import */ var feather_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! feather-icons */ "./node_modules/feather-icons/dist/feather.js");
-/* harmony import */ var feather_icons__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(feather_icons__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _dashboard_main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../dashboard/main */ "./resources/js/dashboard/main.js");
+/* harmony import */ var feather_icons__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! feather-icons */ "./node_modules/feather-icons/dist/feather.js");
+/* harmony import */ var feather_icons__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(feather_icons__WEBPACK_IMPORTED_MODULE_2__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
 
 
 
@@ -7081,8 +7078,8 @@ var onChangeAvatar = function onChangeAvatar() {
 
               if (status == 200) {
                 $(".cnt-user-avatar").html($(data));
-                feather_icons__WEBPACK_IMPORTED_MODULE_3___default.a.replace();
-                _dashboard_main__WEBPACK_IMPORTED_MODULE_2__["default"].toastAlert("success", "Το Cover άλλαξε");
+                feather_icons__WEBPACK_IMPORTED_MODULE_2___default.a.replace();
+                _dashboard_main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", "Το Cover άλλαξε");
               }
 
             case 9:
@@ -7174,7 +7171,7 @@ $(".col-span-12").on("click", ".js-update-submit", /*#__PURE__*/_asyncToGenerato
           $(".col-span-12").html($(data).find(".col-span-12 > *"));
           initRedactor();
           onChangeAvatar();
-          feather_icons__WEBPACK_IMPORTED_MODULE_3___default.a.replace();
+          feather_icons__WEBPACK_IMPORTED_MODULE_2___default.a.replace();
 
           if (!$(".has-error").length) {
             _context2.next = 27;
@@ -7182,14 +7179,14 @@ $(".col-span-12").on("click", ".js-update-submit", /*#__PURE__*/_asyncToGenerato
           }
 
           _context2.next = 26;
-          return _dashboard_main__WEBPACK_IMPORTED_MODULE_2__["default"].toastAlert("warning", "\u03C5\u03C0\u03AC\u03C1\u03C7\u03BF\u03C5\u03BD ".concat($(".has-error").length, " \u03C3\u03C6\u03AC\u03BB\u03BC\u03B1\u03C4\u03B1"));
+          return _dashboard_main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("warning", "\u03C5\u03C0\u03AC\u03C1\u03C7\u03BF\u03C5\u03BD ".concat($(".has-error").length, " \u03C3\u03C6\u03AC\u03BB\u03BC\u03B1\u03C4\u03B1"));
 
         case 26:
           return _context2.abrupt("return");
 
         case 27:
           _context2.next = 29;
-          return _dashboard_main__WEBPACK_IMPORTED_MODULE_2__["default"].toastAlert("success", "".concat(name, " ").concat(last, " \u03B5\u03BD\u03B7\u03BC\u03B5\u03C1\u03CE\u03B8\u03B7\u03BA\u03B5!"));
+          return _dashboard_main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", "".concat(name, " ").concat(last, " \u03B5\u03BD\u03B7\u03BC\u03B5\u03C1\u03CE\u03B8\u03B7\u03BA\u03B5!"));
 
         case 29:
         case "end":

@@ -39,7 +39,7 @@
 
                 <hr class="my-4 ">
 
-                @if($existSocials)
+                @if($user->facebook_link ||  $user->instagram_link || $user->linkedin_link || $user->youtube_link )
                     <section class="space-y-4">
                         <h4 class="text-black text-base font-semibold capitalize">social</h4>
 
@@ -388,7 +388,7 @@
                                             <input type="text"
                                                    class="input pl-12 w-full border col-span-4"
                                                    id="user-update-linkedin"
-                                                   value="{{$user->linkedin}}"
+                                                   value="{{$user->linkedin_link}}"
                                                    placeholder="Eισάγετε link">
                                         </div>
                                     </div>

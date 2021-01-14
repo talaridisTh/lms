@@ -20,7 +20,7 @@
             padding: 10px;
             position: sticky;
             top: 110px;
-            z-index: 1000;
+            /*z-index: 100;*/
         }
 
         footer {

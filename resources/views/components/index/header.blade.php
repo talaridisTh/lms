@@ -82,7 +82,8 @@
                             <div class="top-menu__title"> Ο λογαριασμος μου <i data-feather="chevron-down"
                                                                                class="top-menu__sub-icon"></i></div>
                         </a>
-                        <ul class="py-2">
+                        <ul class="py-2 "
+                            style="z-index: 9999">
                             <li class="orange-line">
                                 <a href="{{route('index.account',auth()->user()->slug)}}"
                                    class="top-menu">

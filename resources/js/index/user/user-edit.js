@@ -1,4 +1,3 @@
-import Swal from "sweetalert2";
 import utilities from "../../dashboard/main";
 import feather from 'feather-icons';
 
@@ -16,24 +15,24 @@ const initRedactor = () => {
 }
 initRedactor()
 
-const onChangeAvatar = () =>{
+const onChangeAvatar = () => {
     let userSlug = $("#user-slug").data("user-slug");
-    $(".cnt-update-user").on("change","#file-pond", async function (e) {
+    $(".cnt-update-user").on("change", "#file-pond", async function (e) {
         var formData = new FormData();
         var imagefile = document.querySelector('#file-pond');
         formData.append("file", imagefile.files[0]);
 
-       const {data,status}  = await axios.post(`/home/account/${userSlug}/upload-avatar`, formData, {
+        const {data, status} = await axios.post(`/home/account/${userSlug}/upload-avatar`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         })
 
-        if (status==200){
+        if (status == 200) {
 
             $(".cnt-user-avatar").html($(data));
             feather.replace()
-            utilities.toastAlert("success","Το Cover άλλαξε")
+            utilities.toastAlert("success", "Το Cover άλλαξε")
 
         }
     })
