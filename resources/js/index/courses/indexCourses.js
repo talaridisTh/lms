@@ -3,6 +3,12 @@ import 'swiper/swiper-bundle.css'; // slider.css
 import "lightbox2/dist/js/lightbox" //lightbox
 import feather from "feather-icons"; //icon feather
 import "../../../../resources/theme/js/vendor/dropzone.min"
+import * as FilePond from 'filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 
 
 feather.replace();
@@ -222,107 +228,84 @@ const initDropzone = () => {
 }
 initDropzone()
 
-// import utilities from '../../index/main';
-// require('../../../../node_modules/lightbox2/dist/js/lightbox');
-//
+require('../../../../node_modules/lightbox2/dist/js/lightbox');
+
 // if ($('meta[name=route]').attr('content') == "index.userCourse") {
 //     const slugCourse = $(".course-slug")[0].dataset.courseSlug
 //     window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
 // }
-// import Swiper from 'swiper/bundle';
-// import 'swiper/swiper-bundle.css';
-//
-//
-// import * as FilePond from 'filepond';
-// import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-// import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
-// import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
-// import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
-// import 'filepond/dist/filepond.min.css';
-//
-// FilePond.setOptions({
-//     maxFiles: 6,
-//     allowMultiple: true,
-//     className: "js-filepond-file-dragging",
-//     labelIdle: "Drag & Drop your files or Browse",
-//     allowRevert: false
-// });
-//
-// FilePond.registerPlugin(FilePondPluginFileValidateType);
-// FilePond.registerPlugin(FilePondPluginFileValidateSize);
-// FilePond.registerPlugin(FilePondPluginImagePreview);
-// var pond = {};
-// const initFilepond = () => {
-//
-//     let dropzone = document.getElementById("file-pond");
-//     pond = FilePond.create(dropzone, {
-//         server: {
-//             url: window.location.origin,
-//             process: {
-//                 url: '/discussion/comment/upload',
-//                 headers: {
-//                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
-//                 },
-//                 onload: function (data) {
-//                 }
-//             }
-//
-//         },
-//
-//         onprocessfiles: function () {
-//
-//             let files = pond.getFiles().map(file => {
-//                 return file.filenameWithoutExtension
-//             })
-//             $(".js-form-reply").prop('disabled', false);
-//             // delete   $(".js-form-reply")[0].dataset.upload
-//             $(".js-form-reply")[0].dataset.upload = JSON.stringify(files);
-//
-//         },
-//         onaddfile: function (error, file) {
-//             $(".js-form-reply").prop('disabled', true);
-//         },
-//
-//         acceptedFileTypes: ['image/png', 'image/jpeg'],
-//         allowReorder: true
-//     });
-// }
-//
-// initFilepond();
-//
-//
-// //! announcements-swiper
-// //!============================================================
-// var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
-//     // Optional parameters
-//
-//
-//     // If we need pagination
-//     pagination: {
-//         el: '.swiper-pagination-announcements',
-//         draggable: true,
-//     },
-//
-//
-//     // Navigation arrows
-//     navigation: {
-//         nextEl: '.swiper-button-next',
-//         prevEl: '.swiper-button-prev',
-//     },
-//
-//     // And if we need scrollbar
-//     scrollbar: {
-//         el: '.swiper-scrollbar-announcements',
-//     },
-//     keyboard: {
-//         enabled: true,
-//         onlyInViewport: false,
-//     },
-// })
-// let countSlider = 0
-// $(".cnt-announcement").on("click", function (e) {
-//     countSlider = $(e.target).data("count")
-// })
+
+FilePond.setOptions({
+    maxFiles: 4,
+    allowMultiple: true,
+    className: "js-filepond-file-dragging",
+    labelIdle: "Drag & Drop your files or Browse",
+    allowRevert: false
+});
+let timer = 0;
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
+FilePond.registerPlugin(FilePondPluginImagePreview);
+var pond = {};
+const initFilepond = () => {
+
+    let dropzone = document.getElementById("file-pond");
+    pond = FilePond.create(dropzone, {
+        server: {
+            url: window.location.origin,
+            process: {
+                url: '/discussion/comment/upload',
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
+                },
+                onload: function (data) {
+                }
+            }
+
+        },
+
+        onprocessfiles: function () {
+
+            let files = pond.getFiles().map(file => {
+                return file.filenameWithoutExtension
+            })
+            $(".js-form-reply").prop('disabled', false);
+            $(".js-form-reply").prop('disabled', false).addClass("bg-theme-1").removeClass("bg-gray-500 cursor-not-allowed");
+            // delete   $(".js-form-reply")[0].dataset.upload
+            $(".js-form-reply")[0].dataset.upload = JSON.stringify(files);
+
+
+            // if (pond.status === 4) {
+            //
+            //     clearTimeout(timer);
+            //     let files = pond.getFiles();
+            //     console.log(files)
+            //
+            //     for (let i = 0; i < files.length; i++) {
+            //
+            //         if (files[i].status === 5) {
+            //             timer = setTimeout(function () {
+            //                 pond.removeFile(files[i]);
+            //             }, (i + 1) * 500);
+            //         }
+            //
+            //
+            //     }
+            // }
+
+        },
+        onaddfile: function (error, file) {
+            $(".filepond--drop-label").hide();
+            $(".js-form-reply").prop('disabled', true).removeClass("bg-theme-1").addClass("bg-gray-500 cursor-not-allowed");
+        },
+
+        acceptedFileTypes: ['image/png', 'image/jpeg'],
+        allowReorder: true
+    });
+}
+
+initFilepond();
+
 
 // $('#announcements-modal').on('shown.bs.modal', function (e) {
 //     swiperAnnouncements.update();
@@ -693,11 +676,13 @@ $(document).on("click", ".js-form-reply", async function (e) {
             $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
             $('#new-reply').modal('hide')
             $('#form-create-reply')[0].reset()
-            // pond.removeFiles();
+            pond.removeFiles();
             delete this.dataset.upload;
             this.disabled = false
             $(".text-reply-comment").text("Νέο μήνυμα")
             feather.replace()
+            $(".filepond--drop-label").show();
+            // FilePond.destroy( inputElement );
         }
 
     } catch (e) {

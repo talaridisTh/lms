@@ -47,7 +47,7 @@
                                 </span>
                             </a>
                             <a href=""
-                               class="flex items-center block p-2 transition duration-300 ease-in-out bg-white
+                               class="hidden flex items-center block p-2 transition duration-300 ease-in-out bg-white
                                     dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md js-delete-comment"
                                data-class-comment="{{$comment->id}}">
                                 <i data-feather="trash"
@@ -65,36 +65,36 @@
         </div>
         <p class="font-semibold pt-1  text-xs ">
             <span class="text-gray-500">{{$comment->created_at->diffForHumans()}}</span></p>
-        <div class="flex ">
-            @foreach($comment->media as $image)
-                <a class="flex mr-2 rounded"
-                   href="{{ $image->rel_path}}"
-                   height="100"
-                   data-lightbox="cover-comment"
-                   data-title="{{$image->name}}">
-                    <img class="rounded"
-                         src=" {{$image->roundedSmallCoverUrl("rel_path")}}"
-                         alt="comment-photo">
-                </a>
-            @endforeach
-        </div>
+
         <div class="cnt-body-comment">
-                                <pre style="font-family:'roboto'"
-                                     class="my-6">{!!  $comment->body!!}</pre>
+            <pre style="font-family:'roboto'"
+                 class="my-6">{!!  $comment->body!!}</pre>
         </div>
+        @if(count($comment->media))
+            <div class="flex space-x-4 border-t border-gray-300">
+                @foreach($comment->media as $image)
+                    <a class="flex rounded my-5 zoom-in"
+                       href="{{ $image->rel_path}}"
+                       height="80"
+                       data-lightbox="cover-comment"
+                       data-title="{{$image->name}}">
+                        <img class="rounded"
+                             src=" {{$image->roundedSmallCoverUrl("rel_path")}}"
+                             alt="comment-photo">
+                    </a>
+                @endforeach
+            </div>
+        @endif
         <hr>
-        <div
-                class="post-buttons flex items-center justify-between">
+        <div class="post-buttons flex items-center justify-between">
             <div class="flex space-x-4">
                 <i data-comment-id="{{$comment->id}}"
                    class="mdi mdi-heart mr-2 btn-reply-like {{$isLiked}}">
                     <span class="">{{$comment->isLikedCount()}}</span>
                 </i>
-                <a
-
-                        class="js-reply-post-btn zoom-in cursor-pointer js-comment-reply font-normal hover:font-semibold"
-                        data-toggle="modal"
-                        data-target="#new-reply">Aπάντηση
+                <a class="js-reply-post-btn zoom-in cursor-pointer js-comment-reply font-normal hover:font-semibold"
+                   data-toggle="modal"
+                   data-target="#new-reply">Aπάντηση
                 </a>
             </div>
             <div class="single-post-show hidden">

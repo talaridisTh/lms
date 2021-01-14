@@ -1,32 +1,37 @@
+<style>
+    .filepond--item {
+        width: calc(20%);
+    }
+
+    .filepond--file-status {
+        display: none;
+    }
+
+    .filepond--panel-root {
+        display: none;
+    }
+
+    .filepond--panel-root {
+        background-color: transparent;
+        border: 2px solid #2c3340;
+    }
+</style>
 <div class="modal flex items-end justify-center"
      id="new-reply"><!-- Begin: modal -->
     <div class="modal__content mb-0 modal__content--xl p-5">
 
-        <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-300 dark:border-dark-5">
+        <div class="flex items-center px-5 py-5 sm:py-3 border-b border-gray-300 dark:border-dark-5 space-x-10">
             <!-- BEGIN: header modal -->
             <h4 class="flex-1">
                 <i class="mdi mdi-reply"></i>
                 <span> Reply to <span class="text-blue-500 replay-name"></span></span>
             </h4>
-            <button class="button border items-center text-gray-700 dark:border-dark-5 dark:text-gray-300 hidden sm:flex">
+            <button id="file-pond"
+                    class="button flex-1 items-center text-gray-700 dark:border-dark-5 dark:text-gray-300 flex">
                 <i data-feather="file"
                    class="w-4 h-4 mr-2"></i> Download Docs
             </button><!-- END: decktop -->
-            <div class="dropdown sm:hidden">
-                <a class="dropdown-toggle w-5 h-5 block"
-                   href="javascript:;">
-                    <i data-feather="more-horizontal"
-                       class="w-5 h-5 text-gray-600 dark:text-gray-600"></i>
-                </a>
-                <div class="dropdown-box w-40">
-                    <div class="dropdown-box__content box dark:bg-dark-1 p-2">
-                        <a href="javascript:;"
-                           class="flex items-center p-2 transition duration-300 ease-in-out bg-white dark:bg-dark-1 hover:bg-gray-200 dark:hover:bg-dark-2 rounded-md">
-                            <i data-feather="file"
-                               class="w-4 h-4 mr-2"></i> Download Docs </a>
-                    </div>
-                </div>
-            </div><!-- END: mobile -->
+
         </div><!-- END: header modal -->
 
         <div class="p-5 w-full"><!-- BEGIN: body modal -->
