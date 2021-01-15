@@ -70,7 +70,12 @@
 
 	<!-- Modal -->
 	<div class="modal fade" id="edit-file-modal" tabindex="-1" role="dialog" aria-labelledby="edit-file-modalLabel" aria-hidden="true">
-		<div class="modal-dialog  modal-xl" role="document">
+		
+		<div id="edit-media-placeholder" class="d-flex justify-content-center align-items-center w-100 h-100">
+			<div class="spinner-grow avatar-lg text-secondary" role="status"></div>
+		</div>
+		
+		<div id="edit-media-dialog" class="modal-dialog  modal-xl d-none" role="document"><!-- modal-dialog @s -->
 			<div class="modal-content">
 				<div class="modal-header modal-colored-header bg-primary">
 					<h5 class="modal-title" id="edit-file-modalLabel">Επεξεργασία Αρχείου</h5>
@@ -79,7 +84,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body"><!-- modal-body @s -->
 					<form id="store-file-details-form">
 						<div class="form-row">
 							<div class="form-group col-md-6">
@@ -129,7 +134,7 @@
 						</div>
 					</div>
 
-				</div>
+				</div><!-- ./modal-body @e -->
 				<div class="modal-footer">
 					<button id="save-details-btn" class="btn btn-primary">
 						<i class="mdi mdi-content-save mr-1"></i>
@@ -138,7 +143,7 @@
 					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
 				</div>
 			</div>
-		</div>
+		</div><!-- ./modal-dialog @e -->
 	</div>
 
 	<div class="container table-cnt content-width mb-5">

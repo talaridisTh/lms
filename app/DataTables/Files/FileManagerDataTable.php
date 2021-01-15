@@ -27,31 +27,9 @@ class FileManagerDataTable extends DataTable
 			->editColumn("original_name", function($data) {
 
 				$mediaDetails = $data->mediaDetails;
-				$detailsTitle = null;
-				$detailsSubtitle = "";
-				$detailsCaption = "";
-				$detailsDescription = "";
-
-				if ( !is_null($data->public_pass) ) {
-					$showCopyBtn = "";
-					$publicUrl = url("/pf/$data->public_pass/$data->name");
-				}
-				else {
-					$showCopyBtn = "d-none";
-					$publicUrl = "";
-				}
-
-				// $publicUrl = !is_null($data->public_pass)
-				// 	? url("/pf/$data->public_pass/$data->name") : "";
-
-				if ( !is_null($mediaDetails) ) {
-					$detailsTitle = $mediaDetails->title;
-					$detailsSubtitle = $mediaDetails->subtitle;
-					$detailsCaption = $mediaDetails->caption;
-					$detailsDescription = $mediaDetails->description;
-				}
-
-				$title = $detailsTitle ?? $data->original_name;
+				$showCopyBtn = !is_null($data->public_pass) ? "" : "d-none";
+				$title = !is_null($mediaDetails) ? $mediaDetails->title : $data->original_name;
+				$publicUrl = !is_null($data->public_pass) ? url("/pf/$data->public_pass/$data->name") : "";
 
 				return "
 					<a href='#' class='h5 custom-link-primary' data-toggle='modal'
@@ -59,10 +37,6 @@ class FileManagerDataTable extends DataTable
 					</a>
 					<div class='d-none'>
 						<input class='js-id-input' type='text' value='$data->id'>
-						<input class='js-title-input' type='text' value='$detailsTitle'>
-						<input class='js-subtile-input' type='text' value='$detailsSubtitle'>
-						<input class='js-caption-input' type='text' value='$detailsCaption'>
-						<input class='js-description-input' type='text' value='$detailsDescription'>
 						<input class='js-public-url-input' type='text' value='$publicUrl'>
 					</div>
 					<p class='mb-1'>$data->name.$data->ext</p>
