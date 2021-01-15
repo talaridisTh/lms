@@ -1129,7 +1129,7 @@ var onInitEmoji = function onInitEmoji() {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\chat\message.js */"./resources/js/index/chat/message.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\chat\message.js */"./resources/js/index/chat/message.js");
 
 
 /***/ })

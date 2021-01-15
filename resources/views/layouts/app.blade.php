@@ -34,7 +34,7 @@
 
     @include("components.index.header",['logo'=>"logo"])
 
-    <main class="my-7 mb-20 flex-grow mx-5 xl:mx-0">
+    <main class="my-7 mb-20 flex-grow mx-5">
 
         @yield("content")
 
@@ -45,21 +45,23 @@
             style=";  box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.75);">
 
         <div class="container mx-auto max-w-1xl flex items-center flex-wrap justify-between">
-            <div class="mr-7 flex-1 ">
-                <a href="#"
-                   class="text-xl">
-                    <img class=""
-                         src="{{ $options->logo }}"
-                         alt="{{ $options->title }}"
-                         height="80">
-                </a>
-            </div>
-            <div class="flex-1">
-                <p class="text-base font-semibold">{{ $options->contactInfo->city }}</p>
-                <p>{{ $options->contactInfo->address }}, {{ $options->contactInfo->zipCode }}</p>
-                <p>{{ $options->contactInfo->email }}</p>
-                <p>{{ $options->contactInfo->phone }}, {{ $options->contactInfo->fax }}</p>
-            </div>
+			<div class="flex">
+				<div class="flex items-center mr-5">
+            	    <a href="#"
+            	       class="text-xl">
+            	        <img class=""
+            	             src="{{ $options->logo }}"
+            	             alt="{{ $options->title }}"
+            	             height="80">
+            	    </a>
+            	</div>
+            	<div class="flex-1">
+            	    <p class="text-base font-semibold">{{ $options->contactInfo->city }}</p>
+            	    <p>{{ $options->contactInfo->address }}, {{ $options->contactInfo->zipCode }}</p>
+            	    <p>{{ $options->contactInfo->email }}</p>
+            	    <p>{{ $options->contactInfo->phone }}, {{ $options->contactInfo->fax }}</p>
+				</div>
+			</div>
             <div class="w-full my-3 sm:my-0 sm:w-auto">
                 <ul class="flex justify-center space-x-3">
                     @foreach($options->social as $social => $link)
@@ -108,6 +110,7 @@
 <link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/css/ion.rangeSlider.min.css"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
+@auth
 <script>
     var modals = [];
     @if($options->seen->seen_message>0)
@@ -121,25 +124,26 @@
         // timerProgressBar: true
     });
 
+	@endif
+    	@if($options->seen->seen_task>0)
+    	modals.push({
+    	    toast: 'true',
+    	    position: 'top-end',
+    	    icon: "info",
+    	    title: "Έχετε νέα εργασία",
+    	    // showConfirmButton: false,
+    	    // timer: 4000,
+    	    // timerProgressBar: true
+    	});
     @endif
-    @if($options->seen->seen_task>0)
-    modals.push({
-        toast: 'true',
-        position: 'top-end',
-        icon: "info",
-        title: "Έχετε νέα εργασία",
-        // showConfirmButton: false,
-        // timer: 4000,
-        // timerProgressBar: true
-    });
 
-    @endif
-
+	
     Swal.queue(modals);
-
-
+	
+	
 </script>
 
+@endauth
 
 @yield("script")
 

@@ -4245,7 +4245,7 @@ function resetGalleryBtns(bulk, checkboxes) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\courses\coursesMain.js */"./resources/js/dashboard/courses/coursesMain.js");
 
 
 /***/ })
