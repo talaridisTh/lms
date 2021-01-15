@@ -31,16 +31,18 @@ class FileManagerDataTable extends DataTable
 				$detailsSubtitle = "";
 				$detailsCaption = "";
 				$detailsDescription = "";
-				$view = "";
-				$publicUrl = !is_null($data->public_pass)
-					? url("/pf/$data->public_pass/$data->name") : "";
 
-				if ( $data->type == 0 ) {
-					$view = "<a href='#' class='js-view-image custom-link-primary'
-						data-toggle='modal' data-target='#image-light-room'
-						data-source='$data->rel_path' draggable='false'>View</a>
-						<span class='mx-2'>|</span>";
+				if ( !is_null($data->public_pass) ) {
+					$showCopyBtn = "";
+					$publicUrl = url("/pf/$data->public_pass/$data->name");
 				}
+				else {
+					$showCopyBtn = "d-none";
+					$publicUrl = "";
+				}
+
+				// $publicUrl = !is_null($data->public_pass)
+				// 	? url("/pf/$data->public_pass/$data->name") : "";
 
 				if ( !is_null($mediaDetails) ) {
 					$detailsTitle = $mediaDetails->title;
@@ -66,8 +68,11 @@ class FileManagerDataTable extends DataTable
 					<p class='mb-1'>$data->name.$data->ext</p>
 					<a href='#' class='custom-link-primary' data-toggle='modal' 
 						data-target='#edit-file-modal' draggable='false'>Edit</a>
+					<span class='hide-adjacent mx-2 $showCopyBtn'>|</span>
+					<a href='#' class='js-copy-url custom-link-primary'
+						data-toggle='tooltip' data-placement='bottom' title=''
+						data-original-title='Copy to clipboard' draggable='false'>Copy Url</a>
 					<span class='mx-2'>|</span>
-					$view
 					<a href='$data->rel_path' class='custom-link-primary'
 						draggable='false' download>Download</a>";
 			})
@@ -83,7 +88,10 @@ class FileManagerDataTable extends DataTable
 					}
 				}
 
-				return "<img class='img-fluid' style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' draggable='false'/>";
+				return "<img class='js-view-image img-fluid cursor-pointer' data-source='$data->rel_path'
+					data-toggle='modal' data-target='#image-light-room'
+					style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."'
+					alt='$data->original_name' draggable='false'/>";
 			})
 			->addColumn("title", function($data) {
 

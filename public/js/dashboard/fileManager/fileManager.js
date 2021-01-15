@@ -17495,8 +17495,6 @@ $("#edit-file-modal").on("show.bs.modal", function (event) {
   $R("#file-description-area", 'destroy');
   $R("#file-description-area", _main__WEBPACK_IMPORTED_MODULE_0__["default"].redactorConfig);
 });
-$("#file-search").on("input", searchHandler);
-$(".js-gallery-page-btn").on('click', paginationHandler);
 $(".custom-tabs").on("click", function () {
   var tabs = $(".tab-pane");
   $(".custom-tabs.btn-light").removeClass("btn-light").addClass("btn-dark");
@@ -17581,10 +17579,32 @@ var fileManagerDatatable = $("#file-manager-datatable").DataTable({
     $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
     $(".dataTables_paginate > .pagination > li > a").attr("draggable", "false");
     $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
+    $(".js-copy-url").on("click", copyHiddenInputClickHandler);
+    $(".js-copy-url").on("mouseleave", copyHiddenInputLeaveHandler);
+    $('[data-toggle="tooltip"]').tooltip("dispose");
+    $('[data-toggle="tooltip"]').tooltip();
   }
 }); //!######################################
 //! 		Grid View Functions			#
 //!######################################
+
+function copyHiddenInputLeaveHandler() {
+  $(this).attr("data-original-title", "Copy to clipboard");
+}
+
+function copyHiddenInputClickHandler() {
+  var td = this.parentElement;
+  var publicUrl = td.getElementsByClassName("js-public-url-input")[0].value;
+  var input = document.createElement("input");
+  input.classList.add("absolute");
+  input.value = publicUrl;
+  document.body.append(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  $(this).attr("data-original-title", "Copied!").tooltip('show');
+  input.remove();
+}
 
 function paginationHandler(event) {
   event.preventDefault();
