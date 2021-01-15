@@ -44547,6 +44547,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_7___default.a);
+filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_8___default.a);
+filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_11___default.a);
+var timer = 0;
 feather_icons__WEBPACK_IMPORTED_MODULE_4___default.a.replace();
 var swiperAnnouncements = new swiper_bundle__WEBPACK_IMPORTED_MODULE_1__["default"]('.swiper-container-announcements', {
   autoHeight: true,
@@ -44642,7 +44646,8 @@ $(".spa-click").on("click", /*#__PURE__*/function () {
               onFullScreen();
               onCloseFullScreen(); // onPreviewMaterial();
 
-              onInitEventHandler(); // initFilepond();
+              onInitEventHandler();
+              initFilepond();
             }
 
             _context.next = 22;
@@ -44692,6 +44697,7 @@ var onCloseFullScreen = function onCloseFullScreen() {
               initDropzone();
               initTabs();
               onInitEventHandler();
+              initFilepond();
             }
 
             _context2.next = 12;
@@ -44764,10 +44770,13 @@ var initTabs = function initTabs() {
 
 
 initTabs();
-var button = document.querySelector('.modal-button-custom');
-button.addEventListener('click', toggleModal);
-var overlay = document.querySelector('.modal-overlay-custom');
-overlay.addEventListener('click', toggleModal);
+
+if ($(".modal-button-custom").length) {
+  var button = document.querySelector('.modal-button-custom');
+  button.addEventListener('click', toggleModal);
+  var overlay = document.querySelector('.modal-overlay-custom');
+  overlay.addEventListener('click', toggleModal);
+}
 
 function toggleModal() {
   swiperAnnouncements.slideTo(0);
@@ -44821,13 +44830,9 @@ filepond__WEBPACK_IMPORTED_MODULE_6__["setOptions"]({
   maxFiles: 4,
   allowMultiple: true,
   className: "js-filepond-file-dragging",
-  labelIdle: "Drag & Drop your files or Browse",
+  labelIdle: "Ανέβασμα φωτογραφιών",
   allowRevert: false
 });
-var timer = 0;
-filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_7___default.a);
-filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_8___default.a);
-filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_11___default.a);
 var pond = {};
 
 var initFilepond = function initFilepond() {
@@ -45211,7 +45216,7 @@ initFilepond(); // $('#announcements-modal').on('shown.bs.modal', function (e) {
 //
 // }
 
-$(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
+$(document).on("click", ".js-form-eply", /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(e) {
     var body, modelInfo, parentId, namespace, upload, _yield$axios$post, data, status;
 

@@ -10,7 +10,11 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 
+FilePond.registerPlugin(FilePondPluginFileValidateType);
+FilePond.registerPlugin(FilePondPluginFileValidateSize);
+FilePond.registerPlugin(FilePondPluginImagePreview);
 
+let timer = 0;
 feather.replace();
 
 var swiperAnnouncements = new Swiper('.swiper-container-announcements', {
@@ -93,7 +97,7 @@ $(".spa-click").on("click", async function (e) {
             onCloseFullScreen();
             // onPreviewMaterial();
             onInitEventHandler();
-            // initFilepond();
+            initFilepond();
 
 
         }
@@ -118,6 +122,7 @@ const onCloseFullScreen = () => {
                 initDropzone()
                 initTabs();
                 onInitEventHandler();
+                initFilepond();
             }
         } catch (e) {
             console.log(e)
@@ -171,13 +176,15 @@ const initTabs = () => {
 } // create tabs
 initTabs();
 
-const button = document.querySelector('.modal-button-custom')
+if ($(".modal-button-custom").length) {
+    const button = document.querySelector('.modal-button-custom')
 
-button.addEventListener('click', toggleModal)
+    button.addEventListener('click', toggleModal)
 
-const overlay = document.querySelector('.modal-overlay-custom')
+    const overlay = document.querySelector('.modal-overlay-custom')
 
-overlay.addEventListener('click', toggleModal)
+    overlay.addEventListener('click', toggleModal)
+}
 
 function toggleModal() {
     swiperAnnouncements.slideTo(0);
@@ -235,17 +242,14 @@ require('../../../../node_modules/lightbox2/dist/js/lightbox');
 //     window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
 // }
 
+
 FilePond.setOptions({
     maxFiles: 4,
     allowMultiple: true,
     className: "js-filepond-file-dragging",
-    labelIdle: "Drag & Drop your files or Browse",
+    labelIdle: "Ανέβασμα φωτογραφιών",
     allowRevert: false
 });
-let timer = 0;
-FilePond.registerPlugin(FilePondPluginFileValidateType);
-FilePond.registerPlugin(FilePondPluginFileValidateSize);
-FilePond.registerPlugin(FilePondPluginImagePreview);
 var pond = {};
 const initFilepond = () => {
 
@@ -303,7 +307,6 @@ const initFilepond = () => {
         allowReorder: true
     });
 }
-
 initFilepond();
 
 
@@ -640,7 +643,7 @@ initFilepond();
 //
 //
 // }
-$(document).on("click", ".js-form-reply", async function (e) {
+$(document).on("click", ".js-form-eply", async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
 

@@ -58,15 +58,22 @@ $(".js-message-seen").on("click", async function () {
     }
 })
 
-$(document).on("click", ".js-task-seen", async function () {
+$(document).on("click", ".js-task-seen", async function (e) {
+    e.preventDefault()
+
+    window.location.href = "/discussion?task";
+
+
+    console.log($("#filter-my-task"))
     try {
+
         const {
             status
         } = await axios.patch("home/task/update");
-
-        // if (status == 200) {
-        //     $(".js-message-badge").remove();
-        // }
+        if (status == 200) {
+            $("#filter-my-task").trigger("click");
+            // $(".js-message-badge").remove();
+        }
     } catch (e) {
         console.log(e)
     }

@@ -58,6 +58,7 @@ class DiscussionController extends Controller {
 //
 //        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
 //            ->paginate(10);
+//        dd(url()->full());
         return view("index.discussions.discussions", [
             "posts" => $posts,
             "comment" => Comment::all(),

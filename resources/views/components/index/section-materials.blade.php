@@ -9,7 +9,7 @@
                                id="extra-file">
                         <label class="tab-label text-black  text-lg p-2"
                                for="extra-file"><span
-                                    class="">Βοηθητικά αρχεία</span></label>
+                                    class="-mb-2">Βοηθητικά αρχεία</span></label>
                         @foreach($course->media->where("type",1) as $file)
                             <div
                                     class="tab-content text-gray-600 flex justify-between zoom-in rounded-lg hover:text-black cursor-pointer">
@@ -44,7 +44,7 @@
                                id="material-file">
                         <label class="tab-label text-black  text-lg p-2"
                                for="material-file"><span
-                                    class="">Μαθήματα</span></label>
+                                    class="-mb-2">Μαθήματα</span></label>
                         @foreach($lessons as $lesson)
                             <div
                                     class="tab-content text-gray-600 zoom-in flex justify-between  rounded-lg  hover:text-black cursor-pointer spa-click"
@@ -55,7 +55,7 @@
                                               class="mt-1 font-semibold">{{$loop->index+1}}</span>
                                 <a class="mt-1  flex-1"
                                    href="">
-                                    <span class="">{{$lesson->title}}</span>
+                                    <span class="-mb-2">{{$lesson->title}}</span>
                                 </a>
 
                                 <i style="flex-basis: 10%;"
@@ -78,7 +78,7 @@
                                id="sections">
                         <label class="tab-label text-black text-lg my-1 p-2"
                                for="sections"><span
-                                    class="">Ενότητες</span></label>
+                                    class="-mb-1">Ενότητες</span></label>
                         <div class="tab-content text-gray-600 p-0 m-0 space-y-1"
                              style="padding:0!important;">
                             @foreach($sections as $key=> $section)

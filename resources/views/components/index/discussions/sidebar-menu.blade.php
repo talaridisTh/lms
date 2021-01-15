@@ -63,11 +63,11 @@
         No replies yet
     </li>
 
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread "
         data-role-user="{{auth()->user()->getRoleNames()[0]}}"
         id="filter-my-task">
         <i class="font-18 mr-1 uil-link-h"></i>
-        My task
+        Εργασίες
     </li>
 </ul>
 
@@ -215,4 +215,5 @@
       action="{{route('discussion.reply')}}">
     @csrf
 </form>
+
 

@@ -54,33 +54,22 @@
 
                     <li class=" orange-line intro-x">
                         <a href="{{route('discussion.index')}}"
-                           class="top-menu relative js-task-seen">
-
+                           class="top-menu relative ">
                             <div class="top-menu__icon">
-                                @if($options->seen->seen_task)
-                                    <span class=" absolute -left-2 inline-flex items-center justify-center px-2
-                                     py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-                                        {{$options->seen->seen_task}}
-                                    </span>
-                                @else
-                                    <i data-feather="home"></i>
-                                @endif
+                                <i data-feather="home"></i>
                             </div>
-                            <div class="top-menu__title "> Discussions
-
-                            </div>
-
+                            <div class="top-menu__title "> Discussions</div>
                         </a>
                     </li>
-
 
                     <li class="bg-login rounded-xl intro-x">
                         <a href="javascript:;"
                            class="top-menu"
                            style="color: white!important;">
                             <div class="top-menu__icon"><i data-feather="hard-drive"></i></div>
-                            <div class="top-menu__title"> Ο λογαριασμος μου <i data-feather="chevron-down"
-                                                                               class="top-menu__sub-icon"></i></div>
+                            <div class="top-menu__title"> Ο λογαριασμός μου
+                                <i data-feather="chevron-down"
+                                   class="top-menu__sub-icon"></i></div>
                         </a>
                         <ul class="py-2 "
                             style="z-index: 9999">
@@ -88,7 +77,7 @@
                                 <a href="{{route('index.account',auth()->user()->slug)}}"
                                    class="top-menu">
                                     <div class="top-menu__icon"><i data-feather="user"></i></div>
-                                    <div class="top-menu__title"> My account</div>
+                                    <div class="top-menu__title"> Προφίλ</div>
                                 </a>
                             </li>
                             <li class="orange-line">
@@ -96,6 +85,17 @@
                                    class="top-menu js-message-seen">
                                     <div class="top-menu__icon"><i data-feather="activity"></i></div>
                                     <div class="top-menu__title justify-between"> Μηνύματα
+                                        <span class="{{$options->seen->seen_message==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
+                                            font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_message}}</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="orange-line">
+                                <a href="{{route('discussion.index')}}"
+                                   class="top-menu js-task-seen">
+                                    <div class="top-menu__icon"><i data-feather="activity"></i></div>
+                                    <div class="top-menu__title justify-between">
+                                        Εργασίες
                                         <span class="{{$options->seen->seen_message==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
                                             font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_message}}</span>
                                     </div>
@@ -165,20 +165,45 @@
                 <a href="javascript:;"
                    class="menu">
                     <div class="menu__icon"><i data-feather="box"></i></div>
-                    <div class="menu__title"> Ο λογαριασμος μου
+                    <div class="menu__title"> Ο λογαριασμός μου
                         <i data-feather="chevron-down"
                            class="menu__sub-icon"></i></div>
                 </a>
                 <ul class="">
+                    <li id=""
+                        class="bg-gray-300">
+                        <a href="{{route('index.account',auth()->user()->slug)}}"
+                           class="menu">
+                            <div class="menu__icon"><i data-feather="user"></i></div>
+                            <div class="top-menu__title ml-2"> Προφίλ</div>
+                        </a>
+                    </li>
+                    <li id=""
+                        class="bg-gray-300">
+                        <a href="/message"
+                           class="menu">
+                            <div class="menu__icon"><i data-feather="activity"></i></div>
+                            <div class="top-menu__title ml-2"> Μηνύματα</div>
+                        </a>
+                    </li>
+                    <li id=""
+                        class="bg-gray-300">
+                        <a href="{{route('discussion.index')}}"
+                           class="menu">
+                            <div class="menu__icon"><i data-feather="activity"></i></div>
+                            <div class="top-menu__title ml-2">Εργασίες</div>
+                        </a>
+                    </li>
                     <li id="logout-btn"
                         class="bg-gray-300">
                         <a href="top-menu-light-dashboard.html"
                            class="menu">
-                            <div class="menu__icon"><i data-feather="activity"></i></div>
+                            <div class="menu__icon"><i data-feather="log-out"></i></div>
                             <div class="menu__title"> Έξοδος</div>
                         </a>
                     </li>
                 </ul>
+
             </li>
 
         </ul>

@@ -7981,6 +7981,14 @@ $(".discussions-left").on("click", "#filter-my-task", /*#__PURE__*/_asyncToGener
 //     }
 // });
 
+if (window.location.search == "?task") {
+  $("#filter-all-threads").removeClass("active-thread");
+  $("#filter-all-threads").addClass("active-thread");
+  setTimeout(function () {
+    $("#filter-my-task").trigger("click");
+  }, 100);
+}
+
 /***/ }),
 
 /***/ 32:

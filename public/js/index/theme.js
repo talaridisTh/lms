@@ -20801,35 +20801,49 @@ $(".js-message-seen").on("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_
     }
   }, _callee, null, [[0, 8]]);
 })));
-$(document).on("click", ".js-task-seen", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-  var _yield$axios$patch2, status;
+$(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
+  var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
+    var _yield$axios$patch2, status;
 
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          _context2.prev = 0;
-          _context2.next = 3;
-          return axios.patch("home/task/update");
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            e.preventDefault();
+            window.location.href = "/discussion?task";
+            console.log($("#filter-my-task"));
+            _context2.prev = 3;
+            _context2.next = 6;
+            return axios.patch("home/task/update");
 
-        case 3:
-          _yield$axios$patch2 = _context2.sent;
-          status = _yield$axios$patch2.status;
-          _context2.next = 10;
-          break;
+          case 6:
+            _yield$axios$patch2 = _context2.sent;
+            status = _yield$axios$patch2.status;
 
-        case 7:
-          _context2.prev = 7;
-          _context2.t0 = _context2["catch"](0);
-          console.log(_context2.t0);
+            if (status == 200) {
+              $("#filter-my-task").trigger("click"); // $(".js-message-badge").remove();
+            }
 
-        case 10:
-        case "end":
-          return _context2.stop();
+            _context2.next = 14;
+            break;
+
+          case 11:
+            _context2.prev = 11;
+            _context2.t0 = _context2["catch"](3);
+            console.log(_context2.t0);
+
+          case 14:
+          case "end":
+            return _context2.stop();
+        }
       }
-    }
-  }, _callee2, null, [[0, 7]]);
-})));
+    }, _callee2, null, [[3, 11]]);
+  }));
+
+  return function (_x) {
+    return _ref2.apply(this, arguments);
+  };
+}());
 
 /***/ }),
 

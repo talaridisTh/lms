@@ -72,22 +72,18 @@
                                                     r="15.91549431"
                                                     class="circle-chart__circle no-animation"></circle>
                                         </svg>
-                                        @isset($course->cover)
-                                            <img width="98"
-                                                 height="98"
-                                                 alt=""
-                                                 class="absolute top-0 left-0 w-full rounded-full"
-                                                 src="{{$course->roundedMediumCoverUrl("cover")}}
-                                                         ">
-                                        @endisset
-
+                                        <img width="98"
+                                             height="98"
+                                             alt=""
+                                             class="absolute top-0 left-0 w-full rounded-full"
+                                             src="{{isset($course->cover)?$course->roundedMediumCoverUrl("cover"):asset("theme/images/no-course.png") }}">
                                     </a>
 
                                 </div>
                                 <div class="cnt-card relative flex flex-col justify-around my-5">
                                     <h3 class=" inline-flex items-start lg:items-center lg:h-12 text-base  link">
                                         <a href="{{route('index.showCourse',$course->slug)}}">
-                                            {!! \Str::limit($course->title,20 , "...")!!}
+                                            {!! \Str::limit($course->title,60 , "...")!!}
                                         </a></h3>
                                     <div
                                             class=" text-xs text-black-transparent-60  lg:mb-auto mt-5">

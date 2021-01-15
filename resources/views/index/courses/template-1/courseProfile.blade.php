@@ -4,6 +4,11 @@
         .dz-preview, .dz-file-preview {
             display: none;
         }
+
+        .filepond--drop-label {
+            background: lightgray;
+            border-radius: 8px;
+        }
     </style>
 @endsection
 @section("content")
@@ -15,7 +20,7 @@
             <figure class="w-64 h-64  my-8 relative lg:mr-16">
                 <div
                         class="group avatar w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table cursor-pointer border">
-                    <img src="{{$course->cover}}"
+                    <img src="{{isset($course->cover)?$course->roundedMediumCoverUrl("cover"):asset("theme/images/no-course.png") }}"
                          class="p-3 rounded-full object-cover object-center w-full h-full visible group-hover:hidden"
                          alt="{{$course->title}}">
                 </div>
@@ -37,6 +42,7 @@
                     <li class="text-black font-semibold  ">Τελευταίες Ανακοινώσεις</li>
                 </ul>
                 <ul class="my-6 h-full px-4 w-full space-y-4 announcement">
+
                     @forelse($announcements as $key =>$announcement)
                         <li class="text-black font-medium flex test-an cursor-pointer"
                             data-swiper-count="{{$loop->index}}">
@@ -54,10 +60,12 @@
                         </li>
                     @endforelse
                 </ul>
-                <div class="flex px-4 text-white py-3 justify-end bg-opacity-20 bg-black w-full rounded-b-xl">
-                    <p class="font-light text-sm modal-button-custom cursor-pointer">Όλες οι ανακοινώσεις <i
-                                class="ml-2 dripicons-chevron-right "></i></p>
-                </div>
+                @if($announcements->isNotEmpty())
+                    <div class="flex px-4 text-white py-3 justify-end bg-opacity-20 bg-black w-full rounded-b-xl">
+                        <p class="font-light text-sm modal-button-custom cursor-pointer">Όλες οι ανακοινώσεις <i
+                                    class="ml-2 dripicons-chevron-right "></i></p>
+                    </div>
+                @endif
             </aside>
         </section>
         <section class="flex lg:px-16 px-9 text-white py-4 justify-between lg:justify-start  lg:space-x-10
