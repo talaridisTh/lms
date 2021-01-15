@@ -7,7 +7,9 @@
     <meta name="route"
           content="{{\Request::route()->getName()}}">
     <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+		  content="width=device-width, initial-scale=1.0">
+	
+	<meta name="robots" content="noindex, nofollow">
     <meta content="{{ $options->description }}"
           name="description">
 
