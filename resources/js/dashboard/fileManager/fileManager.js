@@ -69,7 +69,7 @@ $("#edit-file-modal").on("show.bs.modal", async function(event) {
 			var {description} = res.data.media_details;
 		}
 
-		if ( publicPass == "" ) {
+		if ( publicPass.value == "" ) {
 			copyUrlBtn.disabled = true;
 			$(copyUrlBtn).tooltip('disable');
 			urlToggle.checked = false;

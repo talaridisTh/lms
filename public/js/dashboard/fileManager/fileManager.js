@@ -18274,7 +18274,7 @@ $("#edit-file-modal").on("show.bs.modal", /*#__PURE__*/function () {
               description = res.data.media_details.description;
             }
 
-            if (publicPass == "") {
+            if (publicPass.value == "") {
               copyUrlBtn.disabled = true;
               $(copyUrlBtn).tooltip('disable');
               urlToggle.checked = false;
