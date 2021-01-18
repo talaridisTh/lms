@@ -287,7 +287,7 @@
             @endphp
             @endrole
 
-            @role("instructor")
+            @hasanyrole("instructor|admin|super-admin")
             @php
                 $userIds = \App\Models\Course::where("user_id",auth()->id())->with("users")->get()->pluck("users")->flatten()->pluck("id");
 
