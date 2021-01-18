@@ -50,15 +50,15 @@
                             </a>
                         </li>
 
-                        @if(\Request::route()->getName()== "index.userCourse")
+                        @if(\Request::route()->getName()== "index.showCourse")
                             <li>
-                                <a href="#"
+                                <a href="/dashboard/courses/{{$course->slug}}/edit"
                                    class="top-menu">
-                                    <div class="top-menu__icon"><i data-feather="home"></i></div>
-                                    <div class="top-menu__title"> edit this course</div>
+                                    <div class="top-menu__icon"><i data-feather="edit"></i></div>
+                                    <div class="top-menu__title"> Eπεξεργασία course</div>
                                 </a>
                             </li>
-                            <li class="orange-line">>
+                            <li class="orange-line hidden">>
                                 <a href="#"
                                    class="top-menu">
                                     <div class="top-menu__icon"><i data-feather="home"></i></div>
@@ -106,7 +106,7 @@
                                 <li class="orange-line">
                                     <a href="/message"
                                        class="top-menu js-message-seen">
-                                        <div class="top-menu__icon"><i data-feather="activity"></i></div>
+                                        <div class="top-menu__icon"><i data-feather="mail"></i></div>
                                         <div class="top-menu__title justify-between"> Μηνύματα
                                             <span class="{{$options->seen->seen_message==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
                     	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_message}}</span>
@@ -229,7 +229,7 @@
                             class="hover:bg-gray-200 bg-white ">
                             <a href="/message"
                                class="menu">
-                                <div class="menu__icon"><i data-feather="activity"></i></div>
+                                <div class="menu__icon"><i data-feather="mail"></i></div>
                                 <div class="menu__title"> Μηνύματα
                                     <span class="{{$options->seen->seen_message==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
                     	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_message}}</span>

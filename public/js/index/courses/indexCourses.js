@@ -44547,6 +44547,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+
+__webpack_require__(/*! ../../../../node_modules/lightbox2/dist/js/lightbox */ "./node_modules/lightbox2/dist/js/lightbox.js");
+
 filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_7___default.a);
 filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_8___default.a);
 filepond__WEBPACK_IMPORTED_MODULE_6__["registerPlugin"](filepond_plugin_image_preview__WEBPACK_IMPORTED_MODULE_11___default.a);
@@ -44820,11 +44823,10 @@ var initDropzone = function initDropzone() {
 
 initDropzone();
 
-__webpack_require__(/*! ../../../../node_modules/lightbox2/dist/js/lightbox */ "./node_modules/lightbox2/dist/js/lightbox.js"); // if ($('meta[name=route]').attr('content') == "index.userCourse") {
-//     const slugCourse = $(".course-slug")[0].dataset.courseSlug
-//     window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
-// }
-
+if ($('meta[name=route]').attr('content') == "index.showCourse") {
+  var slugCourse = $(".course-slug")[0].dataset.courseSlug;
+  window.PREVIEW_PAGE_COURSE = "/dashboard/courses/".concat(slugCourse, "/edit");
+}
 
 filepond__WEBPACK_IMPORTED_MODULE_6__["setOptions"]({
   maxFiles: 4,
@@ -45216,7 +45218,7 @@ initFilepond(); // $('#announcements-modal').on('shown.bs.modal', function (e) {
 //
 // }
 
-$(document).on("click", ".js-form-eply", /*#__PURE__*/function () {
+$(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
   var _ref4 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(e) {
     var body, modelInfo, parentId, namespace, upload, _yield$axios$post, data, status;
 
@@ -45578,18 +45580,7 @@ var onInitEventHandler = function onInitEventHandler() {
   onEditComment();
 };
 
-onInitEventHandler(); //
-//
-//
-// //pros to paron mexri n ftiaxoun ta link
-// $(".js-link-material").parent().addClass("d-none");
-//
-//
-//
-//
-//
-//
-//
+onInitEventHandler();
 
 /***/ }),
 

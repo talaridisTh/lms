@@ -32,7 +32,8 @@
                     <h3 class="px-6 py-2 text-center border-1 border-white rounded-full">{{$course->topics->first()->title}}</h3>
                 @endif
                 <section class="flex flex-col w-full space-y-4">
-                    <h2 class="sm:text-4xl text-center lg:text-left font-weight-semibold xl:w-4/5 text-2xl">{{$course->title}}</h2>
+                    <h2 class="sm:text-4xl text-center lg:text-left font-weight-semibold xl:w-4/5 text-2xl course-slug"
+                        data-course-slug="{{$course->slug}}">{{$course->title}}</h2>
                     <p class="text-md xs:text-center lg:text-left font-weight-normal xl:w-3/5">{{\Str::limit($course->subtitle,150,"...")}}</p>
                 </section>
             </section>

@@ -10,6 +10,8 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
 import 'filepond/dist/filepond.min.css';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 
+require('../../../../node_modules/lightbox2/dist/js/lightbox');
+
 FilePond.registerPlugin(FilePondPluginFileValidateType);
 FilePond.registerPlugin(FilePondPluginFileValidateSize);
 FilePond.registerPlugin(FilePondPluginImagePreview);
@@ -235,12 +237,11 @@ const initDropzone = () => {
 }
 initDropzone()
 
-require('../../../../node_modules/lightbox2/dist/js/lightbox');
 
-// if ($('meta[name=route]').attr('content') == "index.userCourse") {
-//     const slugCourse = $(".course-slug")[0].dataset.courseSlug
-//     window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
-// }
+if ($('meta[name=route]').attr('content') == "index.showCourse") {
+    const slugCourse = $(".course-slug")[0].dataset.courseSlug
+    window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
+}
 
 
 FilePond.setOptions({
@@ -643,7 +644,7 @@ initFilepond();
 //
 //
 // }
-$(document).on("click", ".js-form-eply", async function (e) {
+$(document).on("click", ".js-form-reply", async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
 
@@ -927,15 +928,3 @@ const onInitEventHandler = () => {
 }
 
 onInitEventHandler();
-//
-//
-//
-// //pros to paron mexri n ftiaxoun ta link
-// $(".js-link-material").parent().addClass("d-none");
-//
-//
-//
-//
-//
-//
-//
