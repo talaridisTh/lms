@@ -38,10 +38,6 @@
         <i class="font-18 mr-1 uil-check-circle"></i>
         My Best Answers
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread">
-        <i class="font-18 mr-1 uil-star"></i>
-        Following
-    </li>
     <li class="py-2 px-6 m-2 list-unstyled bg-thread"
         id="filter-popular-week">
         <i class="font-18 mr-1 uil-star"></i>
