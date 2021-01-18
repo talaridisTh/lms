@@ -850,3 +850,7 @@ figure > img {
 .custom-border-bottom {
 	border-bottom: 1px solid #515c69;
 }
+
+.hide-adjacent.d-none + a {
+	display: none;
+}

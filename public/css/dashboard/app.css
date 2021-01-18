@@ -4865,6 +4865,10 @@ figure > img {
   border-bottom: 1px solid #515c69;
 }
 
+.hide-adjacent.d-none + a {
+  display: none;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0

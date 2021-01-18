@@ -22,6 +22,7 @@ class FileManagerDataTable extends DataTable {
         $query = Media::where("type", "!=", 5)->with('mediaDetails');
 
         return datatables()::of($query)
+<<<<<<< HEAD
             ->editColumn("original_name", function ($data) {
 
                 $mediaDetails = $data->mediaDetails;
@@ -47,22 +48,31 @@ class FileManagerDataTable extends DataTable {
                 $title = $detailsTitle ?? $data->original_name;
 
                 return "
+=======
+			->editColumn("original_name", function($data) {
+
+				$mediaDetails = $data->mediaDetails;
+				$showCopyBtn = !is_null($data->public_pass) ? "" : "d-none";
+				$title = !is_null($mediaDetails) ? $mediaDetails->title : $data->original_name;
+				$publicUrl = !is_null($data->public_pass) ? url("/pf/$data->public_pass/$data->name") : "";
+
+				return "
+>>>>>>> db0437388b36e52086ecdc1fa4bb16f052942eb9
 					<a href='#' class='h5 custom-link-primary' data-toggle='modal'
 						data-target='#edit-file-modal' draggable='false'>$titlbuttons-to-right always-visiblee
 					</a>
 					<div class='d-none'>
 						<input class='js-id-input' type='text' value='$data->id'>
-						<input class='js-title-input' type='text' value='$detailsTitle'>
-						<input class='js-subtile-input' type='text' value='$detailsSubtitle'>
-						<input class='js-caption-input' type='text' value='$detailsCaption'>
-						<input class='js-description-input' type='text' value='$detailsDescription'>
 						<input class='js-public-url-input' type='text' value='$publicUrl'>
 					</div>
 					<p class='mb-1'>$data->name.$data->ext</p>
 					<a href='#' class='custom-link-primary' data-toggle='modal' 
 						data-target='#edit-file-modal' draggable='false'>Edit</a>
+					<span class='hide-adjacent mx-2 $showCopyBtn'>|</span>
+					<a href='#' class='js-copy-url custom-link-primary'
+						data-toggle='tooltip' data-placement='bottom' title=''
+						data-original-title='Copy to clipboard' draggable='false'>Copy Url</a>
 					<span class='mx-2'>|</span>
-					$view
 					<a href='$data->rel_path' class='custom-link-primary'
 						draggable='false' download>Download</a>";
             })
@@ -77,9 +87,18 @@ class FileManagerDataTable extends DataTable {
                     }
                 }
 
+<<<<<<< HEAD
                 return "<img class='img-fluid' style='max-width: 100px;' src='" . $data->thumbnailUrl("rel_path") . "' alt='$data->original_name' draggable='false'/>";
             })
             ->addColumn("title", function ($data) {
+=======
+				return "<img class='js-view-image img-fluid cursor-pointer' data-source='$data->rel_path'
+					data-toggle='modal' data-target='#image-light-room'
+					style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."'
+					alt='$data->original_name' draggable='false'/>";
+			})
+			->addColumn("title", function($data) {
+>>>>>>> db0437388b36e52086ecdc1fa4bb16f052942eb9
 
                 if (!is_null($data->mediaDetails)) {
 

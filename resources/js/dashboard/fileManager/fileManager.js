@@ -34,7 +34,9 @@ $("#save-details-btn").on("click", function() {
 		data
 	)
 	.then( res => {
-		utilities.toastAlert("success", "Οι αλλαγές αποθηκεύτηκαν.")
+		utilities.toastAlert("success", "Οι αλλαγές αποθηκεύτηκαν.");
+
+		clearInvalidMessage();
 		fileManagerDatatable.ajax.reload( null, false);
 		// $("#edit-file-modal").modal('hide');
 	})
@@ -45,45 +47,79 @@ $("#save-details-btn").on("click", function() {
 	})
 });
 
-$("#edit-file-modal").on("show.bs.modal", function(event) {
-
-	const td = event.relatedTarget.parentElement;
-	const id = td.getElementsByClassName("js-id-input")[0];
-	const title = td.getElementsByClassName("js-title-input")[0];
-	const subtitle = td.getElementsByClassName("js-subtile-input")[0];
-	const caption = td.getElementsByClassName("js-caption-input")[0];
-	const description = td.getElementsByClassName("js-description-input")[0];
-	const publicUrl = td.getElementsByClassName("js-public-url-input")[0];
-	const copyUrlBtn = document.getElementById("copy-url-button");
-	const urlToggle = document.getElementById("url-toggle");
-
-	if (publicUrl.value === "") {
-		copyUrlBtn.disabled = true;
-		$(copyUrlBtn).tooltip('disable');
-		urlToggle.checked = false;
-	}
-	else {
-		copyUrlBtn.disabled = false;
-		$(copyUrlBtn).tooltip('enable');
-		urlToggle.checked = true;
-	}
+$("#edit-file-modal").on("show.bs.modal", async function(event) {
 
 	const modal = $(this);
+	const td = event.relatedTarget.parentElement;
+	const id = td.getElementsByClassName("js-id-input")[0];
+	const publicPass = td.getElementsByClassName("js-public-url-input")[0];
+	const copyUrlBtn = document.getElementById("copy-url-button");
+	const urlToggle = document.getElementById("url-toggle");
+	const placeholder = document.getElementById("edit-media-placeholder");
+	const dialog = document.getElementById("edit-media-dialog");
 
-	modal.find("#file-id").val( id.value );
-	modal.find("#title-input").val( title.value );
-	modal.find("#caption-input").val( caption.value );
-	modal.find("#subtitle-input").val( subtitle.value );
-	modal.find("#file-description-area").val( description.value );
-	modal.find("#public-url").val( publicUrl.value );
+	try {
+		const res = await mediaData(id.value);
+		const originalName = res.data.original_name;		
 
-	$R("#file-description-area", 'destroy');
-	$R("#file-description-area", utilities.redactorConfig);
+		if (res.data.media_details) {
+			var {title} = res.data.media_details;
+			var {subtitle} = res.data.media_details;
+			var {caption} = res.data.media_details;
+			var {description} = res.data.media_details;
+		}
+
+		if ( publicPass.value == "" ) {
+			copyUrlBtn.disabled = true;
+			$(copyUrlBtn).tooltip('disable');
+			urlToggle.checked = false;
+		}
+		else {
+			copyUrlBtn.disabled = false;
+			$(copyUrlBtn).tooltip('enable');
+			urlToggle.checked = true;
+		}
+		
+		modal.find("#public-url").val(publicPass.value);
+		modal.find("#file-id").val( id.value );
+		modal.find("#title-input").val( title || originalName );
+		modal.find("#caption-input").val( caption || "" );
+		modal.find("#subtitle-input").val( subtitle || "" );
+
+		$R("#file-description-area").source.setCode(description || "");
+
+		placeholder.classList.toggle("d-flex");
+		placeholder.classList.toggle("d-none");
+		dialog.classList.toggle("d-none");
+	}
+	catch (err) {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+	}
 });
 
-$("#file-search").on("input", searchHandler);
+$("#edit-file-modal").on("hidden.bs.modal", function() {
+	const placeholder = document.getElementById("edit-media-placeholder");
+	const dialog = document.getElementById("edit-media-dialog");
 
-$(".js-gallery-page-btn").on( 'click', paginationHandler);
+	placeholder.classList.toggle("d-flex");
+	placeholder.classList.toggle("d-none");
+	dialog.classList.toggle("d-none");
+	clearInvalidMessage();
+});
+
+function clearInvalidMessage() {
+	const invalids = document.getElementsByClassName("is-invalid");
+
+	for (let i = 0; i < invalids.length; i++) {
+		invalids[i].classList.remove("is-invalid");
+	}
+}
+
+function mediaData(id) {
+
+	return axios.get(`/media-ajax/${id}/get-media-details`);
+}
 
 $(".custom-tabs").on( "click", function() {
 	let tabs = $(".tab-pane");
@@ -142,12 +178,40 @@ const fileManagerDatatable = $("#file-manager-datatable").DataTable({
 		$(".dataTables_paginate > .pagination > li > a").attr("draggable", "false");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-default");
 
+		$(".js-copy-url").on("click", copyHiddenInputClickHandler);
+		$(".js-copy-url").on("mouseleave", copyHiddenInputLeaveHandler);
+
+		$('[data-toggle="tooltip"]').tooltip("dispose");
+		$('[data-toggle="tooltip"]').tooltip();
 	}
 });
 
 //!######################################
 //! 		Grid View Functions			#
 //!######################################
+
+function copyHiddenInputLeaveHandler() {
+	$(this).attr("data-original-title", "Copy to clipboard");
+}
+
+function copyHiddenInputClickHandler() {
+	const td = this.parentElement;
+	const publicUrl = td.getElementsByClassName("js-public-url-input")[0].value;
+	const input = document.createElement("input");
+
+	input.classList.add("absolute");
+	input.value = publicUrl;
+	document.body.append(input);
+
+	input.select();
+	input.setSelectionRange(0, 99999);
+
+	document.execCommand("copy");
+	$(this).attr("data-original-title", "Copied!").tooltip('show'); 
+
+	input.remove();
+}
+
 
 function paginationHandler(event) {
 

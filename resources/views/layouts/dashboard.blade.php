@@ -1,18 +1,15 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-
-
     <meta charset="utf-8"/>
     <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <title>DarkponyLMS</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description"/>
-    <meta content="Coderthemes" name="author"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="robots" content="noindex, nofollow">
+	
     <link rel="icon" size="32x32" type="image/png" href="{{ asset("images/favicon-32x32.png") }}"/>
-
     <link rel="stylesheet" href="{{ mix('css/dashboard/app.css') }}">
-
+	
+    <title>DarkponyLMS</title>
     <style>
         .results-cnt {
             min-width: 315px;

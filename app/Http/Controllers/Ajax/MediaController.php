@@ -337,6 +337,13 @@ class MediaController extends Controller {
 		]);
 	}
 
+	public function getMediaDetails(Media $media) {
+
+		// $mediaDetails = $media->load("details");
+
+		return $media->load("mediaDetails");
+	}
+
 	private function storeFile($file) {
 
 		$date = date('Y.m');
