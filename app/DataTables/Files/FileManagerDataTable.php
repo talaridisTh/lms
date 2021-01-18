@@ -22,44 +22,16 @@ class FileManagerDataTable extends DataTable {
         $query = Media::where("type", "!=", 5)->with('mediaDetails');
 
         return datatables()::of($query)
-<<<<<<< HEAD
             ->editColumn("original_name", function ($data) {
 
                 $mediaDetails = $data->mediaDetails;
-                $detailsTitle = null;
-                $detailsSubtitle = "";
-                $detailsCaption = "";
-                $detailsDescription = "";
-                $view = "";
-                $publicUrl = !is_null($data->public_pass)
-                    ? url("/pf/$data->public_pass/$data->name") : "";
-                if ($data->type == 0) {
-                    $view = "<a href='#' class='js-view-image custom-link-primary'
-						data-toggle='modal' data-target='#image-light-room'
-						data-source='$data->rel_path' draggable='false'>View</a>
-						<span class='mx-2'>|</span>";
-                }
-                if (!is_null($mediaDetails)) {
-                    $detailsTitle = $mediaDetails->title;
-                    $detailsSubtitle = $mediaDetails->subtitle;
-                    $detailsCaption = $mediaDetails->caption;
-                    $detailsDescription = $mediaDetails->description;
-                }
-                $title = $detailsTitle ?? $data->original_name;
+                $showCopyBtn = !is_null($data->public_pass) ? "" : "d-none";
+                $title = !is_null($mediaDetails) ? $mediaDetails->title : $data->original_name;
+                $publicUrl = !is_null($data->public_pass) ? url("/pf/$data->public_pass/$data->name") : "";
 
                 return "
-=======
-			->editColumn("original_name", function($data) {
-
-				$mediaDetails = $data->mediaDetails;
-				$showCopyBtn = !is_null($data->public_pass) ? "" : "d-none";
-				$title = !is_null($mediaDetails) ? $mediaDetails->title : $data->original_name;
-				$publicUrl = !is_null($data->public_pass) ? url("/pf/$data->public_pass/$data->name") : "";
-
-				return "
->>>>>>> db0437388b36e52086ecdc1fa4bb16f052942eb9
 					<a href='#' class='h5 custom-link-primary' data-toggle='modal'
-						data-target='#edit-file-modal' draggable='false'>$titlbuttons-to-right always-visiblee
+						data-target='#edit-file-modal' draggable='false'>$title
 					</a>
 					<div class='d-none'>
 						<input class='js-id-input' type='text' value='$data->id'>
@@ -87,18 +59,12 @@ class FileManagerDataTable extends DataTable {
                     }
                 }
 
-<<<<<<< HEAD
-                return "<img class='img-fluid' style='max-width: 100px;' src='" . $data->thumbnailUrl("rel_path") . "' alt='$data->original_name' draggable='false'/>";
+                return "<img class='js-view-image img-fluid cursor-pointer' data-source='$data->rel_path'
+					data-toggle='modal' data-target='#image-light-room'
+					style='max-width: 100px;' src='" . $data->thumbnailUrl("rel_path") . "'
+					alt='$data->original_name' draggable='false'/>";
             })
             ->addColumn("title", function ($data) {
-=======
-				return "<img class='js-view-image img-fluid cursor-pointer' data-source='$data->rel_path'
-					data-toggle='modal' data-target='#image-light-room'
-					style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."'
-					alt='$data->original_name' draggable='false'/>";
-			})
-			->addColumn("title", function($data) {
->>>>>>> db0437388b36e52086ecdc1fa4bb16f052942eb9
 
                 if (!is_null($data->mediaDetails)) {
 
