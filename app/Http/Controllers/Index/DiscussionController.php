@@ -54,6 +54,7 @@ class DiscussionController extends Controller {
 
             $course->whereIn("posts.postable_id", auth()->user()->courses->pluck("id"));
         })->orderBy('created_at', $request->option ? $request->option : "desc")
+            ->where("postable_type", '!=', "App\Models\Attachment")
             ->paginate(10);
 //
 //        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
@@ -98,7 +99,7 @@ class DiscussionController extends Controller {
     {
         $posts = Post::whereHas("user", function ($course) {
             $course->whereIn("posts.postable_id", auth()->user()->courses->pluck("id"));
-        })->where('title', 'LIKE', '%' . $request->term . '%')->paginate(10);
+        })->where('title', 'LIKE', '%' . $request->term . '%')->where("postable_type", '!=', "App\Models\Attachment")->paginate(10);
 
 //        Post::where('title', 'LIKE', '%' . $request->term . '%')->paginate(10)
         return view("index.discussions.discussions", [
@@ -159,6 +160,7 @@ class DiscussionController extends Controller {
 
         $posts = auth()->user()->posts()
             ->orderBy('created_at', $request->option ? $request->option : "desc")
+            ->where("postable_type", '!=', "App\Models\Attachment")
             ->paginate(10);
 
         return view("index.discussions.discussions", [
@@ -177,7 +179,7 @@ class DiscussionController extends Controller {
                 ->from('comments')
                 ->where("user_id", auth()->id())
                 ->get();
-        })->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+        })->orderBy('created_at', $request->option ? $request->option : "desc")->where("postable_type", '!=', "App\Models\Attachment")->paginate(10);
 
         return view("index.discussions.discussions", [
             "posts" => $posts,
@@ -196,7 +198,9 @@ class DiscussionController extends Controller {
                 ->where("user_id", auth()->id())
                 ->where("best", 1)
                 ->get();
-        })->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+        })->orderBy('created_at', $request->option ? $request->option : "desc")
+            ->where("postable_type", '!=', "App\Models\Attachment")
+            ->paginate(10);
 
         return view("index.discussions.discussions", [
             "posts" => $posts,
@@ -209,7 +213,9 @@ class DiscussionController extends Controller {
     {
 
         $posts = Post::whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
-            ->orderBy("watched", "desc")->paginate(10);
+            ->orderBy("watched", "desc")
+            ->where("postable_type", '!=', "App\Models\Attachment")
+            ->paginate(10);
 
         return view("index.discussions.discussions", [
             "posts" => $posts,
@@ -222,7 +228,9 @@ class DiscussionController extends Controller {
     {
 
         $posts = Post::whereBetween('created_at', [Carbon::now()->startOfYear(), Carbon::now()->endOfYear()])
-            ->orderBy("watched", "desc")->paginate(10);
+            ->orderBy("watched", "desc")
+            ->where("postable_type", '!=', "App\Models\Attachment")
+            ->paginate(10);
 
         return view("index.discussions.discussions", [
             "posts" => $posts,
@@ -235,7 +243,9 @@ class DiscussionController extends Controller {
     {
 
         $posts = Post::where("closed", 1)
-            ->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+            ->orderBy('created_at', $request->option ? $request->option : "desc")
+            ->where("postable_type", '!=', "App\Models\Attachment")
+            ->paginate(10);
 
         return view("index.discussions.discussions", [
             "posts" => $posts,
@@ -254,7 +264,9 @@ class DiscussionController extends Controller {
                 ->join('comments', 'comments.post_id', '=', 'posts.id')
                 ->where("post_id", "!=", null)
                 ->get();
-        })->orderBy('created_at', $request->option ? $request->option : "desc")->paginate(10);
+        })->orderBy('created_at', $request->option ? $request->option : "desc")
+            ->where("postable_type", '!=', "App\Models\Attachment")
+            ->paginate(10);
 
         return view("index.discussions.discussions", [
             "posts" => $posts,
@@ -441,6 +453,32 @@ class DiscussionController extends Controller {
         $file->storeAs("public/attachments/$date", $name->full);
 
         return $attachment;
+    }
+
+    public function createQuestionPost(Request $request)
+    {
+
+        $attachment = Attachment::find($request->id);
+        if ($attachment->post->isEmpty()) {
+            $post = $attachment->post()->create([
+//                "user_id" => $attachment->homework->instructor->id,
+                "user_id" => auth()->id(),
+                "title" => $attachment->original_name,
+                "slug" => $attachment->name,
+            ]);
+
+            return response()->json($post->id);
+        } else {
+
+            Comment::create([
+                "body" => "$request->body",
+                "user_id" => auth()->id(),
+                "post_id" => $attachment->post->first()->id,
+                "parent_id" => 0
+            ]);
+        }
+
+        //emeina sto na balw st eikonidio tis sizitisis oti iparxei to post gia na kane redirect ekei ! :)
     }
 
 }

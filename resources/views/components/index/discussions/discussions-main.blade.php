@@ -1,45 +1,54 @@
-<div class="filter-thread d-flex justify-content-between mb-5 stick bg-light mt-2">
-    <div class="d-flex m-2">
-        <div class="form-group my-1 p-1">
-            <select class="form-control bg-list-thread filter-sidebar" id="">
-                <option value="desc">Νεότερα</option>
-                <option value="asc">Παλαιότερο</option>
-            </select>
+@if(!isset($question))
+    <div class="filter-thread d-flex justify-content-between mb-5 stick bg-light mt-2">
+
+        <div class="d-flex m-2">
+            <div class="form-group my-1 p-1">
+                <select class="form-control bg-list-thread filter-sidebar"
+                        id="">
+                    <option value="desc">Νεότερα</option>
+                    <option value="asc">Παλαιότερο</option>
+                </select>
+            </div>
+
+            {{--        <div class="form-group my-1  p-1">--}}
+            {{--            <select class="form-control bg-list-thread filter-course" id="">--}}
+            {{--                <option>Όλα</option>--}}
+            {{--                @foreach($courses as $key=> $course)--}}
+            {{--                    <option>{{$courses[$key]}}</option>--}}
+            {{--                @endforeach--}}
+            {{--            </select>--}}
+            {{--        </div>--}}
         </div>
 
-{{--        <div class="form-group my-1  p-1">--}}
-{{--            <select class="form-control bg-list-thread filter-course" id="">--}}
-{{--                <option>Όλα</option>--}}
-{{--                @foreach($courses as $key=> $course)--}}
-{{--                    <option>{{$courses[$key]}}</option>--}}
-{{--                @endforeach--}}
-{{--            </select>--}}
-{{--        </div>--}}
+        <div class="d-flex m-2">
+            <div class="form-group my-1  p-1">
+                <i class="font-24 uil-grip-horizontal-line bg-list-thread mr-1 js-hidden-body cursor-pointer js-body-active"
+                   style="padding: 0px 0.375rem"></i>
+                <i class="font-24 uil-align-left bg-list-thread js-show-body cursor-pointer"
+                   style="padding: 0px 0.375rem"></i>
+            </div>
+
+            <div class="form-group my-1  p-1 position-relative">
+                <i class="uil-search position-absolute global-search"></i>
+                <input type="text"
+                       class="form-control bg-list-thread js-search-post pl-10"
+                       placeholder="Πάτα &quot;/&quot; για αναζήτηση">
+            </div>
+        </div>
     </div>
-
-    <div class="d-flex m-2">
-        <div class="form-group my-1  p-1">
-            <i class="font-24 uil-grip-horizontal-line bg-list-thread mr-1 js-hidden-body cursor-pointer js-body-active"
-               style="padding: 0px 0.375rem"></i>
-            <i class="font-24 uil-align-left bg-list-thread js-show-body cursor-pointer"
-               style="padding: 0px 0.375rem"></i>
-        </div>
-
-        <div class="form-group my-1  p-1 position-relative">
-            <i class="uil-search position-absolute global-search"></i>
-                <input type="text" class="form-control bg-list-thread js-search-post pl-10" placeholder="Πάτα &quot;/&quot; για αναζήτηση">
-        </div>
-    </div>
-</div>
+@endif
 
 <div class="cnt-threads-main-list">
-    <ul class="threads-main-list p-0 mt-3">
+    <ul class="threads-main-list p-0 mt-6">
         @forelse($posts  as $post)
 
-            <li class="d-flex list-unstyled bg-list-thread px-6 py-4 mb-5 single-thread" data-post-id="{{$post->id}}">
+            <li class="d-flex list-unstyled bg-list-thread px-6 py-4 mb-5 single-thread"
+                data-post-id="{{$post->id}}">
 
                 <div class="mr-2 d-flex align-items-center ">
-                    <img src="{{$post->user->thumbnailUrl("avatar")}}" class="avatar-sm rounded" alt="">
+                    <img src="{{$post->user->thumbnailUrl("avatar")}}"
+                         class="avatar-sm rounded"
+                         alt="">
                 </div>
 
                 <div class="container-fluid ">
@@ -76,7 +85,7 @@
         @empty
             <h3>Δεν υπάρχουν σχετικές συνομιλίες</h3>
         @endforelse
-        {{ $posts->render() }}
+        {{--        {{ $posts->render() }}--}}
 
     </ul>
 

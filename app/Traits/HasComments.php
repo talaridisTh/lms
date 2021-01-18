@@ -104,7 +104,7 @@ trait HasComments {
     public function addFiles(Request $request)
     {
 
-        dd($request->all());
+//        dd($request->all());
         $model = $request->namespace::find($request->modelId);
         foreach ($request->ids as $id) {
             $model->media()->attach($id, ["usage" => 3]);

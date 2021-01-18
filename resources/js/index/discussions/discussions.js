@@ -325,6 +325,7 @@ const onSubCommentReplayBtnEvent = () => {
     })
 }
 
+
 //likes system comment
 const onLikebtn = () => {
     $(".discussions-right").on("click", ".btn-reply-like", async function () {
@@ -385,6 +386,7 @@ const onEditComment = () => {
         const commentId = this.closest(".main-post").dataset.threadId
         const postId = $(".main-post").data("post-id")
         let author = thisContainer.find(".author-reply")
+        console.log(author)
         const pre = thisContainer.find("pre");
         thisContainer.find(".cnt-body-comment").append(`
              <div class="btn-group cnt-btn-comment my-3 space-x-3" role="group" >
@@ -393,11 +395,11 @@ const onEditComment = () => {
             </div>`)
         pre.replaceWith(function () {
             thisContainer.find($(".author-reply").remove());
-            return $("<input />", {
-                "type": "text",
+            return $("<textarea  />", {
+                // "type": "text",
                 "name": "body",
-                'value': $(this).text(),
-                'class': 'form-control edit-input ',
+                'value': $(pre).text(),
+                'class': 'edit-input focus:outline-none focus:ring focus:border-blue-300 shadow-inner bg-white w-full rounded-md  text-grey-darkest flex-1 p-2 mt-4 bg-transparent',
             })
         })
         $(".edit-input").on("keyup", function (e) {
@@ -412,8 +414,9 @@ const onEditComment = () => {
         $(".btn-body-edit").on("click", async function () {
             const {data, status} = await axios.patch(`/discussion/update/${commentId}`, {
                 postId,
-                editBody: `${author[0].outerHTML} ${$(".edit-input").val()}`
+                editBody: `${$(".edit-input").val()}`
             })
+            console.log(author[0].outerHTML)
 
             if (status == 200) {
                 $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
@@ -425,7 +428,7 @@ const onEditComment = () => {
 
         $(".btn-body-close").on("click", function (e) {
             $(".edit-input").replaceWith(pre);
-            thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
+            // thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
             $(".cnt-btn-comment").remove();
             $(".js-edit-comment").prop("disabled", false)
         })
@@ -755,6 +758,90 @@ const onCompletedTask = () => {
     })
 }
 
+//sent question
+const onSendQuestion = () => {
+    $(".discussions-right").on("click", ".sent-question", async function () {
+            const thisBtn = $(this)
+            if (thisBtn.data("exist-post")) {
+                thisBtn.removeAttr("data-target")
+                // $(".question-task").trigger("click");
+                let postId = thisBtn.data("post")
+                try {
+                    // const {data, status} = await axios.patch(`/discussion/watched/${postId}`)
+                    const {data, status} = await axios.get(`/discussion/${postId}`)
+
+                    if (status === 200) {
+                        $(".discussions-right").off();
+                        $(".discussions-right").html(data)
+                        $(".first-thread").show();
+                        onChangeFirstButtonNew()
+                        onCommentReplayBtnEvent()
+                        onSubCommentReplayBtnEvent()
+                        onLikebtn()
+                        onDeleteComment()
+                        // rangeSlider()
+                        handlerReply()
+                        bestAnswer()
+                        closedPost()
+                        eventTopBar()
+                        onEditComment()
+                        $(".js-range-slider").remove();
+
+
+                    }
+
+                } catch (e) {
+                    console.log(e)
+                }
+
+
+                return;
+            }
+            const id = thisBtn.data("attachment").id
+            $("#new-post-task").off();
+            $("#new-post-task").on("click", ".js-question-btn", async function () {
+                const {status, data} = await axios.post("discussion/question/post", {
+                    id
+                })
+
+                const postId = data;
+                if (status == 200) {
+                    $('#new-post-task').modal('hide')
+                    $(".modal-backdrop").addClass("d-none");
+                    try {
+                        const {data, status} = await axios.get(`/discussion/${postId}`)
+
+                        if (status === 200) {
+                            $(".discussions-right").off();
+                            $(".discussions-right").html(data)
+                            $(".first-thread").show();
+                            onChangeFirstButtonNew()
+                            onCommentReplayBtnEvent()
+                            onSubCommentReplayBtnEvent()
+                            onLikebtn()
+                            onDeleteComment()
+                            // rangeSlider()
+                            handlerReply()
+                            bestAnswer()
+                            closedPost()
+                            eventTopBar()
+                            onEditComment()
+                            $(".js-range-slider").remove();
+
+
+                        }
+
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }
+
+            })
+
+
+        }
+    )
+}
 
 const validationUploadTest = () => {
     $('#subject-task').keyup(function () {
@@ -938,7 +1025,6 @@ $(".discussions-left").on("click", "#filter-no-replies", async function () {
 //my task
 $(".discussions-left").on("click", "#filter-my-task", async function () {
 
-
     const roles = ["admin", "super-admin", "instructor"]
     try {
         const {data, status} = await axios.get("/discussion/my-task")
@@ -947,6 +1033,7 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
             $(".ul-thread .bg-thread").removeClass("active-thread")
             $(this).addClass("active-thread")
             onCompletedTask();
+            onSendQuestion()
             styleCollapse();
             removeTask();
             onFirstReplayBtnEvent();

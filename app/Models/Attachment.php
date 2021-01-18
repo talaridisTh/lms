@@ -27,4 +27,10 @@ class Attachment extends Model {
         return $this->morphMany(Post::class, 'postable');
     }
 
+    public function homework()
+    {
+        return $this->belongsTo(Homework::class, "attachmentable_id");
+
+    }
+
 }

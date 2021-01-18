@@ -7069,15 +7069,16 @@ var onEditComment = function onEditComment() {
     var commentId = this.closest(".main-post").dataset.threadId;
     var postId = $(".main-post").data("post-id");
     var author = thisContainer.find(".author-reply");
+    console.log(author);
     var pre = thisContainer.find("pre");
     thisContainer.find(".cnt-body-comment").append("\n             <div class=\"btn-group cnt-btn-comment my-3 space-x-3\" role=\"group\" >\n                 <button class=\"px-2 py-1 rounded-lg text-black bg-gray-300 btn-body-close\">Close</button>\n                 <button class=\"px-3 py-1 rounded-lg bg-blue-300 text-black btn-body-edit\">Edit</button>\n            </div>");
     pre.replaceWith(function () {
       thisContainer.find($(".author-reply").remove());
-      return $("<input />", {
-        "type": "text",
+      return $("<textarea  />", {
+        // "type": "text",
         "name": "body",
-        'value': $(this).text(),
-        'class': 'form-control edit-input '
+        'value': $(pre).text(),
+        'class': 'edit-input focus:outline-none focus:ring focus:border-blue-300 shadow-inner bg-white w-full rounded-md  text-grey-darkest flex-1 p-2 mt-4 bg-transparent'
       });
     });
     $(".edit-input").on("keyup", function (e) {
@@ -7097,13 +7098,14 @@ var onEditComment = function onEditComment() {
               _context10.next = 2;
               return axios.patch("/discussion/update/".concat(commentId), {
                 postId: postId,
-                editBody: "".concat(author[0].outerHTML, " ").concat($(".edit-input").val())
+                editBody: "".concat($(".edit-input").val())
               });
 
             case 2:
               _yield$axios$patch2 = _context10.sent;
               data = _yield$axios$patch2.data;
               status = _yield$axios$patch2.status;
+              console.log(author[0].outerHTML);
 
               if (status == 200) {
                 $(".cnt-reply-list").html($(data).find(".reply-list")); //reload post
@@ -7115,7 +7117,7 @@ var onEditComment = function onEditComment() {
                 rangeSlider();
               }
 
-            case 6:
+            case 7:
             case "end":
               return _context10.stop();
           }
@@ -7123,8 +7125,8 @@ var onEditComment = function onEditComment() {
       }, _callee10);
     })));
     $(".btn-body-close").on("click", function (e) {
-      $(".edit-input").replaceWith(pre);
-      thisContainer.find("pre").prepend("".concat(author[0].outerHTML));
+      $(".edit-input").replaceWith(pre); // thisContainer.find("pre").prepend(`${author[0].outerHTML}`)
+
       $(".cnt-btn-comment").remove();
       $(".js-edit-comment").prop("disabled", false);
     });
@@ -7531,6 +7533,143 @@ var onCompletedTask = function onCompletedTask() {
       }
     }, _callee15, this);
   })));
+}; //sent question
+
+
+var onSendQuestion = function onSendQuestion() {
+  $(".discussions-right").on("click", ".sent-question", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
+    var thisBtn, postId, _yield$axios$get5, data, status, id;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+      while (1) {
+        switch (_context17.prev = _context17.next) {
+          case 0:
+            thisBtn = $(this);
+
+            if (!thisBtn.data("exist-post")) {
+              _context17.next = 17;
+              break;
+            }
+
+            thisBtn.removeAttr("data-target"); // $(".question-task").trigger("click");
+
+            postId = thisBtn.data("post");
+            _context17.prev = 4;
+            _context17.next = 7;
+            return axios.get("/discussion/".concat(postId));
+
+          case 7:
+            _yield$axios$get5 = _context17.sent;
+            data = _yield$axios$get5.data;
+            status = _yield$axios$get5.status;
+
+            if (status === 200) {
+              $(".discussions-right").off();
+              $(".discussions-right").html(data);
+              $(".first-thread").show();
+              onChangeFirstButtonNew();
+              onCommentReplayBtnEvent();
+              onSubCommentReplayBtnEvent();
+              onLikebtn();
+              onDeleteComment(); // rangeSlider()
+
+              handlerReply();
+              bestAnswer();
+              closedPost();
+              eventTopBar();
+              onEditComment();
+              $(".js-range-slider").remove();
+            }
+
+            _context17.next = 16;
+            break;
+
+          case 13:
+            _context17.prev = 13;
+            _context17.t0 = _context17["catch"](4);
+            console.log(_context17.t0);
+
+          case 16:
+            return _context17.abrupt("return");
+
+          case 17:
+            id = thisBtn.data("attachment").id;
+            $("#new-post-task").off();
+            $("#new-post-task").on("click", ".js-question-btn", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
+              var _yield$axios$post5, status, data, postId, _yield$axios$get6, _data, _status;
+
+              return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+                while (1) {
+                  switch (_context16.prev = _context16.next) {
+                    case 0:
+                      _context16.next = 2;
+                      return axios.post("discussion/question/post", {
+                        id: id
+                      });
+
+                    case 2:
+                      _yield$axios$post5 = _context16.sent;
+                      status = _yield$axios$post5.status;
+                      data = _yield$axios$post5.data;
+                      postId = data;
+
+                      if (!(status == 200)) {
+                        _context16.next = 21;
+                        break;
+                      }
+
+                      $('#new-post-task').modal('hide');
+                      $(".modal-backdrop").addClass("d-none");
+                      _context16.prev = 9;
+                      _context16.next = 12;
+                      return axios.get("/discussion/".concat(postId));
+
+                    case 12:
+                      _yield$axios$get6 = _context16.sent;
+                      _data = _yield$axios$get6.data;
+                      _status = _yield$axios$get6.status;
+
+                      if (_status === 200) {
+                        $(".discussions-right").off();
+                        $(".discussions-right").html(_data);
+                        $(".first-thread").show();
+                        onChangeFirstButtonNew();
+                        onCommentReplayBtnEvent();
+                        onSubCommentReplayBtnEvent();
+                        onLikebtn();
+                        onDeleteComment(); // rangeSlider()
+
+                        handlerReply();
+                        bestAnswer();
+                        closedPost();
+                        eventTopBar();
+                        onEditComment();
+                        $(".js-range-slider").remove();
+                      }
+
+                      _context16.next = 21;
+                      break;
+
+                    case 18:
+                      _context16.prev = 18;
+                      _context16.t0 = _context16["catch"](9);
+                      console.log(_context16.t0);
+
+                    case 21:
+                    case "end":
+                      return _context16.stop();
+                  }
+                }
+              }, _callee16, null, [[9, 18]]);
+            })));
+
+          case 20:
+          case "end":
+            return _context17.stop();
+        }
+      }
+    }, _callee17, this, [[4, 13]]);
+  })));
 };
 
 var validationUploadTest = function validationUploadTest() {
@@ -7584,79 +7723,7 @@ function toastAlert(icon, message) {
 } //all thread sidebar
 
 
-$(".discussions-left").on("click", "#filter-all-threads", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16() {
-  var _yield$axios$get5, data, status;
-
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
-    while (1) {
-      switch (_context16.prev = _context16.next) {
-        case 0:
-          _context16.prev = 0;
-          _context16.next = 3;
-          return axios.get("/discussion");
-
-        case 3:
-          _yield$axios$get5 = _context16.sent;
-          data = _yield$axios$get5.data;
-          status = _yield$axios$get5.status;
-
-          if (status == 200) {
-            axiosUpdateMain($(this), data);
-          }
-
-          _context16.next = 12;
-          break;
-
-        case 9:
-          _context16.prev = 9;
-          _context16.t0 = _context16["catch"](0);
-          console.log(_context16.t0);
-
-        case 12:
-        case "end":
-          return _context16.stop();
-      }
-    }
-  }, _callee16, this, [[0, 9]]);
-}))); //my question sidebar
-
-$(".discussions-left").on("click", "#filter-my-question", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17() {
-  var _yield$axios$get6, data, status;
-
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
-    while (1) {
-      switch (_context17.prev = _context17.next) {
-        case 0:
-          _context17.prev = 0;
-          _context17.next = 3;
-          return axios.get("/discussion/my-question");
-
-        case 3:
-          _yield$axios$get6 = _context17.sent;
-          data = _yield$axios$get6.data;
-          status = _yield$axios$get6.status;
-
-          if (status == 200) {
-            axiosUpdateMain($(this), data);
-          }
-
-          _context17.next = 12;
-          break;
-
-        case 9:
-          _context17.prev = 9;
-          _context17.t0 = _context17["catch"](0);
-          console.log(_context17.t0);
-
-        case 12:
-        case "end":
-          return _context17.stop();
-      }
-    }
-  }, _callee17, this, [[0, 9]]);
-}))); //my simetoxi se post
-
-$(".discussions-left").on("click", "#filter-participation", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
+$(".discussions-left").on("click", "#filter-all-threads", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18() {
   var _yield$axios$get7, data, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
@@ -7665,7 +7732,7 @@ $(".discussions-left").on("click", "#filter-participation", /*#__PURE__*/_asyncT
         case 0:
           _context18.prev = 0;
           _context18.next = 3;
-          return axios.get("/discussion/participation");
+          return axios.get("/discussion");
 
         case 3:
           _yield$axios$get7 = _context18.sent;
@@ -7690,9 +7757,9 @@ $(".discussions-left").on("click", "#filter-participation", /*#__PURE__*/_asyncT
       }
     }
   }, _callee18, this, [[0, 9]]);
-}))); //my kaliteri apantisi
+}))); //my question sidebar
 
-$(".discussions-left").on("click", "#filter-best-answer", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
+$(".discussions-left").on("click", "#filter-my-question", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19() {
   var _yield$axios$get8, data, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
@@ -7701,7 +7768,7 @@ $(".discussions-left").on("click", "#filter-best-answer", /*#__PURE__*/_asyncToG
         case 0:
           _context19.prev = 0;
           _context19.next = 3;
-          return axios.get("/discussion/best-answer");
+          return axios.get("/discussion/my-question");
 
         case 3:
           _yield$axios$get8 = _context19.sent;
@@ -7726,9 +7793,9 @@ $(".discussions-left").on("click", "#filter-best-answer", /*#__PURE__*/_asyncToG
       }
     }
   }, _callee19, this, [[0, 9]]);
-}))); //my popular this wwek
+}))); //my simetoxi se post
 
-$(".discussions-left").on("click", "#filter-popular-week", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20() {
+$(".discussions-left").on("click", "#filter-participation", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20() {
   var _yield$axios$get9, data, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
@@ -7737,7 +7804,7 @@ $(".discussions-left").on("click", "#filter-popular-week", /*#__PURE__*/_asyncTo
         case 0:
           _context20.prev = 0;
           _context20.next = 3;
-          return axios.get("/discussion/popular-week");
+          return axios.get("/discussion/participation");
 
         case 3:
           _yield$axios$get9 = _context20.sent;
@@ -7746,7 +7813,6 @@ $(".discussions-left").on("click", "#filter-popular-week", /*#__PURE__*/_asyncTo
 
           if (status == 200) {
             axiosUpdateMain($(this), data);
-            $(".filter-thread").children().first().css('visibility', 'hidden');
           }
 
           _context20.next = 12;
@@ -7763,9 +7829,9 @@ $(".discussions-left").on("click", "#filter-popular-week", /*#__PURE__*/_asyncTo
       }
     }
   }, _callee20, this, [[0, 9]]);
-}))); //my popular all time
+}))); //my kaliteri apantisi
 
-$(".discussions-left").on("click", "#filter-popular-allTime", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
+$(".discussions-left").on("click", "#filter-best-answer", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21() {
   var _yield$axios$get10, data, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
@@ -7774,7 +7840,7 @@ $(".discussions-left").on("click", "#filter-popular-allTime", /*#__PURE__*/_asyn
         case 0:
           _context21.prev = 0;
           _context21.next = 3;
-          return axios.get("/discussion/popular-allTime");
+          return axios.get("/discussion/best-answer");
 
         case 3:
           _yield$axios$get10 = _context21.sent;
@@ -7783,7 +7849,6 @@ $(".discussions-left").on("click", "#filter-popular-allTime", /*#__PURE__*/_asyn
 
           if (status == 200) {
             axiosUpdateMain($(this), data);
-            $(".filter-thread").children().first().css('visibility', 'hidden');
           }
 
           _context21.next = 12;
@@ -7800,9 +7865,9 @@ $(".discussions-left").on("click", "#filter-popular-allTime", /*#__PURE__*/_asyn
       }
     }
   }, _callee21, this, [[0, 9]]);
-}))); //my post pou einai closed
+}))); //my popular this wwek
 
-$(".discussions-left").on("click", "#filter-isClosed", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
+$(".discussions-left").on("click", "#filter-popular-week", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22() {
   var _yield$axios$get11, data, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
@@ -7811,7 +7876,7 @@ $(".discussions-left").on("click", "#filter-isClosed", /*#__PURE__*/_asyncToGene
         case 0:
           _context22.prev = 0;
           _context22.next = 3;
-          return axios.get("/discussion/isClosed");
+          return axios.get("/discussion/popular-week");
 
         case 3:
           _yield$axios$get11 = _context22.sent;
@@ -7820,6 +7885,7 @@ $(".discussions-left").on("click", "#filter-isClosed", /*#__PURE__*/_asyncToGene
 
           if (status == 200) {
             axiosUpdateMain($(this), data);
+            $(".filter-thread").children().first().css('visibility', 'hidden');
           }
 
           _context22.next = 12;
@@ -7836,9 +7902,9 @@ $(".discussions-left").on("click", "#filter-isClosed", /*#__PURE__*/_asyncToGene
       }
     }
   }, _callee22, this, [[0, 9]]);
-}))); //my xoris apantisi
+}))); //my popular all time
 
-$(".discussions-left").on("click", "#filter-no-replies", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23() {
+$(".discussions-left").on("click", "#filter-popular-allTime", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23() {
   var _yield$axios$get12, data, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
@@ -7847,7 +7913,7 @@ $(".discussions-left").on("click", "#filter-no-replies", /*#__PURE__*/_asyncToGe
         case 0:
           _context23.prev = 0;
           _context23.next = 3;
-          return axios.get("/discussion/no-replies");
+          return axios.get("/discussion/popular-allTime");
 
         case 3:
           _yield$axios$get12 = _context23.sent;
@@ -7856,6 +7922,7 @@ $(".discussions-left").on("click", "#filter-no-replies", /*#__PURE__*/_asyncToGe
 
           if (status == 200) {
             axiosUpdateMain($(this), data);
+            $(".filter-thread").children().first().css('visibility', 'hidden');
           }
 
           _context23.next = 12;
@@ -7872,27 +7939,99 @@ $(".discussions-left").on("click", "#filter-no-replies", /*#__PURE__*/_asyncToGe
       }
     }
   }, _callee23, this, [[0, 9]]);
-}))); //my task
+}))); //my post pou einai closed
 
-$(".discussions-left").on("click", "#filter-my-task", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
-  var roles, _yield$axios$get13, data, status, _yield$axios$get14, _data, _status;
+$(".discussions-left").on("click", "#filter-isClosed", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24() {
+  var _yield$axios$get13, data, status;
 
   return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
     while (1) {
       switch (_context24.prev = _context24.next) {
         case 0:
-          roles = ["admin", "super-admin", "instructor"];
-          _context24.prev = 1;
-          _context24.next = 4;
-          return axios.get("/discussion/my-task");
+          _context24.prev = 0;
+          _context24.next = 3;
+          return axios.get("/discussion/isClosed");
 
-        case 4:
+        case 3:
           _yield$axios$get13 = _context24.sent;
           data = _yield$axios$get13.data;
           status = _yield$axios$get13.status;
 
+          if (status == 200) {
+            axiosUpdateMain($(this), data);
+          }
+
+          _context24.next = 12;
+          break;
+
+        case 9:
+          _context24.prev = 9;
+          _context24.t0 = _context24["catch"](0);
+          console.log(_context24.t0);
+
+        case 12:
+        case "end":
+          return _context24.stop();
+      }
+    }
+  }, _callee24, this, [[0, 9]]);
+}))); //my xoris apantisi
+
+$(".discussions-left").on("click", "#filter-no-replies", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25() {
+  var _yield$axios$get14, data, status;
+
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
+    while (1) {
+      switch (_context25.prev = _context25.next) {
+        case 0:
+          _context25.prev = 0;
+          _context25.next = 3;
+          return axios.get("/discussion/no-replies");
+
+        case 3:
+          _yield$axios$get14 = _context25.sent;
+          data = _yield$axios$get14.data;
+          status = _yield$axios$get14.status;
+
+          if (status == 200) {
+            axiosUpdateMain($(this), data);
+          }
+
+          _context25.next = 12;
+          break;
+
+        case 9:
+          _context25.prev = 9;
+          _context25.t0 = _context25["catch"](0);
+          console.log(_context25.t0);
+
+        case 12:
+        case "end":
+          return _context25.stop();
+      }
+    }
+  }, _callee25, this, [[0, 9]]);
+}))); //my task
+
+$(".discussions-left").on("click", "#filter-my-task", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee26() {
+  var roles, _yield$axios$get15, data, status, _yield$axios$get16, _data2, _status2;
+
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee26$(_context26) {
+    while (1) {
+      switch (_context26.prev = _context26.next) {
+        case 0:
+          roles = ["admin", "super-admin", "instructor"];
+          _context26.prev = 1;
+          _context26.next = 4;
+          return axios.get("/discussion/my-task");
+
+        case 4:
+          _yield$axios$get15 = _context26.sent;
+          data = _yield$axios$get15.data;
+          status = _yield$axios$get15.status;
+
           if (!(status == 200)) {
-            _context24.next = 31;
+            _context26.next = 32;
             break;
           }
 
@@ -7900,60 +8039,61 @@ $(".discussions-left").on("click", "#filter-my-task", /*#__PURE__*/_asyncToGener
           $(".ul-thread .bg-thread").removeClass("active-thread");
           $(this).addClass("active-thread");
           onCompletedTask();
+          onSendQuestion();
           styleCollapse();
           removeTask();
           onFirstReplayBtnEvent();
 
           if (!roles.includes($(this).data("role-user"))) {
-            _context24.next = 27;
+            _context26.next = 28;
             break;
           }
 
           if ($('#accordionExample').children().length) {
-            _context24.next = 25;
+            _context26.next = 26;
             break;
           }
 
           $(".discussions-right").hide();
           sweetalert2__WEBPACK_IMPORTED_MODULE_1___default.a.fire('Προσοχή', '<p>Δεν υπάρχουν εργασίες </p>', 'info');
-          _context24.next = 21;
+          _context26.next = 22;
           return axios.get("/discussion");
 
-        case 21:
-          _yield$axios$get14 = _context24.sent;
-          _data = _yield$axios$get14.data;
-          _status = _yield$axios$get14.status;
+        case 22:
+          _yield$axios$get16 = _context26.sent;
+          _data2 = _yield$axios$get16.data;
+          _status2 = _yield$axios$get16.status;
 
-          if (_status == 200) {
-            axiosUpdateMain($("#filter-all-threads"), _data);
+          if (_status2 == 200) {
+            axiosUpdateMain($("#filter-all-threads"), _data2);
             $(".discussions-right").show();
           }
 
-        case 25:
-          _context24.next = 31;
+        case 26:
+          _context26.next = 32;
           break;
 
-        case 27:
+        case 28:
           $(".ul-thread .bg-thread").removeClass("active-thread");
           $(this).addClass("active-thread");
           sendTask();
           styleCollapse();
 
-        case 31:
-          _context24.next = 36;
+        case 32:
+          _context26.next = 37;
           break;
 
-        case 33:
-          _context24.prev = 33;
-          _context24.t0 = _context24["catch"](1);
-          console.log(_context24.t0);
+        case 34:
+          _context26.prev = 34;
+          _context26.t0 = _context26["catch"](1);
+          console.log(_context26.t0);
 
-        case 36:
+        case 37:
         case "end":
-          return _context24.stop();
+          return _context26.stop();
       }
     }
-  }, _callee24, this, [[1, 33]]);
+  }, _callee26, this, [[1, 34]]);
 }))); // $R("#post-body", {
 //     buttons: [
 //         'html', 'undo', 'redo', 'format',

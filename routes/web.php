@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,28 +22,11 @@ Auth::routes();
 Route::fallback(function () {
     return redirect(route("home"));
 });
-
-
 Route::get('/clear', function () {
     Artisan::call('cache:clear');
 
     return redirect(route("home"));
 });
-
-
-Route::get("create-json/task", function () {
-    $models = User::all();
-    $models->each(function ($item) {
-        $item->update(
-            ['seen' => '{
-                    "seen_message": 0,
-                     "seen_task": 0
-                    }'
-            ]);
-    });
-});
-
-
 //!######################################################
 //!					middleware				            #
 Route::get("email/verify/{id}/{hash}", 'Auth\VerificationController@verify')->name("email.verify");
@@ -55,18 +37,15 @@ Route::get("/full-verification", function () {
         "email_verified_at" => Carbon::now()
     ]);
 });
-
-
 //!########################################################
 //! Dashboard routes
 //!######################################################
 //!					middleware				            #
 Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 
-	Route::get("/dashboard/homeworks", "HomeworkController@index");
-	Route::post("homeworks-datatable/main", "HomeworkController@indexDataTable");
-	Route::get("homework-ajax/{homework:id}", "HomeworkController@homeworkContent");
-
+    Route::get("/dashboard/homeworks", "HomeworkController@index");
+    Route::post("homeworks-datatable/main", "HomeworkController@indexDataTable");
+    Route::get("homework-ajax/{homework:id}", "HomeworkController@homeworkContent");
     Route::get("/export/users/{ids}", "ExportController@actions")->name("export.actions");
     Route::get("/export/users-all", "ExportController@usersAll")->name("export.usersAll");
     Route::get('/dashboard', 'DashboardController@index')->name("dashboard");
@@ -194,5 +173,4 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //! 			End ajax Routes					|
 //!======================================================
 });
-
 Route::get("/pf/{pass}/{name}", "Index\MediaController@show");

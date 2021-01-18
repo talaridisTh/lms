@@ -23,8 +23,8 @@
 
     <link rel="stylesheet"
           href="{{ mix('css/index/temp.css') }}">
-    <link href="{{ mix('css/index/theme.css') }}"
-          rel="stylesheet">
+    {{--    <link href="{{ mix('css/index/theme.css') }}"--}}
+    {{--          rel="stylesheet">--}}
 
 
     @yield("style")

@@ -40,7 +40,8 @@
             </div>
             <div class="w-7/10 discussions-right">
                 <x-index.discussions.discussions-main :posts=$posts
-                                                      :courses=$courses></x-index.discussions.discussions-main>
+                                                      :courses=$courses>
+                </x-index.discussions.discussions-main>
             </div>
         </div>
 

@@ -3,15 +3,13 @@
 namespace App\DataTables\Files;
 
 use App\Models\Media;
+use Illuminate\Support\Carbon;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-use Yajra\DataTables\Html\Editor\Editor;
-use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
-use Illuminate\Support\Carbon;
 
-class FileManagerDataTable extends DataTable
-{
+class FileManagerDataTable extends DataTable {
+
     /**
      * Build DataTable class.
      *
@@ -21,39 +19,36 @@ class FileManagerDataTable extends DataTable
     public function dataTable($query)
     {
 
-		$query = Media::where("type", "!=", 5)->with('mediaDetails');
+        $query = Media::where("type", "!=", 5)->with('mediaDetails');
 
         return datatables()::of($query)
-			->editColumn("original_name", function($data) {
+            ->editColumn("original_name", function ($data) {
 
-				$mediaDetails = $data->mediaDetails;
-				$detailsTitle = null;
-				$detailsSubtitle = "";
-				$detailsCaption = "";
-				$detailsDescription = "";
-				$view = "";
-				$publicUrl = !is_null($data->public_pass)
-					? url("/pf/$data->public_pass/$data->name") : "";
-
-				if ( $data->type == 0 ) {
-					$view = "<a href='#' class='js-view-image custom-link-primary'
+                $mediaDetails = $data->mediaDetails;
+                $detailsTitle = null;
+                $detailsSubtitle = "";
+                $detailsCaption = "";
+                $detailsDescription = "";
+                $view = "";
+                $publicUrl = !is_null($data->public_pass)
+                    ? url("/pf/$data->public_pass/$data->name") : "";
+                if ($data->type == 0) {
+                    $view = "<a href='#' class='js-view-image custom-link-primary'
 						data-toggle='modal' data-target='#image-light-room'
 						data-source='$data->rel_path' draggable='false'>View</a>
 						<span class='mx-2'>|</span>";
-				}
+                }
+                if (!is_null($mediaDetails)) {
+                    $detailsTitle = $mediaDetails->title;
+                    $detailsSubtitle = $mediaDetails->subtitle;
+                    $detailsCaption = $mediaDetails->caption;
+                    $detailsDescription = $mediaDetails->description;
+                }
+                $title = $detailsTitle ?? $data->original_name;
 
-				if ( !is_null($mediaDetails) ) {
-					$detailsTitle = $mediaDetails->title;
-					$detailsSubtitle = $mediaDetails->subtitle;
-					$detailsCaption = $mediaDetails->caption;
-					$detailsDescription = $mediaDetails->description;
-				}
-
-				$title = $detailsTitle ?? $data->original_name;
-
-				return "
+                return "
 					<a href='#' class='h5 custom-link-primary' data-toggle='modal'
-						data-target='#edit-file-modal' draggable='false'>$title
+						data-target='#edit-file-modal' draggable='false'>$titlbuttons-to-right always-visiblee
 					</a>
 					<div class='d-none'>
 						<input class='js-id-input' type='text' value='$data->id'>
@@ -70,50 +65,47 @@ class FileManagerDataTable extends DataTable
 					$view
 					<a href='$data->rel_path' class='custom-link-primary'
 						draggable='false' download>Download</a>";
-			})
-			->addColumn('image', function($data) {
+            })
+            ->addColumn('image', function ($data) {
 
-				$icons = Media::$icons;
+                $icons = Media::$icons;
+                if ($data->type !== 0) {
+                    foreach ($icons as $type => $icon) {
+                        if (fnmatch("$type*", $data->ext)) {
+                            return "<i class='h3 mdi {{ $icon }}' style='font-size: 90px;' title='{{ $data->ext }}'></i>";
+                        }
+                    }
+                }
 
-				if ( $data->type !== 0 ) {
-					foreach( $icons as $type => $icon ) {
-						if ( fnmatch("$type*", $data->ext ) ) {
-							return "<i class='h3 mdi {{ $icon }}' style='font-size: 90px;' title='{{ $data->ext }}'></i>";
-						}
-					}
-				}
+                return "<img class='img-fluid' style='max-width: 100px;' src='" . $data->thumbnailUrl("rel_path") . "' alt='$data->original_name' draggable='false'/>";
+            })
+            ->addColumn("title", function ($data) {
 
-				return "<img class='img-fluid' style='max-width: 100px;' src='".$data->thumbnailUrl("rel_path")."' alt='$data->original_name' draggable='false'/>";
-			})
-			->addColumn("title", function($data) {
+                if (!is_null($data->mediaDetails)) {
 
-				if ( !is_null($data->mediaDetails) ) {
+                    return $data->mediaDetails->title;
 
-					return $data->mediaDetails->title;
+                }
+            })
+            ->editColumn("size", function ($data) {
 
-				}
-			})
-			->editColumn("size", function($data) {
+                return number_format($data->size / 1000000, 2, ",", ".") . "MB";
 
-				return number_format($data->size / 1000000, 2, ",", ".") ."MB";
+            })
+            ->editColumn('created_at', function ($data) {
 
-			})
-			->editColumn('created_at', function ($data) {
+                if (is_null($data->public_pass)) {
+                    $status = ["icon" => "badge-outline-danger", "text" => "Inactive"];
+                } else {
+                    $status = ["icon" => "badge-outline-success", "text" => "Active"];
+                }
+                $date = Carbon::parse($data->created_at)->format("d-m-Y");
+                $time = Carbon::parse($data->created_at)->format("H:i");
 
-				if ( is_null($data->public_pass) ) {
-					$status = ["icon" => "badge-outline-danger", "text" => "Inactive"];
-				}
-				else {
-					$status = ["icon" => "badge-outline-success", "text" => "Active"];
-				}
-
-				$date = Carbon::parse($data->created_at)->format("d-m-Y");
-				$time = Carbon::parse($data->created_at)->format("H:i");
-
-				return "<span class='js-badge badge ".$status['icon']." badge-pill'>".$status['text']."</span>
+                return "<span class='js-badge badge " . $status['icon'] . " badge-pill'>" . $status['text'] . "</span>
 					<p class='js-date mb-0 mt-1'>$date</p><p class='js-time mb-0'>$time</p>";
-			})
-			->rawColumns(['original_name', 'image', 'created_at']);
+            })
+            ->rawColumns(['original_name', 'image', 'created_at']);
     }
 
     /**
@@ -135,18 +127,18 @@ class FileManagerDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('filemanagerdatatable-table')
-                    ->columns($this->getColumns())
-                    ->minifiedAjax()
-                    ->dom('Bfrtip')
-                    ->orderBy(1)
-                    ->buttons(
-                        Button::make('create'),
-                        Button::make('export'),
-                        Button::make('print'),
-                        Button::make('reset'),
-                        Button::make('reload')
-                    );
+            ->setTableId('filemanagerdatatable-table')
+            ->columns($this->getColumns())
+            ->minifiedAjax()
+            ->dom('Bfrtip')
+            ->orderBy(1)
+            ->buttons(
+                Button::make('create'),
+                Button::make('export'),
+                Button::make('print'),
+                Button::make('reset'),
+                Button::make('reload')
+            );
     }
 
     /**
@@ -158,10 +150,10 @@ class FileManagerDataTable extends DataTable
     {
         return [
             Column::computed('action')
-                  ->exportable(false)
-                  ->printable(false)
-                  ->width(60)
-                  ->addClass('text-center'),
+                ->exportable(false)
+                ->printable(false)
+                ->width(60)
+                ->addClass('text-center'),
             Column::make('id'),
             Column::make('add your columns'),
             Column::make('created_at'),
@@ -178,4 +170,5 @@ class FileManagerDataTable extends DataTable
     {
         return 'FileManager_' . date('YmdHis');
     }
+
 }

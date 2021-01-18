@@ -15,15 +15,24 @@
             <a href="#show-task-content"
                class="show-task nav-link   @hasanyrole("
                admin|super-admin|instructor") active @endhasanyrole "
-            data-toggle="tab" aria-expanded="true">
-            Εργασίες
+               data-toggle="tab"
+               aria-expanded="true">
+                Εργασίες
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#question-task-content"
+               class="question-task nav-link "
+               data-toggle="tab"
+               aria-expanded="false">
+                Eρωτησεις
             </a>
         </li>
     </ul>
 
     <div class="tab-content">
         @role("student")
-        <div class="tab-pane  show active"
+        <div class="tab-pane   active"
              id="upload-task-content">
             <form id="email-form"
                   action="{{route('discussion.sendTask')}}"
@@ -86,186 +95,215 @@
         </div>
         @endrole
 
-        <div class="tab-pane    @hasanyrole("
-             admin|super-admin|instructor
-        ") active show @endhasanyrole"
-        id="show-task-content">
-        <div class="row">
+        <div class="tab-pane    @hasanyrole("admin|super-admin|instructor") active show @endhasanyrole"
+             id="show-task-content">
+            <div class="row">
 
-            <!-- Dashboard Box -->
-            <div class="col-xl-12">
-                <div class="dashboard-box margin-top-0">
+                <!-- Dashboard Box -->
+                <div class="col-xl-12">
+                    <div class="dashboard-box margin-top-0">
 
-                    <!-- Headline -->
-                    <div class="accordion"
-                         id="accordionExample">
-                        @foreach($courses as $course)
-                            @hasanyrole('instructor|admin|super-admin')
-                            @php
-                                $tasks =\App\Models\Homework::where("course_id", $course->id )->get();
-                                $completedTask =\App\Models\Attachment::where("attachmentable_id", $course->id )->where("completed_at", "!=" ,null)->get();
-                                $allTask =\App\Models\Attachment::where("attachmentable_id", $course->id )->get();
-                            @endphp
-                            @endhasanyrole
+                        <!-- Headline -->
+                        <div class="accordion"
+                             id="accordionExample">
+                            @foreach($courses as $course)
+                                @hasanyrole('instructor|admin|super-admin')
+                                @php
+                                    $tasks =\App\Models\Homework::where("course_id", $course->id )->get();
+                                    $completedTask =\App\Models\Attachment::where("attachmentable_id", $course->id )->where("completed_at", "!=" ,null)->get();
+                                    $allTask =\App\Models\Attachment::where("attachmentable_id", $course->id )->get();
+                                @endphp
+                                @endhasanyrole
 
-                            @role("student")
-                            @php
-                                $courseIds = auth()->user()->courses->pluck("id");
-                                $tasks =\App\Models\Homework::where("course_id",$course->id )->where("student_id",auth()->id())->get();
+                                @role("student")
+                                @php
+                                    $courseIds = auth()->user()->courses->pluck("id");
+                                    $tasks =\App\Models\Homework::where("course_id",$course->id )->where("student_id",auth()->id())->get();
+                                @endphp
+                                @endrole
+                                <div class="card mb-0">
+                                    <div class="card-header"
+                                         data-all-task="{{isset($tasks)?count($tasks):""}}"
+                                         data-completed-task="{{isset($completedTask)?count($completedTask):""}}"
+                                         id="head-{{$course->id}}"
+                                         style="border-radius: 3px; ">
+                                        <h5 class="m-0">
+                                            <a class="custom-accordion-title d-block {{$course->slug}}"
+                                               data-toggle="collapse"
+                                               href="#collapse-{{$course->slug}}"
+                                               aria-expanded="true"
+                                               aria-controls="collapse-{{$course->slug}}"
+                                               data-course-name="{{$course->title}}">
+                                                <div
+                                                        class="headline d-flex justify-content-between align-items-center ">
+                                                    <h3>
+                                                        <i class="icon-material-outline-assignment"
+                                                           style="margin-left: -6px;"></i> {{$course->title}}
+                                                    </h3>
+                                                    @hasanyrole('instructor|admin|super-admin')
+                                                    {{--                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span--}}
+                                                    {{--                                                                class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($allTask)?count($allTask):""}} </span>--}}
+                                                    {{--                                                    </h5>--}}
+                                                    @endhasanyrole
+                                                </div>
+                                            </a>
+                                        </h5>
+                                    </div>
 
+                                    <div id="collapse-{{$course->slug}}"
+                                         class="collapse"
+                                         aria-labelledby="head-{{$course->id}}"
+                                         data-parent="#accordionExample">
 
-                            @endphp
-                            @endrole
-                            <div class="card mb-0">
-                                <div class="card-header"
-                                     data-all-task="{{isset($tasks)?count($tasks):""}}"
-                                     data-completed-task="{{isset($completedTask)?count($completedTask):""}}"
-                                     id="head-{{$course->id}}"
-                                     style="border-radius: 3px; ">
-                                    <h5 class="m-0">
-                                        <a class="custom-accordion-title d-block {{$course->slug}}"
-                                           data-toggle="collapse"
-                                           href="#collapse-{{$course->slug}}"
-                                           aria-expanded="true"
-                                           aria-controls="collapse-{{$course->slug}}"
-                                           data-course-name="{{$course->title}}">
-                                            <div
-                                                    class="headline d-flex justify-content-between align-items-center ">
-                                                <h3>
-                                                    <i class="icon-material-outline-assignment"
-                                                       style="margin-left: -6px;"></i> {{$course->title}}
-                                                </h3>
-                                                @hasanyrole('instructor|admin|super-admin')
-                                                {{--                                                    <h5>Eλέγχθηκαν : <span class="js-completed-task"><span--}}
-                                                {{--                                                                class="js-num-task">{{isset($completedTask)?count($completedTask):""}}</span>/{{isset($allTask)?count($allTask):""}} </span>--}}
-                                                {{--                                                    </h5>--}}
-                                                @endhasanyrole
-                                            </div>
-                                        </a>
-                                    </h5>
-                                </div>
+                                        <div class="card-body p-0">
 
+                                            <div class="content">
 
-                                <div id="collapse-{{$course->slug}}"
-                                     class="collapse"
-                                     aria-labelledby="head-{{$course->id}}"
-                                     data-parent="#accordionExample">
+                                                <ul class="dashboard-box-list">
 
-                                    <div class="card-body p-0">
+                                                    @forelse($tasks as $task)
 
-                                        <div class="content">
+                                                        @foreach($task->attachments as $attachment)
+                                                            {{--                                                        @if($task->mail->user_id == auth()->id() && $task->course_id == $course->id)--}}
+                                                            <li class="dashboard-box-li"
+                                                                data-task-id="{{$attachment->id}}">
+                                                                <!-- Job Listing -->
+                                                                <div class="job-listing width-adjustment">
 
-                                            <ul class="dashboard-box-list">
+                                                                    <!-- Job Listing Details -->
+                                                                    <div class="job-listing-details">
 
-                                                @forelse($tasks as $task)
-
-                                                    @foreach($task->attachments as $attachment)
-                                                        {{--                                                        @if($task->mail->user_id == auth()->id() && $task->course_id == $course->id)--}}
-                                                        <li class="dashboard-box-li"
-                                                            data-task-id="{{$attachment->id}}">
-                                                            <!-- Job Listing -->
-                                                            <div class="job-listing width-adjustment">
-
-                                                                <!-- Job Listing Details -->
-                                                                <div class="job-listing-details">
-
-                                                                    <!-- Details -->
-                                                                    <div class="job-listing-description">
-                                                                        <h3 class="job-listing-title m-0 ">
-                                                                            <a class="mr-2"
-                                                                               href="#">{{$attachment->name}}
-                                                                                .{{$attachment->ext}}</a>
-                                                                            <span
-                                                                                    data-toggle="tooltip"
-                                                                                    data-placement="top"
-                                                                                    title="{{isset($attachment->completed_at)?"":"Aναμονή ελέγχου καθηγητή"}}!"
-                                                                                    class="dashboard-status-button m-0 p-0 {{isset($attachment->completed_at)?"green":"red"}}">
+                                                                        <!-- Details -->
+                                                                        <div class="job-listing-description">
+                                                                            <h3 class="job-listing-title m-0 ">
+                                                                                <a class="mr-2"
+                                                                                   href="#">{{$attachment->name}}
+                                                                                    .{{$attachment->ext}}</a>
+                                                                                <span
+                                                                                        data-toggle="tooltip"
+                                                                                        data-placement="top"
+                                                                                        title="{{isset($attachment->completed_at)?"":"Aναμονή ελέγχου καθηγητή"}}!"
+                                                                                        class="dashboard-status-button m-0 p-0 {{isset($attachment->completed_at)?"green":"red"}}">
                                                                                 {!!isset($attachment->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($attachment->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
                                                                             </span>
-                                                                        </h3>
+                                                                            </h3>
 
 
-                                                                        <!-- Job Listing Footer -->
-                                                                        <div class="job-listing-footer">
-                                                                            <ul style="padding-left: 1.1rem">
-                                                                                <li class="my-2">
-                                                                                    Ονοματεπώνυμο
-                                                                                    : {{App\Models\User::find($task->student_id)->fullname}}
-                                                                                </li>
-                                                                            </ul>
+                                                                            <!-- Job Listing Footer -->
+                                                                            <div class="job-listing-footer">
+                                                                                <ul style="padding-left: 1.1rem">
+                                                                                    <li class="my-2">
+                                                                                        Ονοματεπώνυμο
+                                                                                        : {{App\Models\User::find($task->student_id)->fullname}}
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
-                                                            </div>
 
-                                                            <!-- Task Details -->
-                                                            <ul class="dashboard-task-info">
-                                                                <li>
-                                                                    <strong>{{$attachment->ext}}</strong>
-                                                                    <span>Τυπος</span>
-                                                                </li>
-                                                                <li>
-                                                                    <strong>
-                                                                        <i class="mdi font-16 {{\App\Models\Media::$icons[$attachment->ext]}}"></i>
-                                                                    </strong>
-                                                                    <a href="{{$attachment->rel_path}}"
-                                                                       target="_blank"
+                                                                <!-- Task Details -->
+                                                                <ul class="dashboard-task-info">
+                                                                    <li>
+                                                                        <strong>{{$attachment->ext}}</strong>
+                                                                        <span>Τυπος</span>
+                                                                    </li>
+                                                                    <li>
+                                                                        <strong>
+                                                                            <i class="mdi font-16 {{\App\Models\Media::$icons[$attachment->ext]}}"></i>
+                                                                        </strong>
+                                                                        <a href="{{$attachment->rel_path}}"
+                                                                           target="_blank"
+                                                                           data-toggle="tooltip"
+                                                                           data-placement="bottom"
+                                                                           data-original-title="Προβολή {{$attachment->ext}}"
+                                                                           class="text-hover-underline cursor-pointer">View</a>
+                                                                    </li>
+                                                                    <li>
+                                                                        <strong>{{$attachment->created_at->format("d/m/Y (H:i)")}}</strong><span>Στάλθηκε</span>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <!-- Buttons -->
+                                                                <div class="buttons-to-right always-visible">
+                                                                    @hasanyrole("admin|super-admin|instructor")
+                                                                    <button
+                                                                            class="js-complete-task btn btn-sm {{isset($attachment->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
+                                                                        {{isset($attachment->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
+                                                                    </button>
+                                                                    @endhasanyrole
+                                                                    @role("student")
+                                                                    <a href="#"
+                                                                       {{--                                                                       data-toggle="tooltip"--}}
+                                                                       data-attachment="{{$attachment}}"
+                                                                       data-exist-post="{{$attachment->post->isNotEmpty()}}"
+                                                                       data-post="{{$attachment->post->isNotEmpty()? $attachment->post->first()->id:""}}"
+                                                                       data-toggle="modal"
+                                                                       data-target="#new-post-task"
+                                                                       data-placement="bottom"
+                                                                       data-original-title="Eπικοινωνία με καθηγητή"
+                                                                       class="sent-question button gray ripple-effect ico first-thread">
+                                                                        <i class="uil-comments-alt"></i>
+                                                                    </a>
+                                                                    @endrole
+                                                                    <a href="#"
                                                                        data-toggle="tooltip"
                                                                        data-placement="bottom"
-                                                                       data-original-title="Προβολή {{$attachment->ext}}"
-                                                                       class="text-hover-underline cursor-pointer">View</a>
-                                                                </li>
-                                                                <li>
-                                                                    <strong>{{$attachment->created_at->format("d/m/Y (H:i)")}}</strong><span>Στάλθηκε</span>
-                                                                </li>
-                                                            </ul>
+                                                                       data-original-title="Αφαίρεση εργασιας"
+                                                                       class="button gray ripple-effect  js-remove-task ico">
+                                                                        <i class="dripicons-document-delete"></i></a>
+                                                                </div>
+                                                            </li>
+                                                        @endforeach
+                                                        {{--                                                        @endif--}}
+                                                    @empty
+                                                    @endforelse
 
-                                                            <!-- Buttons -->
-                                                            <div class="buttons-to-right always-visible">
-                                                                @hasanyrole("admin|super-admin|instructor")
-                                                                <button
-                                                                        class="js-complete-task btn btn-sm {{isset($attachment->completed_at)?"btn-outline-danger":"btn-outline-custom-primary"}} mr-2">
-                                                                    {{isset($attachment->completed_at)?"Δεν ελέγχθηκε":"Ελέγχθηκε"}}
-                                                                </button>
-                                                                @endhasanyrole
-                                                                <a href="#"
-                                                                   data-toggle="tooltip"
-                                                                   data-placement="bottom"
-                                                                   data-original-title="Eπικοινωνία με καθηγητή"
-                                                                   class="button gray ripple-effect ico first-thread">
-                                                                    <i class="uil-comments-alt"></i>
-                                                                </a>
-                                                                <a href="#"
-                                                                   data-toggle="tooltip"
-                                                                   data-placement="bottom"
-                                                                   data-original-title="Αφαίρεση εργασιας"
-                                                                   class="button gray ripple-effect  js-remove-task ico">
-                                                                    <i class="dripicons-document-delete"></i></a>
-                                                            </div>
-                                                        </li>
-                                                    @endforeach
-                                                    {{--                                                        @endif--}}
-                                                @empty
-                                                @endforelse
+                                                </ul>
 
-                                            </ul>
+                                            </div>
 
                                         </div>
 
                                     </div>
-
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
+
                     </div>
-
                 </div>
-            </div>
 
+            </div>
         </div>
+
+
+        <div class="tab-pane  "
+             id="question-task-content">
+            {{--                        @include("components.index.comments.comments-form")--}}
+            @role("student")
+            @php
+                $posts=auth()->user()->posts()->where("postable_type","App\Models\Attachment")->get();
+            @endphp
+            @endrole
+
+            @role("instructor")
+            @php
+                $userIds = \App\Models\Course::where("user_id",auth()->id())->with("users")->get()->pluck("users")->flatten()->pluck("id");
+
+                $posts = \App\Models\Post::whereIn("user_id",$userIds)->get();
+            @endphp
+            @endrole
+
+            <x-index.discussions.discussions-main :posts='$posts'
+                                                  :courses='$courses'
+                                                  question='true'
+            >
+            </x-index.discussions.discussions-main>
+            {{--            @include("components.index.comments.comments",["post"=>auth()->user()->posts])--}}
+        </div>
+
     </div>
-</div>
 </div>
 
 <div id="new-post-task"
@@ -293,13 +331,15 @@
                         data-dismiss="modal">Close
                 </button>
                 <button type="button"
-                        class="btn btn-primary  js-task-create">Post
+                        class="btn btn-primary  js-question-btn">Post
                 </button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal-dialog -->
 <script>
+
+
     $(document).ready(function () {
         $('[data-toggle="tooltip"]').tooltip();
     });

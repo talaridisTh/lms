@@ -28,6 +28,7 @@ import './theme/dropdown'
 import './theme/modal'
 import './theme/show-modal'
 import './theme/dropzone'
+import './theme/accordion'
 
 //jQuery
 $.fn.extend({

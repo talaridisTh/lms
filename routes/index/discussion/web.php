@@ -28,6 +28,8 @@ Route::prefix("discussion")->name("discussion.")->group(function () {
     Route::post("/comment/upload", [DiscussionController::class, 'commentUpload'])->name("commentUpload");
     Route::post("/task/send", [DiscussionController::class, 'sendTask'])->name("sendTask");
     Route::post("/upload-task", [DiscussionController::class, 'uploadTask'])->name("uploadTask");
+    Route::post("/question/post", [DiscussionController::class, 'createQuestionPost'])->name("createQuestionPost");
+
 //Route::post("/pagination", [DiscussionController::class,'pagination'])->name("pagination");
 });
 /*note global route form comments*/
