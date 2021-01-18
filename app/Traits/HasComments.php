@@ -113,4 +113,12 @@ trait HasComments {
 //        return view('components/admin/filesTable', ['files' => $files]);
     }
 
+    public function deletePhotoOnComment(Request $request)
+    {
+        Comment::find($request->commentId)->media()->detach($request->imageId);
+        Media::find($request->imageId)->delete();
+
+        return response()->json(Comment::find($request->commentId)->media()->count());
+    }
+
 }

@@ -124,7 +124,7 @@
             position: 'top-end',
             icon: "info",
             title: "Έχετε νέο μήνυμα",
-            // showConfirmButton: false,
+            // showConfirmButton: false,`
             // timer: 4000,
             // timerProgressBar: true
         });

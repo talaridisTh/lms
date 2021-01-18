@@ -39,5 +39,6 @@ Route::prefix("model")->name("index.")->group(function () {
     Route::post('comment', [CourseController::class, 'modelComment'])->name("modelComment")->withoutMiddleware(['verifyCourse']);
     Route::post("delete", [CourseController::class, 'deleteComment'])->name("deleteComment")->withoutMiddleware(['verifyCourse']);
     Route::patch("update/{id}", [CourseController::class, 'editComment'])->name("editComment")->withoutMiddleware(['verifyCourse']);
+    Route::post("delete/image/{id}", [CourseController::class, 'deletePhotoOnComment'])->name("deletePhotoOnComment")->withoutMiddleware(['verifyCourse']);
 
 });

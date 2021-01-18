@@ -45561,6 +45561,55 @@ var onLikebtn = function onLikebtn() {
   })));
 };
 
+var onDeletePhoto = function onDeletePhoto() {
+  $(".cnt-reply-list").on("click", ".js-delete-comments-photo", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
+    var commentId, imageId, _yield$axios$post3, status, data;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+      while (1) {
+        switch (_context9.prev = _context9.next) {
+          case 0:
+            commentId = $(this).closest(".main-post").data("comment-id");
+            imageId = $(this).prev().data("image-id");
+            $(this).parent().removeAttr("href data-lightbox");
+            _context9.prev = 3;
+            _context9.next = 6;
+            return axios.post("/model/delete/image/".concat(imageId), {
+              imageId: imageId,
+              commentId: commentId
+            });
+
+          case 6:
+            _yield$axios$post3 = _context9.sent;
+            status = _yield$axios$post3.status;
+            data = _yield$axios$post3.data;
+
+            if (status == 200) {
+              if (data < 1) {
+                $(this).closest(".border-t").remove();
+              }
+
+              $(this).prev().remove();
+              $(this).remove();
+            }
+
+            _context9.next = 15;
+            break;
+
+          case 12:
+            _context9.prev = 12;
+            _context9.t0 = _context9["catch"](3);
+            console.log(_context9.t0);
+
+          case 15:
+          case "end":
+            return _context9.stop();
+        }
+      }
+    }, _callee9, this, [[3, 12]]);
+  })));
+};
+
 var onChangeReplyButton = function onChangeReplyButton() {
   if ($(".main-post").attr("data-count")) {
     $(".text-reply-comment").text("Νέο μήνυμα");
@@ -45578,6 +45627,7 @@ var onInitEventHandler = function onInitEventHandler() {
   bestAnswer();
   onChangeReplyButton();
   onEditComment();
+  onDeletePhoto();
 };
 
 onInitEventHandler();

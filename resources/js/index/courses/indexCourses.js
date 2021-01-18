@@ -907,6 +907,33 @@ const onLikebtn = () => {
     })
 }
 
+const onDeletePhoto = () => {
+    $(".cnt-reply-list").on("click", ".js-delete-comments-photo", async function () {
+
+        const commentId = $(this).closest(".main-post").data("comment-id")
+        const imageId = $(this).prev().data("image-id")
+        $(this).parent().removeAttr("href data-lightbox")
+
+        try {
+            const {status, data} = await axios.post(`/model/delete/image/${imageId}`, {
+                imageId, commentId
+            })
+
+            if (status == 200) {
+                if (data < 1) {
+                    $(this).closest(".border-t").remove();
+                }
+                $(this).prev().remove();
+                $(this).remove();
+
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+    })
+}
+
 const onChangeReplyButton = () => {
     if ($(".main-post").attr("data-count")) {
         $(".text-reply-comment").text("Νέο μήνυμα")
@@ -925,6 +952,7 @@ const onInitEventHandler = () => {
     bestAnswer();
     onChangeReplyButton();
     onEditComment()
+    onDeletePhoto()
 }
 
 onInitEventHandler();

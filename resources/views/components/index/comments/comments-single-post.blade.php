@@ -73,15 +73,25 @@
         @if(count($comment->media))
             <div class="flex space-x-4 border-t border-gray-300">
                 @foreach($comment->media as $image)
-                    <a class="flex rounded my-5 zoom-in"
-                       href="{{ $image->rel_path}}"
-                       height="80"
-                       data-lightbox="cover-comment"
-                       data-title="{{$image->name}}">
-                        <img class="rounded"
-                             src=" {{$image->roundedSmallCoverUrl("rel_path")}}"
-                             alt="comment-photo">
-                    </a>
+                    <div>
+                        <a class="flex rounded my-5 zoom-in relative"
+                           href="{{ $image->rel_path}}"
+                           height="80"
+                           data-lightbox="cover-comment"
+                           data-title="{{$image->name}}">
+                            <img class="rounded"
+                                 data-image-id="{{$image->id}}"
+                                 src=" {{$image->roundedSmallCoverUrl("rel_path")}}"
+                                 alt="comment-photo">
+                            @if($comment->user_id == auth()->id())
+                                <i class="z-30 zoom-in w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-theme-6 hover:scale-125 right-0 top-0 -mr-2 -mt-2 js-delete-comments-photo"
+                                   data-original-title="Αφαιρέστε την φωτογραφία"
+                                   data-toggle="tooltip"
+                                   data-placement="top"
+                                   data-feather="x-circle"></i>
+                            @endif
+                        </a>
+                    </div>
                 @endforeach
             </div>
         @endif

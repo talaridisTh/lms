@@ -1,4 +1,5 @@
 //pagination event
+import 'tippy.js/dist/tippy.css'; // optional for styling
 import Swal from "sweetalert2";
 import feather from "feather-icons";
 
