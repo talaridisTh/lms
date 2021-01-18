@@ -168,9 +168,9 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 //! Options Datatable
     Route::post('options/main-datatable', 'Ajax\OptionController@mainDatatable');
 //! Glide Images
-    Route::get('img/{path}', 'MediaController@show')->where('path', '.*');
 //!======================================================
 //! 			End ajax Routes					|
 //!======================================================
 });
+Route::get('img/{path}', 'MediaController@show')->where('path', '.*');
 Route::get("/pf/{pass}/{name}", "Index\MediaController@show");
