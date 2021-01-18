@@ -25009,14 +25009,12 @@ __webpack_require__.r(__webpack_exports__);
 
   cash('#mobile-menu-toggler').on('click', function () {
     if (cash('.mobile-menu').find('ul').first()[0].offsetParent !== null) {
-      velocity_animate__WEBPACK_IMPORTED_MODULE_0___default()(cash('.mobile-menu').find('ul').first(), "slideUp");
-      $(".burger-menu").removeClass("border-t");
-      $(".mobile-menu").removeClass("border-tb");
+      velocity_animate__WEBPACK_IMPORTED_MODULE_0___default()(cash('.mobile-menu').find('ul').first(), "slideUp"); // $(".burger-menu").removeClass("border-t")
+      // $(".mobile-menu").removeClass("border-tb")
     } else {
       velocity_animate__WEBPACK_IMPORTED_MODULE_0___default()(cash('.mobile-menu').find('ul').first(), "slideDown");
-      $(".burger-menu").removeClass("hidden");
-      $(".burger-menu").addClass("border-t");
-      $(".mobile-menu").addClass("border-tb");
+      $(".burger-menu").removeClass("hidden"); // $(".burger-menu").addClass("border-t")
+      // $(".mobile-menu").addClass("border-tb")
     }
   });
   cash('.mobile-menu').find('.menu').on('click', function () {

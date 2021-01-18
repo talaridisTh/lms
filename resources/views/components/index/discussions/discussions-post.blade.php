@@ -46,7 +46,7 @@
     </div>
 </div>
 
-<div class="mt-3 d-flex position-relative height-55px cnt-top-bar-post"
+<div class="mt-3 hidden md:flex position-relative height-55px cnt-top-bar-post"
      style="">
     <div class="arrow-line position-absolute"></div>
     <div class="top-bar-post  position-absolute p-2 d-flex justify-content-between align-items-center">

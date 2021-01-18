@@ -291,7 +291,7 @@
             @php
                 $userIds = \App\Models\Course::where("user_id",auth()->id())->with("users")->get()->pluck("users")->flatten()->pluck("id");
 
-                $posts = \App\Models\Post::whereIn("user_id",$userIds)->get();
+                $posts = \App\Models\Post::whereIn("user_id",$userIds)->where("postable_type","App\Models\Attachment")->get();
             @endphp
             @endrole
 

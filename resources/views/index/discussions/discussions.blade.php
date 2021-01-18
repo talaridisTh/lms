@@ -34,11 +34,11 @@
 @section("content")
     <div class="container"
          style="max-width: 1100px">
-        <div class="row space-x-10 ">
-            <div class="w-1/4 discussions-left">
+        <div class="row md:space-x-7  space-x-0">
+            <div class="md:w-1/4 w-full discussions-left">
                 <x-index.discussions.sidebar-menu :courses=$courses></x-index.discussions.sidebar-menu>
             </div>
-            <div class="w-7/10 discussions-right">
+            <div class="md:w-7/10 w-full xs:m-0 p-4 discussions-right">
                 <x-index.discussions.discussions-main :posts=$posts
                                                       :courses=$courses>
                 </x-index.discussions.discussions-main>

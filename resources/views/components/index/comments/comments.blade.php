@@ -1,5 +1,5 @@
 <div class="cnt-reply-list">
-    {{dd($post)}}
+    {{--    {{dd($post)}}--}}
     @if(isset($post->comments))
 
 

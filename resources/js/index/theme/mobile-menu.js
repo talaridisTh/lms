@@ -1,23 +1,23 @@
 import Velocity from 'velocity-animate'
 
-(function(cash) {
+(function (cash) {
     "use strict";
 
     // Mobile Menu
-    cash('#mobile-menu-toggler').on('click', function() {
+    cash('#mobile-menu-toggler').on('click', function () {
         if (cash('.mobile-menu').find('ul').first()[0].offsetParent !== null) {
             Velocity(cash('.mobile-menu').find('ul').first(), "slideUp")
-            $(".burger-menu").removeClass("border-t")
-            $(".mobile-menu").removeClass("border-tb")
+            // $(".burger-menu").removeClass("border-t")
+            // $(".mobile-menu").removeClass("border-tb")
         } else {
             Velocity(cash('.mobile-menu').find('ul').first(), "slideDown")
             $(".burger-menu").removeClass("hidden")
-            $(".burger-menu").addClass("border-t")
-            $(".mobile-menu").addClass("border-tb")
+            // $(".burger-menu").addClass("border-t")
+            // $(".mobile-menu").addClass("border-tb")
         }
     })
 
-    cash('.mobile-menu').find('.menu').on('click', function() {
+    cash('.mobile-menu').find('.menu').on('click', function () {
         if (cash(this).parent().find('ul').length) {
             if (cash(this).parent().find('ul').first()[0].offsetParent !== null) {
                 cash(this).find('.menu__sub-icon').removeClass('transform rotate-180')
@@ -26,7 +26,7 @@ import Velocity from 'velocity-animate'
                     "slideUp",
                     {
                         duration: 300,
-                        complete: function(el) {
+                        complete: function (el) {
                             cash(this).removeClass('menu__sub-open')
                         }
                     }
@@ -38,7 +38,7 @@ import Velocity from 'velocity-animate'
                     "slideDown",
                     {
                         duration: 300,
-                        complete: function(el) {
+                        complete: function (el) {
                             cash(this).addClass('menu__sub-open')
                         }
                     }
