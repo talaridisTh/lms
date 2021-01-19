@@ -1,5 +1,3 @@
-import utilities from '../index/main';
-import Swiper from 'swiper/bundle';
 import 'swiper/swiper-bundle.css';
 
 import Splide from '@splidejs/splide';
@@ -78,5 +76,3 @@ if (CURRENT_ROUTE == "index.userCourses") {
 //
 //     }).mount();
 // });
-
-

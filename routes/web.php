@@ -41,7 +41,7 @@ Route::get("/full-verification", function () {
 //! Dashboard routes
 //!######################################################
 //!					middleware				            #
-Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
+Route::group(['middleware' => ['auth', "status", "role:admin|super-admin"]], function () {
 
     Route::get("/dashboard/homeworks", "HomeworkController@index");
     Route::post("homeworks-datatable/main", "HomeworkController@indexDataTable");
@@ -174,3 +174,7 @@ Route::group(['middleware' => ['auth', "role:admin|super-admin"]], function () {
 });
 Route::get('img/{path}', 'MediaController@show')->where('path', '.*');
 Route::get("/pf/{pass}/{name}", "Index\MediaController@show");
+Route::get("/inactive", function () {
+    return view("inactive");
+});
+

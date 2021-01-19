@@ -2,11 +2,10 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\CheckDatabase;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class Kernel extends HttpKernel
-{
+class Kernel extends HttpKernel {
+
     /**
      * The application's global HTTP middleware stack.
      *
@@ -39,7 +38,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-
         'api' => [
             'throttle:60,1',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -63,11 +61,13 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-		// 'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-		'verified' => \App\Http\Middleware\VerifyEmail::class,
-		'role' => \App\Http\Middleware\RoleMiddleware::class,
-		'verifyCourse' => \App\Http\Middleware\VerifyCourses::class,
-		'superAdmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
-        "checkDatabase"=>\App\Http\Middleware\CheckDatabase::class,
+        // 'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'verified' => \App\Http\Middleware\VerifyEmail::class,
+        'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'verifyCourse' => \App\Http\Middleware\VerifyCourses::class,
+        'superAdmin' => \App\Http\Middleware\SuperAdminMiddleware::class,
+        "checkDatabase" => \App\Http\Middleware\CheckDatabase::class,
+        "status" => \App\Http\Middleware\StatusMiddleware::class
     ];
+
 }
