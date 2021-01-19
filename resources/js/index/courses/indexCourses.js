@@ -197,15 +197,24 @@ function toggleModal() {
 } // create modal
 
 const initDropzone = () => {
-    $(".dropzone-task").dropzone(
+    let myTaskSend = $(".dropzone-task").dropzone(
         {
             url: "/discussion/task/send",
             parallelUploads: 10,
             uploadMultiple: true,
             paramName: "attachment",
             init: function () {
-                this.on("addedfile", function (file) {
+                this.on("success", function (file) {
 
+                    Swal.fire({
+                        toast: 'true',
+                        position: 'top-end',
+                        icon: "success",
+                        title: `${this.getAcceptedFiles().length} εργασίες ανέβηκαν`,
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true
+                    })
 
                 });
                 this.on("sending", function (file, xhr, formData) {
@@ -240,7 +249,7 @@ initDropzone()
 
 if ($('meta[name=route]').attr('content') == "index.showCourse") {
     const slugCourse = $(".course-slug")[0].dataset.courseSlug
-    window.PREVIEW_PAGE_COURSE = `/dashboard/courses/${slugCourse}/edit`
+    window.PREVIEW_PAGE_COURSE = ` / dashboard / courses /${slugCourse}/edit`
 }
 
 
@@ -885,7 +894,10 @@ const onDeleteComment = () => {
 const onLikebtn = () => {
     $(".cnt-reply-list").on("click", ".btn-reply-like", async function () {
         try {
-            const {data, status} = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
+            const {
+                data,
+                status
+            } = await axios.patch(`/discussion/like-comment/${this.dataset.commentId}`)
 
             if (status == 200) {
                 if (data) {

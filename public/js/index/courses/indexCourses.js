@@ -44790,13 +44790,23 @@ function toggleModal() {
 
 
 var initDropzone = function initDropzone() {
-  $(".dropzone-task").dropzone({
+  var myTaskSend = $(".dropzone-task").dropzone({
     url: "/discussion/task/send",
     parallelUploads: 10,
     uploadMultiple: true,
     paramName: "attachment",
     init: function init() {
-      this.on("addedfile", function (file) {});
+      this.on("success", function (file) {
+        Swal.fire({
+          toast: 'true',
+          position: 'top-end',
+          icon: "success",
+          title: "".concat(this.getAcceptedFiles().length, " \u03B5\u03C1\u03B3\u03B1\u03C3\u03AF\u03B5\u03C2 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B1\u03BD"),
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true
+        });
+      });
       this.on("sending", function (file, xhr, formData) {
         var model = $(".dropzone-task").data("model");
         formData.append("subject", model.title);
@@ -44825,7 +44835,7 @@ initDropzone();
 
 if ($('meta[name=route]').attr('content') == "index.showCourse") {
   var slugCourse = $(".course-slug")[0].dataset.courseSlug;
-  window.PREVIEW_PAGE_COURSE = "/dashboard/courses/".concat(slugCourse, "/edit");
+  window.PREVIEW_PAGE_COURSE = " / dashboard / courses /".concat(slugCourse, "/edit");
 }
 
 filepond__WEBPACK_IMPORTED_MODULE_6__["setOptions"]({

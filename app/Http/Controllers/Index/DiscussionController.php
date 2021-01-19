@@ -373,7 +373,6 @@ class DiscussionController extends Controller {
 
     public function sendTask(Request $request)
     {
-//        dd($request->all());
         $mailInfo = new \stdClass();
         $mailInfo->subject = $request->subject;
         $mailInfo->body = $request->body;

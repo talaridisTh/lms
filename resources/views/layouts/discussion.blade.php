@@ -2,12 +2,17 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8"/>
-    <meta name="csrf-token" content="{{ csrf_token() }}"/>
-    <meta name="route" content="{{\Request::route()->getName()}}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="robots" content="noindex, nofollow">
+    <meta name="csrf-token"
+          content="{{ csrf_token() }}"/>
+    <meta name="route"
+          content="{{\Request::route()->getName()}}">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta name="robots"
+          content="noindex, nofollow">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon"
+          href="assets/images/favicon.ico">
 
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
@@ -17,8 +22,6 @@
 
     <link rel="stylesheet"
           href="{{ mix('css/index/temp.css') }}">
-    {{--    <link href="{{ mix('css/index/theme.css') }}"--}}
-    {{--          rel="stylesheet">--}}
 
 
     @yield("style")
