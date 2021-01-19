@@ -206,15 +206,17 @@ const initDropzone = () => {
             init: function () {
                 this.on("success", function (file) {
 
-                    Swal.fire({
-                        toast: 'true',
-                        position: 'top-end',
-                        icon: "success",
-                        title: `${this.getAcceptedFiles().length} εργασίες ανέβηκαν`,
-                        showConfirmButton: false,
-                        timer: 4000,
-                        timerProgressBar: true
-                    })
+                    iziToast.show({
+                        class: "rounded-lg",
+                        timeout: 4000,
+                        zindex: 99999,
+                        // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+                        position: 'topRight',
+                        theme: "dark",
+                        iconUrl: "/theme/images/upload.png",
+                        message: this.getAcceptedFiles().length > 1 ? ` ${this.getAcceptedFiles().length} εργασίες ανέβηκαν` : `${this.getAcceptedFiles().length} εργασία ανέβηκε `
+                    });
+
 
                 });
                 this.on("sending", function (file, xhr, formData) {
@@ -299,6 +301,17 @@ const initFilepond = () => {
             // delete   $(".js-form-reply")[0].dataset.upload
             $(".js-form-reply")[0].dataset.upload = JSON.stringify(files);
 
+            iziToast.show({
+                class: "rounded-lg",
+                timeout: 4000,
+                zindex: 99999,
+                // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+                position: 'topRight',
+                theme: "dark",
+                iconUrl: "/theme/images/upload.png",
+                message: pond.getFiles().length > 1 ? ` ${pond.getFiles().length} φωτογραφίες ανέβηκαν` : `${pond.getFiles().length} φωτογραφία ανέβηκε `
+
+            });
 
             // if (pond.status === 4) {
             //

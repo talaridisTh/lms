@@ -33,30 +33,32 @@
         <i class="font-18 mr-1 uil-volume"></i>
         Η συμμετοχή μου
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex"
         id="filter-best-answer">
-        <i class="font-18 mr-1 uil-check-circle"></i>
-        My Best Answers
+        <i class="font-18 mr-2 uil-check-circle block"></i>
+        <span>Δεν υπάρχουν ακόμη απαντήσεις</span>
+
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex"
         id="filter-popular-week">
-        <i class="font-18 mr-1 uil-star"></i>
-        Popular This Week
+        <i class="font-18 mr-2 uil-star block"></i>
+        <span>Δημοφιλή αυτήν την εβδομάδα</span>
+
     </li>
     <li class="py-2 px-6 m-2 list-unstyled bg-thread"
         id="filter-popular-allTime">
         <i class="font-18 mr-1 uil-star"></i>
-        Popular All time
+        Δημοφιλές όλο το χρόνο
     </li>
     <li class="py-2 px-6 m-2 list-unstyled bg-thread"
         id="filter-isClosed">
         <i class=" mdi mdi-power mr-1 font-18"></i>
-        Closed
+        Κλειστό
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex"
         id="filter-no-replies">
-        <i class="font-18 mr-1 uil-link-h"></i>
-        No replies yet
+        <i class="font-18 mr-2 uil-link-h block"></i>
+        <span>Δημοφιλή αυτήν την εβδομάδα</span>
     </li>
 
     <li class="py-2 px-6 m-2 list-unstyled bg-thread "

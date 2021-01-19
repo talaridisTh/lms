@@ -117,33 +117,32 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ion-rangeslider/2.3.1/js/ion.rangeSlider.min.js"></script>
 @auth
     <script>
-        var modals = [];
+
         @if($options->seen->seen_message>0)
-        modals.push({
-            toast: 'true',
-            position: 'top-end',
-            icon: "info",
-            title: "Έχετε νέο μήνυμα",
-            // showConfirmButton: false,`
-            // timer: 4000,
-            // timerProgressBar: true
-        });
-
-        @endif
-        @if($options->seen->seen_task>0)
-        modals.push({
-            toast: 'true',
-            position: 'top-end',
-            icon: "info",
-            title: "Έχετε νέα εργασία",
-            // showConfirmButton: false,
-            // timer: 4000,
-            // timerProgressBar: true
+        iziToast.show({
+            class: "rounded-lg",
+            timeout: 4000,
+            zindex: 99999,
+            title: '{{auth()->user()->first_name}}',
+            position: 'topRight',
+            theme: "dark",
+            iconUrl: "/theme/images/message.png",
+            message: 'Έχετε νέο μήνυμα'
         });
         @endif
 
-
-        Swal.queue(modals);
+        @if($options->seen->seen_message>0)
+        iziToast.show({
+            class: "rounded-lg",
+            timeout: 4000,
+            zindex: 99999,
+            title: '{{auth()->user()->first_name}}',
+            position: 'topRight',
+            theme: "dark",
+            iconUrl: "/theme/images/task.png",
+            message: 'Έχετε νέα εργασία'
+        });
+        @endif
 
 
     </script>

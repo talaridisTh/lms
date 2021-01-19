@@ -14,13 +14,11 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Swal = require('sweetalert2');
 window.$R = require('../../plugins/redactor/redactor');
 require('../../plugins/redactor/plugins/alignment/alignment');
-// require('../../theme/js/app');
-
-
-import './theme/bootstrap'
-import './theme/mobile-menu'
-
 // Components
+import iziToast from "izitoast";
+import './theme/bootstrap'
+
+import './theme/mobile-menu'
 import './theme/feather'
 import './theme/tab'
 import './theme/tippy'
@@ -28,7 +26,11 @@ import './theme/dropdown'
 import './theme/modal'
 import './theme/show-modal'
 import './theme/dropzone'
+
 import './theme/accordion'
+
+window.iziToast = iziToast;
+
 
 //jQuery
 $.fn.extend({

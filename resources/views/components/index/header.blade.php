@@ -70,8 +70,10 @@
                         <li class="orange-line intro-x">
                             <a href="{{route('index.userCourses',auth()->id())}}"
                                class="top-menu">
-                                <div class="top-menu__icon"><i data-feather="home"></i></div>
-                                <div class="top-menu__title"> Μαθήματα</div>
+                                <div class="top-menu__icon"><i data-feather="book-open"></i></div>
+                                <div class="top-menu__title"
+                                     style="font-size: 16px"> Μαθήματα
+                                </div>
                             </a>
                         </li>
 
@@ -81,7 +83,9 @@
                                 <div class="top-menu__icon">
                                     <i data-feather="home"></i>
                                 </div>
-                                <div class="top-menu__title "> Discussions</div>
+                                <div class="top-menu__title "
+                                     style="font-size: 16px"> Discussions
+                                </div>
                             </a>
                         </li>
 
@@ -90,7 +94,8 @@
                                class="top-menu"
                                style="color: white!important;">
                                 <div class="top-menu__icon"><i data-feather="hard-drive"></i></div>
-                                <div class="top-menu__title"> Ο λογαριασμός μου
+                                <div class="top-menu__title"
+                                     style="font-size: 16px"> Ο λογαριασμός μου
                                     <i data-feather="chevron-down"
                                        class="top-menu__sub-icon"></i></div>
                             </a>
@@ -184,20 +189,23 @@
                         <div class="menu__title"> Dashboard</div>
                     </a>
                 </li>
-                <li class="hover:bg-gray-200 ">
-                    <a href="{{route('dashboard')}}"
-                       class="menu">
-                        <div class="menu__icon"><i data-feather="home"></i></div>
-                        <div class="menu__title"> edit this course</div>
-                    </a>
-                </li>
-                <li class="hover:bg-gray-200 ">
-                    <a href="{{route('dashboard')}}"
-                       class="menu">
-                        <div class="menu__icon"><i data-feather="home"></i></div>
-                        <div class="menu__title"> Edit this material</div>
-                    </a>
-                </li>
+
+                @if(\Request::route()->getName()== "index.showCourse")
+                    <li>
+                        <a href="/dashboard/courses/{{$course->slug}}/edit"
+                           class="menu">
+                            <div class="menu__icon"><i data-feather="edit"></i></div>
+                            <div class="menu__title"> Eπεξεργασία course</div>
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200 hidden">
+                        <a href="{{route('dashboard')}}"
+                           class="menu">
+                            <div class="menu__icon"><i data-feather="home"></i></div>
+                            <div class="menu__title"> Edit this material</div>
+                        </a>
+                    </li>
+                @endif
                 @endhasanyrole
                 <li class="hover:bg-gray-200 ">
                     <a href="{{route('dashboard')}}"
@@ -208,6 +216,14 @@
 
                     </a>
                 </li>
+                <li class="hover:bg-gray-200 ">
+                    <a href="{{route('index.userCourses',auth()->id())}}"
+                       class="menu">
+                        <div class="menu__icon"><i data-feather="book-open"></i></div>
+                        <div class="menu__title"> Μαθήματα</div>
+                    </a>
+                </li>
+
                 <li class=" ">
                     <a href="javascript:;"
                        class="menu hover:bg-gray-200 ">

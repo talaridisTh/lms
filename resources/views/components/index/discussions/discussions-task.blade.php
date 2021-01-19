@@ -248,7 +248,7 @@
                                                                     </a>
                                                                     @endrole
                                                                     <a href="#"
-                                                                       data-toggle="tooltip"
+                                                                       data-toggle=""
                                                                        data-placement="bottom"
                                                                        data-original-title="Αφαίρεση εργασιας"
                                                                        class="button gray ripple-effect  js-remove-task ico">

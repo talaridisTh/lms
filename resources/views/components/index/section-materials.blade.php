@@ -1,6 +1,6 @@
 <aside class="space-y-5 mt-5 lg:mt-0 w-full lg:w-2/6 spa-list-material lg:pl-2 mb-5 md:mb-0 order-1 md:order-none">
     @if($course->media->where("type",1)->count())
-        <div class="row intr-y">
+        <div class="row intro-y">
             <div class="col ml-0  sm:ml-5">
                 <div class="tabs">
                     <div class="tab bg-gray-200 px-4 em-padding">

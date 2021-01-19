@@ -8101,7 +8101,16 @@ var removeTask = function removeTask() {
               if (status == 200) {
                 $(".discussions-right").html($(data));
                 validationUploadTest();
-                toastAlert("success", "H εργασία αφαιρέθηκε");
+                iziToast.show({
+                  "class": "rounded-lg",
+                  timeout: 4000,
+                  zindex: 99999,
+                  // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+                  position: 'topRight',
+                  theme: "dark",
+                  iconUrl: "/theme/images/refresh.svg",
+                  message: "".concat(name, " ").concat(last, " \u03B5\u03BD\u03B7\u03BC\u03B5\u03C1\u03CE\u03B8\u03B7\u03BA\u03B5!")
+                });
 
                 if ($('#accordionExample').children().length) {
                   $("#show-task-content").addClass("active");

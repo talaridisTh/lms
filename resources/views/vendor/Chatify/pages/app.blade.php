@@ -1,6 +1,6 @@
 @include('Chatify::layouts.headLinks')
 <div class="messenger"
-     style="font-family: roboto">
+     style="font-family: 'Roboto', sans-serif;">
     {{-- ----------------------Users/Groups lists side---------------------- --}}
     <div class="messenger-listView">
         {{-- Header and search bar --}}

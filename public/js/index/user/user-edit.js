@@ -7079,7 +7079,16 @@ var onChangeAvatar = function onChangeAvatar() {
               if (status == 200) {
                 $(".cnt-user-avatar").html($(data));
                 feather_icons__WEBPACK_IMPORTED_MODULE_2___default.a.replace();
-                _dashboard_main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", "Το Cover άλλαξε");
+                iziToast.show({
+                  "class": "rounded-lg",
+                  timeout: 4000,
+                  zindex: 99999,
+                  // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+                  position: 'topRight',
+                  theme: "dark",
+                  iconUrl: "/theme/images/update.svg",
+                  message: " \u03A4\u03BF Cover \u03AC\u03BB\u03BB\u03B1\u03BE\u03B5 "
+                });
               }
 
             case 9:
@@ -7163,7 +7172,7 @@ $(".col-span-12").on("click", ".js-update-submit", /*#__PURE__*/_asyncToGenerato
           status = _yield$axios$post2.status;
 
           if (!(status == 200)) {
-            _context2.next = 29;
+            _context2.next = 28;
             break;
           }
 
@@ -7185,10 +7194,19 @@ $(".col-span-12").on("click", ".js-update-submit", /*#__PURE__*/_asyncToGenerato
           return _context2.abrupt("return");
 
         case 27:
-          _context2.next = 29;
-          return _dashboard_main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", "".concat(name, " ").concat(last, " \u03B5\u03BD\u03B7\u03BC\u03B5\u03C1\u03CE\u03B8\u03B7\u03BA\u03B5!"));
+          // await utilities.toastAlert("success", `${name} ${last} ενημερώθηκε!`)
+          iziToast.show({
+            "class": "rounded-lg",
+            timeout: 4000,
+            zindex: 99999,
+            // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+            position: 'topRight',
+            theme: "dark",
+            iconUrl: "/theme/images/refresh.svg",
+            message: "".concat(name, " ").concat(last, " \u03B5\u03BD\u03B7\u03BC\u03B5\u03C1\u03CE\u03B8\u03B7\u03BA\u03B5!")
+          });
 
-        case 29:
+        case 28:
         case "end":
           return _context2.stop();
       }

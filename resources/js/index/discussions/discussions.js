@@ -710,7 +710,17 @@ const removeTask = () => {
                 if (status == 200) {
                     $(".discussions-right").html($(data))
                     validationUploadTest();
-                    toastAlert("success", "H εργασία αφαιρέθηκε")
+                    iziToast.show({
+                        class: "rounded-lg",
+                        timeout: 4000,
+                        zindex: 99999,
+                        // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+                        position: 'topRight',
+                        theme: "dark",
+                        iconUrl: "/theme/images/refresh.svg",
+                        message: `${name} ${last} ενημερώθηκε!`
+
+                    });
                     if ($('#accordionExample').children().length) {
                         $("#show-task-content").addClass("active");
                         $("#upload-task-content").removeClass("active");

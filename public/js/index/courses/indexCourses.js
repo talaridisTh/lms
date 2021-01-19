@@ -44797,14 +44797,15 @@ var initDropzone = function initDropzone() {
     paramName: "attachment",
     init: function init() {
       this.on("success", function (file) {
-        Swal.fire({
-          toast: 'true',
-          position: 'top-end',
-          icon: "success",
-          title: "".concat(this.getAcceptedFiles().length, " \u03B5\u03C1\u03B3\u03B1\u03C3\u03AF\u03B5\u03C2 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B1\u03BD"),
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true
+        iziToast.show({
+          "class": "rounded-lg",
+          timeout: 4000,
+          zindex: 99999,
+          // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+          position: 'topRight',
+          theme: "dark",
+          iconUrl: "/theme/images/upload.png",
+          message: this.getAcceptedFiles().length > 1 ? " ".concat(this.getAcceptedFiles().length, " \u03B5\u03C1\u03B3\u03B1\u03C3\u03AF\u03B5\u03C2 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B1\u03BD") : "".concat(this.getAcceptedFiles().length, " \u03B5\u03C1\u03B3\u03B1\u03C3\u03AF\u03B1 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B5 ")
         });
       });
       this.on("sending", function (file, xhr, formData) {
@@ -44878,7 +44879,17 @@ var initFilepond = function initFilepond() {
       $(".js-form-reply").prop('disabled', false);
       $(".js-form-reply").prop('disabled', false).addClass("bg-theme-1").removeClass("bg-gray-500 cursor-not-allowed"); // delete   $(".js-form-reply")[0].dataset.upload
 
-      $(".js-form-reply")[0].dataset.upload = JSON.stringify(files); // if (pond.status === 4) {
+      $(".js-form-reply")[0].dataset.upload = JSON.stringify(files);
+      iziToast.show({
+        "class": "rounded-lg",
+        timeout: 4000,
+        zindex: 99999,
+        // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+        position: 'topRight',
+        theme: "dark",
+        iconUrl: "/theme/images/upload.png",
+        message: pond.getFiles().length > 1 ? " ".concat(pond.getFiles().length, " \u03C6\u03C9\u03C4\u03BF\u03B3\u03C1\u03B1\u03C6\u03AF\u03B5\u03C2 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B1\u03BD") : "".concat(pond.getFiles().length, " \u03C6\u03C9\u03C4\u03BF\u03B3\u03C1\u03B1\u03C6\u03AF\u03B1 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B5 ")
+      }); // if (pond.status === 4) {
       //
       //     clearTimeout(timer);
       //     let files = pond.getFiles();

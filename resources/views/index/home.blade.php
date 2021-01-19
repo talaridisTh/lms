@@ -15,7 +15,7 @@
                     Δες τι προσφέρουμε και πως μπορείς να ξεκινήσεις.</p>
                 <div class="flex sm:justify-start xs:justify-center">
                     <button
-                        class="inline-block uppercase w-50 px-8 intro-y py-2 text-xs font-medium leading-6 text-center text-white uppercase
+                            class="inline-block uppercase w-50 px-8 intro-y py-2 text-xs font-medium leading-6 text-center text-white uppercase
                      transition bg-login rounded-xl shadow ripple hover:shadow-lg hover:bg-color-theme focus:outline-none">
                         ΑΙΤΗΜΑ ΓΙΑ DEMO
                     </button>
@@ -23,9 +23,10 @@
             </div>
             <div class="flex-1 lg:flex xs:hidden  justify-center ">
                 <img
-                    style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
-                    class="intro-y img-custom-index img-fluid" src="{{asset('images/vector-smart-object.png')}}"
-                    alt="vector-smart-object"></div>
+                        style=" background: url('{{asset('images/group-33.png')}}'); background-position: right; height: 650px "
+                        class="intro-y img-custom-index img-fluid"
+                        src="{{asset('images/vector-smart-object.png')}}"
+                        alt="vector-smart-object"></div>
         </div>
 
         <div class="sm:container xs:container-lg mx-auto max-w-1xl flex justify-between   space-x-10 p-8">
@@ -38,8 +39,9 @@
             </div>
             <div class="flex-1 lg:flex xs:hidden  justify-center">
                 <img
-                    class="img-custom-index img-fluid" src="{{asset('images/group-5.png')}}"
-                    alt="vector-5">
+                        class="img-custom-index img-fluid"
+                        src="{{asset('images/group-5.png')}}"
+                        alt="vector-5">
             </div>
         </div>
 
@@ -61,7 +63,7 @@
             <div class="flex-1 lg:flex xs:hidden  justify-center"
                  style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
                 <div class="container-oval   relative">
-                    <div class="oval "></div>
+                    <div class="oval animate-pulse"></div>
                     <div class="oval-1 absolute"></div>
                     <div class="oval-2 absolute"></div>
                     <div class="oval-3 absolute"></div>
@@ -73,7 +75,7 @@
             <div class="flex-1 lg:flex xs:hidden  justify-center"
                  style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
                 <div class="container-oval mr-16  relative">
-                    <div class="oval "></div>
+                    <div class="oval animate-pulse"></div>
                     <div class="oval-1 absolute"></div>
                     <div class="oval-2 absolute"></div>
                     <div class="oval-3 absolute"></div>
@@ -112,18 +114,19 @@
             <div class="flex-1 lg:flex xs:hidden  justify-center"
                  style=" background: url('{{asset('images/group-32.png')}}'); background-position: center;background-repeat: no-repeat; ">
                 <div class="container-oval   relative">
-                    <div class="oval "></div>
+                    <div class="oval animate-pulse"></div>
                     <div class="oval-1 absolute"></div>
                     <div class="oval-2 absolute"></div>
                     <div class="oval-3 absolute"></div>
                 </div>
             </div>
         </div>
-        @if($arrayBanners["primary"]->models && $arrayBanners["secondary"]->models )
+        @if($arrayBanners["primary"]->models || $arrayBanners["secondary"]->models )
             <div class="sm:container xs:container-lg mx-auto max-w-1xl space-y-20 p-8">
 
                 @foreach( $arrayBanners as  $key=>  $banners)
-                    <div id="card-slider-{{$key}}" class="splide">
+                    <div id="card-slider-{{$key}}"
+                         class="splide">
                         @if($banners->status==1)
                             <div class="splide__track mx-3">
                                 <ul class="splide__list">
@@ -133,7 +136,9 @@
                                             $model =   $bannerValue::findOrFail($banner->$bannerValue);
                                         @endphp
                                         <li class="splide__slide p-5 space-y-4  bg-gray-200 shadow-inner shadow-2xl">
-                                            <img class="" src="{{$model->cardMediumUrl() }}" alt="Card image cap">
+                                            <img class=""
+                                                 src="{{$model->cardMediumUrl() }}"
+                                                 alt="Card image cap">
                                             <div class="space-y-4">
                                                 <h2 class="text-lg font-semibold">{{$model->title}}</h2>
                                                 <p class="font-normal text-base"> {{$model->subtitle}}</p>

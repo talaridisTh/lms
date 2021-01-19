@@ -32,7 +32,19 @@ const onChangeAvatar = () => {
 
             $(".cnt-user-avatar").html($(data));
             feather.replace()
-            utilities.toastAlert("success", "Το Cover άλλαξε")
+
+            iziToast.show({
+                class: "rounded-lg",
+                timeout: 4000,
+                zindex: 99999,
+                // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+                position: 'topRight',
+                theme: "dark",
+                iconUrl: "/theme/images/update.svg",
+                message: ` Το Cover άλλαξε `
+
+            });
+
 
         }
     })
@@ -113,7 +125,19 @@ $(".col-span-12").on("click", ".js-update-submit", async function () {
             await utilities.toastAlert("warning", `υπάρχουν ${$(".has-error").length} σφάλματα`)
             return;
         }
-        await utilities.toastAlert("success", `${name} ${last} ενημερώθηκε!`)
+        // await utilities.toastAlert("success", `${name} ${last} ενημερώθηκε!`)
+
+        iziToast.show({
+            class: "rounded-lg",
+            timeout: 4000,
+            zindex: 99999,
+            // title: `${this.getAcceptedFiles().length > 1 ? "εργασίες ανέβηκαν" : "εργασία ανέβηκε"} `,
+            position: 'topRight',
+            theme: "dark",
+            iconUrl: "/theme/images/refresh.svg",
+            message: `${name} ${last} ενημερώθηκε!`
+
+        });
 
 
     }
