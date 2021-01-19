@@ -226,6 +226,17 @@ const initDropzone = () => {
                     formData.append("course", model.title);
                     formData.append("dropzone", model.id);
                 });
+                this.on('error', function (file, errorMessage) {
+                    Swal.fire({
+                        toast: 'true',
+                        position: 'top-end',
+                        icon: "danger",
+                        title: `Κάτι Πήγε Στραβά`,
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true
+                    })
+                });
             },
 
             totaluploadprogress: function (progress) {

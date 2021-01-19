@@ -17,10 +17,6 @@
         position: relative;
     }
 
-    .expanded-card {
-        background: linear-gradient(
-                180deg, #f44881, #ec454f);
-    }
 
     .custom-container {
         max-width: 1642px;
@@ -36,6 +32,8 @@
         <div class="splide__track mx-4">
             <ul class="splide__list">
                 @foreach($courses as $course)
+
+                    {{--                    @dd($course->topics)--}}
                     <li class="splide__slide  intro-y">
                         <article class="container mb-5"
                                  style="grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));">
@@ -43,8 +41,9 @@
 
                                  style="box-shadow: rgba(36, 37, 38, 0.04) 4px 4px 15px 0px;">
                                 <div
-                                        class="expanded-card space-y-4 w-3/6 h-64 mr-4 rounded-xl flex flex-col justify-between items-center py-5 px-4 flex-shrink-0"
-                                        style="box-shadow: rgba(0, 0, 0, 0.17) 0px 4px 9px 0px;">
+                                        class=" space-y-4 w-3/6 h-64 mr-4 rounded-xl flex flex-col justify-between items-center py-5 px-4 flex-shrink-0"
+                                        style="box-shadow: rgba(0, 0, 0, 0.17) 0px 4px 9px 0px;
+                                        {{$course->topics->isEmpty()? "background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)":"background:".$course->topics->first()->color}} ">
                                     <a href="{{route('index.showCourse',$course->slug)}}"
                                        class="w-full bg-black-transparent-10  hover:text-grey-darkest rounded-full  leading-none px-4 text-white  text-2xs text-center">
                                         {{count($course->topics)?$course->topics->first()->title:"Γενικά"}}

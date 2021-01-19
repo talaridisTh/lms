@@ -15,12 +15,12 @@
 
 
     <article class="mdc:container max-w-1xl lg:container mx-auto flex flex-col   rounded-xl "
-             style="background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)">
+             style="{{$course->topics->isEmpty()? "background:linear-gradient(315deg, rgb(255, 78, 0) 0%, rgb(236, 133, 5) 75%)":"background:".$course->topics->first()->color}} ">
         <section class="flex xl:justify-between justify-around flex-wrap items-center px-8">
             <figure class="w-64 h-64  my-8 relative lg:mr-16">
                 <div
                         class="group avatar w-full h-full rounded-full overflow-hidden shadow-inner text-center bg-purple table cursor-pointer border">
-                    <img src="{{isset($course->cover)?$course->roundedMediumCoverUrl("cover"):asset("theme/images/no-course.png") }}"
+                    <img src="{{isset($course->cover)?$course->cover:asset("theme/images/no-course.png") }}"
                          class="p-3 rounded-full object-cover object-center w-full h-full visible group-hover:hidden"
                          alt="{{$course->title}}">
                 </div>

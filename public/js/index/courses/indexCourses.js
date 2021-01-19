@@ -44816,6 +44816,17 @@ var initDropzone = function initDropzone() {
         formData.append("course", model.title);
         formData.append("dropzone", model.id);
       });
+      this.on('error', function (file, errorMessage) {
+        Swal.fire({
+          toast: 'true',
+          position: 'top-end',
+          icon: "danger",
+          title: "\u039A\u03AC\u03C4\u03B9 \u03A0\u03AE\u03B3\u03B5 \u03A3\u03C4\u03C1\u03B1\u03B2\u03AC",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true
+        });
+      });
     },
     totaluploadprogress: function totaluploadprogress(progress) {
       var bar = document.getElementById("the-progress-div");
