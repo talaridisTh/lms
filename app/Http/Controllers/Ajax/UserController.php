@@ -9,6 +9,7 @@ use App\DataTables\Users\UserCoursesDataTable;
 use App\DataTables\Users\UsersDataTable;
 use App\Models\Media;
 use App\Models\User;
+use App\Notifications\SentPasswordNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -163,12 +164,14 @@ class UserController {
 
     public function sentInfo(User $user)
     {
-        $password = Crypt::decryptString($user->password_encrypt);
-        $message = "Ο κωδικός σας είναι: $password";
-        Mail::raw($message, function ($message) use ($user) {
-            $message->to($user->email)
-                ->subject("Υδρόγειος Education, ανάκτηση κωδικού");
-        });
+        // $password = Crypt::decryptString($user->password_encrypt);
+        // $message = "Ο κωδικός σας είναι: $password";
+        // Mail::raw($message, function ($message) use ($user) {
+        //     $message->to($user->email)
+        //         ->subject("Υδρόγειος Education, ανάκτηση κωδικού");
+		// });
+		
+		$user->notify(new SentPasswordNotification);
     }
 
     public function confirmPassword(Request $request)
