@@ -4120,7 +4120,7 @@ gpickrEdit.on('change', function (instance) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\topics\topicsMain.js */"./resources/js/dashboard/topics/topicsMain.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\topics\topicsMain.js */"./resources/js/dashboard/topics/topicsMain.js");
 
 
 /***/ })

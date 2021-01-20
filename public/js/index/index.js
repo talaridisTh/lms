@@ -7363,7 +7363,7 @@ if (CURRENT_ROUTE == "index.userCourses") {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\index.js */"./resources/js/index/index.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\index.js */"./resources/js/index/index.js");
 
 
 /***/ })
