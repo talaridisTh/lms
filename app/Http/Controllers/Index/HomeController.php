@@ -20,6 +20,7 @@ class HomeController extends Controller {
         $arrayBanners = json_decode(Option::where("name", "Index Carousels")->pluck("value")->first());
         $arrayBanners = collect($arrayBanners);
 
+//        dd($arrayBanners);
         return view("index.home", compact("arrayBanners"));
 
     }

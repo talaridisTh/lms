@@ -7299,7 +7299,7 @@ if (CURRENT_ROUTE == "home") {
     });
   }
 
-  if ($("#card-slider-sectondary").length) {
+  if ($("#card-slider-secondary").length) {
     document.addEventListener('DOMContentLoaded', function () {
       new _splidejs_splide__WEBPACK_IMPORTED_MODULE_1___default.a('#card-slider-secondary', {
         gap: 10,

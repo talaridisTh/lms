@@ -21,7 +21,7 @@ if (CURRENT_ROUTE == "home") {
             }).mount();
         });
     }
-    if ($("#card-slider-sectondary").length) {
+    if ($("#card-slider-secondary").length) {
         document.addEventListener('DOMContentLoaded', function () {
             new Splide('#card-slider-secondary', {
                 gap: 10,
