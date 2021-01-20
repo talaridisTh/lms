@@ -28,37 +28,44 @@
         <i class="font-18 mr-1 uil-question-circle"></i>
         Οι Ερωτήσεις μου
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread "
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread hidden"
         id="filter-participation">
         <i class="font-18 mr-1 uil-volume"></i>
         Η συμμετοχή μου
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex hidden"
         id="filter-best-answer">
         <i class="font-18 mr-2 uil-check-circle block"></i>
         <span>Δεν υπάρχουν ακόμη απαντήσεις</span>
 
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex hidden"
         id="filter-popular-week">
         <i class="font-18 mr-2 uil-star block"></i>
         <span>Δημοφιλή αυτήν την εβδομάδα</span>
 
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread hidden"
         id="filter-popular-allTime">
         <i class="font-18 mr-1 uil-star"></i>
         Δημοφιλές όλο το χρόνο
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread hidden "
         id="filter-isClosed">
         <i class=" mdi mdi-power mr-1 font-18"></i>
         Κλειστό
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread flex hidden"
         id="filter-no-replies">
         <i class="font-18 mr-2 uil-link-h block"></i>
         <span>Δημοφιλή αυτήν την εβδομάδα</span>
+    </li>
+
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread "
+        data-role-user="{{auth()->user()->getRoleNames()[0]}}"
+        id="filter-announcement">
+        <i class="font-18 mr-1 uil-star"></i>
+        Ανακοινώσεις
     </li>
 
     <li class="py-2 px-6 m-2 list-unstyled bg-thread "

@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Chatify\Facades\ChatifyMessenger as Chatify;
+use Chatify\Http\Models\Favorite;
+use Chatify\Http\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Response;
-use Chatify\Http\Models\Message;
-use Chatify\Http\Models\Favorite;
-use Chatify\Facades\ChatifyMessenger as Chatify;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
 class MessagesController extends Controller {
@@ -342,7 +342,11 @@ class MessagesController extends Controller {
     {
         $getRecords = null;
         $input = trim(filter_var($request['input'], FILTER_SANITIZE_STRING));
-        $records = User::where('name', 'LIKE', "%{$input}%");
+        if (auth()->user()->getRoleNames()[0] == "super-admin" || auth()->user()->getRoleNames()[0] == "admin") {
+            $records = User::where('name', 'LIKE', "%{$input}%");
+        } else {
+            $records = User::where('name', 'LIKE', "admin admin");
+        }
         foreach ($records->get() as $record) {
             $getRecords .= view('Chatify::layouts.listItem', [
                 'get' => 'search_item',

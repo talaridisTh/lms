@@ -8752,6 +8752,53 @@ $(".discussions-left").on("click", "#filter-my-task", /*#__PURE__*/_asyncToGener
       }
     }
   }, _callee26, this, [[1, 34]]);
+}))); //announcment
+
+$(".discussions-left").on("click", "#filter-announcement", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee27() {
+  var _yield$axios$get17, data, status;
+
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee27$(_context27) {
+    while (1) {
+      switch (_context27.prev = _context27.next) {
+        case 0:
+          _context27.prev = 0;
+          _context27.next = 3;
+          return axios.get("/discussion/my-announcement");
+
+        case 3:
+          _yield$axios$get17 = _context27.sent;
+          data = _yield$axios$get17.data;
+          status = _yield$axios$get17.status;
+
+          if (status == 200) {
+            $(".discussions-right").html($(data));
+            $(".ul-thread .bg-thread").removeClass("active-thread");
+            $(this).addClass("active-thread");
+            onCompletedTask();
+            onSendQuestion();
+            styleCollapse();
+            removeTask();
+            onFirstReplayBtnEvent(); //
+            // $(".ul-thread .bg-thread").removeClass("active-thread")
+            // $(this).addClass("active-thread")
+            // sendTask();
+            // styleCollapse();
+          }
+
+          _context27.next = 12;
+          break;
+
+        case 9:
+          _context27.prev = 9;
+          _context27.t0 = _context27["catch"](0);
+          console.log(_context27.t0);
+
+        case 12:
+        case "end":
+          return _context27.stop();
+      }
+    }
+  }, _callee27, this, [[0, 9]]);
 }))); // $R("#post-body", {
 //     buttons: [
 //         'html', 'undo', 'redo', 'format',

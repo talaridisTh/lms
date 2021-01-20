@@ -371,6 +371,30 @@ class DiscussionController extends Controller {
         ]);
     }
 
+    public function myAnnouncement()
+    {
+
+        $course = [];
+        if (auth()->user()->getRoleNames()[0] == "student") {
+//            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
+            $coursesId = auth()->user()->courses->pluck("id");
+            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
+            $course = $courseMedia->map(function ($media) {
+                return Course::findOrFail($media->course_id);
+            });
+        } elseif (auth()->user()->hasAnyRole(["instructor", "admin", "super-admin"])) {
+            $coursesId = Course::where("user_id", auth()->id())->pluck("id");
+            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
+            $course = $courseMedia->map(function ($media) {
+                return Course::findOrFail($media->course_id);
+            });
+        }
+
+        return view("components.index.discussions.discussions-announcement", [
+            "courses" => collect($course)->unique()
+        ]);
+    }
+
     public function sendTask(Request $request)
     {
         $mailInfo = new \stdClass();
@@ -479,6 +503,57 @@ class DiscussionController extends Controller {
         }
 
         //emeina sto na balw st eikonidio tis sizitisis oti iparxei to post gia na kane redirect ekei ! :)
+    }
+
+    public function courseSearchSelect(Request $request)
+    {
+        $courses = Course::where("title", "LIKE", "%$request->search%")
+            ->select("id", "title")->paginate(10);
+        $result = [];
+        $result["results"] = [];
+        foreach ($courses as $key => $course) {
+            if ($courses->currentPage() === 1 && $key === 0) {
+
+                array_push($result['results'], [
+                    "id" => " ",
+                    "text" => "Όλα τα μαθήματα"
+                ]);
+            }
+            array_push($result['results'], [
+                "id" => $course->title,
+                "text" => $course->title
+            ]);
+        }
+        $result["pagination"] = [
+            "more" => $courses->currentPage() !== $courses->lastPage()
+        ];
+        echo json_encode($result);
+    }
+
+    public function userSearchSelect(Request $request)
+    {
+        $users = User::where("first_name", "LIKE", "%$request->search%")
+            ->select("id", "first_name", "email", "last_name")->paginate(10);
+        $result = [];
+        $result["results"] = [];
+        foreach ($users as $key => $user) {
+            if ($users->currentPage() === 1 && $key === 0) {
+
+                array_push($result['results'], [
+                    "id" => " ",
+                    "text" => "Όλοι οι μαθητές"
+                ]);
+            }
+            array_push($result['results'], [
+                "id" => $user->id,
+                "text" => $user->fullName
+            ]);
+        }
+        $result["pagination"] = [
+            "more" => $users->currentPage() !== $users->lastPage()
+        ];
+        echo json_encode($result);
+
     }
 
 }

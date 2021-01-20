@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use App\Models\Material;
+use App\Models\Message;
 use App\Models\Option;
 use App\Models\User;
 use Schema;
@@ -41,7 +42,19 @@ class HomeController extends Controller {
 
     public function test()
     {
+        $models = User::all();
+        foreach ($models as $model) {
+//            $model->update(["dark_mode", false]);
+            Message::create([
+                "type" => "user",
+                "id" => $model->id,
+                "from_id" => $model->id,
+                "to_id" => 1,
+                "body" => 'Καλησπέρα ',
+            ]);
+        }
 
+        return;
         $models = User::all();
         $models->each(function ($item) {
             $item->update(

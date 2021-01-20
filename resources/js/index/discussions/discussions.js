@@ -1078,7 +1078,32 @@ $(".discussions-left").on("click", "#filter-my-task", async function () {
         console.log(e)
     }
 })
+//announcment
+$(".discussions-left").on("click", "#filter-announcement", async function () {
 
+    try {
+        const {data, status} = await axios.get("/discussion/my-announcement")
+        if (status == 200) {
+            $(".discussions-right").html($(data))
+            $(".ul-thread .bg-thread").removeClass("active-thread")
+            $(this).addClass("active-thread")
+            onCompletedTask();
+            onSendQuestion()
+            styleCollapse();
+            removeTask();
+            onFirstReplayBtnEvent();
+
+            //
+            // $(".ul-thread .bg-thread").removeClass("active-thread")
+            // $(this).addClass("active-thread")
+            // sendTask();
+            // styleCollapse();
+
+        }
+    } catch (e) {
+        console.log(e)
+    }
+})
 
 // $R("#post-body", {
 //     buttons: [

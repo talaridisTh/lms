@@ -15,6 +15,7 @@ Route::prefix("discussion")->name("discussion.")->group(function () {
     Route::get("/isClosed", [DiscussionController::class, 'isClosed'])->name("isClosed");
     Route::get("/no-replies", [DiscussionController::class, 'noReplies'])->name("noReplies");
     Route::get("/my-task", [DiscussionController::class, 'myTask'])->name("myTask");
+    Route::get("/my-announcement", [DiscussionController::class, 'myAnnouncement'])->name("myAnnouncement");
     Route::patch("/complete-task/{id}", [DiscussionController::class, 'completeTask'])->name("completeTask");
     Route::delete("/delete-task/{id}", [DiscussionController::class, 'deleteTask'])->name("deleteTask");
     Route::get("/{id}", [DiscussionController::class, 'show'])->name("show");
@@ -29,6 +30,8 @@ Route::prefix("discussion")->name("discussion.")->group(function () {
     Route::post("/task/send", [DiscussionController::class, 'sendTask'])->name("sendTask");
     Route::post("/upload-task", [DiscussionController::class, 'uploadTask'])->name("uploadTask");
     Route::post("/question/post", [DiscussionController::class, 'createQuestionPost'])->name("createQuestionPost");
+    Route::get("/courses/json-search", [DiscussionController::class, 'courseSearchSelect']);
+    Route::get("/users/json-search", [DiscussionController::class, 'userSearchSelect']);
 
 //Route::post("/pagination", [DiscussionController::class,'pagination'])->name("pagination");
 });
