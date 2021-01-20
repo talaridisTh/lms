@@ -23431,40 +23431,46 @@ $.fn.extend({
     return this;
   }
 });
-$(".js-message-seen").on("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-  var _yield$axios$patch, status;
+$(document).on("click", ".js-message-seen", /*#__PURE__*/function () {
+  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
+    var _yield$axios$patch, status;
 
-  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-    while (1) {
-      switch (_context.prev = _context.next) {
-        case 0:
-          _context.prev = 0;
-          _context.next = 3;
-          return axios.patch("home/message/update");
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return axios.patch("home/message/update");
 
-        case 3:
-          _yield$axios$patch = _context.sent;
-          status = _yield$axios$patch.status;
+          case 3:
+            _yield$axios$patch = _context.sent;
+            status = _yield$axios$patch.status;
 
-          if (status == 200) {
-            $(".js-message-badge").remove();
-          }
+            if (status == 200) {
+              $(".js-message-badge").remove();
+            }
 
-          _context.next = 11;
-          break;
+            _context.next = 11;
+            break;
 
-        case 8:
-          _context.prev = 8;
-          _context.t0 = _context["catch"](0);
-          console.log(_context.t0);
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
 
-        case 11:
-        case "end":
-          return _context.stop();
+          case 11:
+          case "end":
+            return _context.stop();
+        }
       }
-    }
-  }, _callee, null, [[0, 8]]);
-})));
+    }, _callee, null, [[0, 8]]);
+  }));
+
+  return function (_x) {
+    return _ref.apply(this, arguments);
+  };
+}());
 $(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
     var _yield$axios$patch2, status;
@@ -23475,12 +23481,11 @@ $(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
           case 0:
             e.preventDefault();
             window.location.href = "/discussion?task";
-            console.log($("#filter-my-task"));
-            _context2.prev = 3;
-            _context2.next = 6;
+            _context2.prev = 2;
+            _context2.next = 5;
             return axios.patch("home/task/update");
 
-          case 6:
+          case 5:
             _yield$axios$patch2 = _context2.sent;
             status = _yield$axios$patch2.status;
 
@@ -23488,23 +23493,23 @@ $(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
               $("#filter-my-task").trigger("click"); // $(".js-message-badge").remove();
             }
 
-            _context2.next = 14;
+            _context2.next = 13;
             break;
 
-          case 11:
-            _context2.prev = 11;
-            _context2.t0 = _context2["catch"](3);
+          case 10:
+            _context2.prev = 10;
+            _context2.t0 = _context2["catch"](2);
             console.log(_context2.t0);
 
-          case 14:
+          case 13:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[3, 11]]);
+    }, _callee2, null, [[2, 10]]);
   }));
 
-  return function (_x) {
+  return function (_x2) {
     return _ref2.apply(this, arguments);
   };
 }());

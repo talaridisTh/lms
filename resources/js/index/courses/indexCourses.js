@@ -86,21 +86,17 @@ $(".spa-click").on("click", async function (e) {
                 $(".spa-cnt").next().addClass("lg:mt-16").removeClass("lg:mt-0")
             }
 
-
             $(".spa-tabs")[1].classList.remove("lg:w-4/6")
             $(".spa-tabs")[1].classList.remove("w-full")
             $(".spa-tabs")[1].classList.add("w-auto")
             initTabs();
             $(".cnt-dropzone").addClass("hidden").removeClass("flex-1");
 
-            // fixPaddingTabs();
-            // templateHandler(data, this);
             onFullScreen();
             onCloseFullScreen();
-            // onPreviewMaterial();
             onInitEventHandler();
             initFilepond();
-
+            feather.replace();
 
         }
 
@@ -125,6 +121,7 @@ const onCloseFullScreen = () => {
                 initTabs();
                 onInitEventHandler();
                 initFilepond();
+                feather.replace()
             }
         } catch (e) {
             console.log(e)

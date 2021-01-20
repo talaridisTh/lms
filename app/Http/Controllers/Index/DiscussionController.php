@@ -415,20 +415,21 @@ class DiscussionController extends Controller {
     {
         $res = [];
         $files = isset($request->file) ? $request->file : $request->attachment;
-//        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
+        $allowedTypes = array_diff($this->allowedTypes, ["image/png", "image/jpeg"]);
         foreach ($files as $key => $file) {
             if ($file->isValid()) {
-
-                if ($file->getSize() <= 50000000) { // 50MB
-                    $media = $this->storeFile($file);
+                if (in_array($file->getClientMimeType(), $allowedTypes)) {
+                    if ($file->getSize() <= 50000000) { // 50MB
+                        $media = $this->storeFile($file);
 //                        auth()->user()->media()->attach($media->id, ["usage" => 6]);
-                    $res["file-" . $key] = [
-                        "url" => $media->rel_path,
-                        "name" => $media->original_name . "." . $media->ext,
-                        "id" => $media->id,
-                    ];
-                }
+                        $res["file-" . $key] = [
+                            "url" => $media->rel_path,
+                            "name" => $media->original_name . "." . $media->ext,
+                            "id" => $media->id,
+                        ];
+                    }
 
+                }
             }
         }
 

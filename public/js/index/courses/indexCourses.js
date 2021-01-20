@@ -44643,14 +44643,12 @@ $(".spa-click").on("click", /*#__PURE__*/function () {
               $(".spa-tabs")[1].classList.remove("w-full");
               $(".spa-tabs")[1].classList.add("w-auto");
               initTabs();
-              $(".cnt-dropzone").addClass("hidden").removeClass("flex-1"); // fixPaddingTabs();
-              // templateHandler(data, this);
-
+              $(".cnt-dropzone").addClass("hidden").removeClass("flex-1");
               onFullScreen();
-              onCloseFullScreen(); // onPreviewMaterial();
-
+              onCloseFullScreen();
               onInitEventHandler();
               initFilepond();
+              feather_icons__WEBPACK_IMPORTED_MODULE_4___default.a.replace();
             }
 
             _context.next = 22;
@@ -44701,6 +44699,7 @@ var onCloseFullScreen = function onCloseFullScreen() {
               initTabs();
               onInitEventHandler();
               initFilepond();
+              feather_icons__WEBPACK_IMPORTED_MODULE_4___default.a.replace();
             }
 
             _context2.next = 12;

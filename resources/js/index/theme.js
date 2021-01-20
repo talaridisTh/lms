@@ -51,7 +51,7 @@ $.fn.extend({
     }
 });
 
-$(".js-message-seen").on("click", async function () {
+$(document).on("click", ".js-message-seen", async function (e) {
     try {
         const {
             status
@@ -71,7 +71,6 @@ $(document).on("click", ".js-task-seen", async function (e) {
     window.location.href = "/discussion?task";
 
 
-    console.log($("#filter-my-task"))
     try {
 
         const {

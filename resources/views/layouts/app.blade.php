@@ -106,9 +106,6 @@
         this.href = window.PREVIEW_PAGE_COURSE
     })
 
-    console.log(window)
-
-
 </script>
 
 
