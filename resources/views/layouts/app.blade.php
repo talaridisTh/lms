@@ -128,7 +128,7 @@
         });
         @endif
 
-        @if($options->seen->seen_message>0)
+        @if($options->seen->seen_task>0)
         iziToast.show({
             class: "rounded-lg",
             timeout: 4000,

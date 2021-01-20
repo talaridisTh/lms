@@ -23441,7 +23441,7 @@ $(document).on("click", ".js-message-seen", /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios.patch("home/message/update");
+            return axios.patch("/home/message/update");
 
           case 3:
             _yield$axios$patch = _context.sent;
@@ -23483,7 +23483,7 @@ $(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
             window.location.href = "/discussion?task";
             _context2.prev = 2;
             _context2.next = 5;
-            return axios.patch("home/task/update");
+            return axios.patch("/home/task/update");
 
           case 5:
             _yield$axios$patch2 = _context2.sent;

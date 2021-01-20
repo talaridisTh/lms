@@ -55,7 +55,7 @@ $(document).on("click", ".js-message-seen", async function (e) {
     try {
         const {
             status
-        } = await axios.patch("home/message/update");
+        } = await axios.patch("/home/message/update");
 
         if (status == 200) {
             $(".js-message-badge").remove();
@@ -75,7 +75,7 @@ $(document).on("click", ".js-task-seen", async function (e) {
 
         const {
             status
-        } = await axios.patch("home/task/update");
+        } = await axios.patch("/home/task/update");
         if (status == 200) {
             $("#filter-my-task").trigger("click");
             // $(".js-message-badge").remove();

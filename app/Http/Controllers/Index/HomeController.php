@@ -27,11 +27,15 @@ class HomeController extends Controller {
     public function updateSeenMessage()
     {
         auth()->user()->update(["seen->seen_message" => 0]);
+
+        return response()->json(auth()->user());
     }
 
     public function updateTaskMessage()
     {
         auth()->user()->update(["seen->seen_task" => 0]);
+
+        return response()->json(auth()->user());
     }
 
     public function test()
