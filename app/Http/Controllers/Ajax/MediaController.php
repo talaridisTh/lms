@@ -76,6 +76,11 @@ class MediaController extends Controller {
 	public function addToGallery(Request $request) {
 
 		$model = $request->namespace::find( $request->modelId );
+
+		if ($request->namespace === "App\\Models\\Course") {
+			$this->authorize("update", $model);
+		}
+
 		$existingMedia = $model->media()->pluck("id")->toArray();
 
 		if ( $model->media()->count() > 0 ) {
@@ -101,6 +106,10 @@ class MediaController extends Controller {
 	public function removeFromGallery(Request $request) {
 
 		$model = $request->namespace::find( $request->modelId );
+		
+		if ($request->namespace === "App\\Models\\Course") {
+			$this->authorize("update", $model);
+		}
 
 		foreach( $request->ids as $id ) {
 			$model->media()->detach( $id );
@@ -115,6 +124,10 @@ class MediaController extends Controller {
 	public function removeCover(Request $request) {
 
 		$model = $request->namespace::find( $request->id );
+
+		if ($request->namespace === "App\\Models\\Course") {
+			$this->authorize("update", $model);
+		}
 
 		if ( $request->namespace === "App\\Models\\User" ) {
 			$model->avatar = null;
@@ -162,6 +175,10 @@ class MediaController extends Controller {
 	public function addFiles(Request $request) {
 
 		$model = $request->namespace::find($request->modelId);
+		
+		if ($request->namespace === "App\\Models\\Course") {
+			$this->authorize("update", $model);
+		}
 
 		foreach( $request->ids as $id ) {
 			$model->media()->attach( $id, ["usage" => 3]);
@@ -175,6 +192,10 @@ class MediaController extends Controller {
 	public function removeFiles( Request $request ) {
 
 		$model = $request->namespace::find( $request->modelId );
+
+		if ($request->namespace === "App\\Models\\Course") {
+			$this->authorize("update", $model);
+		}
 
 		foreach( $request->ids as $id ) {
 			$model->media()->detach($id);
@@ -267,6 +288,10 @@ class MediaController extends Controller {
 		$namespace = $request->namespace;
 		$id = $request->id;
 		$model = $namespace::find( $id );
+
+		if ( $namespace === "App\\Models\\Course") {
+			$this->authorize("update", $model);
+		}
 
 		if ( $namespace === "App\\Models\\User" ) {
 			$model->avatar = $request->url;
