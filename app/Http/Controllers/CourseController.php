@@ -22,9 +22,9 @@ class CourseController extends Controller {
      *
      * @return void
      */
-    // public function __construct() {
-    //     $this->authorizeResource(Course::class, 'course');
-    // }
+    public function __construct() {
+        $this->authorizeResource(Course::class, 'course');
+    }
 
     public function index()
     {

@@ -19,7 +19,8 @@ class DashboardController extends Controller
     public function index()
     {
 		if (Auth::user()->hasRole("instructor")) {
-			redirect("/dashboard/courses");
+			
+			return redirect("/dashboard/courses");
 		}
 
 		$today = date("Y-m-d H:i:s");
