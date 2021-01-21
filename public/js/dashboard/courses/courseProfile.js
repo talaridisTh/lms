@@ -39988,8 +39988,7 @@ function sortInputsInit() {
   });
   $('.js-sort-input').on('keyup', function () {
     if (event.keyCode == 13 && !isNaN(this.value)) {
-      axios.patch('/course-ajax/priority', {
-        courseId: $('#course-materials-list')[0].dataset.courseId,
+      axios.patch("/course-ajax/".concat(courseId, "/priority"), {
         materialId: this.dataset.materialId,
         priority: {
           "new": this.value,
@@ -40209,8 +40208,7 @@ function toggleChapters(sectionId, ids, active, mainCnt, checkedboxes) {
 }
 
 function removeChapters(sectionId, chapterIds) {
-  axios.post("/section-ajax/remove-chapters", {
-    courseId: courseId,
+  axios.post("/section-ajax/".concat(courseId, "/remove-chapters"), {
     sectionId: sectionId,
     chapterIds: chapterIds
   }).then(function (res) {
@@ -40268,8 +40266,7 @@ function addUsers(userIds) {
 }
 
 function removeUsers(userIds, caller) {
-  axios.patch("/course-ajax/remove-users", {
-    courseId: courseId,
+  axios.patch("/course-ajax/".concat(courseId, "/remove-users"), {
     userIds: userIds
   }).then(function (res) {
     var message = userIds.length == 1 ? "Ένας χρήστης αφαιρέθηκε" : "".concat(userIds.length, " \u03C7\u03C1\u03AE\u03C3\u03C4\u03B5\u03C2 \u03B1\u03C6\u03B1\u03B9\u03C1\u03AD\u03B8\u03B7\u03BA\u03B1\u03BD");
@@ -40314,8 +40311,7 @@ function addChapterMaterials(chapterId, materialIds) {
 }
 
 function addCourseMaterials(materialId) {
-  axios.post("/course-ajax/add-materials", {
-    courseId: courseId,
+  axios.post("/course-ajax/".concat(courseId, "/add-materials"), {
     materialId: materialId
   }).then(function (res) {
     var message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : "".concat(materialId.length, " \u03B1\u03C1\u03C7\u03B5\u03AF\u03B1 \u03B5\u03BD\u03C4\u03CC\u03C2 \u03CD\u03BB\u03B7\u03C2");
@@ -40359,17 +40355,16 @@ function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 }
 
 function removeMaterials(materials) {
-  axios.patch("/course-ajax/remove-materials", {
-    courseId: courseId,
+  axios.patch("/course-ajax/".concat(courseId, "/remove-materials"), {
     materials: materials
   }).then(function (res) {
     var message = materials.length == 1 ? "1 αρχείο εκτός ύλης" : "".concat(materials.length, " \u03B1\u03C1\u03C7\u03B5\u03AF\u03B1 \u03B5\u03BA\u03C4\u03CC\u03C2 \u03CD\u03BB\u03B7\u03C2");
-    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert('success', message);
     courseMaterialsTable.ajax.reload(null, false);
     remainingMaterialsTables.ajax.reload(null, false);
     _main__WEBPACK_IMPORTED_MODULE_0__["default"].resetAddButton($("#add-remaingings-btn"), $("#all-remainings-checkbox"));
     _main__WEBPACK_IMPORTED_MODULE_0__["default"].resetBulk($("#active-material-bulk"), $("#all-active-materials-checkbox"));
     $("#section-accordion").html(res.data);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert('info', message);
   })["catch"](function (err) {
     _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
   });

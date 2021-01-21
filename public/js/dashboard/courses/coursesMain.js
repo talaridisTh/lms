@@ -3475,8 +3475,8 @@ function toggleStatus() {
   $('.js-toggle').on('change', function () {
     var _this = this;
 
-    axios.patch('/course-ajax/status', {
-      courseId: this.dataset.courseId,
+    var courseId = this.dataset.courseId;
+    axios.patch("/course-ajax/".concat(courseId, "/status"), {
       status: this.checked
     }).then(function (res) {
       var row = _this.findParent(2);

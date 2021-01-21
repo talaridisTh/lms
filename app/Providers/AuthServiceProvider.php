@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Course;
+use App\Policies\CoursePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -25,11 +27,5 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
-        Gate::define('viewWebTinker', function ($user = null) {
-            // return true if access to web tinker is allowed
-            return true;
-        });
-        //
     }
 }

@@ -1339,8 +1339,7 @@ function sortInputsInit() {
 	$('.js-sort-input').on('keyup', function() {
 
 		if ( event.keyCode == 13 && !isNaN( this.value) ) {
-			axios.patch('/course-ajax/priority', {
-				courseId: $('#course-materials-list')[0].dataset.courseId,
+			axios.patch(`/course-ajax/${courseId}/priority`, {
 				materialId: this.dataset.materialId,
 				priority: {
 					new: this.value,
@@ -1621,8 +1620,8 @@ function toggleChapters( sectionId, ids, active, mainCnt, checkedboxes ) {
 
 function removeChapters(sectionId, chapterIds) {
 
-	axios.post(`/section-ajax/remove-chapters`, {
-		courseId, sectionId, chapterIds
+	axios.post(`/section-ajax/${courseId}/remove-chapters`, {
+		sectionId, chapterIds
 	})
 	.then( res => {
 		let message = chapterIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${chapterIds.length} αρχεία εκτός ύλης`;
@@ -1687,8 +1686,7 @@ function addUsers( userIds ) {
 }
 
 function removeUsers( userIds, caller ) {
-	axios.patch( "/course-ajax/remove-users", {
-		courseId,
+	axios.patch( `/course-ajax/${courseId}/remove-users`, {
 		userIds
 	})
 	.then( (res) => {
@@ -1739,8 +1737,8 @@ function addChapterMaterials( chapterId, materialIds ) {
 }
 
 function addCourseMaterials( materialId ) {
-	axios.post( "/course-ajax/add-materials", {
-		courseId, materialId
+	axios.post( `/course-ajax/${courseId}/add-materials`, {
+		materialId
 	})
 	.then( (res) => {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
@@ -1775,7 +1773,9 @@ function toggleHighlight(materialIds, status) {
 
 function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
-	axios.patch(`/section-ajax/toggle-hightlight/${sectionId}`, {materialIds, status})
+	axios.patch(`/section-ajax/toggle-hightlight/${sectionId}`, {
+		materialIds, status
+	})
 	.then( res => {
 		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
@@ -1789,8 +1789,7 @@ function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
 function removeMaterials( materials ) {
 
-	axios.patch( "/course-ajax/remove-materials", {
-		courseId,
+	axios.patch( `/course-ajax/${courseId}/remove-materials`, {
 		materials
 	})
 	.then( (res) => {
@@ -1798,14 +1797,14 @@ function removeMaterials( materials ) {
 		let message = materials.length == 1 ? "1 αρχείο εκτός ύλης" : `${materials.length} αρχεία εκτός ύλης`;
 
 
-		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload( null, false );
 		remainingMaterialsTables.ajax.reload( null, false );
-
+		
 		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
-
+		
 		$("#section-accordion").html(res.data);
+		utilities.toastAlert( 'info', message );
 	})
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );

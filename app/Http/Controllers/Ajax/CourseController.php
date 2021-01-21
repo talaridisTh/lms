@@ -65,9 +65,7 @@ class CourseController extends Controller
 		}
 	}
 
-	public function toggleStatus(Request $request) {
-
-		$course = Course::find($request->courseId);
+	public function toggleStatus(Request $request, Course $course) {
 
 		if ( !$course->publish_at && $request->status == 1 ) {
 			$course->publish_at = date("Y-m-d H:i:s");
@@ -94,9 +92,7 @@ class CourseController extends Controller
 		echo json_encode($data);
 	}
 
-	public function changePriority( Request $request ) {
-
-		$course = Course::find( $request->courseId );
+	public function changePriority(Request $request, Course $course) {
 
 		$lastInOrder = $course->materials()
 			->orderBy("priority", "desc")->first()->pivot->priority;
@@ -190,9 +186,8 @@ class CourseController extends Controller
 		}
 	}
 
-	public function addMaterials( Request $request ) {
+	public function addMaterials(Request $request, Course $course) {
 
-		$course = Course::find( $request->courseId );
 		$materialIds = $request->materialId;
 
 		$publish = Carbon::now()->format("Y-m-d H:i:s");
@@ -213,11 +208,8 @@ class CourseController extends Controller
 
 	}
 
-	public function removeMaterials( Request $request ) {
+	public function removeMaterials(Request $request, Course $course) {
 
-		$courseId = $request->courseId;
-		$course = Course::find($courseId);
-	
 		$course->materials()->orderBy('priority')
 			->each( function($material) use ($course, $request) {
 
@@ -263,9 +255,8 @@ class CourseController extends Controller
 
 	}
 
-	public function removeUsers( Request $request ) {
+	public function removeUsers(Request $request, Course $course) {
 
-		$course = Course::find( $request->courseId );
 		$userIds = $request->userIds;
 
 		foreach ( $userIds as $id ) {

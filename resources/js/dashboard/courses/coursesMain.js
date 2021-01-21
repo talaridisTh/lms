@@ -190,8 +190,9 @@ function toggleStatus() {
 
 	$('.js-toggle').on('change', function() {
 
-		axios.patch('/course-ajax/status', {
-			courseId: this.dataset.courseId,
+		const courseId = this.dataset.courseId
+
+		axios.patch(`/course-ajax/${courseId}/status`, {
 			status: this.checked
 		})
 		.then( (res) => {
