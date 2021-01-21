@@ -41,31 +41,31 @@
             <nav class="top-nav">
                 @auth
                     <ul class="p-0">
-                        @hasanyrole("admin|super-admin")
-                        <li class="orange-line intro-x">
-                            <a href="{{route('dashboard')}}"
-                               class="top-menu">
-                                <div class="top-menu__icon"><i data-feather="tool"></i></div>
-                                <div class="top-menu__title ">Dashboard</div>
-                            </a>
-                        </li>
+                        @hasanyrole("instructor|admin|super-admin")
+                        	<li class="orange-line intro-x">
+                        	    <a href="/dashboard"
+                        	       class="top-menu">
+                        	        <div class="top-menu__icon"><i data-feather="tool"></i></div>
+                        	        <div class="top-menu__title ">Dashboard</div>
+                        	    </a>
+                        	</li>
 
-                        @if(\Request::route()->getName()== "index.showCourse")
-                            <li>
-                                <a href="/dashboard/courses/{{$course->slug}}/edit"
-                                   class="top-menu">
-                                    <div class="top-menu__icon"><i data-feather="edit"></i></div>
-                                    <div class="top-menu__title"> Eπεξεργασία course</div>
-                                </a>
-                            </li>
-                            <li class="orange-line hidden">>
-                                <a href="#"
-                                   class="top-menu">
-                                    <div class="top-menu__icon"><i data-feather="home"></i></div>
-                                    <div class="top-menu__title"> Edit this material</div>
-                                </a>
-                            </li>
-                        @endif
+                        	@if(\Request::route()->getName()== "index.showCourse")
+                        	    <li>
+                        	        <a href="/dashboard/courses/{{$course->slug}}/edit"
+                        	           class="top-menu">
+                        	            <div class="top-menu__icon"><i data-feather="edit"></i></div>
+                        	            <div class="top-menu__title"> Eπεξεργασία course</div>
+                        	        </a>
+                        	    </li>
+                        	    <li class="orange-line hidden">>
+                        	        <a href="#"
+                        	           class="top-menu">
+                        	            <div class="top-menu__icon"><i data-feather="home"></i></div>
+                        	            <div class="top-menu__title"> Edit this material</div>
+                        	        </a>
+                        	    </li>
+                        	@endif
                         @endhasanyrole
                         <li class="orange-line intro-x">
                             <a href="{{route('index.userCourses',auth()->id())}}"

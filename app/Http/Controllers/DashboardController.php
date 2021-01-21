@@ -10,6 +10,7 @@ use App\Models\Role;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 
@@ -17,6 +18,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
+		if (Auth::user()->hasRole("instructor")) {
+			redirect("/dashboard/courses");
+		}
 
 		$today = date("Y-m-d H:i:s");
 		$lastYear =  date("Y-m-d H:i:s", strtotime("$today -1 year"));
