@@ -59,15 +59,18 @@ Route::prefix("course-ajax")->group(function() {
 });
 
 Route::prefix("section-ajax")->group(function() {
-	Route::post("remove-chapters", [SectionAjaxController::class, "removeChapters"]);
-    Route::patch("{material:id}/toggle-multiple-chapters", [SectionAjaxController::class, "toggleMultipleChapters"]);
-    Route::patch("{material:id}/toggle-chapter", [SectionAjaxController::class, "toggleChapter"]);
-    Route::patch("toggle-hightlight/{material:id}", [SectionAjaxController::class, "toggleHighlight"]);
-    Route::patch("chapters-priority", [SectionAjaxController::class, "chaptersPriority"]);
-	Route::post("add-content", [SectionAjaxController::class, "addNewChapter"]);
-	Route::patch('{material:id}/publish-chapter', [SectionAjaxController::class, "publishchapter"]);
+	// Route::post("remove-chapters", [SectionAjaxController::class, "removeChapters"]);
+	Route::middleware("can:update,course")->group(function() {
+		Route::post("{course:id}/remove-chapters", [SectionAjaxController::class, "removeChapters"]);
+	});
+	Route::post("{course:id}/add-content", [SectionAjaxController::class, "addNewChapter"]);
 
-	// Route::middleware("can:update,course")->group(function() {
-	// 	Route::post("{course:id}/remove-chapters", [SectionAjaxController::class, "removeChapters"]);
-	// });
+    Route::patch("{course:id}/{material:id}/toggle-multiple-chapters", [SectionAjaxController::class, "toggleMultipleChapters"]);
+    Route::patch("{course:id}/{material:id}/toggle-chapter", [SectionAjaxController::class, "toggleChapter"]);
+
+    Route::patch("{course:id}/{material:id}/toggle-hightlight", [SectionAjaxController::class, "toggleHighlight"]);
+	Route::patch("{course:id}/{material:id}/chapters-priority", [SectionAjaxController::class, "chaptersPriority"]);
+	
+	Route::patch('{course:id}/{material:id}/publish-chapter', [SectionAjaxController::class, "publishchapter"]);
+
 });

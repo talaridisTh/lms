@@ -11,7 +11,9 @@ use Illuminate\Support\Str;
 
 class SectionController extends Controller
 {
-	public function toggleHighlight(Material $material, Request $request) {
+	public function toggleHighlight(Request $request, Course $course, Material $material) {
+
+		$this->authorize("update", $course);
 
 		foreach ($request->materialIds as $id ) {
 			$material->chapters()
@@ -19,7 +21,9 @@ class SectionController extends Controller
 		}
 	}
 
-	public function toggleChapter(Request $request, Material $material) {
+	public function toggleChapter(Request $request, Course $course, Material $material) {
+
+		$this->authorize("update", $course);
 
 		$chapter = $material->chapters()
 			->wherePivot("material_id", $request->materialId)->first();
@@ -43,7 +47,9 @@ class SectionController extends Controller
 		echo Carbon::parse($chapter->pivot->publish_at)->format("Y-m-d H:i");
 	}
 
-	public function toggleMultipleChapters(Request $request, Material $material ) {
+	public function toggleMultipleChapters(Request $request, Course $course, Material $material ) {
+
+		$this->authorize("update", $course);
 
 		$now = Carbon::now();
 		$data = [
@@ -78,11 +84,11 @@ class SectionController extends Controller
 		echo json_encode($data);
 	}
 
-    public function removeChapters(Request $request) {
+    public function removeChapters(Request $request, Course $course) {
+
+		$this->authorize("update", $course);
 
 		$material = Material::find($request->sectionId);
-
-		$course = Course::find( $request->courseId );
 
 		$material->chapters()->orderBy("priority")
 			->each( function($chapter) use ($material, $request) {
@@ -104,9 +110,9 @@ class SectionController extends Controller
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	public function chaptersPriority(Request $request) {
+	public function chaptersPriority(Request $request, Course $course, Material $material) {
 
-		$material = Material::find( $request->sectionId );
+		$this->authorize("update", $course);
 
 		$lastInOrder = $material->chapters()
 			->orderBy("priority", "desc")->first()->pivot->priority;
@@ -140,11 +146,13 @@ class SectionController extends Controller
 		$material->updated_at = Carbon::now();
 		$material->save();
 
-		$sections = Course::find( $request->courseId )->materials()->where("type", "Section")->orderBy("priority")->get();
+		$sections = $course->materials()->where("type", "Section")->orderBy("priority")->get();
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	public function addNewChapter(Request $request) {
+	public function addNewChapter(Request $request, Course  $course) {
+
+		$this->authorize("update", $course);
 
 		$request->validate([
 			'title' => 'required'
@@ -173,13 +181,15 @@ class SectionController extends Controller
 				"publish_at" => date( "Y-m-d H:i:s", (time() - 10) )
 			]);
 
-		$sections = Course::find( $request->courseId )->materials()
+		$sections = $course->materials()
 			->where("type", "Section")->orderBy("priority")->get();
 
 		return View('components/admin/courses/sectionBuilder', ['sections' => $sections]);
 	}
 
-	public function publishchapter(Request $request, Material $material) {
+	public function publishchapter(Request $request, Course $course, Material $material) {
+
+		$this->authorize("update", $course);
 
 		$material->chapters()->updateExistingPivot($request->materialId, [
 			"publish_at" => $request->date

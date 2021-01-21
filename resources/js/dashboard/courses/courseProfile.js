@@ -842,8 +842,7 @@ function chapterPriorityInit() {
 
 			let sectionId = this.dataset.sectionId;
 
-			axios.patch(`/section-ajax/chapters-priority`, {
-				courseId, sectionId,
+			axios.patch(`/section-ajax/${courseId}/${sectionId}/chapters-priority`, {
 				materialId: this.dataset.materialId,
 				priority: {
 					new: this.value,
@@ -882,7 +881,7 @@ function chapterStatusInit() {
 
 		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section-ajax/${sectionId}/toggle-chapter`, {
+		axios.patch(`/section-ajax/${courseId}/${sectionId}/toggle-chapter`, {
 			materialId: this.dataset.materialId,
 			status: this.checked ? 1 : 0
 		})
@@ -1431,7 +1430,7 @@ function sectionAdditionHandler() {
 	data.append("type", type);
 	data.append("priority", priority);
 
-	axios.post( "/section-ajax/add-content", data )
+	axios.post( `/section-ajax/${courseId}/add-content`, data )
 		.then( res => {
 			let sectionsCnt = document.getElementsByClassName("accordion")[0];
 			sectionsCnt.innerHTML = res.data;
@@ -1599,7 +1598,7 @@ function activeMaterialsCheckboxHandler() {
 
 function toggleChapters( sectionId, ids, active, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section-ajax/${sectionId}/toggle-multiple-chapters`, {
+	axios.patch(`/section-ajax/${courseId}/${sectionId}/toggle-multiple-chapters`, {
 		ids, "status": active //! or inactive
 	})
 	.then( res => {
@@ -1773,7 +1772,7 @@ function toggleHighlight(materialIds, status) {
 
 function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
-	axios.patch(`/section-ajax/toggle-hightlight/${sectionId}`, {
+	axios.patch(`/section-ajax/${courseId}/${sectionId}/toggle-hightlight`, {
 		materialIds, status
 	})
 	.then( res => {
@@ -2311,7 +2310,7 @@ function chapterPublishApplyHandler(ev, picker) {
 	const materialId = this.dataset.materialId;
 	const date = picker.startDate.format('YYYY-MM-DD H:mm');
 
-	axios.patch(`/section-ajax/${sectionId}/publish-chapter`, {
+	axios.patch(`/section-ajax/${courseId}/${sectionId}/publish-chapter`, {
 		materialId, date
 	})
 	.then( res => {

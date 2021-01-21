@@ -39608,9 +39608,7 @@ function chapterPriorityInit() {
   $('.js-chapter-priority').on('keyup', function () {
     if (event.keyCode == 13 && !isNaN(this.value)) {
       var sectionId = this.dataset.sectionId;
-      axios.patch("/section-ajax/chapters-priority", {
-        courseId: courseId,
-        sectionId: sectionId,
+      axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/chapters-priority"), {
         materialId: this.dataset.materialId,
         priority: {
           "new": this.value,
@@ -39645,7 +39643,7 @@ function chapterStatusInit() {
     var _this4 = this;
 
     var sectionId = this.dataset.sectionId;
-    axios.patch("/section-ajax/".concat(sectionId, "/toggle-chapter"), {
+    axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/toggle-chapter"), {
       materialId: this.dataset.materialId,
       status: this.checked ? 1 : 0
     }).then(function (res) {
@@ -40059,7 +40057,7 @@ function sectionAdditionHandler() {
   data.append("sectionId", sectionId);
   data.append("type", type);
   data.append("priority", priority);
-  axios.post("/section-ajax/add-content", data).then(function (res) {
+  axios.post("/section-ajax/".concat(courseId, "/add-content"), data).then(function (res) {
     var sectionsCnt = document.getElementsByClassName("accordion")[0];
     sectionsCnt.innerHTML = res.data;
     var sections = sectionsCnt.getElementsByClassName("collapse");
@@ -40191,7 +40189,7 @@ function activeMaterialsCheckboxHandler() {
 }
 
 function toggleChapters(sectionId, ids, active, mainCnt, checkedboxes) {
-  axios.patch("/section-ajax/".concat(sectionId, "/toggle-multiple-chapters"), {
+  axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/toggle-multiple-chapters"), {
     ids: ids,
     "status": active //! or inactive
 
@@ -40341,7 +40339,7 @@ function toggleHighlight(materialIds, status) {
 }
 
 function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
-  axios.patch("/section-ajax/toggle-hightlight/".concat(sectionId), {
+  axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/toggle-hightlight"), {
     materialIds: materialIds,
     status: status
   }).then(function (res) {
@@ -40674,7 +40672,7 @@ function chapterPublishApplyHandler(ev, picker) {
   var sectionId = this.dataset.sectionId;
   var materialId = this.dataset.materialId;
   var date = picker.startDate.format('YYYY-MM-DD H:mm');
-  axios.patch("/section-ajax/".concat(sectionId, "/publish-chapter"), {
+  axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/publish-chapter"), {
     materialId: materialId,
     date: date
   }).then(function (res) {
