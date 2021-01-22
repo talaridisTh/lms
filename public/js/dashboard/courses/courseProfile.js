@@ -39846,17 +39846,22 @@ function removeFiles(ids) {
 //* active users table filters
 
 
-var activeUserslistLength = $('#active-users-list_length > label')[0];
-var activeUsersFilter = createRoleSelect("active-user-roles");
-activeUserslistLength.append(activeUsersFilter);
-$("#active-user-roles").select2({
-  minimumResultsForSearch: -1
-});
-$("#active-user-roles").on("change", function () {
-  var label = $("#select2-active-user-roles-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value);
-  courseUsersDatatable.columns(2).search(this.value).draw();
-}); //* add new users table filters
+var activeUserslistLength = $('#active-users-list_length')[0];
+
+if (activeUserslistLength) {
+  var activeUsersFilter = createRoleSelect("active-user-roles");
+  activeUserslistLength.append(activeUsersFilter);
+  $("#active-user-roles").select2({
+    minimumResultsForSearch: -1,
+    width: "150px"
+  });
+  $("#active-user-roles").on("change", function () {
+    var label = $("#select2-active-user-roles-container")[0];
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value);
+    courseUsersDatatable.columns(2).search(this.value).draw();
+  });
+} //* add new users table filters
+
 
 var addUsersListLength = $('#add-users-list_length > label');
 var addUsersFilter = createRoleSelect("add-users-roles");

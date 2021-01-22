@@ -1136,23 +1136,27 @@ function removeFiles(ids) {
 //!######################################
 
 //* active users table filters
-let activeUserslistLength = $('#active-users-list_length > label')[0];
-let activeUsersFilter = createRoleSelect("active-user-roles");
+let activeUserslistLength = $('#active-users-list_length')[0];
 
-activeUserslistLength.append( activeUsersFilter );
-
-$("#active-user-roles").select2({
-	minimumResultsForSearch: -1,
-});
-
-$("#active-user-roles").on( "change", function () {
-
-	let label = $("#select2-active-user-roles-container")[0];
-	utilities.filterStyle( label, this.value )
-
-	courseUsersDatatable.columns(2).search( this.value ).draw();
-
-});
+if (activeUserslistLength) {
+	let activeUsersFilter = createRoleSelect("active-user-roles");
+	
+	activeUserslistLength.append( activeUsersFilter );
+	
+	$("#active-user-roles").select2({
+		minimumResultsForSearch: -1,
+		width: "150px"
+	});
+	
+	$("#active-user-roles").on( "change", function () {
+	
+		let label = $("#select2-active-user-roles-container")[0];
+		utilities.filterStyle( label, this.value )
+	
+		courseUsersDatatable.columns(2).search( this.value ).draw();
+	
+	});
+}
 
 //* add new users table filters
 let addUsersListLength = $('#add-users-list_length > label');

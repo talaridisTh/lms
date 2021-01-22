@@ -299,56 +299,57 @@
 		</div>
 	</div><!-- ./additionnal content modal -->
 
-	<!-- add users modal -->
-	<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-xl">
-			<div class="modal-content">
-				<div class="modal-header modal-colored-header bg-primary">
-					<h4 class="modal-title" id="add-user-modalLabel">Προσθήκη Χρηστών</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-				</div>
-				<div class="modal-body table-cnt">
-					<table id="add-users-list" class="js-table table w-100 nowrap modal-table js-remove-table-classes">
-						<thead>
-							<tr>
-								<th class="text-center">
-									<div class='icheck-primary d-inline'>
-										<input id='add-user-checkbox' type='checkbox' autocomplete='off'>
-										<label for='add-user-checkbox'></label>
-									</div>
-								</th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Email</th>
-								<th class="text-center">Τηλεφωνο</th>
-								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center"></th>
-							</tr>
-						</thead>
-						<tbody class="tables-hover-effect table-text-center table-vertical-align-middle"></tbody>
-						<tfoot>
-							<tr>
-								<th class="text-center"></th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Email</th>
-								<th class="text-center">Τηλεφωνο</th>
-								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center"></th>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button id="add-multiple-users-btn" type="button"
-						class="btn btn-secondary" data-text="Προσθήκη Επιλογών"
-						data-enabled-color="btn-primary" data-disabled-color="btn-secondary" disabled>
-						Προσθήκη Επιλογών (0)
-					</button>
-					<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- ./add users modal -->
-
+	@can('create', App\Models\Course::class)
+		<!-- add users modal -->
+		<div id="add-user-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-user-modalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-xl">
+				<div class="modal-content">
+					<div class="modal-header modal-colored-header bg-primary">
+						<h4 class="modal-title" id="add-user-modalLabel">Προσθήκη Χρηστών</h4>
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					</div>
+					<div class="modal-body table-cnt">
+						<table id="add-users-list" class="js-table table w-100 nowrap modal-table js-remove-table-classes">
+							<thead>
+								<tr>
+									<th class="text-center">
+										<div class='icheck-primary d-inline'>
+											<input id='add-user-checkbox' type='checkbox' autocomplete='off'>
+											<label for='add-user-checkbox'></label>
+										</div>
+									</th>
+									<th class="text-center">Ονοματεπώνυμο</th>
+									<th class="text-center">Email</th>
+									<th class="text-center">Τηλεφωνο</th>
+									<th class="text-center">Ιδιότητα</th>
+									<th class="text-center"></th>
+								</tr>
+							</thead>
+							<tbody class="tables-hover-effect table-text-center table-vertical-align-middle"></tbody>
+							<tfoot>
+								<tr>
+									<th class="text-center"></th>
+									<th class="text-center">Ονοματεπώνυμο</th>
+									<th class="text-center">Email</th>
+									<th class="text-center">Τηλεφωνο</th>
+									<th class="text-center">Ιδιότητα</th>
+									<th class="text-center"></th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+					<div class="modal-footer">
+						<button id="add-multiple-users-btn" type="button"
+							class="btn btn-secondary" data-text="Προσθήκη Επιλογών"
+							data-enabled-color="btn-primary" data-disabled-color="btn-secondary" disabled>
+							Προσθήκη Επιλογών (0)
+						</button>
+						<button type="button" class="btn btn-light" data-dismiss="modal">Έξοδος</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- ./add users modal -->
+	@endcan
 	<!-- add materials modal -->
 	<div id="add-materials-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="add-materials-modalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-xl">
@@ -413,13 +414,15 @@
 						Υλικό
 					</a>
 				</li>
-				<li class="nav-item">
-					<a href="#users" id="users-tab-btn" class="nav-link"
-						data-toggle="tab" aria-expanded="true"
-						>
-						Χρήστες
-					</a>
-				</li>
+				@can('create', App\Models\Course::class)
+					<li class="nav-item">
+						<a href="#users" id="users-tab-btn" class="nav-link"
+							data-toggle="tab" aria-expanded="true"
+							>
+							Χρήστες
+						</a>
+					</li>
+				@endcan
 				<li class="nav-item">
 					<a href="#sections" id="sections-tab-btn" class="nav-link"
 						data-toggle="tab" aria-expanded="true">
@@ -811,57 +814,59 @@
 
 				</div><!-- materials tab-pane -->
 
-				<div id="users" class="tab-pane table-cnt mb-3">
-					<div class="row my-3">
-						<div class="col-sm-1">
-						</div>
-						<div class="col-sm-11 d-flex justify-content-end">
-							<button id="material-modal-shown-btn" type="button"
-								class="btn btn-primary" data-toggle="modal"
-								data-target="#add-user-modal">
-								<i class="mdi mdi-account-multiple-plus mr-2"></i>
-								Προσθήκη Χρηστών
-							</button>
-							<div class="dropdown ml-2">
-								<button class="btn btn-secondary dropdown-toggle"
-									type="button" id="active-users-bulk" data-toggle="dropdown"
-									aria-haspopup="true" aria-expanded="false" disabled>
-									Επιλογές (0)
+				@can('create', App\Models\Course::class)
+					<div id="users" class="tab-pane table-cnt mb-3">
+						<div class="row my-3">
+							<div class="col-sm-1">
+							</div>
+							<div class="col-sm-11 d-flex justify-content-end">
+								<button id="material-modal-shown-btn" type="button"
+									class="btn btn-primary" data-toggle="modal"
+									data-target="#add-user-modal">
+									<i class="mdi mdi-account-multiple-plus mr-2"></i>
+									Προσθήκη Χρηστών
 								</button>
-								<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
-									<a id="remove-selected-users-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
+								<div class="dropdown ml-2">
+									<button class="btn btn-secondary dropdown-toggle"
+										type="button" id="active-users-bulk" data-toggle="dropdown"
+										aria-haspopup="true" aria-expanded="false" disabled>
+										Επιλογές (0)
+									</button>
+									<div class="dropdown-menu dropdown-menu-animated dropdown-menu-right py-0" aria-labelledby="dropdownMenuButton">
+										<a id="remove-selected-users-btn" class="dropdown-item py-2" href="#">Αφαίρεση επιλογών</a>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
 
-					<table id="active-users-list" class="js-table table w-100 nowrap js-remove-table-classes">
-						<thead>
-							<tr>
-								<th class="text-center">
-									<div class='icheck-primary d-inline'>
-										<input type='checkbox' id='select-all-active-users' autocomplete='off'>
-										<label for='select-all-active-users'></label>
-									</div>
-								</th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center">Τηλεφωνο</th>
-								<th class="text-center">Ημ. Εγγραφής</th>
-							</tr>
-						</thead>
-						<tbody class="tables-hover-effect table-text-center"></tbody>
-						<tfoot>
-							<tr>
-								<th class="text-center"></th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center">Τηλεφωνο</th>
-								<th class="text-center">Ημ. Εγγραφής</th>
-							</tr>
-						</tfoot>
-					</table>
-				</div><!-- users tab-pane -->
+						<table id="active-users-list" class="js-table table w-100 nowrap js-remove-table-classes">
+							<thead>
+								<tr>
+									<th class="text-center">
+										<div class='icheck-primary d-inline'>
+											<input type='checkbox' id='select-all-active-users' autocomplete='off'>
+											<label for='select-all-active-users'></label>
+										</div>
+									</th>
+									<th class="text-center">Ονοματεπώνυμο</th>
+									<th class="text-center">Ιδιότητα</th>
+									<th class="text-center">Τηλεφωνο</th>
+									<th class="text-center">Ημ. Εγγραφής</th>
+								</tr>
+							</thead>
+							<tbody class="tables-hover-effect table-text-center"></tbody>
+							<tfoot>
+								<tr>
+									<th class="text-center"></th>
+									<th class="text-center">Ονοματεπώνυμο</th>
+									<th class="text-center">Ιδιότητα</th>
+									<th class="text-center">Τηλεφωνο</th>
+									<th class="text-center">Ημ. Εγγραφής</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div><!-- users tab-pane -->
+				@endcan
 
 				<div id="sections" class="tab-pane mb-3">
 					<div class="accordion" id="section-accordion">
