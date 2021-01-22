@@ -86,12 +86,12 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'title', name: 'title' },
 		{ data: 'toggle', name: 'status', className: "align-middle text-center" },
-		{ data: 'curator', name: 'curator', className: "align-middle text-center", visible: false},
 		{ data: 'topics', name: 'topics', className: "align-middle text-wrap min-width-200" },
 		{ data: 'version', name: 'version', className: "align-middle text-center" },
 		{
 			data: 'created_at',
 			name: 'created_at',
+			searchable: false,
 			className: "align-middle text-center cursor-default",
 			render: function(data) {
 				let date = new Date(data);
@@ -103,7 +103,7 @@ const coursesDatatable = $("#courses-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
-		{ data: 'publish', name: "publish_at", className: "align-middle text-center cursor-default min-width-170", searchable: false },
+		{ data: 'publish', name: "publish_at", className: "align-middle text-center cursor-default", searchable: false },
 		{ data: 'status', name: 'status', visible: false },
 	],
 	language: utilities.tableLocale,
@@ -291,15 +291,15 @@ tablesLengthLabel.append( activeCoursesFilter );
 
 $("#course-state-select").select2({
 	minimumResultsForSearch: -1,
-})
+});
 
-$("#course-state-select").change( function () {
+$("#course-state-select").on("change", function () {
 
 	let label = $("#select2-course-state-select-container")[0];
 
 	utilities.filterStyle( label, this.value );
 
-	coursesDatatable.column(8).search( this.value ).draw();
+	coursesDatatable.column(7).search( this.value ).draw();
 
 });
 
@@ -309,16 +309,12 @@ $("#topic-filter").select2({
 
 });
 
-$("#topic-filter").change( function() {
+$("#topic-filter").on("change", function() {
 
 	let label = $("#select2-topic-filter-container")[0];
 
 	utilities.filterStyle( label, this.value );
-
-	//! mia stili einai krimeni gi auto kanoume search tin stili 5
-	//! kai oxi tin 4
-	coursesDatatable.column(4).search( this.value ).draw();
-
+	coursesDatatable.column(3).search( this.value ).draw();
 });
 
 let courseTypesSelect = utilities.createCourseTypeSelect("course-type-selection");
@@ -333,7 +329,7 @@ $("#course-type-selection").change( function() {
 	let label = $("#select2-course-type-selection-container")[0];
 	utilities.filterStyle( label, this.value );
 
-	coursesDatatable.column(5).search( this.value ).draw();
+	coursesDatatable.column(4).search( this.value ).draw();
 
 });
 
