@@ -68,7 +68,7 @@
 		</div>
 
 		<table id="mails-datatable" class="table w-100 nowrap js-remove-table-classes">
-			<thead class="d-none">
+			<thead>
 				<tr>
 					<th class="text-center">ID</th>
 					<th class="text-center">
@@ -77,21 +77,25 @@
 							<label for='select-all-mails'></label>
 						</div>
 					</th>
-					<th class="text-center">Περιεχόμενο</th>
+					<th class="text-center">Θέμα</th>
+					<th class="text-center">Συντάκτης</th>
 					<th class="text-center">Ημ. Αποστολής</th>
 					<th class="text-center">Ημ. Αποστολής</th>
 				</tr>
 			</thead>
 			<tbody class="tables-hover-effect"></tbody>
+			<tfoot>
+				<tr>
+					<th class="text-center">ID</th>
+					<th class="text-center"></th>
+					<th class="text-center">Θέμα</th>
+					<th class="text-center">Συντάκτης</th>
+					<th class="text-center">Ημ. Αποστολής</th>
+					<th class="text-center">Ημ. Αποστολής</th>
+				</tr>
+			</tfoot>
 		</table>
 	</div>
-
-	<select class="form-control" id="status-filter">
-		<option value="">Όλα τα Mail</option>
-		{{-- einai i times apo RegEx min skefteis na ta pirakseis!!! --}}
-		<option value="^(?!\s*$).+">Απεσταλμένα</option>
-		<option value="^$">Πρόχειρο</option>
-	</select>
 
 @endsection
 

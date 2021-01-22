@@ -2,6 +2,12 @@ import utilities from "../main";
 
 const mailsDatatable = $("#mails-datatable").DataTable({
 	order: [0, "desc"],
+	searchDelay: "1000",
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 1, width: "50px"},
+		{ targets: 3, width: "250px"},
+	],
 	processing: true,
 	serverSide: true,
 	ajax: {
@@ -16,11 +22,13 @@ const mailsDatatable = $("#mails-datatable").DataTable({
 		// }
 	},
 	columns: [
-		{ data: 'id', visible: false},
+		{ data: 'id', name: "id", visible: false },
 		{ data: 'action', name: 'action', className: "align-middle text-center", searchable:false, orderable: false },
-		{ data: 'message' },
-		{ data: 'details', className: "align-middle", searchable:false, orderable: false },
+		{ data: 'message', className: "align-middle" },
+		{ data: 'author.last_name', name: "author.last_name", className: "align-middle text-center" },
+		{ data: 'details', className: "align-middle position-relative", searchable:false, orderable: false },
 		{ data: 'sent_at', name: "sent_at", visible: false },
+		{ data: 'subject', name: "subject", visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
@@ -36,22 +44,6 @@ const mailsDatatable = $("#mails-datatable").DataTable({
 		$(".js-delete-mail").on("click", deleteBtnHandler);
 	}
 });
-
-const lengthCnt = document.querySelector("#mails-datatable_length > label");
-const statusFilter = document.getElementById("status-filter");
-
-lengthCnt.after(statusFilter);
-
-$(statusFilter).select2({
-	width: "125px",
-	minimumResultsForSearch: -1
-});
-
-$(statusFilter).on("change", function() {
-	//! to value einai REGEX! sto draft kanei match empty strings!
-	mailsDatatable.column( 4 ).search( this.value, true, false ).draw();
-
-})
 
 async function deleteBtnHandler() {
 	try {

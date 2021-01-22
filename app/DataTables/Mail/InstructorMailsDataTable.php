@@ -3,17 +3,15 @@
 namespace App\DataTables\Mail;
 
 use App\Models\Mail;
-use App\Models\User;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
-class MailsDataTable extends DataTable
+class InstructorMailsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -23,13 +21,9 @@ class MailsDataTable extends DataTable
      */
     public function dataTable($query)
     {
-		$query->with("author")
-			->select("mails.*");
-
-		return datatables()
-			->eloquent($query)
+        return datatables()::of($query)
 			->addColumn('action', function($data) {
-				 
+
 				$slug = Str::random(10);
 
 				return "<div class='icheck-primary d-inline'>
@@ -37,44 +31,27 @@ class MailsDataTable extends DataTable
 					<label for='$slug'></label>
 				</div>";
 			})
-			->editColumn("author.last_name", function($mail) {
-
-				return $mail->author->fullName;
-			})
 			->addColumn("message", function($data) {
 
 				$title = Str::limit($data->subject, 30);
 				$content = Str::limit(strip_tags($data->content), 80);
 
-				return "<p class='mb-0'>
-						<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'>
-							<span class='h5 mb-1'>$title</span>
-							<br>
-							<span class='block'>$content</span>
-						</a>
-					</p>";
+				if ( is_null($data->sent_at) ) {
+					return "<a href='/dashboard/email/compose/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
+				}
 
-				return "<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'>
-					<strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
+				return "<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
 			})
 			->addColumn("details", function($data) {
 
 				$sentAt = is_null($data->sent_at) 
 					? "<p class='time-cnt mb-0 text-center'><strong>-</strong></p>"
 					: "<p class='time-cnt mb-0 text-right'><strong class='text-right'>". Carbon::parse($data->sent_at)->diffForHumans(null, false, true) ."</strong></p>";
-				
+
 				return "$sentAt <div class='tool-cnt text-left'>
 						<i class='js-delete-mail mdi mdi-delete-circle-outline font-24 custom-danger cursor-pointer'
 							data-mail-id='$data->id'></i>
 					</div>";
-				
-			})
-			->filterColumn("author.last_name", function($query, $keyword) {
-
-				$query->whereHas("author", function($sub) use ($keyword) {
-					$sub->where("last_name", "like", "%$keyword%")
-						->orWhere("first_name", "like", "%$keyword%");
-				});
 
 			})
 			->rawColumns(["action", "message", "details"]);
@@ -83,7 +60,7 @@ class MailsDataTable extends DataTable
     /**
      * Get query source of dataTable.
      *
-     * @param \Mail $model
+     * @param \App\Models\Mail $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function query(Mail $model)
@@ -99,7 +76,7 @@ class MailsDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('mailsdatatable-table')
+                    ->setTableId('mail/instructormails-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -140,6 +117,6 @@ class MailsDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Mails_' . date('YmdHis');
+        return 'Mail/InstructorMails_' . date('YmdHis');
     }
 }

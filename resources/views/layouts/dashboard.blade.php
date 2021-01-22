@@ -235,7 +235,10 @@
                             </div>
 
                             <!-- item-->
-                            <a href="/dashboard/users/{{ Auth::user()->slug }}" class="dropdown-item notify-item"
+							<a href="{{ auth()->user()->hasRole("instructor") 
+								? "/home/account/". Auth::user()->slug 
+								: "/dashboard/users/". Auth::user()->slug }}"
+								class="dropdown-item notify-item"
                                draggable="false">
                                 <i class="mdi mdi-account-circle mr-1"></i>
                                 <span>My Account</span>
@@ -250,35 +253,37 @@
                         </div>
                     </li>
 
-                </ul>
-                <button class="button-menu-mobile open-left disable-btn">
-                    <i class="mdi mdi-menu"></i>
-                </button>
-                <div class="app-search dropdown d-none d-lg-block">
-                    <form action="/dashboard/search" method="GET">
-                        @csrf
-                        <div class="input-group">
-                            <input id="top-search" class="js-global-search form-control dropdown-toggle"
-                                   name="search" type="text" placeholder="Search..." autocomplete="off">
-                            <span class="mdi mdi-magnify search-icon"></span>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit" draggable="false">Search</button>
-                            </div>
-                        </div>
-                    </form>
+				</ul>
+				@hasanyrole("super-admin|admin")
+					<button class="button-menu-mobile open-left disable-btn">
+						<i class="mdi mdi-menu"></i>
+					</button>
+					<div class="app-search dropdown d-none d-lg-block">
+						<form action="/dashboard/search" method="GET">
+							@csrf
+							<div class="input-group">
+								<input id="top-search" class="js-global-search form-control dropdown-toggle"
+									name="search" type="text" placeholder="Search..." autocomplete="off">
+								<span class="mdi mdi-magnify search-icon"></span>
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="submit" draggable="false">Search</button>
+								</div>
+							</div>
+						</form>
 
-                    <div id="search-dropdown" class="results-cnt dropdown-menu dropdown-menu-animated">
+						<div id="search-dropdown" class="results-cnt dropdown-menu dropdown-menu-animated">
 
-                        <div class="row mx-0">
-							<span class="py-2 d-block text-center mx-auto font-16">
-								<i class="mdi mdi-magnify mr-1"></i>
-								<u>3 Characters or more</u>
-							</span>
-                        </div>
+							<div class="row mx-0">
+								<span class="py-2 d-block text-center mx-auto font-16">
+									<i class="mdi mdi-magnify mr-1"></i>
+									<u>3 Characters or more</u>
+								</span>
+							</div>
 
-                    </div>
+						</div>
 
-                </div>
+					</div>
+				@endhasanyrole
             </div>
             <!-- end Topbar -->
 

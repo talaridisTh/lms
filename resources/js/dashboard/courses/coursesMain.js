@@ -65,6 +65,7 @@ $("#cover-input").change( function() {
 //!##########################################
 const coursesDatatable = $("#courses-datatable").DataTable({
 	order: [6, "desc"],
+	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	autoWidth: false,

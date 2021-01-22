@@ -4068,6 +4068,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 var mailsDatatable = $("#mails-datatable").DataTable({
   order: [0, "desc"],
+  searchDelay: "1000",
+  autoWidth: false,
+  columnDefs: [{
+    targets: 1,
+    width: "50px"
+  }, {
+    targets: 3,
+    width: "250px"
+  }],
   processing: true,
   serverSide: true,
   ajax: {
@@ -4085,6 +4094,7 @@ var mailsDatatable = $("#mails-datatable").DataTable({
   },
   columns: [{
     data: 'id',
+    name: "id",
     visible: false
   }, {
     data: 'action',
@@ -4093,15 +4103,24 @@ var mailsDatatable = $("#mails-datatable").DataTable({
     searchable: false,
     orderable: false
   }, {
-    data: 'message'
+    data: 'message',
+    className: "align-middle"
+  }, {
+    data: 'author.last_name',
+    name: "author.last_name",
+    className: "align-middle text-center"
   }, {
     data: 'details',
-    className: "align-middle",
+    className: "align-middle position-relative",
     searchable: false,
     orderable: false
   }, {
     data: 'sent_at',
     name: "sent_at",
+    visible: false
+  }, {
+    data: 'subject',
+    name: "subject",
     visible: false
   }],
   language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
@@ -4115,17 +4134,6 @@ var mailsDatatable = $("#mails-datatable").DataTable({
     $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
     $(".js-delete-mail").on("click", deleteBtnHandler);
   }
-});
-var lengthCnt = document.querySelector("#mails-datatable_length > label");
-var statusFilter = document.getElementById("status-filter");
-lengthCnt.after(statusFilter);
-$(statusFilter).select2({
-  width: "125px",
-  minimumResultsForSearch: -1
-});
-$(statusFilter).on("change", function () {
-  //! to value einai REGEX! sto draft kanei match empty strings!
-  mailsDatatable.column(4).search(this.value, true, false).draw();
 });
 
 function deleteBtnHandler() {

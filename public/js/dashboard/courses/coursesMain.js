@@ -3337,6 +3337,7 @@ $("#cover-input").change(function () {
 
 var coursesDatatable = $("#courses-datatable").DataTable({
   order: [6, "desc"],
+  searchDelay: "1000",
   processing: true,
   serverSide: true,
   autoWidth: false,
