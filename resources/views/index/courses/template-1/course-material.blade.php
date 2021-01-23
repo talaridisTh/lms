@@ -13,13 +13,10 @@
 
         <figure>
             @if($material->video_link)
-                <div class="relative block h-0 p-0 overflow-hidden"
-                     style="padding-top:56.25%;">
-                    <iframe class="absolute top-0 left-0 bottom-0 w-full h-full"
-                            src="https://player.vimeo.com/video/{{$material->video_link}}"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
+                <div class="embed-responsive aspect-ratio-16/9">
+                    <iframe class="embed-responsive-item"
+                            src="https://player.vimeo.com/video/{{$material->video_link}}">
+                    </iframe>
                 </div>
 
             @elseif($material->type=="PDF")
