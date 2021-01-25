@@ -119,9 +119,13 @@ Route::group(['middleware' => ['auth', "status", "role:instructor|admin|super-ad
     Route::post('/dashboard/email', 'MailController@sendNewsletter');
     Route::delete('/dashboard/email/{mail:id}/delete', 'MailController@delete');
     Route::post('email/select-users', 'Ajax\MailController@selectUsersDatatable');
-    Route::post('email/recipients-data-table', 'Ajax\MailController@recipeintsDatatable');
-    Route::post('email/data-table', 'Ajax\MailController@mailsDataTable');
+	Route::post('email/recipients-data-table', 'Ajax\MailController@recipeintsDatatable');
+	
+	Route::post('email/data-table', 'Ajax\MailController@mailsDataTable');
+	Route::post('email/instructors-data-table', 'Ajax\MailController@instructorsMailsDataTable');
+	
 	Route::post('email/delete', 'Ajax\MailController@delete');
+	Route::post('email/instructor-delete', 'Ajax\MailController@instructorMailDelete');
 	
     //! media Routes
 	Route::get("/media", "MediaController@index")->name("media.index");

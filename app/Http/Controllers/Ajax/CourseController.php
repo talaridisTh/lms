@@ -29,8 +29,17 @@ class CourseController extends Controller
     }
 
 	public function courseSearch(Request $request) {
-		$courses = Course::where("title", "LIKE", "%$request->search%")
-			->select("id", "title")->paginate(10);
+
+		if ( auth()->user()->hasRole(["super-admin", "admin"]) ) {
+
+			$courses = Course::where("title", "LIKE", "%$request->search%")
+				->select("id", "title")->paginate(10);
+		}
+		else {
+			$courses = Course::where("user_id", auth()->user()->id)
+				->where("title", "LIKE", "%$request->search%")
+				->select("id", "title")->paginate(10);
+		}
 
 		$result = [];
 		$result["results"] = [];

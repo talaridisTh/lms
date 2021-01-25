@@ -24,8 +24,15 @@ class UsersDataTable extends DataTable
 		$recipients = explode(",", $request->recipients);
 
 		$query = User::role(["admin", "instructor", "student", "partner"])
-			->whereNotIn("users.id", $recipients)->with("courses", "bundles", "roles")
-			->select("users.*");
+			->whereNotIn("users.id", $recipients)->with([
+				"courses" => function($subquery) {
+					$subquery->select("courses.id", "courses.title");
+				}, 
+				"roles" => function($subquery) {
+					$subquery->select("roles.id", "roles.name");
+				}
+			])
+			->select("users.id", "users.first_name", "users.last_name");
 
         return datatables()->of($query)
             ->addColumn('action', function($data) {
@@ -47,11 +54,6 @@ class UsersDataTable extends DataTable
 			->addColumn("courses", function($data) {
 				return $data->courses->map(function ($course) {
 					return $course->title;
-				})->implode(", ");
-			})
-			->addColumn("bundles", function($data) {
-				return $data->bundles->map(function ($bundle) {
-					return $bundle->title;
 				})->implode(", ");
 			})
 			->addColumn("btn", function($data) {
@@ -77,13 +79,6 @@ class UsersDataTable extends DataTable
 			->filterColumn("courses.title", function($query, $keyword) {
 				
 				$query->whereHas("courses", function($sub) use ($keyword) {
-					$sub->where("title", $keyword);
-				});
-
-			})
-			->filterColumn("bundles.title", function($query, $keyword) {
-				
-				$query->whereHas("bundles", function($sub) use ($keyword) {
 					$sub->where("title", $keyword);
 				});
 

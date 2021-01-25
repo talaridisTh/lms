@@ -61,11 +61,11 @@
 									</div>
 								</th>
 								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center min-width-200 w-300px">Courses</th>
-								<th class="text-center min-width-200 w-300px">Bundles</th>
-								<th class="text-center min-width-200 w-300px">Email</th>
 								<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
 								<th class="text-center"></th>
+								<th class="text-center">Courses</th>
+								<th>Όνομα</th>
+								<th>Επώνυμο</th>
 							</tr>
 						</thead>
 						<tbody class="tables-hover-effect"></tbody>
@@ -73,11 +73,11 @@
 							<tr>
 								<th class="text-center"></th>
 								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Courses</th>
-								<th class="text-center">Bundles</th>
-								<th class="text-center">Email</th>
 								<th class="text-center">Ιδιότητα</th>
 								<th class="text-center"></th>
+								<th class="text-center">Courses</th>
+								<th>Όνομα</th>
+								<th>Επώνυμο</th>
 							</tr>
 						</tfoot>
 					</table>
@@ -113,10 +113,10 @@
 	
 	
 	<div class="container content-width">
-		<div class="mt-1 mb-1 text-right">{{-- an figi to value den mporo na kano isset() sto controller --}}
-			<button form="mail-form" class="btn btn-danger ml-1" type="submit" name="button" value="send">
+		<div class="mt-1 mb-1 text-right">
+			<a href="/dashboard/email/compose/{{ $mail->id }}" class="btn btn-danger ml-1">
 				Προώθηση
-			</button>
+			</a>
 			<button id="delete-btn" class="btn btn-light">
 				Διαγραφή
 			</button>
@@ -129,18 +129,13 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="#history-tab" class="nav-link" data-toggle="tab" aria-expanded="true">
-					Ιστορικό
-				</a>
-			</li>
-			<li class="nav-item">
-				<a href="#forward-tab" class="nav-link" data-toggle="tab" aria-expanded="true">
+				<a href="#recipients-tab" class="nav-link" data-toggle="tab" aria-expanded="true">
 					Παραλήπτες
 				</a>
 			</li>
 		</ul>
 
-		<div class="tab-content">
+		<div class="tab-content mb-3">
 			<div id="view-mail-tab" class="tab-pane show active">
 				
 				<div class="position-relative" style="width: 100%; height: 100vh">
@@ -150,7 +145,7 @@
 				</div>
 			</div>
 
-			<div id="history-tab" class="tab-pane">
+			<div id="recipients-tab" class="tab-pane">
 				<table id="history-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 					<thead>
 						<tr>
@@ -166,7 +161,7 @@
 									<td>{{ $user->last_name }} {{ $user->first_name }}</td>
 									<td class="text-center">{{ $user->email }}</td>
 									<td class="text-center">{{ $user->phone }}</td>
-								</tr>							
+								</tr>
 							@endforeach							
 						@endif
 					</tbody>
@@ -179,62 +174,6 @@
 					</tfoot>
 				</table>
 			</div>
-
-			<div id="forward-tab" class="tab-pane">
-				<div class="text-right mb-3">
-					<button class="btn btn-primary" data-toggle="modal" data-target="#users-table-modal">
-						Προσθήκη
-					</button>
-					<button id="remove-recipients-btn" class="btn btn-secondary" disabled
-						data-enabled-color="btn-secondary" data-disabled-color="btn-secondary" data-text="Αφαίρεση">
-						Αφαίρεση (0)
-					</button>
-				</div>
-				
-				<table id="recipients-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
-					<thead>
-						<tr>
-							<th class="text-center" style="width: 35px">
-								<div class='icheck-primary d-inline'>
-									<input type='checkbox' id='select-all-recipients' autocomplete='off'>
-									<label for='select-all-recipients'></label>
-								</div>
-							</th>
-							<th class="text-center">Ονοματεπώνυμο</th>
-							<th class="text-center min-width-200 w-300px">Courses</th>
-							<th class="text-center min-width-200 w-300px">Bundles</th>
-							<th class="text-center min-width-200 w-300px">Email</th>
-							<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
-							<th class="text-center" style="width: 35px"></th>
-							<th>Όνομα</th>
-							<th>Επώνυμο</th>
-						</tr>
-					</thead>
-					<tbody class="tables-hover-effect"></tbody>
-					<tfoot>
-						<tr>
-							<th class="text-center"></th>
-							<th class="text-center">Ονοματεπώνυμο</th>
-							<th class="text-center">Courses</th>
-							<th class="text-center">Bundles</th>
-							<th class="text-center">Email</th>
-							<th class="text-center">Ιδιότητα</th>
-							<th class="text-center"></th>
-							<th>Όνομα</th>
-							<th>Επώνυμο</th>
-						</tr>
-					</tfoot>
-				</table>
-			</div>
-
-			<form id="mail-form" action="/dashboard/email" method="POST" autocomplete="off">
-
-				@csrf
-
-				<input type="text" name="subject" value="{{ old("subject", $mail->subject) }}" hidden>
-				<input type="text" name="content" value="{{ old("content", $mail->content) }}" hidden>
-				<input id="recipients-input" type="text" name="recipients" hidden>
-			</form>
 
 			<form id="delete-mail-form" action="/dashboard/email/{{ $mail->id }}/delete" method="POST">
 				@csrf

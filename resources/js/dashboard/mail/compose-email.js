@@ -10,6 +10,12 @@ utilities.tableLocale.zeroRecords = "Δεν βρέθηκαν παραλήπτε�
 
 const usersDatatable = $("#users-datatable").DataTable({
 	order: [1, "asc"],
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 0, width: "50px"},
+		{ targets: 2, width: "130px"},
+		{ targets: 3, width: "100px"},
+	],
 	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
@@ -26,11 +32,9 @@ const usersDatatable = $("#users-datatable").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'name', name: 'users.last_name', className: "align-middle" },
-		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap", visible: false },
-		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap", visible: false },
-		{ data: 'email', name: 'email', className: "align-middle text-center text-wrap" },
 		{ data: 'role', name: 'roles.name', className: "align-middle text-center text-wrap" },
 		{ data: 'btn', className: "align-middle text-center text-wrap", orderable: false, searchable: false },
+		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap", visible: false },
 		{ data: 'first_name', name: "first_name", visible: false },
 		{ data: 'last_name', name: "last_name", visible: false },
 	],
@@ -56,6 +60,11 @@ const usersDatatable = $("#users-datatable").DataTable({
 
 const recipientsDatatable = $("#recipients-datatable").DataTable({
 	order: [1, "asc"],
+	autoWidth: false,
+	columnDefs: [
+		{ targets: [0, 3], width: "50px"},
+		{ targets: 2, width: "200px"},
+	],
 	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
@@ -72,11 +81,9 @@ const recipientsDatatable = $("#recipients-datatable").DataTable({
 	columns: [
 		{ data: 'action', name: 'action', className: "align-middle text-center", orderable: false },
 		{ data: 'name', name: 'users.last_name', className: "align-middle" },
-		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap", visible: false},
-		{ data: 'bundles', name: 'bundles.title', className: "align-middle text-center text-wrap", visible: false},
-		{ data: 'email', name: 'email', className: "align-middle text-center text-wrap" },
 		{ data: 'role', name: 'roles.name', className: "align-middle text-center text-wrap" },
 		{ data: 'btn', className: "align-middle text-center text-wrap", orderable: false, searchable: false },
+		{ data: 'courses', name: 'courses.title', className: "align-middle text-center text-wrap", visible: false},
 		{ data: 'first_name', name: "first_name", visible: false },
 		{ data: 'last_name', name: "last_name", visible: false },
 	],
@@ -205,39 +212,39 @@ function createSelect(id) {
 		const label = $('#select2-course-user-filter-container')[0];
 
 		utilities.filterStyle( label, this.value.trim() );
-		usersDatatable.column(2).search( this.value ).draw();
+		usersDatatable.column(4).search( this.value ).draw();
 	})
 })();
 
-(function bundlesFilter() {
-	const lengthCnt = document.getElementById("users-datatable_length");
-	const select = createSelect("bundle-user-filter");
+// (function bundlesFilter() {
+// 	const lengthCnt = document.getElementById("users-datatable_length");
+// 	const select = createSelect("bundle-user-filter");
 
-	lengthCnt.append(select);
+// 	lengthCnt.append(select);
 
-	$(select).select2({
-		placeholder: "Όλα τα Bundles",
-		width: "150px",
-		ajax: {
-			url: "/bundles/json-search",
-			delay: 1000,
-			dataType: "json",
-			data: function(params) {
-				return {
-					search: params.term,
-					page: params.page || 1
-				}
-			}
-		}
-	})
+// 	$(select).select2({
+// 		placeholder: "Όλα τα Bundles",
+// 		width: "150px",
+// 		ajax: {
+// 			url: "/bundles/json-search",
+// 			delay: 1000,
+// 			dataType: "json",
+// 			data: function(params) {
+// 				return {
+// 					search: params.term,
+// 					page: params.page || 1
+// 				}
+// 			}
+// 		}
+// 	})
 
-	$(select).on("change", function() {
-		const label = $('#select2-bundle-user-filter-container')[0];
+// 	$(select).on("change", function() {
+// 		const label = $('#select2-bundle-user-filter-container')[0];
 
-		utilities.filterStyle( label, this.value.trim() );
-		usersDatatable.column(3).search( this.value ).draw();
-	})
-})();
+// 		utilities.filterStyle( label, this.value.trim() );
+// 		usersDatatable.column(3).search( this.value ).draw();
+// 	})
+// })();
 
 (function rolesFilter() {
 	const lengthCnt = document.getElementById("users-datatable_length");
@@ -260,7 +267,7 @@ function createSelect(id) {
 		const label = $('#select2-user-role-filter-container')[0];
 
 		utilities.filterStyle( label, this.value );
-		usersDatatable.column(5).search( this.value ).draw();
+		usersDatatable.column(2).search( this.value ).draw();
 	})
 })();
 
@@ -291,39 +298,39 @@ function createSelect(id) {
 		const label = $('#select2-course-recipients-filter-container')[0];
 
 		utilities.filterStyle( label, this.value.trim() );
-		recipientsDatatable.column(2).search( this.value ).draw();
+		recipientsDatatable.column(4).search( this.value ).draw();
 	})
 })();
 
-(function bundleRecipientsFilter() {
-	const lengthCnt = document.getElementById("recipients-datatable_length");
-	const select = createSelect("bundle-recipients-filter");
+// (function bundleRecipientsFilter() {
+// 	const lengthCnt = document.getElementById("recipients-datatable_length");
+// 	const select = createSelect("bundle-recipients-filter");
 
-	lengthCnt.append(select);
+// 	lengthCnt.append(select);
 
-	$(select).select2({
-		placeholder: "Όλα τα Bundles",
-		width: "150px",
-		ajax: {
-			url: "/bundles/json-search",
-			delay: 1000,
-			dataType: "json",
-			data: function(params) {
-				return {
-					search: params.term,
-					page: params.page || 1
-				}
-			}
-		}
-	})
+// 	$(select).select2({
+// 		placeholder: "Όλα τα Bundles",
+// 		width: "150px",
+// 		ajax: {
+// 			url: "/bundles/json-search",
+// 			delay: 1000,
+// 			dataType: "json",
+// 			data: function(params) {
+// 				return {
+// 					search: params.term,
+// 					page: params.page || 1
+// 				}
+// 			}
+// 		}
+// 	})
 
-	$(select).on("change", function() {
-		const label = $('#select2-bundle-recipients-filter-container')[0];
+// 	$(select).on("change", function() {
+// 		const label = $('#select2-bundle-recipients-filter-container')[0];
 
-		utilities.filterStyle( label, this.value.trim() );
-		recipientsDatatable.column(3).search( this.value ).draw();
-	})
-})();
+// 		utilities.filterStyle( label, this.value.trim() );
+// 		recipientsDatatable.column(3).search( this.value ).draw();
+// 	})
+// })();
 
 (function rolesFilter() {
 	const lengthCnt = document.getElementById("recipients-datatable_length");
@@ -346,7 +353,7 @@ function createSelect(id) {
 		const label = $('#select2-recipient-role-filter-container')[0];
 
 		utilities.filterStyle( label, this.value );
-		recipientsDatatable.column(5).search( this.value ).draw();
+		recipientsDatatable.column(2).search( this.value ).draw();
 	})
 })();
 

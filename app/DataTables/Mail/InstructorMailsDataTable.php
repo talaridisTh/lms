@@ -44,11 +44,8 @@ class InstructorMailsDataTable extends DataTable
 			})
 			->addColumn("details", function($data) {
 
-				$sentAt = is_null($data->sent_at) 
-					? "<p class='time-cnt mb-0 text-center'><strong>-</strong></p>"
-					: "<p class='time-cnt mb-0 text-right'><strong class='text-right'>". Carbon::parse($data->sent_at)->diffForHumans(null, false, true) ."</strong></p>";
-
-				return "$sentAt <div class='tool-cnt text-left'>
+				return "<p class='time-cnt mb-0 text-right'><strong class='text-right'>". Carbon::parse($data->sent_at)->diffForHumans(null, false, true) ."</strong></p>
+					<div class='tool-cnt text-left'>
 						<i class='js-delete-mail mdi mdi-delete-circle-outline font-24 custom-danger cursor-pointer'
 							data-mail-id='$data->id'></i>
 					</div>";
@@ -65,7 +62,9 @@ class InstructorMailsDataTable extends DataTable
      */
     public function query(Mail $model)
     {
-        return $model->newQuery();
+		return $model->where("user_id", auth()->user()->id)
+			->withTrashed()
+			->where("instructor_deleted_at", null);
     }
 
     /**

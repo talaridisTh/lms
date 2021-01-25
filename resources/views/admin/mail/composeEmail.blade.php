@@ -60,11 +60,11 @@
 								</div>
 							</th>
 							<th class="text-center">Ονοματεπώνυμο</th>
-							<th class="text-center min-width-200 w-300px">Courses</th>
-							<th class="text-center min-width-200 w-300px">Bundles</th>
-							<th class="text-center min-width-200 w-300px">Email</th>
-							<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
+							<th class="text-center">Ιδιότητα</th>
 							<th class="text-center"></th>
+							<th class="text-center">Courses</th>
+							<th>Όνομα</th>
+							<th>Επώνυμο</th>
 						</tr>
 					</thead>
 					<tbody class="tables-hover-effect"></tbody>
@@ -72,11 +72,11 @@
 						<tr>
 							<th class="text-center"></th>
 							<th class="text-center">Ονοματεπώνυμο</th>
-							<th class="text-center">Courses</th>
-							<th class="text-center">Bundles</th>
-							<th class="text-center">Email</th>
 							<th class="text-center">Ιδιότητα</th>
 							<th class="text-center"></th>
+							<th class="text-center">Courses</th>
+							<th>Όνομα</th>
+							<th>Επώνυμο</th>
 						</tr>
 					</tfoot>
 				</table>
@@ -115,10 +115,7 @@
 
 		<div class="mt-1 mb-1 text-right">{{-- an figi to value den mporo na kano isset() sto controller --}}
 			<button class="js-submit-btn btn btn-danger ml-1" name="button" value="send">
-				Send
-			</button>
-			<button class="js-submit-btn btn btn-secondary" name="button" value="draft">
-				Set Draft
+				Αποστολή
 			</button>
 		</div>
 
@@ -194,11 +191,9 @@
 								</div>
 							</th>
 							<th class="text-center">Ονοματεπώνυμο</th>
-							<th class="text-center min-width-200 w-300px">Courses</th>
-							<th class="text-center min-width-200 w-300px">Bundles</th>
-							<th class="text-center min-width-200 w-300px">Email</th>
-							<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
-							<th class="text-center" style="width: 35px"></th>
+							<th class="text-center">Ιδιότητα</th>
+							<th class="text-center"></th>
+							<th class="text-center">Courses</th>
 							<th>Όνομα</th>
 							<th>Επώνυμο</th>
 						</tr>
@@ -208,11 +203,9 @@
 						<tr>
 							<th class="text-center"></th>
 							<th class="text-center">Ονοματεπώνυμο</th>
-							<th class="text-center">Courses</th>
-							<th class="text-center">Bundles</th>
-							<th class="text-center">Email</th>
 							<th class="text-center">Ιδιότητα</th>
 							<th class="text-center"></th>
+							<th class="text-center">Courses</th>
 							<th>Όνομα</th>
 							<th>Επώνυμο</th>
 						</tr>

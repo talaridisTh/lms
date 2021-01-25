@@ -7,12 +7,13 @@ async function deleteBtnHandler() {
 
 		if ( !isConfirmed ) return;
 
-		deleteMails("/email/delete", [this.dataset.mailId], mailsDatatable);
+		deleteMails("/email/instructor-delete", [this.dataset.mailId], instructorsMailsDatatable);
 	}
 	catch (err) {
 		console.log(err);
-		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε ...");
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε ...")
 	}
+
 }
 
 function checkeBoxesEventListener() {
@@ -26,7 +27,8 @@ function checkeBoxesEventListener() {
 	});
 }
 
-const mailsDatatable = $("#mails-datatable").DataTable({
+
+const instructorsMailsDatatable = $("#instructor-mails-datatable").DataTable({
 	order: [0, "desc"],
 	searchDelay: "1000",
 	autoWidth: false,
@@ -37,7 +39,7 @@ const mailsDatatable = $("#mails-datatable").DataTable({
 	processing: true,
 	serverSide: true,
 	ajax: {
-		url: "/email/data-table",
+		url: "/email/instructors-data-table",
 		headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
 		type: "post",
 		// data: function( d ) {
@@ -51,14 +53,12 @@ const mailsDatatable = $("#mails-datatable").DataTable({
 		{ data: 'id', name: "id", visible: false },
 		{ data: 'action', name: 'action', className: "align-middle text-center", searchable:false, orderable: false },
 		{ data: 'message', className: "align-middle" },
-		{ data: 'author.last_name', name: "author.last_name", className: "align-middle text-center" },
 		{ data: 'details', className: "align-middle position-relative", searchable:false, orderable: false },
 		{ data: 'sent_at', name: "sent_at", visible: false },
-		{ data: 'subject', name: "subject", visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
-		let lenthSelection = $("select[name='mails-datatable_length']");
+		let lenthSelection = $("select[name='instructor-mails-datatable_length']");
 
 		lenthSelection.select2({
 			minimumResultsForSearch: -1,
@@ -71,14 +71,6 @@ const mailsDatatable = $("#mails-datatable").DataTable({
 		utilities.resetBulk( $("#mail-delete-btn"), $("#select-all-mails"), "Διαγραφή (0)");
 		$(".js-delete-mail").on("click", deleteBtnHandler);
 	}
-});
-
-$("#select-all-mails").on("change", function() {
-	let minorCheckboxes = $(".js-mail-checkbox");
-	let bulkBtn = $("#mail-delete-btn")[0];
-
-	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
-
 });
 
 $("#mail-delete-btn").on("click", async function() {
@@ -95,10 +87,18 @@ $("#mail-delete-btn").on("click", async function() {
 
 		if ( !isConfirmed ) return;
 
-		deleteMails("/email/delete", mailIds, mailsDatatable);
+		deleteMails("/email/instructor-delete", mailIds, instructorsMailsDatatable);
 	}
 	catch (err) {
 		console.log(err);
 		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
 	}
+});
+
+$("#select-all-mails").on("change", function() {
+	let minorCheckboxes = $(".js-mail-checkbox");
+	let bulkBtn = $("#mail-delete-btn")[0];
+
+	utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn );
+
 });
