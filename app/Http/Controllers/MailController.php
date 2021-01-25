@@ -58,8 +58,8 @@ class MailController extends Controller
 
 		foreach($users as $user) {
 			array_push($recipients["ids"], $user->id);
-			//  Mail::to($user->email)
-			//  	->send(new Email($request->subject, $request->content));
+			 Mail::to($user->email)
+			 	->send(new Email($request->subject, $request->content));
 		}
 
 		$this->storeEmail($request, $recipients, $request->button);
