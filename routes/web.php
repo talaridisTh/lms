@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use App\Models\Course;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -16,6 +18,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get("/tteestt", function() {
+
+
+	$courseIds = User::find(173)->courses()->pluck("courses.id")->toArray();
+	$userIds = DB::table("course_user")->whereIn("course_id", $courseIds)
+		->select("user_id")
+		->pluck("user_id")->toArray();
+		// ->get();
+
+	// $userIds = array_diff($userIds, [90, 48]);
+
+	// $users = User::whereIn("id", $userIds)->with("roles")->get();
+
+	dd($courseIds);
+});
+
 Auth::routes();
 //! 404
 /*todo na gini 404 selida*/

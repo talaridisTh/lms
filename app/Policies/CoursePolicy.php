@@ -53,8 +53,16 @@ class CoursePolicy
      */
     public function update(User $user, Course $course)
     {
+		if ( $user->hasRole(["super-admin", "admin"]) ) {
 
-        return $user->id === $course->user_id || $user->hasRole(["super-admin", "admin"]);
+			return true;
+		}
+		elseif ( $user->hasRole("instructor") && $user->courses->contains($course->id) ) {
+
+			return true;
+		}
+
+		return false;
     }
 
     /**

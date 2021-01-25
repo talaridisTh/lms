@@ -10,6 +10,7 @@ use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
+use Illuminate\Support\Facades\DB;
 
 class UsersDataTable extends DataTable
 {
@@ -22,19 +23,45 @@ class UsersDataTable extends DataTable
     public function dataTable($query, Request $request)
     {
 		$recipients = explode(",", $request->recipients);
+		array_push($recipients, auth()->user()->id);
 
-		$query = User::role(["admin", "instructor", "student", "partner"])
-			->whereNotIn("users.id", $recipients)->with([
-				"courses" => function($subquery) {
-					$subquery->select("courses.id", "courses.title");
-				}, 
-				"roles" => function($subquery) {
-					$subquery->select("roles.id", "roles.name");
-				}
-			])
-			->select("users.id", "users.first_name", "users.last_name");
+		if (auth()->user()->hasRole(["super-admin", "admin"])) {
+			$query = User::role(["admin", "instructor", "student", "partner"])
+				->whereNotIn("users.id", $recipients)->with([
+					"courses" => function($subquery) {
+						$subquery->select("courses.id", "courses.title");
+					}, 
+					"roles" => function($subquery) {
+						$subquery->select("roles.id", "roles.name");
+					}
+				])
+				->select("users.id", "users.first_name", "users.last_name");
+		}
+		else {
+			//! ids olon ton course pou exei o eisigitis
+			$courseIds = User::find(auth()->user()->id)->courses()
+				->pluck("courses.id")->toArray();
 
-        return datatables()->of($query)
+			//! ola ta id ton xriton pou pou briskonte se auta ta course
+			$userIds = DB::table("course_user")->whereIn("course_id", $courseIds)
+				->pluck("user_id")->toArray();
+
+			//! afairoume ta ids ton xriston pou exoun idi epilegei
+			$userIds = array_diff($userIds, $recipients);
+
+			//! epistrefoume tous ipolipous
+			$query = User::whereIn("users.id", $userIds)->with([
+					"courses" => function($subquery) {
+						$subquery->select("courses.id", "courses.title");
+					}, 
+					"roles" => function($subquery) {
+						$subquery->select("roles.id", "roles.name");
+					}
+				])
+				->select("users.id", "users.first_name", "users.last_name");
+		}
+
+        return datatables()->eloquent($query)
             ->addColumn('action', function($data) {
 
 				$pattern = "/[-!$%^&*(@)_+|~=`{}\[\]:\";'<>?,.\/]/m";
@@ -79,7 +106,7 @@ class UsersDataTable extends DataTable
 			->filterColumn("courses.title", function($query, $keyword) {
 				
 				$query->whereHas("courses", function($sub) use ($keyword) {
-					$sub->where("title", $keyword);
+					$sub->where("title", "like", "%$keyword%");
 				});
 
 			})

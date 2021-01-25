@@ -3,6 +3,7 @@
 namespace App\DataTables\Courses;
 
 use App\Models\Course;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
@@ -25,14 +26,16 @@ class CoursesDataTable extends DataTable {
         if (!is_null($request->startDate) && !is_null($request->endDate)) {
 
             $query->where(function ($subquery) use ($request) {
-				$subquery->whereBetween('publish_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
-					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				$subquery->whereBetween('courses.publish_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
+					->orWhereBetween('courses.created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
 			})->with("topics");
 		}
 		else {
 
             $query->with("topics");
-        }
+		}
+		
+		$query->select("courses.*");
 
         return datatables()::of($query)
             ->addColumn('action', function ($data) {
@@ -116,11 +119,11 @@ class CoursesDataTable extends DataTable {
      */
     public function query(Course $course) {
 
-		if ( ! auth()->user()->hasRole(["super-admin", "admin"]) ) {
-			return $course->where("user_id", auth()->user()->id);
+		if ( auth()->user()->hasRole(["super-admin", "admin"]) ) {
+			return $course->newQuery();
 		}
 		
-        return $course->newQuery();
+		return User::find(auth()->user()->id)->courses();
     }
 
     /**

@@ -36,9 +36,9 @@ class CourseController extends Controller
 				->select("id", "title")->paginate(10);
 		}
 		else {
-			$courses = Course::where("user_id", auth()->user()->id)
-				->where("title", "LIKE", "%$request->search%")
-				->select("id", "title")->paginate(10);
+			$courses = auth()->user()->courses()
+				->where("courses.title", "like", "%$request->search%")
+				->select("courses.id", "courses.title")->paginate(10);
 		}
 
 		$result = [];
