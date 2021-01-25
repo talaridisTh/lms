@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 27);
+/******/ 	return __webpack_require__(__webpack_require__.s = 28);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7216,7 +7216,7 @@ $(".col-span-12").on("click", ".js-update-submit", /*#__PURE__*/_asyncToGenerato
 
 /***/ }),
 
-/***/ 27:
+/***/ 28:
 /*!****************************************************!*\
   !*** multi ./resources/js/index/user/user-edit.js ***!
   \****************************************************/

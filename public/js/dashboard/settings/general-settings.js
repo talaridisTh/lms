@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 23);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -18079,7 +18079,7 @@ for (var i = 0; i < dropArea.length; i++) {
 
 /***/ }),
 
-/***/ 22:
+/***/ 23:
 /*!*******************************************************************!*\
   !*** multi ./resources/js/dashboard/settings/general-settings.js ***!
   \*******************************************************************/
