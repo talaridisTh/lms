@@ -61,16 +61,16 @@ class DashboardController extends Controller
 			->limit(5)
 			->get();
 
-		$topBundles = DB::table("bundle_user")
-			->join("bundles", "bundle_user.bundle_id", "=", "bundles.id")
-			->join("model_has_roles", "bundle_user.user_id", "=", "model_has_roles.model_id")
-			->where("model_has_roles.role_id", 4)
-			->select(
-				"bundles.title",
-				DB::raw('COUNT(model_has_roles.model_id) as students')
-			)
-			->groupBy("bundles.title")->orderBy("students", "desc")
-			->limit(5)->get();
+		// $topBundles = DB::table("bundle_user")
+		// 	->join("bundles", "bundle_user.bundle_id", "=", "bundles.id")
+		// 	->join("model_has_roles", "bundle_user.user_id", "=", "model_has_roles.model_id")
+		// 	->where("model_has_roles.role_id", 4)
+		// 	->select(
+		// 		"bundles.title",
+		// 		DB::raw('COUNT(model_has_roles.model_id) as students')
+		// 	)
+		// 	->groupBy("bundles.title")->orderBy("students", "desc")
+		// 	->limit(5)->get();
 
 		$recentCourses = Course::orderBy("created_at", "desc")
 		 	->where('user_id', "!=", 2)->orWhere("user_id", null)->limit(5)->get();
@@ -101,7 +101,7 @@ class DashboardController extends Controller
 			'activeBundles' => $activeBundles,
 			'activeStudents' => $activeStudents,
 			'topCourses' => $topCourses,
-			'topBundles' => $topBundles,
+			// 'topBundles' => $topBundles,
 			'usersPerMonth' => json_encode($usersPerMonth),
 			'recentCourses' => $recentCourses,
 			'topInstructors' => $topInstructors,

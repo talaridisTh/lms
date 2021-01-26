@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Notifications\NewUserNotification;
+use Spatie\Activitylog\Models\Activity;
 
 class User extends Authenticatable {
 
@@ -52,7 +53,14 @@ class User extends Authenticatable {
             "seen_message": 0,
             "seen_task": 0
         }'
-    ];
+	];
+	
+	public function activity() {
+
+		return $this->morphMany(Activity::class, "causer", "causer_type", "causer_id");
+
+		// return $this->hasMany(Activity::class, "causer_id");
+	}
 
 	public function mails() {
 

@@ -35,40 +35,40 @@ new Chart(topCoursesCanvas, {
     }
 });
 
-const topBundles = document.getElementsByClassName("js-top-bundles");
-const topBundlesData = categoryStudentsCountBuilder( topBundles );
-const topBundlesCanvas = document.getElementById("top-bundles");
+// const topBundles = document.getElementsByClassName("js-top-bundles");
+// const topBundlesData = categoryStudentsCountBuilder( topBundles );
+// const topBundlesCanvas = document.getElementById("top-bundles");
 
-new Chart(topBundlesCanvas, {
-	type: 'doughnut',
-	position: "bottom",
-    data: {
-        labels: topBundlesData.titles,
-        datasets: [{
-            data: topBundlesData.students,
-            backgroundColor: [
-				'rgba(83, 109, 230, 0.8)',
-				'rgba(16, 196, 105, 0.8)',
-				'rgba(249, 200, 81, 0.8)',
-				'rgba(255, 91, 91, 0.8)',
-				'rgba(2, 168, 181, 0.8)'
-			],
-            borderColor: "#fff",
-            borderWidth: 1
-        }]
-    },
-    options: {
-		cutoutPercentage: 50,
-		legend: {
-			position: "bottom",
-			labels: {
-				fontColor: "#a5b3c0",
-				fontFamily: "Open Sans, sans-serif"
+// new Chart(topBundlesCanvas, {
+// 	type: 'doughnut',
+// 	position: "bottom",
+//     data: {
+//         labels: topBundlesData.titles,
+//         datasets: [{
+//             data: topBundlesData.students,
+//             backgroundColor: [
+// 				'rgba(83, 109, 230, 0.8)',
+// 				'rgba(16, 196, 105, 0.8)',
+// 				'rgba(249, 200, 81, 0.8)',
+// 				'rgba(255, 91, 91, 0.8)',
+// 				'rgba(2, 168, 181, 0.8)'
+// 			],
+//             borderColor: "#fff",
+//             borderWidth: 1
+//         }]
+//     },
+//     options: {
+// 		cutoutPercentage: 50,
+// 		legend: {
+// 			position: "bottom",
+// 			labels: {
+// 				fontColor: "#a5b3c0",
+// 				fontFamily: "Open Sans, sans-serif"
 
-			}
-		},		
-    }
-});
+// 			}
+// 		},		
+//     }
+// });
 
 function categoryStudentsCountBuilder( element ) {
 	const titles = [];
