@@ -24,25 +24,34 @@ class HomeworksDataTable extends DataTable
 		if (!is_null($request->startDate) && !is_null($request->endDate)) {
 
             $query->where(function ($subquery) use ($request) {
-				$subquery->whereBetween('updated_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
-					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+				$subquery->whereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
 			});
 		}
 
+		$query->select("homeworks.*");
+
         return datatables()
             ->eloquent($query)
-			->addColumn("student", function($homework) {
+			->editColumn("subject", function($homework) {
 				
-				return "<p class='mb-0'><a class='h5 custom-link-primary' href='/dashboard/users/". $homework->student->slug ."'>".$homework->student->fullname."</a></p>
-					<p class='mb-0'>".$homework->subject."</p>
-					<a class='js-view-homework custom-link-primary' href='#'
+				return "<a class='h5 mb-0 js-view-homework custom-link-primary' href='javascript:void(0)'
+					data-toggle='modal' data-target='#view-homework-modal' data-id='$homework->id'>$homework->subject</a>
+					<p class='mb-0'>".$homework->student->fullName."</p>
+					<a class='js-view-homework custom-link-primary' href='javascript:void(0)'
 						data-toggle='modal' data-target='#view-homework-modal' data-id='$homework->id'>View</a>";
 			})
 			->addColumn("course", function($homework) {
 
 				return $homework->course->title;
 			})
-			->rawColumns(["student"]);
+			->filterColumn("course.title", function($query, $keyword) {
+				
+				$query->whereHas("course", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
+			->rawColumns(["subject"]);
     }
 
     /**

@@ -1,6 +1,14 @@
 <div class="custom-border-bottom px-2">
 	<h4 class="mb-1">{{ $homework->subject }}</h4>
-	<p class="m-0 mb-1">Απο: <strong>{{ $homework->student->fullName }}</strong></p>
+	<p class="m-0 mb-1">Απο: 
+		@can('viewAny', App\Models\User::class)
+			<a class="h5 custom-link-primary" href="/dashboard/users/{{ $homework->student->slug }}">
+				{{ $homework->student->fullName }}
+			</a>
+		@else
+			<strong>{{ $homework->student->fullName }}</strong>
+		@endcan
+	</p>
 </div>
 
 <div class="p-2">

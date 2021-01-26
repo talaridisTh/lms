@@ -3314,8 +3314,8 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
     }
   },
   columns: [{
-    data: 'student',
-    name: 'student.last_name'
+    data: 'subject',
+    name: 'subject'
   }, {
     data: 'course',
     name: 'course.title',
@@ -3324,6 +3324,7 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
     data: 'created_at',
     name: 'homeworks.created_at',
     className: "align-middle text-center cursor-default",
+    searchable: false,
     render: function render(data) {
       var date = new Date(data);
       var day = date.toLocaleDateString().replace(/[/]/g, "-");
@@ -3332,6 +3333,14 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
       var time = "".concat(hours, ":").concat(minutes);
       return "<p class=\"mb-0\">".concat(day, "</p><p class=\"mb-0\">").concat(time, "</p>");
     }
+  }, {
+    data: 'student.last_name',
+    name: 'student.last_name',
+    visible: false
+  }, {
+    data: 'student.first_name',
+    name: 'student.first_name',
+    visible: false
   }],
   language: _main__WEBPACK_IMPORTED_MODULE_0__["default"].tableLocale,
   fnInitComplete: function fnInitComplete(oSettings, json) {
