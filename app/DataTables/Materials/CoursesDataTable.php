@@ -3,7 +3,8 @@
 namespace App\DataTables\Materials;
 
 use App\Models\Course;
-use App\Models\User;
+use App\Models\Material;
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
@@ -19,15 +20,16 @@ class CoursesDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query )
+    public function dataTable($query, Request $request)
     {
+		$query->with([
+			"topics" => function($subquery) {
+				$subquery->select("topics.id", "topics.title");
+			}
+		]);
+		$query->select("courses.*");
 
-
-
-        $query = Course::notInMaterialsCourse(request()->materialId);
-
-
-        return DataTables::of($query)
+        return datatables()->eloquent($query)
             ->addColumn('checkbox', function ($data) {
 
                 return "<div class='icheck-primary d-inline'>
@@ -35,21 +37,26 @@ class CoursesDataTable extends DataTable
 							<label for='$data->title'></label>
 						</div>";
             })
-            ->addColumn('curator', function ($data) {
-
-				if ( is_null($data->user_id) ) {
-					return "-";
-				}
-
-                return User::find($data->user_id)->fullName;
-            })
             ->addColumn('action', function ($data) {
 
                 return "<button class='js-add-courses btn btn-primary'>Προσθήκη</button>";
-            })
-        ->rawColumns(['checkbox',"curator","action"])
-            ->setRowAttr(['data-course-id' => function ($data) {
-                return [$data->id];
+			})
+			->addColumn("topics", function($course) {
+
+				return $course->topics->map(function($topic) {
+					return $topic->title;
+				})->implode(", ");
+			})
+			->filterColumn("topics.title", function($query, $keyword) {
+				
+				$query->whereHas("topics", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
+        	->rawColumns(['checkbox',"curator","action"])
+        	->setRowAttr(['data-course-id' => function ($data) {
+        	    return [$data->id];
             }]);
     }
 
@@ -59,9 +66,18 @@ class CoursesDataTable extends DataTable
      * @param \App\AddCourseInsideMaterial $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
+    public function query(Course $course, Request $request)
     {
-        return $model->newQuery();
+		$courseIds = Material::find($request->materialId)->courses()->pluck("courses.id")->toArray();
+		$courses = Course::whereNotIn("courses.id", $courseIds);
+		
+		if (auth()->user()->hasRole("instructor")) {
+			$instructorCourses = auth()->user()->courses()->pluck("courses.id")->toArray();
+			$courses->whereIn("courses.id", $instructorCourses);
+		}
+
+		return $courses;
+        // return $course->newQuery();
     }
 
     /**

@@ -73,6 +73,17 @@ function toastAlertDelete(text, icon = "warning") {
     });
 }
 
+function removeAlert(text, icon = "warning") {
+    return Swal.fire({
+        title: 'Είστε σίγουρος/η;',
+        text: text,
+        icon: icon,
+		showCancelButton: true,
+		confirmButtonColor: '#536de6',
+        confirmButtonText: 'Ναί, αφαίρεση!',
+        cancelButtonText: 'Άκυρο'
+    });
+}
 
 //!CONFIG
 //!============================================================
@@ -639,12 +650,12 @@ export default {
     paginationHandler,
     searchHandler,
     imageHandler,
-    paginationRequest,
-    resetGalleryBtns,
-    removeImageHandler,
-    removeImages,
-    articleConfig,
-    ALLOWEDTYPES,
-    passwordValidation
+	paginationRequest,
+	resetGalleryBtns,
+	removeImageHandler,
+	removeImages,
+	articleConfig,
+	ALLOWEDTYPES,
+	passwordValidation,
+	removeAlert
 }
-

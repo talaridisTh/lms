@@ -19,6 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get("/tteest", function() {
+	$courses = auth()->user()->courses()->pluck("courses.id")->toArray();
+
+	dd($courses);
+});
+
 Auth::routes();
 //! 404
 /*todo na gini 404 selida*/

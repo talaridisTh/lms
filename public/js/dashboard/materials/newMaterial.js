@@ -38816,6 +38816,19 @@ function toastAlertDelete(text) {
     confirmButtonText: 'Ναί, διαγραφή!',
     cancelButtonText: 'Άκυρο'
   });
+}
+
+function removeAlert(text) {
+  var icon = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "warning";
+  return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
+    title: 'Είστε σίγουρος/η;',
+    text: text,
+    icon: icon,
+    showCancelButton: true,
+    confirmButtonColor: '#536de6',
+    confirmButtonText: 'Ναί, αφαίρεση!',
+    cancelButtonText: 'Άκυρο'
+  });
 } //!CONFIG
 //!============================================================
 
@@ -39301,7 +39314,8 @@ function resetGalleryBtns(bulk, checkboxes) {
   removeImages: removeImages,
   articleConfig: articleConfig,
   ALLOWEDTYPES: ALLOWEDTYPES,
-  passwordValidation: passwordValidation
+  passwordValidation: passwordValidation,
+  removeAlert: removeAlert
 });
 
 /***/ }),
@@ -39524,7 +39538,7 @@ $("#material-create").on("submit", function (event) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\materials\newMaterial.js */"./resources/js/dashboard/materials/newMaterial.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\materials\newMaterial.js */"./resources/js/dashboard/materials/newMaterial.js");
 
 
 /***/ })
