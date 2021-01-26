@@ -53,7 +53,16 @@ class HomeworksDataTable extends DataTable
      */
     public function query(Homework $homework)
     {
-        return $homework->with("student", "course");
+		if (auth()->user()->hasRole(["super-admin", "admin"])) {
+			return $homework->with("student", "course");
+
+		}
+		else {
+			$courseIds = auth()->user()->courses()->pluck("courses.id");
+
+			return $homework->whereIn("course_id", $courseIds)
+				->with("student", "course");
+		}
     }
 
     /**
