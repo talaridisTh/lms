@@ -3337,6 +3337,7 @@ $("#cover-input").change(function () {
 
 var coursesDatatable = $("#courses-datatable").DataTable({
   order: [6, "desc"],
+  searchDelay: "1000",
   processing: true,
   serverSide: true,
   autoWidth: false,
@@ -3370,11 +3371,6 @@ var coursesDatatable = $("#courses-datatable").DataTable({
     name: 'status',
     className: "align-middle text-center"
   }, {
-    data: 'curator',
-    name: 'curator',
-    className: "align-middle text-center",
-    visible: false
-  }, {
     data: 'topics',
     name: 'topics',
     className: "align-middle text-wrap min-width-200"
@@ -3385,6 +3381,7 @@ var coursesDatatable = $("#courses-datatable").DataTable({
   }, {
     data: 'created_at',
     name: 'created_at',
+    searchable: false,
     className: "align-middle text-center cursor-default",
     render: function render(data) {
       var date = new Date(data);
@@ -3397,7 +3394,7 @@ var coursesDatatable = $("#courses-datatable").DataTable({
   }, {
     data: 'publish',
     name: "publish_at",
-    className: "align-middle text-center cursor-default min-width-170",
+    className: "align-middle text-center cursor-default",
     searchable: false
   }, {
     data: 'status',
@@ -3475,8 +3472,8 @@ function toggleStatus() {
   $('.js-toggle').on('change', function () {
     var _this = this;
 
-    axios.patch('/course-ajax/status', {
-      courseId: this.dataset.courseId,
+    var courseId = this.dataset.courseId;
+    axios.patch("/course-ajax/".concat(courseId, "/status"), {
       status: this.checked
     }).then(function (res) {
       var row = _this.findParent(2);
@@ -3549,19 +3546,17 @@ tablesLengthLabel.append(activeCoursesFilter);
 $("#course-state-select").select2({
   minimumResultsForSearch: -1
 });
-$("#course-state-select").change(function () {
+$("#course-state-select").on("change", function () {
   var label = $("#select2-course-state-select-container")[0];
   _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value);
-  coursesDatatable.column(8).search(this.value).draw();
+  coursesDatatable.column(7).search(this.value).draw();
 });
 tablesLengthLabel.append(topicFIlter);
 $("#topic-filter").select2({});
-$("#topic-filter").change(function () {
+$("#topic-filter").on("change", function () {
   var label = $("#select2-topic-filter-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value); //! mia stili einai krimeni gi auto kanoume search tin stili 5
-  //! kai oxi tin 4
-
-  coursesDatatable.column(4).search(this.value).draw();
+  _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value);
+  coursesDatatable.column(3).search(this.value).draw();
 });
 var courseTypesSelect = _main__WEBPACK_IMPORTED_MODULE_0__["default"].createCourseTypeSelect("course-type-selection");
 tablesLengthLabel.append(courseTypesSelect);
@@ -3571,7 +3566,7 @@ $("#course-type-selection").select2({
 $("#course-type-selection").change(function () {
   var label = $("#select2-course-type-selection-container")[0];
   _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value);
-  coursesDatatable.column(5).search(this.value).draw();
+  coursesDatatable.column(4).search(this.value).draw();
 }); //!##########################################
 //!				script functions			#
 //!##########################################

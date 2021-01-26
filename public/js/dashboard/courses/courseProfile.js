@@ -39608,9 +39608,7 @@ function chapterPriorityInit() {
   $('.js-chapter-priority').on('keyup', function () {
     if (event.keyCode == 13 && !isNaN(this.value)) {
       var sectionId = this.dataset.sectionId;
-      axios.patch("/section-ajax/chapters-priority", {
-        courseId: courseId,
-        sectionId: sectionId,
+      axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/chapters-priority"), {
         materialId: this.dataset.materialId,
         priority: {
           "new": this.value,
@@ -39645,7 +39643,7 @@ function chapterStatusInit() {
     var _this4 = this;
 
     var sectionId = this.dataset.sectionId;
-    axios.patch("/section-ajax/".concat(sectionId, "/toggle-chapter"), {
+    axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/toggle-chapter"), {
       materialId: this.dataset.materialId,
       status: this.checked ? 1 : 0
     }).then(function (res) {
@@ -39848,17 +39846,22 @@ function removeFiles(ids) {
 //* active users table filters
 
 
-var activeUserslistLength = $('#active-users-list_length > label')[0];
-var activeUsersFilter = createRoleSelect("active-user-roles");
-activeUserslistLength.append(activeUsersFilter);
-$("#active-user-roles").select2({
-  minimumResultsForSearch: -1
-});
-$("#active-user-roles").on("change", function () {
-  var label = $("#select2-active-user-roles-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value);
-  courseUsersDatatable.columns(2).search(this.value).draw();
-}); //* add new users table filters
+var activeUserslistLength = $('#active-users-list_length')[0];
+
+if (activeUserslistLength) {
+  var activeUsersFilter = createRoleSelect("active-user-roles");
+  activeUserslistLength.append(activeUsersFilter);
+  $("#active-user-roles").select2({
+    minimumResultsForSearch: -1,
+    width: "150px"
+  });
+  $("#active-user-roles").on("change", function () {
+    var label = $("#select2-active-user-roles-container")[0];
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value);
+    courseUsersDatatable.columns(2).search(this.value).draw();
+  });
+} //* add new users table filters
+
 
 var addUsersListLength = $('#add-users-list_length > label');
 var addUsersFilter = createRoleSelect("add-users-roles");
@@ -39988,8 +39991,7 @@ function sortInputsInit() {
   });
   $('.js-sort-input').on('keyup', function () {
     if (event.keyCode == 13 && !isNaN(this.value)) {
-      axios.patch('/course-ajax/priority', {
-        courseId: $('#course-materials-list')[0].dataset.courseId,
+      axios.patch("/course-ajax/".concat(courseId, "/priority"), {
         materialId: this.dataset.materialId,
         priority: {
           "new": this.value,
@@ -40060,7 +40062,7 @@ function sectionAdditionHandler() {
   data.append("sectionId", sectionId);
   data.append("type", type);
   data.append("priority", priority);
-  axios.post("/section-ajax/add-content", data).then(function (res) {
+  axios.post("/section-ajax/".concat(courseId, "/add-content"), data).then(function (res) {
     var sectionsCnt = document.getElementsByClassName("accordion")[0];
     sectionsCnt.innerHTML = res.data;
     var sections = sectionsCnt.getElementsByClassName("collapse");
@@ -40192,7 +40194,7 @@ function activeMaterialsCheckboxHandler() {
 }
 
 function toggleChapters(sectionId, ids, active, mainCnt, checkedboxes) {
-  axios.patch("/section-ajax/".concat(sectionId, "/toggle-multiple-chapters"), {
+  axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/toggle-multiple-chapters"), {
     ids: ids,
     "status": active //! or inactive
 
@@ -40209,8 +40211,7 @@ function toggleChapters(sectionId, ids, active, mainCnt, checkedboxes) {
 }
 
 function removeChapters(sectionId, chapterIds) {
-  axios.post("/section-ajax/remove-chapters", {
-    courseId: courseId,
+  axios.post("/section-ajax/".concat(courseId, "/remove-chapters"), {
     sectionId: sectionId,
     chapterIds: chapterIds
   }).then(function (res) {
@@ -40268,8 +40269,7 @@ function addUsers(userIds) {
 }
 
 function removeUsers(userIds, caller) {
-  axios.patch("/course-ajax/remove-users", {
-    courseId: courseId,
+  axios.patch("/course-ajax/".concat(courseId, "/remove-users"), {
     userIds: userIds
   }).then(function (res) {
     var message = userIds.length == 1 ? "Ένας χρήστης αφαιρέθηκε" : "".concat(userIds.length, " \u03C7\u03C1\u03AE\u03C3\u03C4\u03B5\u03C2 \u03B1\u03C6\u03B1\u03B9\u03C1\u03AD\u03B8\u03B7\u03BA\u03B1\u03BD");
@@ -40314,8 +40314,7 @@ function addChapterMaterials(chapterId, materialIds) {
 }
 
 function addCourseMaterials(materialId) {
-  axios.post("/course-ajax/add-materials", {
-    courseId: courseId,
+  axios.post("/course-ajax/".concat(courseId, "/add-materials"), {
     materialId: materialId
   }).then(function (res) {
     var message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : "".concat(materialId.length, " \u03B1\u03C1\u03C7\u03B5\u03AF\u03B1 \u03B5\u03BD\u03C4\u03CC\u03C2 \u03CD\u03BB\u03B7\u03C2");
@@ -40345,7 +40344,7 @@ function toggleHighlight(materialIds, status) {
 }
 
 function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
-  axios.patch("/section-ajax/toggle-hightlight/".concat(sectionId), {
+  axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/toggle-hightlight"), {
     materialIds: materialIds,
     status: status
   }).then(function (res) {
@@ -40359,17 +40358,16 @@ function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 }
 
 function removeMaterials(materials) {
-  axios.patch("/course-ajax/remove-materials", {
-    courseId: courseId,
+  axios.patch("/course-ajax/".concat(courseId, "/remove-materials"), {
     materials: materials
   }).then(function (res) {
     var message = materials.length == 1 ? "1 αρχείο εκτός ύλης" : "".concat(materials.length, " \u03B1\u03C1\u03C7\u03B5\u03AF\u03B1 \u03B5\u03BA\u03C4\u03CC\u03C2 \u03CD\u03BB\u03B7\u03C2");
-    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert('success', message);
     courseMaterialsTable.ajax.reload(null, false);
     remainingMaterialsTables.ajax.reload(null, false);
     _main__WEBPACK_IMPORTED_MODULE_0__["default"].resetAddButton($("#add-remaingings-btn"), $("#all-remainings-checkbox"));
     _main__WEBPACK_IMPORTED_MODULE_0__["default"].resetBulk($("#active-material-bulk"), $("#all-active-materials-checkbox"));
     $("#section-accordion").html(res.data);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert('info', message);
   })["catch"](function (err) {
     _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
   });
@@ -40679,7 +40677,7 @@ function chapterPublishApplyHandler(ev, picker) {
   var sectionId = this.dataset.sectionId;
   var materialId = this.dataset.materialId;
   var date = picker.startDate.format('YYYY-MM-DD H:mm');
-  axios.patch("/section-ajax/".concat(sectionId, "/publish-chapter"), {
+  axios.patch("/section-ajax/".concat(courseId, "/").concat(sectionId, "/publish-chapter"), {
     materialId: materialId,
     date: date
   }).then(function (res) {

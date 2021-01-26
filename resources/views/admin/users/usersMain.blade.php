@@ -87,6 +87,7 @@
                 <th class="text-center">Email</th>
                 <th class="text-center">Κατάσταση</th>
                 <th class="text-center">Ημ.Εγγραφής</th>
+                <th class="text-center">Δραστηριότητα</th>
             </tr>
             </thead>
             <tbody class="tables-hover-effect"></tbody>
@@ -101,6 +102,7 @@
                 <th class="text-center">Email</th>
                 <th class="text-center">Κατάσταση</th>
                 <th class="text-center">Ημ.Εγγραφής</th>
+                <th class="text-center">Δραστηριότητα</th>
             </tr>
             </tfoot>
         </table>

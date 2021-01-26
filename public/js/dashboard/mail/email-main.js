@@ -4059,6 +4059,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
+/* harmony import */ var _mail_helpers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mail-helpers */ "./resources/js/dashboard/mail/mail-helpers.js");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -4066,8 +4067,76 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
+
+
+function deleteBtnHandler() {
+  return _deleteBtnHandler.apply(this, arguments);
+}
+
+function _deleteBtnHandler() {
+  _deleteBtnHandler = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+    var _yield$swalDelete2, isConfirmed;
+
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+      while (1) {
+        switch (_context2.prev = _context2.next) {
+          case 0:
+            _context2.prev = 0;
+            _context2.next = 3;
+            return Object(_mail_helpers__WEBPACK_IMPORTED_MODULE_2__["swalDelete"])();
+
+          case 3:
+            _yield$swalDelete2 = _context2.sent;
+            isConfirmed = _yield$swalDelete2.isConfirmed;
+
+            if (isConfirmed) {
+              _context2.next = 7;
+              break;
+            }
+
+            return _context2.abrupt("return");
+
+          case 7:
+            Object(_mail_helpers__WEBPACK_IMPORTED_MODULE_2__["deleteMails"])("/email/delete", [this.dataset.mailId], mailsDatatable);
+            _context2.next = 14;
+            break;
+
+          case 10:
+            _context2.prev = 10;
+            _context2.t0 = _context2["catch"](0);
+            console.log(_context2.t0);
+            _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε ...");
+
+          case 14:
+          case "end":
+            return _context2.stop();
+        }
+      }
+    }, _callee2, this, [[0, 10]]);
+  }));
+  return _deleteBtnHandler.apply(this, arguments);
+}
+
+function checkeBoxesEventListener() {
+  var minorCheckboxes = $(".js-mail-checkbox");
+  var mainCheckbox = $("#select-all-mails")[0];
+  var bulkBtn = $("#mail-delete-btn")[0];
+  minorCheckboxes.on("change", function () {
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
+  });
+}
+
 var mailsDatatable = $("#mails-datatable").DataTable({
   order: [0, "desc"],
+  searchDelay: "1000",
+  autoWidth: false,
+  columnDefs: [{
+    targets: 1,
+    width: "50px"
+  }, {
+    targets: 3,
+    width: "250px"
+  }],
   processing: true,
   serverSide: true,
   ajax: {
@@ -4085,6 +4154,7 @@ var mailsDatatable = $("#mails-datatable").DataTable({
   },
   columns: [{
     data: 'id',
+    name: "id",
     visible: false
   }, {
     data: 'action',
@@ -4093,15 +4163,24 @@ var mailsDatatable = $("#mails-datatable").DataTable({
     searchable: false,
     orderable: false
   }, {
-    data: 'message'
+    data: 'message',
+    className: "align-middle"
+  }, {
+    data: 'author.last_name',
+    name: "author.last_name",
+    className: "align-middle text-center"
   }, {
     data: 'details',
-    className: "align-middle",
+    className: "align-middle position-relative",
     searchable: false,
     orderable: false
   }, {
     data: 'sent_at',
     name: "sent_at",
+    visible: false
+  }, {
+    data: 'subject',
+    name: "subject",
     visible: false
   }],
   language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
@@ -4113,20 +4192,87 @@ var mailsDatatable = $("#mails-datatable").DataTable({
   },
   drawCallback: function drawCallback() {
     $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+    checkeBoxesEventListener();
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].resetBulk($("#mail-delete-btn"), $("#select-all-mails"), "Διαγραφή (0)");
     $(".js-delete-mail").on("click", deleteBtnHandler);
   }
 });
-var lengthCnt = document.querySelector("#mails-datatable_length > label");
-var statusFilter = document.getElementById("status-filter");
-lengthCnt.after(statusFilter);
-$(statusFilter).select2({
-  width: "125px",
-  minimumResultsForSearch: -1
+$("#select-all-mails").on("change", function () {
+  var minorCheckboxes = $(".js-mail-checkbox");
+  var bulkBtn = $("#mail-delete-btn")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 });
-$(statusFilter).on("change", function () {
-  //! to value einai REGEX! sto draft kanei match empty strings!
-  mailsDatatable.column(4).search(this.value, true, false).draw();
-});
+$("#mail-delete-btn").on("click", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+  var selectedMails, mailIds, i, _yield$swalDelete, isConfirmed;
+
+  return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          selectedMails = $(".js-mail-checkbox:checked");
+          mailIds = [];
+
+          for (i = 0; i < selectedMails.length; i++) {
+            mailIds.push(selectedMails[i].dataset.mailId);
+          }
+
+          _context.prev = 3;
+          _context.next = 6;
+          return Object(_mail_helpers__WEBPACK_IMPORTED_MODULE_2__["swalDelete"])();
+
+        case 6:
+          _yield$swalDelete = _context.sent;
+          isConfirmed = _yield$swalDelete.isConfirmed;
+
+          if (isConfirmed) {
+            _context.next = 10;
+            break;
+          }
+
+          return _context.abrupt("return");
+
+        case 10:
+          Object(_mail_helpers__WEBPACK_IMPORTED_MODULE_2__["deleteMails"])("/email/delete", mailIds, mailsDatatable);
+          _context.next = 17;
+          break;
+
+        case 13:
+          _context.prev = 13;
+          _context.t0 = _context["catch"](3);
+          console.log(_context.t0);
+          _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+
+        case 17:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, _callee, null, [[3, 13]]);
+})));
+
+/***/ }),
+
+/***/ "./resources/js/dashboard/mail/mail-helpers.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/dashboard/mail/mail-helpers.js ***!
+  \*****************************************************/
+/*! exports provided: deleteBtnHandler, swalDelete, deleteMails */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteBtnHandler", function() { return deleteBtnHandler; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "swalDelete", function() { return swalDelete; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteMails", function() { return deleteMails; });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 function deleteBtnHandler() {
   return _deleteBtnHandler.apply(this, arguments);
@@ -4192,6 +4338,16 @@ function swalDelete() {
     cancelButtonColor: '#d33',
     confirmButtonText: 'Ναι, διαγραφή!',
     cancelButtonText: 'Άκυρο!'
+  });
+}
+function deleteMails(url, ids, table) {
+  axios.post(url, {
+    mailIds: ids
+  }).then(function (res) {
+    table.ajax.reload(false, null);
+  })["catch"](function (err) {
+    console.log(err);
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
   });
 }
 

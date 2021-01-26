@@ -12,7 +12,7 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
 		{ targets: 0, width: "30px"},
 		{ targets: 6, width: "102px"},
 		{ targets: 4, width: "122px"},
-		{ targets: 8, width: "180px"}
+		{ targets: [8, 9], width: "180px"}
 	],
     ajax: {
         url: "/users/view-users",
@@ -28,13 +28,15 @@ const tables = $("#scroll-horizontal-datatable").DataTable({
     columns: [
         { data: "checkbox", className: "align-middle text-center", orderable: false, searchable: false },
         { data: "last_name", name: "last_name" }, // 1
-        { data: 'courses', name: 'courses.title', className: 'align-middle text-wrap min-width-test max-width-250' }, // 2
+        { data: 'courses', name: 'courses.title', className: 'align-middle text-wrap min-width-test max-width-250', visible: false }, // 2
         { data: "first_name", name: "first_name", visible: false },// 3
 		{ data: "roles", name: "roles.name", className: "align-middle text-center role-user" }, // 4
 		{ data: "phone", name: "phone", className: "align-middle text-center" }, //5
         { data: "email", name: "email", visible: false }, // 6
         { data: 'status', name: 'status', className: "align-middle text-center" }, // 7
-        { data: 'date', name: 'users.created_at', className: "text-center align-middle" }, // 8
+        { data: 'edit_created_at', name: 'users.created_at', className: "text-center align-middle" }, // 8
+        { data: 'date', className: "text-center align-middle", orderable: false }, // 9
+        // { data: 'date', name: 'users.created_at', className: "text-center align-middle" }, // 8
     ],
     language: utilities.tableLocale,
     drawCallback: () => {
@@ -256,7 +258,10 @@ const toogleInput = () => {
             'id': user_id
 		})
 		.then ( res => {
-			utilities.toastAlert('success', this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε");
+			const icon = this.checked ? "success" : "info";
+			const message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+			utilities.toastAlert(icon, message);
 		})
         .catch (err => {
             utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")

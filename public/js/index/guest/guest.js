@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 31);
+/******/ 	return __webpack_require__(__webpack_require__.s = 32);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -5108,7 +5108,7 @@ var addWhatchlistAxios = /*#__PURE__*/function () {
 
 /***/ }),
 
-/***/ 31:
+/***/ 32:
 /*!*************************************************!*\
   !*** multi ./resources/js/index/guest/guest.js ***!
   \*************************************************/

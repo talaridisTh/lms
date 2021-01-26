@@ -22,12 +22,13 @@ const homeworksDatatable = $("#homeworks-datatable").DataTable({
 		}
 	},
 	columns: [
-		{ data: 'student', name: 'student.last_name' },
+		{ data: 'subject', name: 'subject' },
 		{ data: 'course', name: 'course.title', className: "align-middle text-center",},
 		{
 			data: 'created_at',
 			name: 'homeworks.created_at',
 			className: "align-middle text-center cursor-default",
+			searchable: false,
 			render: function(data) {
 				let date = new Date(data);
 				let day = date.toLocaleDateString().replace( /[/]/g, "-");
@@ -38,6 +39,8 @@ const homeworksDatatable = $("#homeworks-datatable").DataTable({
 				return `<p class="mb-0">${day}</p><p class="mb-0">${time}</p>`;
 			}
 		},
+		{ data: 'student.last_name', name: 'student.last_name', visible: false },
+		{ data: 'student.first_name', name: 'student.first_name', visible: false },
 	],
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {

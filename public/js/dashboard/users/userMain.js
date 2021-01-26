@@ -4636,7 +4636,7 @@ var tables = $("#scroll-horizontal-datatable").DataTable({
     targets: 4,
     width: "122px"
   }, {
-    targets: 8,
+    targets: [8, 9],
     width: "180px"
   }],
   ajax: {
@@ -4664,7 +4664,8 @@ var tables = $("#scroll-horizontal-datatable").DataTable({
   {
     data: 'courses',
     name: 'courses.title',
-    className: 'align-middle text-wrap min-width-test max-width-250'
+    className: 'align-middle text-wrap min-width-test max-width-250',
+    visible: false
   }, // 2
   {
     data: "first_name",
@@ -4692,10 +4693,16 @@ var tables = $("#scroll-horizontal-datatable").DataTable({
     className: "align-middle text-center"
   }, // 7
   {
-    data: 'date',
+    data: 'edit_created_at',
     name: 'users.created_at',
     className: "text-center align-middle"
-  } // 8
+  }, // 8
+  {
+    data: 'date',
+    className: "text-center align-middle",
+    orderable: false
+  } // 9
+  // { data: 'date', name: 'users.created_at', className: "text-center align-middle" }, // 8
   ],
   language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
   drawCallback: function drawCallback() {
@@ -4948,7 +4955,9 @@ var toogleInput = function toogleInput() {
       'status': status,
       'id': user_id
     }).then(function (res) {
-      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('success', _this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε");
+      var icon = _this.checked ? "success" : "info";
+      var message = _this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert(icon, message);
     })["catch"](function (err) {
       _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα");
     });

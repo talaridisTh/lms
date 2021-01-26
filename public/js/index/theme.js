@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 34);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -29033,7 +29033,7 @@ if(( false?undefined:_typeof(module))==='object'&&module.exports){module.exports
 
 /***/ }),
 
-/***/ 34:
+/***/ 35:
 /*!*******************************************!*\
   !*** multi ./resources/js/index/theme.js ***!
   \*******************************************/

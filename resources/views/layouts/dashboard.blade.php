@@ -66,17 +66,32 @@
 
                 <li class="side-nav-title side-nav-item">Menu</li>
 
-                <li class="side-nav-item">
-                    <a href="/dashboard" class="side-nav-link" draggable="false">
-                        <i class="mdi mdi-speedometer"></i>
-                        <span>Overview</span>
-                    </a>
-                </li>
-                <li class="side-nav-item">
-                    <a href="/dashboard/users" class="side-nav-link" draggable="false">
-                        <i class="mdi mdi-account-multiple"></i>
-                        <span>Χρήστες</span>
-                    </a>
+				@hasanyrole("admin|super-admin")
+					<li class="side-nav-item">
+						<a href="/dashboard" class="side-nav-link" draggable="false">
+							<i class="mdi mdi-speedometer"></i>
+							<span>Overview</span>
+						</a>
+					</li>
+					<li class="side-nav-item">
+						<a href="/dashboard/users" class="side-nav-link" draggable="false">
+							<i class="mdi mdi-account-multiple"></i>
+							<span>Χρήστες</span>
+						</a>
+					</li>
+				@endhasanyrole
+
+				<li class="side-nav-item">
+					<a href="/dashboard/courses" class="side-nav-link" draggable="false">
+						<i class="uil uil-books"></i>
+						<span>Courses</span>
+					</a>
+				</li>
+				<li class="side-nav-item">
+					<a href="/dashboard/materials" class="side-nav-link" draggable="false">
+						<i class="mdi mdi-book-open-page-variant"></i>
+						<span>Υλικό</span>
+					</a>
 				</li>
 				<li class="side-nav-item">
                     <a href="/dashboard/homeworks" class="side-nav-link" draggable="false">
@@ -84,31 +99,15 @@
                         <span>Εργασίες</span>
                     </a>
                 </li>
-                <li class="side-nav-item">
-                    <a href="/dashboard/materials" class="side-nav-link" draggable="false">
-                        <i class="mdi mdi-book-open-page-variant"></i>
-                        <span>Υλικό</span>
-                    </a>
-                </li>
-                <li class="side-nav-item">
-                    <a href="/dashboard/courses" class="side-nav-link" draggable="false">
-                        <i class="uil uil-books"></i>
-                        <span>Courses</span>
-                    </a>
-                </li>
-                <li class="side-nav-item">
-                    <a href="/dashboard/bundles" class="side-nav-link" draggable="false">
-                        <i class="mdi mdi-chart-bubble"></i>
-                        <span>Bundles</span>
-                    </a>
-                </li>
 
-                <li class="side-nav-item">
-                    <a href="/dashboard/topics" class="side-nav-link" draggable="false">
-                        <i class="mdi mdi-tag"></i>
-                        <span>Topics</span>
-                    </a>
-                </li>
+				@hasanyrole("admin|super-admin")
+					<li class="side-nav-item">
+						<a href="/dashboard/topics" class="side-nav-link" draggable="false">
+							<i class="mdi mdi-tag"></i>
+							<span>Topics</span>
+						</a>
+					</li>
+				@endhasanyrole
 
                 <li class="side-nav-item">
                     <a href="{{route('media.index')}}" class="side-nav-link" draggable="false">
@@ -121,47 +120,51 @@
                         <i class="mdi mdi-email-outline"></i>
                         <span>E-Mail</span>
                     </a>
-                </li>
-                <li class="side-nav-item">
-                    <a href="javascript: void(0);" class="side-nav-link" draggable="false">
-                        <i class="mdi mdi-cog"></i>
-                        <span> Settings </span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul class="side-nav-second-level" aria-expanded="false">
-                        <li>
-                            <a href="/dashboard/general-settings" draggable="false">
-                                <i class="font-16 mdi mdi-progress-wrench"></i>
-                                General
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/dashboard/home-carousels" draggable="false">
-                                <i class="font-16 mdi mdi-view-carousel-outline"></i>
-                                Carousels
-                            </a>
-                        </li>
-                        <li class="side-nav-item">
-                            <a href="javascript: void(0);" draggable="false" aria-expanded="false">
-                                <i class="font-16 mdi mdi-cookie"></i>
-                                <span>Policies</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <ul class="side-nav-third-level" aria-expanded="false">
-                                <li>
-                                    <a href="/dashboard/options/terms-of-use" draggable="false">Terms of Use</a>
-                                </li>
-                                <li>
-                                    <a href="/dashboard/options/privacy-policy" draggable="false">Privacy Policy</a>
-                                </li>
-                                <li>
-                                    <a href="/dashboard/options/cookie-policy" draggable="false">Cookie Policy</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                @if ( Auth::user()->roles()->first()->id === 8 )
+				</li>
+				
+				@hasanyrole("admin|super-admin")
+                	<li class="side-nav-item">
+                	    <a href="javascript: void(0);" class="side-nav-link" draggable="false">
+                	        <i class="mdi mdi-cog"></i>
+                	        <span> Settings </span>
+                	        <span class="menu-arrow"></span>
+                	    </a>
+                	    <ul class="side-nav-second-level" aria-expanded="false">
+                	        <li>
+                	            <a href="/dashboard/general-settings" draggable="false">
+                	                <i class="font-16 mdi mdi-progress-wrench"></i>
+                	                General
+                	            </a>
+                	        </li>
+                	        <li>
+                	            <a href="/dashboard/home-carousels" draggable="false">
+                	                <i class="font-16 mdi mdi-view-carousel-outline"></i>
+                	                Carousels
+                	            </a>
+                	        </li>
+                	        <li class="side-nav-item">
+                	            <a href="javascript: void(0);" draggable="false" aria-expanded="false">
+                	                <i class="font-16 mdi mdi-cookie"></i>
+                	                <span>Policies</span>
+                	                <span class="menu-arrow"></span>
+                	            </a>
+                	            <ul class="side-nav-third-level" aria-expanded="false">
+                	                <li>
+                	                    <a href="/dashboard/options/terms-of-use" draggable="false">Terms of Use</a>
+                	                </li>
+                	                <li>
+                	                    <a href="/dashboard/options/privacy-policy" draggable="false">Privacy Policy</a>
+                	                </li>
+                	                <li>
+                	                    <a href="/dashboard/options/cookie-policy" draggable="false">Cookie Policy</a>
+                	                </li>
+                	            </ul>
+                	        </li>
+                	    </ul>
+					</li>
+				@endhasanyrole
+
+				@hasrole("super-admin")
                     <li class="side-nav-item">
                         <a href="javascript: void(0);" class="side-nav-link" draggable="false">
                             <i class="mdi mdi-hammer-wrench"></i>
@@ -176,7 +179,7 @@
                             </li>
                         </ul>
                     </li>
-                @endif
+				@endhasrole
             </ul>
             <!-- End Sidebar -->
 
@@ -232,7 +235,10 @@
                             </div>
 
                             <!-- item-->
-                            <a href="/dashboard/users/{{ Auth::user()->slug }}" class="dropdown-item notify-item"
+							<a href="{{ auth()->user()->hasRole("instructor") 
+								? "/home/account/". Auth::user()->slug 
+								: "/dashboard/users/". Auth::user()->slug }}"
+								class="dropdown-item notify-item"
                                draggable="false">
                                 <i class="mdi mdi-account-circle mr-1"></i>
                                 <span>My Account</span>
@@ -247,35 +253,37 @@
                         </div>
                     </li>
 
-                </ul>
-                <button class="button-menu-mobile open-left disable-btn">
-                    <i class="mdi mdi-menu"></i>
-                </button>
-                <div class="app-search dropdown d-none d-lg-block">
-                    <form action="/dashboard/search" method="GET">
-                        @csrf
-                        <div class="input-group">
-                            <input id="top-search" class="js-global-search form-control dropdown-toggle"
-                                   name="search" type="text" placeholder="Search..." autocomplete="off">
-                            <span class="mdi mdi-magnify search-icon"></span>
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="submit" draggable="false">Search</button>
-                            </div>
-                        </div>
-                    </form>
+				</ul>
+				@hasanyrole("super-admin|admin")
+					<button class="button-menu-mobile open-left disable-btn">
+						<i class="mdi mdi-menu"></i>
+					</button>
+					<div class="app-search dropdown d-none d-lg-block">
+						<form action="/dashboard/search" method="GET">
+							@csrf
+							<div class="input-group">
+								<input id="top-search" class="js-global-search form-control dropdown-toggle"
+									name="search" type="text" placeholder="Search..." autocomplete="off">
+								<span class="mdi mdi-magnify search-icon"></span>
+								<div class="input-group-append">
+									<button class="btn btn-primary" type="submit" draggable="false">Search</button>
+								</div>
+							</div>
+						</form>
 
-                    <div id="search-dropdown" class="results-cnt dropdown-menu dropdown-menu-animated">
+						<div id="search-dropdown" class="results-cnt dropdown-menu dropdown-menu-animated">
 
-                        <div class="row mx-0">
-									<span class="py-2 d-block text-center mx-auto font-16">
-										<i class="mdi mdi-magnify mr-1"></i>
-										<u>3 Characters or more</u>
-									</span>
-                        </div>
+							<div class="row mx-0">
+								<span class="py-2 d-block text-center mx-auto font-16">
+									<i class="mdi mdi-magnify mr-1"></i>
+									<u>3 Characters or more</u>
+								</span>
+							</div>
 
-                    </div>
+						</div>
 
-                </div>
+					</div>
+				@endhasanyrole
             </div>
             <!-- end Topbar -->
 

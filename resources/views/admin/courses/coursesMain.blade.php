@@ -87,10 +87,12 @@
 			<div class="col-sm-8">
 
 				<div class="text-sm-right">
-					<a href="/dashboard/courses/create" class="btn btn-primary mb-2">
-						<i class="mdi mdi-plus-circle mr-2"></i>
-						Νέο Course
-					</a>
+					@can('create', App\Models\Course::class)
+						<a href="/dashboard/courses/create" class="btn btn-primary mb-2">
+							<i class="mdi mdi-plus-circle mr-2"></i>
+							Νέο Course
+						</a>
+					@endcan
 					<div class="btn-group mb-2">
 						<button id="course-bulk-action-btn" disabled type="button"
 							class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
@@ -126,11 +128,10 @@
 					</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Κατάσταση</th>
-					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
 					<th class="text-center">Έκδοση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
-					<th class="text-center">Publish</th>
+					<th class="text-center">Ημ. Δημοσίευσης</th>
 					<th class="text-center">Ενεργό</th>
 				</tr>
 			</thead>
@@ -140,11 +141,10 @@
 					<th class="text-center">Επιλογή</th>
 					<th class="text-center">Τίτλος</th>
 					<th class="text-center">Κατάσταση</th>
-					<th class="text-center">Εισηγητής</th>
 					<th class="text-center">Topics</th>
 					<th class="text-center">Έκδοση</th>
 					<th class="text-center">Ημ. Δημιουργίας</th>
-					<th class="text-center">Publish</th>
+					<th class="text-center">Ημ. Δημοσίευσης</th>
 					<th class="text-center">Ενεργό</th>
 				</tr>
 			</tfoot>

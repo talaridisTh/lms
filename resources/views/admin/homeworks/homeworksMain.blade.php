@@ -39,11 +39,11 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<table id="homeworks-datatable" class="table w-100 nowrap center-not-second js-remove-table-classes">
 			<thead>
 				<tr>
-					<th class="text-center">Μαθητής</th>
+					<th class="text-center">Εργασία</th>
 					<th class="text-center">Course</th>
 					<th class="text-center">Ημ. Καταχώρισης</th>
 				</tr>
@@ -51,13 +51,15 @@
 			<tbody class="tables-hover-effect"></tbody>
 			<tfoot>
 				<tr>
-					<th class="text-center">Μαθητής</th>
+					<th class="text-center">Εργασία</th>
 					<th class="text-center">Course</th>
 					<th class="text-center">Ημ. Καταχώρισης</th>
 				</tr>
 			</tfoot>
 		</table>
 	</div>
+	
+	
 
 @endsection
 

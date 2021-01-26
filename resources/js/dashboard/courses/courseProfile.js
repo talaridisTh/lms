@@ -842,8 +842,7 @@ function chapterPriorityInit() {
 
 			let sectionId = this.dataset.sectionId;
 
-			axios.patch(`/section-ajax/chapters-priority`, {
-				courseId, sectionId,
+			axios.patch(`/section-ajax/${courseId}/${sectionId}/chapters-priority`, {
 				materialId: this.dataset.materialId,
 				priority: {
 					new: this.value,
@@ -882,7 +881,7 @@ function chapterStatusInit() {
 
 		let sectionId = this.dataset.sectionId;
 
-		axios.patch(`/section-ajax/${sectionId}/toggle-chapter`, {
+		axios.patch(`/section-ajax/${courseId}/${sectionId}/toggle-chapter`, {
 			materialId: this.dataset.materialId,
 			status: this.checked ? 1 : 0
 		})
@@ -1137,23 +1136,27 @@ function removeFiles(ids) {
 //!######################################
 
 //* active users table filters
-let activeUserslistLength = $('#active-users-list_length > label')[0];
-let activeUsersFilter = createRoleSelect("active-user-roles");
+let activeUserslistLength = $('#active-users-list_length')[0];
 
-activeUserslistLength.append( activeUsersFilter );
-
-$("#active-user-roles").select2({
-	minimumResultsForSearch: -1,
-});
-
-$("#active-user-roles").on( "change", function () {
-
-	let label = $("#select2-active-user-roles-container")[0];
-	utilities.filterStyle( label, this.value )
-
-	courseUsersDatatable.columns(2).search( this.value ).draw();
-
-});
+if (activeUserslistLength) {
+	let activeUsersFilter = createRoleSelect("active-user-roles");
+	
+	activeUserslistLength.append( activeUsersFilter );
+	
+	$("#active-user-roles").select2({
+		minimumResultsForSearch: -1,
+		width: "150px"
+	});
+	
+	$("#active-user-roles").on( "change", function () {
+	
+		let label = $("#select2-active-user-roles-container")[0];
+		utilities.filterStyle( label, this.value )
+	
+		courseUsersDatatable.columns(2).search( this.value ).draw();
+	
+	});
+}
 
 //* add new users table filters
 let addUsersListLength = $('#add-users-list_length > label');
@@ -1339,8 +1342,7 @@ function sortInputsInit() {
 	$('.js-sort-input').on('keyup', function() {
 
 		if ( event.keyCode == 13 && !isNaN( this.value) ) {
-			axios.patch('/course-ajax/priority', {
-				courseId: $('#course-materials-list')[0].dataset.courseId,
+			axios.patch(`/course-ajax/${courseId}/priority`, {
 				materialId: this.dataset.materialId,
 				priority: {
 					new: this.value,
@@ -1432,7 +1434,7 @@ function sectionAdditionHandler() {
 	data.append("type", type);
 	data.append("priority", priority);
 
-	axios.post( "/section-ajax/add-content", data )
+	axios.post( `/section-ajax/${courseId}/add-content`, data )
 		.then( res => {
 			let sectionsCnt = document.getElementsByClassName("accordion")[0];
 			sectionsCnt.innerHTML = res.data;
@@ -1600,7 +1602,7 @@ function activeMaterialsCheckboxHandler() {
 
 function toggleChapters( sectionId, ids, active, mainCnt, checkedboxes ) {
 
-	axios.patch(`/section-ajax/${sectionId}/toggle-multiple-chapters`, {
+	axios.patch(`/section-ajax/${courseId}/${sectionId}/toggle-multiple-chapters`, {
 		ids, "status": active //! or inactive
 	})
 	.then( res => {
@@ -1621,8 +1623,8 @@ function toggleChapters( sectionId, ids, active, mainCnt, checkedboxes ) {
 
 function removeChapters(sectionId, chapterIds) {
 
-	axios.post(`/section-ajax/remove-chapters`, {
-		courseId, sectionId, chapterIds
+	axios.post(`/section-ajax/${courseId}/remove-chapters`, {
+		sectionId, chapterIds
 	})
 	.then( res => {
 		let message = chapterIds.length == 1 ? "1 αρχείο εκτός ύλης" : `${chapterIds.length} αρχεία εκτός ύλης`;
@@ -1687,8 +1689,7 @@ function addUsers( userIds ) {
 }
 
 function removeUsers( userIds, caller ) {
-	axios.patch( "/course-ajax/remove-users", {
-		courseId,
+	axios.patch( `/course-ajax/${courseId}/remove-users`, {
 		userIds
 	})
 	.then( (res) => {
@@ -1739,8 +1740,8 @@ function addChapterMaterials( chapterId, materialIds ) {
 }
 
 function addCourseMaterials( materialId ) {
-	axios.post( "/course-ajax/add-materials", {
-		courseId, materialId
+	axios.post( `/course-ajax/${courseId}/add-materials`, {
+		materialId
 	})
 	.then( (res) => {
 		let message = materialId.length == 1 ? "1 αρχείο εντός ύλης" : `${materialId.length} αρχεία εντός ύλης`;
@@ -1775,7 +1776,9 @@ function toggleHighlight(materialIds, status) {
 
 function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
-	axios.patch(`/section-ajax/toggle-hightlight/${sectionId}`, {materialIds, status})
+	axios.patch(`/section-ajax/${courseId}/${sectionId}/toggle-hightlight`, {
+		materialIds, status
+	})
 	.then( res => {
 		const message = status === 1 ? "Highlighted." : "De-emphasized."
 		const icon = status === 1 ? "success" : "info"
@@ -1789,8 +1792,7 @@ function sectionMaterialHightlightToggle(sectionId, materialIds, status) {
 
 function removeMaterials( materials ) {
 
-	axios.patch( "/course-ajax/remove-materials", {
-		courseId,
+	axios.patch( `/course-ajax/${courseId}/remove-materials`, {
 		materials
 	})
 	.then( (res) => {
@@ -1798,14 +1800,14 @@ function removeMaterials( materials ) {
 		let message = materials.length == 1 ? "1 αρχείο εκτός ύλης" : `${materials.length} αρχεία εκτός ύλης`;
 
 
-		utilities.toastAlert( 'success', message );
 		courseMaterialsTable.ajax.reload( null, false );
 		remainingMaterialsTables.ajax.reload( null, false );
-
+		
 		utilities.resetAddButton( $("#add-remaingings-btn"), $("#all-remainings-checkbox") );
 		utilities.resetBulk( $("#active-material-bulk"), $("#all-active-materials-checkbox") );
-
+		
 		$("#section-accordion").html(res.data);
+		utilities.toastAlert( 'info', message );
 	})
 	.catch( (err) => {
 		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
@@ -2312,7 +2314,7 @@ function chapterPublishApplyHandler(ev, picker) {
 	const materialId = this.dataset.materialId;
 	const date = picker.startDate.format('YYYY-MM-DD H:mm');
 
-	axios.patch(`/section-ajax/${sectionId}/publish-chapter`, {
+	axios.patch(`/section-ajax/${courseId}/${sectionId}/publish-chapter`, {
 		materialId, date
 	})
 	.then( res => {

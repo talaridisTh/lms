@@ -44,37 +44,41 @@ class MailController extends Controller
 		$request->validate([
 			"subject" => "required",
 			"content" => "required",
-			"recipients" => "required_if:button,===,send"
+			"recipients" => "required"
 		],
 		[
-			"recipients.required_if" => "Δεν ορίστηκαν παραλήπτες."
+			"recipients.required" => "Δεν ορίστηκαν παραλήπτες."
 		]);
 
 		$users = $this->findRecipients($request);
 
 		$recipients = [
-			"ids" => [],
-			"emails" => []
+			"ids" => []
 		];
 
-		if ($request->button === "send") {
-			foreach($users as $user) {
-				array_push($recipients["ids"], $user->id);
-				 Mail::to($user->email)
-				 	->send(new Email($request->subject, $request->content));
-			}
+		foreach($users as $user) {
+			array_push($recipients["ids"], $user->id);
+			 Mail::to($user->email)
+			 	->send(new Email($request->subject, $request->content));
 		}
 
 		$this->storeEmail($request, $recipients, $request->button);
 
-		$message = $request->button === "send" ? ["sent" => "sent"] : ["saved" => "saved"];
+		$message = ["sent" => "sent"];
 
 		return redirect("/dashboard/email")->with($message);
 	}
 
 	public function delete(AppMail $mail) {
 
-		$mail->delete();
+		if ( auth()->user()->hasRole(["super-admin", "admin"]) ) {
+			$mail->delete();
+		}
+		else {
+			$mail->update([
+				"instructor_deleted_at" => now()
+			]);
+		}
 
 		return view("admin.mail.mailMain");
 	}
@@ -103,7 +107,7 @@ class MailController extends Controller
 		$mail->subject = $request->subject;
 		$mail->content = $request->content;
 		$mail->recipients = json_encode($recipients);
-		$mail->sent_at = $status === "send" ? now() : null;
+		$mail->sent_at = now();
 		$mail->save();
 	}
 }

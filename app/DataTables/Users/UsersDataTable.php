@@ -23,7 +23,13 @@ class UsersDataTable extends DataTable {
 
 			$query = User::role(["admin", "instructor", "student", "partner"])
 				->whereBetween("users.created_at", [$request->fromDate ."  00:00:00", $request->toDate ." 23:59:59"])
-				->with("roles", "courses")->select("users.*");
+				->with([
+					"roles",
+					"courses",
+					"activity" => function($query) {
+						$query->orderBy("created_at", "desc")->first();
+					}
+				])->select("users.*");
 
 		}
 
@@ -68,6 +74,24 @@ class UsersDataTable extends DataTable {
 			})
 			->addColumn("date", function($data) {
 
+				if ( ! $data->activity->isEmpty() ) {
+					
+					$badge = str_contains($data->activity[0]->description, "Login")
+						? "<span class='badge badge-outline-success badge-pill'>Logged In</span>"
+						: "<span class='badge badge-outline-danger badge-pill'>Logged Out</span>";
+
+					$date = Carbon::parse($data->activity[0]->created_at)->format("d-m-Y");
+					$time = Carbon::parse($data->activity[0]->created_at)->format("H:i");
+	
+					return "$badge
+						<p class='js-date mb-0'>$date</p>
+						<p class='js-time mb-0'>$time</p>";
+				}
+				else {
+					return "-";
+				}
+			})
+			->addColumn("edit_created_at", function($data) {
 				$date = Carbon::parse($data->created_at)->format("d-m-Y");
 				$time = Carbon::parse($data->created_at)->format("H:i");
 
@@ -81,7 +105,7 @@ class UsersDataTable extends DataTable {
 				});
 
 			})
-            ->rawColumns(['status', "checkbox", "courses", "last_name", "date"])
+            ->rawColumns(['status', "checkbox", "courses", "last_name", "edit_created_at", "date"])
             ->setRowAttr([
                 'data-user-id' => function ($data) {
                     return $data->id;
@@ -101,7 +125,13 @@ class UsersDataTable extends DataTable {
     public function query(User $model)
     {
         return User::role(["admin", "instructor", "student", "partner"])
-			->with("roles", "courses")->select("users.*");
+			->with([
+				"roles", 
+				"courses",
+				"activity" => function($query) {
+					$query->orderBy("created_at", "desc")->first();
+				}
+			])->select("users.*");
     }
 
     /**

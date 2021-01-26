@@ -16,11 +16,10 @@ class RoleMiddleware {
      * @param \Closure $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
-    {
-        $role = $request->user()->getRoleNames();
-        if ($role[0] == "admin" || $role[0] == "super-admin")
-        {
+    public function handle($request, Closure $next, $role) {
+
+        if ($request->user()->hasRole($role)) {
+
             return $next($request);
         }
 

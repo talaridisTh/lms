@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use App\Models\Media;
 use App\Models\Option;
-use App\Models\Role;
 use App\Models\Topic;
 use App\Traits\MediaUploader;
 use Carbon\Carbon;
@@ -15,7 +14,16 @@ use App\Models\User;
 
 class CourseController extends Controller {
 
-    use MediaUploader;
+	use MediaUploader;
+	
+	/**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct() {
+        $this->authorizeResource(Course::class, 'course');
+    }
 
     public function index()
     {
@@ -41,20 +49,22 @@ class CourseController extends Controller {
 
     public function store(Request $request)
     {
-
         $request->validate([
             'title' => 'required'
-        ]);
+		]);
+
         if (isset($request->publishDate)) {
             $publishDate = Carbon::parse($request->publishDate)->format("Y-m-d H:i:s");
         } else {
             $publishDate = Carbon::now();
-        }
+		}
+
         $fields = [
             "summary" => isset($request->summaryEditor) ? 1 : 0,
             "description" => isset($request->descriptionEditor) ? 1 : 0,
             "script" => isset($request->scriptEditor) ? 1 : 0
-        ];
+		];
+
         $course = new Course;
         $course->title = $request->title;
         $course->subtitle = $request->subtitle;
@@ -80,7 +90,7 @@ class CourseController extends Controller {
     /**
      * Display the specified resource.
      *
-     * @param \App\Course $course
+     * @param \App\Models\Course $course
      * @return \Illuminate\Http\Response
      */
     public function show(Course $course)
@@ -92,7 +102,7 @@ class CourseController extends Controller {
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Course $course
+     * @param \App\Models\Course $course
      * @return \Illuminate\Http\Response
      */
     public function edit(Course $course)
@@ -119,7 +129,7 @@ class CourseController extends Controller {
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param \App\Course $course
+     * @param \App\Models\Course $course
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Course $course)
@@ -163,7 +173,7 @@ class CourseController extends Controller {
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Course $course
+     * @param \App\Models\Course $course
      * @return \Illuminate\Http\Response
      */
     public function destroy(Course $course)

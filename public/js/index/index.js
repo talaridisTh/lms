@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 33);
+/******/ 	return __webpack_require__(__webpack_require__.s = 34);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -7356,7 +7356,7 @@ if (CURRENT_ROUTE == "index.userCourses") {
 
 /***/ }),
 
-/***/ 33:
+/***/ 34:
 /*!*******************************************!*\
   !*** multi ./resources/js/index/index.js ***!
   \*******************************************/

@@ -41,17 +41,15 @@
             <nav class="top-nav">
                 @auth
                     <ul class="p-0">
-                        @hasanyrole("admin|super-admin")
+
+                        @hasanyrole("instructor|admin|super-admin")
                         <li class="orange-line intro-x">
-                            <a href="{{route('dashboard')}}"
+                            <a href="/dashboard"
                                class="top-menu">
                                 <div class="top-menu__icon"><i data-feather="tool"></i></div>
-                                <div class="top-menu__title "
-                                     style="font-size: 16px">Dashboard
-                                </div>
+                                <div class="top-menu__title ">Dashboard</div>
                             </a>
                         </li>
-
                         @if(\Request::route()->getName()== "index.showCourse")
                             <li>
                                 <a href="/dashboard/courses/{{$course->slug}}/edit"

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\DataTables\Homeworks;
+namespace App\DataTables\Mail;
 
-use App\Models\Homework;
-use Illuminate\Http\Request;
+use App\Models\Mail;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 
-class HomeworksDataTable extends DataTable
+class InstructorMailsDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -19,59 +19,52 @@ class HomeworksDataTable extends DataTable
      * @param mixed $query Results from query() method.
      * @return \Yajra\DataTables\DataTableAbstract
      */
-    public function dataTable($query, Request $request)
+    public function dataTable($query)
     {
-		if (!is_null($request->startDate) && !is_null($request->endDate)) {
+        return datatables()::of($query)
+			->addColumn('action', function($data) {
 
-            $query->where(function ($subquery) use ($request) {
-				$subquery->whereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-			});
-		}
+				$slug = Str::random(10);
 
-		$query->select("homeworks.*");
-
-        return datatables()
-            ->eloquent($query)
-			->editColumn("subject", function($homework) {
-				
-				return "<a class='h5 mb-0 js-view-homework custom-link-primary' href='javascript:void(0)'
-					data-toggle='modal' data-target='#view-homework-modal' data-id='$homework->id'>$homework->subject</a>
-					<p class='mb-0'>".$homework->student->fullName."</p>
-					<a class='js-view-homework custom-link-primary' href='javascript:void(0)'
-						data-toggle='modal' data-target='#view-homework-modal' data-id='$homework->id'>View</a>";
+				return "<div class='icheck-primary d-inline'>
+					<input class='js-mail-checkbox' data-mail-id='$data->id' type='checkbox' id='$slug' autocomplete='off'>
+					<label for='$slug'></label>
+				</div>";
 			})
-			->addColumn("course", function($homework) {
+			->addColumn("message", function($data) {
 
-				return $homework->course->title;
+				$title = Str::limit($data->subject, 30);
+				$content = Str::limit(strip_tags($data->content), 80);
+
+				if ( is_null($data->sent_at) ) {
+					return "<a href='/dashboard/email/compose/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
+				}
+
+				return "<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
 			})
-			->filterColumn("course.title", function($query, $keyword) {
-				
-				$query->whereHas("course", function($sub) use ($keyword) {
-					$sub->where("title", $keyword);
-				});
+			->addColumn("details", function($data) {
+
+				return "<p class='time-cnt mb-0 text-right'><strong class='text-right'>". Carbon::parse($data->sent_at)->diffForHumans(null, false, true) ."</strong></p>
+					<div class='tool-cnt text-left'>
+						<i class='js-delete-mail mdi mdi-delete-circle-outline font-24 custom-danger cursor-pointer'
+							data-mail-id='$data->id'></i>
+					</div>";
 
 			})
-			->rawColumns(["subject"]);
+			->rawColumns(["action", "message", "details"]);
     }
 
     /**
      * Get query source of dataTable.
      *
-     * @param \Homework $model
+     * @param \App\Models\Mail $model
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Homework $homework)
+    public function query(Mail $model)
     {
-		if (auth()->user()->hasRole(["super-admin", "admin"])) {
-			return $homework->with("student", "course");
-
-		}
-		else {
-			$courseIds = auth()->user()->courses()->pluck("courses.id");
-
-			return $homework->whereIn("course_id", $courseIds)
-				->with("student", "course");
-		}
+		return $model->where("user_id", auth()->user()->id)
+			->withTrashed()
+			->where("instructor_deleted_at", null);
     }
 
     /**
@@ -82,7 +75,7 @@ class HomeworksDataTable extends DataTable
     public function html()
     {
         return $this->builder()
-                    ->setTableId('homeworks/homeworksdatatable-table')
+                    ->setTableId('mail/instructormails-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     ->dom('Bfrtip')
@@ -123,6 +116,6 @@ class HomeworksDataTable extends DataTable
      */
     protected function filename()
     {
-        return 'Homeworks/Homeworks_' . date('YmdHis');
+        return 'Mail/InstructorMails_' . date('YmdHis');
     }
 }

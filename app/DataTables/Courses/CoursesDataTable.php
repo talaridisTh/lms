@@ -3,6 +3,7 @@
 namespace App\DataTables\Courses;
 
 use App\Models\Course;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Html\Button;
@@ -22,19 +23,19 @@ class CoursesDataTable extends DataTable {
     public function dataTable($query, Request $request)
     {
 
-        if (!is_null($request->startDate) && !is_null($request->endDate))
-        {
+        if (!is_null($request->startDate) && !is_null($request->endDate)) {
 
-            $query = Course::where(function ($subquery) use ($request) {
-				$subquery->whereBetween('updated_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
-					->orWhereBetween('created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
-			})->with("topics", "curator")->get();
+            $query->where(function ($subquery) use ($request) {
+				$subquery->whereBetween('courses.publish_at', [$request->startDate . "  00:00:00", $request->endDate . " 23:59:59"])
+					->orWhereBetween('courses.created_at', [ $request->startDate ."  00:00:00", $request->endDate ." 23:59:59"]);
+			})->with("topics");
+		}
+		else {
 
-        } else
-        {
-
-            $query = Course::with("topics", "curator")->get();
-        }
+            $query->with("topics");
+		}
+		
+		$query->select("courses.*");
 
         return datatables()::of($query)
             ->addColumn('action', function ($data) {
@@ -53,7 +54,7 @@ class CoursesDataTable extends DataTable {
 				<span class='mx-2'>|</span>
 				<a href='#' class='js-course-clone-btn custom-link-primary' data-course-id='$data->id'>Clone</a>
 				<span class='mx-2'>|</span>
-				<a href='/courses/course/$data->slug' class='custom-link-primary'>View</a>");
+				<a href='/home/course/$data->slug' class='custom-link-primary'>View</a>");
             })
             ->editColumn('toggle', function ($data) {
 
@@ -72,18 +73,6 @@ class CoursesDataTable extends DataTable {
 
                 return implode(", ", $topics);
             })
-            ->editColumn('curator', function ($data) {
-
-                if ($data->curator)
-                {
-                    $fullName = $data->curator->first_name . " " . $data->curator->last_name;
-                } else
-                {
-                    $fullName = "";
-                }
-
-                return $fullName;
-			})
             ->editColumn('publish', function ($data) {
 
 				if ( $data->status == 1 ) {
@@ -108,6 +97,13 @@ class CoursesDataTable extends DataTable {
 				<input class='js-publish-picker form-control d-none'
 					type='text' value='$date $time' data-course-id='$data->id'>";
 			})
+			->filterColumn("topics", function($query, $keyword) {
+				
+				$query->whereHas("topics", function($sub) use ($keyword) {
+					$sub->where("title", $keyword);
+				});
+
+			})
             ->rawColumns(['action', 'title', 'toggle', 'publish'])
             ->setRowAttr(['data-course-id' => function ($data) {
 
@@ -118,12 +114,16 @@ class CoursesDataTable extends DataTable {
     /**
      * Get query source of dataTable.
      *
-     * @param \App\Course $model
+     * @param \App\Course $course
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function query(Course $model)
-    {
-        return $model->newQuery();
+    public function query(Course $course) {
+
+		if ( auth()->user()->hasRole(["super-admin", "admin"]) ) {
+			return $course->newQuery();
+		}
+		
+		return User::find(auth()->user()->id)->courses();
     }
 
     /**

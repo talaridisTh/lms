@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -22207,7 +22207,7 @@ $("#json-form").on("submit", function (event) {
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /*!**************************************************************!*\
   !*** multi ./resources/js/dashboard/settings/json-editor.js ***!
   \**************************************************************/

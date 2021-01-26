@@ -23,9 +23,11 @@ class MailsDataTable extends DataTable
      */
     public function dataTable($query)
     {
-		$query = User::find(Auth::user()->id)->mails;
+		$query->with("author")
+			->select("mails.*");
 
-        return datatables()::of($query)
+		return datatables()
+			->eloquent($query)
 			->addColumn('action', function($data) {
 				 
 				$slug = Str::random(10);
@@ -35,16 +37,25 @@ class MailsDataTable extends DataTable
 					<label for='$slug'></label>
 				</div>";
 			})
+			->editColumn("author.last_name", function($mail) {
+
+				return $mail->author->fullName;
+			})
 			->addColumn("message", function($data) {
 
 				$title = Str::limit($data->subject, 30);
 				$content = Str::limit(strip_tags($data->content), 80);
 
-				if ( is_null($data->sent_at) ) {
-					return "<a href='/dashboard/email/compose/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
-				}
+				return "<p class='mb-0'>
+						<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'>
+							<span class='h5 mb-1'>$title</span>
+							<br>
+							<span class='block'>$content</span>
+						</a>
+					</p>";
 
-				return "<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'><strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
+				return "<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'>
+					<strong title='$data->subject'>$title</strong> &nbsp; &nbsp; - &nbsp; &nbsp; $content</a>";
 			})
 			->addColumn("details", function($data) {
 
@@ -57,6 +68,14 @@ class MailsDataTable extends DataTable
 							data-mail-id='$data->id'></i>
 					</div>";
 				
+			})
+			->filterColumn("author.last_name", function($query, $keyword) {
+
+				$query->whereHas("author", function($sub) use ($keyword) {
+					$sub->where("last_name", "like", "%$keyword%")
+						->orWhere("first_name", "like", "%$keyword%");
+				});
+
 			})
 			->rawColumns(["action", "message", "details"]);
     }

@@ -37,6 +37,7 @@ mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/dashboard/newContent.js', 'public/js/dashboard')
 
     .js('resources/js/dashboard/mail/email-main.js', 'public/js/dashboard/mail')
+    .js('resources/js/dashboard/mail/instructor-email-main.js', 'public/js/dashboard/mail')
     .js('resources/js/dashboard/mail/compose-email.js', 'public/js/dashboard/mail')
     .js('resources/js/dashboard/mail/edit-email.js', 'public/js/dashboard/mail')
     .js('resources/js/dashboard/homework/homeworkMain.js', 'public/js/dashboard/homework')
