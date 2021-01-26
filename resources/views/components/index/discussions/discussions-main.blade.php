@@ -43,12 +43,12 @@
         @forelse($posts  as $post)
 
             <li class="d-flex list-unstyled bg-list-thread px-6 py-4 mb-5 single-thread"
-                data-post-id="{{$post->id}}">
-
+                data-post-id="{{$post->id}}"
+                data-namespace="{{get_class($post)}}">
                 <div class="mr-2 d-flex align-items-center ">
-                    <img src="{{$post->user->thumbnailUrl("avatar")}}"
-                         class="avatar-sm rounded"
-                         alt="">
+                    {{--                    <img src="{{$post->thumbnailUrl("cover")}}"--}}
+                    {{--                         class="avatar-sm rounded"--}}
+                    {{--                         alt="">--}}
                 </div>
 
                 <div class="container-fluid ">
@@ -57,15 +57,15 @@
                             <h4 class="text-hover-underline cursor-pointer js-thread-title">{{Str::limit($post->title,35,'...')}}</h4>
                             <p class="text-dark d-none js-post-body">{{Str::limit($post->body,120,'...')}}</p>
                             <p>
-                                <span class="text-info mr-2">{{$post->user->fullName}}</span>
+                                {{--                                <span class="text-info mr-2">{{\App\Models\User::find($post->user_id)}}</span>--}}
                                 <span class="text-secondary"> {{$post->created_at->diffForHumans()}}</span>
                             </p>
                         </div>
                         <div class="col-md-5">
                             <div class="d-flex mt-1 justify-content-around">
                                 <div>
-                                    <i class="font-18  uil-eye"></i>
-                                    <span class="js-thread-watched">{{$post->watched}}</span>
+                                    {{--                                    <i class="font-18  uil-eye"></i>--}}
+                                    {{--                                    <span class="js-thread-watched">{{$post->watched}}</span>--}}
                                 </div>
                                 <div>
                                     <i class="font-18  uil-comment"></i>
@@ -73,7 +73,8 @@
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-primary btn-thread-custom font-12 font-weight-bold">
-                                        {{$post->getCourse()}}
+                                        {{\App\Models\User::find($post->user_id)->fullName}}
+
                                     </button>
                                 </div>
                             </div>

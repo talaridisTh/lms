@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPolymorphicToAttachmentsTable extends Migration {
+class DropCompletedAtFromAttachmentsTable extends Migration {
 
     /**
      * Run the migrations.
@@ -15,7 +15,7 @@ class AddPolymorphicToAttachmentsTable extends Migration {
     {
         Schema::table('attachments', function (Blueprint $table) {
             //
-            $table->nullableMorphs("attachmentable");
+            $table->dropColumn("completed_at");
         });
     }
 

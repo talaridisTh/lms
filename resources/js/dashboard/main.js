@@ -27,20 +27,20 @@ Element.prototype.appendAfter = function (element) {
 const baseUrl = window.location.origin;
 var timer = 0;
 export const ALLOWEDTYPES = [
-	"application/octet-stream", "application/x-zip-compressed", "application/pdf",
-	"application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-	"application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
-	"application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
-	"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
-	"application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
-	"application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
-	"application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
-	"application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
-	"application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
-	"application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
-	"application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
-	"application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
-	"application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
+    "application/octet-stream", "application/x-zip-compressed", "application/pdf",
+    "application/msword", "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.template", "application/vnd.ms-word.document.macroEnabled.12",
+    "application/vnd.ms-word.template.macroEnabled.12", "application/vnd.ms-excel", "application/vnd.ms-excel", "application/vnd.ms-excel",
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.openxmlformats-officedocument.spreadsheetml.template",
+    "application/vnd.ms-excel.sheet.macroEnabled.12", "application/vnd.ms-excel.template.macroEnabled.12",
+    "application/vnd.ms-excel.addin.macroEnabled.12", "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
+    "application/vnd.ms-powerpoint", "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "application/vnd.openxmlformats-officedocument.presentationml.template", "application/vnd.openxmlformats-officedocument.presentationml.slideshow",
+    "application/vnd.ms-powerpoint.addin.macroEnabled.12", "application/vnd.ms-powerpoint.presentation.macroEnabled.12",
+    "application/vnd.ms-powerpoint.template.macroEnabled.12", "application/vnd.ms-powerpoint.slideshow.macroEnabled.12",
+    "application/vnd.ms-access", "audio/mpeg", "application/vnd.oasis.opendocument.presentation",
+    "application/vnd.oasis.opendocument.spreadsheet", "application/vnd.oasis.opendocument.text",
+    "application/rtf", "application/vnd.oasis.opendocument.graphics", "text/html"
 ];
 
 //!##########################################
@@ -66,8 +66,8 @@ function toastAlertDelete(text, icon = "warning") {
         title: 'Είστε σίγουρος/η;',
         text: text,
         icon: icon,
-		showCancelButton: true,
-		confirmButtonColor: '#ff5b5b',
+        showCancelButton: true,
+        confirmButtonColor: '#ff5b5b',
         confirmButtonText: 'Ναί, διαγραφή!',
         cancelButtonText: 'Άκυρο'
     });
@@ -77,69 +77,69 @@ function toastAlertDelete(text, icon = "warning") {
 //!CONFIG
 //!============================================================
 const articleConfig = {
-	css: "/css/",
-	custom: {
-		css: [
-			"/css/bootstrap.min.css",
-			"/css/customArticleStyle.css",
-		]
-	},
-	// plugins: ['mediaLibrary', 'reorder'],
-	classes: {
-		img: 'img-fluid',
-		p: 'text-wrap'
-	},
-	grid: {
-		classname: 'row',
-		columns: 12,
-		gutter: '1px',
-		offset: {
-			left: '15px',
-			right: '15px'
-		},
-		patterns: {
-			'6|6': 'col-6|col-6',
-			'4|4|4': 'col-4|col-4|col-4',
-			'3|3|3|3': 'col-3|col-3|col-3|col-3',
-			'2|2|2|2|2|2': 'col-2|col-2|col-2|col-2|col-2|col-2',
-			'3|6|3': 'col-3|col-6|col-3',
-			'2|8|2': 'col-2|col-8|col-2',
-			'5|7': 'col-5|col-7',
-			'7|5': 'col-7|col-5',
-			'4|8': 'col-4|col-8',
-			'8|4': 'col-8|col-4',
-			'3|9': 'col-3|col-9',
-			'9|3': 'col-9|col-3',
-			'2|10': 'col-2|col-10',
-			'10|2': 'col-10|col-2',
-			'12': 'col-12'
-		}
-	},
-	align: {
-		left: "text-left",
-		center: "text-center",
-		right: "text-right",
-	},
-	editor: {
-		minHeight: "300px"
-	},
-	image: {
-		upload: "/media/upload-images",
-		data: {
-			"_token": $('meta[name="csrf-token"]').attr('content'),
-		}
-	}
+    css: "/css/",
+    custom: {
+        css: [
+            "/css/bootstrap.min.css",
+            "/css/customArticleStyle.css",
+        ]
+    },
+    // plugins: ['mediaLibrary', 'reorder'],
+    classes: {
+        img: 'img-fluid',
+        p: 'text-wrap'
+    },
+    grid: {
+        classname: 'row',
+        columns: 12,
+        gutter: '1px',
+        offset: {
+            left: '15px',
+            right: '15px'
+        },
+        patterns: {
+            '6|6': 'col-6|col-6',
+            '4|4|4': 'col-4|col-4|col-4',
+            '3|3|3|3': 'col-3|col-3|col-3|col-3',
+            '2|2|2|2|2|2': 'col-2|col-2|col-2|col-2|col-2|col-2',
+            '3|6|3': 'col-3|col-6|col-3',
+            '2|8|2': 'col-2|col-8|col-2',
+            '5|7': 'col-5|col-7',
+            '7|5': 'col-7|col-5',
+            '4|8': 'col-4|col-8',
+            '8|4': 'col-8|col-4',
+            '3|9': 'col-3|col-9',
+            '9|3': 'col-9|col-3',
+            '2|10': 'col-2|col-10',
+            '10|2': 'col-10|col-2',
+            '12': 'col-12'
+        }
+    },
+    align: {
+        left: "text-left",
+        center: "text-center",
+        right: "text-right",
+    },
+    editor: {
+        minHeight: "300px"
+    },
+    image: {
+        upload: "/media/upload-images",
+        data: {
+            "_token": $('meta[name="csrf-token"]').attr('content'),
+        }
+    }
 }
 
 const redactorConfig = {
     buttons: [
-		'html', 'undo', 'redo', 'format',
-		'bold', 'underline', 'italic', 'deleted',
-		'sup', 'sub', 'lists', 'file', 'link', 'image'
-	],
-	style: false,
-	plugins: ['alignment'],
-	minHeight: '150px',
+        'html', 'undo', 'redo', 'format',
+        'bold', 'underline', 'italic', 'deleted',
+        'sup', 'sub', 'lists', 'file', 'link', 'image'
+    ],
+    style: false,
+    plugins: ['alignment'],
+    minHeight: '150px',
 }
 
 const datePickerConfig = {
@@ -176,8 +176,8 @@ const tableLocale = {
     paginate: {
         previous: "<i class='mdi mdi-chevron-left'>",
         next: "<i class='mdi mdi-chevron-right'>"
-	},
-	infoFiltered: "(Φιλτραρισμένα απο τις _MAX_ εγγραφές)"
+    },
+    infoFiltered: "(Φιλτραρισμένα απο τις _MAX_ εγγραφές)"
 }
 
 //!GLOBAL FUNCTION
@@ -235,12 +235,12 @@ function bulkModifier(bulkBtn, status, sum) {
     let disabledColor = bulkBtn.dataset.disabledColor ? bulkBtn.dataset.disabledColor : "btn-secondary";
 
     if (status) {
-		bulkBtn.classList.remove(enabledColor)
+        bulkBtn.classList.remove(enabledColor)
         bulkBtn.classList.add(disabledColor)
         bulkBtn.textContent = `${text} (0)  `
         bulkBtn.disabled = true;
     } else {
-		bulkBtn.classList.remove(disabledColor);
+        bulkBtn.classList.remove(disabledColor);
         bulkBtn.classList.add(enabledColor);
         bulkBtn.textContent = `${text}  (${sum})  `
         bulkBtn.disabled = false;
@@ -259,7 +259,6 @@ function filterStyle(input, value) {
 
 const filterButton = function (attr, column, table, tableId) {
     $(attr).detach().appendTo(tableId)
-
 
 
     $(attr).on('change', function () {
@@ -371,30 +370,31 @@ function resetAddButton(addBtn, checkbox) {
 }
 
 function passwordValidation() {
-	return Swal.fire({
-		title: "Παρακαλώ εισάγεται Κωδικό",
-		input: "password",
-		showCancelButton: true,
-		confirmButtonColor: "#536de6",
-		showLoaderOnConfirm: true,
-		preConfirm: function(password) {
-			
-			return axios.post(`/users-ajax/confirm-password`, {
-				password: password
-			})
-			.then( res => {
-				return res.status;
-			})
-			.catch( err => {
-				Swal.showValidationMessage(err.response.data);
-			})
-		}
-	})
+    return Swal.fire({
+        title: "Παρακαλώ εισάγεται Κωδικό",
+        input: "password",
+        showCancelButton: true,
+        confirmButtonColor: "#536de6",
+        showLoaderOnConfirm: true,
+        preConfirm: function (password) {
+
+            return axios.post(`/users-ajax/confirm-password`, {
+                password: password
+            })
+                .then(res => {
+                    return res.status;
+                })
+                .catch(err => {
+                    Swal.showValidationMessage(err.response.data);
+                })
+        }
+    })
 }
 
 //!##############################################
 //!				Media Library Functions			#
 //!##############################################
+
 
 function paginationHandler(event) {
 
@@ -435,20 +435,17 @@ function imageHandler() {
 
     if (type == "article") {
         ArticleEditor(editorId).image.insert(image);
-	}
-	else if (type == "redactor") {
-        $R( editorId,
+    } else if (type == "redactor") {
+        $R(editorId,
             'insertion.insertHtml',
             `<img class="img-fluid" src="${this.dataset.imageSource}" alt="${this.dataset.name}" />`
         );
-	}
-	else if ( type == "gallery" ) {
+    } else if (type == "gallery") {
 
-		$("#remove-all-images-btn").removeClass("d-none");
-		addToGallery(model, modelId, this.dataset.imageId);
-		return;
-	}
-    else {
+        $("#remove-all-images-btn").removeClass("d-none");
+        addToGallery(model, modelId, this.dataset.imageId);
+        return;
+    } else {
 
         changeCoverRequest(model, modelId, this.dataset.imageSource);
 
@@ -475,7 +472,7 @@ function paginationRequest(activePage, search) {
 
             for (let i = 0; i < addBtns.length; i++) {
                 addBtns[i].removeEventListener("click", imageHandler);
-				addBtns[i].addEventListener("click", imageHandler);
+                addBtns[i].addEventListener("click", imageHandler);
             }
 
             for (let i = 0; i < pagination.length; i++) {
@@ -486,15 +483,15 @@ function paginationRequest(activePage, search) {
 }
 
 function changeCoverRequest(namespace, id, url) {
-	if ( typeof id === "undefined" && namespace == "App\\Models\\User" ) {
-		let img = $("#cover-image")[0];
-		let removeBtnCnt = $("#remove-cover-btn").parent();
+    if (typeof id === "undefined" && namespace == "App\\Models\\User") {
+        let img = $("#cover-image")[0];
+        let removeBtnCnt = $("#remove-cover-btn").parent();
 
-		img.src = `${url}`;
-		img.classList.remove("d-none");
+        img.src = `${url}`;
+        img.classList.remove("d-none");
 
-		removeBtnCnt.removeClass("d-none");
-		removeBtnCnt.addClass("d-flex");
+        removeBtnCnt.removeClass("d-none");
+        removeBtnCnt.addClass("d-flex");
 
         $("#custom-file")[0].value = `${url}`;
 
@@ -504,17 +501,17 @@ function changeCoverRequest(namespace, id, url) {
         })
             .then(res => {
 
-				let img = $("#cover-image")[0];
-				let removeBtnCnt = $("#remove-cover-btn").parent();
+                let img = $("#cover-image")[0];
+                let removeBtnCnt = $("#remove-cover-btn").parent();
 
-				img.src = res.data.imgUrl;
-				img.classList.remove("d-none");
+                img.src = res.data.imgUrl;
+                img.classList.remove("d-none");
 
-				$("#change-cover-btn").text("Αλλαγή");
-				$("#cover-status").addClass("d-none");
+                $("#change-cover-btn").text("Αλλαγή");
+                $("#cover-status").addClass("d-none");
 
-				removeBtnCnt.removeClass("d-none");
-				removeBtnCnt.addClass("d-flex");
+                removeBtnCnt.removeClass("d-none");
+                removeBtnCnt.addClass("d-flex");
 
                 toastAlert("success", "Το Cover άλλαξε!");
             })
@@ -527,94 +524,93 @@ function changeCoverRequest(namespace, id, url) {
 
 function addToGallery(namespace, id, imageId) {
 
-	axios.post( "/media/gallery", {
-		namespace,
-		modelId: id,
-		ids: [imageId]
-	})
-	.then( res => {
+    axios.post("/media/gallery", {
+        namespace,
+        modelId: id,
+        ids: [imageId]
+    })
+        .then(res => {
 
-		let gallery = $("#gallery-cnt");
-		gallery.html(res.data);
+            let gallery = $("#gallery-cnt");
+            gallery.html(res.data);
 
-		let closeBtns = gallery.find(".js-remove-image");
-		closeBtns.on("click", removeImageHandler);
+            let closeBtns = gallery.find(".js-remove-image");
+            closeBtns.on("click", removeImageHandler);
 
-		toastAlert("success", "Η εικόνα προστέθηκε.");
-		gallery.modal("hide");
+            toastAlert("success", "Η εικόνα προστέθηκε.");
+            gallery.modal("hide");
 
-		let bulk = $("#gallery-bulk-action-btn");
-		let checkboxes = $(".js-gallery-checkbox");
+            let bulk = $("#gallery-bulk-action-btn");
+            let checkboxes = $(".js-gallery-checkbox");
 
-		resetGalleryBtns( bulk, checkboxes );
-	})
-	.catch( err => {
-		console.log(err);
-		toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
-	})
+            resetGalleryBtns(bulk, checkboxes);
+        })
+        .catch(err => {
+            console.log(err);
+            toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
+        })
 }
 
 
 function removeImageHandler() {
-	Swal.fire({
-		icon: 'info',
-		title: 'Προσοχή!',
-		text: 'Η εικόνα θα αφαιρεθεί απο το Gallery.',
-		showCancelButton: true,
-		confirmButtonColor: '#536de6',
-		confirmButtonText: `Ναι, αφαίρεση!`,
-		cancelButtonText: "Άκυρο"
-	})
-	.then((result) => {
+    Swal.fire({
+        icon: 'info',
+        title: 'Προσοχή!',
+        text: 'Η εικόνα θα αφαιρεθεί απο το Gallery.',
+        showCancelButton: true,
+        confirmButtonColor: '#536de6',
+        confirmButtonText: `Ναι, αφαίρεση!`,
+        cancelButtonText: "Άκυρο"
+    })
+        .then((result) => {
 
-		if ( result.isConfirmed ) {
-			removeImages( [this.dataset.imageId] );
-		}
+            if (result.isConfirmed) {
+                removeImages([this.dataset.imageId]);
+            }
 
-	})
+        })
 }
 
-function removeImages( ids ) {
+function removeImages(ids) {
 
-	let gallery = $("#gallery-cnt")[0];
-	let namespace = gallery.dataset.namespace;
-	let modelId = gallery.dataset.modelId;
+    let gallery = $("#gallery-cnt")[0];
+    let namespace = gallery.dataset.namespace;
+    let modelId = gallery.dataset.modelId;
 
-	axios.post("/media/gallery-remove", {
-		namespace, modelId, ids
-	})
-	.then( res => {
+    axios.post("/media/gallery-remove", {
+        namespace, modelId, ids
+    })
+        .then(res => {
 
-		let gallery = $("#gallery-cnt");
-		gallery.html(res.data);
+            let gallery = $("#gallery-cnt");
+            gallery.html(res.data);
 
-		let closeBtns = gallery.find(".js-remove-image");
-		closeBtns.on("click", removeImageHandler);
+            let closeBtns = gallery.find(".js-remove-image");
+            closeBtns.on("click", removeImageHandler);
 
-		if ( closeBtns.length == 0 ) {
-			$("#remove-all-images-btn").addClass("d-none");
-		}
+            if (closeBtns.length == 0) {
+                $("#remove-all-images-btn").addClass("d-none");
+            }
 
-	})
-	.catch( err => {
-		console.log(err);
-		utilities.toastAlert( 'error', "Παρουσιάστηκε κάποιο πρόβλημα ..." );
-	})
+        })
+        .catch(err => {
+            console.log(err);
+            utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
+        })
 
 }
 
 
+function resetGalleryBtns(bulk, checkboxes) {
 
-function resetGalleryBtns( bulk, checkboxes ) {
+    bulk.text("Επιλογές (0)")
+    bulk.prop("disabled", true);
+    bulk.removeClass("btn-warning");
+    bulk.addClass("btn-secondary");
 
-	bulk.text("Επιλογές (0)")
-	bulk.prop("disabled", true);
-	bulk.removeClass("btn-warning");
-	bulk.addClass("btn-secondary");
-
-	for (let i = 0; i < checkboxes.length; i++) {
-		checkboxes[i].checked = false;
-	}
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = false;
+    }
 
 }
 
@@ -643,12 +639,12 @@ export default {
     paginationHandler,
     searchHandler,
     imageHandler,
-	paginationRequest,
-	resetGalleryBtns,
-	removeImageHandler,
-	removeImages,
-	articleConfig,
-	ALLOWEDTYPES,
-	passwordValidation
+    paginationRequest,
+    resetGalleryBtns,
+    removeImageHandler,
+    removeImages,
+    articleConfig,
+    ALLOWEDTYPES,
+    passwordValidation
 }
 

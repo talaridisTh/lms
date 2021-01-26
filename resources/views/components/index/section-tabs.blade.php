@@ -120,6 +120,7 @@
 
                     @foreach($model->media->where("type",0) as $file)
                         <a href="{{$file->rel_path}} "
+                           class="ml-4 mb-4"
                            data-lightbox="image-1">
                             <img class="rounded-lg"
                                  src="{{$file->roundedMediumCoverUrl("rel_path")}}"

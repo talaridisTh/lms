@@ -29,6 +29,7 @@ Route::prefix("discussion")->name("discussion.")->group(function () {
     Route::post("/comment/upload", [DiscussionController::class, 'commentUpload'])->name("commentUpload");
     Route::post("/task/send", [DiscussionController::class, 'sendTask'])->name("sendTask");
     Route::post("/upload-task", [DiscussionController::class, 'uploadTask'])->name("uploadTask");
+    Route::post("/upload-announcement", [DiscussionController::class, 'uploadAnnouncement'])->name("uploadAnnouncement");
     Route::post("/question/post", [DiscussionController::class, 'createQuestionPost'])->name("createQuestionPost");
     Route::get("/courses/json-search", [DiscussionController::class, 'courseSearchSelect']);
     Route::get("/users/json-search", [DiscussionController::class, 'userSearchSelect']);

@@ -121,12 +121,14 @@
                 </div>
             </div>
         </div>
+
+
         @if($arrayBanners["primary"]->models || $arrayBanners["secondary"]->models )
-            <div class="sm:container xs:container-lg mx-auto max-w-1xl space-y-20 p-8">
+            <div class="sm:container xs:container-lg mx-auto max-w	 space-y-20 ">
 
                 @foreach( $arrayBanners as  $key=>  $banners)
                     <div id="card-slider-{{$key}}"
-                         class="splide">
+                         class="splide flex justify-center">
                         @if($banners->status==1)
                             <div class="splide__track mx-3">
                                 <ul class="splide__list">
@@ -135,7 +137,7 @@
                                             $bannerValue = key ( $banner);
                                             $model =   $bannerValue::findOrFail($banner->$bannerValue);
                                         @endphp
-                                        <li class="splide__slide p-5 space-y-4  bg-gray-200 shadow-inner shadow-2xl">
+                                        <li class="splide__slide p-5 space-y-4 bg-gray-50  shadow-inner shadow">
                                             <img class=""
                                                  src="{{$model->cardMediumUrl() }}"
                                                  alt="Card image cap">

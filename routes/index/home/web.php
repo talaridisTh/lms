@@ -13,8 +13,9 @@ Route::prefix("home")->name("index.")->group(function () {
     Route::get("account/{user}", [UserController::class, "index"])->name("account");
     Route::post("account/{user}/update", [UserController::class, "update"])->name("update");
     Route::post("account/{user}/upload-avatar", [UserController::class, "uploadAvatar"])->name("uploadAvatar");
-    Route::patch("message/update",[HomeController::class,"updateSeenMessage"])->name("update.message");
-    Route::patch("task/update",[HomeController::class,"updateTaskMessage"])->name("update.task");
+    Route::patch("message/update", [HomeController::class, "updateSeenMessage"])->name("update.message");
+    Route::patch("task/update", [HomeController::class, "updateTaskMessage"])->name("update.task");
+    Route::patch("announcement/update", [HomeController::class, "updateAnnouncementMessage"])->name("update.announcement");
     //note group with middleware verify course z
     Route::group(['middleware' => 'verifyCourse'], function () {
         Route::get("course/{course}", [CourseController::class, "showCourse"])->name("showCourse")->middleware("verifyCourse");

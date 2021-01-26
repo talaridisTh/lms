@@ -27,7 +27,6 @@
             </figure>
             <section
                     class="flex ml-0  xl:order-none w-full lg:order-last order-none xl:flex-1  space-y-8 p-4 pt-0 flex-col items-center lg:items-start text-white">
-                {{--                {{dd($course->topics)}}--}}
                 @if(count($course->topics)>0)
                     <h3 class="px-6 py-2 text-center border-1 border-white rounded-full">{{$course->topics->first()->title}}</h3>
                 @endif
@@ -74,7 +73,9 @@
             <p><i class="mdi mdi-book-open-page-variant mr-1"></i>{{$sumMaterial}} Μαθήματα</p>
             <p><i class="mdi mdi-book-open-page-variant mr-1"></i>{{count($course->media->where("type",1))}} Βοηθητικά
                 αρχεία</p>
+
         </section>
+
     </article>
 
     <article class="mdc:container lg:container max-w-1xl mx-auto flex flex-wrap mt-7">
@@ -82,7 +83,6 @@
                 :curator=$curator
                 :fields="$fields"
                 :model="$course"
-                :post="$post"
         >
         </x-index.section-tabs>
 
@@ -114,7 +114,7 @@
                             <div class=" w-full lg:flex">
 
                                 <div
-                                        class=" my-7  space-y-7  bg-white rounded-b lg:rounded-b-none lg:rounded-r  flex flex-col justify-between leading-normal">
+                                        class=" my-7  space-y-7 bg-white rounded-b lg:rounded-b-none lg:rounded-r  flex flex-col justify-between leading-normal">
                                     <div class=" px-16">
                                         <div class="text-black font-bold text-xl ">{{$announcement->title}}
                                         </div>

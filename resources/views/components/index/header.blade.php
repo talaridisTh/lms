@@ -46,7 +46,9 @@
                             <a href="{{route('dashboard')}}"
                                class="top-menu">
                                 <div class="top-menu__icon"><i data-feather="tool"></i></div>
-                                <div class="top-menu__title ">Dashboard</div>
+                                <div class="top-menu__title "
+                                     style="font-size: 16px">Dashboard
+                                </div>
                             </a>
                         </li>
 
@@ -79,12 +81,21 @@
 
                         <li class=" orange-line intro-x">
                             <a href="{{route('discussion.index')}}"
-                               class="top-menu relative ">
+                               class="top-menu relative contact">
                                 <div class="top-menu__icon">
                                     <i data-feather="home"></i>
                                 </div>
+
                                 <div class="top-menu__title "
-                                     style="font-size: 16px"> Discussions
+                                     style="font-size: 16px"> Επικοινωνία
+
+                                    @if($notify)
+                                        <span class="flex h-3 w-3 absolute top-2 right-2">
+                                            <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75"></span>
+                                            <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                                        </span>
+
+                                    @endif
                                 </div>
                             </a>
                         </li>
@@ -108,7 +119,7 @@
                                         <div class="top-menu__title"> Προφίλ</div>
                                     </a>
                                 </li>
-                                <li class="orange-line">
+                                <li class="orange-line hidden">
                                     <a href="/message"
                                        class="top-menu js-message-seen">
                                         <div class="top-menu__icon"><i data-feather="mail"></i></div>
@@ -209,9 +220,9 @@
                 @endhasanyrole
                 <li class="hover:bg-gray-200 ">
                     <a href="{{route('dashboard')}}"
-                       class="menu">
+                       class="menu contact">
                         <div class="menu__icon"><i data-feather="home"></i></div>
-                        <div class="menu__title"> Discussions</div>
+                        <div class="menu__title"> Επικοινωνία</div>
                         <span class="absolute top-0 right-0 inline-flex items-center justify-center"></span>
 
                     </a>
@@ -242,7 +253,7 @@
                             </a>
                         </li>
                         <li id="logout-btn"
-                            class="hover:bg-gray-200 bg-white ">
+                            class="hover:bg-gray-200 hidden bg-white ">
                             <a href="/message"
                                class="menu js-message-seen">
                                 <div class="menu__icon"><i data-feather="mail"></i></div>

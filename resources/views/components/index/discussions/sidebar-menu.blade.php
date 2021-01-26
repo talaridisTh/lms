@@ -12,7 +12,7 @@
     }
 </style>
 <ul class="ul-thread stick">
-    <li class="py-3 px-8 mx-2 mt-2 mb-8 list-unstyled first-thread mb-2 "
+    <li class="py-3 px-8 mx-2 mt-2 mb-8 list-unstyled first-thread mb-2 hidden"
         data-toggle="modal"
         data-target="#new-threads">
         NEO POST
@@ -21,9 +21,9 @@
     <li class="py-2 px-6 m-2 list-unstyled bg-thread active-thread"
         id="filter-all-threads">
         <i class="font-18 font-18 mr-1 uil-notebooks"></i>
-        Όλα τα Post
+        Σχόλια
     </li>
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread "
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread hidden"
         id="filter-my-question">
         <i class="font-18 mr-1 uil-question-circle"></i>
         Οι Ερωτήσεις μου
@@ -65,15 +65,16 @@
         data-role-user="{{auth()->user()->getRoleNames()[0]}}"
         id="filter-announcement">
         <i class="font-18 mr-1 uil-star"></i>
-        Ανακοινώσεις
+        Επικοινωνία
     </li>
-
+    @role("student")
     <li class="py-2 px-6 m-2 list-unstyled bg-thread "
         data-role-user="{{auth()->user()->getRoleNames()[0]}}"
         id="filter-my-task">
         <i class="font-18 mr-1 uil-link-h"></i>
         Εργασίες
     </li>
+    @endrole
 </ul>
 
 
@@ -177,7 +178,8 @@
                         data-dismiss="modal">Close
                 </button>
                 <button type="button"
-                        class="btn btn-primary js-form-reply">Post
+                        class="btn btn-primary js-form-reply"
+                        data-namespace="">Post
                 </button>
             </div>
         </div><!-- /.modal-content -->

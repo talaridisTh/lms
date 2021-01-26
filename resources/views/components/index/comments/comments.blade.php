@@ -1,11 +1,12 @@
 <div class="cnt-reply-list">
-    {{--    {{dd($post)}}--}}
-    @if(isset($post->comments))
+
+
+    @if(isset($model->comments))
 
 
         <div class="flex flex-col reply-list space-y-6">
 
-            @foreach($post->comments as $comment)
+            @foreach($model->comments as $comment)
 
                 @if ( !$comment->parent_id )
                     @include("components.index.comments.comments-single-post",["comment"=>$comment,"class"=>""]) @endif

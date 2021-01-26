@@ -5,9 +5,8 @@ namespace App\Traits;
 use App\Models\Comment;
 use App\Models\Media;
 use App\Models\Post;
-use App\Models\User;
+use App\Notifications\NewCommentNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Response;
 use View;
 
@@ -19,30 +18,24 @@ trait HasComments {
 
     public function modelComment(Request $request)
     {
-        $post = Post::where("title", $request->modelInfo["title"])->first();
-        if (empty($post)) {
-            $model = $request->namespace::find($request->modelInfo["id"]);
-            $curator = empty($request->modelInfo["user_id"]) ?
-                User::where("first_name", "Υδρόγειος")->first()->id : $request->modelInfo["user_id"];
-            $post = $model->post()->create([
-                "title" => $request->modelInfo["title"],
-                "slug" => Str::slug($request->modelInfo["title"], "-"),
-                "user_id" => $curator,
-            ]);
-        }
-        $comment = Comment::create([
+        $model = $request->namespace::findOrFail($request->modelInfo);
+        $comment = $model->comments()->create([
             "body" => $request->body,
             "user_id" => auth()->id(),
-            "post_id" => $post->id,
+//            "post_id" => $request->modelInfo["id"],
             "parent_id" => $request->parentId
         ]);
         if ($request->upload) {
 
             $this->attachComment($request, $comment);
         }
+        if ($comment->user_id != $model->user_id) {
+            $user = $model->curator;
+            $user->notify(new NewCommentNotification($comment, $model));
+        }
 
         return view("components.index.comments.comments", [
-            "post" => $post
+            "model" => $model
         ]);
     }
 
@@ -62,7 +55,7 @@ trait HasComments {
         ]);
 
         return view("components.index.comments.comments", [
-            "post" => POST::find($request->namespace::find($request->postId)->post->first()->id)
+            "model" => $request->namespace::find($request->modelId)
         ]);
     }
 

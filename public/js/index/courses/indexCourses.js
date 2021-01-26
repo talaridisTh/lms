@@ -45259,29 +45259,30 @@ $(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
           case 0:
             e.preventDefault();
             body = $('textarea#reply-body').val();
+            $(".animate-spin").removeClass("hidden");
 
             if (body) {
-              _context4.next = 7;
+              _context4.next = 8;
               break;
             }
 
             if (!$(".validate-form-post").length) {
               $('#new-reply').modal('show');
               $("<p class='text-red-400 mt-4 validate-form-post'>*Tο πεδίο είναι απαραίτητο</p>").insertAfter("#reply-body");
+              $(".animate-spin").addClass("hidden");
             }
 
             return _context4.abrupt("return");
 
-          case 7:
+          case 8:
             body = "<span class=\"text-blue-500 author-reply\">".concat($(".replay-name").text(), "</span> ").concat(body);
 
-          case 8:
-            modelInfo = JSON.parse(this.dataset.model);
+          case 9:
+            modelInfo = this.dataset.model;
             parentId = this.dataset.parent;
             namespace = this.dataset.namespace; // delete this.dataset.upload;
 
             upload = typeof this.dataset.upload == "undefined" ? [] : JSON.parse(this.dataset.upload);
-            this.disabled = true;
             $(".validate-form-post").remove();
             _context4.prev = 14;
             _context4.next = 17;
@@ -45309,6 +45310,8 @@ $(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
               $(".text-reply-comment").text("Νέο μήνυμα");
               feather_icons__WEBPACK_IMPORTED_MODULE_4___default.a.replace();
               $(".filepond--drop-label").show(); // FilePond.destroy( inputElement );
+
+              $(".animate-spin").addClass("hidden");
             }
 
             _context4.next = 26;
@@ -45333,13 +45336,14 @@ $(document).on("click", ".js-form-reply", /*#__PURE__*/function () {
 }()); //edit comment
 
 var onEditComment = function onEditComment() {
+  $(document).off('click', '.js-edit-comment');
   $(document).on("click", ".js-edit-comment", function (e) {
     e.preventDefault();
     $(".dropdown").addClass("hidden");
     $(".dropdown-box__content").addClass("hidden");
     var thisContainer = $(".comment-".concat($(this).data("class-comment")));
     var commentId = thisContainer.data('threadId');
-    var postId = $(".hidden-post").data("model-id");
+    var modelId = $(".hidden-post").data("model-id");
     var namespace = $(".hidden-post").data("namespace");
     var author = thisContainer.find(".author-reply");
     var pre = thisContainer.find("pre");
@@ -45368,7 +45372,7 @@ var onEditComment = function onEditComment() {
             case 0:
               _context5.next = 2;
               return axios.patch("/model/update/".concat(commentId), {
-                postId: postId,
+                modelId: modelId,
                 editBody: "".concat(author[0].outerHTML, " ").concat($(".edit-input").val()),
                 namespace: namespace
               });
@@ -45404,7 +45408,7 @@ var onEditComment = function onEditComment() {
 
 var onFirstReplayBtnEvent = function onFirstReplayBtnEvent() {
   $(document).on("click", ".first-thread-replay", function () {
-    var model = $(".hidden-post").data("model-info");
+    var model = $(".hidden-post").data("model-id");
     var namespace = $(".hidden-post").data("namespace");
     $("#new-reply").find(".replay-name").text("");
     $(".js-form-reply")[0].dataset.model = JSON.stringify(model);
@@ -45415,18 +45419,20 @@ var onFirstReplayBtnEvent = function onFirstReplayBtnEvent() {
 
 var onCommentReplayBtnEvent = function onCommentReplayBtnEvent() {
   $(".cnt-reply-list").on("click", ".js-comment-reply", function () {
-    var model = $(".hidden-post").data("model-info");
+    var model = $(".hidden-post").data("model-id");
+    var namespace = $(".hidden-post").data("namespace");
     var parentId = this.closest(".main-post").dataset.commentId;
     var author = $(this).closest(".main-post").find(".author-post-name").text();
     $("#new-reply").find(".replay-name").text("@".concat(author));
-    $(".js-form-reply")[0].dataset.model = JSON.stringify(model);
+    $(".js-form-reply")[0].dataset.model = model;
     $(".js-form-reply")[0].dataset.parent = parentId;
+    $(".js-form-reply")[0].dataset.namespace = namespace;
   });
 };
 
 var onSubCommentReplayBtnEvent = function onSubCommentReplayBtnEvent() {
   $(".cnt-reply-list").on("click", ".js-sub-comment-reply", function () {
-    var model = $(".hidden-post").data("model-info");
+    var model = $(".hidden-post").data("model-id");
     var parentId = this.closest(".main-post").dataset.commentId;
     var author = $(this).closest(".main-post").find(".author-post-name").text();
     $("#new-reply").find(".replay-name").text("@".concat(author));
@@ -45458,7 +45464,7 @@ var bestAnswer = function bestAnswer() {
 
             $(".js-best-answer").not($(this)).parent().find(".badge-best").remove();
             commentId = $(this).closest(".main-post").data("threadId");
-            model = $(".hidden-post").data("model-info").id;
+            model = $(".hidden-post").data("model-id");
             _context6.prev = 6;
             _context6.next = 9;
             return axios.patch("/discussion/best/".concat(commentId), {
@@ -45501,7 +45507,7 @@ var onDeleteComment = function onDeleteComment() {
               e.preventDefault();
               thisContainer = $(".comment-".concat($(this).data("class-comment")));
               id = thisContainer.data('thread-id');
-              modelInfo = $(".hidden-post").data("model-info");
+              modelInfo = $(".hidden-post").data("model-id");
               _context7.prev = 4;
               _context7.next = 7;
               return axios.post("/model/delete", {

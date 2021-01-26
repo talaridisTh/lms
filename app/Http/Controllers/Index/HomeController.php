@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use App\Models\Material;
-use App\Models\Message;
 use App\Models\Option;
-use App\Models\User;
-use Schema;
+use Carbon\Carbon;
 
 class HomeController extends Controller {
 
@@ -40,33 +38,51 @@ class HomeController extends Controller {
         return response()->json(auth()->user());
     }
 
+    public function updateAnnouncementMessage()
+    {
+        $test = auth()->user()->courses()->with("announcement")
+            ->get()->pluck("announcement")
+            ->flatten()->each(function ($annou) {
+
+                $annou->read_at = Carbon::now();
+                $annou->save();
+
+            });
+
+        return response()->json(auth()->user());
+    }
+
     public function test()
     {
-        $models = User::all();
-        foreach ($models as $model) {
-//            $model->update(["dark_mode", false]);
-            Message::create([
-                "type" => "user",
-                "id" => $model->id,
-                "from_id" => $model->id,
-                "to_id" => 1,
-                "body" => 'Καλησπέρα ',
-            ]);
-        }
 
-        return;
-        $models = User::all();
-        $models->each(function ($item) {
-            $item->update(
-                ['seen' => '{
-                    "seen_message": 0,
-                     "seen_task": 0
-                    }'
-                ]);
-            $item->update(["dark_mode" => 1]);
-            $item->update(["name" => $item->first_name . " " . $item->last_name]);
-        });
-
+        auth()->user()->courses()->with("announcement")
+            ->get()->pluck("announcement")
+            ->flatten()->where("read_at", "!=", null)
+            ->isEmpty();
+//        $models = User::all();
+//        foreach ($models as $model) {
+////            $model->update(["dark_mode", false]);
+//            Message::create([
+//                "type" => "user",
+//                "id" => $model->id,
+//                "from_id" => $model->id,
+//                "to_id" => 1,
+//                "body" => 'Καλησπέρα ',
+//            ]);
+//        }
+//
+//        return;
+//        $models = User::all();
+//        $models->each(function ($item) {
+//            $item->update(
+//                ['seen' => '{
+//                    "seen_message": 0,
+//                     "seen_task": 0
+//                    }'
+//                ]);
+//            $item->update(["dark_mode" => 1]);
+//            $item->update(["name" => $item->first_name . " " . $item->last_name]);
+//        });
     }
 
 }

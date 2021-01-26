@@ -10,7 +10,7 @@
 <div class="main-post main-reply flex mt-2 bg-gray-200 py-5 px-3 {{$class}} rounded-xl {{$isBestAnswerCnt}} comment-{{$comment->id}}"
      data-comment-id="{{$comment->id}}"
      data-thread-id="{{$comment->id}}"
-     data-count="{{$post->id}}">
+     data-count="{{$model->id}}">
     <div class="mx-3 group hidden  md:table w-20 h-20 rounded-full overflow-hidden text-center bg-purple table cursor-pointer ">
         <img height="20"
              class=" rounded-full object-cover object-center w-full h-full visible group-hover:hidden"

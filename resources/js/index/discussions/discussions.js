@@ -189,6 +189,7 @@ $(".js-form-reply").on("click", async function (e) {
     }
     let postId = this.dataset.post;
     let parentId = this.dataset.parent;
+    let namespace = this.dataset.namespace;
     this.disabled = true
     $(".validate-form-post").remove();
 
@@ -196,7 +197,8 @@ $(".js-form-reply").on("click", async function (e) {
         const {data, status} = await axios.post("/discussion/post/store-reply", {
             postId,
             parentId,
-            body
+            body,
+            namespace
         })
 
         if (status == 200) {
@@ -221,7 +223,11 @@ $(document).on("click", '.js-thread-title', async function () {
     let postId = this.closest(".single-thread").dataset.postId
     try {
         // const {data, status} = await axios.patch(`/discussion/watched/${postId}`)
-        const {data, status} = await axios.get(`/discussion/${postId}`)
+        const {data, status} = await axios.get(`/discussion/${postId}`, {
+            params: {
+                namespace: this.closest(".single-thread").dataset.namespace,
+            }
+        })
 
         if (status === 200) {
             $(".discussions-right").off();
@@ -305,11 +311,13 @@ const onFirstReplayBtnEvent = () => {
 const onCommentReplayBtnEvent = () => {
     $(".discussions-right").on("click", ".js-comment-reply", function () {
         let postId = $(".main-post")[0].dataset.postId;
+        let namespace = $(".main-post")[0].dataset.namespace;
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
 
         $("#new-reply").find(".replay-name").text(`@${author}`);
         $(".js-form-reply")[0].dataset.post = postId
+        $(".js-form-reply")[0].dataset.namespace = namespace
         $(".js-form-reply")[0].dataset.parent = parentId
     })
 }
@@ -912,6 +920,92 @@ function toastAlert(icon, message) {
     });
 }
 
+const onAnnouncement = () => {
+    let users;
+    let courses;
+
+
+    $("#user-task").select2({
+        placeholder: "Όλοι οι μαθητές",
+        width: "resolve",
+        tags: true,
+        tokenSeparators: [',', ' '],
+        ajax: {
+            url: "/discussion/users/json-search",
+            delay: 1000,
+            dataType: "json",
+            data: function (params) {
+                return {
+                    search: params.term,
+                    page: params.page || 1
+                }
+            }
+        }
+    }).on("select2:select", function (e) {
+        $(document).off("click", ".select2-selection__choice")
+        $(document).on("click", ".select2-selection__choice", function () {
+            if ($(".select2-selection__rendered").children().length > 2) {
+                $("#curator-task").prop("disabled", true);
+            } else {
+                $("#curator-task").prop("disabled", false);
+            }
+        })
+        users = $(e.currentTarget).val();
+        $("#curator-task").attr('disabled', 'disabled');
+
+    });
+
+    $("#curator-task").select2({
+        placeholder: "Όλα τα μαθήματα",
+        width: "resolve",
+        ajax: {
+            url: "/discussion/courses/json-search",
+            delay: 1000,
+            dataType: "json",
+            data: function (params) {
+                return {
+                    search: params.term,
+                    page: params.page || 1
+                }
+            }
+        }
+    }).on("select2:select", function (e) {
+        courses = $(e.currentTarget).val();
+
+        if ($(e.currentTarget).val().length > 1) {
+            $("#user-task").prop("disabled", true);
+        } else {
+
+            $("#user-task").prop("disabled", false);
+        }
+    });
+
+
+    $(".js-send-announcement").on("click", async function () {
+        $(".spinner-border").removeClass("hidden");
+        $(this).prop("disabled", true);
+        try {
+            const {status, data} = await axios.post("/discussion/upload-announcement", {
+                users,
+                courses,
+                body: $("#editor-task").val(),
+                title: $("#announcement-title").val()
+            })
+            if (status == 200) {
+                $(".discussions-right").html($(data))
+                onAnnouncement();
+
+                // $(".show-announcement").trigger("click");
+
+
+            }
+        } catch (e) {
+            console.log(e)
+        }
+
+
+    })
+}
 
 //all thread sidebar
 $(".discussions-left").on("click", "#filter-all-threads", async function () {
@@ -1092,6 +1186,8 @@ $(".discussions-left").on("click", "#filter-announcement", async function () {
             styleCollapse();
             removeTask();
             onFirstReplayBtnEvent();
+
+            onAnnouncement();
 
             //
             // $(".ul-thread .bg-thread").removeClass("active-thread")

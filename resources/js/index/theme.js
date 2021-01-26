@@ -65,6 +65,23 @@ $(document).on("click", ".js-message-seen", async function (e) {
     }
 })
 
+$(document).on("click", ".contact", async function (e) {
+
+    try {
+        const {
+            status
+        } = await axios.patch("/home/announcement/update");
+
+        if (status == 200) {
+
+            console.log("work")
+        }
+    } catch (e) {
+        console.log(e)
+    }
+})
+
+
 $(document).on("click", ".js-task-seen", async function (e) {
     e.preventDefault()
 

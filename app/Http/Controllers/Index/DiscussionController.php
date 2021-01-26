@@ -10,15 +10,18 @@ use App\Models\Course;
 use App\Models\Homework;
 use App\Models\Post;
 use App\Models\User;
+use App\Notifications\NewAnnouncementNorification;
+use App\Traits\IconFinder;
 use App\Traits\MediaUploader;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class DiscussionController extends Controller {
 
-    use MediaUploader;
+    use MediaUploader, IconFinder;
 
     private $allowedTypes = [
         "application/octet-stream", "application/x-zip-compressed", "application/pdf",
@@ -49,13 +52,9 @@ class DiscussionController extends Controller {
 
     public function index(Request $request)
     {
-
-        $posts = Post::whereHas("user", function ($course) {
-
-            $course->whereIn("posts.postable_id", auth()->user()->courses->pluck("id"));
-        })->orderBy('created_at', $request->option ? $request->option : "desc")
-            ->where("postable_type", '!=', "App\Models\Attachment")
-            ->paginate(10);
+//        dd(auth()->user()->getAnnouncementCourse());
+        $posts = auth()->user()->getPosts();
+        //            ->orderBy('created_at', $request->option ? $request->option : "desc")
 //
 //        $posts = Post::orderBy('created_at', $request->option ? $request->option : "desc")
 //            ->paginate(10);
@@ -67,10 +66,9 @@ class DiscussionController extends Controller {
         ]);
     }
 
-    public function show($post)
+    public function show($post, Request $request)
     {
-        $post = Post::findOrFail($post);
-        $post->increment("watched");
+        $post = $request->namespace::findOrFail($post);
 
         return view("components.index.discussions.discussions-post", [
             "post" => $post,
@@ -137,14 +135,13 @@ class DiscussionController extends Controller {
     public function storeReply(Request $request)
     {
 
-        $post = Post::findOrFail($request->postId);
+        $post = $request->namespace::findOrFail($request->postId);
         $request->validate([
             "body" => "required",
         ]);
-        Comment::create([
+        $post->comments()->create([
             "body" => $request->body,
             "user_id" => auth()->id(),
-            "post_id" => $request->postId,
             "parent_id" => $request->parentId
         ]);
 
@@ -350,48 +347,8 @@ class DiscussionController extends Controller {
     public function myTask()
     {
 
-        $course = [];
-        if (auth()->user()->getRoleNames()[0] == "student") {
-//            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
-            $coursesId = auth()->user()->courses->pluck("id");
-            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
-            $course = $courseMedia->map(function ($media) {
-                return Course::findOrFail($media->course_id);
-            });
-        } elseif (auth()->user()->hasAnyRole(["instructor", "admin", "super-admin"])) {
-            $coursesId = Course::where("user_id", auth()->id())->pluck("id");
-            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
-            $course = $courseMedia->map(function ($media) {
-                return Course::findOrFail($media->course_id);
-            });
-        }
-
         return view("components.index.discussions.discussions-task", [
-            "courses" => collect($course)->unique()
-        ]);
-    }
-
-    public function myAnnouncement()
-    {
-
-        $course = [];
-        if (auth()->user()->getRoleNames()[0] == "student") {
-//            $courseMedia = auth()->user()->media()->where("course_id", "!=", 0)->get();
-            $coursesId = auth()->user()->courses->pluck("id");
-            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
-            $course = $courseMedia->map(function ($media) {
-                return Course::findOrFail($media->course_id);
-            });
-        } elseif (auth()->user()->hasAnyRole(["instructor", "admin", "super-admin"])) {
-            $coursesId = Course::where("user_id", auth()->id())->pluck("id");
-            $courseMedia = Homework::whereIn("course_id", $coursesId)->get();
-            $course = $courseMedia->map(function ($media) {
-                return Course::findOrFail($media->course_id);
-            });
-        }
-
-        return view("components.index.discussions.discussions-announcement", [
-            "courses" => collect($course)->unique()
+            "courses" => auth()->user()->courses()->whereHas("homeworks")->with("homeworks")->get()
         ]);
     }
 
@@ -419,7 +376,6 @@ class DiscussionController extends Controller {
 
         $homework = Homework::create([
             'student_id' => auth()->id(),
-            'instructor_id' => $mail->receiver->id,
             'subject' => $mail->subject,
             'content' => $mail->body ?? auth()->user()->fullname,
             'sent_at' => now()
@@ -479,36 +435,10 @@ class DiscussionController extends Controller {
         return $attachment;
     }
 
-    public function createQuestionPost(Request $request)
-    {
-
-        $attachment = Attachment::find($request->id);
-        if ($attachment->post->isEmpty()) {
-            $post = $attachment->post()->create([
-//                "user_id" => $attachment->homework->instructor->id,
-                "user_id" => auth()->id(),
-                "title" => $attachment->original_name,
-                "slug" => $attachment->name,
-            ]);
-
-            return response()->json($post->id);
-        } else {
-
-            Comment::create([
-                "body" => "$request->body",
-                "user_id" => auth()->id(),
-                "post_id" => $attachment->post->first()->id,
-                "parent_id" => 0
-            ]);
-        }
-
-        //emeina sto na balw st eikonidio tis sizitisis oti iparxei to post gia na kane redirect ekei ! :)
-    }
-
     public function courseSearchSelect(Request $request)
     {
-        $courses = Course::where("title", "LIKE", "%$request->search%")
-            ->select("id", "title")->paginate(10);
+        $courses = auth()->user()->courses()->where("title", "LIKE", "%$request->search%")
+            ->select("courses.id", "title")->paginate(10);
         $result = [];
         $result["results"] = [];
         foreach ($courses as $key => $course) {
@@ -532,7 +462,10 @@ class DiscussionController extends Controller {
 
     public function userSearchSelect(Request $request)
     {
-        $users = User::where("first_name", "LIKE", "%$request->search%")
+        $userAll = auth()->user()->whereHas("courses", function ($course) {
+            $course->whereIn("courses.id", auth()->user()->courses()->get()->pluck("id"));
+        });
+        $users = $userAll->where("first_name", "LIKE", "%$request->search%")
             ->select("id", "first_name", "email", "last_name")->paginate(10);
         $result = [];
         $result["results"] = [];
@@ -553,6 +486,71 @@ class DiscussionController extends Controller {
             "more" => $users->currentPage() !== $users->lastPage()
         ];
         echo json_encode($result);
+
+    }
+
+    public function uploadAnnouncement(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "title" => "required",
+            "body" => "required",
+            "users" => "required_if:courses,null",
+            "courses" => "required_if:users,null",
+        ]);
+        if ($validator->fails()) {
+            return redirect('/discussion/my-announcement')->withErrors($validator);
+
+        }
+        if ($request->courses) {
+            $course = Course::where("title", $request->courses)->first();
+            $announcement = $course->announcement()->create([
+                "title" => $request->title,
+                "description" => $request->body,
+                "status" => 1,
+                "slug" => Str::slug($request->title, "-")
+            ]);
+            $announcement->comments()->create([
+                'user_id' => auth()->id(),
+                "parent_id" => 0,
+                "body" => $request->body,
+            ]);
+            foreach ($course->users as $user) {
+                $user->notify(new NewAnnouncementNorification);
+            }
+
+        } elseif ($request->users) {
+            foreach ($request->users as $userId) {
+                $user = User::findOrFail($userId);
+                $announcement = $user->announcement()->create([
+                    "title" => $request->title,
+                    "description" => $request->body,
+                    "status" => 1,
+                    "slug" => Str::slug($request->title, "-")
+                ]);
+                $announcement->comments()->create([
+                    'user_id' => auth()->id(),
+                    "parent_id" => 0,
+                    "body" => $request->body,
+                ]);
+            }
+
+        }
+
+        return $this->myAnnouncement();
+    }
+
+    public function myAnnouncement()
+    {
+
+        $userRole = auth()->user()->getRoleNames()[0];
+        $postsStudent = auth()->user()->courses()->with("announcement.comments")->get()->pluck("announcement.*.comments.*")->collapse();
+
+        return view("components.index.discussions.discussions-announcement", [
+            "posts" => $userRole == "student" ? $postsStudent : auth()->user()->getAnnouncementCourse(),
+            "policiesRoles" => ["super-admin", "admin", "instructor"],
+            'courses' => auth()->user()->courses,
+            'users' => auth()->user()->courses()->with("users")->get()->pluck("users")->collapse()->unique("id")
+        ]);
 
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPolymorphicToAttachmentsTable extends Migration {
+class DropColumnsFromCommentsTable extends Migration {
 
     /**
      * Run the migrations.
@@ -13,9 +13,11 @@ class AddPolymorphicToAttachmentsTable extends Migration {
      */
     public function up()
     {
-        Schema::table('attachments', function (Blueprint $table) {
+        Schema::table('comments', function (Blueprint $table) {
             //
-            $table->nullableMorphs("attachmentable");
+            $table->dropForeign('comments_post_id_foreign');
+            $table->dropColumn('post_id');
+            $table->dropColumn('best');
         });
     }
 
@@ -26,7 +28,7 @@ class AddPolymorphicToAttachmentsTable extends Migration {
      */
     public function down()
     {
-        Schema::table('attachments', function (Blueprint $table) {
+        Schema::table('comments', function (Blueprint $table) {
             //
         });
     }

@@ -4,74 +4,15 @@ namespace App\Models;
 
 use App\Traits\SlugCreator;
 use App\Traits\UrlCreator;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use League\Glide\Urls\UrlBuilderFactory;
 
 class Course extends Model {
 
-    use SoftDeletes, HasFactory, UrlCreator, SlugCreator;
-
-    public function media()
-    {
-
-        return $this->morphToMany(Media::class, 'mediable')->withPivot('usage', 'priority');
-    }
-
-    public function curator()
-    {
-
-        return $this->belongsTo(User::class, "user_id");
-    }
-
-    public function attachments()
-    {
-
-        return $this->hasMany(Attachment::class);
-    }
-
-    public function topics()
-    {
-
-        return $this->morphToMany(Topic::class, 'topicable');
-    }
-
-    public function materials()
-    {
-
-        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at', "guest_status");
-    }
-
-    public function activeMaterials()
-    {
-        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at', "guest_status")
-            ->wherePivot("status", 1)
-            ->wherePivot("publish_at", "<=", now());
-    }
-
-    public function bundles()
-    {
-
-        return $this->belongsToMany(Bundle::class);
-    }
-
-    public function users()
-    {
-
-        return $this->belongsToMany(User::class)->withTimestamps();
-    }
-
-    public function post()
-    {
-        return $this->morphMany(Post::class, 'postable');
-    }
-
-    public function getRouteKeyName()
-    {
-        return "slug";
-    }
+    use Notifiable, SoftDeletes, HasFactory, UrlCreator, SlugCreator;
 
     public static function notInCourseMaterials(Course $course)
     {
@@ -183,25 +124,80 @@ class Course extends Model {
             "odp" => "mdi-file-powerpoint-outline text-orange",
             "zip" => "mdi-folder-zip-outline text-warning",
         ];
-        foreach ($icons as $type => $icon)
-        {
-            if (fnmatch("$type*", $value))
-            {
+        foreach ($icons as $type => $icon) {
+            if (fnmatch("$type*", $value)) {
                 return $icon;
             }
         }
     }
 
-    public function imageUrlSmall()
+    public function media()
     {
-        // Set complicated sign key
-        $signkey = 'The strongest of all warriors are these two, patience and time...';
-        // Create an instance of the URL builder
-        $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
-        // Generate a URL
-        $url = $urlBuilder->getUrl($this->attributes['cover'], ["w" => 400, "h" => 225, "fit" => "crop"]);
 
-        return $url;
+        return $this->morphToMany(Media::class, 'mediable')->withPivot('usage', 'priority');
+    }
+
+    public function curator()
+    {
+
+        return $this->belongsTo(User::class, "user_id");
+    }
+
+    public function attachments()
+    {
+
+        return $this->morphMany(Attachment::class, "attachmentable");
+    }
+
+    public function topics()
+    {
+
+        return $this->morphToMany(Topic::class, 'topicable');
+    }
+
+    public function materials()
+    {
+
+        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at', "guest_status");
+    }
+
+    public function activeMaterials()
+    {
+        return $this->belongsToMany(Material::class)->withPivot('status', 'priority', 'highlight', 'publish_at', "guest_status")
+            ->wherePivot("status", 1)
+            ->wherePivot("publish_at", "<=", now());
+    }
+
+    public function bundles()
+    {
+
+        return $this->belongsToMany(Bundle::class);
+    }
+
+    public function users()
+    {
+
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
+
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    public function announcement()
+    {
+        return $this->morphMany(Announcement::class, 'announcementable');
+    }
+
+    public function homeworks()
+    {
+        return $this->hasMany(Homework::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return "slug";
     }
 
 }

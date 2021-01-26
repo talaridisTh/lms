@@ -677,25 +677,27 @@ initFilepond();
 $(document).on("click", ".js-form-reply", async function (e) {
     e.preventDefault()
     let body = $('textarea#reply-body').val()
+    $(".animate-spin").removeClass("hidden");
 
 
     if (!body) {
         if (!$(".validate-form-post").length) {
             $('#new-reply').modal('show');
             $("<p class='text-red-400 mt-4 validate-form-post'>*Tο πεδίο είναι απαραίτητο</p>").insertAfter("#reply-body");
-
+            $(".animate-spin").addClass("hidden");
         }
         return
     } else {
         body = `<span class="text-blue-500 author-reply">${$(".replay-name").text()}</span> ${body}`
     }
 
-    const modelInfo = JSON.parse(this.dataset.model)
+    const modelInfo = this.dataset.model;
     const parentId = this.dataset.parent;
     const namespace = this.dataset.namespace;
     // delete this.dataset.upload;
     let upload = typeof this.dataset.upload == "undefined" ? [] : JSON.parse(this.dataset.upload);
-    this.disabled = true
+
+
     $(".validate-form-post").remove();
     try {
         const {data, status} = await axios.post(`/model/comment`, {
@@ -717,6 +719,7 @@ $(document).on("click", ".js-form-reply", async function (e) {
             feather.replace()
             $(".filepond--drop-label").show();
             // FilePond.destroy( inputElement );
+            $(".animate-spin").addClass("hidden");
         }
 
     } catch (e) {
@@ -727,7 +730,7 @@ $(document).on("click", ".js-form-reply", async function (e) {
 
 //edit comment
 const onEditComment = () => {
-
+    $(document).off('click', '.js-edit-comment');
     $(document).on("click", ".js-edit-comment", function (e) {
 
         e.preventDefault()
@@ -736,7 +739,7 @@ const onEditComment = () => {
 
         const thisContainer = $(`.comment-${$(this).data("class-comment")}`)
         const commentId = thisContainer.data('threadId');
-        const postId = $(".hidden-post").data("model-id");
+        const modelId = $(".hidden-post").data("model-id");
         const namespace = $(".hidden-post").data("namespace");
         let author = thisContainer.find(".author-reply")
         const pre = thisContainer.find("pre");
@@ -768,7 +771,7 @@ const onEditComment = () => {
         $(".btn-body-edit").on("click", async function () {
 
             const {data, status} = await axios.patch(`/model/update/${commentId}`, {
-                postId,
+                modelId,
                 editBody: `${author[0].outerHTML} ${$(".edit-input").val()}`,
                 namespace
             })
@@ -794,7 +797,7 @@ const onEditComment = () => {
 const onFirstReplayBtnEvent = () => {
 
     $(document).on("click", ".first-thread-replay", function () {
-        let model = $(".hidden-post").data("model-info");
+        let model = $(".hidden-post").data("model-id");
         let namespace = $(".hidden-post").data("namespace");
 
 
@@ -809,19 +812,22 @@ const onFirstReplayBtnEvent = () => {
 
 const onCommentReplayBtnEvent = () => {
     $(".cnt-reply-list").on("click", ".js-comment-reply", function () {
-        let model = $(".hidden-post").data("model-info");
+        let model = $(".hidden-post").data("model-id");
+        let namespace = $(".hidden-post").data("namespace");
+
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
 
         $("#new-reply").find(".replay-name").text(`@${author}`);
-        $(".js-form-reply")[0].dataset.model = JSON.stringify(model)
+        $(".js-form-reply")[0].dataset.model = model
         $(".js-form-reply")[0].dataset.parent = parentId
+        $(".js-form-reply")[0].dataset.namespace = namespace;
     })
 }
 
 const onSubCommentReplayBtnEvent = () => {
     $(".cnt-reply-list").on("click", ".js-sub-comment-reply", function () {
-        let model = $(".hidden-post").data("model-info");
+        let model = $(".hidden-post").data("model-id");
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
 
@@ -859,7 +865,7 @@ const bestAnswer = () => {
 
 
         let commentId = $(this).closest(".main-post").data("threadId")
-        let model = $(".hidden-post").data("model-info").id;
+        let model = $(".hidden-post").data("model-id");
 
         try {
 
@@ -886,7 +892,7 @@ const onDeleteComment = () => {
         e.preventDefault();
         const thisContainer = $(`.comment-${$(this).data("class-comment")}`)
         const id = thisContainer.data('thread-id')
-        const modelInfo = $(".hidden-post").data("model-info");
+        const modelInfo = $(".hidden-post").data("model-id");
         try {
             const {data, status, comment} = await axios.post(`/model/delete`, {
                 modelInfo,

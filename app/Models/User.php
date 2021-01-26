@@ -4,13 +4,12 @@ namespace App\Models;
 
 use App\Traits\UrlCreator;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Notifications\NewUserNotification;
 
 class User extends Authenticatable {
 
@@ -21,7 +20,6 @@ class User extends Authenticatable {
      *
      * @var array
      */
-
     protected $guarded = [];
 
     /**
@@ -54,109 +52,12 @@ class User extends Authenticatable {
         }'
     ];
 
-	public function mails() {
-
-		return $this->hasMany(Mail::class);
-	}
-
-	public function bundles() {
-
-		return $this->belongsToMany(Bundle::class);
-
-	}
-
-    public function watchlistMaterial() {
-
-
-        return $this->morphedByMany(Material::class, 'watchlistable')->withPivot("created_at")->withTimestamps();
-
-    }
-    public function watchlistCourse() {
-
-        return $this->morphedByMany(Course::class, 'watchlistable')->withPivot("created_at")->withTimestamps();
-
-    }
-
-    public function courses()
-    {
-
-        return $this->belongsToMany(Course::class)->withTimestamps();
-    }
-
-    public function likeComment()
-    {
-        return $this->morphedByMany(Comment::class, 'likable');
-    }
-
-    public function likePost()
-    {
-        return $this->morphedByMany(Post::class, 'likable');
-    }
-
-
-
-
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
-
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    public function guest()
-    {
-        return $this->belongsToMany(User::class, 'guest_user', 'partner_id',"user_id")->withPivot("user_link");
-    }
-
-
-    public function guestMaterial()
-    {
-
-        return $this->belongsToMany(Material::class,"guest_material","user_id","material_id")->withPivot("course_id");
-    }
-
-
-    // public function role()
-    // {
-
-    //     return $this->belongsToMany(Role::class, 'model_has_roles', 'role_id', 'model_id');
-    // }
-
-    public function media() {
-
-        return $this->morphToMany(Media::class, 'mediable');
-
-    }
-
-    public function materials()
-    {
-
-        return $this->belongsToMany(Material::class);
-    }
-
-//    public function Witchlist()
-//    {
-//        return $this->belongsToMany('App\User', 'Witchlist', 'user_id', 'material_id'  );
-//    }
-
-    public function witchlist()
-    {
-
-        return $this->belongsToMany(Material::class,'witchlist', 'user_id', 'material_id'  )->withPivot("course_id");
-    }
-
-
-//    CUSTOM METHOD
     public static function getInstructor()
     {
 //        $users = User::whereHas("courses")->get();
         $users = User::all();
         $instructor = [];
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             if ($user->getRoleNames()[0] == "instructor")
                 array_push($instructor, $user);
         }
@@ -168,8 +69,7 @@ class User extends Authenticatable {
     {
         $users = User::whereHas("courses")->get();
         $partner = [];
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             if ($user->getRoleNames()[0] == "partner")
                 array_push($partner, $user);
         }
@@ -181,8 +81,7 @@ class User extends Authenticatable {
     {
         $users = User::whereHas("courses")->get();
         $student = [];
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             if ($user->getRoleNames()[0] == "student")
                 array_push($student, $user);
         }
@@ -194,8 +93,7 @@ class User extends Authenticatable {
     {
         $materials = User::whereId($user)->with('courses.materials')->first();
         $materialArray = [];
-        foreach ($materials->courses as $material)
-        {
+        foreach ($materials->courses as $material) {
 
             array_push($materialArray, $material->materials);
         }
@@ -217,8 +115,8 @@ class User extends Authenticatable {
 
     public static function courseWhereNotExist($user)
     {
-       $test = DB::table('courses')
-           ->where('status', 1)
+        $test = DB::table('courses')
+            ->where('status', 1)
             ->whereNotIn('id',
                 function ($query) use ($user) {
 
@@ -229,13 +127,15 @@ class User extends Authenticatable {
                 }
             )
             ->get();
-       return $test;
+
+        return $test;
     }
+
     public static function trialCourseWhereNotExist($user)
     {
-       $test = DB::table('courses')
-           ->where('status', 1)
-           ->where("version","Trial")
+        $test = DB::table('courses')
+            ->where('status', 1)
+            ->where("version", "Trial")
             ->whereNotIn('id',
                 function ($query) use ($user) {
 
@@ -246,13 +146,14 @@ class User extends Authenticatable {
                 }
             )
             ->get();
-       return $test;
+
+        return $test;
     }
 
     public static function courseWhereActive()
     {
 
-        return Course::where("status",1)->get();
+        return Course::where("status", 1)->get();
 
     }
 
@@ -272,43 +173,154 @@ class User extends Authenticatable {
         return $user->getRoleNames()->first();
     }
 
-    public static function ifExistUrl( $user)
+    public static function ifExistUrl($user)
     {
 
         $uri = $user->pivot->user_link;
         $request = Request::create($uri);
-        return $request->hasValidSignature()==1? " Ενεργο": " Εληξε";
+
+        return $request->hasValidSignature() == 1 ? " Ενεργο" : " Εληξε";
     }
 
-    public  static function getlastMessage($user){
-	    if(isset(User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->message)){
 
-	       return User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->message;
-        }else
-        {
+    // public function role()
+    // {
+    //     return $this->belongsToMany(Role::class, 'model_has_roles', 'role_id', 'model_id');
+    // }
+    public static function getlastMessage($user)
+    {
+        if (isset(User::findOrFail($user)->sentMessage()->orderBy('updated_at', 'DESC')->first()->message)) {
+
+            return User::findOrFail($user)->sentMessage()->orderBy('updated_at', 'DESC')->first()->message;
+        } else {
 
             return "";
         }
 
-
-
     }
 
-    public  static function getlastHour($user){
-        if(isset(User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->updated_at)){
+    public static function getlastHour($user)
+    {
+        if (isset(User::findOrFail($user)->sentMessage()->orderBy('updated_at', 'DESC')->first()->updated_at)) {
 
-            return User::findOrFail($user)->sentMessage()->orderBy('updated_at','DESC')->first()->updated_at->diffForHumans();
-        }else
-        {
+            return User::findOrFail($user)->sentMessage()->orderBy('updated_at', 'DESC')->first()->updated_at->diffForHumans();
+        } else {
 
             return "";
         }
 
+    }
 
+//    public function Witchlist()
+//    {
+//        return $this->belongsToMany('App\User', 'Witchlist', 'user_id', 'material_id'  );
+//    }
+    public static function getNextId()
+    {
+        $statement = DB::select("show table status like 'users'");
 
+        return $statement[0]->Auto_increment;
+    }
+
+//    CUSTOM METHOD
+    public function mails()
+    {
+
+        return $this->hasMany(Mail::class);
+    }
+
+    public function bundles()
+    {
+
+        return $this->belongsToMany(Bundle::class);
+
+    }
+
+    public function watchlistMaterial()
+    {
+
+        return $this->morphedByMany(Material::class, 'watchlistable')->withPivot("created_at")->withTimestamps();
+
+    }
+
+    public function watchlistCourse()
+    {
+
+        return $this->morphedByMany(Course::class, 'watchlistable')->withPivot("created_at")->withTimestamps();
+
+    }
+
+    public function courses()
+    {
+
+        return $this->belongsToMany(Course::class)->withTimestamps();
+    }
+
+    public function likeComment()
+    {
+        return $this->morphedByMany(Comment::class, 'likable');
+    }
+
+    public function likePost()
+    {
+        return $this->morphedByMany(Post::class, 'likable');
+    }
+
+    public function getPosts()
+    {
+        $models = $this->comments()->where("commentable_type", "!=", "App\Models\Announcement")
+            ->get(["commentable_id", "commentable_type"])->unique('commentable_id')->map(function ($model) {
+                return $model->commentable_type::find($model->commentable_id);
+            });
+
+        return collect($models);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function announcement()
+    {
+        return $this->morphMany(Announcement::class, 'announcementable');
+    }
+
+    public function guest()
+    {
+        return $this->belongsToMany(User::class, 'guest_user', 'partner_id', "user_id")->withPivot("user_link");
+    }
+
+    public function guestMaterial()
+    {
+
+        return $this->belongsToMany(Material::class, "guest_material", "user_id", "material_id")->withPivot("course_id");
+    }
+
+    public function homeworks()
+    {
+        return $this->hasMany(Homework::class, "student_id");
+    }
+
+    public function media()
+    {
+
+        return $this->morphToMany(Media::class, 'mediable');
+
+    }
+
+    public function materials()
+    {
+
+        return $this->belongsToMany(Material::class);
     }
 
     // $user->fullName  // Onoma Epitheto
+    public function getAnnouncementCourse()
+    {
+        return $this->comments()->where("commentable_type", "App\Models\Announcement")->get();
+    }
+
     public function getFullNameAttribute()
     {
         return $this->attributes['last_name'] . ' ' . $this->attributes['first_name'];
@@ -320,25 +332,19 @@ class User extends Authenticatable {
 
     }
 
-
     public function getUpdatedAtAttribute($value)
     {
         $carbonDate = new Carbon($value);
-        return $carbonDate->diffForHumans();
-    }
 
-    public static function getNextId()
-    {
-        $statement = DB::select("show table status like 'users'");
-        return $statement[0]->Auto_increment;
+        return $carbonDate->diffForHumans();
     }
 
     public function commentIsLiked($comment)
     {
 
-        $like = auth()->user()->likeComment->whereIn("id",$comment->id)->first()?true :false;
+        $like = auth()->user()->likeComment->whereIn("id", $comment->id)->first() ? true : false;
 
-       return $like;
+        return $like;
     }
 
 }

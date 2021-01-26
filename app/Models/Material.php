@@ -3,18 +3,60 @@
 namespace App\Models;
 
 use App\Traits\SlugCreator;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use League\Glide\Urls\UrlBuilderFactory;
 use App\Traits\UrlCreator;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use League\Glide\Urls\UrlBuilderFactory;
 
 class Material extends Model {
 
-	use HasFactory;
-	use UrlCreator;
-	use SlugCreator;
+    use HasFactory;
+    use UrlCreator;
+    use SlugCreator;
 
     protected $guarded = [];
+
+    public static function getIcon($value)
+    {
+        $icons = [
+            "mp3" => "mdi-music-clef-treble",
+            "ev3" => "mdi-robot-industrial",
+            "pdf" => "mdi-file-pdf-outline text-danger",
+            "html" => "mdi-language-html5 text-danger",
+            "odg" => "mdi-file-pdf text-danger",
+            "doc" => "mdi-file-document-outline text-teal",
+            "odt" => "mdi-file-document-outline text-teal",
+            "rtf" => "mdi-file-document-outline text-teal",
+            "xl" => "mdi-file-table-box text-success",
+            "ods" => "mdi-file-table-box text-success",
+            "pp" => "mdi-file-powerpoint-outline text-orange",
+            "odp" => "mdi-file-powerpoint-outline text-orange",
+            "sb3" => "mdi-cat text-orange",
+            "zip" => "mdi-folder-zip-outline text-warning",
+            "rar" => "mdi-folder-zip-outline text-warning",
+        ];
+        foreach ($icons as $type => $icon) {
+            if (fnmatch("$type*", $value)) {
+                return $icon;
+            }
+        }
+    }
+
+    public static function getType($value)
+    {
+        $icons = [
+            "Lesson" => "mdi  mdi-book-open-page-variant ",
+            "Link" => 'mdi  mdi-satellite-uplink mr-1 text-red-500',
+            "Video" => "mdi  mdi-motion-play-outline  ",
+            "PDF" => "mdi  mdi-file-pdf-outline mr-1"
+        ];
+        foreach ($icons as $type => $icon) {
+            if (fnmatch("$type*", $value)) {
+
+                return $icon;
+            }
+        }
+    }
 
     public function chapters()
     {
@@ -23,6 +65,7 @@ class Material extends Model {
             "section_id", "material_id"
         )->withPivot('status', 'priority', 'highlight', 'publish_at');
     }
+
     public function activeChapters()
     {
         return $this->belongsToMany(
@@ -37,7 +80,7 @@ class Material extends Model {
     {
 
         return $this->belongsToMany(Course::class)->withPivot('status', 'priority');
-	}
+    }
 
     public function media()
     {
@@ -69,14 +112,14 @@ class Material extends Model {
         return $this->morphToMany(User::class, 'watchlistable');
     }
 
-    public function post()
+    public function comments()
     {
-        return $this->morphMany(Post::class, 'postable');
+        return $this->morphMany(Comment::class, 'commentable');
     }
 
     public function witchlist()
     {
-        return $this->belongsToMany(Course::class,'witchlist',"material_id","course_id" );
+        return $this->belongsToMany(Course::class, 'witchlist', "material_id", "course_id");
     }
 
     public function getRouteKeyName()
@@ -84,103 +127,53 @@ class Material extends Model {
         return "slug";
     }
 
-    public static function getIcon($value)
+    public function publishBadge()
     {
-        $icons = [
-            "mp3" => "mdi-music-clef-treble",
-            "ev3" => "mdi-robot-industrial",
-            "pdf" => "mdi-file-pdf-outline text-danger",
-            "html" => "mdi-language-html5 text-danger",
-            "odg" => "mdi-file-pdf text-danger",
-            "doc" => "mdi-file-document-outline text-teal",
-            "odt" => "mdi-file-document-outline text-teal",
-            "rtf" => "mdi-file-document-outline text-teal",
-            "xl" => "mdi-file-table-box text-success",
-            "ods" => "mdi-file-table-box text-success",
-            "pp" => "mdi-file-powerpoint-outline text-orange",
-            "odp" => "mdi-file-powerpoint-outline text-orange",
-            "sb3" => "mdi-cat text-orange",
-            "zip" => "mdi-folder-zip-outline text-warning",
-            "rar" => "mdi-folder-zip-outline text-warning",
-        ];
-        foreach ($icons as $type => $icon)
-        {
-            if (fnmatch("$type*", $value))
-            {
-                return $icon;
+        if ($this->pivot->status == 1) {
+            if (time() > strtotime($this->pivot->publish_at) && !is_null($this->pivot->publish_at)) {
+                return (object) [
+                    "icon" => "badge-outline-success",
+                    "text" => "Published"
+                ];
+            } else {
+                return (object) [
+                    "icon" => "custom-pill-primary badge-outline-primary",
+                    "text" => "Scheduled"
+                ];
             }
+        } else {
+            return (object) [
+                "icon" => "badge-outline-danger",
+                "text" => "Draft"
+            ];
         }
     }
 
-
-    public static function getType($value)
+    public function publishDate()
     {
-        $icons = [
-            "Lesson" => "mdi  mdi-book-open-page-variant ",
-            "Link" => 'mdi  mdi-satellite-uplink mr-1 text-red-500',
-            "Video" => "mdi  mdi-motion-play-outline  ",
-            "PDF" =>"mdi  mdi-file-pdf-outline mr-1"
+        if (!is_null($this->pivot->publish_at)) {
+            $publish = date_create($this->pivot->publish_at);
 
-        ];
-        foreach ($icons as $type => $icon)
-        {
-            if (fnmatch("$type*", $value))
-            {
-
-                return $icon;
-            }
+            return (object) [
+                "publish" => $publish,
+                "date" => date_format($publish, "d-m-Y"),
+                "time" => date_format($publish, "H:i")
+            ];
+        } else {
+            return (object) [
+                "publish" => "",
+                "date" => "",
+                "time" => ""
+            ];
         }
     }
 
-	public function publishBadge() {
-		if ( $this->pivot->status == 1 ) {
-			if ( time() > strtotime($this->pivot->publish_at) && !is_null($this->pivot->publish_at) ) {
-				return (object)[
-					"icon" => "badge-outline-success",
-					"text" => "Published"
-				];
-			}
-			else {
-				return (object)[
-					"icon" => "custom-pill-primary badge-outline-primary",
-					"text" => "Scheduled"
-				];
-			}
-		}
-		else {
-			return (object)[
-				"icon" => "badge-outline-danger",
-				"text" => "Draft"
-			];
-		}
-	}
-
-	public function publishDate() {
-		if ( !is_null($this->pivot->publish_at) ) {
-			$publish = date_create($this->pivot->publish_at);
-
-			return (object)[
-				"publish" => $publish,
-				"date" => date_format($publish, "d-m-Y"),
-				"time" => date_format($publish, "H:i")
-			];
-		}
-		else {
-			return (object)[
-				"publish" => "",
-				"date" => "",
-				"time" => ""
-			];
-		}
-	}
-
-    public function imageUrlSmall() {
+    public function imageUrlSmall()
+    {
         // Set complicated sign key
         $signkey = 'The strongest of all warriors are these two, patience and time...';
-
         // Create an instance of the URL builder
         $urlBuilder = UrlBuilderFactory::create('/img/', $signkey);
-
         // Generate a URL
         $url = $urlBuilder->getUrl($this->attributes['cover'], ["w" => 400, "h" => 225, "fit" => "crop"]);
 

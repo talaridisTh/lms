@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddPolymorphicToAttachmentsTable extends Migration {
+class DropPostsTable extends Migration {
 
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class AddPolymorphicToAttachmentsTable extends Migration {
      */
     public function up()
     {
-        Schema::table('attachments', function (Blueprint $table) {
-            //
-            $table->nullableMorphs("attachmentable");
+        //
+        Schema::table('posts', function (Blueprint $table) {
+            Schema::dropIfExists('posts');
         });
     }
 
@@ -26,9 +26,7 @@ class AddPolymorphicToAttachmentsTable extends Migration {
      */
     public function down()
     {
-        Schema::table('attachments', function (Blueprint $table) {
-            //
-        });
+        //
     }
 
 }
