@@ -180,9 +180,9 @@
                                                                                href="#">{{$task->subject}}</a>
                                                                             <span data-toggle="tooltip"
                                                                                   data-placement="top"
-                                                                                  title="{{isset($attachment->completed_at)?"":"Aναμονή ελέγχου καθηγητή"}}!"
-                                                                                  class="dashboard-status-button m-0 p-0 {{isset($attachment->completed_at)?"green":"red"}}">
-                                                                                {!!isset($attachment->completed_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($attachment->completed_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
+                                                                                  title="{{isset($task->seen_at)?"":"Aναμονή ελέγχου καθηγητή"}}!"
+                                                                                  class="dashboard-status-button m-0 p-0 {{isset($task->seen_at)?"green":"red"}}">
+                                                                                {!!isset($task->seen_at)?"Ελέγχθηκε <span class='text-muted font-12'>(".Carbon\Carbon::parse($task->seen_at)->format("d-m-Y H:i").')</span>':"Αναμονή.."!!}
                                                                             </span>
                                                                         </h3>
                                                                     </div>
