@@ -721,6 +721,24 @@ $R("#content-material", {
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
+const materialCoursesTopicFilter = document.getElementById("topicFilterMaterialCourses");
+const courseTopicsFilter = materialCoursesTopicFilter.cloneNode(true);
+courseTopicsFilter.id = "course-topics-filter";
+
+const coursesTableLengthSelect = document.querySelector("#remaining-course-material-table_length > label");
+coursesTableLengthSelect.append(courseTopicsFilter);
+$("#course-topics-filter").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#course-topics-filter").on("change", function() {
+
+	let label = $("#select2-course-topics-filter-container")[0];
+
+	utilities.filterStyle( label, this.value );
+	addCouseModal.column(2).search(this.value).draw();
+});
+
 utilities.filterButton('#activeFilterMaterialCourses', 6, materialCourseDatatable, "#material-course-table_length label");
 utilities.filterButton('#topicFilterMaterialCourses', 3, materialCourseDatatable, "#material-course-table_length label");
 // utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
@@ -791,6 +809,14 @@ $("#topicMaterial").select2({
 
 $("#versionFilterMaterial").select2({
     minimumResultsForSearch: -1,
+});
+
+$("#versionFilterMaterial").on("change", function () {
+
+    let label = $("#select2-versionFilterMaterial-container")[0];
+
+    utilities.filterStyle(label, this.value);
+
 });
 
 //datatable

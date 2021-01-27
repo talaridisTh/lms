@@ -40834,6 +40834,19 @@ $R("#content-material", {
 //! GLOBAL FUNCTION Filter
 //!============================================================
 
+var materialCoursesTopicFilter = document.getElementById("topicFilterMaterialCourses");
+var courseTopicsFilter = materialCoursesTopicFilter.cloneNode(true);
+courseTopicsFilter.id = "course-topics-filter";
+var coursesTableLengthSelect = document.querySelector("#remaining-course-material-table_length > label");
+coursesTableLengthSelect.append(courseTopicsFilter);
+$("#course-topics-filter").select2({
+  minimumResultsForSearch: -1
+});
+$("#course-topics-filter").on("change", function () {
+  var label = $("#select2-course-topics-filter-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+  addCouseModal.column(2).search(this.value).draw();
+});
 _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#activeFilterMaterialCourses', 6, materialCourseDatatable, "#material-course-table_length label");
 _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#topicFilterMaterialCourses', 3, materialCourseDatatable, "#material-course-table_length label"); // utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
 
@@ -40882,6 +40895,10 @@ $("#topicMaterial").select2({
 });
 $("#versionFilterMaterial").select2({
   minimumResultsForSearch: -1
+});
+$("#versionFilterMaterial").on("change", function () {
+  var label = $("#select2-versionFilterMaterial-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
 }); //datatable
 
 $("#topicFilterMaterialCourses").select2({});

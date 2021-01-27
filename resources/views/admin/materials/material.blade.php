@@ -158,7 +158,7 @@
 		</ul><!-- ./Tab Links -->
 
 		<div class="tab-content mb-3">
-			<div class="tab-pane show active" id="content">
+			<div class="tab-pane" id="content">
 				<div class="row">
 
 					<!-- form inputs -->
@@ -379,7 +379,7 @@
 				</div>
 			</div>
 
-			<div class="tab-pane" id="courses-tabs">
+			<div class="tab-pane show active" id="courses-tabs">
 				@include("components.admin.materials.tabsCourses")
 			</div>
 
