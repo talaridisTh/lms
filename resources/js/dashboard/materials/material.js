@@ -20,9 +20,154 @@ const baseUrl = window.location.origin;
 
 let timer = 0;
 
-//!##################################################
-//!					EventListeners					#
-//!##################################################
+const pickerConfig = {
+	singleDatePicker: true,
+	drops: "auto",
+    opens: "center",
+	timePicker: true,
+	autoUpdateInput: false,
+	timePicker24Hour: true,
+	cancelButtonClasses: "btn-secondary",
+	locale: {
+		format: "DD-MM-YYYY H:mm",
+		cancelLabel: "Cancel"
+    },
+}
+
+function datetime(date) {
+	const temp = date.split(" ");
+
+	return {
+		day: temp[0],
+		time: temp[1]
+	}
+}
+
+function publishCoverUpdate(row, date, status) {
+	let dateElm = row.getElementsByClassName("js-date")[0];
+	let timeElm = row.getElementsByClassName("js-time")[0];
+	let inputElm = row.getElementsByClassName("js-publish-picker")[0];
+	let badge = row.getElementsByClassName("js-badge")[0];
+	let day = date.day
+	let time = date.time;
+	let now = new Date();
+
+	date = new Date( `${day} ${time}` );
+
+	if ( status == 1 ) {
+		if ( now > date ) {
+			badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+			badge.classList.add("badge-outline-success");
+			badge.textContent = "Published";
+		}
+		else {
+			badge.classList.remove("badge-outline-success", "badge-outline-danger");
+			badge.classList.add("badge-outline-primary");
+			badge.textContent = "Scheduled";
+		}
+	}
+	else {
+		badge.classList.remove("badge-outline-primary", "badge-outline-success");
+		badge.classList.add("badge-outline-danger");
+		badge.textContent = "Draft";
+	}
+	day = day.split("-").reverse().join("-");
+	dateElm.textContent = day;
+	timeElm.textContent = time;
+	inputElm.value = `${day} ${time}`;
+}
+
+function publishApplyHandler(ev, picker) {
+	const date = picker.startDate.format('YYYY-MM-DD H:mm');
+	const courseId = this.dataset.courseId;
+
+	axios.patch(`/course-ajax/${courseId}/edit-publish`, {
+		date: date
+	})
+	.then( res => {
+		const row = this.findParent(2)
+		const date = datetime(res.data.publish);
+
+		publishCoverUpdate(row, date, res.data.status);
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...")
+	})
+}
+
+function publishHideHandler(cover, dateInput) {
+	setTimeout(() => {
+		cover.classList.remove("d-none");
+		dateInput.classList.add("d-none");
+		
+		$(dateInput).data('daterangepicker').remove();
+	}, 50);
+}
+
+function publishHandler() {
+	const cover = this;
+	const td = this.parentElement;
+	const dateInput = td.getElementsByClassName("js-publish-picker")[0];
+
+	this.classList.add("d-none");
+	dateInput.classList.remove("d-none");
+
+	$(dateInput).daterangepicker(pickerConfig);
+	$(dateInput).on("apply.daterangepicker", publishApplyHandler);
+	$(dateInput).on("hide.daterangepicker", publishHideHandler.bind(this, cover, dateInput));
+	dateInput.focus();
+}
+
+function deleteBtnHandler() {
+
+	const courseId = this.dataset.courseId;
+
+	axiosMultipleDelete([courseId], materialId);
+}
+
+function startDate( input ) {
+
+	let dateInput = input;
+
+	if ( !dateInput || dateInput.value == "" ) {
+		return "";
+	}
+
+	let dateInputValue = dateInput.value.split(" - ");
+	let firstDate = dateInputValue[0].split("/").reverse().join("-");
+
+	return firstDate;
+}
+
+function endDate( input ) {
+
+	let dateInput = input;
+
+	if ( !dateInput || dateInput.value == "" ) {
+		return "";
+	}
+
+	let dateInputValue = dateInput.value.split(" - ");
+	let secondDate = dateInputValue[1].split("/").reverse().join("-");
+
+	return secondDate;
+}
+
+function createDateElm() {
+
+	let input = document.createElement("input");
+
+	input.classList.add("form-control", "date", "d-inline-block", "ml-1");
+	input.id = "course-date-range";
+	input.dataset.toggle = "date-picker";
+	input.dataset.cancelClass = "btn-secondary";
+	input.style.height = "31.96px";
+	input.style.width = "195px";
+	input.placeholder = "Επιλέξτε ημερομηνίες...";
+
+	return input;
+}
 
 $(".js-editors-toggle").on("change", function() {
 	let editorToggles = $(".js-editors-toggle");
@@ -143,6 +288,14 @@ $("#add-gallery-images-btn").on("click", function() {
 //!============================================================
 const materialCourseDatatable = $("#material-course-table").DataTable({
 	order: [[ 1, "desc" ]],
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 0, width: "50px"},
+		{ targets: 2, width: "150px"},
+		{ targets: 3, width: "250px"},
+		{ targets: 4, width: "100px"},
+		{ targets: 5, width: "170px"},
+	],
 	searchDelay: "1000",
     processing: true,
     serverSide: true,
@@ -150,16 +303,21 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
         url: "/material-datatables/material-courses",
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         type: "post",
-        data: {
-            materialId
-        }
+        data: function( d ) {
+			return $.extend( {}, d, {
+				materialId: materialId,
+				startDate: startDate( $("#course-date-range")[0] ),
+				endDate: endDate( $("#course-date-range")[0] ),
+			})
+		}
     },
     columns: [
         {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-center align-middle"},
-        {data: "title", name: "title"},
-        {data: "curator", name: "curator", className: "text-center align-middle"},
-        {data: "updated_at", name: "updated_at", className: "text-center align-middle"},
-        {data: "created_at", name: "created_at", visible: false},
+        {data: "title", name: "courses.title"},
+        {data: "toggle", name: "status", className: "text-center align-middle" },
+        {data: "topics", name: "topics.title", className: "align-middle"},
+        {data: "version", name: "version", className: "text-center align-middle" },
+        {data: "publish", name: "publish_at", className: "text-center align-middle" },
         {data: "status", name: "status", visible: false},
 
     ],
@@ -172,12 +330,24 @@ const materialCourseDatatable = $("#material-course-table").DataTable({
 
         utilities.resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
         utilities.resetBulk($("#course-indside-material-bulk"), $(".js-course-inside-material"));
-        checkeBoxesEventListener();
+		
+		$(".js-publish-cover").on("click", publishHandler);
+		$(".js-remove-btn").on("click", deleteBtnHandler);
+		
+		checkeBoxesEventListener();
+		toggleStatus();
     }
 });
 
 const addCouseModal = $("#remaining-course-material-table").DataTable({
 	order: [[ 1, "desc" ]],
+	autoWidth: false,
+	columnDefs: [
+		{ targets: 0, width: "50px"},
+		{ targets: 2, width: "210px"},
+		{ targets: 3, width: "100px"},
+		{ targets: 4, width: "100px"},
+	],
 	searchDelay: "1000",
     processing: true,
     serverSide: true,
@@ -191,8 +361,9 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
     },
     columns: [
         {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-center align-middle"},
-        {data: "title", name: "title", className: "align-middle"},
-        {data: "curator", name: "curator", className: "text-center align-middle"},
+        {data: "title", name: "courses.title", className: "align-middle"},
+        // {data: "curator", name: "curator", className: "text-center align-middle"},
+        {data: "topics", name: "topics.title", className: "align-middle"},
         {data: "version", name: "version", className: "text-center align-middle"},
         {data: "action", name: "action", className: "text-center align-middle", searchable: false, orderable: false},
 
@@ -205,7 +376,8 @@ const addCouseModal = $("#remaining-course-material-table").DataTable({
         utilities.resetBulk($("#add-remaingings-btn"), $("#all-remainings-checkbox"));
         utilities.resetBulk($("#add-remaingings-btn"), $(".remainings-checkbox"));
         checkeBoxesEventListenerModal();
-        addCourse();
+		addCourse();
+		
     }
 })
 
@@ -235,7 +407,64 @@ const remainingFilesTable = $("#remaining-files-datatable").DataTable({
 		addFilesBtnInit();
 		tableAudioBtnInit();
     }
-})
+});
+
+function toggleStatus() {
+
+	$('.js-toggle').on('change', function() {
+
+		const courseId = this.dataset.courseId
+
+		axios.patch(`/course-ajax/${courseId}/status`, {
+			status: this.checked
+		})
+		.then( (res) => {
+			let row = this.findParent(2);
+			let dateElm = row.getElementsByClassName("js-date")[0];
+			let timeElm = row.getElementsByClassName("js-time")[0];
+			let inputElm = row.getElementsByClassName("js-publish-picker")[0];
+			let badge = row.getElementsByClassName("js-badge")[0];
+			let date = res.data.date.split("-").reverse().join("-");
+			let time = res.data.time;
+			let now = new Date();
+
+			date = new Date( `${date} ${time}` );
+
+			if ( this.checked ) {
+				if ( now > date ) {
+					badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+					badge.classList.add("badge-outline-success");
+					badge.textContent = "Published";
+				}
+				else {
+					badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+					badge.classList.add("badge-outline-primary");
+					badge.textContent = "Scheduled";
+				}
+			}
+			else {
+				badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+				badge.classList.add("badge-outline-danger");
+				badge.textContent = "Draft";
+			}
+
+			dateElm.textContent = res.data.date;
+			timeElm.textContent = res.data.time;
+			inputElm.value = `${res.data.date} ${res.data.time}`;
+
+			let icon = this.checked ? "success" : "info";
+			let message = this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+
+			utilities.toastAlert( icon, message );
+
+		})
+		.catch( (err) => {
+			console.log(err);
+			utilities.toastAlert( "error", "Παρουσιάστηκε κάποιο πρόβλημα ..." );
+
+		});
+	});
+}
 
 function tableAudioBtnInit() {
 
@@ -492,10 +721,73 @@ $R("#content-material", {
 
 //! GLOBAL FUNCTION Filter
 //!============================================================
-utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable, "#material-course-table_length label")
-utilities.filterButton('#activeFilterMaterialCourses', 5, materialCourseDatatable, "#material-course-table_length label")
-utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
-utilities.filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label")
+const materialCoursesTopicFilter = document.getElementById("topicFilterMaterialCourses");
+const courseTopicsFilter = materialCoursesTopicFilter.cloneNode(true);
+courseTopicsFilter.id = "course-topics-filter";
+
+const coursesTableLengthSelect = document.querySelector("#remaining-course-material-table_length > label");
+coursesTableLengthSelect.append(courseTopicsFilter);
+$("#course-topics-filter").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#course-topics-filter").on("change", function() {
+
+	let label = $("#select2-course-topics-filter-container")[0];
+
+	utilities.filterStyle( label, this.value );
+	addCouseModal.column(2).search(this.value).draw();
+});
+
+utilities.filterButton('#activeFilterMaterialCourses', 6, materialCourseDatatable, "#material-course-table_length label");
+utilities.filterButton('#topicFilterMaterialCourses', 3, materialCourseDatatable, "#material-course-table_length label");
+// utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
+utilities.filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label");
+
+let tablesLengthLabel = $("#material-course-table_length > label")[0];
+let courseTypesSelect = utilities.createCourseTypeSelect("course-type-selection");
+tablesLengthLabel.append(courseTypesSelect);
+
+$("#course-type-selection").select2({
+	minimumResultsForSearch: -1,
+});
+
+$("#course-type-selection").on("change", function() {
+
+	let label = $("#select2-course-type-selection-container")[0];
+	utilities.filterStyle( label, this.value );
+
+	materialCourseDatatable.column(4).search( this.value ).draw();
+
+});
+
+let searchFieldLabel = $("#material-course-table_filter > label > input")[0];
+let dateInput = createDateElm();
+
+dateInput.appendBefore( searchFieldLabel );
+
+let dateRange = $("#course-date-range");
+
+dateRange.daterangepicker( utilities.datePickerConfig );
+
+dateRange.on( "apply.daterangepicker", function(event, picker) {
+
+	let startDate = picker.startDate.format('DD/MM/YYYY');
+	let endDate = picker.endDate.format('DD/MM/YYYY');
+
+	this.classList.add("select2-selected");
+	this.value = `${ startDate } - ${ endDate }`;
+
+	materialCourseDatatable.ajax.reload();
+
+})
+
+dateRange.on( 'cancel.daterangepicker', function(event, picker) {
+
+	this.classList.remove("select2-selected");
+	dateInput.value = "";
+	materialCourseDatatable.ajax.reload();
+})
 
 //! SELECT2
 //!============================================================
@@ -519,6 +811,14 @@ $("#versionFilterMaterial").select2({
     minimumResultsForSearch: -1,
 });
 
+$("#versionFilterMaterial").on("change", function () {
+
+    let label = $("#select2-versionFilterMaterial-container")[0];
+
+    utilities.filterStyle(label, this.value);
+
+});
+
 //datatable
 $("#topicFilterMaterialCourses").select2({});
 
@@ -526,7 +826,7 @@ $(".custom-select").select2({minimumResultsForSearch: -1,});
 
 $("#activeFilterMaterialCourses").select2({minimumResultsForSearch: -1,});
 
-$("#userFilterMaterialCourses").select2({});
+// $("#userFilterMaterialCourses").select2({});
 
 $("#topicFilterMaterialCourses").change(function () {
 
@@ -536,13 +836,13 @@ $("#topicFilterMaterialCourses").change(function () {
 
 });
 
-$("#userFilterMaterialCourses").change(function () {
+// $("#userFilterMaterialCourses").change(function () {
 
-    let label = $("#select2-userFilterMaterialCourses-container")[0];
+//     let label = $("#select2-userFilterMaterialCourses-container")[0];
 
-    utilities.filterStyle(label, this.value);
+//     utilities.filterStyle(label, this.value);
 
-});
+// });
 
 $("#activeFilterMaterialCourses").change(function () {
 
@@ -629,26 +929,24 @@ $("#js-multiple-delete").on("click", function() {
 const axiosMultipleDelete = async (courseId, materialId) => {
 
     try {
-        const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το ${courseId.length} απο τα μαθήματα `)
-        if (value) {
-            const {status} = await axios.delete("/materials/multiple/course/delete", {
-                data: {
-                    courseId,
-                    materialId,
-                }
 
-            })
-            if (status == 200) {
-                utilities.toastAlert("success", `${courseId.length} αφερέθηκαν`)
-                addCouseModal.ajax.reload()
-                materialCourseDatatable.ajax.reload()
-
-
+		const {isConfirmed} = await utilities.removeAlert(`Θέλετε να αφαιρέσετε το υλικό απο ${courseId.length} course;`);
+		
+		if ( ! isConfirmed ) return;
+		
+        await axios.delete("/materials/multiple/course/delete", {
+            data: {
+                courseId,
+                materialId,
             }
-        }
+        });
+
+        addCouseModal.ajax.reload(false, null);
+        materialCourseDatatable.ajax.reload(false, null);
+        
     } catch (e) {
         console.log(e)
-        utilities.toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα")
+        utilities.toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
     }
 }
 

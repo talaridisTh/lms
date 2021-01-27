@@ -1,4 +1,4 @@
-<button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-course-modal">
+{{-- <button id="material-modal-shown-btn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-course-modal">
     <i class="mdi mdi-plus-circle mr-2"></i>
     Προσθήκη Υλικού
 </button>
@@ -9,4 +9,4 @@
 </button>
 <div class="dropdown-menu dropdown-menu-animated dropdown-menu-right" aria-labelledby="dropdownMenuButton">
     <a id="js-multiple-delete" class="dropdown-item" href="#">Αφαίρεση επιλογών</a>
-</div>
+</div> --}}

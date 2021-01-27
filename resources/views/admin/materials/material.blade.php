@@ -158,7 +158,7 @@
 		</ul><!-- ./Tab Links -->
 
 		<div class="tab-content mb-3">
-			<div class="tab-pane show active" id="content">
+			<div class="tab-pane" id="content">
 				<div class="row">
 
 					<!-- form inputs -->
@@ -268,14 +268,6 @@
 							<button form="material-create" id="store-material-btn" class="btn btn-info" type="submit">
 								Update
 							</button>
-
-{{--                            {{dd([$material->courses->first()->slug,$material->slug])}}--}}
-{{--							@if( count($material->courses) > 0 && $material->type != "Link" && $material->type != "Announcement" )--}}
-{{--								<a target="_blank" href="{{route('index.material.show',[$material->courses->first()->slug,$material->slug])}}"--}}
-{{--									id="preview-btn" class="btn btn-warning">--}}
-{{--									<i class="mdi mdi-eye"></i>--}}
-{{--								</a>--}}
-{{--							@endif--}}
 
 						</div><!-- ./Βuttons -->
 
@@ -387,7 +379,7 @@
 				</div>
 			</div>
 
-			<div class="tab-pane" id="courses-tabs">
+			<div class="tab-pane show active" id="courses-tabs">
 				@include("components.admin.materials.tabsCourses")
 			</div>
 

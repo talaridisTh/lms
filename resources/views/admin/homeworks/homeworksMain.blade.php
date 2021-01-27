@@ -44,6 +44,7 @@
 			<thead>
 				<tr>
 					<th class="text-center">Εργασία</th>
+					<th class="text-center">Ελέγχθηκε</th>
 					<th class="text-center">Course</th>
 					<th class="text-center">Ημ. Καταχώρισης</th>
 				</tr>
@@ -52,6 +53,7 @@
 			<tfoot>
 				<tr>
 					<th class="text-center">Εργασία</th>
+					<th class="text-center">Ελέγχθηκε</th>
 					<th class="text-center">Course</th>
 					<th class="text-center">Ημ. Καταχώρισης</th>
 				</tr>

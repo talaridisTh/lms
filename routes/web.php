@@ -113,6 +113,7 @@ Route::group(['middleware' => ['auth', "status", "role:instructor|admin|super-ad
     Route::get("/dashboard/homeworks", "HomeworkController@index");
     Route::post("homeworks-datatable/main", "HomeworkController@indexDataTable");
 	Route::get("homework-ajax/{homework:id}", "HomeworkController@homeworkContent");
+	Route::patch("homework-ajax/{homework:id}/inspected", "HomeworkController@inspected");
 
     //! Mail Routes
     Route::get('/dashboard/email', 'MailController@composeEmail');

@@ -3288,16 +3288,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
 
 var homeworksDatatable = $("#homeworks-datatable").DataTable({
-  order: [2, "desc"],
+  order: [3, "desc"],
   searchDelay: "1000",
   processing: true,
   serverSide: true,
   autoWidth: false,
   columnDefs: [{
     targets: 1,
-    width: "250px"
+    width: "150px"
   }, {
     targets: 2,
+    width: "150px"
+  }, {
+    targets: 3,
     width: "180px"
   }],
   ajax: {
@@ -3316,6 +3319,11 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
   columns: [{
     data: 'subject',
     name: 'subject'
+  }, {
+    data: 'inspect',
+    className: "align-middle text-center",
+    orderable: false,
+    searchable: false
   }, {
     data: 'course',
     name: 'course.title',
@@ -3355,8 +3363,26 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
     $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
     $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
     $(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
+    $(".js-inspect").on("change", homewordInspectCheckHandler);
   }
 });
+
+function homewordInspectCheckHandler() {
+  var _this = this;
+
+  var homeworkId = this.dataset.homeworkId;
+  axios.patch("/homework-ajax/".concat(homeworkId, "/inspected"), {
+    inspected: this.checked
+  }).then(function (res) {
+    if (_this.checked) {
+      _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("success", "Ελέγχθηκε");
+    }
+  })["catch"](function (err) {
+    console.log(err);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+  });
+}
+
 var searchFieldLabel = $("#homeworks-datatable_filter > label > input")[0];
 var dateInput = createDateElm();
 dateInput.appendBefore(searchFieldLabel);
@@ -3442,12 +3468,12 @@ $("#course-select").on("change", function () {
   homeworksDatatable.column(1).search(this.value).draw();
 });
 $("#view-homework-modal").on("show.bs.modal", function (event) {
-  var _this = this;
+  var _this2 = this;
 
   var button = $(event.relatedTarget);
   var id = button.data("id");
   axios.get("/homework-ajax/".concat(id)).then(function (res) {
-    $(_this).find("#homework-content").html(res.data);
+    $(_this2).find("#homework-content").html(res.data);
   })["catch"](function (err) {
     console.log(err);
     _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
@@ -3520,6 +3546,19 @@ function toastAlertDelete(text) {
     showCancelButton: true,
     confirmButtonColor: '#ff5b5b',
     confirmButtonText: 'Ναί, διαγραφή!',
+    cancelButtonText: 'Άκυρο'
+  });
+}
+
+function removeAlert(text) {
+  var icon = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "warning";
+  return sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
+    title: 'Είστε σίγουρος/η;',
+    text: text,
+    icon: icon,
+    showCancelButton: true,
+    confirmButtonColor: '#536de6',
+    confirmButtonText: 'Ναί, αφαίρεση!',
     cancelButtonText: 'Άκυρο'
   });
 } //!CONFIG
@@ -4007,7 +4046,8 @@ function resetGalleryBtns(bulk, checkboxes) {
   removeImages: removeImages,
   articleConfig: articleConfig,
   ALLOWEDTYPES: ALLOWEDTYPES,
-  passwordValidation: passwordValidation
+  passwordValidation: passwordValidation,
+  removeAlert: removeAlert
 });
 
 /***/ }),
