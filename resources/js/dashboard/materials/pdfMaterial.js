@@ -17,6 +17,8 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size';
 import 'filepond/dist/filepond.min.css';
 
+require("./data-tables");
+
 //!######################################
 //! 			Functions				#
 //!######################################
@@ -70,30 +72,6 @@ function changeExistingPDF(btn) {
 		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε.");
 	})
 
-}
-
-async function axiosMultipleDelete(courseId, materialId) {
-
-    try {
-        const {value} = await utilities.toastAlertDelete(`Θέλετε να αφαιρέσετε το μαθήμα απο ${courseId.length} course;`)
-        if (value) {
-            const {status} = await axios.delete("/materials/multiple/course/delete", {
-                data: {
-                    courseId,
-                    materialId,
-                }
-            })
-            if (status == 200) {
-                utilities.toastAlert("info", `Το μάθημα αφαιρέθηκε...`)
-                addCouseModal.ajax.reload();
-                materialCourseDatatable.ajax.reload();
-
-            }
-        }
-    } catch (e) {
-        console.log(e)
-        utilities.toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...")
-    }
 }
 
 function changePDFBtnInit() {
@@ -184,47 +162,6 @@ function getPDFid() {
 	return false;
 }
 
-const materialCourseDatatable = $("#material-course-table").DataTable({
-	order: [[ 1, "desc" ]],
-	searchDelay: "1000",
-    processing: true,
-    serverSide: true,
-    ajax: {
-        url: "/material-datatables/material-courses",
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        type: "post",
-        data: {
-            materialId
-        }
-    },
-    columns: [
-        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-center align-middle"},
-        {data: "title", name: "title"},
-        {data: "curator", name: "curator", className: "text-center align-middle"},
-        {data: "updated_at", name: "updated_at", className: "text-center align-middle"},
-        {data: "created_at", name: "created_at", visible: false},
-
-    ],
-	language: utilities.tableLocale,
-	fnInitComplete: function( oSettings, json ) {
-		let lenthSelection = $("select[name='material-course-table_length']");
-		lenthSelection.addClass("select2");
-
-		lenthSelection.select2({
-			minimumResultsForSearch: -1,
-		});
-	},
-    drawCallback: function () {
-        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-        $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
-
-        // utilities.resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
-        // utilities.resetBulk($("#course-indside-material-bulk"), $(".js-course-inside-material"));
-        checkeBoxesEventListener();
-        // selectMultipleCheckboxDelete();
-    }
-});
-
 const PDFDatatable = $("#remaining-pdf-datatable").DataTable({
 	order: [[ 1, "desc" ]],
 	searchDelay: "1000",
@@ -264,156 +201,23 @@ const PDFDatatable = $("#remaining-pdf-datatable").DataTable({
 	}
 });
 
-const addCouseModal = $("#remaining-course-material-table").DataTable({
-	order: [[ 1, "desc" ]],
-	searchDelay: "1000",
-    processing: true,
-    serverSide: true,
-    ajax: {
-        url: '/material-datatables/courses',
-        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-        type: "post",
-        data: {
-            materialId
-        }
-    },
-    columns: [
-        {data: "checkbox", name: "checkbox", searchable: false, orderable: false, className: "text-center align-middle"},
-        {data: "title", name: "title", className: "align-middle"},
-        {data: "curator", name: "curator", className: "text-center align-middle"},
-        {data: "version", name: "version", className: "text-center align-middle"},
-        {data: "action", name: "action", className: "text-center align-middle", searchable: false, orderable: false},
-
-    ],
-	language: utilities.tableLocale,
-	fnInitComplete: function( oSettings, json ) {
-		let lenthSelection = $("select[name='remaining-course-material-table_length']");
-		lenthSelection.addClass("select2");
-
-		lenthSelection.select2({
-			minimumResultsForSearch: -1,
-		});
-	},
-    drawCallback: function () {
-        $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-        $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
-
-        utilities.resetBulk($("#add-remaingings-btn"), $("#all-remainings-checkbox"));
-        utilities.resetBulk($("#add-remaingings-btn"), $(".remainings-checkbox"));
-        checkeBoxesEventListenerModal();
-        addCourse();
-    }
-})
 
 //!##############################################
 //!		Datatable Button initializations		#
 //!##############################################
-function checkeBoxesEventListener() {
-    let minorCheckboxes = $(".js-course-inside-material");
-    let mainCheckbox = $("#select-all-courses")[0];
-    let bulkBtn = $("#course-indside-material-bulk")[0];
-
-    minorCheckboxes.on("change", function () {
-        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
-    });
-}
-
-function checkeBoxesEventListenerModal() {
-
-    let minorCheckboxes = $(".remainings-checkbox");
-    let mainCheckbox = $("#all-remainings-checkbox")[0];
-    let bulkBtn = $("#add-remaingings-btn")[0];
-
-    minorCheckboxes.on("change", function () {
-        utilities.mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn)
-    });
-
-}
-
-function addCourse() {
-    $(".js-add-courses").on("click", function () {
-        addCourseAxios([this.findParent(2).dataset.courseId], materialId);
-    });
-}
-
-function addCourseAxios(courseIds, materialId) {
-
-	axios.post("/materials/add-course", {
-        courseIds, materialId
-	})
-	.then ( res => {
-		let message = courseIds.length === 1
-			? "1 Course προστέθηκε" : `${courseIds.length} Courses προστέθηκαν`;
-		utilities.toastAlert("success", message);
-		addCouseModal.ajax.reload();
-		materialCourseDatatable.ajax.reload();
-	})
-    .catch ( err => {
-        console.log(err);
-        utilities.toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
-	})
-}
 
 $(".dataTables_wrapper:not(#remaining-pdf-datatable_wrapper) > .row:first-child > div").removeClass("col-sm-12 col-md-6");
 $(".dataTables_wrapper:not(#remaining-pdf-datatable_wrapper) > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 
-utilities.filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable, "#material-course-table_length label")
-utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
-utilities.filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label")
-
-
-$("#activeFilterMaterialCourses").detach().prependTo("#material-course-table_filter > label");
-
-$("#activeFilterMaterialCourses").select2({
-	minimumResultsForSearch: -1
-});
-
-$("#activeFilterMaterialCourses").on('change', function () {
-	materialCourseDatatable.columns(7).search(this.value).draw();
-
-});
-
-$("#versionFilterMaterial").select2({
-    minimumResultsForSearch: -1,
-});
-
-$("#userFilterMaterialCourses").select2({});
-
-
-$("#topicFilterMaterialCourses").select2({});
-
 //!##################################################
 //!					EventListeners					#
 //!##################################################
-
-$("#js-multiple-delete").on("click", function() {
-    let checkboxes = $(".js-course-inside-material:checked")
-    let materialId = $("#material-course-table")[0].dataset.materialId
-	let ids = [];
-
-    for (let i = 0; i < checkboxes.length; i++) {
-        ids.push(checkboxes[i].findParent(3).dataset.courseId);
-    }
-
-    axiosMultipleDelete(ids, materialId)
-});
 
 $("#select-all-courses").on("change", function () {
     let minorCheckboxes = $(".js-course-inside-material");
     let bulkBtn = $("#course-indside-material-bulk")[0];
 
     utilities.minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
-});
-
-$("#add-remaingings-btn").on("click", function () {
-	let checkboxes = $(".remainings-checkbox:checked");
-	let ids = [];
-
-	for (let i = 0; i < checkboxes.length; i++) {
-		ids.push(checkboxes[i].dataset.courseId);
-	}
-
-	addCourseAxios(ids, materialId);
 });
 
 $("#all-remainings-checkbox").on("change", function () {
