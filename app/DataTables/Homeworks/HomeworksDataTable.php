@@ -44,6 +44,16 @@ class HomeworksDataTable extends DataTable
 
 				return $homework->course->title;
 			})
+			->addColumn("inspect", function($data) {
+
+				$slug = Str::random(15);
+				$checked = is_null($data->seen_at) ? "" : "checked";
+
+				return "<div class='icheck-success d-inline'>
+						<input id='$slug' class='js-inspect' data-homework-id='$data->id' type='checkbox' $checked autocomplete='off'>
+						<label for='$slug'></label>
+					</div>";
+			})
 			->filterColumn("course.title", function($query, $keyword) {
 				
 				$query->whereHas("course", function($sub) use ($keyword) {
@@ -51,7 +61,7 @@ class HomeworksDataTable extends DataTable
 				});
 
 			})
-			->rawColumns(["subject"]);
+			->rawColumns(["subject", "inspect"]);
     }
 
     /**

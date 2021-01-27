@@ -1,14 +1,15 @@
 import utilities from "../main";
 
 const homeworksDatatable = $("#homeworks-datatable").DataTable({
-	order: [2, "desc"],
+	order: [3, "desc"],
 	searchDelay: "1000",
 	processing: true,
 	serverSide: true,
 	autoWidth: false,
 	columnDefs: [
-		{ targets: 1, width: "250px"},
-		{ targets: 2, width: "180px"}
+		{ targets: 1, width: "150px"},
+		{ targets: 2, width: "150px"},
+		{ targets: 3, width: "180px"}
 	],
 	ajax: {
 		url: "/homeworks-datatable/main",
@@ -23,6 +24,7 @@ const homeworksDatatable = $("#homeworks-datatable").DataTable({
 	},
 	columns: [
 		{ data: 'subject', name: 'subject' },
+		{ data: 'inspect', className: "align-middle text-center", orderable: false, searchable: false },
 		{ data: 'course', name: 'course.title', className: "align-middle text-center",},
 		{
 			data: 'created_at',
@@ -57,8 +59,27 @@ const homeworksDatatable = $("#homeworks-datatable").DataTable({
 		$(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
 		$(".js-remove-table-classes > thead > tr > th").removeClass("cursor-pointer");
 
+		$(".js-inspect").on("change", homewordInspectCheckHandler)
 	}
 });
+
+function homewordInspectCheckHandler() {
+	
+	const homeworkId = this.dataset.homeworkId;
+
+	axios.patch(`/homework-ajax/${homeworkId}/inspected`, {
+		inspected: this.checked
+	}).then( res => {
+		
+		if (this.checked) {
+			utilities.toastAlert("success", "Ελέγχθηκε");
+		}
+	})
+	.catch( err => {
+		console.log(err);
+		utilities.toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+	})
+}
 
 let searchFieldLabel = $("#homeworks-datatable_filter > label > input")[0];
 let dateInput = createDateElm();

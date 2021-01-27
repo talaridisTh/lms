@@ -24,4 +24,11 @@ class HomeworkController extends Controller
 		
 		return view("components/admin/ajax/homeworkModalContent", compact("homework"));
 	}
+
+	public function inspected(Homework $homework, Request $request) {
+
+		$homework->update([
+			"seen_at" => $request->inspected ? now() : null
+		]);
+	}
 }
