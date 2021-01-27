@@ -21,13 +21,6 @@
         <div class="flex justify-between items-center ">
             <div class="flex items-center cnt-post-buttons space-x-3">
                 <h3 class="font-semibold author-post-name">{{$comment->user->fullName}}</h3>
-                {{--                todo best anwser--}}
-                {{--                @if(auth()->id()==$post->user_id)--}}
-                {{--                    <i class="{{$isBestAnswerBtn }} js-best-answer  cursor-pointer mdi mdi-alpha-b-circle"></i>--}}
-                {{--                @endif--}}
-                {{--                <a href="#"--}}
-                {{--                   class="{{$isBestAnswerBadge}} ml-3 mt-2 badge badge-success badge-best  font-14">Best--}}
-                {{--                    Answer</a>--}}
             </div>
             @if($comment->user_id == auth()->id())
                 <div class="dropdown"

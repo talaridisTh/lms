@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Material;
 use App\Models\Option;
 use Carbon\Carbon;
@@ -24,20 +25,6 @@ class HomeController extends Controller {
 
     }
 
-    public function updateSeenMessage()
-    {
-        auth()->user()->update(["seen->seen_message" => 0]);
-
-        return response()->json(auth()->user());
-    }
-
-    public function updateTaskMessage()
-    {
-        auth()->user()->update(["seen->seen_task" => 0]);
-
-        return response()->json(auth()->user());
-    }
-
     public function updateAnnouncementMessage()
     {
         $test = auth()->user()->courses()->with("announcement")
@@ -55,10 +42,10 @@ class HomeController extends Controller {
     public function test()
     {
 
-        auth()->user()->courses()->with("announcement")
-            ->get()->pluck("announcement")
-            ->flatten()->where("read_at", "!=", null)
-            ->isEmpty();
+        $course = Course::find(3);
+        dd($course->users()->whereHas("roles", function ($role) {
+            $role->where("name", "!=", "student");
+        })->get()->unique("id"));
 //        $models = User::all();
 //        foreach ($models as $model) {
 ////            $model->update(["dark_mode", false]);

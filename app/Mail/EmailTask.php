@@ -40,8 +40,7 @@ class EmailTask extends Mailable {
             ->view('index.mail.task');
         if (isset($this->mailInfo->attachment) && !isset($this->ids)) {
             foreach (json_decode($this->mailInfo->attachment) as $filePath) {
-                $amount = json_decode($this->mailInfo->receiver->seen)->seen_task + 1;
-                $this->mailInfo->receiver->update(['seen->seen_task' => $amount]);
+
                 Attachment::findOrFail($filePath->id)->update(
                     [
                         "attachmentable_type" => "App\Models\Homework",
@@ -53,8 +52,6 @@ class EmailTask extends Mailable {
         } elseif (isset($this->ids)) {
             foreach ($this->ids as $filePath) {
 
-                $amount = json_decode($this->mailInfo->receiver->seen)->seen_task + 1;
-                $this->mailInfo->receiver->update(['seen->seen_task' => $amount]);
                 Attachment::findOrFail($filePath["id"])->update(
                     [
                         "attachmentable_type" => "App\Models\Homework",

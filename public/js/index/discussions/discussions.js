@@ -7589,9 +7589,11 @@ var onFirstReplayBtnEvent = function onFirstReplayBtnEvent() {
   $(document).on("click", ".first-thread-replay", function () {
     var postId = $(".main-post")[0].dataset.postId;
     var parentId = 0;
+    var namespace = $(".main-post")[0].dataset.namespace;
     $("#new-reply").find(".replay-name").text("");
     $(".js-form-reply")[0].dataset.post = postId;
     $(".js-form-reply")[0].dataset.parent = parentId;
+    $(".js-form-reply")[0].dataset.namespace = namespace;
   });
 }; //replay comment
 

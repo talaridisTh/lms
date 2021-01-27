@@ -136,6 +136,9 @@ class DiscussionController extends Controller {
     {
 
         $post = $request->namespace::findOrFail($request->postId);
+        if (get_class($post) == "App\Models\Comment") {
+            $post = $post->announcement;
+        }
         $request->validate([
             "body" => "required",
         ]);
@@ -463,7 +466,7 @@ class DiscussionController extends Controller {
     public function userSearchSelect(Request $request)
     {
         $userAll = auth()->user()->whereHas("courses", function ($course) {
-            $course->whereIn("courses.id", auth()->user()->courses()->get()->pluck("id"));
+            $course->whereIn("courses.id", auth()->user()->courses()->get()->pluck("id")->unique("slug"));
         });
         $users = $userAll->where("first_name", "LIKE", "%$request->search%")
             ->select("id", "first_name", "email", "last_name")->paginate(10);

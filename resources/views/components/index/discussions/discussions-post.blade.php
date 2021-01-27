@@ -69,7 +69,8 @@
             </div>
             <div>
                 <button class="btn btn-outline-primary btn-thread-custom font-12 font-weight-bold">
-                    {{\App\Models\User::find($post->user_id)->fullName}}
+                    {{isset($post->user_id)?\App\Models\User::find($post->user_id)->fullName:"Idrogios Υδρόγειος"}}
+
                 </button>
             </div>
         </div>
@@ -103,9 +104,8 @@
     <div class="space-y-5">
         <div>
             <div class="d-flex align-items-center">
-                <h3 class=" font-18 ">{{isset($post->curator)?$post->curator->fullName:\App\Models\User::find($post->user_id)->fullName}}</h3>
-
-
+                <h3 class=" font-18 ">
+                    {{isset($post->curator)?$post->curator->fullName:(isset($post->user_id)?\App\Models\User::find($post->user_id)->fullName:"Idrogios Υδρόγειος")}}</h3>
             </div>
             <p class="font-12">{{$post->created_at->diffForHumans()}}</p>
         </div>

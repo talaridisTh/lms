@@ -299,10 +299,12 @@ const onFirstReplayBtnEvent = () => {
 
         let postId = $(".main-post")[0].dataset.postId;
         let parentId = 0;
+        let namespace = $(".main-post")[0].dataset.namespace;
 
         $("#new-reply").find(".replay-name").text("");
         $(".js-form-reply")[0].dataset.post = postId
         $(".js-form-reply")[0].dataset.parent = parentId
+        $(".js-form-reply")[0].dataset.namespace = namespace
 
     })
 
@@ -312,6 +314,7 @@ const onCommentReplayBtnEvent = () => {
     $(".discussions-right").on("click", ".js-comment-reply", function () {
         let postId = $(".main-post")[0].dataset.postId;
         let namespace = $(".main-post")[0].dataset.namespace;
+
         let parentId = this.closest(".main-post").dataset.commentId;
         let author = $(this).closest(".main-post").find(".author-post-name").text()
 

@@ -151,8 +151,6 @@ class MessagesController extends Controller {
 //                $amount = json_decode(auth()->user()->seen)->seen_message + 1;
 //                User::find($request['id'])->update(['seen->seen_message' => $amount]);
 //            }
-            $amount = json_decode(User::find($request['id'])->seen)->seen_message + 1;
-            User::find($request['id'])->update(['seen->seen_message' => $amount]);
             // fetch message to send it with the response
             $messageData = Chatify::fetchMessage($messageID);
             // send to user using pusher

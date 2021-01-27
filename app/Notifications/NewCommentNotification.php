@@ -25,6 +25,7 @@ class NewCommentNotification extends Notification {
         //
         $this->comment = $comment;
         $this->course = $course;
+
     }
 
     /**

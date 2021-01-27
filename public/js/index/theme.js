@@ -23431,7 +23431,7 @@ $.fn.extend({
     return this;
   }
 });
-$(document).on("click", ".js-message-seen", /*#__PURE__*/function () {
+$(document).on("click", ".contact", /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(e) {
     var _yield$axios$patch, status;
 
@@ -23441,14 +23441,14 @@ $(document).on("click", ".js-message-seen", /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return axios.patch("/home/message/update");
+            return axios.patch("/home/announcement/update");
 
           case 3:
             _yield$axios$patch = _context.sent;
             status = _yield$axios$patch.status;
 
             if (status == 200) {
-              $(".js-message-badge").remove();
+              console.log("work");
             }
 
             _context.next = 11;
@@ -23471,86 +23471,30 @@ $(document).on("click", ".js-message-seen", /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }());
-$(document).on("click", ".contact", /*#__PURE__*/function () {
+$(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(e) {
-    var _yield$axios$patch2, status;
-
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.prev = 0;
-            _context2.next = 3;
-            return axios.patch("/home/announcement/update");
+            e.preventDefault();
 
-          case 3:
-            _yield$axios$patch2 = _context2.sent;
-            status = _yield$axios$patch2.status;
-
-            if (status == 200) {
-              console.log("work");
+            if ($(this).data("role") == "student") {
+              window.location.href = "/discussion?task";
+            } else {
+              window.location.href = "/dashboard/homeworks";
             }
 
-            _context2.next = 11;
-            break;
-
-          case 8:
-            _context2.prev = 8;
-            _context2.t0 = _context2["catch"](0);
-            console.log(_context2.t0);
-
-          case 11:
+          case 2:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 8]]);
+    }, _callee2, this);
   }));
 
   return function (_x2) {
     return _ref2.apply(this, arguments);
-  };
-}());
-$(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
-  var _ref3 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
-    var _yield$axios$patch3, status;
-
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
-      while (1) {
-        switch (_context3.prev = _context3.next) {
-          case 0:
-            e.preventDefault();
-            window.location.href = "/discussion?task";
-            _context3.prev = 2;
-            _context3.next = 5;
-            return axios.patch("/home/task/update");
-
-          case 5:
-            _yield$axios$patch3 = _context3.sent;
-            status = _yield$axios$patch3.status;
-
-            if (status == 200) {
-              $("#filter-my-task").trigger("click"); // $(".js-message-badge").remove();
-            }
-
-            _context3.next = 13;
-            break;
-
-          case 10:
-            _context3.prev = 10;
-            _context3.t0 = _context3["catch"](2);
-            console.log(_context3.t0);
-
-          case 13:
-          case "end":
-            return _context3.stop();
-        }
-      }
-    }, _callee3, null, [[2, 10]]);
-  }));
-
-  return function (_x3) {
-    return _ref3.apply(this, arguments);
   };
 }());
 

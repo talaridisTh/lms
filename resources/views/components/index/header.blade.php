@@ -122,19 +122,20 @@
                                        class="top-menu js-message-seen">
                                         <div class="top-menu__icon"><i data-feather="mail"></i></div>
                                         <div class="top-menu__title justify-between"> Μηνύματα
-                                            <span class="{{$options->seen->seen_message==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
-                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_message}}</span>
+                                            <span class="inline-flex js-message-badge  items-center justify-center px-2 py-1 text-xs
+                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full"></span>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="orange-line">
                                     <a href="{{route('discussion.index')}}"
+                                       data-role="{{auth()->user()->getRoleNames()[0]}}"
                                        class="top-menu js-task-seen">
                                         <div class="top-menu__icon"><i data-feather="activity"></i></div>
                                         <div class="top-menu__title justify-between">
                                             Εργασίες
-                                            <span class="{{$options->seen->seen_task==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
-                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_task}}</span>
+                                            <span class="{{$notifyTask ? "inline-flex":"hidden"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
+                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$notifyTask}}</span>
                                         </div>
                                     </a>
                                 </li>
@@ -256,8 +257,8 @@
                                class="menu js-message-seen">
                                 <div class="menu__icon"><i data-feather="mail"></i></div>
                                 <div class="menu__title"> Μηνύματα
-                                    <span class="{{$options->seen->seen_message==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
-                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_message}}</span>
+                                    <span class="inline-flex js-message-badge  items-center justify-center px-2 py-1 text-xs
+                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full"></span>
                                 </div>
                             </a>
                         </li>
@@ -267,8 +268,8 @@
                                class="menu js-message-task">
                                 <div class="menu__icon"><i data-feather="activity"></i></div>
                                 <div class="menu__title js-task-seen"> Εργασίες
-                                    <span class="{{$options->seen->seen_task==0?"hidden":"inline-flex"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
-                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$options->seen->seen_task}}</span>
+                                    <span class="{{$notifyTask ? "inline-flex":"hidden"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
+                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$notifyTask}}</span>
                                 </div>
                             </a>
                         </li>

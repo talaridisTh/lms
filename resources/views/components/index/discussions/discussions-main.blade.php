@@ -73,8 +73,8 @@
                                 </div>
                                 <div>
                                     <button class="btn btn-outline-primary btn-thread-custom font-12 font-weight-bold">
-                                        {{\App\Models\User::find($post->user_id)->fullName}}
 
+                                        {{isset($post->user_id)?\App\Models\User::find($post->user_id)->fullName:"Idrogios Υδρόγειος"}}
                                     </button>
                                 </div>
                             </div>

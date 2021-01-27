@@ -115,20 +115,20 @@
 @auth
     <script>
 
-        @if($options->seen->seen_message>0)
-        iziToast.show({
-            class: "rounded-lg",
-            timeout: 4000,
-            zindex: 99999,
-            title: '{{auth()->user()->first_name}}',
-            position: 'topRight',
-            theme: "dark",
-            iconUrl: "/theme/images/message.png",
-            message: 'Έχετε νέο μήνυμα'
-        });
-        @endif
+        {{--                @if($options->seen->seen_message>0)--}}
+        {{--                iziToast.show({--}}
+        {{--                    class: "rounded-lg",--}}
+        {{--                    timeout: 4000,--}}
+        {{--                    zindex: 99999,--}}
+        {{--                    title: '{{auth()->user()->first_name}}',--}}
+        {{--                    position: 'topRight',--}}
+        {{--                    theme: "dark",--}}
+        {{--                    iconUrl: "/theme/images/message.png",--}}
+        {{--                    message: 'Έχετε νέο μήνυμα'--}}
+        {{--                });--}}
+        {{--                @endif--}}
 
-        @if($options->seen->seen_task>0)
+        @if($notifyTask)
         iziToast.show({
             class: "rounded-lg",
             timeout: 4000,

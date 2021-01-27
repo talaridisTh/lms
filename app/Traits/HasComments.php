@@ -18,6 +18,7 @@ trait HasComments {
 
     public function modelComment(Request $request)
     {
+
         $model = $request->namespace::findOrFail($request->modelInfo);
         $comment = $model->comments()->create([
             "body" => $request->body,
@@ -29,9 +30,14 @@ trait HasComments {
 
             $this->attachComment($request, $comment);
         }
-        if ($comment->user_id != $model->user_id) {
-            $user = $model->curator;
-            $user->notify(new NewCommentNotification($comment, $model));
+        $users = $model->users()->whereHas("roles", function ($role) {
+            $role->where("name", "!=", "student");
+        })->get()->unique("id");
+        foreach ($users as $user) {
+
+            if ($comment->user_id != $user->id) {
+                $user->notify(new NewCommentNotification($comment, $model));
+            }
         }
 
         return view("components.index.comments.comments", [

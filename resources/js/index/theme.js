@@ -51,19 +51,6 @@ $.fn.extend({
     }
 });
 
-$(document).on("click", ".js-message-seen", async function (e) {
-    try {
-        const {
-            status
-        } = await axios.patch("/home/message/update");
-
-        if (status == 200) {
-            $(".js-message-badge").remove();
-        }
-    } catch (e) {
-        console.log(e)
-    }
-})
 
 $(document).on("click", ".contact", async function (e) {
 
@@ -85,19 +72,11 @@ $(document).on("click", ".contact", async function (e) {
 $(document).on("click", ".js-task-seen", async function (e) {
     e.preventDefault()
 
-    window.location.href = "/discussion?task";
-
-
-    try {
-
-        const {
-            status
-        } = await axios.patch("/home/task/update");
-        if (status == 200) {
-            $("#filter-my-task").trigger("click");
-            // $(".js-message-badge").remove();
-        }
-    } catch (e) {
-        console.log(e)
+    if (($(this).data("role") == "student")) {
+        window.location.href = "/discussion?task";
+    } else {
+        window.location.href = "/dashboard/homeworks"
     }
+
+
 })
