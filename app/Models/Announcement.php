@@ -16,6 +16,12 @@ class Announcement extends Model {
         return $this->morphTo();
     }
 
+    public function course()
+    {
+        return $this->belongsTo(Course::class, "announcementable_id");
+
+    }
+
     public function comments()
     {
         return $this->morphMany(Comment::class, 'commentable');

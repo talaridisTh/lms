@@ -84,7 +84,7 @@
     $closedBtn = $post->closed?"d-none":"";
 @endphp
 
-<div class="main-post items-center d-flex py-8 space-x-6"
+<div class="main-post items-center d-flex py-8 space-x-6 {{get_class($post)=="App\Models\Announcement"? "hidden":""}}"
      data-post-id="{{$post->id}}"
      data-namespace="{{get_class($post)}}"
      style="background-color: rgba(0, 0, 0, 0.1)">
@@ -101,6 +101,7 @@
                     alt="">
         @endif
     </div>
+
     <div class="space-y-5">
         <div>
             <div class="d-flex align-items-center">
@@ -124,8 +125,6 @@
                 @php
                     $isLiked = auth()->user()->commentIsLiked($comment)?"like-class":"";
                     $isLikedCount = $comment->likes->count()?$comment->likes->count():"";
-
-
                 @endphp
 
                 @if ( !$comment->parent_id )
@@ -259,7 +258,7 @@
 </div>
 
 
-<div class="form-group  mt-7 replay-bottom first-thread-replay mb-4 hidden "
+<div class="form-group  mt-7 replay-bottom first-thread-replay mb-4  "
      data-toggle="modal"
      data-target="#new-reply">
     <p class="p-8 text-dark  font-20"><i class="mdi mdi-hand-pointing-down font-18 mr-4"></i> Απαντησε στο Post</p>

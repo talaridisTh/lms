@@ -546,7 +546,8 @@ class DiscussionController extends Controller {
     {
 
         $userRole = auth()->user()->getRoleNames()[0];
-        $postsStudent = auth()->user()->courses()->with("announcement.comments")->get()->pluck("announcement.*.comments.*")->collapse();
+//        $postsStudent = auth()->user()->courses()->with("announcement.comments")->get()->pluck("announcement.*.comments.*")->collapse();
+        $postsStudent = auth()->user()->courses()->with("announcement.comments")->get()->pluck("announcement")->collapse();
 
         return view("components.index.discussions.discussions-announcement", [
             "posts" => $userRole == "student" ? $postsStudent : auth()->user()->getAnnouncementCourse(),

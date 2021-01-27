@@ -84,12 +84,6 @@ class User extends Authenticatable {
 
     }
 
-    public function courses()
-    {
-
-        return $this->belongsToMany(Course::class)->withTimestamps();
-    }
-
     public function likeComment()
     {
         return $this->morphedByMany(Comment::class, 'likable');
@@ -143,10 +137,17 @@ class User extends Authenticatable {
         return $this->belongsToMany(Material::class);
     }
 
-    // $user->fullName  // Onoma Epitheto
     public function getAnnouncementCourse()
     {
-        return $this->comments()->where("commentable_type", "App\Models\Announcement")->get();
+//        return $this->comments()->where("commentable_type", "App\Models\Announcement")->get();
+        return auth()->user()->courses()->with("announcement.comments")->get()->pluck("announcement")->collapse();
+    }
+
+    // $user->fullName  // Onoma Epitheto
+    public function courses()
+    {
+
+        return $this->belongsToMany(Course::class)->withTimestamps();
     }
 
     public function getFullNameAttribute()

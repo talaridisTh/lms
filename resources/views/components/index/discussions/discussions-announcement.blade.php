@@ -107,49 +107,49 @@
         <div class="tab-pane  @role("student") active @endrole"
              id="show-announcement-content">
             <ul class="threads-main-list p-0 mt-6">
+
                 @forelse($posts  as $post)
-                    @if($post->announcement)
-                        <li class="d-flex list-unstyled bg-list-thread px-6 py-4 mb-5 single-thread"
-                            data-post-id="{{$post->id}}"
-                            data-namespace="{{get_class($post)}}">
-                            <div class="mr-2 d-flex align-items-center ">
-                                {{--                    <img src="{{$post->thumbnailUrl("cover")}}"--}}
-                                {{--                         class="avatar-sm rounded"--}}
-                                {{--                         alt="">--}}
-                            </div>
+                    <li class="d-flex list-unstyled bg-list-thread px-6 py-4 mb-5 single-thread"
+                        data-post-id="{{$post->id}}"
+                        data-namespace="{{get_class($post)}}">
+                        <div class="mr-2 d-flex align-items-center ">
+                            {{--                    <img src="{{$post->thumbnailUrl("cover")}}"--}}
+                            {{--                         class="avatar-sm rounded"--}}
+                            {{--                         alt="">--}}
+                        </div>
 
-                            <div class="container-fluid ">
-                                <div class="row">
-                                    <div class="col-md-7 space-y-2">
-                                        <h4 class="text-hover-underline cursor-pointer js-thread-title">{{Str::limit($post->announcement->title,35,'...')}}</h4>
-                                        <p class="text-dark d-none js-post-body">{{Str::limit($post->announcement->description,120,'...')}}</p>
-                                        <p>
-                                            {{--                                <span class="text-info mr-2">{{\App\Models\User::find($post->user_id)}}</span>--}}
-                                            <span class="text-secondary"> {{$post->announcement->created_at->diffForHumans()}}</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-5">
-                                        <div class="d-flex mt-1 justify-content-around">
-                                            <div>
-                                                {{--                                            <i class="font-18  uil-eye"></i>--}}
-                                                {{--                                            <span class="js-thread-watched">{{$post->watched}}</span>--}}
-                                            </div>
-                                            <div>
-                                                <i class="font-18  uil-comment"></i>
-                                                {{$post->announcement->comments->count()}}
-                                            </div>
-                                            <div>
-                                                <button class="btn btn-outline-primary btn-thread-custom font-12 font-weight-bold">
-                                                    {{\App\Models\User::find($post->user_id)->fullName}}
+                        <div class="container-fluid ">
+                            <div class="row">
+                                <div class="col-md-7 space-y-2">
+                                    <h4 class="text-hover-underline cursor-pointer js-thread-title">{{Str::limit($post->title,35,'...')}}</h4>
+                                    <p class="text-dark d-none js-post-body">{{Str::limit($post->description,120,'...')}}</p>
+                                    <p>
+                                        {{--                                <span class="text-info mr-2">{{\App\Models\User::find($post->user_id)}}</span>--}}
+                                        <span class="text-secondary"> {{$post->created_at->diffForHumans()}}</span>
+                                    </p>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="d-flex mt-1 justify-content-around">
+                                        <div>
+                                            {{--                                            <i class="font-18  uil-eye"></i>--}}
+                                            {{--                                            <span class="js-thread-watched">{{$post->watched}}</span>--}}
+                                        </div>
+                                        <div>
+                                            <i class="font-18  uil-comment"></i>
+                                            {{$post->comments->count()}}
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-outline-primary btn-thread-custom font-12 font-weight-bold">
+                                                {{\App\Models\User::find($post->course->user_id)->fullName}}
 
-                                                </button>
-                                            </div>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </li>
-                    @endif
+                        </div>
+                    </li>
+
 
                 @empty
                     <h3>Δεν υπάρχουν σχετικές ανακοινώσεις</h3>
