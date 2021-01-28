@@ -43,7 +43,7 @@ trait MediaUploader {
 		$slug =  Str::slug( $originalName );
 		$extension = strtolower($file->getClientOriginalExtension());
 
-		$count = Media::where( "original_name", $originalName)->count();
+		$count = Media::where( "original_name", "like", "%$originalName%")->count();
 
 		if ( $count > 0 ) {
 			$name = $slug.( $count + 1 );

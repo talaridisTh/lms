@@ -854,3 +854,23 @@ figure > img {
 .hide-adjacent.d-none + a {
 	display: none;
 }
+
+.custom-dropzone {
+	background-color: #404954;
+	padding: 2rem;
+	border: 2px dashed #47515d;
+	border-radius: 0.25rem;
+	text-align: center;
+}
+
+.custom-file-details {
+	padding: 0.30rem 0.40rem;
+	display: inline-block;
+	background-color: #404954;
+	border: 1px solid #47515d;
+	border-radius: 0.25rem;
+}
+
+.custom-margin-left > * + *, .custom-margin-left > *:first-child {
+	margin-right: 10px;
+}
