@@ -29565,7 +29565,7 @@ $("#view-homework-modal").on("hidden.bs.modal", function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\users\userProfil.js */"./resources/js/dashboard/users/userProfil.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\users\userProfil.js */"./resources/js/dashboard/users/userProfil.js");
 
 
 /***/ })

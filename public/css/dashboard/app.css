@@ -4869,6 +4869,26 @@ figure > img {
   display: none;
 }
 
+.custom-dropzone {
+  background-color: #404954;
+  padding: 2rem;
+  border: 2px dashed #47515d;
+  border-radius: 0.25rem;
+  text-align: center;
+}
+
+.custom-file-details {
+  padding: 0.3rem 0.4rem;
+  display: inline-block;
+  background-color: #404954;
+  border: 1px solid #47515d;
+  border-radius: 0.25rem;
+}
+
+.custom-margin-left > * + *, .custom-margin-left > *:first-child {
+  margin-right: 10px;
+}
+
 /*
 Template Name: Hyper - Responsive Bootstrap 4 Admin Dashboard
 Version: 3.0.0
