@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Index;
 
-use App\Models\Course;
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Material;
-use App\Models\Post;
-use App\Traits\HasComments;
 use App\Models\User;
-use Illuminate\Http\Request;
+use App\Traits\HasComments;
 use stdClass;
 
 class MaterialController extends Controller {
@@ -17,21 +15,17 @@ class MaterialController extends Controller {
 
     public function material(Course $course, Material $material)
     {
-        $course = Course::find(1);
-        $material = Material::find(1);
-
-
-
-
+        $course = Course::find(3);
+        $material = Material::find(3);
         $user = auth()->user();
-        $sections = $user->courses()->where("courses.id", $course->id)->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
+        $sections = $course->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
         $materials = $this->getMaterial($user, $sections, $course);
 
         return view("index.materials.index-material", [
             "course" => Course::find($course->id),
             "material" => $material,
             "lessons" => $materials["lessons"],
-            "announcements" => $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Announcement")->unique("slug"),
+            "announcements" => $course->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Announcement")->unique("slug"),
             "sections" => $sections,
             "sumMaterial" => count($materials["section"]) + count($materials["lessons"]),
             "curator" => User::FindOrFail(isset($course->user_id) ? $course->user_id : User::where("first_name", "Υδρόγειος")->first()->id),
@@ -41,40 +35,6 @@ class MaterialController extends Controller {
         ]);
     }
 
-    private function getFields($course)
-    {
-
-        $courseFields = $course->fields;
-        $fields = new stdClass();
-        foreach (json_decode($courseFields) as $key => $field)
-        {
-
-            if (isset($course["$key"]) && $field)
-            {
-                $fields->$key = $field;
-            } else
-            {
-                $fields->$key = 0;
-            }
-        }
-        if ($course->media->where("type", 0)->isNotEmpty())
-        {
-            $fields->media = 1;
-        } else
-        {
-            $fields->media = 0;
-        }
-        if ($course->media->where("type", 1)->isNotEmpty())
-        {
-            $fields->file = 1;
-        } else
-        {
-            $fields->file = 0;
-        }
-
-        return $fields;
-    }
-
     private function getMaterial($user, $sections, $course)
     {
         $lessons = $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->whereIn("type", ["Lesson", "Video", "Link", "PDF"])->unique("slug");
@@ -82,8 +42,7 @@ class MaterialController extends Controller {
             return count($material->chapters);
         })->toArray();
         $isSectionExist = $sections->map(function ($section) {
-            if ($section->activeChapters->isNotEmpty())
-            {
+            if ($section->activeChapters->isNotEmpty()) {
                 return $section->activeChapters;
             }
         })->reject(function ($name) {
@@ -91,6 +50,33 @@ class MaterialController extends Controller {
         });
 
         return ["lessons" => $lessons, "section" => $isSectionExist];
+    }
+
+    private function getFields($course)
+    {
+
+        $courseFields = $course->fields;
+        $fields = new stdClass();
+        foreach (json_decode($courseFields) as $key => $field) {
+
+            if (isset($course["$key"]) && $field) {
+                $fields->$key = $field;
+            } else {
+                $fields->$key = 0;
+            }
+        }
+        if ($course->media->where("type", 0)->isNotEmpty()) {
+            $fields->media = 1;
+        } else {
+            $fields->media = 0;
+        }
+        if ($course->media->where("type", 1)->isNotEmpty()) {
+            $fields->file = 1;
+        } else {
+            $fields->file = 0;
+        }
+
+        return $fields;
     }
 
 }

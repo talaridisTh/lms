@@ -202,6 +202,7 @@
         $('[data-toggle="tooltip"]').tooltip();
     });
     $R('#editor-task', {
+        buttonsHide: ['file'],
         fileUpload: '/discussion/upload-task',
         fileAttachment: '#file-target',
         callbacks: {

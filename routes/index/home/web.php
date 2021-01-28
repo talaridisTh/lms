@@ -20,7 +20,7 @@ Route::prefix("home")->name("index.")->group(function () {
     Route::group(['middleware' => 'verifyCourse'], function () {
         Route::get("course/{course}", [CourseController::class, "showCourse"])->name("showCourse")->middleware("verifyCourse");
         Route::get("course/{course}/{material}", [CourseController::class, "showMaterial"])->name("showMaterial")->middleware("verifyCourse");
-        Route::get("material/", [MaterialController::class, 'material'])->name("material")->middleware("verifyCourse");
+        Route::get("material/{material}", [MaterialController::class, 'material'])->name("material")->middleware("verifyCourse");
     });
 //    Route::get("course/{course}", [CourseController::class, "showCourse"])->name("showCourse")->middleware("verifyCourse");
 //    Route::get("course/{course}/{material}", [CourseController::class, "showMaterial"])->name("showMaterial")->middleware("verifyCourse");

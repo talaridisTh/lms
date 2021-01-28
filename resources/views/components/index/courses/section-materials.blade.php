@@ -47,7 +47,7 @@
                                     class="-mb-2">Μαθήματα</span></label>
                         @foreach($lessons as $lesson)
                             <div
-                                    class="tab-content text-gray-600 zoom-in flex justify-between  rounded-lg  hover:text-black cursor-pointer spa-click"
+                                    class="tab-content text-gray-600 zoom-in flex justify-between  rounded-lg  hover:text-black cursor-pointer {{isset($classSpa)?$classSpa:""}}"
                                     data-href="{{$lesson->type=="Link"?$lesson->link:route('index.showMaterial',[$course->slug,$lesson->slug])}}"
                                     data-type="{{$lesson->type}}"
                             >
