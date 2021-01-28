@@ -96,6 +96,7 @@ class User extends Authenticatable {
 
     public function getPosts()
     {
+
         $models = $this->comments()->where("commentable_type", "!=", "App\Models\Announcement")
             ->get(["commentable_id", "commentable_type"])->unique('commentable_id')->map(function ($model) {
                 return $model->commentable_type::find($model->commentable_id);

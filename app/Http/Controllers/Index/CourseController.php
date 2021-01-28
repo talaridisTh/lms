@@ -23,7 +23,7 @@ class CourseController extends Controller {
             ->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
         $materials = $this->getMaterial($user, $sections, $course);
 
-        return view($course->template, [
+        return view("index.courses.template-1.courseProfile", [
             "course" => $course,
             "lessons" => $materials["lessons"],
             "announcements" => $course->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Announcement")->unique("slug"),
