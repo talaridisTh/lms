@@ -18750,9 +18750,9 @@ function resetGalleryBtns(bulk, checkboxes) {
 
 /***/ }),
 
-/***/ "./resources/js/dashboard/materials/pdfMaterial.js":
+/***/ "./resources/js/dashboard/materials/data-tables.js":
 /*!*********************************************************!*\
-  !*** ./resources/js/dashboard/materials/pdfMaterial.js ***!
+  !*** ./resources/js/dashboard/materials/data-tables.js ***!
   \*********************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -18762,74 +18762,233 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
-/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! filepond */ "./node_modules/filepond/dist/filepond.js");
-/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(filepond__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! filepond-plugin-file-validate-type */ "./node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js");
-/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! filepond-plugin-file-validate-size */ "./node_modules/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js");
-/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! filepond/dist/filepond.min.css */ "./node_modules/filepond/dist/filepond.min.css");
-/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_5__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-//!##########################################
-//!				Global Variables			#
-//!##########################################
-var materialId = $("#material-title")[0].dataset.materialId;
-var materialSlug = $("#material-title")[0].dataset.materialSlug;
-var namespace = "App\\Models\\Material";
-var baseUrl = window.location.origin;
-var timer = 0; //!######################################
-//! 				Imports				#
-//!######################################
 
+var materialId = $("#material-course-table")[0].dataset.materialId;
+var pickerConfig = {
+  singleDatePicker: true,
+  drops: "auto",
+  opens: "center",
+  timePicker: true,
+  autoUpdateInput: false,
+  timePicker24Hour: true,
+  cancelButtonClasses: "btn-secondary",
+  locale: {
+    format: "DD-MM-YYYY H:mm",
+    cancelLabel: "Cancel"
+  }
+};
 
-
-
-
- //!######################################
-//! 			Functions				#
-//!######################################
-
-function updatePDFInfo(btn) {
-  var titleElm = $("#pdf-title");
-  var nameElm = $("#pdf-name");
-  var nameInput = $("#pdf-name-input");
-  var titleInput = $("#pdf-title-input");
-  var iconElm = $("#pdf-file-icon");
-  iconElm.removeClass("mdi-cancel");
-  iconElm.addClass("mdi-file-pdf-outline text-danger");
-  nameElm.removeClass("d-none");
-  $("#change-pdf-btn").text("Αλλαγή");
-  titleElm.text(btn.dataset.pdfTitle);
-  titleInput.val(btn.dataset.pdfTitle);
-  nameElm.text(btn.dataset.pdfName);
-  nameInput.val(btn.dataset.pdfName);
-  $("#pdf-id").val(btn.dataset.pdfId);
-  PDFDatatable.ajax.reload(null, false);
-  $("#remainings-pdf-modal").modal("hide");
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", "Το αρχείο άλλαξε.");
+function datetime(date) {
+  var temp = date.split(" ");
+  return {
+    day: temp[0],
+    time: temp[1]
+  };
 }
 
-function changeExistingPDF(btn) {
-  axios.patch("/material/".concat(materialId, "/change-pdf"), {
-    materialId: materialId,
-    pdfId: btn.dataset.pdfId
+function publishCoverUpdate(row, date, status) {
+  var dateElm = row.getElementsByClassName("js-date")[0];
+  var timeElm = row.getElementsByClassName("js-time")[0];
+  var inputElm = row.getElementsByClassName("js-publish-picker")[0];
+  var badge = row.getElementsByClassName("js-badge")[0];
+  var day = date.day;
+  var time = date.time;
+  var now = new Date();
+  date = new Date("".concat(day, " ").concat(time));
+
+  if (status == 1) {
+    if (now > date) {
+      badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+      badge.classList.add("badge-outline-success");
+      badge.textContent = "Published";
+    } else {
+      badge.classList.remove("badge-outline-success", "badge-outline-danger");
+      badge.classList.add("badge-outline-primary");
+      badge.textContent = "Scheduled";
+    }
+  } else {
+    badge.classList.remove("badge-outline-primary", "badge-outline-success");
+    badge.classList.add("badge-outline-danger");
+    badge.textContent = "Draft";
+  }
+
+  day = day.split("-").reverse().join("-");
+  dateElm.textContent = day;
+  timeElm.textContent = time;
+  inputElm.value = "".concat(day, " ").concat(time);
+}
+
+function publishApplyHandler(ev, picker) {
+  var _this = this;
+
+  var date = picker.startDate.format('YYYY-MM-DD H:mm');
+  var courseId = this.dataset.courseId;
+  axios.patch("/course-ajax/".concat(courseId, "/edit-publish"), {
+    date: date
   }).then(function (res) {
-    var title = res.data.pdf.media_details ? res.data.pdf.media_details.title : res.data.pdf.original_name;
-    $("#pdf-title").text(title);
-    $("#pdf-pdf").text("".concat(res.data.pdf.name, ".").concat(res.data.pdf.ext));
-    $("#pdf-embed").attr("src", res.data.pdf.rel_path);
-    PDFDatatable.ajax.reload(null, false);
-    $("#remainings-pdf-modal").modal("hide");
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", "Το αρχείο άλλαξε.");
+    var row = _this.findParent(2);
+
+    var date = datetime(res.data.publish);
+    publishCoverUpdate(row, date, res.data.status);
   })["catch"](function (err) {
     console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε.");
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+  });
+}
+
+function publishHideHandler(cover, dateInput) {
+  setTimeout(function () {
+    cover.classList.remove("d-none");
+    dateInput.classList.add("d-none");
+    $(dateInput).data('daterangepicker').remove();
+  }, 50);
+}
+
+function publishHandler() {
+  var cover = this;
+  var td = this.parentElement;
+  var dateInput = td.getElementsByClassName("js-publish-picker")[0];
+  this.classList.add("d-none");
+  dateInput.classList.remove("d-none");
+  $(dateInput).daterangepicker(pickerConfig);
+  $(dateInput).on("apply.daterangepicker", publishApplyHandler);
+  $(dateInput).on("hide.daterangepicker", publishHideHandler.bind(this, cover, dateInput));
+  dateInput.focus();
+}
+
+function deleteBtnHandler() {
+  var courseId = this.dataset.courseId;
+  axiosMultipleDelete([courseId], materialId);
+}
+
+function startDate(input) {
+  var dateInput = input;
+
+  if (!dateInput || dateInput.value == "") {
+    return "";
+  }
+
+  var dateInputValue = dateInput.value.split(" - ");
+  var firstDate = dateInputValue[0].split("/").reverse().join("-");
+  return firstDate;
+}
+
+function endDate(input) {
+  var dateInput = input;
+
+  if (!dateInput || dateInput.value == "") {
+    return "";
+  }
+
+  var dateInputValue = dateInput.value.split(" - ");
+  var secondDate = dateInputValue[1].split("/").reverse().join("-");
+  return secondDate;
+}
+
+function createDateElm() {
+  var input = document.createElement("input");
+  input.classList.add("form-control", "date", "d-inline-block", "ml-1");
+  input.id = "course-date-range";
+  input.dataset.toggle = "date-picker";
+  input.dataset.cancelClass = "btn-secondary";
+  input.style.height = "31.96px";
+  input.style.width = "195px";
+  input.placeholder = "Επιλέξτε ημερομηνίες...";
+  return input;
+}
+
+function toggleStatus() {
+  $('.js-toggle').on('change', function () {
+    var _this2 = this;
+
+    var courseId = this.dataset.courseId;
+    axios.patch("/course-ajax/".concat(courseId, "/status"), {
+      status: this.checked
+    }).then(function (res) {
+      var row = _this2.findParent(2);
+
+      var dateElm = row.getElementsByClassName("js-date")[0];
+      var timeElm = row.getElementsByClassName("js-time")[0];
+      var inputElm = row.getElementsByClassName("js-publish-picker")[0];
+      var badge = row.getElementsByClassName("js-badge")[0];
+      var date = res.data.date.split("-").reverse().join("-");
+      var time = res.data.time;
+      var now = new Date();
+      date = new Date("".concat(date, " ").concat(time));
+
+      if (_this2.checked) {
+        if (now > date) {
+          badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+          badge.classList.add("badge-outline-success");
+          badge.textContent = "Published";
+        } else {
+          badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+          badge.classList.add("badge-outline-primary");
+          badge.textContent = "Scheduled";
+        }
+      } else {
+        badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+        badge.classList.add("badge-outline-danger");
+        badge.textContent = "Draft";
+      }
+
+      dateElm.textContent = res.data.date;
+      timeElm.textContent = res.data.time;
+      inputElm.value = "".concat(res.data.date, " ").concat(res.data.time);
+      var icon = _this2.checked ? "success" : "info";
+      var message = _this2.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert(icon, message);
+    })["catch"](function (err) {
+      console.log(err);
+      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+    });
+  });
+}
+
+function checkeBoxesEventListener() {
+  var minorCheckboxes = $(".js-course-inside-material");
+  var mainCheckbox = $("#select-all-courses")[0];
+  var bulkBtn = $("#course-indside-material-bulk")[0];
+  minorCheckboxes.unbind();
+  minorCheckboxes.change(function () {
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
+  });
+}
+
+function checkeBoxesEventListenerModal() {
+  var minorCheckboxes = $(".remainings-checkbox");
+  var mainCheckbox = $("#all-remainings-checkbox")[0];
+  var bulkBtn = $("#add-remaingings-btn")[0];
+  minorCheckboxes.unbind();
+  minorCheckboxes.change(function () {
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
+  });
+}
+
+function addCourseAxios(courseIds, materialId) {
+  axios.post("/materials/add-course", {
+    courseIds: courseIds,
+    materialId: materialId
+  }).then(function (res) {
+    var message = courseIds.length === 1 ? "1 Course προστέθηκε" : "".concat(courseIds.length, " Courses \u03C0\u03C1\u03BF\u03C3\u03C4\u03AD\u03B8\u03B7\u03BA\u03B1\u03BD");
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", message);
+    addCouseModal.ajax.reload();
+    materialCourseDatatable.ajax.reload();
+  })["catch"](function (err) {
+    console.log(err);
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
+  });
+}
+
+function addCourse() {
+  $(".js-add-courses").on("click", function () {
+    addCourseAxios([this.findParent(2).dataset.courseId], materialId);
   });
 }
 
@@ -18839,7 +18998,7 @@ function axiosMultipleDelete(_x, _x2) {
 
 function _axiosMultipleDelete() {
   _axiosMultipleDelete = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(courseId, materialId) {
-    var _yield$utilities$toas, value, _yield$axios$delete, status;
+    var _yield$utilities$remo, isConfirmed;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
       while (1) {
@@ -18847,18 +19006,21 @@ function _axiosMultipleDelete() {
           case 0:
             _context.prev = 0;
             _context.next = 3;
-            return _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlertDelete("\u0398\u03AD\u03BB\u03B5\u03C4\u03B5 \u03BD\u03B1 \u03B1\u03C6\u03B1\u03B9\u03C1\u03AD\u03C3\u03B5\u03C4\u03B5 \u03C4\u03BF \u03BC\u03B1\u03B8\u03AE\u03BC\u03B1 \u03B1\u03C0\u03BF ".concat(courseId.length, " course;"));
+            return _main__WEBPACK_IMPORTED_MODULE_1__["default"].removeAlert("\u0398\u03AD\u03BB\u03B5\u03C4\u03B5 \u03BD\u03B1 \u03B1\u03C6\u03B1\u03B9\u03C1\u03AD\u03C3\u03B5\u03C4\u03B5 \u03C4\u03BF \u03C5\u03BB\u03B9\u03BA\u03CC \u03B1\u03C0\u03BF ".concat(courseId.length, " course;"));
 
           case 3:
-            _yield$utilities$toas = _context.sent;
-            value = _yield$utilities$toas.value;
+            _yield$utilities$remo = _context.sent;
+            isConfirmed = _yield$utilities$remo.isConfirmed;
 
-            if (!value) {
-              _context.next = 11;
+            if (isConfirmed) {
+              _context.next = 7;
               break;
             }
 
-            _context.next = 8;
+            return _context.abrupt("return");
+
+          case 7:
+            _context.next = 9;
             return axios["delete"]("/materials/multiple/course/delete", {
               data: {
                 courseId: courseId,
@@ -18866,17 +19028,9 @@ function _axiosMultipleDelete() {
               }
             });
 
-          case 8:
-            _yield$axios$delete = _context.sent;
-            status = _yield$axios$delete.status;
-
-            if (status == 200) {
-              _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("info", "\u03A4\u03BF \u03BC\u03AC\u03B8\u03B7\u03BC\u03B1 \u03B1\u03C6\u03B1\u03B9\u03C1\u03AD\u03B8\u03B7\u03BA\u03B5...");
-              addCouseModal.ajax.reload();
-              materialCourseDatatable.ajax.reload();
-            }
-
-          case 11:
+          case 9:
+            addCouseModal.ajax.reload(false, null);
+            materialCourseDatatable.ajax.reload(false, null);
             _context.next = 17;
             break;
 
@@ -18896,6 +19050,320 @@ function _axiosMultipleDelete() {
   return _axiosMultipleDelete.apply(this, arguments);
 }
 
+var materialCourseDatatable = $("#material-course-table").DataTable({
+  order: [[1, "desc"]],
+  autoWidth: false,
+  columnDefs: [{
+    targets: 0,
+    width: "50px"
+  }, {
+    targets: 2,
+    width: "150px"
+  }, {
+    targets: 3,
+    width: "250px"
+  }, {
+    targets: 4,
+    width: "100px"
+  }, {
+    targets: 5,
+    width: "170px"
+  }],
+  searchDelay: "1000",
+  processing: true,
+  serverSide: true,
+  ajax: {
+    url: "/material-datatables/material-courses",
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type: "post",
+    data: function data(d) {
+      return $.extend({}, d, {
+        materialId: materialId,
+        startDate: startDate($("#course-date-range")[0]),
+        endDate: endDate($("#course-date-range")[0])
+      });
+    }
+  },
+  columns: [{
+    data: "checkbox",
+    name: "checkbox",
+    searchable: false,
+    orderable: false,
+    className: "text-center align-middle"
+  }, {
+    data: "title",
+    name: "courses.title"
+  }, {
+    data: "toggle",
+    name: "status",
+    className: "text-center align-middle"
+  }, {
+    data: "topics",
+    name: "topics.title",
+    className: "align-middle"
+  }, {
+    data: "version",
+    name: "version",
+    className: "text-center align-middle"
+  }, {
+    data: "publish",
+    name: "publish_at",
+    className: "text-center align-middle"
+  }, {
+    data: "status",
+    name: "status",
+    visible: false
+  }],
+  language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
+  drawCallback: function drawCallback() {
+    $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+    $(".dataTables_wrapper > .row:first-child > div").removeClass("col-sm-12 col-md-6");
+    $(".dataTables_wrapper > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
+    $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].resetBulk($("#course-indside-material-bulk"), $(".js-course-inside-material"));
+    $(".js-publish-cover").on("click", publishHandler);
+    $(".js-remove-btn").on("click", deleteBtnHandler);
+    checkeBoxesEventListener();
+    toggleStatus();
+  }
+});
+var addCouseModal = $("#remaining-course-material-table").DataTable({
+  order: [[1, "desc"]],
+  autoWidth: false,
+  columnDefs: [{
+    targets: 0,
+    width: "50px"
+  }, {
+    targets: 2,
+    width: "210px"
+  }, {
+    targets: 3,
+    width: "100px"
+  }, {
+    targets: 4,
+    width: "100px"
+  }],
+  searchDelay: "1000",
+  processing: true,
+  serverSide: true,
+  ajax: {
+    url: '/material-datatables/courses',
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    type: "post",
+    data: {
+      materialId: materialId
+    }
+  },
+  columns: [{
+    data: "checkbox",
+    name: "checkbox",
+    searchable: false,
+    orderable: false,
+    className: "text-center align-middle"
+  }, {
+    data: "title",
+    name: "courses.title",
+    className: "align-middle"
+  }, {
+    data: "topics",
+    name: "topics.title",
+    className: "align-middle"
+  }, {
+    data: "version",
+    name: "version",
+    className: "text-center align-middle"
+  }, {
+    data: "action",
+    name: "action",
+    className: "text-center align-middle",
+    searchable: false,
+    orderable: false
+  }],
+  language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
+  drawCallback: function drawCallback() {
+    $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
+    $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].resetBulk($("#add-remaingings-btn"), $("#all-remainings-checkbox"));
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].resetBulk($("#add-remaingings-btn"), $(".remainings-checkbox"));
+    checkeBoxesEventListenerModal();
+    addCourse();
+  }
+});
+var materialCoursesTopicFilter = document.getElementById("topicFilterMaterialCourses");
+var courseTopicsFilter = materialCoursesTopicFilter.cloneNode(true);
+courseTopicsFilter.id = "course-topics-filter";
+var coursesTableLengthSelect = document.querySelector("#remaining-course-material-table_length > label");
+coursesTableLengthSelect.append(courseTopicsFilter);
+$("#course-topics-filter").select2({
+  minimumResultsForSearch: -1
+});
+$("#course-topics-filter").on("change", function () {
+  var label = $("#select2-course-topics-filter-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+  addCouseModal.column(2).search(this.value).draw();
+});
+_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#activeFilterMaterialCourses', 6, materialCourseDatatable, "#material-course-table_length label");
+_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#topicFilterMaterialCourses', 3, materialCourseDatatable, "#material-course-table_length label"); // utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
+
+_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label");
+var tablesLengthLabel = $("#material-course-table_length > label")[0];
+var courseTypesSelect = _main__WEBPACK_IMPORTED_MODULE_1__["default"].createCourseTypeSelect("course-type-selection");
+tablesLengthLabel.append(courseTypesSelect);
+$("#course-type-selection").select2({
+  minimumResultsForSearch: -1
+});
+$("#course-type-selection").on("change", function () {
+  var label = $("#select2-course-type-selection-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+  materialCourseDatatable.column(4).search(this.value).draw();
+});
+var searchFieldLabel = $("#material-course-table_filter > label > input")[0];
+var dateInput = createDateElm();
+dateInput.appendBefore(searchFieldLabel);
+var dateRange = $("#course-date-range");
+dateRange.daterangepicker(_main__WEBPACK_IMPORTED_MODULE_1__["default"].datePickerConfig);
+dateRange.on("apply.daterangepicker", function (event, picker) {
+  var startDate = picker.startDate.format('DD/MM/YYYY');
+  var endDate = picker.endDate.format('DD/MM/YYYY');
+  this.classList.add("select2-selected");
+  this.value = "".concat(startDate, " - ").concat(endDate);
+  materialCourseDatatable.ajax.reload();
+});
+dateRange.on('cancel.daterangepicker', function (event, picker) {
+  this.classList.remove("select2-selected");
+  dateInput.value = "";
+  materialCourseDatatable.ajax.reload();
+});
+$("#versionFilterMaterial").select2({
+  minimumResultsForSearch: -1
+});
+$("#versionFilterMaterial").on("change", function () {
+  var label = $("#select2-versionFilterMaterial-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+}); //datatable
+
+$("#topicFilterMaterialCourses").select2({});
+$(".custom-select").select2({
+  minimumResultsForSearch: -1
+});
+$("#activeFilterMaterialCourses").select2({
+  minimumResultsForSearch: -1
+});
+$("#topicFilterMaterialCourses").change(function () {
+  var label = $("#select2-topicFilterMaterialCourses-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+});
+$("#activeFilterMaterialCourses").change(function () {
+  var label = $("#select2-activeFilterMaterialCourses-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+});
+$("#js-multiple-delete").on("click", function () {
+  var checkboxes = $(".js-course-inside-material:checked");
+  var materialId = $("#material-course-table")[0].dataset.materialId;
+  var ids = [];
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    ids.push(checkboxes[i].findParent(3).dataset.courseId);
+  }
+
+  axiosMultipleDelete(ids, materialId);
+});
+$("#add-remaingings-btn").on("click", function () {
+  var checkboxes = $(".remainings-checkbox:checked");
+  var ids = [];
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    ids.push(checkboxes[i].dataset.courseId);
+  }
+
+  addCourseAxios(ids, materialId);
+});
+
+/***/ }),
+
+/***/ "./resources/js/dashboard/materials/pdfMaterial.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/dashboard/materials/pdfMaterial.js ***!
+  \*********************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
+/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! filepond */ "./node_modules/filepond/dist/filepond.js");
+/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(filepond__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! filepond-plugin-file-validate-type */ "./node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js");
+/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! filepond-plugin-file-validate-size */ "./node_modules/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js");
+/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! filepond/dist/filepond.min.css */ "./node_modules/filepond/dist/filepond.min.css");
+/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_4__);
+//!##########################################
+//!				Global Variables			#
+//!##########################################
+var materialId = $("#material-title")[0].dataset.materialId;
+var materialSlug = $("#material-title")[0].dataset.materialSlug;
+var namespace = "App\\Models\\Material";
+var baseUrl = window.location.origin;
+var timer = 0; //!######################################
+//! 				Imports				#
+//!######################################
+
+
+
+
+
+
+
+__webpack_require__(/*! ./data-tables */ "./resources/js/dashboard/materials/data-tables.js"); //!######################################
+//! 			Functions				#
+//!######################################
+
+
+function updatePDFInfo(btn) {
+  var titleElm = $("#pdf-title");
+  var nameElm = $("#pdf-name");
+  var nameInput = $("#pdf-name-input");
+  var titleInput = $("#pdf-title-input");
+  var iconElm = $("#pdf-file-icon");
+  iconElm.removeClass("mdi-cancel");
+  iconElm.addClass("mdi-file-pdf-outline text-danger");
+  nameElm.removeClass("d-none");
+  $("#change-pdf-btn").text("Αλλαγή");
+  titleElm.text(btn.dataset.pdfTitle);
+  titleInput.val(btn.dataset.pdfTitle);
+  nameElm.text(btn.dataset.pdfName);
+  nameInput.val(btn.dataset.pdfName);
+  $("#pdf-id").val(btn.dataset.pdfId);
+  PDFDatatable.ajax.reload(null, false);
+  $("#remainings-pdf-modal").modal("hide");
+  _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("success", "Το αρχείο άλλαξε.");
+}
+
+function changeExistingPDF(btn) {
+  axios.patch("/material/".concat(materialId, "/change-pdf"), {
+    materialId: materialId,
+    pdfId: btn.dataset.pdfId
+  }).then(function (res) {
+    var title = res.data.pdf.media_details ? res.data.pdf.media_details.title : res.data.pdf.original_name;
+    $("#pdf-title").text(title);
+    $("#pdf-pdf").text("".concat(res.data.pdf.name, ".").concat(res.data.pdf.ext));
+    $("#pdf-embed").attr("src", res.data.pdf.rel_path);
+    PDFDatatable.ajax.reload(null, false);
+    $("#remainings-pdf-modal").modal("hide");
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("success", "Το αρχείο άλλαξε.");
+  })["catch"](function (err) {
+    console.log(err);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε.");
+  });
+}
+
 function changePDFBtnInit() {
   var btns = $(".js-change-pdf-btn");
   btns.on("click", function () {
@@ -18910,10 +19378,10 @@ function changePDFBtnInit() {
 //!##########################################
 
 
-filepond__WEBPACK_IMPORTED_MODULE_2__["registerPlugin"](filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3___default.a);
-filepond__WEBPACK_IMPORTED_MODULE_2__["registerPlugin"](filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4___default.a);
+filepond__WEBPACK_IMPORTED_MODULE_1__["registerPlugin"](filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2___default.a);
+filepond__WEBPACK_IMPORTED_MODULE_1__["registerPlugin"](filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3___default.a);
 var dropzone = document.getElementById("file-pond");
-var pond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](dropzone, {
+var pond = filepond__WEBPACK_IMPORTED_MODULE_1__["create"](dropzone, {
   name: 'file',
   className: "js-filepond-file-dragging",
   labelIdle: "Drag & Drop your files or Browse",
@@ -18966,8 +19434,8 @@ var pond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](dropzone, {
   acceptedFileTypes: ["application/pdf"],
   maxFileSize: "50MB"
 });
-_main__WEBPACK_IMPORTED_MODULE_1__["default"].redactorConfig.minHeight = "265px";
-$R("#description", _main__WEBPACK_IMPORTED_MODULE_1__["default"].redactorConfig);
+_main__WEBPACK_IMPORTED_MODULE_0__["default"].redactorConfig.minHeight = "265px";
+$R("#description", _main__WEBPACK_IMPORTED_MODULE_0__["default"].redactorConfig);
 
 function getPDFid() {
   var idElm = document.getElementById("pdf-id");
@@ -18979,59 +19447,6 @@ function getPDFid() {
   return false;
 }
 
-var materialCourseDatatable = $("#material-course-table").DataTable({
-  order: [[1, "desc"]],
-  searchDelay: "1000",
-  processing: true,
-  serverSide: true,
-  ajax: {
-    url: "/material-datatables/material-courses",
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    type: "post",
-    data: {
-      materialId: materialId
-    }
-  },
-  columns: [{
-    data: "checkbox",
-    name: "checkbox",
-    searchable: false,
-    orderable: false,
-    className: "text-center align-middle"
-  }, {
-    data: "title",
-    name: "title"
-  }, {
-    data: "curator",
-    name: "curator",
-    className: "text-center align-middle"
-  }, {
-    data: "updated_at",
-    name: "updated_at",
-    className: "text-center align-middle"
-  }, {
-    data: "created_at",
-    name: "created_at",
-    visible: false
-  }],
-  language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
-  fnInitComplete: function fnInitComplete(oSettings, json) {
-    var lenthSelection = $("select[name='material-course-table_length']");
-    lenthSelection.addClass("select2");
-    lenthSelection.select2({
-      minimumResultsForSearch: -1
-    });
-  },
-  drawCallback: function drawCallback() {
-    $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-    $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at"); // utilities.resetBulk($("#course-indside-material-bulk"), $("#select-all-courses"));
-    // utilities.resetBulk($("#course-indside-material-bulk"), $(".js-course-inside-material"));
-
-    checkeBoxesEventListener(); // selectMultipleCheckboxDelete();
-  }
-});
 var PDFDatatable = $("#remaining-pdf-datatable").DataTable({
   order: [[1, "desc"]],
   searchDelay: "1000",
@@ -19063,7 +19478,7 @@ var PDFDatatable = $("#remaining-pdf-datatable").DataTable({
     orderable: false,
     searchable: false
   }],
-  language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
+  language: _main__WEBPACK_IMPORTED_MODULE_0__["default"].tableLocale,
   fnInitComplete: function fnInitComplete(oSettings, json) {
     var lenthSelection = $("select[name='remaining-pdf-datatable_length']");
     lenthSelection.addClass("select2");
@@ -19076,156 +19491,24 @@ var PDFDatatable = $("#remaining-pdf-datatable").DataTable({
     $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
     changePDFBtnInit();
   }
-});
-var addCouseModal = $("#remaining-course-material-table").DataTable({
-  order: [[1, "desc"]],
-  searchDelay: "1000",
-  processing: true,
-  serverSide: true,
-  ajax: {
-    url: '/material-datatables/courses',
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    },
-    type: "post",
-    data: {
-      materialId: materialId
-    }
-  },
-  columns: [{
-    data: "checkbox",
-    name: "checkbox",
-    searchable: false,
-    orderable: false,
-    className: "text-center align-middle"
-  }, {
-    data: "title",
-    name: "title",
-    className: "align-middle"
-  }, {
-    data: "curator",
-    name: "curator",
-    className: "text-center align-middle"
-  }, {
-    data: "version",
-    name: "version",
-    className: "text-center align-middle"
-  }, {
-    data: "action",
-    name: "action",
-    className: "text-center align-middle",
-    searchable: false,
-    orderable: false
-  }],
-  language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
-  fnInitComplete: function fnInitComplete(oSettings, json) {
-    var lenthSelection = $("select[name='remaining-course-material-table_length']");
-    lenthSelection.addClass("select2");
-    lenthSelection.select2({
-      minimumResultsForSearch: -1
-    });
-  },
-  drawCallback: function drawCallback() {
-    $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
-    $(".js-remove-table-classes > thead > tr > th").removeClass("js-link cursor-pointer js-updated-at");
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].resetBulk($("#add-remaingings-btn"), $("#all-remainings-checkbox"));
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].resetBulk($("#add-remaingings-btn"), $(".remainings-checkbox"));
-    checkeBoxesEventListenerModal();
-    addCourse();
-  }
 }); //!##############################################
 //!		Datatable Button initializations		#
 //!##############################################
 
-function checkeBoxesEventListener() {
-  var minorCheckboxes = $(".js-course-inside-material");
-  var mainCheckbox = $("#select-all-courses")[0];
-  var bulkBtn = $("#course-indside-material-bulk")[0];
-  minorCheckboxes.on("change", function () {
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
-  });
-}
-
-function checkeBoxesEventListenerModal() {
-  var minorCheckboxes = $(".remainings-checkbox");
-  var mainCheckbox = $("#all-remainings-checkbox")[0];
-  var bulkBtn = $("#add-remaingings-btn")[0];
-  minorCheckboxes.on("change", function () {
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
-  });
-}
-
-function addCourse() {
-  $(".js-add-courses").on("click", function () {
-    addCourseAxios([this.findParent(2).dataset.courseId], materialId);
-  });
-}
-
-function addCourseAxios(courseIds, materialId) {
-  axios.post("/materials/add-course", {
-    courseIds: courseIds,
-    materialId: materialId
-  }).then(function (res) {
-    var message = courseIds.length === 1 ? "1 Course προστέθηκε" : "".concat(courseIds.length, " Courses \u03C0\u03C1\u03BF\u03C3\u03C4\u03AD\u03B8\u03B7\u03BA\u03B1\u03BD");
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", message);
-    addCouseModal.ajax.reload();
-    materialCourseDatatable.ajax.reload();
-  })["catch"](function (err) {
-    console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
-  });
-}
-
 $(".dataTables_wrapper:not(#remaining-pdf-datatable_wrapper) > .row:first-child > div").removeClass("col-sm-12 col-md-6");
-$(".dataTables_wrapper:not(#remaining-pdf-datatable_wrapper) > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block");
-_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#topicFilterMaterialCourses', 1, materialCourseDatatable, "#material-course-table_length label");
-_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label");
-_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label");
-$("#activeFilterMaterialCourses").detach().prependTo("#material-course-table_filter > label");
-$("#activeFilterMaterialCourses").select2({
-  minimumResultsForSearch: -1
-});
-$("#activeFilterMaterialCourses").on('change', function () {
-  materialCourseDatatable.columns(7).search(this.value).draw();
-});
-$("#versionFilterMaterial").select2({
-  minimumResultsForSearch: -1
-});
-$("#userFilterMaterialCourses").select2({});
-$("#topicFilterMaterialCourses").select2({}); //!##################################################
+$(".dataTables_wrapper:not(#remaining-pdf-datatable_wrapper) > .row:first-child > div").addClass("col-lg-12 col-xl-6 d-md-flex justify-content-md-center d-xl-block"); //!##################################################
 //!					EventListeners					#
 //!##################################################
 
-$("#js-multiple-delete").on("click", function () {
-  var checkboxes = $(".js-course-inside-material:checked");
-  var materialId = $("#material-course-table")[0].dataset.materialId;
-  var ids = [];
-
-  for (var i = 0; i < checkboxes.length; i++) {
-    ids.push(checkboxes[i].findParent(3).dataset.courseId);
-  }
-
-  axiosMultipleDelete(ids, materialId);
-});
 $("#select-all-courses").on("change", function () {
   var minorCheckboxes = $(".js-course-inside-material");
   var bulkBtn = $("#course-indside-material-bulk")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
-});
-$("#add-remaingings-btn").on("click", function () {
-  var checkboxes = $(".remainings-checkbox:checked");
-  var ids = [];
-
-  for (var i = 0; i < checkboxes.length; i++) {
-    ids.push(checkboxes[i].dataset.courseId);
-  }
-
-  addCourseAxios(ids, materialId);
+  _main__WEBPACK_IMPORTED_MODULE_0__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 });
 $("#all-remainings-checkbox").on("change", function () {
   var minorCheckboxes = $(".remainings-checkbox");
   var bulkBtn = $("#add-remaingings-btn")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
+  _main__WEBPACK_IMPORTED_MODULE_0__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 });
 $(".js-editors-toggle").on("change", function () {
   var _this = this;
@@ -19243,10 +19526,10 @@ $(".js-editors-toggle").on("change", function () {
   }).then(function (res) {
     var icon = _this.checked ? "success" : "info";
     var message = _this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert(icon, message);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert(icon, message);
   })["catch"](function (err) {
     console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
   });
 });
 $("#pdf-material-status").on("change", function () {
@@ -19257,10 +19540,10 @@ $("#pdf-material-status").on("change", function () {
   }).then(function (res) {
     var icon = _this2.checked ? "success" : "info";
     var message = _this2.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert(icon, message);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert(icon, message);
   })["catch"](function (err) {
     console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
   });
 });
 $(".tab-link").on("show.bs.tab", function (event) {

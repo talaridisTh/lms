@@ -40091,10 +40091,10 @@ function resetGalleryBtns(bulk, checkboxes) {
 
 /***/ }),
 
-/***/ "./resources/js/dashboard/materials/material.js":
-/*!******************************************************!*\
-  !*** ./resources/js/dashboard/materials/material.js ***!
-  \******************************************************/
+/***/ "./resources/js/dashboard/materials/data-tables.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/dashboard/materials/data-tables.js ***!
+  \*********************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -40103,20 +40103,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
-/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! filepond */ "./node_modules/filepond/dist/filepond.js");
-/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(filepond__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! filepond-plugin-file-validate-type */ "./node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js");
-/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! filepond-plugin-file-validate-size */ "./node_modules/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js");
-/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! filepond/dist/filepond.min.css */ "./node_modules/filepond/dist/filepond.min.css");
-/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! codemirror/lib/codemirror */ "./node_modules/codemirror/lib/codemirror.js");
-/* harmony import */ var codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! codemirror/lib/codemirror.css */ "./node_modules/codemirror/lib/codemirror.css");
-/* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! codemirror/theme/shadowfox.css */ "./node_modules/codemirror/theme/shadowfox.css");
-/* harmony import */ var codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_8__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -40124,26 +40110,7 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 
-
-
-
-
-
-
-__webpack_require__(/*! codemirror/mode/htmlmixed/htmlmixed */ "./node_modules/codemirror/mode/htmlmixed/htmlmixed.js");
-
-__webpack_require__(/*! codemirror/addon/display/autorefresh */ "./node_modules/codemirror/addon/display/autorefresh.js");
-
-
-
-
-var beautify_html = __webpack_require__(/*! js-beautify */ "./node_modules/js-beautify/js/index.js").html;
-
 var materialId = $("#material-course-table")[0].dataset.materialId;
-var materialSlug = $("#material-title")[0].dataset.materialSlug;
-var namespace = "App\\Models\\Material";
-var baseUrl = window.location.origin;
-var timer = 0;
 var pickerConfig = {
   singleDatePicker: true,
   drops: "auto",
@@ -40277,104 +40244,152 @@ function createDateElm() {
   return input;
 }
 
-$(".js-editors-toggle").on("change", function () {
-  var _this2 = this;
+function toggleStatus() {
+  $('.js-toggle').on('change', function () {
+    var _this2 = this;
 
-  var editorToggles = $(".js-editors-toggle");
-  var field = {};
+    var courseId = this.dataset.courseId;
+    axios.patch("/course-ajax/".concat(courseId, "/status"), {
+      status: this.checked
+    }).then(function (res) {
+      var row = _this2.findParent(2);
 
-  for (var i = 0; i < editorToggles.length; i++) {
-    field["".concat(editorToggles[i].dataset.field)] = editorToggles[i].checked ? 1 : 0;
-  }
+      var dateElm = row.getElementsByClassName("js-date")[0];
+      var timeElm = row.getElementsByClassName("js-time")[0];
+      var inputElm = row.getElementsByClassName("js-publish-picker")[0];
+      var badge = row.getElementsByClassName("js-badge")[0];
+      var date = res.data.date.split("-").reverse().join("-");
+      var time = res.data.time;
+      var now = new Date();
+      date = new Date("".concat(date, " ").concat(time));
 
-  var fields = JSON.stringify(field);
-  axios.patch("/material/".concat(materialId, "/toggle-editors"), {
-    fields: fields
+      if (_this2.checked) {
+        if (now > date) {
+          badge.classList.remove("badge-outline-dark", "badge-outline-danger");
+          badge.classList.add("badge-outline-success");
+          badge.textContent = "Published";
+        } else {
+          badge.classList.remove("badge-outline-primary", "badge-outline-danger");
+          badge.classList.add("badge-outline-primary");
+          badge.textContent = "Scheduled";
+        }
+      } else {
+        badge.classList.remove("badge-outline-primary", "badge-outline-dark");
+        badge.classList.add("badge-outline-danger");
+        badge.textContent = "Draft";
+      }
+
+      dateElm.textContent = res.data.date;
+      timeElm.textContent = res.data.time;
+      inputElm.value = "".concat(res.data.date, " ").concat(res.data.time);
+      var icon = _this2.checked ? "success" : "info";
+      var message = _this2.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert(icon, message);
+    })["catch"](function (err) {
+      console.log(err);
+      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+    });
+  });
+}
+
+function checkeBoxesEventListener() {
+  var minorCheckboxes = $(".js-course-inside-material");
+  var mainCheckbox = $("#select-all-courses")[0];
+  var bulkBtn = $("#course-indside-material-bulk")[0];
+  minorCheckboxes.unbind();
+  minorCheckboxes.change(function () {
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
+  });
+}
+
+function checkeBoxesEventListenerModal() {
+  var minorCheckboxes = $(".remainings-checkbox");
+  var mainCheckbox = $("#all-remainings-checkbox")[0];
+  var bulkBtn = $("#add-remaingings-btn")[0];
+  minorCheckboxes.unbind();
+  minorCheckboxes.change(function () {
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
+  });
+}
+
+function addCourseAxios(courseIds, materialId) {
+  axios.post("/materials/add-course", {
+    courseIds: courseIds,
+    materialId: materialId
   }).then(function (res) {
-    var icon = _this2.checked ? "success" : "info";
-    var message = _this2.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert(icon, message);
+    var message = courseIds.length === 1 ? "1 Course προστέθηκε" : "".concat(courseIds.length, " Courses \u03C0\u03C1\u03BF\u03C3\u03C4\u03AD\u03B8\u03B7\u03BA\u03B1\u03BD");
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", message);
+    addCouseModal.ajax.reload();
+    materialCourseDatatable.ajax.reload();
   })["catch"](function (err) {
     console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
   });
-});
-$("#remove-cover-btn").on("click", function () {
-  var _this3 = this;
+}
 
-  axios.patch("/media/remove-cover", {
-    namespace: namespace,
-    id: materialId
-  }).then(function (res) {
-    var cnt = _this3.parentElement;
-    $("#cover-image").addClass("d-none");
-    $("#cover-status").removeClass("d-none");
-    $("#change-cover-btn").text("Προσθήκη");
-    cnt.classList.remove("d-flex");
-    cnt.classList.add("d-none");
-  })["catch"](function (err) {
-    console.log(err);
+function addCourse() {
+  $(".js-add-courses").on("click", function () {
+    addCourseAxios([this.findParent(2).dataset.courseId], materialId);
   });
-});
-$("#remove-all-files-btn").on("click", function () {
-  var fileRow = $(".js-file-row");
-  var ids = [];
+}
 
-  for (var i = 0; i < fileRow.length; i++) {
-    ids.push(fileRow[i].dataset.fileId);
-  }
+function axiosMultipleDelete(_x, _x2) {
+  return _axiosMultipleDelete.apply(this, arguments);
+}
 
-  Swal.fire({
-    icon: 'info',
-    title: 'Προσοχή!',
-    text: 'Αφαίρεση όλων των αρχείων;',
-    showCancelButton: true,
-    confirmButtonColor: '#536de6',
-    confirmButtonText: "\u039D\u03B1\u03B9, \u03B1\u03C6\u03B1\u03AF\u03C1\u03B5\u03C3\u03B7!",
-    cancelButtonText: "\u0391\u03BA\u03CD\u03C1\u03C9\u03C3\u03B7"
-  }).then(function (result) {
-    if (result.isConfirmed) {
-      removeFiles(ids);
-    }
-  });
-});
-$(".js-audio-btn").on("click", audioPlayerHandler);
-$(".js-remove-file").on("click", function () {
-  removeFiles([this.dataset.fileId]);
-});
-$("#remove-all-images-btn").on("click", function () {
-  var _this4 = this;
+function _axiosMultipleDelete() {
+  _axiosMultipleDelete = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(courseId, materialId) {
+    var _yield$utilities$remo, isConfirmed;
 
-  var images = $(".js-active-image");
-  var ids = [];
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      while (1) {
+        switch (_context.prev = _context.next) {
+          case 0:
+            _context.prev = 0;
+            _context.next = 3;
+            return _main__WEBPACK_IMPORTED_MODULE_1__["default"].removeAlert("\u0398\u03AD\u03BB\u03B5\u03C4\u03B5 \u03BD\u03B1 \u03B1\u03C6\u03B1\u03B9\u03C1\u03AD\u03C3\u03B5\u03C4\u03B5 \u03C4\u03BF \u03C5\u03BB\u03B9\u03BA\u03CC \u03B1\u03C0\u03BF ".concat(courseId.length, " course;"));
 
-  for (var i = 0; i < images.length; i++) {
-    ids.push(images[i].dataset.fileId);
-  }
+          case 3:
+            _yield$utilities$remo = _context.sent;
+            isConfirmed = _yield$utilities$remo.isConfirmed;
 
-  Swal.fire({
-    icon: 'info',
-    title: 'Προσοχή!',
-    text: 'Αφαίρεση όλων των εικόνων;',
-    showCancelButton: true,
-    confirmButtonColor: '#536de6',
-    confirmButtonText: "\u039D\u03B1\u03B9, \u03B1\u03C6\u03B1\u03AF\u03C1\u03B5\u03C3\u03B7!",
-    cancelButtonText: "\u0391\u03BA\u03CD\u03C1\u03C9\u03C3\u03B7"
-  }).then(function (result) {
-    if (result.isConfirmed) {
-      _main__WEBPACK_IMPORTED_MODULE_1__["default"].removeImages(ids);
-      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("info", "Οι εικόνες αφαιρέθηκαν");
+            if (isConfirmed) {
+              _context.next = 7;
+              break;
+            }
 
-      _this4.classList.add("d-none");
-    }
-  });
-});
-$(".js-remove-image").on("click", _main__WEBPACK_IMPORTED_MODULE_1__["default"].removeImageHandler);
-$("#add-gallery-images-btn").on("click", function () {
-  $("#gallery-content")[0].dataset.type = "gallery";
-  $("#gallery-modal").modal('show');
-}); //! DATATABLE INIT
-//!============================================================
+            return _context.abrupt("return");
+
+          case 7:
+            _context.next = 9;
+            return axios["delete"]("/materials/multiple/course/delete", {
+              data: {
+                courseId: courseId,
+                materialId: materialId
+              }
+            });
+
+          case 9:
+            addCouseModal.ajax.reload(false, null);
+            materialCourseDatatable.ajax.reload(false, null);
+            _context.next = 17;
+            break;
+
+          case 13:
+            _context.prev = 13;
+            _context.t0 = _context["catch"](0);
+            console.log(_context.t0);
+            _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
+
+          case 17:
+          case "end":
+            return _context.stop();
+        }
+      }
+    }, _callee, null, [[0, 13]]);
+  }));
+  return _axiosMultipleDelete.apply(this, arguments);
+}
 
 var materialCourseDatatable = $("#material-course-table").DataTable({
   order: [[1, "desc"]],
@@ -40495,8 +40510,7 @@ var addCouseModal = $("#remaining-course-material-table").DataTable({
     data: "title",
     name: "courses.title",
     className: "align-middle"
-  }, // {data: "curator", name: "curator", className: "text-center align-middle"},
-  {
+  }, {
     data: "topics",
     name: "topics.title",
     className: "align-middle"
@@ -40520,6 +40534,243 @@ var addCouseModal = $("#remaining-course-material-table").DataTable({
     checkeBoxesEventListenerModal();
     addCourse();
   }
+});
+var materialCoursesTopicFilter = document.getElementById("topicFilterMaterialCourses");
+var courseTopicsFilter = materialCoursesTopicFilter.cloneNode(true);
+courseTopicsFilter.id = "course-topics-filter";
+var coursesTableLengthSelect = document.querySelector("#remaining-course-material-table_length > label");
+coursesTableLengthSelect.append(courseTopicsFilter);
+$("#course-topics-filter").select2({
+  minimumResultsForSearch: -1
+});
+$("#course-topics-filter").on("change", function () {
+  var label = $("#select2-course-topics-filter-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+  addCouseModal.column(2).search(this.value).draw();
+});
+_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#activeFilterMaterialCourses', 6, materialCourseDatatable, "#material-course-table_length label");
+_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#topicFilterMaterialCourses', 3, materialCourseDatatable, "#material-course-table_length label"); // utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
+
+_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label");
+var tablesLengthLabel = $("#material-course-table_length > label")[0];
+var courseTypesSelect = _main__WEBPACK_IMPORTED_MODULE_1__["default"].createCourseTypeSelect("course-type-selection");
+tablesLengthLabel.append(courseTypesSelect);
+$("#course-type-selection").select2({
+  minimumResultsForSearch: -1
+});
+$("#course-type-selection").on("change", function () {
+  var label = $("#select2-course-type-selection-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+  materialCourseDatatable.column(4).search(this.value).draw();
+});
+var searchFieldLabel = $("#material-course-table_filter > label > input")[0];
+var dateInput = createDateElm();
+dateInput.appendBefore(searchFieldLabel);
+var dateRange = $("#course-date-range");
+dateRange.daterangepicker(_main__WEBPACK_IMPORTED_MODULE_1__["default"].datePickerConfig);
+dateRange.on("apply.daterangepicker", function (event, picker) {
+  var startDate = picker.startDate.format('DD/MM/YYYY');
+  var endDate = picker.endDate.format('DD/MM/YYYY');
+  this.classList.add("select2-selected");
+  this.value = "".concat(startDate, " - ").concat(endDate);
+  materialCourseDatatable.ajax.reload();
+});
+dateRange.on('cancel.daterangepicker', function (event, picker) {
+  this.classList.remove("select2-selected");
+  dateInput.value = "";
+  materialCourseDatatable.ajax.reload();
+});
+$("#versionFilterMaterial").select2({
+  minimumResultsForSearch: -1
+});
+$("#versionFilterMaterial").on("change", function () {
+  var label = $("#select2-versionFilterMaterial-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+}); //datatable
+
+$("#topicFilterMaterialCourses").select2({});
+$(".custom-select").select2({
+  minimumResultsForSearch: -1
+});
+$("#activeFilterMaterialCourses").select2({
+  minimumResultsForSearch: -1
+});
+$("#topicFilterMaterialCourses").change(function () {
+  var label = $("#select2-topicFilterMaterialCourses-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+});
+$("#activeFilterMaterialCourses").change(function () {
+  var label = $("#select2-activeFilterMaterialCourses-container")[0];
+  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
+});
+$("#js-multiple-delete").on("click", function () {
+  var checkboxes = $(".js-course-inside-material:checked");
+  var materialId = $("#material-course-table")[0].dataset.materialId;
+  var ids = [];
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    ids.push(checkboxes[i].findParent(3).dataset.courseId);
+  }
+
+  axiosMultipleDelete(ids, materialId);
+});
+$("#add-remaingings-btn").on("click", function () {
+  var checkboxes = $(".remainings-checkbox:checked");
+  var ids = [];
+
+  for (var i = 0; i < checkboxes.length; i++) {
+    ids.push(checkboxes[i].dataset.courseId);
+  }
+
+  addCourseAxios(ids, materialId);
+});
+
+/***/ }),
+
+/***/ "./resources/js/dashboard/materials/material.js":
+/*!******************************************************!*\
+  !*** ./resources/js/dashboard/materials/material.js ***!
+  \******************************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
+/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! filepond */ "./node_modules/filepond/dist/filepond.js");
+/* harmony import */ var filepond__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(filepond__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! filepond-plugin-file-validate-type */ "./node_modules/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js");
+/* harmony import */ var filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! filepond-plugin-file-validate-size */ "./node_modules/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js");
+/* harmony import */ var filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! filepond/dist/filepond.min.css */ "./node_modules/filepond/dist/filepond.min.css");
+/* harmony import */ var filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(filepond_dist_filepond_min_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! codemirror/lib/codemirror */ "./node_modules/codemirror/lib/codemirror.js");
+/* harmony import */ var codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! codemirror/lib/codemirror.css */ "./node_modules/codemirror/lib/codemirror.css");
+/* harmony import */ var codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(codemirror_lib_codemirror_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! codemirror/theme/shadowfox.css */ "./node_modules/codemirror/theme/shadowfox.css");
+/* harmony import */ var codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(codemirror_theme_shadowfox_css__WEBPACK_IMPORTED_MODULE_7__);
+
+
+
+
+
+
+
+__webpack_require__(/*! codemirror/mode/htmlmixed/htmlmixed */ "./node_modules/codemirror/mode/htmlmixed/htmlmixed.js");
+
+__webpack_require__(/*! codemirror/addon/display/autorefresh */ "./node_modules/codemirror/addon/display/autorefresh.js");
+
+
+
+
+var beautify_html = __webpack_require__(/*! js-beautify */ "./node_modules/js-beautify/js/index.js").html;
+
+var materialId = $("#material-course-table")[0].dataset.materialId;
+var materialSlug = $("#material-title")[0].dataset.materialSlug;
+var namespace = "App\\Models\\Material";
+var baseUrl = window.location.origin;
+var timer = 0;
+
+__webpack_require__(/*! ./data-tables */ "./resources/js/dashboard/materials/data-tables.js");
+
+$(".js-editors-toggle").on("change", function () {
+  var _this = this;
+
+  var editorToggles = $(".js-editors-toggle");
+  var field = {};
+
+  for (var i = 0; i < editorToggles.length; i++) {
+    field["".concat(editorToggles[i].dataset.field)] = editorToggles[i].checked ? 1 : 0;
+  }
+
+  var fields = JSON.stringify(field);
+  axios.patch("/material/".concat(materialId, "/toggle-editors"), {
+    fields: fields
+  }).then(function (res) {
+    var icon = _this.checked ? "success" : "info";
+    var message = _this.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert(icon, message);
+  })["catch"](function (err) {
+    console.log(err);
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
+  });
+});
+$("#remove-cover-btn").on("click", function () {
+  var _this2 = this;
+
+  axios.patch("/media/remove-cover", {
+    namespace: namespace,
+    id: materialId
+  }).then(function (res) {
+    var cnt = _this2.parentElement;
+    $("#cover-image").addClass("d-none");
+    $("#cover-status").removeClass("d-none");
+    $("#change-cover-btn").text("Προσθήκη");
+    cnt.classList.remove("d-flex");
+    cnt.classList.add("d-none");
+  })["catch"](function (err) {
+    console.log(err);
+  });
+});
+$("#remove-all-files-btn").on("click", function () {
+  var fileRow = $(".js-file-row");
+  var ids = [];
+
+  for (var i = 0; i < fileRow.length; i++) {
+    ids.push(fileRow[i].dataset.fileId);
+  }
+
+  Swal.fire({
+    icon: 'info',
+    title: 'Προσοχή!',
+    text: 'Αφαίρεση όλων των αρχείων;',
+    showCancelButton: true,
+    confirmButtonColor: '#536de6',
+    confirmButtonText: "\u039D\u03B1\u03B9, \u03B1\u03C6\u03B1\u03AF\u03C1\u03B5\u03C3\u03B7!",
+    cancelButtonText: "\u0391\u03BA\u03CD\u03C1\u03C9\u03C3\u03B7"
+  }).then(function (result) {
+    if (result.isConfirmed) {
+      removeFiles(ids);
+    }
+  });
+});
+$(".js-audio-btn").on("click", audioPlayerHandler);
+$(".js-remove-file").on("click", function () {
+  removeFiles([this.dataset.fileId]);
+});
+$("#remove-all-images-btn").on("click", function () {
+  var _this3 = this;
+
+  var images = $(".js-active-image");
+  var ids = [];
+
+  for (var i = 0; i < images.length; i++) {
+    ids.push(images[i].dataset.fileId);
+  }
+
+  Swal.fire({
+    icon: 'info',
+    title: 'Προσοχή!',
+    text: 'Αφαίρεση όλων των εικόνων;',
+    showCancelButton: true,
+    confirmButtonColor: '#536de6',
+    confirmButtonText: "\u039D\u03B1\u03B9, \u03B1\u03C6\u03B1\u03AF\u03C1\u03B5\u03C3\u03B7!",
+    cancelButtonText: "\u0391\u03BA\u03CD\u03C1\u03C9\u03C3\u03B7"
+  }).then(function (result) {
+    if (result.isConfirmed) {
+      _main__WEBPACK_IMPORTED_MODULE_0__["default"].removeImages(ids);
+      _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("info", "Οι εικόνες αφαιρέθηκαν");
+
+      _this3.classList.add("d-none");
+    }
+  });
+});
+$(".js-remove-image").on("click", _main__WEBPACK_IMPORTED_MODULE_0__["default"].removeImageHandler);
+$("#add-gallery-images-btn").on("click", function () {
+  $("#gallery-content")[0].dataset.type = "gallery";
+  $("#gallery-modal").modal('show');
 });
 var remainingFilesTable = $("#remaining-files-datatable").DataTable({
   order: [0, "asc"],
@@ -40550,61 +40801,13 @@ var remainingFilesTable = $("#remaining-files-datatable").DataTable({
     searchable: false,
     orderable: false
   }],
-  language: _main__WEBPACK_IMPORTED_MODULE_1__["default"].tableLocale,
+  language: _main__WEBPACK_IMPORTED_MODULE_0__["default"].tableLocale,
   drawCallback: function drawCallback() {
     $(".dataTables_paginate > .pagination").addClass("pagination-rounded");
     addFilesBtnInit();
     tableAudioBtnInit();
   }
 });
-
-function toggleStatus() {
-  $('.js-toggle').on('change', function () {
-    var _this5 = this;
-
-    var courseId = this.dataset.courseId;
-    axios.patch("/course-ajax/".concat(courseId, "/status"), {
-      status: this.checked
-    }).then(function (res) {
-      var row = _this5.findParent(2);
-
-      var dateElm = row.getElementsByClassName("js-date")[0];
-      var timeElm = row.getElementsByClassName("js-time")[0];
-      var inputElm = row.getElementsByClassName("js-publish-picker")[0];
-      var badge = row.getElementsByClassName("js-badge")[0];
-      var date = res.data.date.split("-").reverse().join("-");
-      var time = res.data.time;
-      var now = new Date();
-      date = new Date("".concat(date, " ").concat(time));
-
-      if (_this5.checked) {
-        if (now > date) {
-          badge.classList.remove("badge-outline-dark", "badge-outline-danger");
-          badge.classList.add("badge-outline-success");
-          badge.textContent = "Published";
-        } else {
-          badge.classList.remove("badge-outline-primary", "badge-outline-danger");
-          badge.classList.add("badge-outline-primary");
-          badge.textContent = "Scheduled";
-        }
-      } else {
-        badge.classList.remove("badge-outline-primary", "badge-outline-dark");
-        badge.classList.add("badge-outline-danger");
-        badge.textContent = "Draft";
-      }
-
-      dateElm.textContent = res.data.date;
-      timeElm.textContent = res.data.time;
-      inputElm.value = "".concat(res.data.date, " ").concat(res.data.time);
-      var icon = _this5.checked ? "success" : "info";
-      var message = _this5.checked ? "Ενεργοποιήθηκε" : "Απενεργοποιήθηκε";
-      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert(icon, message);
-    })["catch"](function (err) {
-      console.log(err);
-      _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Παρουσιάστηκε κάποιο πρόβλημα ...");
-    });
-  });
-}
 
 function tableAudioBtnInit() {
   $(".js-audio-btn").off("click", audioPlayerHandler);
@@ -40662,10 +40865,10 @@ function removeFiles(ids) {
     }
 
     remainingFilesTable.ajax.reload(null, false);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("info", "Τα αρχεία αφαιρέθηκαν");
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("info", "Τα αρχεία αφαιρέθηκαν");
   })["catch"](function (err) {
     console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert('error', "Παρουσιάστηκε κάποιο πρόβλημα ...");
   });
 } //! EDITOR INIT
 //!============================================================
@@ -40828,56 +41031,6 @@ $R("#content-material", {
       }
     }
   }
-}); //! METHOD FORM HIDEN
-//!============================================================
-//! utilities.changeInputHidden('#coursesMaterial','#coursesMaterialHidden')
-//! GLOBAL FUNCTION Filter
-//!============================================================
-
-var materialCoursesTopicFilter = document.getElementById("topicFilterMaterialCourses");
-var courseTopicsFilter = materialCoursesTopicFilter.cloneNode(true);
-courseTopicsFilter.id = "course-topics-filter";
-var coursesTableLengthSelect = document.querySelector("#remaining-course-material-table_length > label");
-coursesTableLengthSelect.append(courseTopicsFilter);
-$("#course-topics-filter").select2({
-  minimumResultsForSearch: -1
-});
-$("#course-topics-filter").on("change", function () {
-  var label = $("#select2-course-topics-filter-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
-  addCouseModal.column(2).search(this.value).draw();
-});
-_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#activeFilterMaterialCourses', 6, materialCourseDatatable, "#material-course-table_length label");
-_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#topicFilterMaterialCourses', 3, materialCourseDatatable, "#material-course-table_length label"); // utilities.filterButton('#userFilterMaterialCourses', 2, materialCourseDatatable, "#material-course-table_length label")
-
-_main__WEBPACK_IMPORTED_MODULE_1__["default"].filterButton('#versionFilterMaterial', 3, addCouseModal, "#remaining-course-material-table_length label");
-var tablesLengthLabel = $("#material-course-table_length > label")[0];
-var courseTypesSelect = _main__WEBPACK_IMPORTED_MODULE_1__["default"].createCourseTypeSelect("course-type-selection");
-tablesLengthLabel.append(courseTypesSelect);
-$("#course-type-selection").select2({
-  minimumResultsForSearch: -1
-});
-$("#course-type-selection").on("change", function () {
-  var label = $("#select2-course-type-selection-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
-  materialCourseDatatable.column(4).search(this.value).draw();
-});
-var searchFieldLabel = $("#material-course-table_filter > label > input")[0];
-var dateInput = createDateElm();
-dateInput.appendBefore(searchFieldLabel);
-var dateRange = $("#course-date-range");
-dateRange.daterangepicker(_main__WEBPACK_IMPORTED_MODULE_1__["default"].datePickerConfig);
-dateRange.on("apply.daterangepicker", function (event, picker) {
-  var startDate = picker.startDate.format('DD/MM/YYYY');
-  var endDate = picker.endDate.format('DD/MM/YYYY');
-  this.classList.add("select2-selected");
-  this.value = "".concat(startDate, " - ").concat(endDate);
-  materialCourseDatatable.ajax.reload();
-});
-dateRange.on('cancel.daterangepicker', function (event, picker) {
-  this.classList.remove("select2-selected");
-  dateInput.value = "";
-  materialCourseDatatable.ajax.reload();
 }); //! SELECT2
 //!============================================================
 //contant
@@ -40892,34 +41045,6 @@ $("#instructorMaterial").select2({
 });
 $("#topicMaterial").select2({
   tags: true
-});
-$("#versionFilterMaterial").select2({
-  minimumResultsForSearch: -1
-});
-$("#versionFilterMaterial").on("change", function () {
-  var label = $("#select2-versionFilterMaterial-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
-}); //datatable
-
-$("#topicFilterMaterialCourses").select2({});
-$(".custom-select").select2({
-  minimumResultsForSearch: -1
-});
-$("#activeFilterMaterialCourses").select2({
-  minimumResultsForSearch: -1
-}); // $("#userFilterMaterialCourses").select2({});
-
-$("#topicFilterMaterialCourses").change(function () {
-  var label = $("#select2-topicFilterMaterialCourses-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
-}); // $("#userFilterMaterialCourses").change(function () {
-//     let label = $("#select2-userFilterMaterialCourses-container")[0];
-//     utilities.filterStyle(label, this.value);
-// });
-
-$("#activeFilterMaterialCourses").change(function () {
-  var label = $("#select2-activeFilterMaterialCourses-container")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].filterStyle(label, this.value);
 }); //! DATARANGE
 //!============================================================
 
@@ -40949,151 +41074,28 @@ $(".tab-link").on("show.bs.tab", function (event) {
 }); //! BULK ACTIOON  materialCourseDatatable
 //!============================================================
 
-function checkeBoxesEventListener() {
-  var minorCheckboxes = $(".js-course-inside-material");
-  var mainCheckbox = $("#select-all-courses")[0];
-  var bulkBtn = $("#course-indside-material-bulk")[0];
-  minorCheckboxes.unbind();
-  minorCheckboxes.change(function () {
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
-  });
-}
-
 $("#select-all-courses").change(function () {
   var minorCheckboxes = $(".js-course-inside-material");
   var bulkBtn = $("#course-indside-material-bulk")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
+  _main__WEBPACK_IMPORTED_MODULE_0__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 });
-$("#js-multiple-delete").on("click", function () {
-  var checkboxes = $(".js-course-inside-material:checked");
-  var materialId = $("#material-course-table")[0].dataset.materialId;
-  var ids = [];
-
-  for (var i = 0; i < checkboxes.length; i++) {
-    ids.push(checkboxes[i].findParent(3).dataset.courseId);
-  }
-
-  axiosMultipleDelete(ids, materialId);
-});
-
-var axiosMultipleDelete = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(courseId, materialId) {
-    var _yield$utilities$remo, isConfirmed;
-
-    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            _context.prev = 0;
-            _context.next = 3;
-            return _main__WEBPACK_IMPORTED_MODULE_1__["default"].removeAlert("\u0398\u03AD\u03BB\u03B5\u03C4\u03B5 \u03BD\u03B1 \u03B1\u03C6\u03B1\u03B9\u03C1\u03AD\u03C3\u03B5\u03C4\u03B5 \u03C4\u03BF \u03C5\u03BB\u03B9\u03BA\u03CC \u03B1\u03C0\u03BF ".concat(courseId.length, " course;"));
-
-          case 3:
-            _yield$utilities$remo = _context.sent;
-            isConfirmed = _yield$utilities$remo.isConfirmed;
-
-            if (isConfirmed) {
-              _context.next = 7;
-              break;
-            }
-
-            return _context.abrupt("return");
-
-          case 7:
-            _context.next = 9;
-            return axios["delete"]("/materials/multiple/course/delete", {
-              data: {
-                courseId: courseId,
-                materialId: materialId
-              }
-            });
-
-          case 9:
-            addCouseModal.ajax.reload(false, null);
-            materialCourseDatatable.ajax.reload(false, null);
-            _context.next = 17;
-            break;
-
-          case 13:
-            _context.prev = 13;
-            _context.t0 = _context["catch"](0);
-            console.log(_context.t0);
-            _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
-
-          case 17:
-          case "end":
-            return _context.stop();
-        }
-      }
-    }, _callee, null, [[0, 13]]);
-  }));
-
-  return function axiosMultipleDelete(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
-}(); //! BULK ACTIOON  addCouseModal
-//!============================================================
-
-
-function checkeBoxesEventListenerModal() {
-  var minorCheckboxes = $(".remainings-checkbox");
-  var mainCheckbox = $("#all-remainings-checkbox")[0];
-  var bulkBtn = $("#add-remaingings-btn")[0];
-  minorCheckboxes.unbind();
-  minorCheckboxes.change(function () {
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].mainCheckboxSwitcher(mainCheckbox, minorCheckboxes, bulkBtn);
-  });
-}
-
 $("#all-remainings-checkbox").change(function () {
   var minorCheckboxes = $(".remainings-checkbox");
   var bulkBtn = $("#add-remaingings-btn")[0];
-  _main__WEBPACK_IMPORTED_MODULE_1__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
-});
-
-function addCourseAxios(courseIds, materialId) {
-  axios.post("/materials/add-course", {
-    courseIds: courseIds,
-    materialId: materialId
-  }).then(function (res) {
-    var message = courseIds.length === 1 ? "1 Course προστέθηκε" : "".concat(courseIds.length, " Courses \u03C0\u03C1\u03BF\u03C3\u03C4\u03AD\u03B8\u03B7\u03BA\u03B1\u03BD");
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", message);
-    addCouseModal.ajax.reload();
-    materialCourseDatatable.ajax.reload();
-  })["catch"](function (err) {
-    console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert('error', "Κάποιο σφάλμα παρουσιάστηκε...");
-  });
-}
-
-function addCourse() {
-  $(".js-add-courses").on("click", function () {
-    addCourseAxios([this.findParent(2).dataset.courseId], materialId);
-  });
-}
-
-$("#add-remaingings-btn").on("click", function () {
-  var checkboxes = $(".remainings-checkbox:checked");
-  var ids = [];
-
-  for (var i = 0; i < checkboxes.length; i++) {
-    ids.push(checkboxes[i].dataset.courseId);
-  }
-
-  addCourseAxios(ids, materialId);
+  _main__WEBPACK_IMPORTED_MODULE_0__["default"].minorCheckboxSwitcher(this, minorCheckboxes, bulkBtn);
 }); //! DROPOZONE
 //!============================================================
 
-$("#image-search").on("input", _main__WEBPACK_IMPORTED_MODULE_1__["default"].searchHandler);
-$(".js-gallery-page-btn").on('click', _main__WEBPACK_IMPORTED_MODULE_1__["default"].paginationHandler);
-$(".js-add-image").on("click", _main__WEBPACK_IMPORTED_MODULE_1__["default"].imageHandler);
+$("#image-search").on("input", _main__WEBPACK_IMPORTED_MODULE_0__["default"].searchHandler);
+$(".js-gallery-page-btn").on('click', _main__WEBPACK_IMPORTED_MODULE_0__["default"].paginationHandler);
+$(".js-add-image").on("click", _main__WEBPACK_IMPORTED_MODULE_0__["default"].imageHandler);
 $("#change-cover-btn").on("click", function () {
   $("#gallery-content")[0].dataset.type = "cover";
   $("#gallery-modal").modal('show');
 });
-filepond__WEBPACK_IMPORTED_MODULE_2__["registerPlugin"](filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_3___default.a);
-filepond__WEBPACK_IMPORTED_MODULE_2__["registerPlugin"](filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_4___default.a);
-filepond__WEBPACK_IMPORTED_MODULE_2__["setOptions"]({
+filepond__WEBPACK_IMPORTED_MODULE_1__["registerPlugin"](filepond_plugin_file_validate_type__WEBPACK_IMPORTED_MODULE_2___default.a);
+filepond__WEBPACK_IMPORTED_MODULE_1__["registerPlugin"](filepond_plugin_file_validate_size__WEBPACK_IMPORTED_MODULE_3___default.a);
+filepond__WEBPACK_IMPORTED_MODULE_1__["setOptions"]({
   name: 'file[]',
   allowMultiple: true,
   className: "js-filepond-file-dragging",
@@ -41101,7 +41103,7 @@ filepond__WEBPACK_IMPORTED_MODULE_2__["setOptions"]({
   allowRevert: false
 });
 var dropzone = document.getElementById("file-pond");
-var pond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](dropzone, {
+var pond = filepond__WEBPACK_IMPORTED_MODULE_1__["create"](dropzone, {
   server: {
     url: baseUrl,
     process: {
@@ -41112,19 +41114,19 @@ var pond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](dropzone, {
     }
   },
   onprocessfiles: function onprocessfiles(data) {
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].paginationRequest(1, "");
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].paginationRequest(1, "");
     $("#upload-tab-btn").removeClass("active");
     $("#upload").removeClass("active");
     $("#media-library-tab-btn").addClass("active");
     $("#media-library").addClass("show active");
   },
   onupdatefiles: function onupdatefiles(file) {
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("success", "".concat(file.length, " \u03B5\u03B9\u03BA\u03CC\u03BD\u03B1 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B1\u03BD"));
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("success", "".concat(file.length, " \u03B5\u03B9\u03BA\u03CC\u03BD\u03B1 \u03B1\u03BD\u03AD\u03B2\u03B7\u03BA\u03B1\u03BD"));
   },
   acceptedFileTypes: ['image/png', 'image/jpeg']
 });
 var materialImgUpload = $("#material-img-upload")[0];
-var materialPond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](materialImgUpload, {
+var materialPond = filepond__WEBPACK_IMPORTED_MODULE_1__["create"](materialImgUpload, {
   server: {
     url: baseUrl,
     process: {
@@ -41136,9 +41138,9 @@ var materialPond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](materialImgUp
         var container = $("#gallery-cnt");
         container.html(data);
         var removeBtns = container.find(".js-remove-image");
-        removeBtns.on("click", _main__WEBPACK_IMPORTED_MODULE_1__["default"].removeImageHandler);
+        removeBtns.on("click", _main__WEBPACK_IMPORTED_MODULE_0__["default"].removeImageHandler);
         $("#remove-all-images-btn").removeClass("d-none");
-        _main__WEBPACK_IMPORTED_MODULE_1__["default"].paginationRequest(1, "");
+        _main__WEBPACK_IMPORTED_MODULE_0__["default"].paginationRequest(1, "");
       },
       ondata: function ondata(formData) {
         formData.append("id", materialId);
@@ -41196,7 +41198,7 @@ var materialPond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](materialImgUp
   acceptedFileTypes: ['image/png', 'image/jpeg']
 });
 var materialFileUpload = $("#material-file-upload")[0];
-var materialFilePond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](materialFileUpload, {
+var materialFilePond = filepond__WEBPACK_IMPORTED_MODULE_1__["create"](materialFileUpload, {
   name: "file",
   server: {
     url: baseUrl,
@@ -41270,13 +41272,13 @@ var materialFilePond = filepond__WEBPACK_IMPORTED_MODULE_2__["create"](materialF
     $("#files-cnt").removeClass("d-none");
     $("#active-files-loading").addClass("d-none");
   },
-  acceptedFileTypes: _main__WEBPACK_IMPORTED_MODULE_1__["default"].ALLOWEDTYPES,
+  acceptedFileTypes: _main__WEBPACK_IMPORTED_MODULE_0__["default"].ALLOWEDTYPES,
   fileValidateTypeDetectType: function fileValidateTypeDetectType(source, type) {
     return new Promise(function (resolve, reject) {
       // Do custom type detection here and return with promise
       var extension = source.name.split(".").pop();
 
-      if (_main__WEBPACK_IMPORTED_MODULE_1__["default"].ALLOWEDTYPES.includes(type)) {
+      if (_main__WEBPACK_IMPORTED_MODULE_0__["default"].ALLOWEDTYPES.includes(type)) {
         resolve(type);
       } else if (extension === "ev3" || extension === "rar" || extension === "sb3") {
         type = "application/octet-stream";
@@ -41322,7 +41324,7 @@ dragula([dragArea], {}).on("drop", function () {
     imagesPriority: imagesPriority
   })["catch"](function (err) {
     console.log(err);
-    _main__WEBPACK_IMPORTED_MODULE_1__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
+    _main__WEBPACK_IMPORTED_MODULE_0__["default"].toastAlert("error", "Κάποιο σφάλμα παρουσιάστηκε...");
   });
 });
 var dropArea = document.getElementsByClassName("js-filepond-file-dragging");
@@ -41353,7 +41355,7 @@ var scriptArea = document.getElementById("script-area");
 var format = beautify_html(scriptArea.value, {
   indent_size: 4
 });
-var myCodeMirror = codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_6___default()(editor, {
+var myCodeMirror = codemirror_lib_codemirror__WEBPACK_IMPORTED_MODULE_5___default()(editor, {
   viewportMargin: Infinity,
   value: format,
   mode: "htmlmixed",

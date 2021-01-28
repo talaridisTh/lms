@@ -138,7 +138,7 @@ class MaterialController extends Controller {
 
 		$data = [
 			"topics" => Topic::all(),
-			"instructors" => User::role(["admin", "instructor"])->where("status", 1)->orderBy("last_name")->get(),
+			"instructors" => User::role(["admin", "instructor"])->orderBy("last_name")->get(),
 			"activeInstructors" => $material->users()->pluck("users.id")->toArray(),
 			"material" => $material,
 			"types" => $types,
