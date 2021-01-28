@@ -84,7 +84,7 @@ class DiscussionController extends Controller {
             $comment->delete();
         });
         Comment::findOrFail($id)->delete();
-        $post = Post::findOrFail($request->postId);
+        $post = $request->namespace::findOrFail($request->postId);
 
         return view("components.index.discussions.discussions-post", [
             "post" => $post,
@@ -315,7 +315,7 @@ class DiscussionController extends Controller {
         ]);
 
         return view("components.index.discussions.discussions-post", [
-            "post" => Post::find($request->postId),
+            "post" => $request->namespace::find($request->postId),
             "comment" => Comment::all(),
             "courses" => $this->course
         ]);
@@ -545,15 +545,16 @@ class DiscussionController extends Controller {
     public function myAnnouncement()
     {
 
-        $userRole = auth()->user()->getRoleNames()[0];
+        $user = auth()->user();
+        $userRole = $user->getRoleNames()[0];
 //        $postsStudent = auth()->user()->courses()->with("announcement.comments")->get()->pluck("announcement.*.comments.*")->collapse();
-        $postsStudent = auth()->user()->courses()->with("announcement.comments")->get()->pluck("announcement")->collapse();
+        $postsStudent = $user->courses()->with("announcement.comments")->get()->pluck("announcement")->collapse();
 
         return view("components.index.discussions.discussions-announcement", [
-            "posts" => $userRole == "student" ? $postsStudent : auth()->user()->getAnnouncementCourse(),
+            "posts" => $userRole == "student" ? $postsStudent->merge($user->announcement) : $postsStudent->merge($user->announcement),
             "policiesRoles" => ["super-admin", "admin", "instructor"],
-            'courses' => auth()->user()->courses,
-            'users' => auth()->user()->courses()->with("users")->get()->pluck("users")->collapse()->unique("id")
+            'courses' => $user->courses,
+            'users' => $user->courses()->with("users")->get()->pluck("users")->collapse()->unique("id")
         ]);
 
     }

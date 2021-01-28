@@ -140,7 +140,7 @@
                                         </div>
                                         <div>
                                             <button class="btn btn-outline-primary btn-thread-custom font-12 font-weight-bold">
-                                                {{\App\Models\User::find($post->course->user_id)->fullName}}
+                                                {{\App\Models\User::find(isset($post->course)?$post->course->user_id:$post->id)->fullName}}
 
                                             </button>
                                         </div>

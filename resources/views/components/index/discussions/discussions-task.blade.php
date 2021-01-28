@@ -145,9 +145,14 @@
                                                data-course-name="{{$course->title}}">
                                                 <div
                                                         class="headline d-flex justify-content-between align-items-center ">
-                                                    <h3>
-                                                        <i class="icon-material-outline-assignment"
-                                                           style="margin-left: -6px;"></i> {{$course->title}}
+                                                    <h3 class="w-full">
+                                                        <span class="flex justify-between">
+                                                            <span>
+                                                                <i class="icon-material-outline-assignment"
+                                                                   style="margin-left: -6px;"></i> {{$course->title}}
+                                                            </span>
+                                                            <span>{{isset($course->homeworks) ?"Στάλθηκε: ".$course->homeworks->first()->created_at->format("d-m-Y H:i"):""}}</span>
+                                                        </span>
                                                     </h3>
 
                                                 </div>

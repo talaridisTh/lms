@@ -233,6 +233,7 @@ $(document).on("click", '.js-thread-title', async function () {
             $(".discussions-right").off();
             $(".discussions-right").html(data)
             $(".first-thread").show();
+
             onChangeFirstButtonNew()
             onCommentReplayBtnEvent()
             onSubCommentReplayBtnEvent()
@@ -368,10 +369,12 @@ const onDeleteComment = () => {
     $(".discussions-right").on("click", ".js-delete-comment", async function () {
         const id = this.closest(".main-post").dataset.threadId
         const postId = $(".main-post")[0].dataset.postId;
+        const namespace = $(".main-post")[0].dataset.namespace
         try {
             const {data, status} = await axios.delete(`/discussion/delete/${id}`, {
                 params: {
-                    postId
+                    postId,
+                    namespace
                 }
             })
 
@@ -397,8 +400,8 @@ const onEditComment = () => {
         const thisContainer = $(this).closest(".main-post");
         const commentId = this.closest(".main-post").dataset.threadId
         const postId = $(".main-post").data("post-id")
+        const namespace = $(".main-post").data("namespace");
         let author = thisContainer.find(".author-reply")
-        console.log(author)
         const pre = thisContainer.find("pre");
         thisContainer.find(".cnt-body-comment").append(`
              <div class="btn-group cnt-btn-comment my-3 space-x-3" role="group" >
@@ -426,9 +429,10 @@ const onEditComment = () => {
         $(".btn-body-edit").on("click", async function () {
             const {data, status} = await axios.patch(`/discussion/update/${commentId}`, {
                 postId,
-                editBody: `${$(".edit-input").val()}`
+                editBody: `${$(".edit-input").val()}`,
+                namespace
             })
-            console.log(author[0].outerHTML)
+
 
             if (status == 200) {
                 $(".cnt-reply-list").html($(data).find(".reply-list")) //reload post
@@ -468,7 +472,7 @@ const rangeSlider = () => {
         var topOfElement = document.querySelector(`#${this.value}`).offsetTop - 100;
         window.scroll({top: topOfElement, behavior: "smooth"});
 
-        console.log(this.value)
+
     })
 
     $(".original-post").on("click", function () {

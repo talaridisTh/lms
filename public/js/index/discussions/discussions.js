@@ -7671,7 +7671,7 @@ var onLikebtn = function onLikebtn() {
 
 var onDeleteComment = function onDeleteComment() {
   $(".discussions-right").on("click", ".js-delete-comment", /*#__PURE__*/_asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9() {
-    var id, postId, _yield$axios$delete, data, status;
+    var id, postId, namespace, _yield$axios$delete, data, status;
 
     return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
       while (1) {
@@ -7679,15 +7679,17 @@ var onDeleteComment = function onDeleteComment() {
           case 0:
             id = this.closest(".main-post").dataset.threadId;
             postId = $(".main-post")[0].dataset.postId;
-            _context9.prev = 2;
-            _context9.next = 5;
+            namespace = $(".main-post")[0].dataset.namespace;
+            _context9.prev = 3;
+            _context9.next = 6;
             return axios["delete"]("/discussion/delete/".concat(id), {
               params: {
-                postId: postId
+                postId: postId,
+                namespace: namespace
               }
             });
 
-          case 5:
+          case 6:
             _yield$axios$delete = _context9.sent;
             data = _yield$axios$delete.data;
             status = _yield$axios$delete.status;
@@ -7702,20 +7704,20 @@ var onDeleteComment = function onDeleteComment() {
               rangeSlider();
             }
 
-            _context9.next = 14;
+            _context9.next = 15;
             break;
 
-          case 11:
-            _context9.prev = 11;
-            _context9.t0 = _context9["catch"](2);
+          case 12:
+            _context9.prev = 12;
+            _context9.t0 = _context9["catch"](3);
             console.log(_context9.t0);
 
-          case 14:
+          case 15:
           case "end":
             return _context9.stop();
         }
       }
-    }, _callee9, this, [[2, 11]]);
+    }, _callee9, this, [[3, 12]]);
   })));
 }; //edit comment
 
@@ -7727,8 +7729,8 @@ var onEditComment = function onEditComment() {
     var thisContainer = $(this).closest(".main-post");
     var commentId = this.closest(".main-post").dataset.threadId;
     var postId = $(".main-post").data("post-id");
+    var namespace = $(".main-post").data("namespace");
     var author = thisContainer.find(".author-reply");
-    console.log(author);
     var pre = thisContainer.find("pre");
     thisContainer.find(".cnt-body-comment").append("\n             <div class=\"btn-group cnt-btn-comment my-3 space-x-3\" role=\"group\" >\n                 <button class=\"px-2 py-1 rounded-lg text-black bg-gray-300 btn-body-close\">Close</button>\n                 <button class=\"px-3 py-1 rounded-lg bg-blue-300 text-black btn-body-edit\">Edit</button>\n            </div>");
     pre.replaceWith(function () {
@@ -7757,14 +7759,14 @@ var onEditComment = function onEditComment() {
               _context10.next = 2;
               return axios.patch("/discussion/update/".concat(commentId), {
                 postId: postId,
-                editBody: "".concat($(".edit-input").val())
+                editBody: "".concat($(".edit-input").val()),
+                namespace: namespace
               });
 
             case 2:
               _yield$axios$patch2 = _context10.sent;
               data = _yield$axios$patch2.data;
               status = _yield$axios$patch2.status;
-              console.log(author[0].outerHTML);
 
               if (status == 200) {
                 $(".cnt-reply-list").html($(data).find(".reply-list")); //reload post
@@ -7776,7 +7778,7 @@ var onEditComment = function onEditComment() {
                 rangeSlider();
               }
 
-            case 7:
+            case 6:
             case "end":
               return _context10.stop();
           }
@@ -7812,7 +7814,6 @@ var rangeSlider = function rangeSlider() {
       top: topOfElement,
       behavior: "smooth"
     });
-    console.log(this.value);
   });
   $(".original-post").on("click", function () {
     window.scrollTo({
