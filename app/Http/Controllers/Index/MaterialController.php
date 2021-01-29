@@ -15,14 +15,13 @@ class MaterialController extends Controller {
 
     public function material(Course $course, Material $material)
     {
-        $course = Course::find(3);
-        $material = Material::find(3);
+
         $user = auth()->user();
         $sections = $course->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->unique("slug");
         $materials = $this->getMaterial($user, $sections, $course);
 
         return view("index.materials.index-material", [
-            "course" => Course::find($course->id),
+            "course" => $course,
             "material" => $material,
             "lessons" => $materials["lessons"],
             "announcements" => $course->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Announcement")->unique("slug"),
@@ -37,7 +36,7 @@ class MaterialController extends Controller {
 
     private function getMaterial($user, $sections, $course)
     {
-        $lessons = $user->courses()->where("courses.id", $course->id)->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->whereIn("type", ["Lesson", "Video", "Link", "PDF"])->unique("slug");
+        $lessons = $course->with("activeMaterials")->get()->pluck("activeMaterials")->flatten()->whereIn("type", ["Lesson", "Video", "Link", "PDF"])->unique("slug");
         $countMaterial = $user->courses()->where("courses.id", $course->id)->wherehas("activeMaterials")->get()->pluck("activeMaterials")->flatten()->where("type", "Section")->map(function ($material) {
             return count($material->chapters);
         })->toArray();
@@ -57,12 +56,14 @@ class MaterialController extends Controller {
 
         $courseFields = $course->fields;
         $fields = new stdClass();
-        foreach (json_decode($courseFields) as $key => $field) {
+        if ($courseFields) {
+            foreach (json_decode($courseFields) as $key => $field) {
 
-            if (isset($course["$key"]) && $field) {
-                $fields->$key = $field;
-            } else {
-                $fields->$key = 0;
+                if (isset($course["$key"]) && $field) {
+                    $fields->$key = $field;
+                } else {
+                    $fields->$key = 0;
+                }
             }
         }
         if ($course->media->where("type", 0)->isNotEmpty()) {

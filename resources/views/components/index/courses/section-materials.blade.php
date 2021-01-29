@@ -45,6 +45,7 @@
                         <label class="tab-label text-black  text-lg p-2"
                                for="material-file"><span
                                     class="-mb-2">Μαθήματα</span></label>
+
                         @foreach($lessons as $lesson)
                             <div
                                     class="tab-content text-gray-600 zoom-in flex justify-between  rounded-lg  hover:text-black cursor-pointer {{isset($classSpa)?$classSpa:""}}"
@@ -54,7 +55,7 @@
                                         <span style="flex-basis: 10%;"
                                               class="mt-1 font-semibold">{{$loop->index+1}}</span>
                                 <a class="mt-1  flex-1"
-                                   href="">
+                                   href="{{route('index.material',[$course->slug,$lesson->slug])}}">
                                     <span class="-mb-2">{{$lesson->title}}</span>
                                 </a>
 
