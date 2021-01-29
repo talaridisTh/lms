@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
-use App\Http\View\Composers\Index\OptionComposer;
+
+use App\Http\View\Composers\MailComposer;
+use App\Http\View\Composers\OptionComposer;
+use App\Http\View\Composers\NotificationComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +28,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer("layouts.front", OptionComposer::class);
+		View::composer('index.*', OptionComposer::class);
+        View::composer('index.*', NotificationComposer::class);
     }
 }

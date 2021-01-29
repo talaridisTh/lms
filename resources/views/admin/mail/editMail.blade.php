@@ -43,55 +43,6 @@
 
 @section('content')
 
-	<div id="users-table-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="users-table-modalLabel" aria-hidden="true">
-	    <div class="modal-dialog modal-xl">
-	        <div class="modal-content">
-	            <div class="modal-header modal-colored-header bg-primary">
-	                <h4 class="modal-title" id="users-table-modalLabel">Χρήστες</h4>
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	            </div>
-	            <div class="modal-body table-cnt">
-	                <table id="users-datatable" class="table w-100 modal-table nowrap center-not-second js-remove-table-classes">
-						<thead>
-							<tr>
-								<th class="text-center" style="width: 30px;">
-									<div class='icheck-primary d-inline'>
-										<input type='checkbox' id='select-all-users' autocomplete='off'>
-										<label for='select-all-users'></label>
-									</div>
-								</th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
-								<th class="text-center"></th>
-								<th class="text-center">Courses</th>
-								<th>Όνομα</th>
-								<th>Επώνυμο</th>
-							</tr>
-						</thead>
-						<tbody class="tables-hover-effect"></tbody>
-						<tfoot>
-							<tr>
-								<th class="text-center"></th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center"></th>
-								<th class="text-center">Courses</th>
-								<th>Όνομα</th>
-								<th>Επώνυμο</th>
-							</tr>
-						</tfoot>
-					</table>
-	            </div>
-	            <div class="modal-footer">
-					<button id="add-recipients-blk" type="button"
-						class="btn btn-secondary" disabled data-text="Προσθήκη Επιλογών"
-						data-enabled-color="btn-primary" data-disabled-color="btn-secondary">Προσθήκη Επιλογών (0)</button>
-	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
 	<!-- start page title -->
 	<div class="container content-width mt-2">
 		<div class="row">
