@@ -36,12 +36,15 @@
          style="max-width: 1100px">
         <div class="row md:space-x-7  space-x-0">
             <div class="md:w-1/4 w-full discussions-left">
-                <x-index.discussions.sidebar-menu :courses=$courses></x-index.discussions.sidebar-menu>
+                <x-index.discussions.sidebar-menu
+                 :courses="$courses"/>
             </div>
+
             <div class="md:w-7/10 w-full xs:m-0 p-4 hidden discussions-right">
-                <x-index.discussions.discussions-main :posts=$posts
-                                                      :courses=$courses>
-                </x-index.discussions.discussions-main>
+                <x-index.discussions.discussions-main
+                 :posts=$posts
+                 :courses="$courses"/>
+
             </div>
         </div>
 

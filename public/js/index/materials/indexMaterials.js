@@ -46382,7 +46382,7 @@ $(".js-link-material").parent().addClass("d-none");
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\materials\indexMaterials.js */"./resources/js/index/materials/indexMaterials.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\materials\indexMaterials.js */"./resources/js/index/materials/indexMaterials.js");
 
 
 /***/ })

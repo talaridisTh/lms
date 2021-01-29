@@ -5518,7 +5518,7 @@ _theme_js_vendor_dragula_min_js__WEBPACK_IMPORTED_MODULE_1___default()([primaryC
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\settings\home-page.js */"./resources/js/dashboard/settings/home-page.js");
 
 
 /***/ })

@@ -41,6 +41,7 @@
 
 <!-- Begin page -->
     <div id="content-custom"
+         class="bg-white"
          style="min-height: 73vh;">
         @yield('content')
     </div>

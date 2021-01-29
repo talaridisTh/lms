@@ -91,14 +91,14 @@
     <div class="mx-3 mx-5 w-28 h-28 ">
         @if(get_class($post)=="App\Models\Course")
             <img
-                    src="{{$post->thumbnailUrl("cover")}}"
-                    class="rounded-xl"
-                    alt="">
+             src="{{$post->thumbnailUrl("cover")}}"
+             class="rounded-xl"
+             alt="">
         @elseif(get_class($post)=="App\Models\Comment")
             <img
-                    src="{{\App\Models\User::find($post->user_id)->thumbnailUrl("avatar")}}"
-                    class="rounded-xl"
-                    alt="">
+             src="{{\App\Models\User::find($post->user_id)->thumbnailUrl("avatar")}}"
+             class="rounded-xl"
+             alt="">
         @endif
     </div>
 
@@ -129,23 +129,35 @@
 
                 @if ( !$comment->parent_id )
                     @php  $countPost =$countPost+1   @endphp
-                    <div class="main-post main-reply d-flex py-5 space-x-6 "
+                    <div class="main-post main-reply d-flex  "
                          id="reply-{{$countPost}}"
                          data-comment-id="{{$comment->id}}"
                          data-thread-id="{{$comment->id}}"
-                         style="background-color: rgba(0, 0, 0, 0.03)">
-                        <div class="mx-3 my-2 w-20 h-20 ">
+                         style="/*background-color: rgba(0, 0, 0, 0.03)*/">
+                        <div class="mx-3 my-2 w-14 h-14 ">
                             <img
-                                    class="rounded-xl"
-                                    src="{{$comment->user->thumbnailUrl("avatar")}}"
-                                    alt="">
+                             class="rounded-full"
+                             src="{{$comment->user->thumbnailUrl("avatar")}}"
+                             alt="">
                         </div>
                         <div class="cnt-list-content">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="d-flex align-items-center cnt-post-buttons">
-                                    <h3 class="mt-2 mb-1 font-18 author-post-name">{{$comment->user->fullName}}</h3>
-
-
+                            <div class="d-flex justify-content-between align-items-center ">
+                                <div class="d-flex align-items-center cnt-post-buttons space-x-3">
+                                    <h3 class="text-gray-700 text-lg author-post-name ">{{$comment->user->fullName}}</h3>
+                                    <p class="text-gray-500 text-xs">{{$comment->created_at->format("d-m-Y, H:i")}}</p>
+                                </div>
+                                <div class="post-buttons d-flex font-18 justify-content-between mb-2">
+                                    <div class="d-flex text-gray-500">
+                                        <i data-comment-id="{{$comment->id}}"
+                                           class="mdi mdi-heart mr-2 btn-reply-like {{$isLiked}}">
+                                <span
+                                 class="font-weight-normal font-16 text-dark">{{$comment->isLikedCount()}}</span>
+                                        </i>
+                                        <i class="js-reply-post-btn mdi mdi-reply text-gray-500  cursor-pointer js-comment-reply "
+                                           data-toggle="modal"
+                                           data-target="#new-reply">
+                                        </i>
+                                    </div>
                                 </div>
                                 @if($comment->user_id == auth()->id())
                                     <div class="dropdown">
@@ -163,28 +175,11 @@
                                 @endif
 
                             </div>
-                            <p class="font-12">{{$comment->created_at->diffForHumans()}}</p>
                             <div class="cnt-body-comment">
                             <pre style="font-family:'Open Sans'"
-                                 class="font-16 p-3">{!!  $comment->body!!}</pre>
+                                 class="font-16 px-3 pb-2">{!!  $comment->body!!}</pre>
                             </div>
-                            <div class="post-buttons d-flex font-18 justify-content-between mb-2">
-                                <div class="d-flex">
-                                    <i data-comment-id="{{$comment->id}}"
-                                       class="mdi mdi-heart mr-2 btn-reply-like {{$isLiked}}">
-                                <span
-                                        class="font-weight-normal font-16 text-dark">{{$comment->isLikedCount()}}</span>
-                                    </i>
-                                    <span class="js-reply-post-btn  cursor-pointer js-comment-reply "
-                                          data-toggle="modal"
-                                          data-target="#new-reply">Aπάντηση
-                            </span>
-                                </div>
-                                <div class="single-post-show d-none">
-                                    <i class="font-18  uil-align-left bg-list-thread mr-2 cursor-pointer"
-                                       style="padding: 0px 0.375rem"></i>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 @endif
@@ -238,7 +233,7 @@
                                     <i data-comment-id="{{$rep1->id}}"
                                        class="mdi mdi-heart mr-2 btn-reply-like {{$isLiked}}">
                                     <span
-                                            class="js-count-like font-weight-normal font-16 text-dark">{{$rep1->isLikedCount()}}</span>
+                                     class="js-count-like font-weight-normal font-16 text-dark">{{$rep1->isLikedCount()}}</span>
                                     </i>
                                     <span class="js-reply-post-btn cursor-pointer  js-sub-comment-reply"
                                           data-toggle="modal"
@@ -258,8 +253,9 @@
 </div>
 
 
-<div class="form-group  mt-7 replay-bottom first-thread-replay mb-4  "
+<div class="form-group  mt-7 replay-bottom bg-white first-thread-replay mb-4  "
      data-toggle="modal"
      data-target="#new-reply">
-    <p class="p-8 text-dark  font-20"><i class="mdi mdi-hand-pointing-down font-18 mr-4"></i> Απαντησε στο Post</p>
+    <p class="p-8 text-dark text-center font-20"><i class="mdi mdi-hand-pointing-down font-18 mr-4"></i>Γράψτε το σχόλιο
+        σας</p>
 </div>

@@ -132,7 +132,7 @@ function search(value) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\dashboard.js */"./resources/js/dashboard/dashboard.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\dashboard.js */"./resources/js/dashboard/dashboard.js");
 
 
 /***/ })

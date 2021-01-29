@@ -7452,11 +7452,11 @@ function ($) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\sass\dashboard\customArticleStyle.scss */"./resources/sass/dashboard/customArticleStyle.scss");
-__webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\sass\dashboard\app.scss */"./resources/sass/dashboard/app.scss");
-__webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\sass\index\theme.scss */"./resources/sass/index/theme.scss");
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\sass\index\temp.scss */"./resources/sass/index/temp.scss");
+__webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\sass\dashboard\customArticleStyle.scss */"./resources/sass/dashboard/customArticleStyle.scss");
+__webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\sass\dashboard\app.scss */"./resources/sass/dashboard/app.scss");
+__webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\sass\index\theme.scss */"./resources/sass/index/theme.scss");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\sass\index\temp.scss */"./resources/sass/index/temp.scss");
 
 
 /***/ })

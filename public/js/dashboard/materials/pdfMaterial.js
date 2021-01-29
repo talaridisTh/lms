@@ -19587,7 +19587,7 @@ for (var i = 0; i < dropArea.length; i++) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\materials\pdfMaterial.js */"./resources/js/dashboard/materials/pdfMaterial.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\materials\pdfMaterial.js */"./resources/js/dashboard/materials/pdfMaterial.js");
 
 
 /***/ })

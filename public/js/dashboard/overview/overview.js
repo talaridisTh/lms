@@ -38092,7 +38092,7 @@ function titleCountSeparator(arrayData) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\overview\overview.js */"./resources/js/dashboard/overview/overview.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\overview\overview.js */"./resources/js/dashboard/overview/overview.js");
 
 
 /***/ })
