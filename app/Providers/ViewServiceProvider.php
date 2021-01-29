@@ -28,7 +28,7 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-		View::composer('index.*', OptionComposer::class);
+		View::composer(['index.*', 'auth.*'], OptionComposer::class);
         View::composer('index.*', NotificationComposer::class);
     }
 }
