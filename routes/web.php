@@ -3,6 +3,7 @@
 use App\Mail\Email;
 use App\Models\Attachment;
 use App\Models\User;
+use App\Notifications\NewUserNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;

@@ -3,10 +3,8 @@
 namespace App\DataTables\Mail;
 
 use App\Models\Mail;
-use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
 use Yajra\DataTables\Html\Editor\Editor;
@@ -44,7 +42,7 @@ class MailsDataTable extends DataTable
 			->addColumn("message", function($data) {
 
 				$title = Str::limit($data->subject, 30);
-				$content = Str::limit(strip_tags($data->content), 80);
+				$content = Str::limit(strip_tags($data->content), 50);
 
 				return "<p class='mb-0'>
 						<a href='/dashboard/email/$data->id' class='mb-0 custom-primary'>

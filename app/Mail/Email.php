@@ -2,7 +2,6 @@
 
 namespace App\Mail;
 
-use App\Models\Attachment;
 use App\Models\Option;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,9 +12,9 @@ class Email extends Mailable
 {
     use Queueable, SerializesModels;
 
-	public $logo;
-	public $contactInfo;
-	public $socialLinks;
+	private $logo;
+	private $title;
+	private $copyright;
 	public $subject;
 	public $content;
 	public $mailAttachments;
@@ -27,9 +26,12 @@ class Email extends Mailable
      */
     public function __construct($subject, $content, $mailAttachments = [])
     {
-		$this->contactInfo = json_decode(Option::where("name", "Contact Info")->first()->value);
-		$this->socialLinks = json_decode(Option::where("name", "Social")->first()->value);
-		$this->logo = Option::where("name", "Logo")->first()->value;
+		$this->logo = Option::where("name", "Logo")->first()->value
+			?? "/images/darkpony-logo.png";
+		$this->title = Option::where("name", "Title")->first()->value
+			?? "Darkpony Digital";
+		$this->copyright = Option::where("name", "Copyright")->first()->value
+			?? "Darkpony. All rights reserved.";
         $this->subject = $subject;
 		$this->content = $content;
 		$this->mailAttachments = $mailAttachments;
@@ -42,7 +44,11 @@ class Email extends Mailable
      */
     public function build()
     {
-		$mail = $this->view('admin.mail.templates.default');
+		$mail = $this->markdown('admin.mail.templates.email')->with([
+			"logo" => $this->logo,
+			"title" => $this->title,
+			"copyright" => $this->copyright
+		]);
 
 		foreach ($this->mailAttachments as $attachment) {
 			

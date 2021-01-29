@@ -43,55 +43,6 @@
 
 @section('content')
 
-	<div id="users-table-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="users-table-modalLabel" aria-hidden="true">
-	    <div class="modal-dialog modal-xl">
-	        <div class="modal-content">
-	            <div class="modal-header modal-colored-header bg-primary">
-	                <h4 class="modal-title" id="users-table-modalLabel">Χρήστες</h4>
-	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-	            </div>
-	            <div class="modal-body table-cnt">
-	                <table id="users-datatable" class="table w-100 modal-table nowrap center-not-second js-remove-table-classes">
-						<thead>
-							<tr>
-								<th class="text-center" style="width: 30px;">
-									<div class='icheck-primary d-inline'>
-										<input type='checkbox' id='select-all-users' autocomplete='off'>
-										<label for='select-all-users'></label>
-									</div>
-								</th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center min-width-200 w-300px">Ιδιότητα</th>
-								<th class="text-center"></th>
-								<th class="text-center">Courses</th>
-								<th>Όνομα</th>
-								<th>Επώνυμο</th>
-							</tr>
-						</thead>
-						<tbody class="tables-hover-effect"></tbody>
-						<tfoot>
-							<tr>
-								<th class="text-center"></th>
-								<th class="text-center">Ονοματεπώνυμο</th>
-								<th class="text-center">Ιδιότητα</th>
-								<th class="text-center"></th>
-								<th class="text-center">Courses</th>
-								<th>Όνομα</th>
-								<th>Επώνυμο</th>
-							</tr>
-						</tfoot>
-					</table>
-	            </div>
-	            <div class="modal-footer">
-					<button id="add-recipients-blk" type="button"
-						class="btn btn-secondary" disabled data-text="Προσθήκη Επιλογών"
-						data-enabled-color="btn-primary" data-disabled-color="btn-secondary">Προσθήκη Επιλογών (0)</button>
-	                <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-	            </div>
-	        </div><!-- /.modal-content -->
-	    </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-
 	<!-- start page title -->
 	<div class="container content-width mt-2">
 		<div class="row">
@@ -137,11 +88,29 @@
 
 		<div class="tab-content mb-3">
 			<div id="view-mail-tab" class="tab-pane show active">
-				
-				<div class="position-relative" style="width: 100%; height: 100vh">
-					<div style="position: absolute; top: 0; bottom:0; left: 0px; right: 0; background: #fff;">
-						<iframe srcdoc="{{ $body }}" frameborder="0" width="100%" height="100%"></iframe>
-					</div>
+				<iframe id="mail-frame" srcdoc="{{ $body }}" frameBorder="0" width="100%"></iframe>
+
+				<div>
+					@forelse ($mail->attachments as $attachment)
+						<div class="custom-file-details my-1">
+							<div class="d-inline-block">
+
+								<div class="mb-1"><span>{{ $attachment->original_name }}.{{ $attachment->ext }}</span></div>
+								<div class="d-flex justify-content-between align-items-bottom">
+
+									@if ($attachment->size < 1000000)
+										<div class="mr-4"><strong>{{ number_format( floatval($attachment->size / 1000), 2, ",", ".") }}</strong> kb</div>
+									@else
+										<div class="mr-4"><strong>{{ number_format( floatval($attachment->size  / 1000000), 2, ",", ".") }}</strong> mb</div>
+									@endif
+									<a class="custom-link-primary h5 m-0" href="{{ url($attachment->rel_path) }}" download>Download</a>
+								</div>
+
+							</div>
+						</div>
+					@empty
+						
+					@endforelse
 				</div>
 			</div>
 

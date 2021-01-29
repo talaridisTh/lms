@@ -43,8 +43,6 @@ class AppServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        View::composer(['*', "*"], OptionComposer::class);
-        View::composer(['index', "*"], NotificationComposer::class);
         Carbon::setLocale(env('LOCALE', 'el_GR'));
         Paginator::useBootstrap();
     }

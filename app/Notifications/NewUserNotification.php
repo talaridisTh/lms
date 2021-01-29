@@ -14,11 +14,6 @@ class NewUserNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
-	public $title;
-	public $description;
-	public $logo;
-	public $copyright;
-
     /**
      * Create a new notification instance.
      *
