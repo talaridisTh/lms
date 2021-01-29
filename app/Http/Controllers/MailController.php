@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Http\Requests\EmailRequest;
 use App\Models\Mail as AppMail;
 use App\Mail\Email;
 use App\Models\User;
+use App\Traits\AttachmentUploader;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class MailController extends Controller
 {
+	use AttachmentUploader;
+
 	public function index() {
 
 		return view("admin.mail.mailMain");
@@ -39,16 +42,18 @@ class MailController extends Controller
 		return view('admin.mail.composeEmail', compact("mail"));
 	}
 
-	public function sendNewsletter(Request $request) {
+	public function sendNewsletter(EmailRequest $request) {
 
-		$request->validate([
-			"subject" => "required",
-			"content" => "required",
-			"recipients" => "required"
-		],
-		[
-			"recipients.required" => "Δεν ορίστηκαν παραλήπτες."
-		]);
+		$files = [];
+		
+		if ( isset($request->file) ) {
+
+			foreach ($request->file as $file) {
+	
+				$attachment = $this->storeAttachment($file);
+				array_push($files, $attachment);
+			}
+		}
 
 		$users = $this->findRecipients($request);
 
@@ -58,15 +63,18 @@ class MailController extends Controller
 
 		foreach($users as $user) {
 			array_push($recipients["ids"], $user->id);
-			 Mail::to($user->email)
-			 	->send(new Email($request->subject, $request->content));
+
+			Mail::to($user->email)
+			 	->send(new Email($request->subject, $request->content, $files));
 		}
 
-		$this->storeEmail($request, $recipients, $request->button);
+		$mail = $this->storeEmail($request, $recipients);
+		$mail->attachments()->saveMany($files);
 
-		$message = ["sent" => "sent"];
-
-		return redirect("/dashboard/email")->with($message);
+		if($request->ajax()){
+			return response("Successful", 200);
+		}
+		return redirect("/dashboard/email");
 	}
 
 	public function delete(AppMail $mail) {
@@ -94,20 +102,16 @@ class MailController extends Controller
 		return null;
 	}
 
-	private function storeEmail(Request $request, $recipients, $status) {
+	private function storeEmail(Request $request, $recipients) {
 
-		if ( isset($request->id) ) {
-			$mail = AppMail::find($request->id);
-		}
-		else {
-			$mail = new AppMail;
-		}
-
+		$mail = new AppMail;
 		$mail->user_id = Auth::user()->id;
 		$mail->subject = $request->subject;
 		$mail->content = $request->content;
 		$mail->recipients = json_encode($recipients);
 		$mail->sent_at = now();
 		$mail->save();
+
+		return $mail;
 	}
 }

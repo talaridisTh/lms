@@ -17,8 +17,8 @@ const homeworksDatatable = $("#homeworks-datatable").DataTable({
 		type: "post",
 		data: function( d ) {
 			return $.extend( {}, d, {
-				startDate: startDate( $("#homework-date-range")[0] ),
-				endDate: endDate( $("#homework-date-range")[0] ),
+				startDate: utilities.startDate( $("#homework-date-range")[0] ),
+				endDate: utilities.endDate( $("#homework-date-range")[0] ),
 			})
 		}
 	},
@@ -108,34 +108,6 @@ dateRange.on( 'cancel.daterangepicker', function(event, picker) {
 	homeworksDatatable.ajax.reload();
 })
 
-function startDate( input ) {
-
-	let dateInput = input;
-
-	if ( !dateInput || dateInput.value == "" ) {
-		return "";
-	}
-
-	let dateInputValue = dateInput.value.split(" - ");
-	let firstDate = dateInputValue[0].split("/").reverse().join("-");
-
-	return firstDate;
-}
-
-function endDate( input ) {
-
-	let dateInput = input;
-
-	if ( !dateInput || dateInput.value == "" ) {
-		return "";
-	}
-
-	let dateInputValue = dateInput.value.split(" - ");
-	let secondDate = dateInputValue[1].split("/").reverse().join("-");
-
-	return secondDate;
-}
-
 function createDateElm() {
 
 	let input = document.createElement("input");
@@ -184,7 +156,7 @@ $("#course-select").on("change", function () {
 	const label = $("#select2-course-select-container")[0];
 
 	utilities.filterStyle( label, this.value.trim() );
-	homeworksDatatable.column(1).search( this.value ).draw();
+	homeworksDatatable.column(2).search( this.value ).draw();
 });
 
 $("#view-homework-modal").on("show.bs.modal", function(event) {

@@ -1,7 +1,9 @@
 <?php
 
+use App\Mail\Email;
+use App\Models\Attachment;
 use App\Models\User;
-use App\Models\Course;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
@@ -131,6 +133,8 @@ Route::group(['middleware' => ['auth', "status", "role:instructor|admin|super-ad
 	Route::post('email/delete', 'Ajax\MailController@delete');
 	Route::post('email/instructor-delete', 'Ajax\MailController@instructorMailDelete');
 	
+	Route::post("attachment-ajax/store", 'AttachmentController@store');
+
     //! media Routes
 	Route::get("/media", "MediaController@index")->name("media.index");
 	

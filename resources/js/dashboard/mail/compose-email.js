@@ -1,4 +1,9 @@
 import utilities from '../main';
+import Dropzone from "../../../theme/js/vendor/dropzone.min.js";
+
+//! Global Variables
+const baseUrl = window.location.origin;
+//!====================================
 
 utilities.redactorConfig.minHeight = "300px"
 
@@ -156,27 +161,6 @@ function userTablesUpdate(recipients) {
 	recipientsDatatable.ajax.reload(null, false);
 }
 
-$(".js-submit-btn").on("click", function() {
-	const form = document.getElementById("email-form");
-	const name = this.name;
-	const value = this.value;
-	const recipients = sessionStorage.getItem("recipients");
-
-	createInput(form, name, value);
-	$("#recipients-input").val(recipients);
-
-	form.submit();
-});
-
-function createInput(form, name, value) {
-	const input = document.createElement("input");
-	input.name = name;
-	input.value = value;
-	input.hidden = true;
-
-	form.appendChild(input);
-}
-
 function createSelect(id) {
 	const select = document.createElement("select");
 	select.classList.add("select2", "form-control", "select2-multiple");
@@ -215,36 +199,6 @@ function createSelect(id) {
 		usersDatatable.column(4).search( this.value ).draw();
 	})
 })();
-
-// (function bundlesFilter() {
-// 	const lengthCnt = document.getElementById("users-datatable_length");
-// 	const select = createSelect("bundle-user-filter");
-
-// 	lengthCnt.append(select);
-
-// 	$(select).select2({
-// 		placeholder: "Όλα τα Bundles",
-// 		width: "150px",
-// 		ajax: {
-// 			url: "/bundles/json-search",
-// 			delay: 1000,
-// 			dataType: "json",
-// 			data: function(params) {
-// 				return {
-// 					search: params.term,
-// 					page: params.page || 1
-// 				}
-// 			}
-// 		}
-// 	})
-
-// 	$(select).on("change", function() {
-// 		const label = $('#select2-bundle-user-filter-container')[0];
-
-// 		utilities.filterStyle( label, this.value.trim() );
-// 		usersDatatable.column(3).search( this.value ).draw();
-// 	})
-// })();
 
 (function rolesFilter() {
 	const lengthCnt = document.getElementById("users-datatable_length");
@@ -301,36 +255,6 @@ function createSelect(id) {
 		recipientsDatatable.column(4).search( this.value ).draw();
 	})
 })();
-
-// (function bundleRecipientsFilter() {
-// 	const lengthCnt = document.getElementById("recipients-datatable_length");
-// 	const select = createSelect("bundle-recipients-filter");
-
-// 	lengthCnt.append(select);
-
-// 	$(select).select2({
-// 		placeholder: "Όλα τα Bundles",
-// 		width: "150px",
-// 		ajax: {
-// 			url: "/bundles/json-search",
-// 			delay: 1000,
-// 			dataType: "json",
-// 			data: function(params) {
-// 				return {
-// 					search: params.term,
-// 					page: params.page || 1
-// 				}
-// 			}
-// 		}
-// 	})
-
-// 	$(select).on("change", function() {
-// 		const label = $('#select2-bundle-recipients-filter-container')[0];
-
-// 		utilities.filterStyle( label, this.value.trim() );
-// 		recipientsDatatable.column(3).search( this.value ).draw();
-// 	})
-// })();
 
 (function rolesFilter() {
 	const lengthCnt = document.getElementById("recipients-datatable_length");
@@ -396,4 +320,118 @@ $("#add-recipients-blk").on("click", function() {
 	userTablesUpdate(recipients.toString());
 
 	$("#users-table-modal").modal("hide");
+});
+
+function dzCancelHandler() {
+
+	const fileName = this.findParent(3)
+		.querySelector(".dz-filename > span").textContent;
+
+	const files = attachmentDropzone.getAcceptedFiles();
+
+	for ( let i = 0; i < files.length; i++ ) {
+		if ( files[i].name === fileName ) {
+			attachmentDropzone.removeFile(files[i]);
+		}
+	}
+}
+
+utilities.ALLOWEDTYPES.push("image/jpeg");
+utilities.ALLOWEDTYPES.push("image/png");
+
+const filePreviewTemplate = document.getElementById("file-preview-template").innerHTML;
+const bannerDropzoneCnt = document.getElementById("my-awesome-dropzone");
+const attachmentDropzone = new Dropzone(bannerDropzoneCnt, {
+	url: "/dashboard/email",
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+	},
+	autoProcessQueue: false,
+	parallelUploads: 10,
+	uploadMultiple: true,
+	previewTemplate: filePreviewTemplate,
+	previewsContainer: "#previews",
+	acceptedFiles: utilities.ALLOWEDTYPES.join(),
+	dictInvalidFileType: "Μη υποστηριζόμενος τύπος αρχείου.",
+});
+
+attachmentDropzone.on("addedfile", function(file) {
+
+	file.cancelBtn = file.previewTemplate
+		.getElementsByClassName("js-cancel-btn")[0];
+
+	file.cancelBtn.addEventListener("click", dzCancelHandler);
+});
+
+attachmentDropzone.on("complete", function(file) {
+
+	const {accepted} = file;
+
+	if ( ! accepted) {
+
+		this.removeFile(file); //! invalid type
+
+		utilities.toastAlert("info", "Ο τύπος αρχείου δεν υποστηρίζεται...");
+
+		return;
+	}
+});
+
+attachmentDropzone.on("sendingmultiple", function(file, xhr, formData) {
+
+	const subject = $("#subject").val();
+	const content = $R('#editor', 'source.getCode');
+	const recipients = sessionStorage.getItem("recipients") == null
+		? "" : sessionStorage.getItem("recipients");
+
+	formData.append("subject", subject);
+	formData.append("content", content);
+	formData.append("recipients", recipients);
+});
+
+attachmentDropzone.on("successmultiple", function(file, res) {
+
+	if ( res === "Successful" ) {
+		window.location.href = `${baseUrl}/dashboard/email`;
+	}
+});
+
+attachmentDropzone.on("errormultiple", function(files, res) {
+
+	for (let i = 0; i < files.length; i++) {
+		files[i].status = "queued";
+	}
+
+	$(`#subject-error`).addClass("d-none");
+	$(`#content-error`).addClass("d-none");
+
+	for (const error in res.errors) {
+
+		if ( error !== "recipients") {
+			
+			$(`#${error}-error`).removeClass("d-none");
+		}
+		else {
+			utilities.toastAlert("info", "Δεν ορίστηκαν παραλήπτες...");
+		}
+	}
+
+});
+
+$(".js-submit-btn").on("click", function() {
+
+	const files = attachmentDropzone.getAcceptedFiles();
+
+	if (files.length > 0) {
+		attachmentDropzone.processQueue();
+
+		return;
+	}
+
+	const form = document.getElementById("email-form");
+	const recipients = sessionStorage.getItem("recipients");
+
+	$("#recipients-input").val(recipients);
+
+	form.submit();
 });

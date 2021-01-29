@@ -15,4 +15,9 @@ class Mail extends Model
 	public function author() {
 		return $this->belongsTo(User::class, "user_id");
 	}
+
+	public function attachments() {
+
+		return $this->morphMany(Attachment::class, "attachmentable");
+	}
 }

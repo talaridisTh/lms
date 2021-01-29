@@ -127,12 +127,12 @@
 			</li>
 			<li class="nav-item">
 				<a href="#recipients-tab" class="nav-link" data-toggle="tab" aria-expanded="true">
-					Παραλήπτες
+					Παραλήπτες  <span class="text-danger">*</span>
 				</a>
 			</li>
 		</ul>
 		
-		<div class="tab-content">
+		<div class="tab-content mb-3">
 			<div class="tab-pane show active" id="compose-mail-tab">
 				<form id="email-form" action="/dashboard/email" method="POST" autocomplete="off">
 			
@@ -144,30 +144,58 @@
 						<input type="text" name="id" value="{{ old("id", $mail->id) }}" hidden>
 					@endif
 
-					<div class="form-group">
-						<label for="subject">Θέμα</label>
+					<div class="form-group mb-3">
+						<label for="subject">Θέμα <span class="text-danger">*</span></label>
 						<input id="subject" class="form-control" type="text"
 							placeholder="Εισάγετε θέμα..." name="subject"
 							value="{{ old("subject") != "" ? old("subject") : ( !is_null($mail) ? $mail->subject : "" ) }}"/>
-						@error('subject')
-							<span class="text-danger" role="alert">
-								<small><strong>{{ $message }}</strong></small>
-							</span>
-						@enderror
+
+						<span id="subject-error" class="text-danger{{ $errors->has('subject') ? "" : " d-none" }}" role="alert">
+							<small><strong>Το πεδίο είναι υποχρεωτικό.</strong></small>
+						</span>
 					</div>
-		
-					<div class="form-group">
-						<label for="editor">Περιεχόμενο</label>
-						<textarea class="form-control @error('content') is-invalid @enderror"
-							id="editor" placeholder="Εισάγετε περιεχόμενο..."
-							name="content" rows="5">{{ old('content') != "" ? old('content') : ( !is_null($mail) ? $mail->content : "" )}}</textarea>
-							@error('content')
-								<span class="text-danger" role="alert">
-									<small><strong>{{ $message }}</strong></small>
-								</span>
-							@enderror
+
+					<div class="form-group mb-3">
+						<label for="editor">Περιεχόμενο <span class="text-danger">*</span></label>
+						<textarea class="form-control"
+							id="editor" placeholder="Εισάγετε περιεχόμενο..." name="content"
+							rows="5">{{ old('content') != "" ? old('content') : ( !is_null($mail) ? $mail->content : "" )}}</textarea>
+
+							<span id="content-error" class="text-danger{{ $errors->has('content') ? "" : " d-none" }}" role="alert">
+								<small><strong>Το πεδίο είναι υποχρεωτικό.</strong></small>
+							</span>
 					</div>
 				</form>
+
+				<!-- File Upload -->
+				<div class="custom-dropzone" id="my-awesome-dropzone">
+					<div class="fallback">
+						<input name="file" type="file" multiple />
+					</div>
+				
+					<div class="dz-message needsclick">
+						<i class="h1 text-muted dripicons-cloud-upload"></i>
+						<h3>Drop files here or click to upload.</h3>
+					</div>
+				</div>
+
+				<template id="file-preview-template">
+					<div class="custom-file-details my-1">
+						<div class="d-inline-block">
+
+							<div class="dz-filename mb-1"><span data-dz-name></span></div>
+							<div class="d-flex justify-content-between align-items-bottom">
+
+								<div class="dz-size mr-4" data-dz-size></div>
+								<a class="js-cancel-btn text-danger" href="javascript:void(0);">Αφαίρεση</a>
+							</div>
+
+						</div>
+					</div>
+				</template>
+
+				<div class="custom-margin-left my-3" id="previews"></div>
+
 			</div>
 			<div class="tab-pane" id="recipients-tab">
 

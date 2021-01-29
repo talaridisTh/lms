@@ -3311,8 +3311,8 @@ var homeworksDatatable = $("#homeworks-datatable").DataTable({
     type: "post",
     data: function data(d) {
       return $.extend({}, d, {
-        startDate: startDate($("#homework-date-range")[0]),
-        endDate: endDate($("#homework-date-range")[0])
+        startDate: _main__WEBPACK_IMPORTED_MODULE_0__["default"].startDate($("#homework-date-range")[0]),
+        endDate: _main__WEBPACK_IMPORTED_MODULE_0__["default"].endDate($("#homework-date-range")[0])
       });
     }
   },
@@ -3401,30 +3401,6 @@ dateRange.on('cancel.daterangepicker', function (event, picker) {
   homeworksDatatable.ajax.reload();
 });
 
-function startDate(input) {
-  var dateInput = input;
-
-  if (!dateInput || dateInput.value == "") {
-    return "";
-  }
-
-  var dateInputValue = dateInput.value.split(" - ");
-  var firstDate = dateInputValue[0].split("/").reverse().join("-");
-  return firstDate;
-}
-
-function endDate(input) {
-  var dateInput = input;
-
-  if (!dateInput || dateInput.value == "") {
-    return "";
-  }
-
-  var dateInputValue = dateInput.value.split(" - ");
-  var secondDate = dateInputValue[1].split("/").reverse().join("-");
-  return secondDate;
-}
-
 function createDateElm() {
   var input = document.createElement("input");
   input.classList.add("form-control", "date", "d-inline-block", "ml-1");
@@ -3465,7 +3441,7 @@ $("#course-select").select2({
 $("#course-select").on("change", function () {
   var label = $("#select2-course-select-container")[0];
   _main__WEBPACK_IMPORTED_MODULE_0__["default"].filterStyle(label, this.value.trim());
-  homeworksDatatable.column(1).search(this.value).draw();
+  homeworksDatatable.column(2).search(this.value).draw();
 });
 $("#view-homework-modal").on("show.bs.modal", function (event) {
   var _this2 = this;
@@ -4059,7 +4035,7 @@ function resetGalleryBtns(bulk, checkboxes) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\dashboard\homework\homeworkMain.js */"./resources/js/dashboard/homework/homeworkMain.js");
+module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\dashboard\homework\homeworkMain.js */"./resources/js/dashboard/homework/homeworkMain.js");
 
 
 /***/ })
