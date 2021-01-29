@@ -8984,7 +8984,7 @@ $(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\discussions\discussions.js */"./resources/js/index/discussions/discussions.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\discussions\discussions.js */"./resources/js/index/discussions/discussions.js");
 
 
 /***/ })
