@@ -3287,6 +3287,8 @@ if (typeof this !== 'undefined' && this.Sweetalert2){  this.swal = this.sweetAle
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _main__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../main */ "./resources/js/dashboard/main.js");
 
+var iFrame = document.getElementById('mail-frame');
+iFrame.height = iFrame.contentWindow.document.body.scrollHeight + 60;
 $("#history-datatable").DataTable({
   language: _main__WEBPACK_IMPORTED_MODULE_0__["default"].tableLocale,
   fnInitComplete: function fnInitComplete(oSettings, json) {

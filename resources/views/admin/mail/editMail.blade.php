@@ -88,11 +88,29 @@
 
 		<div class="tab-content mb-3">
 			<div id="view-mail-tab" class="tab-pane show active">
-				
-				<div class="position-relative" style="width: 100%; height: 100vh">
-					<div style="position: absolute; top: 0; bottom:0; left: 0px; right: 0; background: #fff;">
-						<iframe srcdoc="{{ $body }}" frameborder="0" width="100%" height="100%"></iframe>
-					</div>
+				<iframe id="mail-frame" srcdoc="{{ $body }}" frameBorder="0" width="100%"></iframe>
+
+				<div>
+					@forelse ($mail->attachments as $attachment)
+						<div class="custom-file-details my-1">
+							<div class="d-inline-block">
+
+								<div class="mb-1"><span>{{ $attachment->original_name }}.{{ $attachment->ext }}</span></div>
+								<div class="d-flex justify-content-between align-items-bottom">
+
+									@if ($attachment->size < 1000000)
+										<div class="mr-4"><strong>{{ number_format( floatval($attachment->size / 1000), 2, ",", ".") }}</strong> kb</div>
+									@else
+										<div class="mr-4"><strong>{{ number_format( floatval($attachment->size  / 1000000), 2, ",", ".") }}</strong> mb</div>
+									@endif
+									<a class="custom-link-primary h5 m-0" href="{{ url($attachment->rel_path) }}" download>Download</a>
+								</div>
+
+							</div>
+						</div>
+					@empty
+						
+					@endforelse
 				</div>
 			</div>
 

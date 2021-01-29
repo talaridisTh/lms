@@ -28,6 +28,8 @@ class MailController extends Controller
 			$recipients = User::find($recipients->ids);
 		}
 
+		$mail->load("attachments");
+
 		$data = [
 			"mail" => $mail,
 			"recipients" => $recipients,

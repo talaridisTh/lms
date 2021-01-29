@@ -1,5 +1,8 @@
 import utilities from '../main';
 
+const iFrame = document.getElementById( 'mail-frame' );
+iFrame.height = iFrame.contentWindow.document.body.scrollHeight + 60;
+
 $("#history-datatable").DataTable({
 	language: utilities.tableLocale,
 	fnInitComplete: function( oSettings, json ) {
