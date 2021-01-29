@@ -78,10 +78,10 @@
                         </li>
 
                         <li class=" orange-line intro-x">
-                            <a href="{{route('discussion.index')}}"
+                            <a href="{{route('discussion.index',"filter-announcement")}}"
                                class="top-menu relative contact">
                                 <div class="top-menu__icon">
-                                    <i data-feather="home"></i>
+                                    <i data-feather="mail"></i>
                                 </div>
 
                                 <div class="top-menu__title "
@@ -117,13 +117,11 @@
                                         <div class="top-menu__title"> Προφίλ</div>
                                     </a>
                                 </li>
-                                <li class="orange-line hidden">
-                                    <a href="/message"
-                                       class="top-menu js-message-seen">
-                                        <div class="top-menu__icon"><i data-feather="mail"></i></div>
-                                        <div class="top-menu__title justify-between"> Μηνύματα
-                                            <span class="inline-flex js-message-badge  items-center justify-center px-2 py-1 text-xs
-                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full"></span>
+                                <li class="orange-line ">
+                                    <a href="{{route('discussion.index',"filter-all-threads")}}"
+                                       class="top-menu ">
+                                        <div class="top-menu__icon"><i data-feather="message-circle"></i></div>
+                                        <div class="top-menu__title justify-between"> Συζητήσεις
                                         </div>
                                     </a>
                                 </li>
@@ -132,7 +130,7 @@
                                        data-role="{{auth()->user()->getRoleNames()[0]}}"
                                        class="top-menu js-task-seen">
                                         <div class="top-menu__icon"><i data-feather="activity"></i></div>
-                                        <div class="top-menu__title justify-between">
+                                        <div class="top-menu__title justify-between js-task-seen">
                                             Εργασίες
                                             <span class="{{$notifyTask ? "inline-flex":"hidden"}} js-message-badge  items-center justify-center px-2 py-1 text-xs
                     	                        font-bold leading-none text-red-100 bg-red-600 rounded-full">{{$notifyTask}}</span>
@@ -217,15 +215,8 @@
                     </li>
                 @endif
                 @endhasanyrole
-                <li class="hover:bg-gray-200 ">
-                    <a href="{{route('dashboard')}}"
-                       class="menu contact">
-                        <div class="menu__icon"><i data-feather="home"></i></div>
-                        <div class="menu__title"> Επικοινωνία</div>
-                        <span class="absolute top-0 right-0 inline-flex items-center justify-center"></span>
 
-                    </a>
-                </li>
+
                 <li class="hover:bg-gray-200 ">
                     <a href="{{route('index.userCourses',auth()->id())}}"
                        class="menu">
@@ -233,6 +224,17 @@
                         <div class="menu__title"> Μαθήματα</div>
                     </a>
                 </li>
+
+                <li class="hover:bg-gray-200 ">
+                    <a href="{{route('discussion.index',"filter-announcement")}}"
+                       class="menu contact">
+                        <div class="menu__icon"><i data-feather="mail"></i></div>
+                        <div class="menu__title"> Επικοινωνία</div>
+                        <span class="absolute top-0 right-0 inline-flex items-center justify-center"></span>
+
+                    </a>
+                </li>
+
 
                 <li class=" ">
                     <a href="javascript:;"
@@ -247,18 +249,16 @@
                             class="hover:bg-gray-200 bg-white border-t-0">
                             <a href="{{route('index.account',auth()->user()->slug)}}"
                                class="menu">
-                                <div class="menu__icon"><i data-feather="activity"></i></div>
+                                <div class="menu__icon"><i data-feather="user"></i></div>
                                 <div class="menu__title"> Προφίλ</div>
                             </a>
                         </li>
                         <li id="logout-btn"
-                            class="hover:bg-gray-200 hidden bg-white ">
-                            <a href="/message"
-                               class="menu js-message-seen">
-                                <div class="menu__icon"><i data-feather="mail"></i></div>
-                                <div class="menu__title"> Μηνύματα
-                                    <span class="inline-flex js-message-badge  items-center justify-center px-2 py-1 text-xs
-                    	                        font-bold leading-none text-red-100 bg-red-600 rounded-full"></span>
+                            class="hover:bg-gray-200  bg-white ">
+                            <a href="{{route('discussion.index',"filter-all-threads")}}"
+                               class="menu">
+                                <div class="menu__icon"><i data-feather="message-circle"></i></div>
+                                <div class="menu__title"> Συζητήσεις
                                 </div>
                             </a>
                         </li>
@@ -277,7 +277,7 @@
                             class="hover:bg-gray-200 bg-white ">
                             <a href="{{route('logout')}}"
                                class="menu">
-                                <div class="menu__icon"><i data-feather="activity"></i></div>
+                                <div class="menu__icon"><i data-feather="log-out"></i></div>
                                 <div class="menu__title"> Έξοδος</div>
                             </a>
                         </li>

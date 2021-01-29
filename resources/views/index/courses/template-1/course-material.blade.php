@@ -21,7 +21,6 @@
             @elseif($material->type=="PDF")
                 @php
                     $pdf = $material->media()->wherePivot("usage", 4)->with("mediaDetails")->first();
-
                 @endphp
                 @isset($pdf->rel_path)
                     <embed id="pdf-embed"

@@ -73,7 +73,7 @@ $(document).on("click", ".js-task-seen", async function (e) {
     e.preventDefault()
 
     if (($(this).data("role") == "student")) {
-        window.location.href = "/discussion?task";
+        window.location.href = "/discussion?filter-my-task";
     } else {
         window.location.href = "/dashboard/homeworks"
     }

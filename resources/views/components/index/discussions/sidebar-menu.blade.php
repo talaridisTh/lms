@@ -18,10 +18,10 @@
         NEO POST
     </li>
 
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread active-thread"
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread hidden active-thread"
         id="filter-all-threads">
         <i class="font-18 font-18 mr-1 uil-notebooks"></i>
-        Σχόλια
+        Συζητήσεις
     </li>
     <li class="py-2 px-6 m-2 list-unstyled bg-thread hidden"
         id="filter-my-question">
@@ -61,14 +61,14 @@
         <span>Δημοφιλή αυτήν την εβδομάδα</span>
     </li>
 
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread "
+    <li class="py-2 px-6 m-2 list-unstyled bg-thread hidden"
         data-role-user="{{auth()->user()->getRoleNames()[0]}}"
         id="filter-announcement">
         <i class="font-18 mr-1 uil-star"></i>
         Επικοινωνία
     </li>
     @role("student")
-    <li class="py-2 px-6 m-2 list-unstyled bg-thread "
+    <li class="py-2 px-6 mt-9 mx-4 list-unstyled bg-thread hidden active-thread"
         data-role-user="{{auth()->user()->getRoleNames()[0]}}"
         id="filter-my-task">
         <i class="font-18 mr-1 uil-link-h"></i>

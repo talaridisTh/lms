@@ -23480,7 +23480,7 @@ $(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
             e.preventDefault();
 
             if ($(this).data("role") == "student") {
-              window.location.href = "/discussion?task";
+              window.location.href = "/discussion?filter-my-task";
             } else {
               window.location.href = "/dashboard/homeworks";
             }
@@ -28984,7 +28984,7 @@ if(( false?undefined:_typeof(module))==='object'&&module.exports){module.exports
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\theme.js */"./resources/js/index/theme.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\theme.js */"./resources/js/index/theme.js");
 
 
 /***/ })

@@ -1234,16 +1234,29 @@ $(".discussions-left").on("click", "#filter-announcement", async function () {
 //         }
 //     }
 // });
+let url = window.location.href;
+if (url.includes('?')) {
+    const filterId = window.location.search.replace("?", "#")
 
-if (window.location.search == "?task") {
-    $("#filter-all-threads").removeClass("active-thread")
-    $("#filter-all-threads").addClass("active-thread")
+    $(filterId).removeClass("hidden").addClass("active-thread")
+
+    $(filterId).trigger("click");
     setTimeout(function () {
-            $("#filter-my-task").trigger("click");
+            $(".discussions-right").removeClass("hidden");
+
         },
-        100);
+        300);
 }
 
 
+$(document).on("click", ".js-task-seen", async function (e) {
+    e.preventDefault()
+
+    if (($(this).data("role") == "student")) {
+        window.location.href = "/discussion?filter-my-task";
+    } else {
+        window.location.href = "/dashboard/homeworks"
+    }
 
 
+})

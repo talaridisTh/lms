@@ -8937,13 +8937,43 @@ $(".discussions-left").on("click", "#filter-announcement", /*#__PURE__*/_asyncTo
 //     }
 // });
 
-if (window.location.search == "?task") {
-  $("#filter-all-threads").removeClass("active-thread");
-  $("#filter-all-threads").addClass("active-thread");
+var url = window.location.href;
+
+if (url.includes('?')) {
+  var filterId = window.location.search.replace("?", "#");
+  $(filterId).removeClass("hidden").addClass("active-thread");
+  $(filterId).trigger("click");
   setTimeout(function () {
-    $("#filter-my-task").trigger("click");
-  }, 100);
+    $(".discussions-right").removeClass("hidden");
+  }, 300);
 }
+
+$(document).on("click", ".js-task-seen", /*#__PURE__*/function () {
+  var _ref29 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee29(e) {
+    return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee29$(_context29) {
+      while (1) {
+        switch (_context29.prev = _context29.next) {
+          case 0:
+            e.preventDefault();
+
+            if ($(this).data("role") == "student") {
+              window.location.href = "/discussion?filter-my-task";
+            } else {
+              window.location.href = "/dashboard/homeworks";
+            }
+
+          case 2:
+          case "end":
+            return _context29.stop();
+        }
+      }
+    }, _callee29, this);
+  }));
+
+  return function (_x7) {
+    return _ref29.apply(this, arguments);
+  };
+}());
 
 /***/ }),
 
@@ -8954,7 +8984,7 @@ if (window.location.search == "?task") {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Coding\Darkpony\Idrogeios\lmsdemo\resources\js\index\discussions\discussions.js */"./resources/js/index/discussions/discussions.js");
+module.exports = __webpack_require__(/*! C:\Users\arxi-\OneDrive\Υπολογιστής\lmsdemo-master\resources\js\index\discussions\discussions.js */"./resources/js/index/discussions/discussions.js");
 
 
 /***/ })
